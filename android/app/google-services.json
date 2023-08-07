@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "686212353505",
+    "project_id": "sona-dating",
+    "storage_bucket": "sona-dating.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686212353505:android:f4f29f6ccf9703360716a0",
+        "android_client_info": {
+          "package_name": "com.planetwalk.sona"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686212353505-4tg2ts6duuu6s39tan2p59otvuspfkcr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVmRgXOuFgxcy2htwFIvtR1mtNUPjQj4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686212353505-4tg2ts6duuu6s39tan2p59otvuspfkcr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "686212353505-eu1iv85e1sr2lqfkq6mlmsnefvefteaf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.planetwalk.sona"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
