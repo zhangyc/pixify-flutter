@@ -3,8 +3,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sona/core/persona/providers/persona.dart';
+import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/providers/user.dart';
 import 'package:sona/utils/providers/dio.dart';
+import 'package:sona/utils/providers/env.dart';
 
 import '../../../utils/dialog/input.dart';
 
@@ -71,7 +73,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
         centerTitle: true,
         title: Text(user.name),
         actions: [
-          IconButton(onPressed: () => null, icon: Icon(Icons.share_outlined))
+          IconButton(onPressed: _switchEnv, icon: Icon(Icons.share_outlined))
         ],
         elevation: 0,
       ),
@@ -181,6 +183,17 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
     final data = resp.data;
     if (data['code'] == 1 ) {
       _fetchKnowledge();
+    }
+  }
+
+  Future<void> _switchEnv() async {
+    final sure = await showConfirm(
+        context: context,
+        content: '连接到银古本地测试环境?\n(数据是同一份，不会丢失；App重启后复原)'
+    );
+    if (sure == true) {
+      ref.read(tokenProvider.notifier).state = null;
+      ref.read(envProvider.notifier).state = 'http://192.168.31.142:8000';
     }
   }
 }

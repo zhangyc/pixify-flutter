@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/screens/function.dart';
+import 'package:sona/core/chat/screens/prompte_template.dart';
 
 import '../../../utils/providers/dio.dart';
 import '../../persona/models/user.dart';
@@ -42,6 +43,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         centerTitle: true,
         title: const Text('Chat'),
         elevation: 0,
+        actions: [
+          IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PromptTemplateScreen())), icon: Icon(Icons.temple_buddhist_outlined))
+        ],
       ),
       body: ListView.separated(
         itemBuilder: _itemBuilder,
