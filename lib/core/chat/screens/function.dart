@@ -11,6 +11,7 @@ import 'package:sona/core/chat/widgets/chat_input.dart';
 import 'package:sona/core/providers/user.dart';
 import 'package:sona/widgets/button/colored_button.dart';
 
+import '../../../utils/dialog/input.dart';
 import '../../../utils/providers/dio.dart';
 import '../../persona/models/user.dart';
 
@@ -67,6 +68,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
         title: Text(widget.to.name),
         elevation: 0,
         actions: [
+          IconButton(onPressed: _onClearHistory, icon: Icon(Icons.cleaning_services_outlined)),
           IconButton(onPressed: _showInfo, icon: Icon(Icons.info_outline))
         ],
       ),
@@ -282,6 +284,24 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
 
   void _showInfo() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => ChatInfoScreen(user: widget.to)));
+  }
+
+  void _onClearHistory() async {
+    final sure = await showConfirm(
+      context: context,
+      content: '清空历史消息'
+    );
+    if (sure == true) {
+      final dio = ref.read(dioProvider);
+      EasyLoading.show();
+      try {
+        await dio.delete('/chat/${widget.to.phone}/message');
+      } catch(e) {
+        //
+      } finally {
+        EasyLoading.dismiss();
+      }
+    }
   }
 
   Future _getSuggestion(String purpose) async {
