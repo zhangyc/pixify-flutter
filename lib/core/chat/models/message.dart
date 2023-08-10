@@ -5,20 +5,23 @@ class ImMessage {
     required this.conversation,
     required this.sender,
     required this.receiver,
-    required this.content
+    required this.content,
+    this.knowledgeAdded = false
   });
 
   final String conversation;
   final String content;
   final User sender;
   final User receiver;
+  bool knowledgeAdded;
 
   factory ImMessage.fromJson(Map<String, dynamic> json) {
     return ImMessage(
       conversation: json['target'],
       sender: User.fromJson(json['sender']),
       receiver: User.fromJson(json['receiver']),
-      content: json['content']
+      content: json['content'],
+      knowledgeAdded: json['knowledge_added'] ?? false
     );
   }
 
@@ -26,6 +29,7 @@ class ImMessage {
     'target': conversation,
     'sender': sender.toJson(),
     'receiver': receiver.toJson(),
-    'content': content
+    'content': content,
+    'knowledge_added': knowledgeAdded
   };
 }

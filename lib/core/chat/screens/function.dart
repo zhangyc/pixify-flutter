@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,7 +26,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
 
   Timer? _timer;
   var _messages = <ImMessage>[];
-  bool _showSuggestion = true;
+  var _mode = 'docker';
 
   @override
   void initState() {
@@ -80,7 +79,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
               alignment: Alignment.topCenter,
               child: ListView.separated(
                 shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 2),
                 reverse: true,
                 itemBuilder: _itemBuilder,
                 itemCount: _messages.length,
@@ -90,14 +89,15 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           ),
         ],
       ),
-      bottomSheet: _showSuggestion ? _bottomTips() : Container(
+      floatingActionButton: _mode == 'docker' ? _bottomTips() : Container(
         padding: EdgeInsets.only(
           top: 12,
           bottom: MediaQuery.of(context).viewPadding.bottom + 12
         ),
         color: Colors.white,
-        child: ChatInput(onSubmit: _onMessage),
-      )
+        child: ChatInput(onSubmit: _onMessage, actionText: _mode == 'manuel' ? 'Send' : 'Sona'),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -106,24 +106,84 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     final me = ref.read(userProvider);
     if (message.sender.phone == me.phone) {
       return Container(
-        margin: EdgeInsets.only(left: 50),
-        child: ListTile(
-          trailing: CircleAvatar(
-            child: Text(message.sender.name),
-          ),
-          title: Text(message.content),
-          tileColor: Color(0xFFF8F8F8)
+        margin: EdgeInsets.only(left: 50, bottom: 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListTile(
+              title: Text(message.content),
+            ),
+            SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () => _onEditMessage(message),
+                  child: Container(
+                    height: 28,
+                    width: 28,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black, width: 1)
+                    ),
+                    alignment: Alignment.center,
+                    child: Text('\u{270D}'),
+                  ),
+                ),
+                Visibility(
+                  visible: !message.knowledgeAdded,
+                  child: GestureDetector(
+                    onTap: () => _onAddKnowledge(message),
+                    child: Container(
+                      height: 28,
+                      width: 28,
+                      margin: EdgeInsets.only(left: 20),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black, width: 1)
+                      ),
+                      alignment: Alignment.center,
+                      child: Text('S', style: TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.w700)),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12)
+              ],
+            )
+          ],
         ),
       );
     } else {
       return Container(
-        margin: EdgeInsets.only(right: 50),
-        child: ListTile(
-            leading: CircleAvatar(
-              child: Text(message.sender.name),
+        margin: EdgeInsets.only(right: 50, bottom: 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListTile(
+                title: Text(message.content),
             ),
-            title: Text(message.content),
-            tileColor: Color(0xFFF8F8F8)
+            SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 18),
+                GestureDetector(
+                  child: Container(
+                    height: 28,
+                    width: 28,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.black, width: 1)
+                    ),
+                    alignment: Alignment.center,
+                    child: Text('❤️'),
+                  ),
+                ),
+              ],
+            )
+          ],
         ),
       );
     }
@@ -173,18 +233,22 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
 
   Widget _bottomTips() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 16),
-      padding: EdgeInsets.only(right: 10),
+      margin: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(width: 10),
-          GestureDetector(
-              onTap: () => _getMessageSuggestion('给我建议'),
-              child: Text('给我\n建议', style: _blueStyle)
+          IconButton(
+              onPressed: () => _getMessageSuggestion(),
+              icon: Text('💡')
           ),
           GestureDetector(
-              onTap: () async {
+            behavior: HitTestBehavior.translucent,
+              onTap: () {
+                setState(() {
+                  _mode = 'sona';
+                });
+              },
+              onLongPress: () async {
                 final dio = ref.read(dioProvider);
                 EasyLoading.show();
                 try {
@@ -197,88 +261,77 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                   EasyLoading.dismiss();
                 }
               },
-              child: Text('自动\n问答', style: _blueStyle)
+              child: Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.pinkAccent.shade100,
+                      Colors.blueAccent.shade100
+                    ]
+                  ),
+                  shape: BoxShape.circle,
+                ),
+                alignment: Alignment.center,
+                child: Text('S', style: TextStyle(fontSize: 28)),
+              )
           ),
-          GestureDetector(
-              onTap: () {
-                final dio = ref.read(dioProvider);
-                showModalBottomSheet<bool>(
-                    context: context,
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        )
-                    ),
-                    builder: (_) {
-                      return SafeArea(
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              ...['调情', '讽刺', '萌萌', '好奇'].map((e) => Container(
-                                margin: EdgeInsets.symmetric(vertical: 5),
-                                child: ColoredButton(
-                                    onTap: () async {
-                                      Navigator.pop(context);
-                                      EasyLoading.show();
-                                      try {
-                                        await dio.post('/chat/free', data: {
-                                          'receiver_id': widget.to.phone,
-                                          'purpose': e == '调情' ? 'Flirty' : e
-                                        });
-                                      } catch(e) {
-                                        //
-                                      } finally {
-                                        EasyLoading.dismiss();
-                                      }
-                                    },
-                                    text: e
-                                ),
-                              )),
-                              SizedBox(height: 30),
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-                );
-              },
-              child: Text('手动\n指令', style: _blueStyle)
-          ),
-          GestureDetector(
-              onTap: () {
+          IconButton(
+              onPressed: () {
                 setState(() {
-                  _showSuggestion = false;
+                  _mode = 'manuel';
                 });
               },
-              child: Text('手动\n输入', style: _blueStyle)
+              icon: Text('\u{270D}', style: _blueStyle)
           ),
-          SizedBox(width: 10),
         ],
       ),
     );
   }
 
   void _onMessage({String? text}) async {
-    if (text == null) {
+    print(text);
+    if (text == null || text.trim().isEmpty) {
       FocusManager.instance.primaryFocus?.unfocus();
+      setState(() {
+        _mode = 'docker';
+      });
       return;
     }
     final dio = ref.read(dioProvider);
     final me = ref.read(userProvider);
-    final message = ImMessage(conversation: widget.to.phone, sender: me, receiver: widget.to, content: text);
-    final resp = await dio.post('/chat/message', data: message.toJson());
-    final data = resp.data;
-    if (data['code'] == 1) {
-      // 成功
-      setState(() {
-        _showSuggestion = true;
-      });
+    EasyLoading.show();
+    if (_mode == 'manuel') {
+      final message = ImMessage(conversation: widget.to.phone, sender: me, receiver: widget.to, content: text);
+      final resp = await dio.post('/chat/message', data: message.toJson());
+      final data = resp.data;
+      if (data['code'] == 1) {
+        // 成功
+        setState(() {
+          _mode = 'docker';
+        });
+      }
+    } else if (_mode == 'directive') {
+      try {
+        final resp = await dio.post('/chat/free', data: {
+          'receiver_id': widget.to.phone,
+          'purpose': text
+        });
+        final data = resp.data;
+        if (data['code'] == 1) {
+          // 成功
+          setState(() {
+            _mode = 'docker';
+          });
+        }
+      } catch(e) {
+        //
+      } finally {
+        EasyLoading.dismiss();
+      }
     }
   }
 
@@ -317,10 +370,14 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     } finally {
       EasyLoading.dismiss();
     }
+  }
+
+  Future _onSona(String directive) async {
+    final dio = ref.read(dioProvider);
 
   }
 
-  Future _getMessageSuggestion(String purpose) async {
+  Future _getMessageSuggestion() async {
     final dio = ref.read(dioProvider);
     EasyLoading.show();
     var resp;
@@ -379,5 +436,21 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
         );
       }
     );
+  }
+
+  Future _onEditMessage(ImMessage message) async {
+    Fluttertoast.showToast(msg: 'todo');
+  }
+
+  Future _onAddKnowledge(ImMessage message) async {
+    final dio = ref.read(dioProvider);
+    final resp = await dio.post('/knowledge', data: {'content': message.content});
+    final data = resp.data;
+    if (data['code'] == 1 ) {
+      message.knowledgeAdded = true;
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 }

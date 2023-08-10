@@ -6,6 +6,7 @@ class ChatInput extends StatefulWidget {
   final String? initialText;
   final String hintText;
   final TextInputType keyboardType;
+  final String actionText;
   final Function(String)? onInputChange;
   final void Function({String? text})? onSubmit;
   final int maxLength;
@@ -19,6 +20,7 @@ class ChatInput extends StatefulWidget {
     this.initialText,
     this.hintText = '',
     this.keyboardType = TextInputType.text,
+    this.actionText = 'Send',
     this.onInputChange,
     this.onSubmit,
     this.maxLength = 1024,
@@ -90,10 +92,8 @@ class _LinkCommentInputBarState extends State<ChatInput> with AutomaticKeepAlive
                 if (widget.onInputChange != null) widget.onInputChange!(text);
               },
               onSubmitted: (String text) {
-                if (text.trim().isNotEmpty) {
-                  onSubmit(text: text);
-                  _controller.text = '';
-                }
+                onSubmit(text: text);
+                _controller.text = '';
               },
               focusNode: focusNode,
               autofocus: widget.autofocus,
@@ -101,12 +101,9 @@ class _LinkCommentInputBarState extends State<ChatInput> with AutomaticKeepAlive
           ),
           TextButton(
               onPressed: () {
-                if (_controller.text.isEmpty) {
-                  return;
-                }
                 onSubmit(text: _controller.text);
               },
-              child: Text('Send')
+              child: Text(widget.actionText)
           )
         ],
       ),
