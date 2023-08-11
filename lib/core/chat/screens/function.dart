@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/screens/info.dart';
 import 'package:sona/core/chat/widgets/chat_input.dart';
@@ -249,6 +251,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                 });
               },
               onLongPress: () async {
+                HapticFeedback.mediumImpact();
                 final dio = ref.read(dioProvider);
                 EasyLoading.show();
                 try {
@@ -306,15 +309,21 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     EasyLoading.show();
     if (_mode == 'manuel') {
       final message = ImMessage(conversation: widget.to.phone, sender: me, receiver: widget.to, content: text);
-      final resp = await dio.post('/chat/message', data: message.toJson());
-      final data = resp.data;
-      if (data['code'] == 1) {
-        // 成功
-        setState(() {
-          _mode = 'docker';
-        });
+      try {
+        final resp = await dio.post('/chat/message', data: message.toJson());
+        final data = resp.data;
+        if (data['code'] == 1) {
+          // 成功
+          setState(() {
+            _mode = 'docker';
+          });
+        }
+      } catch(e) {
+        //
+      } finally {
+        EasyLoading.dismiss();
       }
-    } else if (_mode == 'directive') {
+    } else if (_mode == 'sona') {
       try {
         final resp = await dio.post('/chat/free', data: {
           'receiver_id': widget.to.phone,
@@ -332,6 +341,28 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       } finally {
         EasyLoading.dismiss();
       }
+    } else {
+      EasyLoading.dismiss();
+    }
+  }
+
+  Future _sendMessage(String content) async {
+    EasyLoading.show();
+    try {
+      final dio = ref.read(dioProvider);
+      final me = ref.read(userProvider);
+      final message = ImMessage(conversation: widget.to.phone, sender: me, receiver: widget.to, content: content);
+      try {
+        final resp = await dio.post('/chat/message', data: message.toJson());
+      } catch(e) {
+        //
+      } finally {
+        EasyLoading.dismiss();
+      }
+    } catch(e) {
+      //
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
@@ -372,11 +403,6 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     }
   }
 
-  Future _onSona(String directive) async {
-    final dio = ref.read(dioProvider);
-
-  }
-
   Future _getMessageSuggestion() async {
     final dio = ref.read(dioProvider);
     EasyLoading.show();
@@ -409,24 +435,14 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ...sugg_map.values.map((e) => Container(
+                  ...sugg_map.entries.map((e) => Container(
                     margin: EdgeInsets.symmetric(vertical: 5),
                     child: ColoredButton(
                         onTap: () async {
                           Navigator.pop(context);
-                          EasyLoading.show();
-                          try {
-                            await dio.post('/chat/free', data: {
-                              'receiver_id': widget.to.phone,
-                              'purpose': e
-                            });
-                          } catch(e) {
-                            //
-                          } finally {
-                            EasyLoading.dismiss();
-                          }
+                          _sendMessage(e.value);
                         },
-                        text: e
+                        text: e.key
                     ),
                   )),
                   SizedBox(height: 30),

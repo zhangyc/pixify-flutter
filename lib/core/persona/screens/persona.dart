@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pinput/pinput.dart';
@@ -126,17 +127,34 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
                   border: OutlineInputBorder()
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: TextButton(
-                  onPressed: () {
-                    final dio = ref.read(dioProvider);
-                    dio.post('/persona', data: {'intro': _controller.text});
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    Fluttertoast.showToast(msg: '设置成功');
-                  },
-                  child: Text('修改', style: TextStyle(fontSize: 18),),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () async {
+                      final dio = ref.read(dioProvider);
+                      EasyLoading.show();
+                      try {
+                        final resp = await dio.post('/persona/intro/generation');
+                        await _fetchIntro();
+                      } catch (e) {
+                        //
+                      } finally {
+                        EasyLoading.dismiss();
+                      }
+                    },
+                    child: Text('知识库总结', style: TextStyle(fontSize: 18),),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      final dio = ref.read(dioProvider);
+                      dio.post('/persona', data: {'intro': _controller.text});
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      Fluttertoast.showToast(msg: '设置成功');
+                    },
+                    child: Text('修改', style: TextStyle(fontSize: 18),),
+                  ),
+                ],
               ),
               SizedBox(height: 15,),
               Text("知识库", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
@@ -159,14 +177,9 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ..._knowledge.map((e) => Container(
-                    margin: EdgeInsets.symmetric(vertical: 4),
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF1F1F1)
-                    ),
-                    child: Text(e)
-                  ))
+                  ..._knowledge.map(
+                    (e) => ListTile(title: Text(e), trailing: IconButton(icon: Icon(Icons.close), onPressed: () => _removeKnowledge(e)),)
+                  )
                 ],
               )
             ],
@@ -193,6 +206,15 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
     );
     if (sure == true) {
       ref.read(envProvider.notifier).state = 'http://192.168.31.142:8000';
+    }
+  }
+
+  Future _removeKnowledge(String content) async {
+    final dio = ref.read(dioProvider);
+    final resp = await dio.delete('/knowledge', data: {'content': content});
+    final data = resp.data;
+    if (data['code'] == 1 ) {
+      _fetchKnowledge();
     }
   }
 }
