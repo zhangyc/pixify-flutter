@@ -8,6 +8,8 @@ import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/providers/user.dart';
 import 'package:sona/utils/providers/dio.dart';
 import 'package:sona/utils/providers/env.dart';
+import 'package:sona/widgets/button/colored_button.dart';
+import 'package:sona/widgets/text/gradient_colored_text.dart';
 
 import '../../../utils/dialog/input.dart';
 
@@ -70,20 +72,45 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.settings), onPressed: () => Navigator.pushNamed(context, 'setting')),
-        centerTitle: true,
-        title: Text(user.name),
         actions: [
-          IconButton(onPressed: _switchEnv, icon: Icon(Icons.share_outlined))
+          IconButton(onPressed: _switchEnv, icon: Icon(Icons.settings))
         ],
         elevation: 0,
       ),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const GradientColoredText(
+                      text: 'SONA',
+                      style: TextStyle(
+                        fontSize: 50,
+                        letterSpacing: 12.0,
+                      )
+                  ),
+                  Container()
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 12),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ColoredButton(onTap: () => null, text: 'My Profile'),
+                    SizedBox(height: 5),
+                    ColoredButton(onTap: () => null, text: 'Sona Status'),
+                    SizedBox(height: 5),
+                    ColoredButton(onTap: () => null, text: 'Becoming Super Sona')
+                  ],
+                ),
+              ),
               Flex(
                 direction: Axis.horizontal,
                 children: [
