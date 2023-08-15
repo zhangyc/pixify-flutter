@@ -11,6 +11,7 @@ import 'package:sona/core/chat/screens/info.dart';
 import 'package:sona/core/chat/widgets/chat_input.dart';
 import 'package:sona/core/providers/user.dart';
 import 'package:sona/widgets/button/colored_button.dart';
+import 'package:sona/widgets/text/gradient_colored_text.dart';
 
 import '../../../utils/dialog/input.dart';
 import '../../../utils/providers/dio.dart';
@@ -28,7 +29,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
 
   Timer? _timer;
   var _messages = <ImMessage>[];
-  var _mode = 'docker';
+  _ChatMode _mode = _ChatMode.docker;
 
   @override
   void initState() {
@@ -73,31 +74,40 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           IconButton(onPressed: _showInfo, icon: Icon(Icons.info_outline))
         ],
       ),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            bottom: 100,
-            child: _messages.isNotEmpty ? Container(
-              alignment: Alignment.topCenter,
-              child: ListView.separated(
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 2),
-                reverse: true,
-                itemBuilder: _itemBuilder,
-                itemCount: _messages.length,
-                separatorBuilder: (_, __) => SizedBox(height: 5),
-              ),
-            ) : _tips()
-          ),
-        ],
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+          setState(() {
+            _mode = _ChatMode.docker;
+          });
+        },
+        child: Stack(
+          children: [
+            Positioned.fill(
+              bottom: 100,
+              child: _messages.isNotEmpty ? Container(
+                alignment: Alignment.topCenter,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: 2),
+                  reverse: true,
+                  itemBuilder: _itemBuilder,
+                  itemCount: _messages.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 5),
+                ),
+              ) : _tips()
+            ),
+          ],
+        ),
       ),
-      floatingActionButton: _mode == 'docker' ? _bottomTips() : Container(
+      floatingActionButton: _mode == _ChatMode.docker ? _bottomTips() : Container(
         padding: EdgeInsets.only(
           top: 12,
           bottom: MediaQuery.of(context).viewPadding.bottom + 12
         ),
         color: Colors.white,
-        child: ChatInput(onSubmit: _onMessage, actionText: _mode == 'manuel' ? 'Send' : 'Sona'),
+        child: ChatInput(onSubmit: _onMessage, actionText: _mode == _ChatMode.manuel ? 'Send' : 'Sona'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -146,7 +156,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                           border: Border.all(color: Colors.black, width: 1)
                       ),
                       alignment: Alignment.center,
-                      child: Text('S', style: TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.w700)),
+                      child: GradientColoredText(text: 'S', style: TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.w700)),
                     ),
                   ),
                 ),
@@ -247,7 +257,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
             behavior: HitTestBehavior.translucent,
               onTap: () {
                 setState(() {
-                  _mode = 'sona';
+                  _mode = _ChatMode.sona;
                 });
               },
               onLongPress: () async {
@@ -272,20 +282,20 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Colors.pinkAccent.shade100,
-                      Colors.blueAccent.shade100
+                      Theme.of(context).colorScheme.primaryContainer,
+                      Theme.of(context).colorScheme.secondaryContainer,
                     ]
                   ),
                   shape: BoxShape.circle,
                 ),
                 alignment: Alignment.center,
-                child: Text('S', style: TextStyle(fontSize: 28)),
+                child: GradientColoredText(text: 'S', style: TextStyle(fontSize: 28)),
               )
           ),
           IconButton(
               onPressed: () {
                 setState(() {
-                  _mode = 'manuel';
+                  _mode = _ChatMode.manuel;
                 });
               },
               icon: Text('\u{270D}', style: _blueStyle)
@@ -300,14 +310,15 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     if (text == null || text.trim().isEmpty) {
       FocusManager.instance.primaryFocus?.unfocus();
       setState(() {
-        _mode = 'docker';
+        _mode = _ChatMode.docker;
       });
       return;
     }
+
     final dio = ref.read(dioProvider);
     final me = ref.read(userProvider);
     EasyLoading.show();
-    if (_mode == 'manuel') {
+    if (_mode == _ChatMode.manuel) {
       final message = ImMessage(conversation: widget.to.phone, sender: me, receiver: widget.to, content: text);
       try {
         final resp = await dio.post('/chat/message', data: message.toJson());
@@ -315,7 +326,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
         if (data['code'] == 1) {
           // 成功
           setState(() {
-            _mode = 'docker';
+            _mode = _ChatMode.docker;
           });
         }
       } catch(e) {
@@ -323,9 +334,9 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       } finally {
         EasyLoading.dismiss();
       }
-    } else if (_mode == 'sona') {
+    } else if (_mode == _ChatMode.sona) {
       try {
-        final resp = await dio.post('/chat/free', data: {
+        final resp = await dio.post('/chat/directive', data: {
           'receiver_id': widget.to.phone,
           'purpose': text
         });
@@ -333,7 +344,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
         if (data['code'] == 1) {
           // 成功
           setState(() {
-            _mode = 'docker';
+            _mode = _ChatMode.docker;
           });
         }
       } catch(e) {
@@ -469,4 +480,10 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       }
     }
   }
+}
+
+enum _ChatMode {
+  docker,
+  manuel,
+  sona
 }

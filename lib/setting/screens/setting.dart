@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/providers/token.dart';
 
+import '../../utils/dialog/input.dart';
+import '../../utils/providers/env.dart';
+
 class SettingScreen extends StatefulHookConsumerWidget {
   const SettingScreen({super.key});
 
@@ -35,6 +38,12 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
               child: Text('About')
             ),
           ),
+          SliverToBoxAdapter(
+            child: TextButton(
+                onPressed: _switchEnv,
+                child: Text('Switch to local test env')
+            ),
+          ),
           SliverFillRemaining(
             hasScrollBody: false,
             child: Align(
@@ -48,6 +57,16 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
         ],
       )
     );
+  }
+
+  Future<void> _switchEnv() async {
+    final sure = await showConfirm(
+        context: context,
+        content: '连接到银古本地测试环境?\n(数据是同一份，不会丢失；App重启后复原)'
+    );
+    if (sure == true) {
+      ref.read(envProvider.notifier).state = 'http://192.168.31.142:8000';
+    }
   }
 
   void _logout() {

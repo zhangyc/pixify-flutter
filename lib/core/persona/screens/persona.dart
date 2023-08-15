@@ -225,16 +225,6 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
     }
   }
 
-  Future<void> _switchEnv() async {
-    final sure = await showConfirm(
-        context: context,
-        content: '连接到银古本地测试环境?\n(数据是同一份，不会丢失；App重启后复原)'
-    );
-    if (sure == true) {
-      ref.read(envProvider.notifier).state = 'http://192.168.31.142:8000';
-    }
-  }
-
   void _goSetting() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingScreen()));
   }
