@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/login.dart';
 import 'package:sona/core/providers/token.dart';
@@ -13,6 +14,7 @@ import 'core/home.dart';
 
 const primaryColor =  Color(0xFFFF00D4);
 const scaffoldBackgroundColor = Colors.white;
+const fontColour = Color(0xFF4D4D4D);
 
 class SonaApp extends HookConsumerWidget {
   const SonaApp({super.key});
@@ -39,16 +41,18 @@ class SonaApp extends HookConsumerWidget {
         primaryColor: primaryColor,
         scaffoldBackgroundColor: scaffoldBackgroundColor,
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           backgroundColor: Colors.transparent,
-          titleTextStyle: TextStyle(
-            color: Colors.black87,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 1
+          titleTextStyle: GoogleFonts.inder(
+            textStyle: const TextStyle(
+              color: fontColour,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 1
+            )
           ),
           iconTheme: IconThemeData(
-            color: Colors.black87
+            color: fontColour
           ),
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarBrightness: Brightness.light,
@@ -56,6 +60,16 @@ class SonaApp extends HookConsumerWidget {
             statusBarIconBrightness: Brightness.dark
           )
         ),
+        textTheme: TextTheme(
+          bodySmall: GoogleFonts.inder(
+            textStyle: const TextStyle(
+              color: fontColour,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              letterSpacing: 1
+            )
+          )
+        )
       ),
       initialRoute: token == null ? 'login' : '/',
       // routes: _routes,

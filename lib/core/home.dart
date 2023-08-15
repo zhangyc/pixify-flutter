@@ -14,7 +14,7 @@ class SonaHome extends StatefulHookConsumerWidget {
 }
 
 class _SonaHomeState extends ConsumerState<SonaHome> {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   late final _pageController = PageController(initialPage: _currentIndex);
 
   @override
@@ -24,7 +24,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: _onPageChange,
-        children: [
+        children: const [
           MatchScreen(),
           PersonaScreen(),
           ChatScreen(),
@@ -33,7 +33,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onPageChange,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Text('match'), label: 'match'),
           BottomNavigationBarItem(icon: Text('persona'), label: 'persona'),
           BottomNavigationBarItem(icon: Text('chat'), label: 'chat')

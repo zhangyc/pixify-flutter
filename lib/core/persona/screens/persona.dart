@@ -3,9 +3,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pinput/pinput.dart';
-import 'package:sona/core/persona/providers/persona.dart';
-import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/providers/user.dart';
+import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/providers/dio.dart';
 import 'package:sona/utils/providers/env.dart';
 import 'package:sona/widgets/button/colored_button.dart';
@@ -73,7 +72,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: _switchEnv, icon: Icon(Icons.settings))
+          IconButton(onPressed: _goSetting, icon: Icon(Icons.settings))
         ],
         elevation: 0,
       ),
@@ -234,6 +233,10 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
     if (sure == true) {
       ref.read(envProvider.notifier).state = 'http://192.168.31.142:8000';
     }
+  }
+
+  void _goSetting() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingScreen()));
   }
 
   Future _removeKnowledge(String content) async {

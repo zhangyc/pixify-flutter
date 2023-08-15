@@ -12,7 +12,7 @@ class ColoredButton extends StatefulWidget {
     this.size = ColoredButtonSize.Big,
     this.color = scaffoldBackgroundColor,
     required this.text,
-    this.fontColor = Colors.black,
+    this.fontColor = fontColour,
     this.disabled = false
   }) : super(key: key);
 
@@ -57,7 +57,7 @@ class _ColoredButtonState extends State<ColoredButton> {
       textAlign: TextAlign.center,
       style: TextStyle(
           color: widget.disabled ? Color(0xFF888888) : widget.fontColor,
-          fontWeight: FontWeight.w900,
+          fontWeight: FontWeight.w500,
           fontSize: _fontSize
       )
   ) : Center(

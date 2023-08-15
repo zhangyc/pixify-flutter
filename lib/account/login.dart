@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pinput/pinput.dart';
+import 'package:sona/account/info_completing_flow.dart';
 import 'package:sona/account/signup.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/providers/dio.dart';
