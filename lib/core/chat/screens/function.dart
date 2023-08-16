@@ -9,6 +9,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/screens/info.dart';
 import 'package:sona/core/chat/widgets/chat_input.dart';
+import 'package:sona/core/persona/widgets/sona_avatar.dart';
+import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/core/providers/user.dart';
 import 'package:sona/widgets/button/colored_button.dart';
 import 'package:sona/widgets/text/gradient_colored_text.dart';
@@ -118,13 +120,14 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     final me = ref.read(userProvider);
     if (message.sender.phone == me.phone) {
       return Container(
-        margin: EdgeInsets.only(left: 50, bottom: 12),
+        margin: EdgeInsets.only(left: 70, bottom: 12, right: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ListTile(
-              title: Text(message.content),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(message.content, style: Theme.of(context).textTheme.bodySmall),
             ),
             SizedBox(height: 12),
             Row(
@@ -168,13 +171,14 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       );
     } else {
       return Container(
-        margin: EdgeInsets.only(right: 50, bottom: 12),
+        margin: EdgeInsets.only(right: 70, bottom: 12, left: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ListTile(
-                title: Text(message.content),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(message.content, style: Theme.of(context).textTheme.bodySmall),
             ),
             SizedBox(height: 12),
             Row(
@@ -437,6 +441,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           topRight: Radius.circular(30),
         )
       ),
+      isScrollControlled: true,
       builder: (_) {
         return SafeArea(
           child: Container(
@@ -446,8 +451,10 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  SonaMessage(content: '\nI\'m the Idea Wizard'),
+                  SizedBox(height: 12),
                   ...sugg_map.entries.map((e) => Container(
-                    margin: EdgeInsets.symmetric(vertical: 5),
+                    margin: EdgeInsets.only(top: 5, left: 64),
                     child: ColoredButton(
                         onTap: () async {
                           Navigator.pop(context);

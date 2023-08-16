@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/screens/function.dart';
 import 'package:sona/core/chat/screens/prompte_template.dart';
+import 'package:sona/core/persona/widgets/sona_avatar.dart';
 
 import '../../../utils/providers/dio.dart';
 import '../../persona/models/user.dart';
@@ -43,9 +44,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         centerTitle: true,
         title: const Text('Chat'),
         elevation: 0,
-        actions: [
-          IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PromptTemplateScreen())), icon: Icon(Icons.temple_buddhist_outlined))
-        ],
+        // actions: [
+        //   IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PromptTemplateScreen())), icon: Icon(Icons.temple_buddhist_outlined))
+        // ],
       ),
       body: ListView.separated(
         itemBuilder: _itemBuilder,
@@ -59,7 +60,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final user = _chats[index];
     return GestureDetector(
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatFunctionScreen(to: user))),
-      child: ListTile(title: Text(user.name), tileColor: Theme.of(context).colorScheme.secondaryContainer)
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16),
+        child: ListTile(
+          leading: SonaAvatar(),
+            title: Text(user.name)
+        )
+      )
     );
   }
 }
