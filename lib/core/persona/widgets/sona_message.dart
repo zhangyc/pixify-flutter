@@ -16,10 +16,11 @@ class _SonaMessageState extends ConsumerState<SonaMessage> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SonaAvatar(),
           const SizedBox(width: 20),
-          Text(widget.content)
+          Flexible(child: Text(widget.content, softWrap: true))
         ],
       ),
     );

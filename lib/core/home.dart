@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/persona/screens/persona.dart';
+import 'package:sona/widgets/text/gradient_colored_text.dart';
 
 import 'match/screens/match.dart';
 
@@ -31,12 +32,76 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         currentIndex: _currentIndex,
         onTap: _onPageChange,
-        items: const [
-          BottomNavigationBarItem(icon: Text('match'), label: 'match'),
-          BottomNavigationBarItem(icon: Text('persona'), label: 'persona'),
-          BottomNavigationBarItem(icon: Text('chat'), label: 'chat')
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border_outlined),
+              activeIcon: Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Theme.of(context).colorScheme.primary)
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(Icons.favorite, color: Theme.of(context).colorScheme.primaryContainer)
+              ),
+              label: ''
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: GradientColoredText(
+                text: 'S',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 24
+                )
+              ),
+            ),
+            activeIcon: Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Theme.of(context).colorScheme.primary)
+              ),
+              alignment: Alignment.center,
+              child: GradientColoredText(
+                  text: 'S',
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 24
+                  )
+              ),
+            ),
+            label: ''
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.chat_bubble_outline),
+              activeIcon: Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Theme.of(context).colorScheme.primary)
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(
+                      Icons.chat_bubble_outlined,
+                      color: Theme.of(context).colorScheme.primaryContainer
+                  )
+              ),
+              label: ''
+          )
         ],
       ),
     );

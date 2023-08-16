@@ -59,7 +59,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final user = _chats[index];
     return GestureDetector(
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatFunctionScreen(to: user))),
-      child: ListTile(title: Text(user.name), tileColor: Colors.amberAccent,)
+      child: ListTile(title: Text(user.name), tileColor: Theme.of(context).colorScheme.secondaryContainer)
     );
   }
 }

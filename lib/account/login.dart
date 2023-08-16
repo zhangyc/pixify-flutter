@@ -171,7 +171,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         } else if (data['code'] == 1001) {
           // 未注册
           if (mounted) {
-            await Navigator.push(context, MaterialPageRoute(builder: (_) => SignupScreen(phone: phone, pin: pin)));
+            await Navigator.push(context, MaterialPageRoute(builder: (_) => InfoCompletingFlow(phone: phone, pin: pin)));
           }
         } else {
           throw Exception(data['msg']);

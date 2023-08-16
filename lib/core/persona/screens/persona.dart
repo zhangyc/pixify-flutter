@@ -3,6 +3,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pinput/pinput.dart';
+import 'package:sona/account/profile.dart';
+import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/core/providers/user.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/providers/dio.dart';
@@ -27,29 +29,8 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
 
   @override
   void initState() {
-    _fetchIntro();
     _fetchKnowledge();
     super.initState();
-  }
-
-  Future _fetchIntro() async {
-    final dio = ref.read(dioProvider);
-    final resp = await dio.get('/persona');
-    final data = resp.data;
-    if (data['code'] == 1 && data['data']['intro'] != null) {
-      if (mounted) {
-        setState(() {
-          _controller.setText(data['data']['intro']);
-        });
-      }
-    }
-    if (data['code'] == 1 && data['data']['character'] != null) {
-      if (mounted) {
-        setState(() {
-          _currentCharacter = data['data']['character'];
-        });
-      }
-    }
   }
 
   Future _fetchKnowledge() async {
@@ -67,8 +48,6 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(userProvider);
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -102,7 +81,12 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ColoredButton(onTap: () => null, text: 'My Profile'),
+                    ColoredButton(
+                        onTap: () => Navigator.push(context, MaterialPageRoute(
+                            builder: (_) => const ProfileScreen()
+                        )),
+                        text: 'My Profile'
+                    ),
                     SizedBox(height: 5),
                     ColoredButton(onTap: () => null, text: 'Sona Status'),
                     SizedBox(height: 5),
@@ -110,107 +94,23 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
                   ],
                 ),
               ),
-              Flex(
-                direction: Axis.horizontal,
-                children: [
-                  ...['Misaki', 'Hannah'].map((name) => Flexible(
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () async {
-                        final dio = ref.read(dioProvider);
-                        final resp = await dio.post('/persona', data: {'character': name});
-                        final data = resp.data;
-                        if (data['code'] == 1) {
-                          if (mounted) {
-                            setState(() {
-                              _currentCharacter = name;
-                            });
-                          }
-                        }
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: _currentCharacter == name ? Colors.black : Colors.black12, width: 2)
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(name),
-                      ),
-                    )
-                  ))
-                ],
-              ),
-              SizedBox(height: 15,),
-              Text("Bio", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
-              TextField(
-                controller: _controller,
-                minLines: 6,
-                maxLines: 6,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                  hintText: '输入介绍，年龄、性别、性取向等',
-                  border: OutlineInputBorder()
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () async {
-                      final dio = ref.read(dioProvider);
-                      EasyLoading.show();
-                      try {
-                        final resp = await dio.post('/persona/intro/generation');
-                        await _fetchIntro();
-                      } catch (e) {
-                        //
-                      } finally {
-                        EasyLoading.dismiss();
-                      }
-                    },
-                    child: Text('知识库总结', style: TextStyle(fontSize: 18),),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      final dio = ref.read(dioProvider);
-                      dio.post('/persona', data: {'intro': _controller.text});
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      Fluttertoast.showToast(msg: '设置成功');
-                    },
-                    child: Text('修改', style: TextStyle(fontSize: 18),),
-                  ),
-                ],
-              ),
-              SizedBox(height: 15,),
-              Text("知识库", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
-              SizedBox(height: 10),
-              GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: _onAddKnowledge,
-                child: Container(
-                  width: double.infinity,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1)
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(Icons.add, size: 24,)
-                ),
-              ),
-              SizedBox(height: 10),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ..._knowledge.map(
-                    (e) => ListTile(title: Text(e), trailing: IconButton(icon: Icon(Icons.close), onPressed: () => _removeKnowledge(e)),)
-                  )
-                ],
-              )
+              SizedBox(height: 24),
+              _sonaChat()
             ],
           ),
         ),
+      ),
+    );
+  }
+  
+  Widget _sonaChat() {
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SonaMessage(content: 'Hey there! I\'m SONA, your social AI agent!\nThe more you share with me, the better I can help you connect with people.'),
+          SonaMessage(content: 'So, Any favorite singers or bands? \nI\'d love to hear which artists get you excited!')
+        ],
       ),
     );
   }
