@@ -14,7 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   hooks_riverpod: ^2.3.6
   flutter_hooks: ^0.18.6
-  firebase_core: ^2.15.0
+#  firebase_core: ^2.15.0
   shared_preferences: ^2.2.0
   dio: ^5.3.0
   intl_phone_field: ^3.2.0
@@ -24,7 +24,7 @@ dependencies:
   fluttertoast: ^8.2.2
   flutter_easyloading: ^3.0.5
   permission_handler: ^10.4.3
-
+  google_fonts:
 dev_dependencies:
   custom_lint: ^0.4.0
   flutter_lints: ^2.0.0

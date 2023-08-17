@@ -2,13 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../app.dart';
+
 class ColoredButton extends StatefulWidget {
   const ColoredButton({
     Key? key,
     required this.onTap,
     this.loadingWhenAsyncAction = false,
     this.size = ColoredButtonSize.Big,
-    this.color = const Color(0xE9DCECFF),
+    this.color = scaffoldBackgroundColor,
     required this.text,
     this.fontColor = Colors.black,
     this.disabled = false
@@ -31,7 +33,7 @@ class _ColoredButtonState extends State<ColoredButton> {
   double get _height => widget.size == ColoredButtonSize.Big ? 44 : 30;
   double get _radius => widget.size == ColoredButtonSize.Big ? 6 : 4;
   double get _fontSize => widget.size == ColoredButtonSize.Big ? 15 : 12;
-  double get _borderWidth => widget.size == ColoredButtonSize.Big ? 3 : 1.5;
+  double get _borderWidth => widget.size == ColoredButtonSize.Big ? 2 : 1;
 
   void Function()? get onTap => !_loading ? () {
     if (widget.disabled || widget.onTap == null) return;
@@ -86,7 +88,7 @@ class _ColoredButtonState extends State<ColoredButton> {
             decoration: BoxDecoration(
                 color: widget.disabled ? Color(0xFF888888) : widget.color,
                 borderRadius: BorderRadius.circular(_radius),
-                border: Border.all(color: Colors.black, width: _borderWidth)
+                border: Border.all(color: Theme.of(context).colorScheme.primaryContainer, width: _borderWidth)
             ),
             padding: padding,
             child: child

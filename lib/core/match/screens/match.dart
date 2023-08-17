@@ -32,58 +32,91 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
         centerTitle: true,
         title: const Text('Match'),
         actions: [
-          IconButton(onPressed: () => null, icon: Icon(Icons.settings))
+          IconButton(onPressed: (){
+
+           }, icon: Icon(Icons.filter_alt))
         ],
         elevation: 0,
       ),
       body: SafeArea(
-        child: AppinioSwiper(
-          controller: _controller,
-          cardsCount: _s.length,
-          onSwipe: (int index, AppinioSwiperDirection direction) {
-            // if (index >= _s.length - 3) {
-            //   _loadMore();
-            // }
-            final user = _s[index - 1];
-            switch (direction) {
-              case AppinioSwiperDirection.left:
-                _leftSwipeHandler(user);
-              case AppinioSwiperDirection.right:
-                _rightSwipeHandler(user);
-              case AppinioSwiperDirection.top || AppinioSwiperDirection.bottom:
-                _verticalSwipeHandler(user);
-              default:
-                _swipeExceptionHandler(index, direction, user);
-            }
-          },
-          onEnd: () {
-            print('onEnd');
-          },
-          cardsBuilder: (BuildContext context,int index){
-            return Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    image: DecorationImage(
-                        image: AssetImage(avatar),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.center
-                    ),
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                clipBehavior: Clip.antiAlias,
-                alignment: Alignment.bottomCenter,
-                // child: TextButton(
-                //     child: Container(
-                //         height: 42,
-                //         width: 78,
-                //         alignment: Alignment.center,
-                //         color: Colors.white,
-                //         child: Text('Hang')
-                //     ),
-                //     onPressed: () {}
-                // )
-            );
-          },
+        child: Column(
+          children: [
+            Expanded(
+              child: AppinioSwiper(
+                controller: _controller,
+                cardsCount: _s.length,
+                onSwipe: (int index, AppinioSwiperDirection direction) {
+                  // if (index >= _s.length - 3) {
+                  //   _loadMore();
+                  // }
+                  final user = _s[index - 1];
+                  switch (direction) {
+                    case AppinioSwiperDirection.left:
+                      _leftSwipeHandler(user);
+                    case AppinioSwiperDirection.right:
+                      _rightSwipeHandler(user);
+                    case AppinioSwiperDirection.top || AppinioSwiperDirection.bottom:
+                      _verticalSwipeHandler(user);
+                    default:
+                      _swipeExceptionHandler(index, direction, user);
+                  }
+                },
+                onEnd: () {
+                  print('onEnd');
+                },
+                cardsBuilder: (BuildContext context,int index){
+                  return Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          image: DecorationImage(
+                              image: AssetImage(avatar),
+                              fit: BoxFit.cover,
+                              alignment: Alignment.center
+                          ),
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      alignment: Alignment.bottomCenter,
+                      // child: TextButton(
+                      //     child: Container(
+                      //         height: 42,
+                      //         width: 78,
+                      //         alignment: Alignment.center,
+                      //         color: Colors.white,
+                      //         child: Text('Hang')
+                      //     ),
+                      //     onPressed: () {}
+                      // )
+                  );
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Lucy'),
+                IconButton(onPressed: (){}, icon: Icon(Icons.more_horiz))
+              ],
+            ),
+            Container(
+              height: 100,
+              child: Text('assaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(onPressed: (){
+
+                 }, icon: Icon(Icons.close,size: 36,)),
+                IconButton(onPressed: (){
+
+                 }, icon: Icon(Icons.monitor_heart_rounded,size: 36,)),
+                IconButton(onPressed: (){
+
+                 }, icon: Icon(Icons.connect_without_contact_outlined,size: 36,)),
+              ],
+            )
+          ],
         ),
       ),
     );

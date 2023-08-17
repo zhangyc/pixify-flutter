@@ -11,6 +11,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'core/home.dart';
 
 
+const primaryColor =  Color(0xFFFF00D4);
+const scaffoldBackgroundColor = Colors.white;
+
 class SonaApp extends HookConsumerWidget {
   const SonaApp({super.key});
 
@@ -33,7 +36,9 @@ class SonaApp extends HookConsumerWidget {
       }),
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white,
+        primaryColor: primaryColor,
+        scaffoldBackgroundColor: scaffoldBackgroundColor,
+        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
           titleTextStyle: TextStyle(
