@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/screens/info.dart';
+import 'package:sona/core/chat/widgets/chat_directive_button.dart';
 import 'package:sona/core/chat/widgets/chat_input.dart';
 import 'package:sona/core/persona/widgets/sona_avatar.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
@@ -31,7 +32,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
 
   Timer? _timer;
   var _messages = <ImMessage>[];
-  _ChatMode _mode = _ChatMode.docker;
+  ChatActionMode _mode = ChatActionMode.docker;
 
   @override
   void initState() {
@@ -81,7 +82,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
           setState(() {
-            _mode = _ChatMode.docker;
+            _mode = ChatActionMode.docker;
           });
         },
         child: Stack(
@@ -103,13 +104,15 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           ],
         ),
       ),
-      floatingActionButton: _mode == _ChatMode.docker ? _bottomTips() : Container(
+      floatingActionButton: _mode == ChatActionMode.docker ? ChatDirectiveButton(
+        onAction: _onAction
+      ) : Container(
         padding: EdgeInsets.only(
           top: 12,
           bottom: MediaQuery.of(context).viewPadding.bottom + 12
         ),
         color: Colors.white,
-        child: ChatInput(onSubmit: _onMessage, actionText: _mode == _ChatMode.manuel ? 'Send' : 'Sona'),
+        child: ChatInput(onSubmit: _onMessage, actionText: _mode == ChatActionMode.manuel ? 'Send' : 'Sona'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -247,74 +250,12 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     );
   }
 
-  Widget _bottomTips() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-              onPressed: () => _getMessageSuggestion(),
-              icon: Text('💡')
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-              onTap: () {
-                setState(() {
-                  _mode = _ChatMode.sona;
-                });
-              },
-              onLongPress: () async {
-                HapticFeedback.mediumImpact();
-                final dio = ref.read(dioProvider);
-                EasyLoading.show();
-                try {
-                  await dio.post('/chat/free', data: {
-                    'receiver_id': widget.to.phone,
-                  });
-                } catch(e) {
-                  //
-                } finally {
-                  EasyLoading.dismiss();
-                }
-              },
-              child: Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Theme.of(context).colorScheme.primaryContainer,
-                      Theme.of(context).colorScheme.secondaryContainer,
-                    ]
-                  ),
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: GradientColoredText(text: 'S', style: TextStyle(fontSize: 28)),
-              )
-          ),
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  _mode = _ChatMode.manuel;
-                });
-              },
-              icon: Text('\u{270D}', style: _blueStyle)
-          ),
-        ],
-      ),
-    );
-  }
-
   void _onMessage({String? text}) async {
     print(text);
     if (text == null || text.trim().isEmpty) {
       FocusManager.instance.primaryFocus?.unfocus();
       setState(() {
-        _mode = _ChatMode.docker;
+        _mode = ChatActionMode.docker;
       });
       return;
     }
@@ -322,7 +263,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     final dio = ref.read(dioProvider);
     final me = ref.read(userProvider);
     EasyLoading.show();
-    if (_mode == _ChatMode.manuel) {
+    if (_mode == ChatActionMode.manuel) {
       final message = ImMessage(conversation: widget.to.phone, sender: me, receiver: widget.to, content: text);
       try {
         final resp = await dio.post('/chat/message', data: message.toJson());
@@ -330,7 +271,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
         if (data['code'] == 1) {
           // 成功
           setState(() {
-            _mode = _ChatMode.docker;
+            _mode = ChatActionMode.docker;
           });
         }
       } catch(e) {
@@ -338,7 +279,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       } finally {
         EasyLoading.dismiss();
       }
-    } else if (_mode == _ChatMode.sona) {
+    } else if (_mode == ChatActionMode.sona) {
       try {
         final resp = await dio.post('/chat/directive', data: {
           'receiver_id': widget.to.phone,
@@ -348,7 +289,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
         if (data['code'] == 1) {
           // 成功
           setState(() {
-            _mode = _ChatMode.docker;
+            _mode = ChatActionMode.docker;
           });
         }
       } catch(e) {
@@ -418,21 +359,40 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     }
   }
 
-  Future _getMessageSuggestion() async {
+  FutureOr _onAction(ChatActionMode mode) {
+    switch(mode) {
+      case ChatActionMode.docker:
+      case ChatActionMode.manuel:
+      case ChatActionMode.sona:
+        setState(() {
+          _mode = mode;
+        });
+        break;
+      case ChatActionMode.suggestion:
+        return _onSuggestion();
+      case ChatActionMode.chat:
+        return _freeChat();
+    }
+  }
+
+  Future _freeChat() async {
     final dio = ref.read(dioProvider);
-    EasyLoading.show();
-    var resp;
     try {
-      resp = await dio.post('/chat/suggestion', data: {
+      await dio.post('/chat/free', data: {
         'receiver_id': widget.to.phone,
       });
     } catch(e) {
       //
-    } finally {
-      EasyLoading.dismiss();
     }
+  }
+
+  Future _onSuggestion() async {
+    final dio = ref.read(dioProvider);
+    var resp = await dio.post('/chat/suggestion', data: {
+      'receiver_id': widget.to.phone,
+    });
     final sugg_map = resp.data['data']['suggestion'] as Map;
-    showModalBottomSheet<bool>(
+    await showModalBottomSheet<bool>(
       context: context,
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
@@ -489,8 +449,10 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
   }
 }
 
-enum _ChatMode {
+enum ChatActionMode {
   docker,
   manuel,
-  sona
+  sona,
+  suggestion,
+  chat
 }
