@@ -8,6 +8,7 @@ import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/providers/navigator_key.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sona/test/test_chat.dart';
 
 import 'core/home.dart';
 
@@ -74,6 +75,7 @@ class SonaApp extends HookConsumerWidget {
       initialRoute: token == null ? 'login' : '/',
       // routes: _routes,
       onGenerateRoute: _onGenerateRoute,
+      // home: TestChat(),
     );
   }
 }

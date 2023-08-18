@@ -26,6 +26,12 @@ dependencies:
   permission_handler: ^10.4.3
   google_fonts: ^5.1.0
   image_picker: ^1.0.2
+  firebase_auth:
+  cloud_firestore:
+  firebase_storage:
+  google_sign_in:
+  extended_image:
+
 
 dev_dependencies:
   custom_lint: ^0.4.0

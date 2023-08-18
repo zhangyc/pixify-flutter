@@ -1,8 +1,10 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/match/models/user_model.dart';
 import 'package:sona/core/persona/models/user.dart';
 import 'package:sona/utils/providers/dio.dart';
 
@@ -16,7 +18,7 @@ class MatchScreen extends StatefulHookConsumerWidget {
 class _MatchScreenState extends ConsumerState<MatchScreen> {
   late AppinioSwiperController _controller;
   final avatar = 'assets/kael.jpeg';
-  var _s = <User>[];
+  var _s = <UserModel>[];
 
   @override
   void initState() {
@@ -45,6 +47,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
               child: AppinioSwiper(
                 controller: _controller,
                 cardsCount: _s.length,
+
                 onSwipe: (int index, AppinioSwiperDirection direction) {
                   // if (index >= _s.length - 3) {
                   //   _loadMore();
@@ -65,57 +68,81 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                   print('onEnd');
                 },
                 cardsBuilder: (BuildContext context,int index){
-                  return Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          image: DecorationImage(
-                              image: AssetImage(avatar),
-                              fit: BoxFit.cover,
-                              alignment: Alignment.center
+                  UserModel user= _s[index];
+                  // List<String> images
+                  return Column(
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              image: DecorationImage(
+                                  image: ExtendedNetworkImageProvider(user.avatar??''),
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment.center
+                              ),
+                              borderRadius: BorderRadius.circular(20)
                           ),
-                          borderRadius: BorderRadius.circular(20)
+                          clipBehavior: Clip.antiAlias,
+                          alignment: Alignment.bottomCenter,
+                          // child: TextButton(
+                          //     child: Container(
+                          //         height: 42,
+                          //         width: 78,
+                          //         alignment: Alignment.center,
+                          //         color: Colors.white,
+                          //         child: Text('Hang')
+                          //     ),
+                          //     onPressed: () {}
+                          // )
                       ),
-                      clipBehavior: Clip.antiAlias,
-                      alignment: Alignment.bottomCenter,
-                      // child: TextButton(
-                      //     child: Container(
-                      //         height: 42,
-                      //         width: 78,
-                      //         alignment: Alignment.center,
-                      //         color: Colors.white,
-                      //         child: Text('Hang')
-                      //     ),
-                      //     onPressed: () {}
-                      // )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('${user.nickname}'),
+                          IconButton(onPressed: (){}, icon: Icon(Icons.more_horiz))
+                        ],
+                      ),
+                      Container(
+                        height: 100,
+                        child: Text('${user.description}'),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Color(0xffF6C6FF),
+                            borderRadius: BorderRadius.circular(60)
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(onPressed: (){
+                              ref.read(dioProvider).post('/user/update-relation',data: {
+                                'userId':user.id,
+                                'relationType':RelationType.ignore.value
+                              });
+                            }, icon: Icon(Icons.close,size: 36,)),
+                            IconButton(onPressed: (){
+                              ref.read(dioProvider).post('/user/update-relation',data: {
+                                'userId':user.id,
+                                'relationType':RelationType.like.value
+                              });
+                            }, icon: Icon(Icons.monitor_heart_rounded,size: 36,)),
+                            IconButton(onPressed: (){
+                              ref.read(dioProvider).post('/user/update-relation',data: {
+                                'userId':user.id,
+                                'relationType':RelationType.arrow.value
+                              });
+                            }, icon: Icon(Icons.connect_without_contact_outlined,size: 36,)),
+                          ],
+                        ),
+
+                      )
+                    ],
                   );
                 },
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Lucy'),
-                IconButton(onPressed: (){}, icon: Icon(Icons.more_horiz))
-              ],
-            ),
-            Container(
-              height: 100,
-              child: Text('assaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(onPressed: (){
 
-                 }, icon: Icon(Icons.close,size: 36,)),
-                IconButton(onPressed: (){
-
-                 }, icon: Icon(Icons.monitor_heart_rounded,size: 36,)),
-                IconButton(onPressed: (){
-
-                 }, icon: Icon(Icons.connect_without_contact_outlined,size: 36,)),
-              ],
-            )
           ],
         ),
       ),
@@ -124,17 +151,17 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
 
   Future _loadMore() async {
     final dio = ref.read(dioProvider);
-    final resp = await dio.post('/match/list');
+    final resp = await dio.post('/user/match');
     final data = resp.data;
     if (data['code'] == 1) {
       final d = data['data'] as List;
-      final users = d.map<User>((e) => User.fromJson(e));
+      final users = d.map<UserModel>((e) => UserModel.fromJson(e));
       _s = [..._s, ...users];
       setState(() {});
     }
   }
 
-  Future _leftSwipeHandler(User user) async {
+  Future _leftSwipeHandler(UserModel user) async {
     final dio = ref.read(dioProvider);
     final resp = await dio.post('/chat', data: user.toJson());
     final data = resp.data;
@@ -175,15 +202,23 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
     // );
   }
 
-  void _rightSwipeHandler(User user) {
+  void _rightSwipeHandler(UserModel user) {
     print('swipe-right');
   }
 
-  void _verticalSwipeHandler(User user) {
+  void _verticalSwipeHandler(UserModel user) {
 
   }
 
-  void _swipeExceptionHandler(int index, AppinioSwiperDirection direction, User user) {
+  void _swipeExceptionHandler(int index, AppinioSwiperDirection direction, UserModel user) {
 
   }
+}
+enum RelationType{
+  ignore(label:'ignore',value:1),
+  like(label:'like',value:2),
+  arrow(label:'arrow',value:3);
+  const RelationType({required this.label,required this.value});
+  final String label;
+  final int value;
 }
