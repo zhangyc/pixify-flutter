@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sona/account/info_completing_flow.dart';
+import 'package:sona/account/services/auth.dart';
 import 'package:sona/account/signup.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/utils/http/interceptors/base.dart';
 import 'package:sona/utils/providers/dio.dart';
 import 'package:sona/utils/providers/firebase.dart';
 
@@ -19,6 +22,8 @@ class LoginScreen extends StatefulHookConsumerWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final PageController _controller = PageController();
   final _phoneController = TextEditingController();
+  var _countryCode;
+  var _phoneNumber;
   final _pinController = TextEditingController();
   final _phoneFocusNode = FocusNode();
   final _pinFocusNode = FocusNode();
@@ -81,8 +86,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ),
                         initialCountryCode: 'CN',
-                        onChanged: (phone) {
-                          print(phone.completeNumber);
+                        onChanged: (PhoneNumber? pn) {
+                          _countryCode = pn?.countryCode;
+                          _phoneNumber = pn?.number;
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
@@ -108,13 +114,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Form(
                   key: _pinKey,
                   child: Pinput(
+                    length: 6,
                     controller: _pinController,
                     focusNode: _pinFocusNode,
                     defaultPinTheme: defaultPinTheme,
                     focusedPinTheme: focusedPinTheme,
                     submittedPinTheme: submittedPinTheme,
+                    androidSmsAutofillMethod:  AndroidSmsAutofillMethod.smsUserConsentApi,
                     validator: (s) {
-                      return s == '2222' ? null : 'Pin is incorrect';
+                      final regex = RegExp(r'^\d{6}$');
+                      return s != null && regex.hasMatch(s) ? null : 'Pin is incorrect';
                     },
                     pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                     showCursor: true,
@@ -143,11 +152,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _next() async {
-    if (_phoneController.value.text.isEmpty) {
-      _phoneKey.currentState!.validate();
-      return;
-    }
     if (_phoneKey.currentState!.validate()) {
+      _phoneKey.currentState!.save();
+
+      await _sendPin();
       await _controller.animateToPage(1,
           duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -156,28 +164,34 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
+  // final _maxRetryTime = 1;
+  // var _currentRetryTime = 0;
+  Future _sendPin() async {
+    final dio = ref.read(dioProvider);
+    try {
+      await sendPin(httpClient: dio, countryCode: _countryCode, phoneNumber: _phoneNumber);
+    } on CustomDioException catch (e) {
+      Fluttertoast.showToast(msg: 'Sending pin message failed');
+      rethrow;
+    }
+  }
+
   Future _complete() async {
     if (_pinKey.currentState!.validate()) {
-      final phone = _phoneController.text;
-      final pin = _pinController.text;
-
+      final pinCode = _pinController.text;
       final dio = ref.read(dioProvider);
+
       try {
-        final resp = await dio.post('/auth/login', data: {'phone': phone, 'pin': pin});
-        final data = resp.data as Map<String, dynamic>;
-        if (data['code'] == 1) {
-          final token = data['data']['token'];
-          ref.read(tokenProvider.notifier).state = token;
-        } else if (data['code'] == 1001) {
-          // 未注册
+        final resp = await login(httpClient: dio, countryCode: _countryCode, phoneNumber: _phoneNumber, pinCode: pinCode);
+        final token = resp.data['token'];
+        ref.read(tokenProvider.notifier).state = token;
+      } on CustomDioException catch (e) {
+        if (e.code == '2') {
           if (mounted) {
-            await Navigator.push(context, MaterialPageRoute(builder: (_) => InfoCompletingFlow(phone: phone, pin: pin)));
+            await Navigator.push(context, MaterialPageRoute(
+                builder: (_) => InfoCompletingFlow()));
           }
-        } else {
-          throw Exception(data['msg']);
         }
-      } on Exception catch (e) {
-        print(e);
         Fluttertoast.showToast(msg: e.toString());
       }
     }
