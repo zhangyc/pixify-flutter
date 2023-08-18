@@ -7,17 +7,19 @@ class UserInfo {
   });
 
   final String? name;
-  final String? gender;
+  final int? gender;
   final String? age;
   final String? avatar;
 
-  static const empty = UserInfo(name: '', gender: '', age: '', avatar: '');
+  bool get completed => _validate();
+
+  static const empty = UserInfo(name: '', gender: 1, age: '', avatar: '');
 
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     return UserInfo(
-        name: json['name'],
+        name: json['nickname'],
         gender: json['gender'],
-        age: json['age'],
+        age: json['birthday'],
         avatar: json['avatar']
     );
   }
@@ -33,7 +35,7 @@ class UserInfo {
 
   UserInfo copyWithProperties({
     String? name,
-    String? gender,
+    int? gender,
     String? age,
     String? avatar
   }) {
@@ -47,10 +49,17 @@ class UserInfo {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'name': name,
+      'nickname': name,
       'gender': gender,
-      'age': age,
+      'birthday': age,
       'avatar': avatar
     };
+  }
+
+  bool _validate() {
+    return name != null
+        && gender != null
+        && age != null
+        && avatar != null;
   }
 }

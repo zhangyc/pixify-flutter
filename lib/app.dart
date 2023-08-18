@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/info_completing_flow.dart';
 import 'package:sona/account/login.dart';
+import 'package:sona/account/providers/info.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/providers/navigator_key.dart';
 import 'package:sona/setting/screens/setting.dart';
@@ -33,7 +35,43 @@ class SonaApp extends HookConsumerWidget {
           onTap: () {
             FocusManager.instance.primaryFocus?.unfocus();
           },
-          child: child,
+          child: Builder(
+            builder: (context) {
+              final asyncMyInfo = ref.watch(myInfoProvider);
+              return Stack(
+                children: [
+                  Positioned.fill(child: child!),
+                  Positioned.fill(child: asyncMyInfo.when(
+                    data: (myInfo) {
+                      if (myInfo.completed) {
+                        return const Opacity(
+                          opacity: 0,
+                        );
+                      } else {
+                        return Container(
+                          color: Colors.white,
+                          child: InfoCompletingFlow()
+                        );
+                      }
+                    },
+                    loading: () => Container(
+                      color: Colors.white54,
+                    ),
+                    error: (err, stack) => GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => ref.watch(myInfoProvider.notifier).refresh(),
+                      child: Container(
+                        color: Colors.white,
+                        child: Center(
+                          child: Text('Load info error\nclick the screen to try again.', textAlign: TextAlign.center),
+                        ),
+                      ),
+                    ),
+                  ))
+                ],
+              );
+            }
+          ),
         );
       }),
       theme: ThemeData(
@@ -51,10 +89,10 @@ class SonaApp extends HookConsumerWidget {
               letterSpacing: 1
             )
           ),
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: fontColour
           ),
-          systemOverlayStyle: SystemUiOverlayStyle(
+          systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarBrightness: Brightness.light,
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.dark

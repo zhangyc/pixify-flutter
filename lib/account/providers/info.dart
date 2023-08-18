@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/services/info.dart';
+import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/providers/dio.dart';
 
 import '../models/user_info.dart';
@@ -19,6 +20,11 @@ class AsyncMyInfoNotifier extends AsyncNotifier<UserInfo> {
     return _fetchInfo();
   }
 
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => _fetchInfo());
+  }
+
   Future<void> setInfo(UserInfo ui) async {
     final stt = state.value ?? UserInfo.empty;
     state = const AsyncValue.loading();
@@ -30,4 +36,7 @@ class AsyncMyInfoNotifier extends AsyncNotifier<UserInfo> {
   }
 }
 
-final infoProvider = AsyncNotifierProvider<AsyncMyInfoNotifier, UserInfo>(() => AsyncMyInfoNotifier());
+final myInfoProvider = AsyncNotifierProvider<AsyncMyInfoNotifier, UserInfo>(
+  () => AsyncMyInfoNotifier(),
+  dependencies: [tokenProvider]
+);

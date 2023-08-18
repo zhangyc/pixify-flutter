@@ -15,7 +15,7 @@ Future<UserInfo> getMyInfo({
   required Dio httpClient,
 }) async {
   final resp = await httpClient.post(
-      '/user/find-my-detail'
+      '/user/find-myself'
   );
   return UserInfo.fromJson(resp.data);
 }
