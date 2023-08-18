@@ -1,0 +1,39 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+
+
+class BaseFormatter extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    if (options.method.toUpperCase() == 'POST') {
+      if (options.data is FormData) {
+        options.headers.addAll({HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType});
+      } else {
+        options.headers.addAll({HttpHeaders.contentTypeHeader: Headers.jsonContentType});
+      }
+    }
+    super.onRequest(options, handler);
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    if (response.data['code'] == '0') {
+      response.data = response.data['data'];
+    } else {
+      throw CustomDioException(requestOptions: response.requestOptions, code: response.data['code']);
+    }
+    super.onResponse(response, handler);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    final customErr = CustomDioException(requestOptions: err.requestOptions, code: err.response?.statusCode.toString());
+    super.onError(customErr, handler);
+  }
+}
+
+class CustomDioException extends DioException {
+  CustomDioException({required super.requestOptions, this.code});
+  final String? code;
+}

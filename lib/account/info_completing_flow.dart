@@ -2,20 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sona/account/models/user_info.dart';
+import 'package:sona/account/services/info.dart';
 
 import '../core/persona/widgets/sona_message.dart';
 import '../core/providers/token.dart';
 import '../utils/providers/dio.dart';
 
 class InfoCompletingFlow extends ConsumerStatefulWidget {
-  const InfoCompletingFlow({
-    super.key,
-    required this.phone,
-    required this.pin
-  });
-
-  final String phone;
-  final String pin;
+  const InfoCompletingFlow({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _InfoCompletingFlowState();
@@ -298,15 +293,9 @@ class _InfoCompletingFlowState extends ConsumerState<InfoCompletingFlow> {
                     onPressed: () async {
                       final name = _nameController.text;
                       final dio = ref.read(dioProvider);
+                      final info = UserInfo(name: name, gender: int.tryParse(_genderController.text), age: _ageController.text, avatar: 'avatar');
                       try {
-                        final resp = await dio.post('/auth/signup', data: {'phone': widget.phone, 'pin': widget.pin, 'name': name});
-                        final data = resp.data as Map<String, dynamic>;
-                        if (data['code'] == 1) {
-                          final token = data['data']['token'];
-                          ref.read(tokenProvider.notifier).state = token;
-                        } else {
-                          throw Exception(data['msg']);
-                        }
+                        await updateMyInfo(httpClient: dio, info: info);
                       } on Exception catch (e) {
                         Fluttertoast.showToast(msg: e.toString());
                       }

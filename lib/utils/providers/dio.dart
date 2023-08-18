@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/providers/env.dart';
+
+import '../http/interceptors/base.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final token = ref.watch(tokenProvider);
@@ -12,11 +17,15 @@ final dioProvider = Provider<Dio>((ref) {
     sendTimeout: const Duration(milliseconds: 25000),
     baseUrl: baseUrl,
     headers: {
-      'app': 'sona',
+      'device': Platform.operatingSystem,
+      'version': 'v1.0.0',
       'token': token
     }
   );
   final dio = Dio(options);
-  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+  if (kDebugMode) {
+    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+  }
+  dio.interceptors.add(BaseFormatter());
   return dio;
 });
