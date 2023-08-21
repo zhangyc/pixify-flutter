@@ -1,10 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/models/user_info.dart';
+import 'package:sona/account/providers/info.dart';
+import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/persona/providers/persona.dart';
 import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/picker/gender.dart';
 
 import '../utils/providers/dio.dart';
 
@@ -16,8 +21,17 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+
+  late MyInfo _profile;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _profile = ref.watch(myInfoProvider).value!;
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -41,7 +55,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               crossAxisCount: 3,
               mainAxisSpacing: 5,
               crossAxisSpacing: 5,
-              childAspectRatio: 0.6
+              childAspectRatio: 600 / 848
             )
           ),
           SliverToBoxAdapter(
@@ -74,22 +88,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             )
           ),
           SliverToBoxAdapter(
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: _showGenderEditor,
-              child: Container(
-                height: 56,
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                alignment: Alignment.center,
-                child: Row(
-                  children: [
-                    Text('性别'),
-                    Expanded(child: Container()),
-                    Text('男'),
-                    SizedBox(width: 8),
-                    Icon(CupertinoIcons.forward)
-                  ],
-                ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: ForwardButton(
+                onTap: _showGenderEditor,
+                text: '性别 ${_profile.gender!.name}',
               ),
             ),
           )
@@ -99,6 +102,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Widget _photoBuilder(BuildContext context, int index) {
+    Widget child;
+    if (index >= _profile.photos.length) {
+      child = GestureDetector(
+        onTap: () {
+          // _onAddPhoto();
+        },
+        child: Icon(Icons.add, size: 36)
+      );
+    } else {
+      final photo = _profile.photos[index];
+      child = CachedNetworkImage(imageUrl: photo);
+    }
     return Container(
       height: 108,
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -107,7 +122,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           borderRadius: BorderRadius.circular(12)
       ),
       alignment: Alignment.center,
-      child: Icon(Icons.add, size: 36,),
+      child: child,
     );
   }
 
@@ -146,30 +161,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Future _showGenderEditor() async {
-    final dio = ref.read(dioProvider);
-
-    var gender = 1;
-    final resp = await dio.get('/persona');
-    final data = resp.data;
-    if (data['code'] == 1 && data['data']['intro'] != null) {
-      gender = data['data']['gender'] ?? 0;
-    }
-    
-    final g = await showRadioFieldDialog<int>(
-      context: context,
-      options: [0, 1],
-      labels: ['女', '男'],
-      initialValue: gender
-    );
-
-    if (g != null && g != gender) {
-      final dio = ref.read(dioProvider);
-      final resp = await dio.post('/persona', data: {'gender': g});
-      if (resp.data['code'] == 1) {
-        Fluttertoast.showToast(msg: '设置成功');
-      } else {
-        Fluttertoast.showToast(msg: 'Failed');
-      }
+    var gender = await showGenderPicker(context: context);
+    if (gender != null && gender != _profile.gender) {
+      ref.read(myInfoProvider.notifier).updateInfo(gender: gender);
     }
   }
 }

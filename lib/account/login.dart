@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:pinput/pinput.dart';
-import 'package:sona/account/info_completing_flow.dart';
+import 'package:sona/account/required_info_form.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/account/signup.dart';
 import 'package:sona/core/providers/token.dart';
@@ -189,7 +189,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         if (e.code == '2') {
           if (mounted) {
             await Navigator.push(context, MaterialPageRoute(
-                builder: (_) => InfoCompletingFlow()));
+                builder: (_) => RequiredInfoFormScreen()));
           }
         }
         Fluttertoast.showToast(msg: e.toString());

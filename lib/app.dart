@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/info_completing_flow.dart';
+import 'package:sona/account/required_info_form.dart';
 import 'package:sona/account/login.dart';
 import 'package:sona/account/providers/info.dart';
 import 'package:sona/core/providers/token.dart';
@@ -49,14 +49,30 @@ class SonaApp extends HookConsumerWidget {
                           opacity: 0,
                         );
                       } else {
-                        return Container(
-                          color: Colors.white,
-                          child: InfoCompletingFlow()
+                        final pages = [
+                          const MaterialPage(
+                              child: RequiredInfoFormScreen()
+                          )
+                        ];
+                        return HeroControllerScope.none(
+                          child: Navigator(
+                            pages: pages,
+                            onPopPage: (Route<dynamic> route, dynamic result) {
+                              pages.remove(route.settings);
+                              return route.didPop(result);
+                            },
+                          )
                         );
                       }
                     },
                     loading: () => Container(
                       color: Colors.white54,
+                      alignment: Alignment.center,
+                      child: const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator()
+                      ),
                     ),
                     error: (err, stack) => token == null ? const Opacity(opacity: 0) : GestureDetector(
                       behavior: HitTestBehavior.translucent,
@@ -64,9 +80,9 @@ class SonaApp extends HookConsumerWidget {
                       child: Container(
                         color: Colors.white,
                         alignment: Alignment.center,
-                        child: Text(
-                            'Load info error\nclick the screen to try again.',
-                            textAlign: TextAlign.center,
+                        child: const Text(
+                          'Load info error\nclick the screen to try again.',
+                          textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 16, decoration: TextDecoration.none)
                         ),
                       ),

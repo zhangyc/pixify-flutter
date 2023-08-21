@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../widgets/button/colored_button.dart';
+import '../../common/widgets/button/colored.dart';
 
 Future<bool?> showInfo({
   required BuildContext context,
@@ -387,7 +387,7 @@ Future<String?> showTextFieldDialog({
 
 Future<T?> showRadioFieldDialog<T>({
   required BuildContext context,
-  required T initialValue,
+  T? initialValue,
   required List<T> options,
   required List<String> labels,
   String? title,
@@ -403,7 +403,6 @@ Future<T?> showRadioFieldDialog<T>({
         )
     ),
     builder: (BuildContext context) {
-      var _value = initialValue;
       return Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: Column(
@@ -442,15 +441,16 @@ Future<T?> showRadioFieldDialog<T>({
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         ...options.asMap().keys.map(
-                            (index) => Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              child: ColoredButton(
-                                onTap: () {
-                                  Navigator.pop(context, options[index]);
-                                },
-                                text: labels[index]
-                              ),
-                            )
+                          (index) => Container(
+                            margin: EdgeInsets.symmetric(vertical: 5),
+                            child: ColoredButton(
+                              onTap: () {
+                                Navigator.pop(context, options[index]);
+                              },
+                              color: initialValue == options[index] ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.background,
+                              text: labels[index]
+                            ),
+                          )
                         )
                       ],
                     ),

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sona/core/chat/screens/function.dart';
 
-import '../../../widgets/text/gradient_colored_text.dart';
+import '../../../common/widgets/text/gradient_colored_text.dart';
 
 class ChatDirectiveButton extends StatefulWidget {
   const ChatDirectiveButton({

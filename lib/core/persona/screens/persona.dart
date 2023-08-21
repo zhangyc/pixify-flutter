@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pinput/pinput.dart';
 import 'package:sona/account/profile.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
-import 'package:sona/core/providers/user.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/providers/dio.dart';
-import 'package:sona/utils/providers/env.dart';
-import 'package:sona/widgets/button/colored_button.dart';
-import 'package:sona/widgets/text/gradient_colored_text.dart';
+import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 
 import '../../../utils/dialog/input.dart';
 

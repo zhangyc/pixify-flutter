@@ -13,8 +13,8 @@ import 'package:sona/core/chat/widgets/chat_input.dart';
 import 'package:sona/core/persona/widgets/sona_avatar.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/core/providers/user.dart';
-import 'package:sona/widgets/button/colored_button.dart';
-import 'package:sona/widgets/text/gradient_colored_text.dart';
+import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 
 import '../../../utils/dialog/input.dart';
 import '../../../utils/providers/dio.dart';

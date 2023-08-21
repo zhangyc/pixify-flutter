@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/widgets/text/gradient_colored_text.dart';
+import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 
 class SonaAvatar extends ConsumerStatefulWidget {
   const SonaAvatar({super.key});

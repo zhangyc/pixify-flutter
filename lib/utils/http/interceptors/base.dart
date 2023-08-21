@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/providers/token.dart';
 
 
-class BaseFormatter extends Interceptor {
-  BaseFormatter({required this.ref});
+class BaseInterceptor extends Interceptor {
+  BaseInterceptor({required this.ref});
   final Ref ref;
 
   @override

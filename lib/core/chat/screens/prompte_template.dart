@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/utils/providers/dio.dart';
-import 'package:sona/widgets/button/colored_button.dart';
+import 'package:sona/common/widgets/button/colored.dart';
 
 import '../../../utils/dialog/input.dart';
 
