@@ -293,7 +293,7 @@ class _InfoCompletingFlowState extends ConsumerState<InfoCompletingFlow> {
                     onPressed: () async {
                       final name = _nameController.text;
                       final dio = ref.read(dioProvider);
-                      final info = MyInfo(name: name, gender: int.tryParse(_genderController.text), age: _ageController.text, avatar: 'avatar');
+                      final info = MyInfo(name: name, gender: int.tryParse(_genderController.text), age: _ageController.text, avatar: 'avatar', id: 0);
                       try {
                         await updateMyInfo(httpClient: dio, info: info);
                       } on Exception catch (e) {

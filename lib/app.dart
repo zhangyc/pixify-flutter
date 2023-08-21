@@ -58,7 +58,7 @@ class SonaApp extends HookConsumerWidget {
                     loading: () => Container(
                       color: Colors.white54,
                     ),
-                    error: (err, stack) => GestureDetector(
+                    error: (err, stack) => token == null ? const Opacity(opacity: 0) : GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => ref.watch(myInfoProvider.notifier).refresh(),
                       child: Container(

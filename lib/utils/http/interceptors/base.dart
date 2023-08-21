@@ -1,9 +1,14 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/providers/token.dart';
 
 
 class BaseFormatter extends Interceptor {
+  BaseFormatter({required this.ref});
+  final Ref ref;
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (options.method.toUpperCase() == 'POST') {
@@ -20,6 +25,8 @@ class BaseFormatter extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (response.data['code'] == '0') {
       response.data = response.data['data'];
+    } else if (response.data['code'] == '10040') {
+      ref.read(tokenProvider.notifier).state = null;
     } else {
       throw CustomDioException(requestOptions: response.requestOptions, code: response.data['code']);
     }
