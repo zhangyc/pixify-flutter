@@ -3,7 +3,7 @@ import 'package:sona/account/models/user_info.dart';
 
 Future<Response> updateMyInfo({
   required Dio httpClient,
-  required UserInfo info
+  required MyInfo info
 }) async {
   return httpClient.post(
       '/user/update',
@@ -11,11 +11,11 @@ Future<Response> updateMyInfo({
   );
 }
 
-Future<UserInfo> getMyInfo({
+Future<MyInfo> getMyInfo({
   required Dio httpClient,
 }) async {
   final resp = await httpClient.post(
       '/user/find-myself'
   );
-  return UserInfo.fromJson(resp.data);
+  return MyInfo.fromJson(resp.data);
 }

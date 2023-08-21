@@ -8,9 +8,9 @@ import '../models/user_info.dart';
 
 
 @immutable
-class AsyncMyInfoNotifier extends AsyncNotifier<UserInfo> {
+class AsyncMyInfoNotifier extends AsyncNotifier<MyInfo> {
 
-  Future<UserInfo> _fetchInfo() {
+  Future<MyInfo> _fetchInfo() {
     final dio = ref.read(dioProvider);
     return getMyInfo(httpClient: dio);
   }
@@ -25,8 +25,8 @@ class AsyncMyInfoNotifier extends AsyncNotifier<UserInfo> {
     state = await AsyncValue.guard(() => _fetchInfo());
   }
 
-  Future<void> setInfo(UserInfo ui) async {
-    final stt = state.value ?? UserInfo.empty;
+  Future<void> setInfo(MyInfo ui) async {
+    final stt = state.value ?? MyInfo.empty;
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final dio = ref.watch(dioProvider);
@@ -36,7 +36,7 @@ class AsyncMyInfoNotifier extends AsyncNotifier<UserInfo> {
   }
 }
 
-final myInfoProvider = AsyncNotifierProvider<AsyncMyInfoNotifier, UserInfo>(
+final myInfoProvider = AsyncNotifierProvider<AsyncMyInfoNotifier, MyInfo>(
   () => AsyncMyInfoNotifier(),
   dependencies: [tokenProvider]
 );

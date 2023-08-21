@@ -1,5 +1,5 @@
-class UserInfo {
-  const UserInfo({
+class MyInfo {
+  const MyInfo({
     required this.name,
     required this.gender,
     required this.age,
@@ -13,10 +13,10 @@ class UserInfo {
 
   bool get completed => _validate();
 
-  static const empty = UserInfo(name: '', gender: 1, age: '', avatar: '');
+  static const empty = MyInfo(name: '', gender: 1, age: '', avatar: '');
 
-  factory UserInfo.fromJson(Map<String, dynamic> json) {
-    return UserInfo(
+  factory MyInfo.fromJson(Map<String, dynamic> json) {
+    return MyInfo(
         name: json['nickname'],
         gender: json['gender'],
         age: json['birthday'],
@@ -24,8 +24,8 @@ class UserInfo {
     );
   }
 
-  UserInfo copyWith(UserInfo info) {
-    return UserInfo(
+  MyInfo copyWith(MyInfo info) {
+    return MyInfo(
         name: info.name ?? name,
         gender: info.gender ?? gender,
         age: info.age ?? age,
@@ -33,13 +33,13 @@ class UserInfo {
     );
   }
 
-  UserInfo copyWithProperties({
+  MyInfo copyWithProperties({
     String? name,
     int? gender,
     String? age,
     String? avatar
   }) {
-    return UserInfo(
+    return MyInfo(
       name: name ?? this.name,
       gender: gender ?? this.gender,
       age: age ?? this.age,
