@@ -26,7 +26,7 @@ class UserModel {
     description = json['description'];
     id = json['id'];
     avatar = json['avatar'];
-    images = json['images'].cast<String>();
+    images = json['images'];
   }
 
   Map<String, dynamic> toJson() {

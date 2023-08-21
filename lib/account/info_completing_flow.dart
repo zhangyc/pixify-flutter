@@ -8,6 +8,7 @@ import 'package:sona/account/services/info.dart';
 import '../core/persona/widgets/sona_message.dart';
 import '../core/providers/token.dart';
 import '../utils/providers/dio.dart';
+import 'providers/info.dart';
 
 class InfoCompletingFlow extends ConsumerStatefulWidget {
   const InfoCompletingFlow({super.key});
@@ -296,6 +297,7 @@ class _InfoCompletingFlowState extends ConsumerState<InfoCompletingFlow> {
                       final info = MyInfo(name: name, gender: int.tryParse(_genderController.text), age: _ageController.text, avatar: 'avatar', id: 0);
                       try {
                         await updateMyInfo(httpClient: dio, info: info);
+                        ref.read(myInfoProvider.notifier).refresh();
                       } on Exception catch (e) {
                         Fluttertoast.showToast(msg: e.toString());
                       }
