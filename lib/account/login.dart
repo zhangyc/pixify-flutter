@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:pinput/pinput.dart';
+import 'package:sona/account/providers/info.dart';
 import 'package:sona/account/required_info_form.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/account/signup.dart';
@@ -178,13 +179,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future _complete() async {
     if (_pinKey.currentState!.validate()) {
-      final pinCode = _pinController.text;
-      final dio = ref.read(dioProvider);
-
       try {
-        final resp = await login(httpClient: dio, countryCode: _countryCode, phoneNumber: _phoneNumber, pinCode: pinCode);
+        final resp = await login(
+            httpClient: ref.read(dioProvider),
+            countryCode: _countryCode,
+            phoneNumber: _phoneNumber,
+            pinCode: _pinController.text
+        );
         final token = resp.data['token'];
         ref.read(tokenProvider.notifier).state = token;
+        ref.read(myInfoProvider.notifier).refresh();
       } on CustomDioException catch (e) {
         if (e.code == '2') {
           if (mounted) {
