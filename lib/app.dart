@@ -63,8 +63,11 @@ class SonaApp extends HookConsumerWidget {
                       onTap: () => ref.watch(myInfoProvider.notifier).refresh(),
                       child: Container(
                         color: Colors.white,
-                        child: Center(
-                          child: Text('Load info error\nclick the screen to try again.', textAlign: TextAlign.center),
+                        alignment: Alignment.center,
+                        child: Text(
+                            'Load info error\nclick the screen to try again.',
+                            textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16, decoration: TextDecoration.none)
                         ),
                       ),
                     ),
