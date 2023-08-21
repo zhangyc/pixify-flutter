@@ -1,5 +1,5 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
-import 'package:extended_image/extended_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -76,7 +76,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                           decoration: BoxDecoration(
                               color: Colors.white,
                               image: DecorationImage(
-                                  image: ExtendedNetworkImageProvider(user.avatar??''),
+                                  image: CachedNetworkImageProvider(user.avatar??''),
                                   fit: BoxFit.cover,
                                   alignment: Alignment.center
                               ),
