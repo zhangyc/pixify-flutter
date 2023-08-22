@@ -16,7 +16,7 @@ class PersonaScreen extends StatefulHookConsumerWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _PersonaScreenState();
 }
 
-class _PersonaScreenState extends ConsumerState<PersonaScreen> {
+class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKeepAliveClientMixin {
 
   var _controller = TextEditingController();
   String? _currentCharacter;
@@ -29,20 +29,21 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
   }
 
   Future _fetchKnowledge() async {
-    final dio = ref.read(dioProvider);
-    final resp = await dio.get('/knowledge');
-    final data = resp.data;
-    if (data['code'] == 1) {
-      if (mounted) {
-        setState(() {
-          _knowledge = List<String>.from(data['data']);
-        });
-      }
-    }
+    // final dio = ref.read(dioProvider);
+    // final resp = await dio.get('/knowledge');
+    // final data = resp.data;
+    // if (data['code'] == 1) {
+    //   if (mounted) {
+    //     setState(() {
+    //       _knowledge = List<String>.from(data['data']);
+    //     });
+    //   }
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -132,4 +133,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> {
       _fetchKnowledge();
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -14,7 +14,7 @@ class ChatScreen extends StatefulHookConsumerWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends ConsumerState<ChatScreen> {
+class _ChatScreenState extends ConsumerState<ChatScreen> with AutomaticKeepAliveClientMixin {
 
   var _chats = <User>[];
 
@@ -38,6 +38,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -69,4 +70,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       )
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
