@@ -147,6 +147,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
           alignment: Alignment.center
         ),
       ),
+      clipBehavior: Clip.antiAlias,
       alignment: Alignment.bottomCenter,
       child: Container(
         height: 128,

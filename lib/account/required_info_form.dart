@@ -350,6 +350,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                           gender: _gender,
                           birthday: _birthday,
                           interests: _interested,
+                          avatar: _avatar
                         );
                         ref.read(myInfoProvider.notifier).refresh();
                       } on Exception catch (e) {
@@ -447,7 +448,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                   aspectRatio: 600 / 848,
                   controller: _cropController,
                   onCropped: (croppedData) async {
-                    _avatar = await addPhoto(httpClient: ref.read(dioProvider), bytes: croppedData, filename: file.name);
+                    _avatar = await uploadFile(httpClient: ref.read(dioProvider), bytes: croppedData, filename: file.name);
                     if (!mounted) return;
                     Navigator.pop(context);
                     if (mounted) setState(() {});
