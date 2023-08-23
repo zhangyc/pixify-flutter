@@ -1,5 +1,6 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
@@ -49,10 +50,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
               child: Stack(
                 children: [
                   Positioned.fill(
-                    bottom: 60,
+                    bottom: 72,
                     child: AppinioSwiper(
-                        controller: _controller,
-                        cardsCount: users.length,
+                      controller: _controller,
+                      cardsBuilder: _cardBuilder,
+                      cardsCount: users.length,
                         onSwipe: (int index, AppinioSwiperDirection direction) {
                           _current_user = users[index];
                           switch (direction) {
@@ -72,7 +74,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
                         onEnd: () {
                           print('onEnd');
                         },
-                        cardsBuilder: _cardBuilder
                     ),
                   ),
                   Positioned(
@@ -139,20 +140,31 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
     final user = ref.read(matchedProvider).value![index];
 
     return Container(
+      key: ValueKey(user.id),
       decoration: BoxDecoration(
         color: Colors.white,
         image: DecorationImage(
           image: CachedNetworkImageProvider(user.photos.firstOrNull ?? ''),
           fit: BoxFit.cover,
-          alignment: Alignment.center
+          alignment: Alignment.center,
+          isAntiAlias: true
         ),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: CupertinoColors.systemGrey.withOpacity(0.2),
+            spreadRadius: 3,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          )
+        ],
       ),
       clipBehavior: Clip.antiAlias,
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 128,
-        padding: EdgeInsets.all(16),
+        height: 148,
         color: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -164,7 +176,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
                 IconButton(onPressed: () => _showActions(user), icon: Icon(Icons.more_horiz_outlined))
               ],
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 4),
             Text(user.bio ?? '', textAlign: TextAlign.start, maxLines: 3, overflow: TextOverflow.ellipsis),
           ],
         ),
