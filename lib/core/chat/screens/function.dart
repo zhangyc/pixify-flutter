@@ -5,24 +5,24 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:sona/account/providers/info.dart';
 import 'package:sona/core/chat/models/message.dart';
+import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/info.dart';
+import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/chat_directive_button.dart';
 import 'package:sona/core/chat/widgets/chat_input.dart';
-import 'package:sona/core/persona/widgets/sona_avatar.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
-import 'package:sona/core/providers/user.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 
+import '../../../common/models/user.dart';
 import '../../../utils/dialog/input.dart';
 import '../../../utils/providers/dio.dart';
-import '../../persona/models/user.dart';
 
 class ChatFunctionScreen extends StatefulHookConsumerWidget {
-  const ChatFunctionScreen({super.key, required this.to});
-  final User to;
+  const ChatFunctionScreen({super.key, required this.otherSide});
+  final UserInfo otherSide;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatFunctionScreenState();
@@ -31,14 +31,14 @@ class ChatFunctionScreen extends StatefulHookConsumerWidget {
 class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
 
   Timer? _timer;
-  var _messages = <ImMessage>[];
   ChatActionMode _mode = ChatActionMode.docker;
 
   @override
   void initState() {
-    _fetchList();
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      _fetchList();
+      if (mounted) {
+        ref.read(asyncMessagesProvider(widget.otherSide.id).notifier).refresh();
+      }
     });
     super.initState();
   }
@@ -49,31 +49,13 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     super.dispose();
   }
 
-  Future _fetchList() async {
-    final dio = ref.read(dioProvider);
-    final resp = await dio.get('/chat/message/${widget.to.phone}');
-    final data = resp.data;
-    if (data['code'] == 1) {
-      final list = data['data']['list'] as List;
-      if (list.length == _messages.length) return;
-
-      if (mounted) {
-        setState(() {
-          _messages = list.map((e) => ImMessage.fromJson(e)).toList(growable: false);
-        });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(widget.to.name),
-        elevation: 0,
+        title: Text(widget.otherSide.name!),
         actions: [
-          IconButton(onPressed: _onClearHistory, icon: Icon(Icons.cleaning_services_outlined)),
+          // IconButton(onPressed: _onClearHistory, icon: Icon(Icons.cleaning_services_outlined)),
           IconButton(onPressed: _showInfo, icon: Icon(Icons.info_outline))
         ],
       ),
@@ -89,17 +71,31 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           children: [
             Positioned.fill(
               bottom: 100,
-              child: _messages.isNotEmpty ? Container(
-                alignment: Alignment.topCenter,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(horizontal: 2),
-                  reverse: true,
-                  itemBuilder: _itemBuilder,
-                  itemCount: _messages.length,
-                  separatorBuilder: (_, __) => SizedBox(height: 5),
-                ),
-              ) : _tips()
+              child: ref.watch(asyncMessagesProvider(widget.otherSide.id)).when(
+                data: (messages) => messages.isNotEmpty ? Container(
+                  alignment: Alignment.topCenter,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(horizontal: 2),
+                    reverse: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      final msg = messages[index];
+                      return _itemBuilder(msg);
+                    },
+                    itemCount: messages.length,
+                    separatorBuilder: (_, __) => SizedBox(height: 5),
+                  ),
+                ) : _tips(),
+                error: (_, __) => Container(),
+                loading: () => Container(
+                  alignment: Alignment.center,
+                  child: const SizedBox(
+                    height: 32,
+                    width: 32,
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              )
             ),
           ],
         ),
@@ -118,10 +114,9 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     );
   }
 
-  Widget _itemBuilder(BuildContext context, int index) {
-    final message = _messages[index];
-    final me = ref.read(userProvider);
-    if (message.sender.phone == me.phone) {
+  Widget _itemBuilder(ImMessage msg) {
+    final me = ref.read(myInfoProvider);
+    if (msg.sender.id == me.value!.id) {
       return Container(
         margin: EdgeInsets.only(left: 70, bottom: 12, right: 16),
         child: Column(
@@ -130,14 +125,14 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           children: [
             Align(
               alignment: Alignment.centerRight,
-              child: Text(message.content, style: Theme.of(context).textTheme.bodySmall),
+              child: Text(msg.content, style: Theme.of(context).textTheme.bodySmall),
             ),
             SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 GestureDetector(
-                  onTap: () => _onEditMessage(message),
+                  onTap: () => _onEditMessage(msg),
                   child: Container(
                     height: 28,
                     width: 28,
@@ -150,9 +145,9 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                   ),
                 ),
                 Visibility(
-                  visible: !message.knowledgeAdded,
+                  visible: !msg.knowledgeAdded,
                   child: GestureDetector(
-                    onTap: () => _onAddKnowledge(message),
+                    onTap: () => _onAddKnowledge(msg),
                     child: Container(
                       height: 28,
                       width: 28,
@@ -181,7 +176,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(message.content, style: Theme.of(context).textTheme.bodySmall),
+              child: Text(msg.content, style: Theme.of(context).textTheme.bodySmall),
             ),
             SizedBox(height: 12),
             Row(
@@ -226,22 +221,22 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           Text('您希望怎样开始对话呢？', style: TextStyle(fontSize: 16)),
           SizedBox(height: 10),
           GestureDetector(
-            onTap: () => _getSuggestion('有趣的开场白'),
+            onTap: () => _startUpLine('有趣的开场白'),
             child: Text('有趣的开场白', style: _blueStyle)
           ),
           SizedBox(height: 10),
           GestureDetector(
-              onTap: () => _getSuggestion('询问我关心的问题'),
+              onTap: () => _startUpLine('询问我关心的问题'),
               child: Text('我关心的问题', style: _blueStyle)
           ),
           SizedBox(height: 10),
           GestureDetector(
-              onTap: () => _getSuggestion('尝试投其所好'),
+              onTap: () => _startUpLine('尝试投其所好'),
               child: Text('尝试投其所好', style: _blueStyle)
           ),
           SizedBox(height: 10),
           GestureDetector(
-              onTap: () => _getSuggestion('自由发挥'),
+              onTap: () => _startUpLine('自由发挥'),
               child: Text('自由发挥', style: _blueStyle)
           ),
           SizedBox(height: 5),
@@ -260,20 +255,17 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       return;
     }
 
-    final dio = ref.read(dioProvider);
-    final me = ref.read(userProvider);
     EasyLoading.show();
     if (_mode == ChatActionMode.manuel) {
-      final message = ImMessage(conversation: widget.to.phone, sender: me, receiver: widget.to, content: text);
       try {
-        final resp = await dio.post('/chat/message', data: message.toJson());
-        final data = resp.data;
-        if (data['code'] == 1) {
-          // 成功
-          setState(() {
-            _mode = ChatActionMode.docker;
-          });
-        }
+        await sendMessage(
+            httpClient: ref.read(dioProvider),
+            userId: widget.otherSide.id,
+            content: text,
+        );
+        setState(() {
+          _mode = ChatActionMode.docker;
+        });
       } catch(e) {
         //
       } finally {
@@ -281,17 +273,15 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       }
     } else if (_mode == ChatActionMode.sona) {
       try {
-        final resp = await dio.post('/chat/directive', data: {
-          'receiver_id': widget.to.phone,
-          'purpose': text
+        await callSona(
+            httpClient: ref.read(dioProvider),
+            userId: widget.otherSide.id,
+            input: text,
+            type: CallSonaType.INPUT
+        );
+        setState(() {
+          _mode = ChatActionMode.docker;
         });
-        final data = resp.data;
-        if (data['code'] == 1) {
-          // 成功
-          setState(() {
-            _mode = ChatActionMode.docker;
-          });
-        }
       } catch(e) {
         //
       } finally {
@@ -302,61 +292,8 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     }
   }
 
-  Future _sendMessage(String content) async {
-    EasyLoading.show();
-    try {
-      final dio = ref.read(dioProvider);
-      final me = ref.read(userProvider);
-      final message = ImMessage(conversation: widget.to.phone, sender: me, receiver: widget.to, content: content);
-      try {
-        final resp = await dio.post('/chat/message', data: message.toJson());
-      } catch(e) {
-        //
-      } finally {
-        EasyLoading.dismiss();
-      }
-    } catch(e) {
-      //
-    } finally {
-      EasyLoading.dismiss();
-    }
-  }
-
   void _showInfo() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatInfoScreen(user: widget.to)));
-  }
-
-  void _onClearHistory() async {
-    final sure = await showConfirm(
-      context: context,
-      content: '清空历史消息'
-    );
-    if (sure == true) {
-      final dio = ref.read(dioProvider);
-      EasyLoading.show();
-      try {
-        await dio.delete('/chat/${widget.to.phone}/message');
-      } catch(e) {
-        //
-      } finally {
-        EasyLoading.dismiss();
-      }
-    }
-  }
-
-  Future _getSuggestion(String purpose) async {
-    final dio = ref.read(dioProvider);
-    EasyLoading.show();
-    try {
-      await dio.post('/chat/free', data: {
-        'receiver_id': widget.to.phone,
-        'purpose': purpose
-      });
-    } catch(e) {
-      //
-    } finally {
-      EasyLoading.dismiss();
-    }
+    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatInfoScreen(user: widget.otherSide)));
   }
 
   FutureOr _onAction(ChatActionMode mode) {
@@ -375,23 +312,29 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     }
   }
 
+  Future _startUpLine(String input) async {
+    callSona(
+        httpClient: ref.read(dioProvider),
+        userId: widget.otherSide.id,
+        type: CallSonaType.PROLOGUE
+    );
+  }
+
   Future _freeChat() async {
-    final dio = ref.read(dioProvider);
-    try {
-      await dio.post('/chat/free', data: {
-        'receiver_id': widget.to.phone,
-      });
-    } catch(e) {
-      //
-    }
+    callSona(
+        httpClient: ref.read(dioProvider),
+        userId: widget.otherSide.id,
+        type: CallSonaType.AUTO
+    );
   }
 
   Future _onSuggestion() async {
-    final dio = ref.read(dioProvider);
-    var resp = await dio.post('/chat/suggestion', data: {
-      'receiver_id': widget.to.phone,
-    });
-    final sugg_map = resp.data['data']['suggestion'] as Map;
+    final resp = await callSona(
+        httpClient: ref.read(dioProvider),
+        userId: widget.otherSide.id,
+        type: CallSonaType.SUGGEST
+    );
+    final options = resp.data['options'] as List;
     await showModalBottomSheet<bool>(
       context: context,
       backgroundColor: Colors.white,
@@ -413,14 +356,18 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                 children: [
                   SonaMessage(content: '\nI\'m the Idea Wizard'),
                   SizedBox(height: 12),
-                  ...sugg_map.entries.map((e) => Container(
+                  ...options.map((m) => Container(
                     margin: EdgeInsets.only(top: 5, left: 64),
                     child: ColoredButton(
                         onTap: () async {
                           Navigator.pop(context);
-                          _sendMessage(e.value);
+                          await sendMessage(
+                            httpClient: ref.read(dioProvider),
+                            userId: widget.otherSide.id,
+                            content: m['value'],
+                          );
                         },
-                        text: e.key
+                        text: m['key']
                     ),
                   )),
                   SizedBox(height: 30),

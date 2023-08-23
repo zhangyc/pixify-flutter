@@ -29,8 +29,8 @@ Future<Response> matchAction({
 }
 
 enum MatchAction {
-  like(1),
-  skip(2),
+  skip(1),
+  like(2),
   arrow(3);
 
   const MatchAction(this.value);

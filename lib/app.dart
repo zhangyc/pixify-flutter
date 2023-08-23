@@ -109,6 +109,7 @@ class SonaApp extends HookConsumerWidget {
               letterSpacing: 1
             )
           ),
+          elevation: 0,
           centerTitle: true,
           iconTheme: const IconThemeData(
             color: fontColour

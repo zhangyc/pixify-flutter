@@ -100,7 +100,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
                             size: 36,
                           ),
                           onPressed: () {
-                            ref.read(matchedProvider.notifier).like(_current_user!.id);
+                            // ref.read(matchedProvider.notifier).like(_current_user!.id);
+                            _controller.swipeRight();
                           },
                         ),
                       ),
@@ -189,7 +190,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
   }
 
   void _rightSwipeHandler() {
-    ref.read(matchedProvider.notifier).superlike(_current_user!.id);
+    ref.read(matchedProvider.notifier).like(_current_user!.id);
   }
 
   void _topSwipeHandler() {

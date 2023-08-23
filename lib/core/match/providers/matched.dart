@@ -25,8 +25,7 @@ class AsyncMatchedNotifier extends AsyncNotifier<List<UserInfo>> {
 
   @override
   Future<List<UserInfo>> build() async{
-    var d = await _fetchMatched();
-    return d;
+    return _fetchMatched();
   }
 
   Future refresh() async {
