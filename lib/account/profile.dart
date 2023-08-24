@@ -31,7 +31,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _profile = ref.watch(myInfoProvider).value!;
+    _profile = ref.watch(asyncMyProfileProvider).value!;
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -164,7 +164,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future _showGenderEditor() async {
     var gender = await showGenderPicker(context: context);
     if (gender != null && gender != _profile.gender) {
-      ref.read(myInfoProvider.notifier).updateInfo(gender: gender);
+      ref.read(asyncMyProfileProvider.notifier).updateInfo(gender: gender);
     }
   }
 }

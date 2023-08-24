@@ -10,7 +10,7 @@ import 'package:sona/utils/providers/dio.dart';
 
 /// 可能需要把分页数据也封装进来，no more data 等
 @immutable
-class AsyncMatchedNotifier extends AsyncNotifier<List<UserInfo>> {
+class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
   Future<List<UserInfo>> _fetchMatched() async {
     return fetchMatchPeople(
       httpClient: ref.read(dioProvider),
@@ -57,7 +57,6 @@ class AsyncMatchedNotifier extends AsyncNotifier<List<UserInfo>> {
 }
 
 
-final matchedProvider = AsyncNotifierProvider<AsyncMatchedNotifier, List<UserInfo>>(
-  () => AsyncMatchedNotifier(),
-  dependencies: [tokenProvider]
+final asyncMatchRecommendedProvider = AsyncNotifierProvider<AsyncMatchRecommendedNotifier, List<UserInfo>>(
+  () => AsyncMatchRecommendedNotifier(),
 );

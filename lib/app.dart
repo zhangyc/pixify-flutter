@@ -38,11 +38,11 @@ class SonaApp extends HookConsumerWidget {
           },
           child: Builder(
             builder: (context) {
-              final asyncMyInfo = ref.watch(myInfoProvider);
+              final asyncMyProfile = ref.watch(asyncMyProfileProvider);
               return Stack(
                 children: [
                   Positioned.fill(child: child!),
-                  Positioned.fill(child: asyncMyInfo.when(
+                  Positioned.fill(child: asyncMyProfile.when(
                     data: (myInfo) {
                       if (myInfo.completed) {
                         return const Opacity(
@@ -76,7 +76,7 @@ class SonaApp extends HookConsumerWidget {
                     ),
                     error: (err, stack) => token == null ? const Opacity(opacity: 0) : GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () => ref.watch(myInfoProvider.notifier).refresh(),
+                      onTap: () => ref.watch(asyncMyProfileProvider.notifier).refresh(),
                       child: Container(
                         color: Colors.white,
                         alignment: Alignment.center,

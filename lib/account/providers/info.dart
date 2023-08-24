@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/services/info.dart';
-import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/providers/dio.dart';
 
 import '../models/gender.dart';
@@ -9,20 +8,20 @@ import '../models/user_info.dart';
 
 
 @immutable
-class AsyncMyInfoNotifier extends AsyncNotifier<MyInfo> {
+class AsyncMyProfileNotifier extends AsyncNotifier<MyInfo> {
 
-  Future<MyInfo> _fetchInfo() {
+  Future<MyInfo> _fetchProfile() {
     return getMyInfo(httpClient: ref.read(dioProvider));
   }
 
   @override
   build() {
-    return _fetchInfo();
+    return _fetchProfile();
   }
 
   Future<void> refresh() async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() => _fetchInfo());
+    state = await AsyncValue.guard(() => _fetchProfile());
   }
 
   Future<void> updateInfo({
@@ -43,12 +42,11 @@ class AsyncMyInfoNotifier extends AsyncNotifier<MyInfo> {
         interests: interests,
         avatar: avatar
       );
-      return _fetchInfo();
+      return _fetchProfile();
     });
   }
 }
 
-final myInfoProvider = AsyncNotifierProvider<AsyncMyInfoNotifier, MyInfo>(
-  () => AsyncMyInfoNotifier(),
-  dependencies: [tokenProvider]
+final asyncMyProfileProvider = AsyncNotifierProvider<AsyncMyProfileNotifier, MyInfo>(
+  () => AsyncMyProfileNotifier()
 );

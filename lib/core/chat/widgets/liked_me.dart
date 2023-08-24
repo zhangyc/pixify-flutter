@@ -14,7 +14,7 @@ class LikedMeListView extends StatefulHookConsumerWidget {
 class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
   @override
   Widget build(BuildContext context) {
-    return ref.watch(asyncLikedMeUsers).when<Widget>(
+    return ref.watch(asyncLikedMeProvider).when<Widget>(
       data: (likedMeUsers) {
         return likedMeUsers.isEmpty ? Container() : Container(
           padding: EdgeInsets.symmetric(horizontal: 16),

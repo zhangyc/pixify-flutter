@@ -66,6 +66,5 @@ class AsyncMessagesNotifier extends AutoDisposeFamilyAsyncNotifier<List<ImMessag
 }
 
 final asyncMessagesProvider = AsyncNotifierProvider.family.autoDispose<AsyncMessagesNotifier, List<ImMessage>, int>(
-    () => AsyncMessagesNotifier(),
-    dependencies: [tokenProvider]
+    () => AsyncMessagesNotifier()
 );

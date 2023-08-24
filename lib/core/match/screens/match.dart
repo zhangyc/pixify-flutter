@@ -43,7 +43,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
         ],
         elevation: 0,
       ),
-      body: ref.watch(matchedProvider).when<Widget>(
+      body: ref.watch(asyncMatchRecommendedProvider).when<Widget>(
           data: (List<UserInfo> users) {
             _current_user ??= users.first;
             return SafeArea(
@@ -113,7 +113,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
           },
           error: (err, stack) => GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () => ref.watch(matchedProvider.notifier).refresh(),
+            onTap: () => ref.watch(asyncMatchRecommendedProvider.notifier).refresh(),
             child: Container(
               color: Colors.white,
               alignment: Alignment.center,
@@ -138,7 +138,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
   }
 
   Widget _cardBuilder(BuildContext context, int index) {
-    final user = ref.read(matchedProvider).value![index];
+    final user = ref.read(asyncMatchRecommendedProvider).value![index];
 
     return Container(
       key: ValueKey(user.id),
@@ -186,11 +186,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
   }
 
   Future _leftSwipeHandler() async {
-    ref.read(matchedProvider.notifier).skip(_current_user!.id);
+    ref.read(asyncMatchRecommendedProvider.notifier).skip(_current_user!.id);
   }
 
   void _rightSwipeHandler() {
-    ref.read(matchedProvider.notifier).like(_current_user!.id);
+    ref.read(asyncMatchRecommendedProvider.notifier).like(_current_user!.id);
   }
 
   void _topSwipeHandler() {

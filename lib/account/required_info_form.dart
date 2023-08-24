@@ -352,7 +352,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                           interests: _interested,
                           avatar: _avatar
                         );
-                        ref.read(myInfoProvider.notifier).refresh();
+                        ref.read(asyncMyProfileProvider.notifier).refresh();
                       } on Exception catch (e) {
                         Fluttertoast.showToast(msg: e.toString());
                       }

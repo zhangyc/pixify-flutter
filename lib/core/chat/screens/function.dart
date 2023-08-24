@@ -115,7 +115,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
   }
 
   Widget _itemBuilder(ImMessage msg) {
-    final me = ref.read(myInfoProvider);
+    final me = ref.read(asyncMyProfileProvider);
     if (msg.sender.id == me.value!.id) {
       return Container(
         margin: EdgeInsets.only(left: 70, bottom: 12, right: 16),

@@ -1,5 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/info.dart';
+import 'package:sona/core/match/providers/matched.dart';
+import 'package:sona/core/persona/providers/persona.dart';
 import 'package:sona/utils/providers/kv_store.dart';
+
+import '../chat/providers/liked_me.dart';
 
 const tokenKey = 'token';
 final tokenProvider = StateProvider<String?>(
@@ -8,6 +13,10 @@ final tokenProvider = StateProvider<String?>(
     ref.listenSelf((previous, next) {
       if (next == null) {
         kvStore.remove(tokenKey);
+        ref.invalidate(asyncMyProfileProvider);
+        ref.invalidate(asyncLikedMeProvider);
+        ref.invalidate(asyncPersonaProvider);
+        ref.invalidate(asyncMatchRecommendedProvider);
       } else {
         kvStore.setString(tokenKey, next);
       }
