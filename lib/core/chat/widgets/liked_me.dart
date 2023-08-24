@@ -1,11 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/common/models/user.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
 
 
 class LikedMeListView extends StatefulHookConsumerWidget {
-  const LikedMeListView({super.key});
+  const LikedMeListView({
+    super.key,
+    required this.onMatchedTap
+  });
+  final void Function(UserInfo) onMatchedTap;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LikedMeListViewState();
@@ -32,24 +37,27 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
                     final u = likedMeUsers[index];
-                    print('in like me: ${likedMeUsers.length}');
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 120,
-                          height: 170,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider(u.avatar ?? ''),
-                              fit: BoxFit.cover
+                    return GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => widget.onMatchedTap(u),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 120,
+                            height: 170,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: CachedNetworkImageProvider(u.avatar ?? ''),
+                                fit: BoxFit.cover
+                              ),
+                              borderRadius: BorderRadius.circular(12)
                             ),
-                            borderRadius: BorderRadius.circular(12)
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(u.name!, maxLines: 1)
-                      ],
+                          const SizedBox(height: 12),
+                          Text(u.name!, maxLines: 1)
+                        ],
+                      ),
                     );
                   },
                   separatorBuilder: (_, __) => const SizedBox(width: 12),

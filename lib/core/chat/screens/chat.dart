@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/common/models/user.dart';
 import 'package:sona/core/chat/providers/chat.dart';
+import 'package:sona/core/chat/providers/liked_me.dart';
 import 'package:sona/core/chat/screens/function.dart';
 import 'package:sona/core/persona/widgets/sona_avatar.dart';
 
@@ -14,6 +18,16 @@ class ChatScreen extends StatefulHookConsumerWidget {
 }
 
 class _ChatScreenState extends ConsumerState<ChatScreen> with AutomaticKeepAliveClientMixin {
+
+  @override
+  void initState() {
+    Timer.periodic(const Duration(seconds: 3), (timer) {
+      ref.read(asyncLikedMeProvider.notifier).refresh();
+      ref.read(asyncConversationsProvider.notifier).refresh();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -24,8 +38,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with AutomaticKeepAlive
       ),
       body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
-            child: LikedMeListView(),
+          SliverToBoxAdapter(
+            child: LikedMeListView(onMatchedTap: _startANewChat),
           ),
           ref.watch(asyncConversationsProvider).when(
             data: (conversations) => SliverList.separated(
@@ -59,6 +73,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with AutomaticKeepAlive
         ],
       )
     );
+  }
+
+  void _startANewChat(UserInfo u) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatFunctionScreen(otherSide: u)));
   }
 
   @override

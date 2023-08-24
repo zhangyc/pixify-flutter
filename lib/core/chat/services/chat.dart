@@ -44,6 +44,7 @@ Future<Response> callSona({
 Future<Response> sendMessage({
   required Dio httpClient,
   required int userId,
+  required CallSonaType type,
   required String content,
 }) async {
   return httpClient.post(
@@ -51,7 +52,7 @@ Future<Response> sendMessage({
       data: {
         'userId': userId,
         'message': content,
-        'type': CallSonaType.SUGGEST
+        'messageType': type.name
       }
   );
 }

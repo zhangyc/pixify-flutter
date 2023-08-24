@@ -55,25 +55,25 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
                       controller: _controller,
                       cardsBuilder: _cardBuilder,
                       cardsCount: users.length,
-                        onSwipe: (int index, AppinioSwiperDirection direction) {
-                          _current_user = users[index];
-                          switch (direction) {
-                            case AppinioSwiperDirection.left:
-                              _leftSwipeHandler();
-                              break;
-                            case AppinioSwiperDirection.right:
-                              _rightSwipeHandler();
-                              break;
-                            case AppinioSwiperDirection.top:
-                            case AppinioSwiperDirection.bottom:
-                              break;
-                            default:
-                              _swipeExceptionHandler(index, direction);
-                          }
-                        },
-                        onEnd: () {
-                          print('onEnd');
-                        },
+                      onSwipe: (int index, AppinioSwiperDirection direction) {
+                        _current_user = users[index - 1];
+                        switch (direction) {
+                          case AppinioSwiperDirection.left:
+                            _leftSwipeHandler();
+                            break;
+                          case AppinioSwiperDirection.right:
+                            _rightSwipeHandler();
+                            break;
+                          case AppinioSwiperDirection.top:
+                          case AppinioSwiperDirection.bottom:
+                            break;
+                          default:
+                            _swipeExceptionHandler(index, direction);
+                        }
+                      },
+                      onEnd: () {
+                        print('onEnd');
+                      },
                     ),
                   ),
                   Positioned(

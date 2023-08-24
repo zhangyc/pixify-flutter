@@ -86,7 +86,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                     separatorBuilder: (_, __) => SizedBox(height: 5),
                   ),
                 ) : _tips(),
-                error: (_, __) => Container(),
+                error: (error, __) => Container(child: Text(error.toString()),),
                 loading: () => Container(
                   alignment: Alignment.center,
                   child: const SizedBox(
@@ -261,6 +261,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
         await sendMessage(
             httpClient: ref.read(dioProvider),
             userId: widget.otherSide.id,
+            type: CallSonaType.MANUAL,
             content: text,
         );
         setState(() {
@@ -364,6 +365,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                           await sendMessage(
                             httpClient: ref.read(dioProvider),
                             userId: widget.otherSide.id,
+                            type: CallSonaType.SUGGEST,
                             content: m['value'],
                           );
                         },

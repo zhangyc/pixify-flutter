@@ -39,5 +39,6 @@ enum CallSonaType {
   PROLOGUE,
   AUTO,
   SUGGEST,
-  INPUT
+  INPUT,
+  MANUAL
 }

@@ -40,7 +40,6 @@ class AsyncConversationsNotifier extends AsyncNotifier<List<ImConversation>> {
 
 final asyncConversationsProvider = AsyncNotifierProvider<AsyncConversationsNotifier, List<ImConversation>>(
   () => AsyncConversationsNotifier(),
-  dependencies: [tokenProvider]
 );
 
 
@@ -50,8 +49,9 @@ class AsyncMessagesNotifier extends AutoDisposeFamilyAsyncNotifier<List<ImMessag
       httpClient: ref.read(dioProvider),
       userId: id,
       page: 1,
+      pageSize: 100
     ).then((resp) {
-      return (resp.data as List).map((m) => ImMessage.fromJson(m)).toList();
+      return (resp.data['list'] as List).map((m) => ImMessage.fromJson(m)).toList();
     });
   }
 
