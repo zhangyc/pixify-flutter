@@ -6,9 +6,12 @@ import 'package:sona/utils/providers/kv_store.dart';
 
 import 'app.dart';
 import 'firebase_options.dart';
+import 'utils/providers/app_lifecycle.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  var appStateObserver = AppStateObserver();
+  WidgetsBinding.instance.addObserver(appStateObserver);
   // final firebase = await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
