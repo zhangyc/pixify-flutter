@@ -29,6 +29,7 @@ Future<Response> callSona({
   required Dio httpClient,
   required int userId,
   required CallSonaType type,
+  int? chatStyleId,
   String? input,
 }) async {
   return httpClient.post(
@@ -36,6 +37,7 @@ Future<Response> callSona({
       data: {
         'userId': userId,
         'type': type.name,
+        'chatStyleId': chatStyleId,
         'input': input,
       }
   );

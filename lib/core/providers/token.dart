@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/info.dart';
 import 'package:sona/core/chat/providers/chat.dart';
+import 'package:sona/core/chat/providers/chat_style.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/persona/providers/persona.dart';
 import 'package:sona/utils/providers/kv_store.dart';
@@ -19,6 +20,7 @@ final tokenProvider = StateProvider<String?>(
         ref.invalidate(asyncPersonaProvider);
         ref.invalidate(asyncMatchRecommendedProvider);
         ref.invalidate(asyncConversationsProvider);
+        ref.invalidate(asyncChatStylesProvider);
       } else {
         kvStore.setString(tokenKey, next);
       }

@@ -20,7 +20,7 @@ class ChatInput extends StatefulWidget {
     this.initialText,
     this.hintText = '',
     this.keyboardType = TextInputType.text,
-    this.actionText = 'Send',
+    this.actionText = 'Sona',
     this.onInputChange,
     this.onSubmit,
     this.maxLength = 1024,
@@ -29,10 +29,10 @@ class ChatInput extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _LinkCommentInputBarState();
+  State<StatefulWidget> createState() => _ChatInputState();
 }
 
-class _LinkCommentInputBarState extends State<ChatInput> with AutomaticKeepAliveClientMixin {
+class _ChatInputState extends State<ChatInput> with AutomaticKeepAliveClientMixin {
   late final TextEditingController _controller;
   late FocusNode focusNode;
   late double height;

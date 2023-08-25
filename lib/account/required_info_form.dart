@@ -353,7 +353,8 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                           gender: _gender,
                           birthday: _birthday,
                           interests: _interested,
-                          avatar: _avatar
+                          avatar: _avatar,
+                          position: position
                         );
                         ref.read(asyncMyProfileProvider.notifier).refresh();
                       } on Exception catch (e) {
