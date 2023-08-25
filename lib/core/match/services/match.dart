@@ -2,15 +2,9 @@ import 'package:dio/dio.dart';
 
 Future<Response> fetchMatchPeople({
   required Dio httpClient,
-  required int page,
-  int pageSize = 50
 }) async {
   return httpClient.post(
-    '/user/match',
-    data: {
-      'page': page,
-      'pageSize': pageSize
-    }
+    '/user/match'
   );
 }
 
