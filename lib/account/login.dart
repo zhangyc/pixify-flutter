@@ -188,7 +188,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         );
         final token = resp.data['token'];
         ref.read(tokenProvider.notifier).state = token;
-        ref.read(myInfoProvider.notifier).refresh();
+        ref.read(asyncMyProfileProvider.notifier).refresh();
       } on CustomDioException catch (e) {
         if (e.code == '2') {
           if (mounted) {

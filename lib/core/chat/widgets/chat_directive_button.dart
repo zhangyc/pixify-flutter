@@ -38,6 +38,8 @@ class _ChatDirectiveButtonState
   ChatActionMode _active = ChatActionMode.docker;
   var _loading = false;
 
+  final _stopwatch = Stopwatch();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -145,15 +147,20 @@ class _ChatDirectiveButtonState
       _pointerDown = true;
     });
     _eventPosition.value = event.localPosition;
+    _stopwatch.start();
   }
 
-  FutureOr _onPointerUp(_) async {
-    final active = _active;
+  FutureOr _onPointerUp(PointerUpEvent event) async {
+    var active = _active;
     setState(() {
       _active = ChatActionMode.docker;
       _loading = true;
       _pointerDown = false;
     });
+    _stopwatch.stop();
+    if (_stopwatch.elapsed > const Duration(seconds: 2)) {
+      _active = ChatActionMode.sona;
+    }
     try {
       await widget.onAction(active);
     } catch(e) {
@@ -186,24 +193,21 @@ class _ChatDirectiveButtonState
           });
           HapticFeedback.selectionClick();
         }
-      }
-      if ((direction - sonaDirection).abs() < pi * 0.1) {
+      } else if ((direction - sonaDirection).abs() < pi * 0.1) {
         if (_active != ChatActionMode.sona) {
           setState(() {
             _active = ChatActionMode.sona;
           });
           HapticFeedback.selectionClick();
         }
-      }
-      if ((direction - suggestionDirection).abs() < pi * 0.1) {
+      } else if ((direction - suggestionDirection).abs() < pi * 0.1) {
         if (_active != ChatActionMode.suggestion) {
           setState(() {
             _active = ChatActionMode.suggestion;
           });
           HapticFeedback.selectionClick();
         }
-      }
-      if ((direction - cancelDirection).abs() < pi * 0.1) {
+      } else if ((direction - cancelDirection).abs() < pi * 0.1) {
         if (_active != ChatActionMode.docker) {
           setState(() {
             _active = ChatActionMode.docker;

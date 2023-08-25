@@ -34,6 +34,6 @@ class PersonaNotifier extends AsyncNotifier<Persona?> {
   }
 }
 
-final personaProvider = FutureProvider<PersonaNotifier>((ref) {
+final asyncPersonaProvider = FutureProvider<PersonaNotifier>((ref) {
   return PersonaNotifier();
 });

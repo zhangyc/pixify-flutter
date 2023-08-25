@@ -31,7 +31,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _profile = ref.watch(myInfoProvider).value!;
+    _profile = ref.watch(asyncMyProfileProvider).value!;
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -46,17 +46,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               child: Text('更多真实照片会增加匹配成功率'),
             ),
           ),
-          SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              _photoBuilder,
-              childCount: 9
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                _photoBuilder,
+                childCount: 9
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
+                childAspectRatio: 600 / 848
+              )
             ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
-              childAspectRatio: 600 / 848
-            )
           ),
           SliverToBoxAdapter(
             child: Column(
@@ -108,20 +111,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         onTap: () {
           // _onAddPhoto();
         },
-        child: Icon(Icons.add, size: 36)
+        child: Center(child: Icon(Icons.add, size: 36))
       );
     } else {
       final photo = _profile.photos[index];
-      child = CachedNetworkImage(imageUrl: photo);
+      child = CachedNetworkImage(imageUrl: photo, fit: BoxFit.cover);
     }
     return Container(
-      height: 108,
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
-          borderRadius: BorderRadius.circular(12)
+        border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
+        borderRadius: BorderRadius.circular(12)
       ),
-      alignment: Alignment.center,
+      clipBehavior: Clip.antiAlias,
       child: child,
     );
   }
@@ -163,7 +164,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future _showGenderEditor() async {
     var gender = await showGenderPicker(context: context);
     if (gender != null && gender != _profile.gender) {
-      ref.read(myInfoProvider.notifier).updateInfo(gender: gender);
+      ref.read(asyncMyProfileProvider.notifier).updateInfo(gender: gender);
     }
   }
 }
