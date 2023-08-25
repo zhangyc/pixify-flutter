@@ -47,7 +47,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
         title: const Text('Match'),
         actions: [
           IconButton(onPressed: (){
+                setState(() {
 
+                });
            }, icon: Icon(Icons.filter_alt))
         ],
         elevation: 0,
@@ -64,7 +66,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                   // if (index >= _s.length - 3) {
                   //   _loadMore();
                   // }
-                  userModel = _s[index - 1];
+                  userModel = _s[index];
                   switch (direction) {
                     case AppinioSwiperDirection.left:
                       _leftSwipeHandler(userModel!);
@@ -146,7 +148,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                     setState(() {
 
                     });
-                  }, icon: Icon(Icons.close,size: 36,)),
+                   }, icon: Icon(Icons.close,size: 36,)),
                   IconButton(onPressed: (){
                     ref.read(dioProvider).post('/user/update-relation',data: {
                       'userId':userModel?.id,
