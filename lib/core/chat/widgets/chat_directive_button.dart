@@ -151,6 +151,7 @@ class _ChatDirectiveButtonState
   }
 
   FutureOr _onPointerUp(PointerUpEvent event) async {
+    print('up evt');
     var active = _active;
     setState(() {
       _active = ChatActionMode.docker;
@@ -161,6 +162,7 @@ class _ChatDirectiveButtonState
     if (_stopwatch.elapsed > const Duration(seconds: 2)) {
       _active = ChatActionMode.sona;
     }
+    _stopwatch.reset();
     try {
       await widget.onAction(active);
     } catch(e) {
@@ -223,6 +225,7 @@ class _ChatDirectiveButtonState
     }
   }
 }
+
 
 class JoyStick extends StatefulWidget {
   const JoyStick({super.key, required this.size, required this.position});

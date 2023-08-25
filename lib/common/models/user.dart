@@ -33,7 +33,7 @@ class UserInfo {
           avatar: json['avatar'],
           bio: json['description'],
           chatStyleId: json['chatStyleId'],
-          photos: List<String>.from(json['image'] ?? [])
+          photos: List<String>.from(json['images'] ?? [])
       );
   }
 }

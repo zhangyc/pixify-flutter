@@ -13,11 +13,9 @@ import 'package:sona/utils/providers/dio.dart';
 class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
   Future<List<UserInfo>> _fetchMatched() async {
     return fetchMatchPeople(
-      httpClient: ref.read(dioProvider),
-      page: 1,
-      pageSize: 50
+      httpClient: ref.read(dioProvider)
     ).then<List>(
-      (resp) => resp.data['list'] as List
+      (resp) => resp.data as List
     ).then<List<UserInfo>>(
       (data) => data.map<UserInfo>((m) => UserInfo.fromJson(m)).toList()
     );

@@ -2,6 +2,7 @@ import 'package:crop_your_image/crop_your_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/age.dart';
@@ -11,6 +12,7 @@ import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/providers/navigator_key.dart';
+import 'package:sona/utils/location/location.dart';
 
 import '../core/persona/widgets/sona_message.dart';
 import '../utils/dialog/input.dart';
@@ -344,6 +346,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                         return;
                       }
                       try {
+                        final position = await determinePosition();
                         await updateMyInfo(
                           httpClient: ref.read(dioProvider),
                           name: _nameController.text,
