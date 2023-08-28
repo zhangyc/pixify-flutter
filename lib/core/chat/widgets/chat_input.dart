@@ -20,7 +20,7 @@ class ChatInput extends StatefulWidget {
     this.initialText,
     this.hintText = '',
     this.keyboardType = TextInputType.text,
-    this.actionText = 'Sona',
+    this.actionText = 'Send',
     this.onInputChange,
     this.onSubmit,
     this.maxLength = 1024,
