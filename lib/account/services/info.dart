@@ -1,8 +1,6 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/account/models/user_info.dart';
@@ -13,7 +11,8 @@ Future<Response> updateMyInfo({
   Gender? gender,
   DateTime? birthday,
   Set<String>? interests,
-  String? avatar
+  String? avatar,
+  Position? position
 }) async {
   return httpClient.post(
       '/user/update',
@@ -22,7 +21,9 @@ Future<Response> updateMyInfo({
         'gender': gender?.index,
         'birthday': birthday?.toBirthdayString(),
         'interest': interests?.join(','),
-        'imageUrl': avatar
+        'imageUrl': avatar,
+        'longitude': position?.longitude,
+        'latitude': position?.latitude
       }
   );
 }

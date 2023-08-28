@@ -8,10 +8,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/info.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
+import 'package:sona/core/chat/providers/chat_style.dart';
 import 'package:sona/core/chat/screens/info.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/chat_directive_button.dart';
 import 'package:sona/core/chat/widgets/chat_input.dart';
+import 'package:sona/core/chat/widgets/chat_instruction_input.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
@@ -108,7 +110,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           bottom: MediaQuery.of(context).viewPadding.bottom + 12
         ),
         color: Colors.white,
-        child: ChatInput(onSubmit: _onMessage, actionText: _mode == ChatActionMode.manuel ? 'Send' : 'Sona'),
+        child: _mode == ChatActionMode.sona ? ChatInstructionInput(onSubmit: _onSona) :  ChatInput(onSubmit: _onMessage),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -290,6 +292,32 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       }
     } else {
       EasyLoading.dismiss();
+    }
+  }
+
+  void _onSona(String? text) async {
+    if (text == null || text.trim().isEmpty) {
+      FocusManager.instance.primaryFocus?.unfocus();
+      setState(() {
+        _mode = ChatActionMode.docker;
+      });
+      return;
+    }
+
+    try {
+      await callSona(
+        httpClient: ref.read(dioProvider),
+        userId: widget.otherSide.id,
+        input: text,
+        type: CallSonaType.INPUT,
+        chatStyleId: ref.read(currentChatStyleIdProvider)
+      );
+      setState(() {
+        _mode = ChatActionMode.docker;
+      });
+    } catch(e) {
+      //
+    } finally {
     }
   }
 

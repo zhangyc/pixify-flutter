@@ -121,6 +121,14 @@ class SonaApp extends HookConsumerWidget {
           )
         ),
         textTheme: TextTheme(
+          bodyMedium: GoogleFonts.inder(
+              textStyle: const TextStyle(
+                  color: fontColour,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 1
+              )
+          ),
           bodySmall: GoogleFonts.inder(
             textStyle: const TextStyle(
               color: fontColour,
