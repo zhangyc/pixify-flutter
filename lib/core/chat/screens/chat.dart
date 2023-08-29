@@ -17,15 +17,40 @@ class ChatScreen extends StatefulHookConsumerWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends ConsumerState<ChatScreen> with AutomaticKeepAliveClientMixin {
+class _ChatScreenState extends ConsumerState<ChatScreen> with AutomaticKeepAliveClientMixin, RouteAware {
 
-  @override
-  void initState() {
-    Timer.periodic(const Duration(seconds: 3), (timer) {
+  Timer? _timer;
+
+  void _startRefresh() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       ref.read(asyncLikedMeProvider.notifier).refresh();
       ref.read(asyncConversationsProvider.notifier).refresh();
     });
+  }
+
+  @override
+  void initState() {
+    _startRefresh();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  void didPushNext() {
+    _timer?.cancel();
+    super.didPushNext();
+  }
+
+  @override
+  void didPopNext() {
+    _startRefresh();
+    super.didPopNext();
   }
 
   @override

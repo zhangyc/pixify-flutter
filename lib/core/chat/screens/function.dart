@@ -8,10 +8,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/info.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
+import 'package:sona/core/chat/providers/chat_action.dart';
 import 'package:sona/core/chat/providers/chat_style.dart';
 import 'package:sona/core/chat/screens/info.dart';
 import 'package:sona/core/chat/services/chat.dart';
-import 'package:sona/core/chat/widgets/chat_directive_button.dart';
+import 'package:sona/core/chat/widgets/chat_actions.dart';
 import 'package:sona/core/chat/widgets/chat_input.dart';
 import 'package:sona/core/chat/widgets/chat_instruction_input.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
@@ -19,7 +20,6 @@ import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 
 import '../../../common/models/user.dart';
-import '../../../utils/dialog/input.dart';
 import '../../../utils/providers/dio.dart';
 
 class ChatFunctionScreen extends StatefulHookConsumerWidget {
@@ -30,18 +30,22 @@ class ChatFunctionScreen extends StatefulHookConsumerWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatFunctionScreenState();
 }
 
-class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
+class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with RouteAware {
 
   Timer? _timer;
   ChatActionMode _mode = ChatActionMode.docker;
 
-  @override
-  void initState() {
+  void _startRefresh() {
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (mounted) {
         ref.read(asyncMessagesProvider(widget.otherSide.id).notifier).refresh();
       }
     });
+  }
+
+  @override
+  void initState() {
+    _startRefresh();
     super.initState();
   }
 
@@ -49,6 +53,18 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
   void dispose() {
     _timer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didPushNext() {
+    _timer?.cancel();
+    super.didPushNext();
+  }
+
+  @override
+  void didPopNext() {
+    _startRefresh();
+    super.didPopNext();
   }
 
   @override
@@ -61,6 +77,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           IconButton(onPressed: _showInfo, icon: Icon(Icons.info_outline))
         ],
       ),
+      resizeToAvoidBottomInset: false,
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -102,15 +119,15 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
           ],
         ),
       ),
-      floatingActionButton: _mode == ChatActionMode.docker ? ChatDirectiveButton(
-        onAction: _onAction
+      floatingActionButton: _mode == ChatActionMode.docker ? ChatActions(
+        onAct: _onAction
       ) : Container(
         padding: EdgeInsets.only(
           top: 12,
-          bottom: MediaQuery.of(context).viewPadding.bottom + 12
+          bottom: MediaQuery.of(context).viewInsets.bottom + 12
         ),
         color: Colors.white,
-        child: _mode == ChatActionMode.sona ? ChatInstructionInput(onSubmit: _onSona) :  ChatInput(onSubmit: _onMessage),
+        child: _mode == ChatActionMode.sona ? ChatInstructionInput(onSubmit: _onSona, autofocus: true,) :  ChatInput(onSubmit: _onMessage, autofocus: true,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -133,6 +150,8 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Text(msg.time.toMessageTime(), style: Theme.of(context).textTheme.bodySmall),
+                SizedBox(width: 12),
                 GestureDetector(
                   onTap: () => _onEditMessage(msg),
                   child: Container(
@@ -197,6 +216,8 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
                     child: Text('❤️'),
                   ),
                 ),
+                SizedBox(width: 12),
+                Text(msg.time.toMessageTime(), style: Theme.of(context).textTheme.bodySmall),
               ],
             )
           ],
@@ -257,9 +278,9 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       return;
     }
 
-    EasyLoading.show();
-    if (_mode == ChatActionMode.manuel) {
+    if (_mode == ChatActionMode.manual) {
       try {
+        ref.read(sonaLoadingProvider.notifier).state = true;
         await sendMessage(
             httpClient: ref.read(dioProvider),
             userId: widget.otherSide.id,
@@ -272,10 +293,11 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       } catch(e) {
         //
       } finally {
-        EasyLoading.dismiss();
+        ref.read(sonaLoadingProvider.notifier).state = false;
       }
     } else if (_mode == ChatActionMode.sona) {
       try {
+        ref.read(sonaLoadingProvider.notifier).state = true;
         await callSona(
             httpClient: ref.read(dioProvider),
             userId: widget.otherSide.id,
@@ -288,10 +310,8 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
       } catch(e) {
         //
       } finally {
-        EasyLoading.dismiss();
+        ref.read(sonaLoadingProvider.notifier).state = false;
       }
-    } else {
-      EasyLoading.dismiss();
     }
   }
 
@@ -305,6 +325,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     }
 
     try {
+      ref.read(sonaLoadingProvider.notifier).state = true;
       await callSona(
         httpClient: ref.read(dioProvider),
         userId: widget.otherSide.id,
@@ -318,6 +339,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
     } catch(e) {
       //
     } finally {
+      ref.read(sonaLoadingProvider.notifier).state = false;
     }
   }
 
@@ -328,7 +350,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
   FutureOr _onAction(ChatActionMode mode) {
     switch(mode) {
       case ChatActionMode.docker:
-      case ChatActionMode.manuel:
+      case ChatActionMode.manual:
       case ChatActionMode.sona:
         setState(() {
           _mode = mode;
@@ -336,7 +358,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
         break;
       case ChatActionMode.suggestion:
         return _onSuggestion();
-      case ChatActionMode.chat:
+      case ChatActionMode.hook:
         return _freeChat();
     }
   }
@@ -350,19 +372,34 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
   }
 
   Future _freeChat() async {
+    ref.read(sonaLoadingProvider.notifier).state = true;
     callSona(
         httpClient: ref.read(dioProvider),
         userId: widget.otherSide.id,
         type: CallSonaType.AUTO
-    );
+    )
+    .catchError((e) {
+      throw(e);
+    })
+    .whenComplete(() {
+      ref.read(sonaLoadingProvider.notifier).state = false;
+    });
   }
 
   Future _onSuggestion() async {
+    ref.read(sonaLoadingProvider.notifier).state = true;
     final resp = await callSona(
         httpClient: ref.read(dioProvider),
         userId: widget.otherSide.id,
         type: CallSonaType.SUGGEST
-    );
+    )
+    .catchError((e) {
+      throw(e);
+    })
+    .whenComplete(() {
+      ref.read(sonaLoadingProvider.notifier).state = false;
+    });
+
     final options = resp.data['options'] as List;
     await showModalBottomSheet<bool>(
       context: context,
@@ -428,8 +465,8 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> {
 
 enum ChatActionMode {
   docker,
-  manuel,
+  manual,
   sona,
   suggestion,
-  chat
+  hook
 }

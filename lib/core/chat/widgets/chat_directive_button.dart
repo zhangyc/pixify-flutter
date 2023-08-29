@@ -63,7 +63,7 @@ class _ChatDirectiveButtonState
                 width: 42,
                 height: 42,
                 decoration: BoxDecoration(
-                  color: _active == ChatActionMode.manuel ? Theme.of(context).colorScheme.primaryContainer : Colors.transparent,
+                  color: _active == ChatActionMode.manual ? Theme.of(context).colorScheme.primaryContainer : Colors.transparent,
                   border: Border.all(color: Theme.of(context).colorScheme.primaryContainer),
                   shape: BoxShape.circle
                 ),
@@ -189,9 +189,9 @@ class _ChatDirectiveButtonState
 
     if (distance > 36) {
       if ((direction - manualDirection).abs() < pi * 0.1) {
-        if (_active != ChatActionMode.manuel) {
+        if (_active != ChatActionMode.manual) {
           setState(() {
-            _active = ChatActionMode.manuel;
+            _active = ChatActionMode.manual;
           });
           HapticFeedback.selectionClick();
         }
@@ -217,9 +217,9 @@ class _ChatDirectiveButtonState
         }
       }
     } else {
-      if (_active != ChatActionMode.chat) {
+      if (_active != ChatActionMode.hook) {
         setState(() {
-          _active = ChatActionMode.chat;
+          _active = ChatActionMode.hook;
         });
       }
     }
