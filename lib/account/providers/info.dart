@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/utils/providers/dio.dart';
@@ -29,7 +30,8 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyInfo> {
     Gender? gender,
     DateTime? birthday,
     Set<String>? interests,
-    String? avatar
+    String? avatar,
+    Position? position,
   }) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
@@ -40,7 +42,8 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyInfo> {
         gender: gender,
         birthday: birthday,
         interests: interests,
-        avatar: avatar
+        avatar: avatar,
+        position: position
       );
       return _fetchProfile();
     });

@@ -22,6 +22,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
     return ref.watch(asyncLikedMeProvider).when<Widget>(
       data: (likedMeUsers) {
         return likedMeUsers.isEmpty ? Container() : Container(
+          margin: EdgeInsets.only(bottom: 38),
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -30,7 +31,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
               Text('Liked You (${likedMeUsers.length})', textAlign: TextAlign.start),
               const SizedBox(height: 8),
               Container(
-                height: 202,
+                height: 208,
                 alignment: Alignment.centerLeft,
                 child: ListView.separated(
                   shrinkWrap: true,

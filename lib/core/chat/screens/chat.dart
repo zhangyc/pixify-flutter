@@ -3,10 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/common/widgets/image/user_avatar.dart';
+import 'package:sona/core/chat/models/conversation.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
 import 'package:sona/core/chat/screens/function.dart';
-import 'package:sona/core/persona/widgets/sona_avatar.dart';
+import 'package:sona/core/chat/services/chat.dart';
+import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/providers/dio.dart';
 
 import '../widgets/liked_me.dart';
 
@@ -73,10 +77,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with AutomaticKeepAlive
                 return GestureDetector(
                   key: ValueKey(conversation.otherSide.id),
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatFunctionScreen(otherSide: conversation.otherSide))),
+                  onLongPress: () => _showConversationActions(conversation),
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     child: ListTile(
-                      leading: SonaAvatar(),
+                      leading: UserAvatar(key: ValueKey(conversation.otherSide.id), url: conversation.otherSide.avatar!),
                       title: Text(conversation.otherSide.name ?? '')
                     )
                   )
@@ -98,6 +103,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with AutomaticKeepAlive
         ],
       )
     );
+  }
+
+  void _showConversationActions(ImConversation conversation) async {
+    final choice = await showRadioFieldDialog<String>(context: context, options: ['delete'], labels: ['Delete']);
+    if (choice == 'delete') {
+      deleteChat(httpClient: ref.read(dioProvider), id: conversation.otherSide.id);
+    }
   }
 
   void _startANewChat(UserInfo u) {

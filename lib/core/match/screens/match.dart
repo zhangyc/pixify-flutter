@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
+import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/setting.dart';
 
 import '../../../common/widgets/button/colored.dart';

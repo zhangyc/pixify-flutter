@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/services/match.dart';
-import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/providers/dio.dart';
 
 
@@ -12,8 +12,14 @@ import 'package:sona/utils/providers/dio.dart';
 @immutable
 class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
   Future<List<UserInfo>> _fetchMatched() async {
+    final position = ref.read(positionProvider);
+    final setting = ref.read(matchSettingProvider);
+
     return fetchMatchPeople(
-      httpClient: ref.read(dioProvider)
+      httpClient: ref.read(dioProvider),
+      position: position!,
+      gender: setting.gender,
+      range: setting.ageRange
     ).then<List>(
       (resp) => resp.data as List
     ).then<List<UserInfo>>(
