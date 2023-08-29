@@ -142,7 +142,7 @@ class SonaApp extends HookConsumerWidget {
       initialRoute: token == null ? 'login' : '/',
       // routes: _routes,
       onGenerateRoute: _onGenerateRoute,
-      // home: TestChat(),
+      home: TestChat(),
     );
   }
 }

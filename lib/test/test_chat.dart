@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
+///FirebaseFirestore chatdemo
 class TestChat extends StatefulWidget {
   const TestChat({super.key});
 
@@ -10,6 +11,7 @@ class TestChat extends StatefulWidget {
 }
 
 class _TestChatState extends State<TestChat> {
+  ///发送消息
   void sendChatMessage(String content, int type, String groupChatId,
       String currentUserId, String peerId) {
     DocumentReference documentReference = firebaseFirestore
@@ -29,8 +31,8 @@ class _TestChatState extends State<TestChat> {
     });
 
   }
-
   late FirebaseFirestore firebaseFirestore;
+  ///获取消息
   Stream<QuerySnapshot> getChatMessage(String groupChatId, int limit) {
     return firebaseFirestore
         .collection(FirestoreConstants.pathMessageCollection)
@@ -40,29 +42,88 @@ class _TestChatState extends State<TestChat> {
         .limit(limit)
         .snapshots();
   }
+  ///消息stream
+  final Stream<QuerySnapshot> _usersStream =
+  FirebaseFirestore.instance.collection(FirestoreConstants.pathMessageCollection).snapshots();
   @override
   void initState() {
-    firebaseFirestore=FirebaseFirestore.instance;
+    ///store实例
+   firebaseFirestore=FirebaseFirestore.instance;
     sendChatMessage('123', 1, '1001', '1-2', "2");
     sendChatMessage('12322222222222222222', 1, '1-2', '1', "2");
-    firebaseFirestore.collection(FirestoreConstants.pathMessageCollection).doc('1-2').collection('1-2').snapshots().listen((event) {
-      print(event);
-    });
-    getChatMessage('groupChatId', 2).listen((event) {
-      for(var tmp in event.docChanges){
-        print(tmp.doc.data());
-      }
-    });
+   ///测试建听是否通顺
+   // firebaseFirestore.collection(FirestoreConstants.pathMessageCollection).doc('user-10').collection('user-10-12').listen((event) {
+   //    // Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+   //    print(event);
+   //  });
+   // final docRef = db.collection("cities").doc("SF");
+   // firebaseFirestore.collection(FirestoreConstants.pathMessageCollection).doc('user-10').get().then(
+   //       (DocumentSnapshot doc) {
+   //     final data = doc.data() as Map<String, dynamic>;
+   //     // ...
+   //   },
+   //   onError: (e) => print("Error getting document: $e"),
+   // );
+
+   // firebaseFirestore.collection(FirestoreConstants.pathMessageCollection).doc('user-10').get().then(
+   //       (doc) {
+   //     print(doc);
+   //     // ...
+   //   },
+   //   onError: (e) => print("Error getting document: $e"),
+   // );
+   firebaseFirestore.collection(FirestoreConstants.pathMessageCollection).doc('user-10').collection('room-10-12').get().then(
+         (doc) {
+       print(doc);
+       // ...
+     },
+     onError: (e) => print("Error getting document: $e"),
+   );
+   firebaseFirestore.collection(FirestoreConstants.pathMessageCollection).doc('user-10').collection('room-10-12').snapshots().listen((event) {
+     print(event);
+   });
+    // getChatMessage('groupChatId', 2).listen((event) {
+    //   for(var tmp in event.docChanges){
+    //     print(tmp.doc.data());
+    //   }
+    // });
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Placeholder();
+    ///StreamBuilder进行数据接受
+    return StreamBuilder<QuerySnapshot>(
+      stream: _usersStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text("Loading");
+        }
+
+        return ListView(
+          children: snapshot.data!.docs
+              .map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+            document.data()! as Map<String, dynamic>;
+            return ListTile(
+              title: Text(data['full_name']),
+              subtitle: Text(data['company']),
+            );
+          })
+              .toList()
+              .cast(),
+        );
+      },
+    );
   }
 }
 class FirestoreConstants {
   static const pathUserCollection = "users";
-  static const pathMessageCollection = "messages";
+  static const pathMessageCollection = "messages-test";
   static const displayName = "displayName";
   static const aboutMe = "aboutMe";
   static const photoUrl = "photoUrl";

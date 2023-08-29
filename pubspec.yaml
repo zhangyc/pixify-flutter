@@ -33,6 +33,7 @@ dependencies:
   firebase_core:
   firebase_storage:
   cloud_firestore:
+  firebase_messaging:
 
 dev_dependencies:
   custom_lint: ^0.4.0
