@@ -73,7 +73,6 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
       appBar: AppBar(
         title: Text(widget.otherSide.name!),
         actions: [
-          // IconButton(onPressed: _onClearHistory, icon: Icon(Icons.cleaning_services_outlined)),
           IconButton(onPressed: _showInfo, icon: Icon(Icons.info_outline))
         ],
       ),
