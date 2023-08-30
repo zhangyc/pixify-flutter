@@ -15,4 +15,14 @@ class Gender {
       throw('Invalid gender $index');
     }
   }
+
+  Gender opposite() {
+    if (this == Gender.female) {
+      return Gender.male;
+    } else if (this == Gender.male) {
+      return Gender.female;
+    } else {
+      throw('Invalid gender $index');
+    }
+  }
 }

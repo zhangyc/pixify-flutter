@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/info.dart';
 import 'package:sona/core/chat/screens/chat.dart';
@@ -29,7 +30,6 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
 
   void _determinePosition() async {
     final position = await determinePosition();
-    ref.read(positionProvider.notifier).state = position;
     ref.read(asyncMyProfileProvider.notifier).updateInfo(position: position);
   }
 
