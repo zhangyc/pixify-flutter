@@ -7,11 +7,14 @@ Future<Gender?> showGenderPicker({
   required BuildContext context,
   Gender? initialValue,
   String? title,
+  bool nullable = false,
 }) {
-  return showRadioFieldDialog<Gender>(
+  final options = [Gender.male, Gender.female, if (nullable) null];
+  final labels = [Gender.male.name, Gender.female.name, if (nullable) 'All'];
+  return showRadioFieldDialog<Gender?>(
     context: context,
     initialValue: initialValue,
-    options: [Gender.male, Gender.female],
-    labels: [Gender.male.name, Gender.female.name]
+    options: options,
+    labels: labels
   );
 }

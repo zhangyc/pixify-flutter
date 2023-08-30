@@ -3,21 +3,34 @@ import 'dart:async';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
-import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/providers/dio.dart';
 
 import '../models/conversation.dart';
 import '../models/message.dart';
 
+// class AsyncHistoryMessagesNotifier extends AutoDisposeAsyncNotifierProviderFamily<List<ImMessage>, int> {
+//   Future<List<ImMessage>> _fetchData() {
+//     return fetchChatList(httpClient: ref.read(dioProvider)).then((resp) {
+//       return (resp.data as List).map((m) => ImConversation.fromJson(m)).toList();
+//     });
+//   }
+//
+//   @override
+//   FutureOr<List<ImMessage>> build() {
+//     return _fetchData();
+//   }
+// }
 
-final chatProvider = StreamProvider.family.autoDispose<List<ImMessage>, String>((ref, conversation) async* {
+// final asyncHistoryMessagesProvider = AsyncNotifierProvider.family.autoDispose();
+
+final chatMessageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>, String>((ref, conversationId) async* {
   var allMessages = const <ImMessage>[];
   await for (final message in messageStream) {
     // A new message has been received. Let's add it to the list of all messages.
     allMessages = [...allMessages, message];
     yield allMessages;
   }
-});
+}, dependencies: []);
 
 
 class AsyncConversationsNotifier extends AsyncNotifier<List<ImConversation>> {

@@ -68,6 +68,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           children: [
             Center(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(height: 108),
                   Padding(
