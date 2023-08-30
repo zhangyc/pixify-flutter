@@ -34,7 +34,7 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
     Gender? gender;
     final storageGenderValue = kvStore.getInt('match:gender');
     if (storageGenderValue != null) {
-      gender = Gender.values.firstWhere((g) => g.value == storageGenderValue);
+      gender = Gender.fromIndex(storageGenderValue);
     }
 
     RangeValues? ageRange;
@@ -60,7 +60,7 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
     state = state.copyWith(
       gender: gender
     );
-    ref.read(kvStoreProvider).setInt('match:gender', gender.value);
+    ref.read(kvStoreProvider).setInt('match:gender', gender.index);
   }
 }
 

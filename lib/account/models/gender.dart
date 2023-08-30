@@ -1,10 +1,10 @@
-enum Gender {
-  male(1, 'Male'),
-  female(2, 'Female');
+class Gender {
+  const Gender._({required this.index, required this.name});
+  final int index;
+  final String name;
 
-  const Gender(this.value, this.label);
-  final int value;
-  final String label;
+  static const male = Gender._(index: 1, name: 'Male');
+  static const female = Gender._(index: 2, name: 'Female');
 
   factory Gender.fromIndex(int index) {
     if (index == male.index) {

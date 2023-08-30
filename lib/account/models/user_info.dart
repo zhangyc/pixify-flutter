@@ -31,7 +31,7 @@ class MyInfo {
     return MyInfo(
       id: json['id'],
       name: json['nickname'],
-      gender: json['gender'] != null ? Gender.values.firstWhere((g) => g.value == json['gender']) : null,
+      gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
       birthday: json['birthday'] != null ? DateTime.tryParse(json['birthday']) : null,
       avatar: json['avatar'],
       bio: json['description'],
