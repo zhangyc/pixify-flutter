@@ -1,5 +1,4 @@
-import 'dart:ffi';
-
+import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/gender.dart';
 
 class MyInfo {
@@ -10,6 +9,7 @@ class MyInfo {
     required this.birthday,
     required this.avatar,
     required this.interests,
+    required this.position,
     this.bio,
     this.chatStyleId,
     this.photos = const <String>[]
@@ -24,6 +24,7 @@ class MyInfo {
   final int? chatStyleId;
   final List<String> interests;
   final List<String> photos;
+  final Position position;
 
   bool get completed => _validate();
 
@@ -31,13 +32,14 @@ class MyInfo {
     return MyInfo(
       id: json['id'],
       name: json['nickname'],
-      gender: json['gender'] != null ? Gender.values.firstWhere((g) => g.value == json['gender']) : null,
+      gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
       birthday: json['birthday'] != null ? DateTime.tryParse(json['birthday']) : null,
       avatar: json['avatar'],
       bio: json['description'],
       chatStyleId: json['chatStyleId'],
       interests: json['interest'] != null ? (json['interest'] as String).split(',') : [],
-      photos: json['images'] != null ? (json['images'] as List).map<String>((photo) => photo['attachmentUrl']).toList() : []
+      photos: json['images'] != null ? (json['images'] as List).map<String>((photo) => photo['attachmentUrl']).toList() : [],
+      position: Position.fromMap({'longitude': double.parse(json['longitude']), 'latitude': double.parse(json['latitude'])})
     );
   }
 

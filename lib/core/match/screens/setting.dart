@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/common/widgets/button/forward.dart';
+import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/utils/picker/gender.dart';
 
-class MatchSettingScreen extends StatefulWidget {
+class MatchSettingScreen extends ConsumerStatefulWidget {
   const MatchSettingScreen({super.key});
 
   @override
-  State<MatchSettingScreen> createState() => _MatchSettingScreenState();
+  ConsumerState<MatchSettingScreen> createState() => _MatchSettingScreenState();
 }
 
-class _MatchSettingScreenState extends State<MatchSettingScreen> {
-  Gender _gender = Gender.female;
-  RangeValues _ageRange = RangeValues(18, 38);
+class _MatchSettingScreenState extends ConsumerState<MatchSettingScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -30,29 +30,25 @@ class _MatchSettingScreenState extends State<MatchSettingScreen> {
           children: [
             ForwardButton(
               onTap: () async {
-                final g = await showGenderPicker(context: context, initialValue: _gender);
-                if (g != null && g != _gender) {
-                  setState(() {
-                    _gender = g;
-                  });
+                final g = await showGenderPicker(context: context, initialValue: ref.read(matchSettingProvider).gender);
+                if (g != null && g != ref.read(matchSettingProvider).gender) {
+                  ref.read(matchSettingProvider.notifier).setGender(g);
                 }
               },
-              text: '显示  ${_gender.name}'
+              text: '显示  ${ref.watch(matchSettingProvider).gender.name}'
             ),
             SizedBox(height: 16),
             ForwardButton(
-                onTap: () { },
-                text: '年龄  ${_ageRange.start.toInt()} - ${_ageRange.end.toInt()}'
+                onTap: () {},
+                text: '年龄  ${ref.watch(matchSettingProvider).ageRange.start.toInt()} - ${ref.watch(matchSettingProvider).ageRange.end.toInt()}'
             ),
             SizedBox(height: 8),
             RangeSlider(
               min: 14,
               max: 60,
-              values: _ageRange,
+              values: ref.watch(matchSettingProvider).ageRange,
               onChanged: (rv) {
-                setState(() {
-                  _ageRange = rv;
-                });
+                ref.read(matchSettingProvider.notifier).setAgeRange(rv);
               }
             )
           ],

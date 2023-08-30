@@ -11,7 +11,6 @@ import '../models/message.dart';
 
 
 final chatProvider = StreamProvider.family.autoDispose<List<ImMessage>, String>((ref, conversation) async* {
-  // return messageStream.where((message) => message.conversation == conversation);
   var allMessages = const <ImMessage>[];
   await for (final message in messageStream) {
     // A new message has been received. Let's add it to the list of all messages.
