@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/info.dart';
-import 'package:sona/core/chat/screens/conversation_list.dart';
+import 'package:sona/core/chat/screens/conversation.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 import 'package:sona/utils/location/location.dart';
 
-import 'match/providers/setting.dart';
 import 'match/screens/match.dart';
 
 class SonaHome extends StatefulHookConsumerWidget {
@@ -43,7 +41,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         children: const [
           MatchScreen(),
           PersonaScreen(),
-          ConversationList(),
+          ConversationScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
