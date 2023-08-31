@@ -1,82 +1,52 @@
-import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/core/chat/message.dart';
-import 'package:sona/core/chat/services/chat.dart';
-import 'package:sona/utils/providers/dio.dart';
+import 'package:sona/account/providers/info.dart';
 
 import '../models/conversation.dart';
 import '../models/message.dart';
 
-// class AsyncHistoryMessagesNotifier extends AutoDisposeAsyncNotifierProviderFamily<List<ImMessage>, int> {
-//   Future<List<ImMessage>> _fetchData() {
-//     return fetchChatList(httpClient: ref.read(dioProvider)).then((resp) {
-//       return (resp.data as List).map((m) => ImConversation.fromJson(m)).toList();
-//     });
-//   }
-//
-//   @override
-//   FutureOr<List<ImMessage>> build() {
-//     return _fetchData();
-//   }
-// }
-
-// final asyncHistoryMessagesProvider = AsyncNotifierProvider.family.autoDispose();
-
-final chatMessageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>, String>((ref, conversationId) async* {
-  var allMessages = const <ImMessage>[];
-  await for (final message in messageStream) {
-    // A new message has been received. Let's add it to the list of all messages.
-    allMessages = [...allMessages, message];
-    yield allMessages;
+final conversationStreamProvider = StreamProvider<List<ImConversation>>((ref) async* {
+  final userId = ref.read(asyncMyProfileProvider).value!.id;
+  final stream = FirebaseFirestore.instance
+      .collection('users').doc('$userId')
+      .collection('rooms').orderBy('id', descending: true).limit(100)
+      .snapshots();
+  await for (var snapshot in stream) {
+    var conversations = snapshot.docs.map<ImConversation>((doc) => ImConversation.fromJson(doc.data())).toList();
+    yield conversations;
   }
-}, dependencies: []);
+});
 
-
-class AsyncConversationsNotifier extends AsyncNotifier<List<ImConversation>> {
-  Future<List<ImConversation>> _fetchData() {
-    return fetchChatList(httpClient: ref.read(dioProvider)).then((resp) {
-      return (resp.data as List).map((m) => ImConversation.fromJson(m)).toList();
-    });
-  }
-
-  @override
-  FutureOr<List<ImConversation>> build() {
-    return _fetchData();
-  }
-
-  Future<void> refresh() async {
-    state = await AsyncValue.guard(() => _fetchData());
-  }
-}
-
-final asyncConversationsProvider = AsyncNotifierProvider<AsyncConversationsNotifier, List<ImConversation>>(
-  () => AsyncConversationsNotifier(),
+final messagePaginationProvider = StateProvider.family.autoDispose<DocumentSnapshot?, int>(
+    (ref, roomId) => null
 );
 
-
-class AsyncMessagesNotifier extends AutoDisposeFamilyAsyncNotifier<List<ImMessage>, int> {
-  Future<List<ImMessage>> _fetchData(int id) {
-    return fetchMessageList(
-      httpClient: ref.read(dioProvider),
-      userId: id,
-      page: 1,
-      pageSize: 100
-    ).then((resp) {
-      return (resp.data['list'] as List).map((m) => ImMessage.fromJson(m)).toList();
+final messageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>, int>(
+  (ref, roomId) async* {
+    List<ImMessage> messages = [];
+    final userId = ref.read(asyncMyProfileProvider).value!.id;
+    final stream = FirebaseFirestore.instance
+        .collection('users').doc('$userId')
+        .collection('rooms').doc('$roomId')
+        .collection('msgs').orderBy('id', descending: true)
+        .snapshots();
+    ref.listen(messagePaginationProvider(roomId), (previous, next) async {
+      if (next != null) {
+        final historyMessages = await FirebaseFirestore.instance
+            .collection('users').doc('$userId')
+            .collection('rooms').doc('$roomId')
+            .collection('msgs').orderBy('id', descending: true).startAfterDocument(next)
+            .get()
+            .then<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((snapshot) => snapshot.docs)
+            .then<Iterable<ImMessage>>((docs) => docs.map<ImMessage>((doc) => ImMessage.fromJson(doc.data())));
+        messages = [...messages, ...historyMessages];
+      }
     });
-  }
-
-  @override
-  FutureOr<List<ImMessage>> build(int arg) {
-    return _fetchData(arg);
-  }
-
-  Future<void> refresh() async {
-    state = await AsyncValue.guard(() => _fetchData(arg));
-  }
-}
-
-final asyncMessagesProvider = AsyncNotifierProvider.family.autoDispose<AsyncMessagesNotifier, List<ImMessage>, int>(
-    () => AsyncMessagesNotifier()
+    await for (var snapshot in stream) {
+      // snapshot.docChanges.
+      messages = snapshot.docs.map<ImMessage>((doc) => ImMessage.fromJson(doc.data())).toList();
+      yield messages;
+    }
+  },
+  dependencies: [messagePaginationProvider]
 );
