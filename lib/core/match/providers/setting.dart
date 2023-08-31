@@ -1,6 +1,3 @@
-
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,7 +23,7 @@ final positionProvider = StateProvider<Position?>((ref) {
 @immutable
 class MatchSetting {
   const MatchSetting({required this.gender, required this.ageRange});
-  final Gender gender;
+  final Gender? gender;
   final RangeValues ageRange;
 
   MatchSetting copyWith({
@@ -42,21 +39,21 @@ class MatchSetting {
 
 class MatchSettingNotifier extends Notifier<MatchSetting> {
   static final debounce = Debounce(duration: const Duration(milliseconds: 300));
+  static const genderKey = 'match:gender';
+  static const ageRangeKey = 'match:agerange';
 
   @override
   MatchSetting build() {
     final kvStore = ref.read(kvStoreProvider);
 
     Gender? gender;
-    final storageGenderValue = kvStore.getInt('match:gender');
+    final storageGenderValue = kvStore.getInt(genderKey);
     if (storageGenderValue != null) {
       gender = Gender.fromIndex(storageGenderValue);
-    } else {
-      gender = ref.read(asyncMyProfileProvider).value!.gender!.opposite();
     }
 
-    RangeValues? ageRange;
-    final ageRangeValues = kvStore.getString('match:agerange');
+    RangeValues ageRange;
+    final ageRangeValues = kvStore.getString(ageRangeKey);
     if (ageRangeValues != null) {
       final values = ageRangeValues.split(':');
       ageRange = RangeValues(double.parse(values[0]), double.parse(values[1]));
@@ -75,16 +72,20 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
       ageRange: ageRange
     );
     debounce.run(ref.read(asyncMatchRecommendedProvider.notifier).refresh);
-    ref.read(kvStoreProvider).setString('match:agerange', [ageRange.start.toInt(), ageRange.end.toInt()].join(':'));
+    ref.read(kvStoreProvider).setString(ageRangeKey, [ageRange.start.toInt(), ageRange.end.toInt()].join(':'));
   }
 
-  void setGender(Gender gender) {
+  void setGender(Gender? gender) {
     if (gender == state.gender) return;
     state = state.copyWith(
       gender: gender
     );
     debounce.run(ref.read(asyncMatchRecommendedProvider.notifier).refresh);
-    ref.read(kvStoreProvider).setInt('match:gender', gender.index);
+    if (gender != null) {
+      ref.read(kvStoreProvider).setInt(genderKey, gender.index);
+    } else {
+      ref.read(kvStoreProvider).remove(genderKey);
+    }
   }
 }
 

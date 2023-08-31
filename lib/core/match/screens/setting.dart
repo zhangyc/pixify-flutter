@@ -30,12 +30,16 @@ class _MatchSettingScreenState extends ConsumerState<MatchSettingScreen> {
           children: [
             ForwardButton(
               onTap: () async {
-                final g = await showGenderPicker(context: context, initialValue: ref.read(matchSettingProvider).gender);
-                if (g != null && g != ref.read(matchSettingProvider).gender) {
+                final g = await showGenderPicker(
+                  context: context,
+                  initialValue: ref.read(matchSettingProvider).gender,
+                  nullable: true
+                );
+                if (g != ref.read(matchSettingProvider).gender) {
                   ref.read(matchSettingProvider.notifier).setGender(g);
                 }
               },
-              text: '显示  ${ref.watch(matchSettingProvider).gender.name}'
+              text: '显示  ${ref.watch(matchSettingProvider).gender?.name ?? 'All'}'
             ),
             SizedBox(height: 16),
             ForwardButton(
