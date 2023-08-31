@@ -13,47 +13,32 @@ import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/providers/dio.dart';
 
 import '../widgets/liked_me.dart';
-///会话列表
-class ConversationList extends StatefulHookConsumerWidget {
-  const ConversationList({super.key});
-  static const routeName="lib/core/chat/screens/conversation_list";
+
+class ConversationScreen extends StatefulHookConsumerWidget {
+  const ConversationScreen({super.key});
+
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ChatScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ConversationScreenState();
 }
 
-class _ChatScreenState extends ConsumerState<ConversationList> with AutomaticKeepAliveClientMixin, RouteAware {
-
-  Timer? _timer;
-
-  void _startRefresh() {
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      ref.read(asyncLikedMeProvider.notifier).refresh();
-      ref.read(asyncConversationsProvider.notifier).refresh();
-    });
-  }
-
+class _ConversationScreenState extends ConsumerState<ConversationScreen> with AutomaticKeepAliveClientMixin, RouteAware {
   @override
   void initState() {
-    _startRefresh();
     super.initState();
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     super.dispose();
   }
 
   @override
   void didPushNext() {
-    _timer?.cancel();
     super.didPushNext();
   }
 
   @override
   void didPopNext() {
-    _startRefresh();
     super.didPopNext();
   }
 
@@ -70,13 +55,13 @@ class _ChatScreenState extends ConsumerState<ConversationList> with AutomaticKee
           SliverToBoxAdapter(
             child: LikedMeListView(onMatchedTap: _startANewChat),
           ),
-          ref.watch(asyncConversationsProvider).when(
+          ref.watch(conversationStreamProvider).when(
             data: (conversations) => SliverList.separated(
               itemBuilder: (BuildContext context, int index) {
                 final conversation = conversations[index];
                 return GestureDetector(
                   key: ValueKey(conversation.otherSide.id),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(otherSide: conversation.otherSide))),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatFunctionScreen(otherSide: conversation.otherSide))),
                   onLongPress: () => _showConversationActions(conversation),
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 16),
@@ -113,7 +98,7 @@ class _ChatScreenState extends ConsumerState<ConversationList> with AutomaticKee
   }
 
   void _startANewChat(UserInfo u) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(otherSide: u)));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatFunctionScreen(otherSide: u)));
   }
 
   @override

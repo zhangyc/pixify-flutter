@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 import 'package:sona/core/chat/providers/chat_action.dart';
-import 'package:sona/core/chat/screens/chat.dart';
+import 'package:sona/core/chat/screens/conversation.dart';
+
+import '../screens/chat.dart';
 
 class ChatActions extends ConsumerStatefulWidget {
   const ChatActions({super.key, required this.onAct});

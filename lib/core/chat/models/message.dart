@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sona/common/models/user.dart';
 
 class ImMessage {
@@ -23,7 +24,7 @@ class ImMessage {
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
       content: json['message'],
-      time: DateTime.fromMillisecondsSinceEpoch(json['createDate']).add(const Duration(hours: 8)),
+      time: (json['createDate'] as Timestamp).toDate(),
       knowledgeAdded: json['knowledge_added'] ?? false
     );
   }

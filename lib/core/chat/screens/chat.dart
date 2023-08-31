@@ -21,9 +21,9 @@ import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/providers/dio.dart';
-///聊天
-class ChatScreen extends StatefulHookConsumerWidget {
-  const ChatScreen({super.key, required this.otherSide});
+
+class ChatFunctionScreen extends StatefulHookConsumerWidget {
+  const ChatFunctionScreen({super.key, required this.otherSide});
   final UserInfo otherSide;
   static const routeName="lib/core/chat/screens/chat";
 
@@ -31,40 +31,27 @@ class ChatScreen extends StatefulHookConsumerWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatFunctionScreenState();
 }
 
-class _ChatFunctionScreenState extends ConsumerState<ChatScreen> with RouteAware {
+class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with RouteAware {
 
-  Timer? _timer;
   ChatActionMode _mode = ChatActionMode.docker;
-
-  void _startRefresh() {
-    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (mounted) {
-        ref.read(asyncMessagesProvider(widget.otherSide.id).notifier).refresh();
-      }
-    });
-  }
 
   @override
   void initState() {
-    _startRefresh();
     super.initState();
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     super.dispose();
   }
 
   @override
   void didPushNext() {
-    _timer?.cancel();
     super.didPushNext();
   }
 
   @override
   void didPopNext() {
-    _startRefresh();
     super.didPopNext();
   }
 
@@ -91,7 +78,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatScreen> with RouteAware
           children: [
             Positioned.fill(
               bottom: 100,
-              child: ref.watch(asyncMessagesProvider(widget.otherSide.id)).when(
+              child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
                 data: (messages) => messages.isNotEmpty ? Container(
                   alignment: Alignment.topCenter,
                   child: ListView.separated(
@@ -432,10 +419,10 @@ class _ChatFunctionScreenState extends ConsumerState<ChatScreen> with RouteAware
                             httpClient: ref.read(dioProvider),
                             userId: widget.otherSide.id,
                             type: CallSonaType.SUGGEST,
-                            content: m['value'],
+                            content: m['message'],
                           );
                         },
-                        text: m['key']
+                        text: m['short']
                     ),
                   )),
                   SizedBox(height: 30),

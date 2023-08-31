@@ -19,7 +19,7 @@ final tokenProvider = StateProvider<String?>(
         ref.invalidate(asyncLikedMeProvider);
         ref.invalidate(asyncPersonaProvider);
         ref.invalidate(asyncMatchRecommendedProvider);
-        ref.invalidate(asyncConversationsProvider);
+        ref.invalidate(conversationStreamProvider);
         ref.invalidate(asyncChatStylesProvider);
       } else {
         kvStore.setString(tokenKey, next);

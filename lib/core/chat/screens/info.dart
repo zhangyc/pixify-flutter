@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/core/chat/screens/chat.dart';
-import 'package:sona/core/persona/models/persona.dart';
 
 import '../../../common/models/user.dart';
-import '../../../utils/providers/dio.dart';
 
 class ChatInfoScreen extends StatefulHookConsumerWidget {
   const ChatInfoScreen({
