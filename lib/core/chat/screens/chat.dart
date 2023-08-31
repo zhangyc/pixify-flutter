@@ -25,6 +25,7 @@ import '../../../utils/providers/dio.dart';
 class ChatScreen extends StatefulHookConsumerWidget {
   const ChatScreen({super.key, required this.otherSide});
   final UserInfo otherSide;
+  static const routeName="lib/core/chat/screens/chat";
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatFunctionScreenState();

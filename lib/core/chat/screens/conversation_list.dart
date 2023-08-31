@@ -16,7 +16,7 @@ import '../widgets/liked_me.dart';
 ///会话列表
 class ConversationList extends StatefulHookConsumerWidget {
   const ConversationList({super.key});
-
+  static const routeName="lib/core/chat/screens/conversation_list";
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatScreenState();
 }
