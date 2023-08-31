@@ -2,9 +2,6 @@
 class Assets {
   Assets._();
 
-  static const String assetsBg = 'assets/bg.gif';
   static const String assetsKael = 'assets/kael.jpeg';
-  static const String assetsSpineNewProject1 = 'assets/spine/NewProject_1.atlas';
-  static const String spineNewProject1 = 'assets/spine/NewProject_1.png';
 
 }

@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sona/core/chat/screens/function.dart';
+import 'package:sona/core/chat/screens/chat.dart';
 
 import '../../../common/widgets/text/gradient_colored_text.dart';
 

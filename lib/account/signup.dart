@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/firebase/sona_firebase.dart';
 
 import '../utils/providers/dio.dart';
 
@@ -85,7 +86,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       final name = _nameController.text;
       final dio = ref.read(dioProvider);
       try {
-        final resp = await dio.post('/auth/signup', data: {'phone': widget.phone, 'pin': widget.pin, 'name': name});
+        final resp = await dio.post('/auth/signup',
+            data: {'phone': widget.phone, 'pin': widget.pin, 'name': name, 'deviceToken': deviceToken}..removeWhere((key, value) => value==null));
         final data = resp.data as Map<String, dynamic>;
         if (data['code'] == 1) {
           final token = data['data']['token'];

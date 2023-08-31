@@ -9,6 +9,7 @@ import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/setting.dart';
 
 import '../../../common/widgets/button/colored.dart';
+import '../../../firebase/sona_firebase.dart';
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});
@@ -23,6 +24,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
 
   @override
   void initState() {
+
     _controller = AppinioSwiperController();
     super.initState();
   }
@@ -46,7 +48,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
       ),
       body: ref.watch(asyncMatchRecommendedProvider).when<Widget>(
           data: (List<UserInfo> users) {
-            _current_user ??= users.first;
+            _current_user ??= users.isNotEmpty?users.first:null;
             return SafeArea(
               child: Stack(
                 children: [

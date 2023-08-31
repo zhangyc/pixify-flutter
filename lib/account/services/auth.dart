@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../../firebase/sona_firebase.dart';
 Future<Response> sendPin({
   required Dio httpClient,
   required String countryCode,
@@ -25,7 +26,9 @@ Future<Response> login({
       data: {
         'phonePrefix': countryCode,
         'phone': phoneNumber,
-        'code': pinCode
-      }
+        'code': pinCode,
+        'deviceToken': deviceToken,
+        'timezone':'${DateTime.now().timeZoneOffset.inHours}'
+      }..removeWhere((key, value) => value==null)
   );
 }

@@ -9,6 +9,7 @@ import 'package:sona/account/required_info_form.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/account/signup.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/firebase/sona_firebase.dart';
 import 'package:sona/utils/http/interceptors/base.dart';
 import 'package:sona/utils/providers/dio.dart';
 import 'package:sona/utils/providers/firebase.dart';
@@ -54,7 +55,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // storeService.collection('messages-test').doc('user-10').collection('room-10-12').get().then(
+    //       (doc) {
+    //     print(doc);
+    //     // ...
+    //   },
+    //   onError: (e) => print("Error getting document: $e"),
+    // );
+    // storeService.collection('messages-test').doc('user-10').collection('room-10-12').snapshots().listen((event) {
+    //   print(event);
+    // });
+
+    // storeService.runTransaction((transaction) async{
+    //   transaction.set(storeService
+    //       .collection('messages-test')
+    //       .doc('groupChatId')
+    //       .collection('groupChatId')
+    //       .doc(DateTime.now().millisecondsSinceEpoch.toString()), data);
+    // });
+    storeService.collection('messages-test').doc('user-10').get().then((value){
+      print(value);
+    });
     super.initState();
   }
 
@@ -187,6 +208,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             pinCode: _pinController.text
         );
         final token = resp.data['token'];
+
         ref.read(tokenProvider.notifier).state = token;
         ref.read(asyncMyProfileProvider.notifier).refresh();
       } on CustomDioException catch (e) {

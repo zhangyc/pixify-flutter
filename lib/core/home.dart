@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/info.dart';
-import 'package:sona/core/chat/screens/chat.dart';
+import 'package:sona/core/chat/screens/conversation_list.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 import 'package:sona/utils/location/location.dart';
@@ -43,7 +43,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         children: const [
           MatchScreen(),
           PersonaScreen(),
-          ChatScreen(),
+          ConversationList(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

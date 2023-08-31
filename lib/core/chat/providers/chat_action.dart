@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../screens/function.dart';
+import '../screens/chat.dart';
 
 final joystickCenterPositionProvider = StateProvider<Offset>((ref) => Offset.zero);
 

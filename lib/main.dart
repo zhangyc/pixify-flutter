@@ -1,43 +1,52 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sona/utils/providers/firebase.dart';
+import 'package:sona/firebase/sona_firebase.dart';
 import 'package:sona/utils/providers/kv_store.dart';
 
 import 'app.dart';
 import 'firebase_options.dart';
 import 'utils/providers/app_lifecycle.dart';
-///如果使用的是 Flutter 3.3.0 版或更高版本，则必须紧接函数声明之前用 @pragma('vm:entry-point') 标注消息处理程序（否则，对于发布模式，可能会在摇树优化期间将其移除）。
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  //await Firebase.initializeApp();
 
-  print("Handling a background message: ${message.messageId}");
-}
+
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler); ///后台消息处理
   var appStateObserver = AppStateObserver();
-  WidgetsBinding.instance.addObserver(appStateObserver);
+  WidgetsBinding.instance.addObserver(appStateObserver);  ///判断app当前在前台还是后台
 
   final firebase = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
     name: 'sona'
   );
-  ///初始化firebase app。
+  ///成功初始化firebase app。
   if(firebase.name=='sona'){
-
-    FirebaseMessaging.instance.getToken().then((String? token) {
-      print(token);
+    sonaFireBase=firebase;
+    authService = FirebaseAuth.instanceFor(app: firebase);
+    messagesService =FirebaseMessaging.instance;
+    NotificationSettings settings = await messagesService.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    messagesService.setForegroundNotificationPresentationOptions(
+      badge: true
+    );
+    messagesService.getToken().then((value){
+      deviceToken=value;
     });
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
+    ///应用在前台时，
+    FirebaseMessaging.onMessage.listen(foreground);
+    storeService=FirebaseFirestore.instance;
   }
   final preferences = await SharedPreferences.getInstance();
   runApp(
