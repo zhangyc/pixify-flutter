@@ -55,27 +55,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   void initState() {
-    // storeService.collection('messages-test').doc('user-10').collection('room-10-12').get().then(
-    //       (doc) {
-    //     print(doc);
-    //     // ...
-    //   },
-    //   onError: (e) => print("Error getting document: $e"),
-    // );
-    // storeService.collection('messages-test').doc('user-10').collection('room-10-12').snapshots().listen((event) {
-    //   print(event);
-    // });
-
-    // storeService.runTransaction((transaction) async{
-    //   transaction.set(storeService
-    //       .collection('messages-test')
-    //       .doc('groupChatId')
-    //       .collection('groupChatId')
-    //       .doc(DateTime.now().millisecondsSinceEpoch.toString()), data);
-    // });
-    storeService.collection('messages-test').doc('user-10').get().then((value){
-      print(value);
-    });
     super.initState();
   }
 
