@@ -38,6 +38,7 @@ dependencies:
   firebase_analytics: ^10.4.5
   firebase_crashlytics: ^3.3.5
   intl: ^0.18.1
+  flutter_local_notifications: ^15.1.1
 dev_dependencies:
   custom_lint: ^0.4.0
   flutter_lints: ^2.0.0
