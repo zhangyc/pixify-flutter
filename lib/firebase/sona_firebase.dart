@@ -38,3 +38,33 @@ void foreground(RemoteMessage message) {
     print('Message also contained a notification: ${message.notification}');
   }
 }
+Future<void> initFireBaseService(FirebaseApp firebase) async {
+  sonaFireBase=firebase;
+  authService = FirebaseAuth.instanceFor(app: firebase);
+  messagesService =FirebaseMessaging.instance;
+  ///终止应用程序后，您需要以Main.dart的主要方法获取消息，
+  ///如果您尝试将其获取其他任何地方，则会失败。
+  ///我将此消息传递到第一页，然后在Initstate中采取了适当的诉讼。
+  final RemoteMessage? _message = await messagesService.getInitialMessage();  ///这个方法
+
+  NotificationSettings settings = await messagesService.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  messagesService.setForegroundNotificationPresentationOptions(
+      badge: true
+  );
+  messagesService.getToken().then((value){
+    deviceToken=value;
+  });
+
+  ///应用在前台时，
+  FirebaseMessaging.onMessage.listen(foreground);
+  storeService=FirebaseFirestore.instance;
+}
