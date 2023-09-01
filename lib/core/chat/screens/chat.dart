@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -452,6 +453,16 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
 
   Future _deleteAllMessages() async {
     await deleteAllMessages(httpClient: ref.read(dioProvider), id: widget.otherSide.id);
+    var allMsgs = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(ref.read(asyncMyProfileProvider).value!.id.toString())
+        .collection('rooms')
+        .doc(widget.otherSide.id.toString())
+        .collection('msgs')
+        .get();
+    allMsgs.docs.forEach((doc) {
+      doc.reference.delete();
+    });
   }
 }
 
