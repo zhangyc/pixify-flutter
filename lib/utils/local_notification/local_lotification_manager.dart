@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:sona/core/chat/screens/conversation.dart';
 
-import '../../core/chat/screens/conversation_list.dart';
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
  'high_importance_channel', // id
  'High Importance Notifications', // ti
@@ -74,7 +74,7 @@ void initNotificationPlugin() async{
  if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
   selectedNotificationPayload =
       notificationAppLaunchDetails!.notificationResponse?.payload;
-  initialRoute =ConversationList.routeName;
+  initialRoute =ConversationScreen.routeName;
  }
 
  final List<DarwinNotificationCategory> darwinNotificationCategories =

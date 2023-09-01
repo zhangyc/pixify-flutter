@@ -13,7 +13,6 @@ import 'package:sona/firebase/sona_firebase.dart';
 import 'package:sona/utils/providers/kv_store.dart';
 
 import 'app.dart';
-import 'core/chat/screens/conversation_list.dart';
 import 'firebase_options.dart';
 import 'utils/local_notification/local_lotification_manager.dart';
 import 'utils/providers/app_lifecycle.dart';
