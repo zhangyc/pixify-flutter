@@ -11,7 +11,7 @@ import 'package:sona/core/persona/providers/persona.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
 
-import '../utils/providers/dio.dart';
+import '../../utils/providers/dio.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});

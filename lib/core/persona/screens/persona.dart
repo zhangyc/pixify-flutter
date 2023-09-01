@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/profile.dart';
+import 'package:sona/account/screens/profile.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/providers/dio.dart';

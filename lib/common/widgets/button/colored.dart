@@ -2,17 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../app.dart';
-
 class ColoredButton extends StatefulWidget {
   const ColoredButton({
     Key? key,
     required this.onTap,
     this.loadingWhenAsyncAction = false,
-    this.size = ColoredButtonSize.Big,
-    this.color = scaffoldBackgroundColor,
+    this.size = ColoredButtonSize.medium,
+    this.color = const Color(0xFFFFFFFF),
     required this.text,
-    this.fontColor = fontColour,
+    this.fontColor = const Color(0xFF000000),
+    this.borderColor = const Color(0x00000000),
     this.disabled = false
   }) : super(key: key);
 
@@ -21,6 +20,7 @@ class ColoredButton extends StatefulWidget {
   final ColoredButtonSize size;
   final Color color;
   final String text;
+  final Color borderColor;
   final Color fontColor;
   final bool disabled;
 
@@ -30,10 +30,6 @@ class ColoredButton extends StatefulWidget {
 
 class _ColoredButtonState extends State<ColoredButton> {
   bool _loading = false;
-  double get _height => widget.size == ColoredButtonSize.Big ? 44 : 30;
-  double get _radius => widget.size == ColoredButtonSize.Big ? 6 : 4;
-  double get _fontSize => widget.size == ColoredButtonSize.Big ? 15 : 12;
-  double get _borderWidth => widget.size == ColoredButtonSize.Big ? 2 : 1;
 
   void Function()? get onTap => !_loading ? () {
     if (widget.disabled || widget.onTap == null) return;
@@ -58,23 +54,17 @@ class _ColoredButtonState extends State<ColoredButton> {
       style: TextStyle(
           color: widget.disabled ? Color(0xFF888888) : widget.fontColor,
           fontWeight: FontWeight.w500,
-          fontSize: _fontSize
+          fontSize: widget.size.fontSize
       )
-  ) : Center(
-    child: SizedBox(
-      width: _height / 2,
-      height: _height / 2,
-      child: CircularProgressIndicator(
+  ) : SizedBox(
+      width: widget.size.height / 2,
+      height: widget.size.height / 2,
+      child: const CircularProgressIndicator(
         backgroundColor: Color(0xFFD4D4D4),
         valueColor: AlwaysStoppedAnimation(Color(0xFF888888)),
         strokeWidth: 2.5,
       ),
-    ),
   );
-
-  EdgeInsets get padding => widget.size == ColoredButtonSize.Big
-      ? EdgeInsets.symmetric(horizontal: 24, vertical: 8)
-      : EdgeInsets.symmetric(horizontal: 12, vertical: 4);
 
   @override
   Widget build(BuildContext context) {
@@ -83,15 +73,16 @@ class _ColoredButtonState extends State<ColoredButton> {
       child: InkWell(
         onTap: onTap,
         splashColor: Colors.black12,
-        customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_borderWidth)),
+        customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(widget.size.borderRadiusCircular)),
         child: Ink(
             decoration: BoxDecoration(
                 color: widget.disabled ? Color(0xFF888888) : widget.color,
-                borderRadius: BorderRadius.circular(_radius),
-                border: Border.all(color: Theme.of(context).colorScheme.primaryContainer, width: _borderWidth)
+                borderRadius: BorderRadius.circular(widget.size.borderRadiusCircular),
+                border: Border.all(color: widget.borderColor, width: widget.size.borderWidth)
             ),
-            padding: padding,
-            child: child
+            padding: EdgeInsets.symmetric(horizontal: widget.size.height * 0.2),
+            height: widget.size.height,
+            child: Center(child: child)
         ),
       ),
     );
@@ -104,6 +95,33 @@ class _ColoredButtonState extends State<ColoredButton> {
 
 
 enum ColoredButtonSize {
-  Big,
-  Small
+  large(
+      height: 64,
+      fontSize: 17,
+      borderWidth: 4,
+      borderRadiusCircular: 10
+  ),
+  medium(
+      height: 44,
+      fontSize: 15,
+      borderWidth: 2.5,
+      borderRadiusCircular: 6
+  ),
+  small(
+      height: 30,
+      fontSize: 12,
+      borderWidth: 1,
+      borderRadiusCircular: 4
+  );
+
+  const ColoredButtonSize({
+    required this.height,
+    required this.fontSize,
+    required this.borderWidth,
+    required this.borderRadiusCircular
+  });
+  final double height;
+  final double fontSize;
+  final double borderWidth;
+  final double borderRadiusCircular;
 }

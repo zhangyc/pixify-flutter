@@ -3,20 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/required_info_form.dart';
-import 'package:sona/account/login.dart';
+import 'package:sona/account/screens/required_info_form.dart';
+import 'package:sona/account/screens/login.dart';
 import 'package:sona/account/providers/info.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/providers/navigator_key.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sona/theme/theme.dart';
 
 import 'core/home.dart';
-
-
-const primaryColor =  Color(0xFFFF00D4);
-const scaffoldBackgroundColor = Colors.white;
-const fontColour = Color(0xFF4D4D4D);
 
 class SonaApp extends HookConsumerWidget {
   const SonaApp({super.key});
@@ -93,51 +89,7 @@ class SonaApp extends HookConsumerWidget {
           ),
         );
       }),
-      theme: ThemeData(
-        useMaterial3: true,
-        primaryColor: primaryColor,
-        scaffoldBackgroundColor: scaffoldBackgroundColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.transparent,
-          titleTextStyle: GoogleFonts.inder(
-            textStyle: const TextStyle(
-              color: fontColour,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 1
-            )
-          ),
-          elevation: 0,
-          centerTitle: true,
-          iconTheme: const IconThemeData(
-            color: fontColour
-          ),
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.light,
-            statusBarColor: Colors.transparent,
-            statusBarIconBrightness: Brightness.dark
-          )
-        ),
-        textTheme: TextTheme(
-          bodyMedium: GoogleFonts.inder(
-              textStyle: const TextStyle(
-                  color: fontColour,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 1
-              )
-          ),
-          bodySmall: GoogleFonts.inder(
-            textStyle: const TextStyle(
-              color: fontColour,
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              letterSpacing: 1
-            )
-          )
-        )
-      ),
+      theme: themeData,
       initialRoute: token == null ? 'login' : '/',
       // routes: _routes,
       onGenerateRoute: _onGenerateRoute,
@@ -153,7 +105,6 @@ final _routes = <String, WidgetBuilder>{
 
 Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
   final name = settings.name;
-  print('on-generate-route: $name');
   final builder = _routes[name]!;
   return MaterialPageRoute(builder: builder, settings: settings);
 }
