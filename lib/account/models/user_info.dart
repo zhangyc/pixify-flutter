@@ -43,6 +43,22 @@ class MyInfo {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'nickname': name,
+      'gender': gender?.index,
+      'birthday': birthday?.toString(),
+      'avatar': avatar,
+      'description': bio,
+      'chatStyleId': chatStyleId,
+      'interest': interests.join(','),
+      'images': photos.map<Map<String, dynamic>>((photo) => {'attachmentUrl': photo}).toList(),
+      'longitude': position.longitude.toString(),
+      'latitude': position.latitude.toString()
+    };
+  }
+
   bool _validate() {
     return name != null
         && gender != null
