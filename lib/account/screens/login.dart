@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -97,7 +98,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           initialCountryCode: 'CN',
                           onChanged: (PhoneNumber? pn) {
-                            _countryCode = pn?.countryCode;
+                            _countryCode = pn?.countryCode.replaceAll('+', '');
                             _phoneNumber = pn?.number;
                           },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -137,9 +138,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       SizedBox(height: 4),
-                      Text(
-                        'we sent to $_countryCode $_phoneNumber',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'we sent to $_countryCode $_phoneNumber',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            WidgetSpan(child: SizedBox(width: 8)),
+                            TextSpan(
+                              text: 'change number',
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).colorScheme.primary
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  _controller.animateToPage(0,
+                                      duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+                                  _pinController.clear();
+                                  _pinFocusNode.unfocus();
+                                  _phoneFocusNode.requestFocus();
+                                }
+                            )
+                          ]
+                        )
                       ),
                       SizedBox(height: 32),
                       Form(
@@ -189,9 +211,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future _next() async {
     if (_phoneKey.currentState!.validate()) {
-      _phoneKey.currentState!.save();
-
-      await _sendPin();
+      _sendPin();
+      if (mounted) setState(() {});
       await _controller.animateToPage(1,
           duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

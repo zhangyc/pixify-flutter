@@ -162,7 +162,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Future _showGenderEditor() async {
-    var gender = await showGenderPicker(context: context);
+    var gender = await showGenderPicker(
+        context: context,
+        initialValue: ref.read(asyncMyProfileProvider).value!.gender,
+    );
     if (gender != null && gender != _profile.gender) {
       ref.read(asyncMyProfileProvider.notifier).updateInfo(gender: gender);
     }

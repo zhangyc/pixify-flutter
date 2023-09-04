@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sona/common/widgets/button/option.dart';
 
 import '../../common/widgets/button/colored.dart';
 
@@ -388,9 +389,9 @@ Future<String?> showTextFieldDialog({
 Future<T?> showRadioFieldDialog<T>({
   required BuildContext context,
   T? initialValue,
-  required List<T> options,
-  required List<String> labels,
+  required Map<String, T> options,
   String? title,
+  bool dismissible = false
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -398,67 +399,58 @@ Future<T?> showRadioFieldDialog<T>({
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
         )
     ),
+    clipBehavior: Clip.antiAlias,
+    isDismissible: dismissible,
     builder: (BuildContext context) {
+      final itemCount = dismissible ? options.length + 1 : options.length;
+
       return Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 10),
-            Container(
-              width: 30,
-              height: 3,
-              color: Colors.black12,
-            ),
-            SizedBox(height: 24),
             Visibility(
               visible: title != null && title.isNotEmpty,
-              child: Text(
-                  title ?? '',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18
-                  )
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                child: Text(
+                    title ?? '',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 18
+                    )
+                ),
               ),
             ),
-            SizedBox(height: 20),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4)
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        ...options.asMap().keys.map(
-                          (index) => Container(
-                            margin: EdgeInsets.symmetric(vertical: 5),
-                            child: ColoredButton(
-                              onTap: () {
-                                Navigator.pop(context, options[index]);
-                              },
-                              color: initialValue == options[index] ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.background,
-                              text: labels[index]
-                            ),
-                          )
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            ListView.separated(
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == options.length) {
+                  return OptionButton(
+                    onTap: () => Navigator.pop(context, null),
+                    color: Colors.transparent,
+                    text: 'Cancel',
+                    fontColor: Theme.of(context).colorScheme.error,
+                  );
+                }
+
+                final key = options.keys.toList(growable: false)[index];
+                final value = options[key];
+                return OptionButton(
+                    onTap: () => Navigator.pop(context, value),
+                    color: initialValue == value ? Theme.of(context).colorScheme.secondaryContainer : Colors.transparent,
+                    text: key
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(height: 1, indent: 0);
+              },
+              itemCount: itemCount,
             ),
-            SizedBox(height: 40)
           ],
         ),
       );
