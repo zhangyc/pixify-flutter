@@ -33,7 +33,6 @@ class _MatchSettingScreenState extends ConsumerState<MatchSettingScreen> {
                 final g = await showGenderPicker(
                   context: context,
                   initialValue: ref.read(matchSettingProvider).gender,
-                  nullable: true
                 );
                 if (g != ref.read(matchSettingProvider).gender) {
                   ref.read(matchSettingProvider.notifier).setGender(g);

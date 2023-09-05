@@ -380,7 +380,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   void _onGenderTap() async {
     _gender = await showGenderPicker(
       context: context,
-      title: 'Select your gender'
+      dismissible: false
     );
     setState(() {});
   }
