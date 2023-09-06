@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/info.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
 import 'package:sona/core/persona/screens/persona.dart';
-import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 import 'package:sona/utils/location/location.dart';
 
 import 'match/screens/match.dart';
@@ -34,87 +33,41 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: _onPageChange,
         children: const [
-          MatchScreen(),
           PersonaScreen(),
+          MatchScreen(),
           ConversationScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black.withOpacity(0.2),
+        iconSize: 48,
         currentIndex: _currentIndex,
         onTap: _onPageChange,
-        items: [
+        selectedItemColor: Colors.white,
+        items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border_outlined),
-              activeIcon: Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Theme.of(context).colorScheme.primary)
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(Icons.favorite, color: Theme.of(context).colorScheme.primaryContainer)
-              ),
-              label: ''
-          ),
+              icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 48),
+              activeIcon:
+                  SonaIcon(icon: SonaIcons.navicon_sona_active, size: 48),
+              label: 'SONA'),
           BottomNavigationBarItem(
-            icon: Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-              ),
-              alignment: Alignment.center,
-              child: GradientColoredText(
-                text: 'S',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 24
-                )
-              ),
-            ),
-            activeIcon: Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Theme.of(context).colorScheme.primary)
-              ),
-              alignment: Alignment.center,
-              child: GradientColoredText(
-                  text: 'S',
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: 24
-                  )
-              ),
-            ),
-            label: ''
-          ),
+              icon: SonaIcon(icon: SonaIcons.navicon_match, size: 48),
+              activeIcon:
+                  SonaIcon(icon: SonaIcons.navicon_match_active, size: 48),
+              label: 'Match'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.chat_bubble_outline),
-              activeIcon: Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Theme.of(context).colorScheme.primary)
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(
-                      Icons.chat_bubble_outlined,
-                      color: Theme.of(context).colorScheme.primaryContainer
-                  )
-              ),
-              label: ''
-          )
+              icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 48),
+              activeIcon:
+                  SonaIcon(icon: SonaIcons.navicon_chat_active, size: 48),
+              label: 'Chat')
         ],
       ),
     );
