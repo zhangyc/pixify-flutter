@@ -1,24 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sona/common/widgets/button/option.dart';
 
 import '../../common/widgets/button/colored.dart';
 
-Future<bool?> showInfo({
-  required BuildContext context,
-  String? title,
-  String content = '',
-  String buttonText = 'Sure'
-}) {
+Future<bool?> showInfo(
+    {required BuildContext context,
+    String? title,
+    String content = '',
+    String buttonText = 'Sure'}) {
   return showModalBottomSheet<bool>(
     context: context,
     backgroundColor: Colors.white,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        )
-    ),
+      topLeft: Radius.circular(30),
+      topRight: Radius.circular(30),
+    )),
     builder: (BuildContext context) {
       return SafeArea(
         top: false,
@@ -38,13 +37,9 @@ Future<bool?> showInfo({
                 visible: title != null,
                 child: Container(
                   margin: EdgeInsets.only(bottom: 20),
-                  child: Text(
-                      title ?? '',
+                  child: Text(title ?? '',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18
-                      )
-                  ),
+                      style: TextStyle(fontSize: 18)),
                 ),
               ),
               Container(
@@ -54,7 +49,9 @@ Future<bool?> showInfo({
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(content, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyText2),
+                      Text(content,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyText2),
                       SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -64,15 +61,13 @@ Future<bool?> showInfo({
                             flex: 2,
                             child: ColoredButton(
                                 text: buttonText,
-                                onTap: () => Navigator.pop(context, true)
-                            ),
+                                onTap: () => Navigator.pop(context, true)),
                           ),
                           Flexible(flex: 1, child: Container())
                         ],
                       ),
                     ],
-                  )
-              ),
+                  )),
             ],
           ),
         ),
@@ -81,22 +76,20 @@ Future<bool?> showInfo({
   );
 }
 
-Future<bool?> showConfirm({
-  required BuildContext context,
-  String? title = 'Are you sure',
-  String confirmText = 'Sure',
-  String cancelText = 'No',
-  required String content
-}) {
+Future<bool?> showConfirm(
+    {required BuildContext context,
+    String? title = 'Are you sure',
+    String confirmText = 'Sure',
+    String cancelText = 'No',
+    required String content}) {
   return showModalBottomSheet<bool>(
     context: context,
     backgroundColor: Colors.white,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        )
-    ),
+      topLeft: Radius.circular(30),
+      topRight: Radius.circular(30),
+    )),
     builder: (BuildContext context) {
       return SafeArea(
         top: false,
@@ -114,13 +107,9 @@ Future<bool?> showConfirm({
               visible: title != null,
               child: Container(
                 margin: EdgeInsets.only(bottom: 20),
-                child: Text(
-                    title ?? '',
+                child: Text(title ?? '',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18
-                    )
-                ),
+                    style: TextStyle(fontSize: 18)),
               ),
             ),
             Container(
@@ -130,7 +119,9 @@ Future<bool?> showConfirm({
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(content, textAlign: TextAlign.center, style: Theme.of(context).textTheme.caption),
+                  Text(content,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.caption),
                   SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,8 +131,7 @@ Future<bool?> showConfirm({
                         child: ColoredButton(
                             color: Colors.white,
                             text: cancelText,
-                            onTap: () => Navigator.of(context).pop(false)
-                        ),
+                            onTap: () => Navigator.of(context).pop(false)),
                       ),
                       SizedBox(width: 5),
                       Expanded(
@@ -149,8 +139,7 @@ Future<bool?> showConfirm({
                         child: ColoredButton(
                             color: Color(0xFFE2E2F6),
                             text: confirmText,
-                            onTap: () => Navigator.of(context).pop(true)
-                        ),
+                            onTap: () => Navigator.of(context).pop(true)),
                       )
                     ],
                   )
@@ -164,27 +153,23 @@ Future<bool?> showConfirm({
   );
 }
 
-void showSingleLineTextField<T>({
-  required BuildContext context,
-  required String? title,
-  String? tip,
-  String? hintText,
-  keyboardType = TextInputType.text,
-  int maxLength = 64,
-  required void Function(String) onConfirm,
-  void Function()? onCancel
-}) {
+Future<String?> showSingleLineTextField(
+    {required BuildContext context,
+    required String? title,
+    String? tip,
+    String? hintText,
+    keyboardType = TextInputType.text,
+    int maxLength = 64}) {
   final controller = TextEditingController();
-  showModalBottomSheet<T>(
+  return showModalBottomSheet<String>(
     context: context,
     backgroundColor: Colors.black26,
     isScrollControlled: true,
-    shape: RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        )
-    ),
+      topLeft: Radius.circular(30),
+      topRight: Radius.circular(30),
+    )),
     builder: (BuildContext context) {
       return Padding(
         padding: MediaQuery.of(context).viewInsets,
@@ -202,13 +187,9 @@ void showSingleLineTextField<T>({
               visible: title != null && title.isNotEmpty,
               child: Container(
                 margin: EdgeInsets.only(bottom: 20),
-                child: Text(
-                    title??'',
+                child: Text(title ?? '',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18
-                    )
-                ),
+                    style: TextStyle(fontSize: 18)),
               ),
             ),
             Container(
@@ -221,12 +202,9 @@ void showSingleLineTextField<T>({
                     visible: tip != null && tip.isNotEmpty,
                     child: Container(
                       padding: EdgeInsets.only(
-                          left: 12,
-                          right: 12,
-                          top: 0,
-                          bottom: 12
-                      ),
-                      child: Text(tip ?? '', style: Theme.of(context).textTheme.caption),
+                          left: 12, right: 12, top: 0, bottom: 12),
+                      child: Text(tip ?? '',
+                          style: Theme.of(context).textTheme.caption),
                     ),
                   ),
                   TextField(
@@ -244,8 +222,7 @@ void showSingleLineTextField<T>({
                         child: ColoredButton(
                             color: Colors.white,
                             text: 'Cancel',
-                            onTap: onCancel ?? () => Navigator.pop(context)
-                        ),
+                            onTap: () => Navigator.pop(context)),
                       ),
                       SizedBox(width: 5),
                       Expanded(
@@ -253,12 +230,8 @@ void showSingleLineTextField<T>({
                         child: ColoredButton(
                             text: 'Confirm',
                             onTap: () {
-                              if (controller.text.isNotEmpty) {
-                                onConfirm(controller.text);
-                                Navigator.pop(context);
-                              }
-                            }
-                        ),
+                              Navigator.pop(context, controller.text.trim());
+                            }),
                       )
                     ],
                   )
@@ -287,10 +260,9 @@ Future<String?> showTextFieldDialog({
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        )
-    ),
+      topLeft: Radius.circular(30),
+      topRight: Radius.circular(30),
+    )),
     builder: (BuildContext context) {
       return Padding(
         padding: MediaQuery.of(context).viewInsets,
@@ -306,13 +278,8 @@ Future<String?> showTextFieldDialog({
             SizedBox(height: 24),
             Visibility(
               visible: title != null && title.isNotEmpty,
-              child: Text(
-                  title ?? '',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18
-                  )
-              ),
+              child: Text(title ?? '',
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 18)),
             ),
             SizedBox(height: 20),
             Container(
@@ -324,8 +291,7 @@ Future<String?> showTextFieldDialog({
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: Color(0xFFF1F1F1),
-                        borderRadius: BorderRadius.circular(4)
-                    ),
+                        borderRadius: BorderRadius.circular(4)),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -335,10 +301,9 @@ Future<String?> showTextFieldDialog({
                               hintText: hintText,
                               fillColor: Color(0xFFF1F1F1),
                               alignLabelWithHint: true,
-                              border: OutlineInputBorder(borderSide: BorderSide.none),
-                              contentPadding: EdgeInsets.all(0)
-                          ),
-
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              contentPadding: EdgeInsets.all(0)),
                           keyboardType: TextInputType.multiline,
                           maxLines: 7,
                           minLines: 7,
@@ -358,8 +323,7 @@ Future<String?> showTextFieldDialog({
                             text: 'Cancel',
                             onTap: () {
                               Navigator.pop(context);
-                            }
-                        ),
+                            }),
                       ),
                       SizedBox(width: 5),
                       Expanded(
@@ -370,8 +334,7 @@ Future<String?> showTextFieldDialog({
                               if (controller.text.isNotEmpty) {
                                 Navigator.pop(context, controller.text);
                               }
-                            }
-                        ),
+                            }),
                       )
                     ],
                   )
@@ -386,23 +349,21 @@ Future<String?> showTextFieldDialog({
   );
 }
 
-Future<T?> showRadioFieldDialog<T>({
-  required BuildContext context,
-  T? initialValue,
-  required Map<String, T> options,
-  String? title,
-  bool dismissible = false
-}) {
+Future<T?> showRadioFieldDialog<T>(
+    {required BuildContext context,
+    T? initialValue,
+    required Map<String, T> options,
+    String? title,
+    bool dismissible = false}) {
   return showModalBottomSheet<T>(
     context: context,
     backgroundColor: Colors.white,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        )
-    ),
+      topLeft: Radius.circular(16),
+      topRight: Radius.circular(16),
+    )),
     clipBehavior: Clip.antiAlias,
     isDismissible: dismissible,
     builder: (BuildContext context) {
@@ -417,13 +378,9 @@ Future<T?> showRadioFieldDialog<T>({
               visible: title != null && title.isNotEmpty,
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
-                child: Text(
-                    title ?? '',
+                child: Text(title ?? '',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18
-                    )
-                ),
+                    style: TextStyle(fontSize: 18)),
               ),
             ),
             ListView.separated(
@@ -442,9 +399,10 @@ Future<T?> showRadioFieldDialog<T>({
                 final value = options[key];
                 return OptionButton(
                     onTap: () => Navigator.pop(context, value),
-                    color: initialValue == value ? Theme.of(context).colorScheme.secondaryContainer : Colors.transparent,
-                    text: key
-                );
+                    color: initialValue == value
+                        ? Theme.of(context).colorScheme.secondaryContainer
+                        : Colors.transparent,
+                    text: key);
               },
               separatorBuilder: (BuildContext context, int index) {
                 return Divider(height: 1, indent: 0);
@@ -458,18 +416,69 @@ Future<T?> showRadioFieldDialog<T>({
   );
 }
 
+Future<DateTime?> showBirthdayPicker({
+  required BuildContext context,
+  required DateTime initialDate,
+  bool dismissible = true,
+}) {
+  DateTime _birthday = initialDate;
+  return showCupertinoModalPopup<DateTime>(
+    context: context,
+    barrierDismissible: dismissible,
+    builder: (BuildContext context) => Container(
+      height: 208,
+      padding: const EdgeInsets.only(top: 6.0),
+      margin: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      decoration: BoxDecoration(
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          )),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(height: 10),
+          Container(
+            width: 30,
+            height: 3,
+            color: Colors.black12,
+          ),
+          SizedBox(height: 24),
+          SizedBox(
+            height: 108,
+            child: CupertinoDatePicker(
+                initialDateTime: initialDate,
+                mode: CupertinoDatePickerMode.date,
+                showDayOfWeek: true,
+                onDateTimeChanged: (DateTime newDate) {
+                  _birthday = newDate;
+                },
+                itemExtent: 40),
+          ),
+          ColoredButton(
+              text: 'Confirm',
+              onTap: () {
+                Navigator.pop(context, _birthday);
+              })
+        ],
+      ),
+    ),
+  );
+}
+
 Future openExternalWebsite(BuildContext context, String url) async {
   await showConfirm(
     context: context,
     title: 'Warning',
-    content: '$url\n\nYou are opening an external website. Please guard against scams, etc.',
+    content:
+        '$url\n\nYou are opening an external website. Please guard against scams, etc.',
   ).then((confirm) {
     if (confirm == true) {
-      Navigator.pushNamed(
-          context,
-          "WebPage.routeName",
-          arguments: {'url': url}
-      );
+      Navigator.pushNamed(context, "WebPage.routeName",
+          arguments: {'url': url});
     }
   });
 }

@@ -1,17 +1,12 @@
-import 'package:crop_your_image/crop_your_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/info.dart';
-import 'package:sona/account/services/info.dart';
+import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
-import 'package:sona/common/widgets/button/colored.dart';
-import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/common/widgets/text/colorful_sona.dart';
-import 'package:sona/utils/location/location.dart';
+import 'package:sona/utils/dialog/input.dart';
 
 import '../../core/persona/widgets/sona_message.dart';
 import '../../utils/picker/gender.dart';
@@ -28,50 +23,51 @@ class RequiredInfoFormScreen extends ConsumerStatefulWidget {
 
 class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   final _pageController = PageController();
+  late final List<FieldAquireAction> _actions;
 
-  final _nameController = TextEditingController();
-  final _nameFocusNode = FocusNode();
-  final _nameKey = GlobalKey<FormState>(debugLabel: 'name');
-
+  String? _name;
   Gender? _gender;
   DateTime? _birthday;
   String? _avatar;
-  final _cropController = CropController();
-  List<Map<String, dynamic>> _availableInterests = [];
-  final _interested = <String>{};
+  Set<String> _interests = <String>{};
 
   bool get _nameValidate =>
-      _nameController.text.trim().isNotEmpty &&
-      _nameController.text.trim().length < 32;
+      _name != null && _name!.isNotEmpty && _name!.length < 32;
   bool get _validate =>
       _nameValidate &&
       _gender != null &&
       _birthday != null &&
       _avatar != null &&
-      _interested.length >= 3;
+      _interests.length >= 3;
 
   @override
   void initState() {
-    _fetchAvailableInterests();
+    _initActions();
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
-
-  Future _fetchAvailableInterests() async {
-    final dio = ref.read(dioProvider);
-    try {
-      final resp = await fetchAvailableInterests(httpClient: dio);
-      _availableInterests = List<Map<String, dynamic>>.from(resp.data);
-      if (mounted) setState(() {});
-    } catch (e) {
-      //
-      debugPrint(e.toString());
-    }
+  void _initActions() {
+    _actions = [
+      FieldAquireAction(
+          field: null,
+          text:
+              'Hi\n\nI\'m SONA😊\n\nYour social advisor to coach you on meaningful friendships!',
+          action: null),
+      FieldAquireAction(
+          field: 'name', text: 'What\'s your name?', action: _getName),
+      FieldAquireAction(
+          field: 'birthday', text: 'How old are you?', action: _getBirthday),
+      FieldAquireAction(
+          field: 'gender', text: 'Plz choose your Gender', action: _getGender),
+      FieldAquireAction(
+          field: 'avatar',
+          text: 'Choose a photo for your avatar',
+          action: _getAPhotoAndUpload),
+      FieldAquireAction(
+          field: 'interests',
+          text: 'Choose your interests',
+          action: _chooseInterests),
+    ];
   }
 
   @override
@@ -92,127 +88,159 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
         child: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
-          children: [_name(), _genderNAge(), _purpose(), _photo()],
+          children: _actions
+              .map((action) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 20),
+                    child: Typwriter(
+                        text: action.text,
+                        duration: const Duration(milliseconds: 100),
+                        onDone: () async {
+                          if (action.action != null) {
+                            action.value = await action.action!();
+                          }
+                          if (action.field == 'avatar') {
+                            ref
+                                .read(asyncMyProfileProvider.notifier)
+                                .updateInfo(
+                                    name: _name,
+                                    birthday: _birthday,
+                                    gender: _gender,
+                                    avatar: _avatar,
+                                    interests: _interests);
+                          } else {
+                            _pageController.nextPage(
+                                duration: const Duration(microseconds: 400),
+                                curve: Curves.ease);
+                          }
+                        }),
+                  ))
+              .toList(),
         ),
       ),
       resizeToAvoidBottomInset: true,
     );
   }
 
-  Widget _name() {
-    return Container(
-      margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 30),
-      child: Form(
-        key: _nameKey,
-        child: Column(
-          children: [
-            const SonaMessage(
-                content: 'We haven\'t been introduced \nwhat\'s your name?'),
-            SizedBox(height: 36),
-            Padding(
-              padding: EdgeInsets.only(left: 90, right: 20),
-              child: TextFormField(
-                controller: _nameController,
-                focusNode: _nameFocusNode,
-                decoration: const InputDecoration(
-                  labelText: 'My name is...',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 36),
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                  onPressed: () {
-                    _nameFocusNode.unfocus();
-                    if (_nameKey.currentState!.validate()) {
-                      _pageController.animateToPage(1,
-                          duration: const Duration(microseconds: 400),
-                          curve: Curves.ease);
-                    }
-                  },
-                  icon: Container(
-                      width: 42,
-                      height: 42,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.primary)),
-                      alignment: Alignment.center,
-                      child: Icon(Icons.arrow_forward_rounded))),
-            )
-          ],
-        ),
-      ),
-    );
+  Future<String> _getName() async {
+    final value = await showSingleLineTextField(context: context, title: null);
+    if (value == null) {
+      return _getName();
+    } else {
+      _actions.firstWhere((action) => action.field == 'name')
+        ..value = value
+        ..done = true;
+      _name = value;
+      return value;
+    }
   }
 
-  Widget _genderNAge() {
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 30),
-        child: Column(
-          children: [
-            const SonaMessage(
-                content:
-                    'I’m Sona. I Will blablabla\nWould you mind telling me your\ngender and age?'),
-            SizedBox(height: 36),
-            Padding(
-                padding: EdgeInsets.only(left: 90, right: 20),
-                child: ForwardButton(
-                  onTap: _onGenderTap,
-                  text: '性别 ${_gender != null ? _gender?.name : ''}',
-                )),
-            SizedBox(height: 36),
-            Padding(
-                padding: EdgeInsets.only(left: 90, right: 20),
-                child: ForwardButton(
-                  onTap: _onBirthdayTap,
-                  text: '年龄 ${_birthday != null ? _birthday!.toAge() : ''}',
-                )),
-            SizedBox(height: 36),
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                  onPressed: () {
-                    if (_gender == null) {
-                      Fluttertoast.showToast(msg: 'Gender is required');
-                      return;
-                    }
-                    if (_birthday == null) {
-                      Fluttertoast.showToast(msg: 'Age is required');
-                      return;
-                    }
-                    if (DateTime.now().difference(_birthday!) <
-                        const Duration(days: 365 * 12)) {
-                      Fluttertoast.showToast(
-                          msg: 'The app is not available for under 12');
-                      return;
-                    }
-                    _pageController.animateToPage(2,
-                        duration: const Duration(microseconds: 400),
-                        curve: Curves.ease);
-                  },
-                  icon: Container(
-                      width: 42,
-                      height: 42,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.primary)),
-                      alignment: Alignment.center,
-                      child: Icon(Icons.arrow_forward_rounded))),
-            )
-          ],
-        ),
-      ),
-    );
+  Future<DateTime> _getBirthday() async {
+    final value = await showBirthdayPicker(
+        context: context,
+        initialDate: DateTime(2000, 12, 30),
+        dismissible: false);
+    if (value == null) {
+      return _getBirthday();
+    } else {
+      _actions.firstWhere((action) => action.field == 'birthday')
+        ..value = value
+        ..done = true;
+      _birthday = value;
+      return value;
+    }
   }
 
-  Widget _purpose() {
+  Future<Gender> _getGender() async {
+    final value = await showGenderPicker(context: context, dismissible: false);
+    if (value == null) {
+      return _getGender();
+    } else {
+      _actions.firstWhere((action) => action.field == 'gender')
+        ..value = value
+        ..done = true;
+      _gender = value;
+      return value;
+    }
+  }
+
+  Future<String> _getAPhotoAndUpload() async {
+    final source = await showRadioFieldDialog(context: context, options: {
+      'Choose a photo': ImageSource.gallery,
+      'Take a photo': ImageSource.camera
+    });
+    if (source == null) throw Exception('No source');
+    final picker = ImagePicker();
+    final file = await picker.pickImage(source: source);
+    if (file == null) throw Exception('No file');
+    final bytes = await file.readAsBytes();
+    final dio = ref.read(dioProvider);
+    final value =
+        await uploadFile(httpClient: dio, bytes: bytes, filename: file.name);
+    _actions.firstWhere((action) => action.field == 'avatar')
+      ..value = value
+      ..done = true;
+    _avatar = value;
+    return value;
+  }
+
+  Future<Gender> _chooseInterests() async {
+    final value = await showDialog(
+        context: context, builder: (context) => const InterestsSelector());
+    if (value == null) {
+      return _getGender();
+    } else {
+      _actions.firstWhere((action) => action.field == 'interests')
+        ..value = value
+        ..done = true;
+      _interests = value;
+      return value;
+    }
+  }
+}
+
+class FieldAquireAction<T> {
+  FieldAquireAction(
+      {required this.field, required this.text, required this.action});
+  final String? field;
+  String text;
+  final Future<T> Function()? action;
+  T? value;
+  bool done = false;
+}
+
+class InterestsSelector extends ConsumerStatefulWidget {
+  const InterestsSelector({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _InterestsSelectorState();
+}
+
+class _InterestsSelectorState extends ConsumerState<InterestsSelector> {
+  List<Map<String, dynamic>> _availableInterests = [];
+  final _interested = <String>{};
+
+  @override
+  void initState() {
+    _fetchAvailableInterests();
+    super.initState();
+  }
+
+  Future _fetchAvailableInterests() async {
+    final dio = ref.read(dioProvider);
+    try {
+      final resp = await fetchAvailableInterests(httpClient: dio);
+      _availableInterests = List<Map<String, dynamic>>.from(resp.data);
+      if (mounted) setState(() {});
+    } catch (e) {
+      //
+      debugPrint(e.toString());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 30),
@@ -277,9 +305,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                 child: IconButton(
                     onPressed: () {
                       if (_interested.length >= 3) {
-                        _pageController.animateToPage(3,
-                            duration: const Duration(microseconds: 400),
-                            curve: Curves.ease);
+                        Navigator.of(context).pop(_interested);
                       } else {
                         Fluttertoast.showToast(msg: 'Select 3 or more');
                       }
@@ -299,202 +325,5 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
         ),
       ),
     );
-  }
-
-  Widget _photo() {
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 30),
-        child: Form(
-          child: Column(
-            children: [
-              const SonaMessage(
-                  content:
-                      'Share a photo of yourself \nto \nstart connecting with people'),
-              SizedBox(height: 36),
-              GestureDetector(
-                onTap: () async {
-                  final ImagePicker picker = ImagePicker();
-                  final XFile? file =
-                      await picker.pickImage(source: ImageSource.camera);
-                  if (file == null) return;
-                  _onCropImage(file);
-                },
-                behavior: HitTestBehavior.translucent,
-                child: Container(
-                  width: 158,
-                  height: 88,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color:
-                              Theme.of(context).colorScheme.tertiaryContainer),
-                      borderRadius: BorderRadius.circular(12)),
-                  alignment: Alignment.center,
-                  child: Text('拍照'),
-                ),
-              ),
-              SizedBox(height: 36),
-              GestureDetector(
-                onTap: () async {
-                  final ImagePicker picker = ImagePicker();
-                  final XFile? file =
-                      await picker.pickImage(source: ImageSource.gallery);
-                  if (file == null) return;
-                  _onCropImage(file);
-                },
-                behavior: HitTestBehavior.translucent,
-                child: Container(
-                  width: 158,
-                  height: 88,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color:
-                              Theme.of(context).colorScheme.tertiaryContainer),
-                      borderRadius: BorderRadius.circular(12)),
-                  alignment: Alignment.center,
-                  child: Text('相册'),
-                ),
-              ),
-              SizedBox(height: 36),
-              Align(
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                    onPressed: () async {
-                      if (!_validate) {
-                        Fluttertoast.showToast(msg: 'Please check your input');
-                        return;
-                      }
-                      try {
-                        final position = await determinePosition();
-                        await updateMyInfo(
-                            httpClient: ref.read(dioProvider),
-                            name: _nameController.text,
-                            gender: _gender,
-                            birthday: _birthday,
-                            interests: _interested,
-                            avatar: _avatar,
-                            position: position);
-                        ref.read(asyncMyProfileProvider.notifier).refresh();
-                      } on Exception catch (e) {
-                        Fluttertoast.showToast(msg: e.toString());
-                      }
-                    },
-                    icon: Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                color: Theme.of(context).colorScheme.primary)),
-                        alignment: Alignment.center,
-                        child: Icon(Icons.arrow_forward_rounded))),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _onGenderTap() async {
-    _gender = await showGenderPicker(context: context, dismissible: false);
-    setState(() {});
-  }
-
-  void _onBirthdayTap() async {
-    await showCupertinoModalPopup<void>(
-      context: context,
-      builder: (BuildContext context) => Container(
-        height: 208,
-        padding: const EdgeInsets.only(top: 6.0),
-        margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        decoration: BoxDecoration(
-            color: CupertinoColors.systemBackground.resolveFrom(context),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            )),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 10),
-            Container(
-              width: 30,
-              height: 3,
-              color: Colors.black12,
-            ),
-            SizedBox(height: 24),
-            SizedBox(
-              height: 108,
-              child: CupertinoDatePicker(
-                  initialDateTime: DateTime(2000, 12, 30),
-                  mode: CupertinoDatePickerMode.date,
-                  showDayOfWeek: true,
-                  onDateTimeChanged: (DateTime newDate) {
-                    _birthday = newDate;
-                  },
-                  itemExtent: 40),
-            ),
-          ],
-        ),
-      ),
-    );
-    setState(() {});
-  }
-
-  void _onCropImage(XFile file) async {
-    final bytes = await file.readAsBytes();
-    if (!mounted) return;
-    await showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (_) => Container(
-              padding: EdgeInsets.symmetric(vertical: 30),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: 600,
-                    width: MediaQuery.of(context).size.width,
-                    child: Crop(
-                      image: bytes,
-                      aspectRatio: 600 / 848,
-                      controller: _cropController,
-                      onCropped: (croppedData) async {
-                        _avatar = await uploadFile(
-                            httpClient: ref.read(dioProvider),
-                            bytes: croppedData,
-                            filename: file.name);
-                        if (!mounted) return;
-                        Navigator.pop(context);
-                        if (mounted) setState(() {});
-                      },
-                      initialSize: 0.5,
-                      // maskColor: _isSumbnail ? Colors.white : null,
-                      cornerDotBuilder: (size, edgeAlignment) =>
-                          const SizedBox.shrink(),
-                      interactive: true,
-                      fixArea: true,
-                      radius: 16,
-                      initialAreaBuilder: (rect) {
-                        return Rect.fromLTRB(
-                            rect.left + 24,
-                            rect.top - 24 * 848 / 600,
-                            rect.right - 24,
-                            rect.bottom + 24 * 848 / 600);
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  ColoredButton(
-                      onTap: () {
-                        _cropController.crop();
-                      },
-                      text: 'done')
-                ],
-              ),
-            ));
   }
 }

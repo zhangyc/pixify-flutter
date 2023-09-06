@@ -38,8 +38,8 @@ class SonaApp extends HookConsumerWidget {
                 Positioned.fill(child: child!),
                 Positioned.fill(
                     child: asyncMyProfile.when(
-                  data: (myInfo) {
-                    if (myInfo.completed) {
+                  data: (myProfile) {
+                    if (myProfile.completed) {
                       return const Opacity(
                         opacity: 0,
                       );
