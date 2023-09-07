@@ -51,7 +51,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
       FieldAcquireAction(
           field: null,
           text:
-              'Hi\n\nI\'m SONA😊\n\nYour social advisor to coach you on\nmeaningful friendships!',
+              'Hi\n\nI\'m SONA😊\n\nYour social\nadvisor to coach\nyou on\nmeaningful\nfriendships!',
           action: null),
       FieldAcquireAction(
           field: 'name', text: 'What\'s your name?', action: _getName),
