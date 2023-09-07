@@ -10,6 +10,7 @@ import 'package:sona/core/match/screens/setting.dart';
 
 import '../../../common/widgets/button/colored.dart';
 import '../../../firebase/sona_firebase.dart';
+import '../../chat/screens/chat.dart';
 import '../widgets/scroller.dart';
 
 class MatchScreen extends StatefulHookConsumerWidget {
@@ -33,6 +34,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   void initState() {
+
     controller = Controller()
       ..addListener((event) {
         _handleCallbackEvent(event.direction, event.success);

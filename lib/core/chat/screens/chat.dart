@@ -401,11 +401,10 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
     });
 
     final options = resp.data['options'] as List;
-    if (!mounted) return;
-    await showModalBottomSheet(
+    await showModalBottomSheet<bool>(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
@@ -435,7 +434,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
                             content: m['message'],
                           );
                         },
-                        text: m['summary']
+                        text: m['short']
                     ),
                   )),
                   SizedBox(height: 30),
@@ -485,7 +484,7 @@ enum ChatActionMode {
   manual,
   sona,
   suggestion,
-  hook
+  hook,
 }
 class InAppPurchasePage extends ConsumerStatefulWidget {
   const InAppPurchasePage({super.key});
@@ -515,6 +514,8 @@ const List<String> _kProductIds = <String>[
   quarter,
   biannually,
   annually,
+  'test_4'
+
 ];
 class _InAppPurchasePageState extends ConsumerState<InAppPurchasePage> {
 
