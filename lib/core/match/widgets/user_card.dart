@@ -19,10 +19,29 @@ class UserCard extends StatefulWidget {
 
 class _UserCardState extends State<UserCard> {
   final _pageController = PageController();
+  double _page = 0;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _pageController.addListener(_pageControllerListener);
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.removeListener(_pageControllerListener);
+    super.dispose();
+  }
+
+  _pageControllerListener() {
+    _page = _pageController.page ?? 0;
+    if (mounted) setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    print('photo count: ${widget.user.photos.length}');
     return Stack(
       children: [
         Positioned.fill(
@@ -40,6 +59,22 @@ class _UserCardState extends State<UserCard> {
             itemCount: widget.user.photos.length + 1,
           ),
         ),
+        Positioned(
+            top: MediaQuery.of(context).padding.top,
+            left: 20,
+            right: 20,
+            height: 5,
+            child: Row(
+              children: List.generate(
+                  widget.user.photos.length + 1,
+                  (index) => Flexible(
+                      child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 2),
+                          height: 3,
+                          color: index == _page.round()
+                              ? Colors.white54
+                              : Colors.black26))),
+            )),
         Positioned(
           right: 20,
           bottom: MediaQuery.of(context).viewInsets.bottom + 120,
@@ -117,17 +152,24 @@ class _UserCardState extends State<UserCard> {
 
   Widget _userBio() {
     return Container(
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 40,
+            left: 20,
+            right: 20,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 160),
         decoration: BoxDecoration(
           image: DecorationImage(
               image: CachedNetworkImageProvider(
                   widget.user.photos.firstOrNull ?? ''),
+              colorFilter: ColorFilter.mode(Colors.black54, BlendMode.srcATop),
               fit: BoxFit.cover,
               alignment: Alignment.center,
               isAntiAlias: true),
         ),
         clipBehavior: Clip.antiAlias,
-        alignment: Alignment.bottomCenter,
-        child: Text('${widget.user.bio}',
+        alignment: Alignment.topLeft,
+        child: Text(widget.user.bio ?? 'no bio',
+            textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,

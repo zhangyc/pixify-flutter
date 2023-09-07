@@ -52,7 +52,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                   contentSize: users.length,
                   swipePositionThreshold: 0.2,
                   // ^ the fraction of the screen needed to scroll
-                  swipeVelocityThreshold: 2000,
+                  swipeVelocityThreshold: 1000,
                   // ^ the velocity threshold for smaller scrolls
                   animationDuration: const Duration(milliseconds: 400),
                   // ^ how long the animation will take
