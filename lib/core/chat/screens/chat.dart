@@ -19,6 +19,7 @@ import 'package:sona/core/chat/widgets/chat_instruction_input.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
+import 'package:sona/utils/dialog/input.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/providers/dio.dart';
@@ -131,9 +132,41 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(msg.content, style: Theme.of(context).textTheme.bodySmall),
+            Row(
+              children: [
+                Visibility(
+                  visible: msg.time.add(const Duration(hours: 2)).isAfter(DateTime.now()),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(msg: '赞');
+                        },
+                        child: Text('👍'),
+                      ),
+                      SizedBox(height: 12),
+                      GestureDetector(
+                          onTap: () {
+                            Fluttertoast.showToast(msg: '孬');
+                          },
+                          child: Text('👎')
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  child: GestureDetector(
+                    onLongPress: () => _onMyMsgLongPress(msg),
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      child: Text(msg.content, style: Theme.of(context).textTheme.bodySmall),
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 12),
             Row(
@@ -184,9 +217,12 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(msg.content, style: Theme.of(context).textTheme.bodySmall),
+            GestureDetector(
+              onLongPress: () => _onOthersMsgLongPress(msg),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text(msg.content, style: Theme.of(context).textTheme.bodySmall),
+              ),
             ),
             SizedBox(height: 12),
             Row(
@@ -464,6 +500,26 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
     allMsgs.docs.forEach((doc) {
       doc.reference.delete();
     });
+  }
+
+  void _onMyMsgLongPress(ImMessage msg) async {
+    final action = await showRadioFieldDialog(context: context, options: {'Copy': 'copy', 'Delete': 'delete'}, dismissible: true);
+    if (action == 'copy') {
+      Clipboard.setData(ClipboardData(text: msg.content));
+      Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
+    } else if (action == 'delete') {
+      Fluttertoast.showToast(msg: 'todo');
+    }
+  }
+
+  void _onOthersMsgLongPress(ImMessage msg) async {
+    final action = await showRadioFieldDialog(context: context, options: {'Copy': 'copy', 'Delete': 'delete'}, dismissible: true);
+    if (action == 'copy') {
+      Clipboard.setData(ClipboardData(text: msg.content));
+      Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
+    } else if (action == 'delete') {
+      Fluttertoast.showToast(msg: 'todo');
+    }
   }
 }
 
