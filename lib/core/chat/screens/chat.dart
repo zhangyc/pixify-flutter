@@ -25,6 +25,7 @@ import 'package:sona/core/chat/widgets/chat_instruction_input.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 
 import '../../../common/models/user.dart';
 import '../../../test_pay/_MyApp.dart';
@@ -350,6 +351,9 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
       case ChatActionMode.manual:
         Fluttertoast.showToast(msg: 'msg');
 
+        Navigator.push(context, MaterialPageRoute(builder: (c){
+          return SubscribePage();
+        }));
         break;
       case ChatActionMode.sona:
         setState(() {
