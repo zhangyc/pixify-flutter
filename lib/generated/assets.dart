@@ -3,5 +3,6 @@ class Assets {
   Assets._();
 
   static const String assetsKael = 'assets/kael.jpeg';
+  static const String lottieAnimation1 = 'assets/lottie/animation1.json';
 
 }

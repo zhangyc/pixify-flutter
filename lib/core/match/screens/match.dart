@@ -3,13 +3,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/setting.dart';
+import 'package:sona/generated/assets.dart';
 
 import '../../../common/widgets/button/colored.dart';
 import '../../../firebase/sona_firebase.dart';
+import '../../chat/screens/chat.dart';
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});
@@ -24,7 +27,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
 
   @override
   void initState() {
-
+    Navigator.push(context, MaterialPageRoute(builder: (c){
+      return InAppPurchasePage();
+    }));
     _controller = AppinioSwiperController();
     super.initState();
   }
@@ -42,7 +47,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen> with AutomaticKeepAli
                 builder: (_) => const MatchSettingScreen()
               )),
               icon: Icon(Icons.filter_alt)
-          )
+          ),
         ],
         elevation: 0,
       ),

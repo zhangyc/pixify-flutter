@@ -2,7 +2,7 @@ name: sona
 description: an AI persona dating app.
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.0+5
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -39,6 +39,8 @@ dependencies:
   firebase_crashlytics: ^3.3.5
   intl: ^0.18.1
   flutter_local_notifications: ^15.1.1
+  lottie:
+  in_app_purchase: ^3.1.10
 dev_dependencies:
   custom_lint: ^0.4.0
   flutter_lints: ^2.0.0
@@ -48,3 +50,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/lottie/
