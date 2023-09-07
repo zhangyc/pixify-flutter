@@ -7,7 +7,6 @@ import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/services/match.dart';
 import 'package:sona/utils/providers/dio.dart';
 
-
 /// 可能需要把分页数据也封装进来，no more data 等
 @immutable
 class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
@@ -16,19 +15,18 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     final setting = ref.read(matchSettingProvider);
 
     return fetchMatchPeople(
-      httpClient: ref.read(dioProvider),
-      position: position!,
-      gender: setting.gender,
-      range: setting.ageRange
-    ).then<List>(
-      (resp) => resp.data as List
-    ).then<List<UserInfo>>(
-      (data) => data.map<UserInfo>((m) => UserInfo.fromJson(m)).toList()
-    );
+            httpClient: ref.read(dioProvider),
+            position: position!,
+            gender: setting.gender,
+            range: setting.ageRange)
+        .then<List>((resp) => resp.data as List)
+        .then<List<UserInfo>>(
+            (data) => data.map<UserInfo>((m) => UserInfo.fromJson(m)).toList())
+        .catchError((e) => <UserInfo>[]);
   }
 
   @override
-  Future<List<UserInfo>> build() async{
+  Future<List<UserInfo>> build() async {
     return _fetchMatched();
   }
 
@@ -55,12 +53,11 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     matchAction(
         httpClient: ref.read(dioProvider),
         userId: id,
-        action: MatchAction.like
-    );
+        action: MatchAction.like);
   }
 }
 
-
-final asyncMatchRecommendedProvider = AsyncNotifierProvider<AsyncMatchRecommendedNotifier, List<UserInfo>>(
+final asyncMatchRecommendedProvider =
+    AsyncNotifierProvider<AsyncMatchRecommendedNotifier, List<UserInfo>>(
   () => AsyncMatchRecommendedNotifier(),
 );

@@ -120,7 +120,8 @@ class _TikTokStyleFullPageScrollerState
               },
               onVerticalDragUpdate: (DragUpdateDetails details) {
                 setState(() {
-                  _cardOffset = details.localPosition.dy - _dragStartPosition;
+                  _cardOffset =
+                      (details.localPosition.dy - _dragStartPosition) / 1.5;
                 });
               },
               onVerticalDragEnd: (DragEndDetails details) {
