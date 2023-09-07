@@ -161,7 +161,8 @@ class _UserCardState extends State<UserCard> {
           image: DecorationImage(
               image: CachedNetworkImageProvider(
                   widget.user.photos.firstOrNull ?? ''),
-              colorFilter: ColorFilter.mode(Colors.black54, BlendMode.srcATop),
+              colorFilter:
+                  const ColorFilter.mode(Colors.black54, BlendMode.srcATop),
               fit: BoxFit.cover,
               alignment: Alignment.center,
               isAntiAlias: true),

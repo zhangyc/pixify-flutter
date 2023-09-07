@@ -23,7 +23,7 @@ class RequiredInfoFormScreen extends ConsumerStatefulWidget {
 
 class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   final _pageController = PageController();
-  late final List<FieldAquireAction> _actions;
+  late final List<FieldAcquireAction> _actions;
 
   String? _name;
   Gender? _gender;
@@ -48,22 +48,22 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
 
   void _initActions() {
     _actions = [
-      FieldAquireAction(
+      FieldAcquireAction(
           field: null,
           text:
-              'Hi\n\nI\'m SONA😊\n\nYour social advisor to coach you on meaningful friendships!',
+              'Hi\n\nI\'m SONA😊\n\nYour social advisor to coach you on\nmeaningful friendships!',
           action: null),
-      FieldAquireAction(
+      FieldAcquireAction(
           field: 'name', text: 'What\'s your name?', action: _getName),
-      FieldAquireAction(
+      FieldAcquireAction(
           field: 'birthday', text: 'How old are you?', action: _getBirthday),
-      FieldAquireAction(
+      FieldAcquireAction(
           field: 'gender', text: 'Plz choose your Gender', action: _getGender),
-      FieldAquireAction(
+      FieldAcquireAction(
           field: 'avatar',
           text: 'Choose a photo for your avatar',
           action: _getAPhotoAndUpload),
-      FieldAquireAction(
+      FieldAcquireAction(
           field: 'interests',
           text: 'Choose your interests',
           action: _chooseInterests),
@@ -73,17 +73,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_outlined),
-          onPressed: () {
-            _pageController.previousPage(
-                duration: const Duration(microseconds: 400),
-                curve: Curves.ease);
-          },
-        ),
-        title: const ColorfulSona(),
-      ),
+      backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: PageView(
           controller: _pageController,
@@ -91,7 +81,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
           children: _actions
               .map((action) => Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 20),
+                        horizontal: 30, vertical: 50),
                     child: Typwriter(
                         text: action.text,
                         duration: const Duration(milliseconds: 100),
@@ -199,8 +189,8 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   }
 }
 
-class FieldAquireAction<T> {
-  FieldAquireAction(
+class FieldAcquireAction<T> {
+  FieldAcquireAction(
       {required this.field, required this.text, required this.action});
   final String? field;
   String text;
