@@ -401,10 +401,11 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
     });
 
     final options = resp.data['options'] as List;
-    await showModalBottomSheet<bool>(
+    if (!mounted) return;
+    await showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
@@ -434,7 +435,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
                             content: m['message'],
                           );
                         },
-                        text: m['short']
+                        text: m['summary']
                     ),
                   )),
                   SizedBox(height: 30),

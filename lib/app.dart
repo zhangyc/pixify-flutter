@@ -31,62 +31,62 @@ class SonaApp extends HookConsumerWidget {
           onTap: () {
             FocusManager.instance.primaryFocus?.unfocus();
           },
-          child: Builder(
-            builder: (context) {
-              final asyncMyProfile = ref.watch(asyncMyProfileProvider);
-              return Stack(
-                children: [
-                  Positioned.fill(child: child!),
-                  Positioned.fill(child: asyncMyProfile.when(
-                    data: (myInfo) {
-                      if (myInfo.completed) {
-                        return const Opacity(
-                          opacity: 0,
-                        );
-                      } else {
-                        final pages = [
-                          const MaterialPage(
-                              child: RequiredInfoFormScreen()
-                          )
-                        ];
-                        return HeroControllerScope.none(
+          child: Builder(builder: (context) {
+            final asyncMyProfile = ref.watch(asyncMyProfileProvider);
+            return Stack(
+              children: [
+                Positioned.fill(child: child!),
+                Positioned.fill(
+                    child: asyncMyProfile.when(
+                  data: (myProfile) {
+                    if (myProfile.completed) {
+                      return const Opacity(
+                        opacity: 0,
+                      );
+                    } else {
+                      final pages = [
+                        const MaterialPage(child: RequiredInfoFormScreen())
+                      ];
+                      return HeroControllerScope.none(
                           child: Navigator(
-                            pages: pages,
-                            onPopPage: (Route<dynamic> route, dynamic result) {
-                              pages.remove(route.settings);
-                              return route.didPop(result);
-                            },
-                          )
-                        );
-                      }
-                    },
-                    loading: () => Container(
-                      color: Colors.white54,
-                      alignment: Alignment.center,
-                      child: const SizedBox(
+                        pages: pages,
+                        onPopPage: (Route<dynamic> route, dynamic result) {
+                          pages.remove(route.settings);
+                          return route.didPop(result);
+                        },
+                      ));
+                    }
+                  },
+                  loading: () => Container(
+                    color: Colors.white54,
+                    alignment: Alignment.center,
+                    child: const SizedBox(
                         width: 16,
                         height: 16,
-                        child: CircularProgressIndicator()
-                      ),
-                    ),
-                    error: (err, stack) => token == null ? const Opacity(opacity: 0) : GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () => ref.watch(asyncMyProfileProvider.notifier).refresh(),
-                      child: Container(
-                        color: Colors.white,
-                        alignment: Alignment.center,
-                        child: const Text(
-                          'Load info error\nclick the screen to try again.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, decoration: TextDecoration.none)
+                        child: CircularProgressIndicator()),
+                  ),
+                  error: (err, stack) => token == null
+                      ? const Opacity(opacity: 0)
+                      : GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () => ref
+                              .watch(asyncMyProfileProvider.notifier)
+                              .refresh(),
+                          child: Container(
+                            color: Colors.white,
+                            alignment: Alignment.center,
+                            child: const Text(
+                                'Load info error\nclick the screen to try again.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    decoration: TextDecoration.none)),
+                          ),
                         ),
-                      ),
-                    ),
-                  ))
-                ],
-              );
-            }
-          ),
+                ))
+              ],
+            );
+          }),
         );
       }),
       theme: themeData,
