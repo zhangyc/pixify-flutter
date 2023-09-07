@@ -56,17 +56,17 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
           BottomNavigationBarItem(
               icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 48),
               activeIcon:
-                  SonaIcon(icon: SonaIcons.navicon_sona_active, size: 48),
+                  SonaIcon(icon: SonaIcons.navicon_sona, size: 48),
               label: 'SONA'),
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_match, size: 48),
+              icon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 48),
               activeIcon:
                   SonaIcon(icon: SonaIcons.navicon_match_active, size: 48),
               label: 'Match'),
           BottomNavigationBarItem(
               icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 48),
               activeIcon:
-                  SonaIcon(icon: SonaIcons.navicon_chat_active, size: 48),
+                  SonaIcon(icon: SonaIcons.navicon_chat, size: 48),
               label: 'Chat')
         ],
       ),

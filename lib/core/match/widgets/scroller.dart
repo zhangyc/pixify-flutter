@@ -13,7 +13,7 @@ class TikTokStyleFullPageScroller extends StatefulWidget {
     required this.builder,
     this.swipePositionThreshold = 0.20,
     this.swipeVelocityThreshold = 1000,
-    this.animationDuration = const Duration(milliseconds: 300),
+    this.animationDuration = const Duration(milliseconds: 200),
     this.controller,
   });
 
@@ -84,7 +84,6 @@ class _TikTokStyleFullPageScrollerState
             _animateToPosition(event.data as int);
             break;
         }
-        print("controller went: $event");
       });
     }
     super.initState();
@@ -204,7 +203,7 @@ class _TikTokStyleFullPageScrollerState
         _end = 0;
     }
     _animation = Tween<double>(begin: _cardOffset, end: _end)
-        .animate(_animationController)
+        .animate(CurvedAnimation(parent: _animationController, curve: Curves.ease))
       ..addListener(_animationListener)
       ..addStatusListener(_animationStatusListener);
     _animationController.forward();

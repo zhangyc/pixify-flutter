@@ -47,7 +47,9 @@ class _TypwriterState extends State<Typwriter> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Text(widget.text.substring(0, _index),
-          style: Theme.of(context).textTheme.headlineMedium),
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            color: Colors.white
+          )),
     );
   }
 }
