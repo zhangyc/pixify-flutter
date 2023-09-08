@@ -13,20 +13,21 @@ import '../models/user_info.dart';
 
 
 @immutable
-class AsyncMyProfileNotifier extends AsyncNotifier<MyInfo> {
+class AsyncMyProfileNotifier extends AsyncNotifier<MyProfile> {
 
-  Future<MyInfo> _fetchProfile() async {
+  Future<MyProfile> _fetchProfile() async {
     final profile = await getMyInfo(httpClient: ref.read(dioProvider));
     ref.read(kvStoreProvider).setString('profile', jsonEncode(profile.toJson()));
     return profile;
   }
 
   @override
-  FutureOr<MyInfo> build() {
+  FutureOr<MyProfile> build() {
     try {
       final localCachedProfileString = ref.read(kvStoreProvider).getString('profile');
-      return MyInfo.fromJson(jsonDecode(localCachedProfileString!));
+      return MyProfile.fromJson(jsonDecode(localCachedProfileString!));
     } catch(e) {
+      ref.read(kvStoreProvider).remove('profile');
       return _fetchProfile();
     }
   }
@@ -42,7 +43,8 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyInfo> {
     DateTime? birthday,
     Set<String>? interests,
     String? avatar,
-    Position? position,
+    String? bio,
+    Position? position
   }) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
@@ -54,6 +56,7 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyInfo> {
         birthday: birthday,
         interests: interests,
         avatar: avatar,
+        bio: bio,
         position: position
       );
       return _fetchProfile();
@@ -61,6 +64,6 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyInfo> {
   }
 }
 
-final asyncMyProfileProvider = AsyncNotifierProvider<AsyncMyProfileNotifier, MyInfo>(
+final asyncMyProfileProvider = AsyncNotifierProvider<AsyncMyProfileNotifier, MyProfile>(
   () => AsyncMyProfileNotifier()
 );

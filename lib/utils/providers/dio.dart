@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -24,7 +25,7 @@ final dioProvider = Provider<Dio>((ref) {
   );
   final dio = Dio(options);
   if (kDebugMode) {
-    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true, logPrint: (i) => log(i.toString())));
   }
   dio.interceptors.add(BaseInterceptor(ref: ref));
   return dio;

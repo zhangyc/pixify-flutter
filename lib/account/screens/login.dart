@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:pinput/pinput.dart';
-import 'package:sona/account/providers/info.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/widgets/button/colored.dart';

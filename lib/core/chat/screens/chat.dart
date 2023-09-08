@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/providers/info.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/providers/chat_action.dart';

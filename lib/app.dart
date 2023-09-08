@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/screens/login.dart';
-import 'package:sona/account/providers/info.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/providers/navigator_key.dart';
 import 'package:sona/setting/screens/setting.dart';

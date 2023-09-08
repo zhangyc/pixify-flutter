@@ -12,6 +12,7 @@ Future<Response> updateMyInfo({
   DateTime? birthday,
   Set<String>? interests,
   String? avatar,
+  String? bio,
   Position? position
 }) async {
   return httpClient.post(
@@ -22,20 +23,21 @@ Future<Response> updateMyInfo({
         'birthday': birthday?.toBirthdayString(),
         'interest': interests?.join(','),
         'imageUrl': avatar,
+        'description': bio,
         'longitude': position?.longitude,
         'latitude': position?.latitude
       }
   );
 }
 
-Future<MyInfo> getMyInfo({
+Future<MyProfile> getMyInfo({
   required Dio httpClient,
 }) async {
   final resp = await httpClient.post(
       '/user/find-myself'
   );
   try {
-    final d = MyInfo.fromJson(resp.data);
+    final d = MyProfile.fromJson(resp.data);
     return d;
   } catch(e) {
     debugPrint(e.toString());
@@ -43,8 +45,7 @@ Future<MyInfo> getMyInfo({
   }
 }
 
-/// * return url
-Future<String> addPhoto({
+Future<Response> addPhoto({
   required Dio httpClient,
   required Uint8List bytes,
   required String filename
@@ -58,5 +59,25 @@ Future<String> addPhoto({
   return httpClient.post(
     '/user/upload-image',
     data: formData
-  ).then((resp) => resp.data['attachmentUrl']);
+  );
+}
+
+Future<Response> removePhoto({
+  required Dio httpClient,
+  required int photoId
+}) async {
+  return httpClient.post(
+    '/user/delete-image',
+    data: {'id': photoId}
+  );
+}
+
+Future<Response> updatePhotoSorts({
+  required Dio httpClient,
+  required data
+}) async {
+  return httpClient.post(
+      '/user/update-image-sort',
+      data: data
+  );
 }

@@ -349,12 +349,13 @@ Future<String?> showTextFieldDialog({
   );
 }
 
-Future<T?> showRadioFieldDialog<T>(
-    {required BuildContext context,
-    T? initialValue,
-    required Map<String, T> options,
-    String? title,
-    bool dismissible = false}) {
+Future<T?> showRadioFieldDialog<T>({
+  required BuildContext context,
+  T? initialValue,
+  required Map<String, T> options,
+  String? title,
+  bool dismissible = true
+}) {
   return showModalBottomSheet<T>(
     context: context,
     backgroundColor: Colors.white,
