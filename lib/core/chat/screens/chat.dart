@@ -24,6 +24,7 @@ import 'package:sona/utils/dialog/input.dart';
 import '../../../common/models/user.dart';
 import '../../../utils/providers/dio.dart';
 import '../models/message_type.dart';
+import '../widgets/message/message.dart';
 
 class ChatScreen extends StatefulHookConsumerWidget {
   const ChatScreen({super.key, required this.entry, required this.otherSide});
@@ -78,10 +79,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     shrinkWrap: true,
                     padding: EdgeInsets.symmetric(horizontal: 2),
                     reverse: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      final msg = messages[index];
-                      return _itemBuilder(msg);
-                    },
+                    itemBuilder: (BuildContext context, int index) => MessageWidget(
+                      message: messages[index],
+                      fromMe: ref.read(asyncMyProfileProvider).value!.id == messages[index].sender.id
+                    ),
                     itemCount: messages.length,
                     separatorBuilder: (_, __) => SizedBox(height: 5),
                   ),
@@ -114,135 +115,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
-  }
-
-  Widget _itemBuilder(ImMessage msg) {
-    final me = ref.read(asyncMyProfileProvider);
-    final isMe = msg.sender.id == me.value!.id;
-    if (msg.sender.id == me.value!.id) {
-      return Container(
-        margin: EdgeInsets.only(left: 70, bottom: 12, right: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Visibility(
-                  visible: msg.time.add(const Duration(hours: 2)).isAfter(DateTime.now()),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Fluttertoast.showToast(msg: '赞');
-                        },
-                        child: Text('👍'),
-                      ),
-                      SizedBox(height: 12),
-                      GestureDetector(
-                          onTap: () {
-                            Fluttertoast.showToast(msg: '孬');
-                          },
-                          child: Text('👎')
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: GestureDetector(
-                    onLongPress: () => _onMyMsgLongPress(msg),
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text(msg.content, style: Theme.of(context).textTheme.bodySmall),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(msg.time.toMessageTime(), style: Theme.of(context).textTheme.bodySmall),
-                SizedBox(width: 12),
-                GestureDetector(
-                  onTap: () => _onEditMessage(msg),
-                  child: Container(
-                    height: 28,
-                    width: 28,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black, width: 1)
-                    ),
-                    alignment: Alignment.center,
-                    child: Text('\u{270D}'),
-                  ),
-                ),
-                Visibility(
-                  visible: !msg.knowledgeAdded,
-                  child: GestureDetector(
-                    onTap: () => _onAddKnowledge(msg),
-                    child: Container(
-                      height: 28,
-                      width: 28,
-                      margin: EdgeInsets.only(left: 20),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.black, width: 1)
-                      ),
-                      alignment: Alignment.center,
-                      child: GradientColoredText(text: 'S', style: TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.w700)),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 12)
-              ],
-            )
-          ],
-        ),
-      );
-    } else {
-      return Container(
-        margin: EdgeInsets.only(right: 70, bottom: 12, left: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            GestureDetector(
-              onLongPress: () => _onOthersMsgLongPress(msg),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(msg.content, style: Theme.of(context).textTheme.bodySmall),
-              ),
-            ),
-            SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: 18),
-                GestureDetector(
-                  child: Container(
-                    height: 28,
-                    width: 28,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.black, width: 1)
-                    ),
-                    alignment: Alignment.center,
-                    child: Text('❤️'),
-                  ),
-                ),
-                SizedBox(width: 12),
-                Text(msg.time.toMessageTime(), style: Theme.of(context).textTheme.bodySmall),
-              ],
-            )
-          ],
-        ),
-      );
-    }
   }
 
   Widget _startupline() {
@@ -426,26 +298,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     allMsgs.docs.forEach((doc) {
       doc.reference.delete();
     });
-  }
-
-  void _onMyMsgLongPress(ImMessage msg) async {
-    final action = await showRadioFieldDialog(context: context, options: {'Copy': 'copy', 'Delete': 'delete'}, dismissible: true);
-    if (action == 'copy') {
-      Clipboard.setData(ClipboardData(text: msg.content));
-      Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-    } else if (action == 'delete') {
-      Fluttertoast.showToast(msg: 'todo');
-    }
-  }
-
-  void _onOthersMsgLongPress(ImMessage msg) async {
-    final action = await showRadioFieldDialog(context: context, options: {'Copy': 'copy', 'Delete': 'delete'}, dismissible: true);
-    if (action == 'copy') {
-      Clipboard.setData(ClipboardData(text: msg.content));
-      Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-    } else if (action == 'delete') {
-      Fluttertoast.showToast(msg: 'todo');
-    }
   }
 }
 
