@@ -9,6 +9,7 @@ import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
+import 'package:sona/account/providers/info.dart';
 import 'package:sona/generated/assets.dart';
 
 import '../../test_pay/_MyApp.dart';
@@ -200,18 +201,16 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               // verify the latest status of you your subscription by using server side receipt validation
               // and update the UI accordingly. The subscription purchase status shown
               // inside the app may not be accurate.
-              final GooglePlayPurchaseDetails? oldSubscription =
-              _getOldSubscription(productDetails, purchases);
+              final GooglePlayPurchaseDetails? oldSubscription = _getOldSubscription(productDetails, purchases);
 
               purchaseParam = GooglePlayPurchaseParam(
+                  applicationUserName: ref.read(asyncMyProfileProvider).value!.id.toString(),
                   productDetails: productDetails,
                   changeSubscriptionParam: (oldSubscription != null)
                       ? ChangeSubscriptionParam(
                     oldPurchaseDetails: oldSubscription,
-                    prorationMode:
-                    ProrationMode.immediateWithTimeProration,
-                  )
-                      : null);
+                    prorationMode: ProrationMode.immediateAndChargeFullPrice,
+                  ) : null);
             } else {
               purchaseParam = PurchaseParam(
                 productDetails: productDetails,
@@ -246,61 +245,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                 Text(productDetails.price),
               ],
             ),
-          ),
-        );
-        return ListTile(
-          title: Text(
-            productDetails.title,
-          ),
-          subtitle: Text(
-            productDetails.description,
-          ),
-          ///
-          trailing: previousPurchase != null && Platform.isIOS
-              ? IconButton(
-              onPressed: () => confirmPriceChange(context),
-              icon: const Icon(Icons.upgrade))
-              : TextButton(
-              style: TextButton.styleFrom(
-              backgroundColor: Colors.green[800],
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () {
-              late PurchaseParam purchaseParam;
-
-              if (Platform.isAndroid) {
-                // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
-                // verify the latest status of you your subscription by using server side receipt validation
-                // and update the UI accordingly. The subscription purchase status shown
-                // inside the app may not be accurate.
-                final GooglePlayPurchaseDetails? oldSubscription =
-                _getOldSubscription(productDetails, purchases);
-
-                purchaseParam = GooglePlayPurchaseParam(
-                    productDetails: productDetails,
-                    changeSubscriptionParam: (oldSubscription != null)
-                        ? ChangeSubscriptionParam(
-                      oldPurchaseDetails: oldSubscription,
-                      prorationMode:
-                      ProrationMode.immediateWithTimeProration,
-                    )
-                        : null);
-              } else {
-                purchaseParam = PurchaseParam(
-                  productDetails: productDetails,
-                );
-              }
-
-              if (productDetails.id == _kConsumableId) {
-                _inAppPurchase.buyConsumable(
-                    purchaseParam: purchaseParam,
-                    autoConsume: _kAutoConsume);
-              } else {
-                _inAppPurchase.buyNonConsumable(
-                    purchaseParam: purchaseParam);
-              }
-            },
-             child: Text(productDetails.price),
           ),
         );
       },
@@ -500,13 +444,23 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     });
   }
   Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) async{
+
     final response=await ref.read(dioProvider).post('/callback/google-pay',data: {
       "packageName":"com.planetwalk.sona",
       "productId":purchaseDetails.productID,
-      "purchaseToken":purchaseDetails.verificationData.serverVerificationData
+      "purchaseToken":purchaseDetails.verificationData.serverVerificationData,
+      "serviceType":"SUBSCRIPTION"
     });
-    //if(response!=null&&response.data)
-    return Future<bool>.value(true);
+    print(response);
+    if(response!=null&&response.data!=null){
+      if(response.data){
+        return Future<bool>.value(true);
+      }else {
+        return Future<bool>.value(false);
+      }
+    }
+    return Future<bool>.value(false);
+
   }
   ///传递
   Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
@@ -543,7 +497,9 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
           handleError(purchaseDetails.error!);
+          ///已购买
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
+            ///恢复购买
             purchaseDetails.status == PurchaseStatus.restored) {
           final bool valid = await _verifyPurchase(purchaseDetails);
           if (valid) {
@@ -582,8 +538,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     }
   }
 
-  GooglePlayPurchaseDetails? _getOldSubscription(
-      ProductDetails productDetails, Map<String, PurchaseDetails> purchases) {
+  GooglePlayPurchaseDetails? _getOldSubscription(ProductDetails productDetails, Map<String, PurchaseDetails> purchases) {
     // This is just to demonstrate a subscription upgrade or downgrade.
     // This method assumes that you have only 2 subscriptions under a group, 'subscription_silver' & 'subscription_gold'.
     // The 'subscription_silver' subscription can be upgraded to 'subscription_gold' and
@@ -591,14 +546,12 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     // Please remember to replace the logic of finding the old subscription Id as per your app.
     // The old subscription is only required on Android since Apple handles this internally
     // by using the subscription group feature in iTunesConnect.
+
     GooglePlayPurchaseDetails? oldSubscription;
-    if (productDetails.id == _kSilverSubscriptionId &&
-        purchases[_kGoldSubscriptionId] != null) {
-      oldSubscription = purchases[_kGoldSubscriptionId]! as GooglePlayPurchaseDetails;
-    } else if (productDetails.id == _kGoldSubscriptionId &&
-        purchases[_kSilverSubscriptionId] != null) {
-      oldSubscription =
-      purchases[_kSilverSubscriptionId]! as GooglePlayPurchaseDetails;
+    if (productDetails.id == month && purchases[quarter] != null) {
+      oldSubscription = purchases[quarter]! as GooglePlayPurchaseDetails;
+    } else if (productDetails.id == quarter && purchases[month] != null) {
+      oldSubscription = purchases[month]! as GooglePlayPurchaseDetails;
     }
     return oldSubscription;
   }

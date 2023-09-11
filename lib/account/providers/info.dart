@@ -24,7 +24,7 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyInfo> {
   @override
   FutureOr<MyInfo> build() {
     try {
-      final localCachedProfileString = ref.read(kvStoreProvider).getString('profile');
+      final localCachedProfileString = ref.read(kvStoreProvider).getString('profile1');
       return MyInfo.fromJson(jsonDecode(localCachedProfileString!));
     } catch(e) {
       return _fetchProfile();

@@ -8,5 +8,9 @@ class Assets {
   static const String iconsNaviconSona = 'assets/icons/navicon_sona.png';
   static const String iconsSuper = 'assets/icons/super.png';
   static const String lottieAnimation1 = 'assets/lottie/animation1.json';
+  static const String lottieLike = 'assets/lottie/like.json';
+  static const String lottieLoading = 'assets/lottie/loading.json';
+  static const String lottieNewbieReward = 'assets/lottie/newbie_reward.json';
+  static const String lottieSearch = 'assets/lottie/search.json';
 
 }

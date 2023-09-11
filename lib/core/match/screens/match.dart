@@ -6,6 +6,7 @@ import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 
 import '../../../common/widgets/button/colored.dart';
+import '../widgets/match_loading.dart';
 import '../widgets/scroller.dart';
 
 class MatchScreen extends StatefulHookConsumerWidget {
@@ -103,14 +104,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       TextStyle(fontSize: 16, decoration: TextDecoration.none)),
             ),
           ),
-          loading: () => Container(
-            color: Colors.white54,
-            alignment: Alignment.center,
-            child: const SizedBox(
-                width: 32,
-                height: 32,
-                child: CircularProgressIndicator(strokeWidth: 2.5)),
-          ),
+          loading: () => MatchLoading(),
         );
   }
 
