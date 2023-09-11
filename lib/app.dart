@@ -76,7 +76,7 @@ class SonaApp extends HookConsumerWidget {
                             color: Colors.white,
                             alignment: Alignment.center,
                             child: const Text(
-                                'Load info error\nclick the screen to try again.',
+                                'Cannot connect to server, tap to retry',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 16,

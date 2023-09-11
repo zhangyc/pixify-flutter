@@ -1,19 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/user_info.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/forward.dart';
-import 'package:sona/core/persona/providers/persona.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
 
-import '../../common/services/common.dart';
 import '../../utils/providers/dio.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {

@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/conversation.dart';
 import 'package:sona/core/chat/providers/chat.dart';
-import 'package:sona/core/chat/providers/liked_me.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/utils/dialog/input.dart';
@@ -16,31 +13,13 @@ import '../widgets/liked_me.dart';
 
 class ConversationScreen extends StatefulHookConsumerWidget {
   const ConversationScreen({super.key});
-  static const routeName="lib/core/chat/screens/conversation";
+  static const routeName="/conversations";
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ConversationScreenState();
 }
 
-class _ConversationScreenState extends ConsumerState<ConversationScreen> with AutomaticKeepAliveClientMixin, RouteAware {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void didPushNext() {
-    super.didPushNext();
-  }
-
-  @override
-  void didPopNext() {
-    super.didPopNext();
-  }
+class _ConversationScreenState extends ConsumerState<ConversationScreen> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +32,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: LikedMeListView(onMatchedTap: _startANewChat),
+            child: LikedMeListView(onMatchedTap: (UserInfo u) => _chat(ChatEntry.match, u)),
           ),
           ref.watch(conversationStreamProvider).when(
             data: (conversations) => SliverList.separated(
@@ -61,7 +40,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
                 final conversation = conversations[index];
                 return GestureDetector(
                   key: ValueKey(conversation.otherSide.id),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatFunctionScreen(otherSide: conversation.otherSide))),
+                  onTap: () => _chat(ChatEntry.conversation, conversation.otherSide),
                   onLongPress: () => _showConversationActions(conversation),
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 16),
@@ -97,8 +76,8 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     }
   }
 
-  void _startANewChat(UserInfo u) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatFunctionScreen(otherSide: u)));
+  void _chat(ChatEntry entry, UserInfo u) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(entry: entry, otherSide: u)));
   }
 
   @override

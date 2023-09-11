@@ -4,19 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
-import 'package:sona/core/chat/providers/chat_action.dart';
+import 'package:sona/core/chat/providers/chat_mode.dart';
 import 'package:sona/core/chat/providers/chat_style.dart';
 import 'package:sona/core/chat/screens/info.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/chat_actions.dart';
 import 'package:sona/core/chat/widgets/chat_input.dart';
 import 'package:sona/core/chat/widgets/chat_instruction_input.dart';
-import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
@@ -24,45 +23,38 @@ import 'package:sona/utils/dialog/input.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/providers/dio.dart';
+import '../models/message_type.dart';
 
-class ChatFunctionScreen extends StatefulHookConsumerWidget {
-  const ChatFunctionScreen({super.key, required this.otherSide});
+class ChatScreen extends StatefulHookConsumerWidget {
+  const ChatScreen({super.key, required this.entry, required this.otherSide});
+  final ChatEntry entry;
   final UserInfo otherSide;
-  static const routeName="lib/core/chat/screens/chat";
+
+  static const routeName = "/chat";
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ChatFunctionScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ChatScreenState();
 }
 
-class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with RouteAware {
-
-  ChatActionMode _mode = ChatActionMode.docker;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void didPushNext() {
-    super.didPushNext();
-  }
-
-  @override
-  void didPopNext() {
-    super.didPopNext();
-  }
+class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.otherSide.name!),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back_ios_outlined),
+        ),
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            UserAvatar(url: widget.otherSide.avatar!, size: 32),
+            SizedBox(width: 12),
+            Text(widget.otherSide.name!),
+          ],
+        ),
+        centerTitle: false,
         actions: [
           IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
           IconButton(onPressed: _showInfo, icon: Icon(Icons.info_outline))
@@ -73,9 +65,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
         behavior: HitTestBehavior.opaque,
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
-          setState(() {
-            _mode = ChatActionMode.docker;
-          });
+          ref.read(chatModeProvider.notifier).state = ChatMode.docker;
         },
         child: Stack(
           children: [
@@ -95,7 +85,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
                     itemCount: messages.length,
                     separatorBuilder: (_, __) => SizedBox(height: 5),
                   ),
-                ) : _tips(),
+                ) : _startupline(),
                 error: (error, __) => Container(child: Text(error.toString()),),
                 loading: () => Container(
                   alignment: Alignment.center,
@@ -110,15 +100,17 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
           ],
         ),
       ),
-      floatingActionButton: _mode == ChatActionMode.docker ? ChatActions(
-        onAct: _onAction
+      floatingActionButton: ref.watch(chatModeProvider) == ChatMode.docker ? ChatActions(
+        onHookTap: _onHookTap,
+        onSuggestionTap: _onSuggestionTap,
+        onSonaTap: _onSonaTap
       ) : Container(
         padding: EdgeInsets.only(
           top: 12,
           bottom: MediaQuery.of(context).viewInsets.bottom + 12
         ),
         color: Colors.white,
-        child: _mode == ChatActionMode.sona ? ChatInstructionInput(onSubmit: _onSona, autofocus: true,) :  ChatInput(onSubmit: _onMessage, autofocus: true,),
+        child: ref.watch(inputModeProvider) == InputMode.sona ? ChatInstructionInput(onSubmit: _onSona, autofocus: true,) :  ChatInput(onSubmit: (String content) => _sendMessage(content, ImMessageType.manual), autofocus: true,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -126,6 +118,7 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
 
   Widget _itemBuilder(ImMessage msg) {
     final me = ref.read(asyncMyProfileProvider);
+    final isMe = msg.sender.id == me.value!.id;
     if (msg.sender.id == me.value!.id) {
       return Container(
         margin: EdgeInsets.only(left: 70, bottom: 12, right: 16),
@@ -252,41 +245,30 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
     }
   }
 
-  final _blueStyle = TextStyle(color: Colors.blue, fontSize: 18);
-  Widget _tips() {
+  Widget _startupline() {
     return Container(
       alignment: Alignment.topRight,
       margin: EdgeInsets.symmetric(vertical: 16),
-      padding: EdgeInsets.only(right: 10),
+      padding: EdgeInsets.symmetric(horizontal: 32),
       decoration: BoxDecoration(
         border: Border(right: BorderSide(color: Colors.black, width: 2))
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('| ㊙️ 这条消息仅您可见', style: TextStyle(color: Colors.grey, fontSize: 14)),
+          Text('You matched!', style: TextStyle(color: Colors.grey, fontSize: 14)),
           SizedBox(height: 10),
-          Text('您希望怎样开始对话呢？', style: TextStyle(fontSize: 16)),
+          UserAvatar(url: widget.otherSide.avatar!, size: 200,),
           SizedBox(height: 10),
-          GestureDetector(
-            onTap: () => _startUpLine('有趣的开场白'),
-            child: Text('有趣的开场白', style: _blueStyle)
-          ),
+          Text('Not sure how to start?', style: TextStyle(color: Colors.grey, fontSize: 14)),
           SizedBox(height: 10),
-          GestureDetector(
-              onTap: () => _startUpLine('询问我关心的问题'),
-              child: Text('我关心的问题', style: _blueStyle)
-          ),
-          SizedBox(height: 10),
-          GestureDetector(
-              onTap: () => _startUpLine('尝试投其所好'),
-              child: Text('尝试投其所好', style: _blueStyle)
-          ),
-          SizedBox(height: 10),
-          GestureDetector(
-              onTap: () => _startUpLine('自由发挥'),
-              child: Text('自由发挥', style: _blueStyle)
+          ColoredButton(
+            size: ColoredButtonSize.large,
+            loadingWhenAsyncAction: true,
+            onTap: _startUpLine,
+            text: '👋Have Sona say "Hi" for you',
+            borderColor: Theme.of(context).colorScheme.secondaryContainer,
           ),
           SizedBox(height: 5),
         ],
@@ -294,154 +276,75 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
     );
   }
 
-  void _onMessage({String? text}) async {
-    print(text);
-    if (text == null || text.trim().isEmpty) {
+  void _sendMessage(String text, ImMessageType type) async {
+    if (text.trim().isEmpty) {
       FocusManager.instance.primaryFocus?.unfocus();
-      setState(() {
-        _mode = ChatActionMode.docker;
-      });
+      ref.read(chatModeProvider.notifier).state = ChatMode.docker;
       return;
     }
-
-    if (_mode == ChatActionMode.manual) {
-      try {
-        ref.read(sonaLoadingProvider.notifier).state = true;
-        await sendMessage(
-            httpClient: ref.read(dioProvider),
-            userId: widget.otherSide.id,
-            type: CallSonaType.MANUAL,
-            content: text,
-        );
-        setState(() {
-          _mode = ChatActionMode.docker;
-        });
-      } catch(e) {
-        //
-      } finally {
-        ref.read(sonaLoadingProvider.notifier).state = false;
-      }
-    } else if (_mode == ChatActionMode.sona) {
-      try {
-        ref.read(sonaLoadingProvider.notifier).state = true;
-        await callSona(
-            httpClient: ref.read(dioProvider),
-            userId: widget.otherSide.id,
-            input: text,
-            type: CallSonaType.INPUT
-        );
-        setState(() {
-          _mode = ChatActionMode.docker;
-        });
-      } catch(e) {
-        //
-      } finally {
-        ref.read(sonaLoadingProvider.notifier).state = false;
-      }
-    }
+    await sendMessage(
+      httpClient: ref.read(dioProvider),
+      userId: widget.otherSide.id,
+      type: type,
+      content: text,
+    );
+    FocusManager.instance.primaryFocus?.unfocus();
+    ref.read(chatModeProvider.notifier).state = ChatMode.docker;
   }
 
-  void _onSona(String? text) async {
+  Future _onSona(String? text) async {
     if (text == null || text.trim().isEmpty) {
       FocusManager.instance.primaryFocus?.unfocus();
-      setState(() {
-        _mode = ChatActionMode.docker;
-      });
+      ref.read(chatModeProvider.notifier).state = ChatMode.docker;
       return;
     }
 
-    try {
-      ref.read(sonaLoadingProvider.notifier).state = true;
-      await callSona(
-        httpClient: ref.read(dioProvider),
-        userId: widget.otherSide.id,
-        input: text,
-        type: CallSonaType.INPUT,
-        chatStyleId: ref.read(currentChatStyleIdProvider)
-      );
-      setState(() {
-        _mode = ChatActionMode.docker;
-      });
-    } catch(e) {
-      //
-    } finally {
-      ref.read(sonaLoadingProvider.notifier).state = false;
-    }
+    return callSona(
+      httpClient: ref.read(dioProvider),
+      userId: widget.otherSide.id,
+      input: text,
+      type: CallSonaType.INPUT,
+      chatStyleId: ref.read(currentChatStyleIdProvider)
+    );
   }
 
   void _showInfo() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => ChatInfoScreen(user: widget.otherSide)));
   }
 
-  FutureOr _onAction(ChatActionMode mode) {
-    switch(mode) {
-      case ChatActionMode.docker:
-      case ChatActionMode.manual:
-        Navigator.push(context, MaterialPageRoute(builder: (_){
-          return SubscribePage();
-        }));
-        break;
-      case ChatActionMode.sona:
-        setState(() {
-          _mode = mode;
-        });
-        break;
-      case ChatActionMode.suggestion:
-        return _onSuggestion();
-      case ChatActionMode.hook:
-        return _freeChat();
-    }
-  }
-
-  Future _startUpLine(String input) async {
-    callSona(
-        httpClient: ref.read(dioProvider),
-        userId: widget.otherSide.id,
-        type: CallSonaType.PROLOGUE
+  Future _startUpLine() {
+    return callSona(
+      httpClient: ref.read(dioProvider),
+      userId: widget.otherSide.id,
+      type: CallSonaType.PROLOGUE
     );
   }
 
-  Future _freeChat() async {
-    ref.read(sonaLoadingProvider.notifier).state = true;
-    callSona(
-        httpClient: ref.read(dioProvider),
-        userId: widget.otherSide.id,
-        type: CallSonaType.AUTO
-    )
-    .catchError((e) {
-      throw(e);
-    })
-    .whenComplete(() {
-      ref.read(sonaLoadingProvider.notifier).state = false;
-    });
+  void _onSonaTap() {
+    ref.read(chatModeProvider.notifier).state = ChatMode.input;
   }
 
-  Future _onSuggestion() async {
-    ref.read(sonaLoadingProvider.notifier).state = true;
-    final resp = await callSona(
-        httpClient: ref.read(dioProvider),
-        userId: widget.otherSide.id,
-        type: CallSonaType.SUGGEST
-    )
-    .catchError((e) {
-      throw(e);
-    })
-    .whenComplete(() {
-      ref.read(sonaLoadingProvider.notifier).state = false;
-    });
+  Future _onHookTap() async {
+    return callSona(
+      httpClient: ref.read(dioProvider),
+      userId: widget.otherSide.id,
+      type: CallSonaType.AUTO
+    );
+  }
 
+  Future _onSuggestionTap() async {
+    final resp = await callSona(
+      httpClient: ref.read(dioProvider),
+      userId: widget.otherSide.id,
+      type: CallSonaType.SUGGEST
+    );
     final options = resp.data['options'] as List;
+
     if (!mounted) return;
-    await showModalBottomSheet(
+    await showDialog(
       context: context,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        )
-      ),
-      isScrollControlled: true,
+      barrierColor: Colors.black54,
+      barrierDismissible: true,
       builder: (_) {
         return SafeArea(
           child: Container(
@@ -449,26 +352,44 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             child: Column(
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SonaMessage(content: '\nI\'m the Idea Wizard'),
+                  Text('✌️Got some ideas', style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Colors.white
+                  )),
                   SizedBox(height: 12),
-                  ...options.map((m) => Container(
-                    margin: EdgeInsets.only(top: 5, left: 64),
-                    child: ColoredButton(
+                  GridView(
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 5,
+                      crossAxisSpacing: 5,
+                      childAspectRatio: 155 / 130
+                    ),
+                    children: [
+                      ...options.map((m) => GestureDetector(
+                        behavior: HitTestBehavior.translucent,
                         onTap: () async {
                           Navigator.pop(context);
-                          await sendMessage(
-                            httpClient: ref.read(dioProvider),
-                            userId: widget.otherSide.id,
-                            type: CallSonaType.SUGGEST,
-                            content: m['message'],
+                          _sendMessage(
+                            m['message'],
+                            ImMessageType.suggestion
                           );
                         },
-                        text: m['summary']
-                    ),
-                  )),
-                  SizedBox(height: 30),
+                        child: Container(
+                            width: 130,
+                            height: 155,
+                            color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7),
+                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                            child: Text(m['summary'], style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: Colors.black
+                            ))
+                        )
+                      ))
+                    ],
+                  ),
+                  SizedBox(height: 20),
                 ],
             ),
           ),
@@ -528,10 +449,8 @@ class _ChatFunctionScreenState extends ConsumerState<ChatFunctionScreen> with Ro
   }
 }
 
-enum ChatActionMode {
-  docker,
-  manual,
-  sona,
-  suggestion,
-  hook
+enum ChatEntry {
+  match,
+  arrow,
+  conversation
 }
