@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sona/account/providers/info.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/text/colorful_sona.dart';
@@ -155,10 +155,14 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   }
 
   Future<String> _getAPhotoAndUpload() async {
-    final source = await showRadioFieldDialog(context: context, options: {
-      'Choose a photo': ImageSource.gallery,
-      'Take a photo': ImageSource.camera
-    });
+    final source = await showRadioFieldDialog(
+      context: context,
+      options: {
+        'Choose a photo': ImageSource.gallery,
+        'Take a photo': ImageSource.camera
+      },
+      dismissible: false
+    );
     if (source == null) throw Exception('No source');
     final picker = ImagePicker();
     final file = await picker.pickImage(source: source);

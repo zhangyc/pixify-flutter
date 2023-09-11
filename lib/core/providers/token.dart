@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/providers/info.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/providers/chat_style.dart';
 import 'package:sona/core/match/providers/matched.dart';

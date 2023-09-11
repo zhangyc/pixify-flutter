@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/user_info.dart';
-import 'package:sona/account/providers/info.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/utils/providers/kv_store.dart';
 import 'package:sona/utils/timer/debounce.dart';
@@ -11,7 +11,7 @@ import '../../../account/models/gender.dart';
 
 final positionProvider = StateProvider<Position?>((ref) {
   Position? position = ref.read(asyncMyProfileProvider).value?.position;
-  ref.listen(asyncMyProfileProvider, (AsyncValue<MyInfo>? prev, AsyncValue<MyInfo> next) {
+  ref.listen(asyncMyProfileProvider, (AsyncValue<MyProfile>? prev, AsyncValue<MyProfile> next) {
     if (next.value?.position != null && position != next.value!.position) {
       position = next.value!.position;
     }

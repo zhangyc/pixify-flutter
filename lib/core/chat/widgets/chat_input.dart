@@ -8,7 +8,7 @@ class ChatInput extends StatefulWidget {
   final TextInputType keyboardType;
   final String actionText;
   final Function(String)? onInputChange;
-  final void Function({String? text})? onSubmit;
+  final void Function(String text)? onSubmit;
   final int maxLength;
   final FocusNode? focusNode;
   final bool autofocus;
@@ -92,7 +92,7 @@ class _ChatInputState extends State<ChatInput> with AutomaticKeepAliveClientMixi
                 if (widget.onInputChange != null) widget.onInputChange!(text);
               },
               onSubmitted: (String text) {
-                onSubmit(text: text);
+                onSubmit(text);
                 _controller.text = '';
               },
               focusNode: focusNode,
@@ -101,7 +101,7 @@ class _ChatInputState extends State<ChatInput> with AutomaticKeepAliveClientMixi
           ),
           TextButton(
               onPressed: () {
-                onSubmit(text: _controller.text);
+                onSubmit(_controller.text);
               },
               child: Text(widget.actionText)
           )
@@ -110,8 +110,8 @@ class _ChatInputState extends State<ChatInput> with AutomaticKeepAliveClientMixi
     );
   }
 
-  void onSubmit({String? text}) async {
-    widget.onSubmit!(text: text);
+  void onSubmit(String text) async {
+    if (widget.onSubmit != null) widget.onSubmit!(text);
     _controller.clear();
     focusNode.unfocus();
   }

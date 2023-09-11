@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/user_info.dart';
-import 'package:sona/account/providers/info.dart';
+import 'package:sona/account/providers/profile.dart';
+import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/forward.dart';
-import 'package:sona/core/persona/providers/persona.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
 
@@ -22,7 +21,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
-  late MyInfo _profile;
+  late MyProfile _profile;
 
   @override
   void initState() {
@@ -71,19 +70,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   child: Container(
                     height: 108,
                     margin: EdgeInsets.only(left: 16, right: 16, top: 56, bottom: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
                       border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
                       borderRadius: BorderRadius.circular(12)
                     ),
-                    alignment: Alignment.center,
-                    child: const Text('My Bio'),
+                    alignment: Alignment.topLeft,
+                    child: Text(ref.watch(asyncMyProfileProvider).value!.bio ?? 'My Bio'),
                   ),
                 ),
                 Align(
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: _sonaWritesBio,
-                    child: Text('Sona writes for me'),
+                    child: Text('Sona Impression'),
                   ),
                 ),
                 SizedBox(height: 12)
@@ -108,22 +108,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     Widget child;
     if (index >= _profile.photos.length) {
       child = GestureDetector(
+        behavior: HitTestBehavior.translucent,
         onTap: () {
-          // _onAddPhoto();
+          _onAddPhoto();
         },
         child: Center(child: Icon(Icons.add, size: 36))
       );
     } else {
       final photo = _profile.photos[index];
-      child = CachedNetworkImage(imageUrl: photo, fit: BoxFit.cover);
+      child = CachedNetworkImage(imageUrl: photo.url, fit: BoxFit.cover);
     }
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
-        borderRadius: BorderRadius.circular(12)
+    return GestureDetector(
+      onLongPress: () => _showPhotoActions(_profile.photos[index]),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
+          borderRadius: BorderRadius.circular(12)
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: child,
       ),
-      clipBehavior: Clip.antiAlias,
-      child: child,
     );
   }
 
@@ -140,24 +144,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Future _showBioEditor() async {
-    final dio = ref.read(dioProvider);
-
-    var bio = '';
-    final resp = await dio.get('/persona');
-    final data = resp.data;
-    if (data['code'] == 1 && data['data']['intro'] != null) {
-      bio = data['data']['intro'];
-    }
-    final text = await showTextFieldDialog(context: context, initialText: bio);
+    final text = await showTextFieldDialog(
+      context: context,
+      initialText: ref.read(asyncMyProfileProvider).value!.bio ?? '',
+      maxLength: 256
+    );
     if (text != null && text.trim().isNotEmpty) {
-      final dio = ref.read(dioProvider);
-      final resp = await dio.post('/persona', data: {'intro': bio});
-      if (resp.data['code'] == 1) {
-        FocusManager.instance.primaryFocus?.unfocus();
-        Fluttertoast.showToast(msg: '设置成功');
-      } else {
-        Fluttertoast.showToast(msg: 'Failed');
-      }
+      await ref.read(asyncMyProfileProvider.notifier).updateInfo(bio: text.trim());
+      FocusManager.instance.primaryFocus?.unfocus();
     }
   }
 
@@ -169,5 +163,40 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if (gender != null && gender != _profile.gender) {
       ref.read(asyncMyProfileProvider.notifier).updateInfo(gender: gender);
     }
+  }
+
+  void _showPhotoActions(ProfilePhoto photo) async {
+    final action = await showRadioFieldDialog(context: context, options: {'Set Default': 'set-default', 'Delete': 'delete'});
+    if (action == 'delete') {
+      _onRemovePhoto(photo.id);
+    } else if (action == 'set-default') {
+      final photos = ref.read(asyncMyProfileProvider).value!.photos;
+      photos..remove(photo)..insert(0, photo);
+      final data = photos.asMap().entries.map<Map<String, dynamic>>((entry) => {'id': entry.value.id, 'sort': entry.key}).toList();
+      // todo 通过provider
+      await updatePhotoSorts(httpClient: ref.read(dioProvider), data: data);
+      ref.read(asyncMyProfileProvider.notifier).refresh();
+    }
+  }
+
+  Future _onAddPhoto() async {
+    final source = await showRadioFieldDialog(context: context, options: {
+      'Choose a photo': ImageSource.gallery,
+      'Take a photo': ImageSource.camera
+    });
+    if (source == null) throw Exception('No source');
+    final picker = ImagePicker();
+    final file = await picker.pickImage(source: source);
+    if (file == null) throw Exception('No file');
+    final bytes = await file.readAsBytes();
+    final dio = ref.read(dioProvider);
+    // todo 通过provider
+    await addPhoto(httpClient: dio, bytes: bytes, filename: file.name);
+    ref.read(asyncMyProfileProvider.notifier).refresh();
+  }
+
+  Future _onRemovePhoto(int photoId) async {
+    await removePhoto(httpClient: ref.read(dioProvider), photoId: photoId);
+    ref.read(asyncMyProfileProvider.notifier).refresh();
   }
 }

@@ -12,7 +12,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   final TextInputType keyboardType;
   final String actionText;
   final Function(String)? onInputChange;
-  final void Function(String? text)? onSubmit;
+  final void Function(String text)? onSubmit;
   final int maxLength;
   final FocusNode? focusNode;
   final bool autofocus;
@@ -137,7 +137,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     if (widget.onInputChange != null) widget.onInputChange!(text);
                   },
                   onSubmitted: (String text) {
-                    onSubmit(text: text);
+                    onSubmit(text);
                     _controller.text = '';
                   },
                   focusNode: focusNode,
@@ -146,7 +146,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
               ),
               TextButton(
                   onPressed: () {
-                    onSubmit(text: _controller.text);
+                    onSubmit(_controller.text);
                   },
                   child: Text(widget.actionText)
               )
@@ -204,8 +204,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     }
   }
 
-  void onSubmit({String? text}) async {
-    widget.onSubmit!(text);
+  void onSubmit(String text) async {
+    if (widget.onSubmit != null) widget.onSubmit!(text);
     _controller.clear();
     focusNode.unfocus();
     ref.invalidate(currentChatStyleIdProvider);

@@ -1,8 +1,8 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/gender.dart';
 
-class MyInfo {
-  const MyInfo({
+class MyProfile {
+  const MyProfile({
     required this.id,
     required this.name,
     required this.gender,
@@ -12,7 +12,7 @@ class MyInfo {
     required this.position,
     this.bio,
     this.chatStyleId,
-    this.photos = const <String>[]
+    this.photos = const <ProfilePhoto>[]
   });
 
   final int id;
@@ -23,13 +23,13 @@ class MyInfo {
   final String? bio;
   final int? chatStyleId;
   final List<String> interests;
-  final List<String> photos;
+  final List<ProfilePhoto> photos;
   final Position position;
 
   bool get completed => _validate();
 
-  factory MyInfo.fromJson(Map<String, dynamic> json) {
-    return MyInfo(
+  factory MyProfile.fromJson(Map<String, dynamic> json) {
+    return MyProfile(
       id: json['id'],
       name: json['nickname'],
       gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
@@ -38,7 +38,7 @@ class MyInfo {
       bio: json['description'],
       chatStyleId: json['chatStyleId'],
       interests: json['interest'] != null ? (json['interest'] as String).split(',') : [],
-      photos: json['images'] != null ? (json['images'] as List).map<String>((photo) => photo['attachmentUrl']).toList() : [],
+      photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
       position: Position.fromMap({'longitude': double.parse(json['longitude']), 'latitude': double.parse(json['latitude'])})
     );
   }
@@ -53,7 +53,7 @@ class MyInfo {
       'description': bio,
       'chatStyleId': chatStyleId,
       'interest': interests.join(','),
-      'images': photos.map<Map<String, dynamic>>((photo) => {'attachmentUrl': photo}).toList(),
+      'images': photos.map<Map<String, dynamic>>((photo) => photo.toJson()).toList(),
       'longitude': position.longitude.toString(),
       'latitude': position.latitude.toString()
     };
@@ -66,4 +66,25 @@ class MyInfo {
         && avatar != null
         && interests.length >= 3;
   }
+}
+
+class ProfilePhoto {
+  const ProfilePhoto({
+    required this.id,
+    required this.url
+  });
+  final int id;
+  final String url;
+
+  factory ProfilePhoto.fromJson(Map<String, dynamic> json) {
+    return ProfilePhoto(
+      id: json['id'],
+      url: json['attachmentUrl']
+    );
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'id': id,
+    'attachmentUrl': url
+  };
 }

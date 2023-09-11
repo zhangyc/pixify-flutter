@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/screens/login.dart';
-import 'package:sona/account/providers/info.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/providers/navigator_key.dart';
 import 'package:sona/setting/screens/setting.dart';
@@ -78,7 +78,7 @@ class SonaApp extends HookConsumerWidget {
                             color: Colors.white,
                             alignment: Alignment.center,
                             child: const Text(
-                                'Load info error\nclick the screen to try again.',
+                                'Cannot connect to server, tap to retry',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 16,
