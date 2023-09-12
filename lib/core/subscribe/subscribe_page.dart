@@ -1,17 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
-import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
-import 'package:sona/account/models/user_info.dart';
 import 'package:sona/generated/assets.dart';
 
 import '../../account/providers/profile.dart';
@@ -23,7 +18,6 @@ class SubscribePage extends ConsumerStatefulWidget {
   @override
   ConsumerState createState() => _SubscribePageState();
 }
-final bool _kAutoConsume = Platform.isIOS || true;
 
 const String annually = '1_annually';
 const String month = '1_month';
@@ -41,7 +35,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   List<String> _notFoundIds = <String>[];
   List<ProductDetails> _products = <ProductDetails>[];
   List<PurchaseDetails> _purchases = <PurchaseDetails>[];
-  // List<String> _consumables = <String>[];
   bool _isAvailable = false;
   bool _purchasePending = false;
   bool _loading = true;
@@ -148,6 +141,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     }
     return Card(child: Column(children: children));
   }
+  ProductDetails? _productDetails;
   ///产品列表
   Widget _buildProductList() {
     if (_loading) {
@@ -181,6 +175,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           return MapEntry<String, PurchaseDetails>(purchase.productID, purchase);
         }));
     ///产品列表，继续转换一下数据类型
+    _products.sort((l,r)=>l.rawPrice.compareTo(r.rawPrice));
+
     productList.addAll(_products.map(
           (ProductDetails productDetails) {
         ///购买前购买详情，赋值给商品。
@@ -188,7 +184,12 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         return GestureDetector(
           onTap: () async {
             late PurchaseParam purchaseParam;
+            if(_productDetails!=productDetails){
+              _productDetails=productDetails;
+              setState(() {
 
+              });
+            }
             if (Platform.isAndroid) {
               // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
               // verify the latest status of you your subscription by using server side receipt validation
@@ -216,19 +217,31 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             height: 151,
             margin: EdgeInsets.only(right: 11),
             decoration: BoxDecoration(
-              color: Colors.cyan,
-              borderRadius: BorderRadius.circular(20)
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              gradient: _productDetails==productDetails?LinearGradient(colors: [
+                Color(0xffFFC36A),
+                Color(0xffFFDF8E),
+              ]):null
             ),
-            child: Column(
-              children: [
-                Text(
-                  productDetails.title,
-                ),
-                Text(
-                  productDetails.description,
-                ),
-                Text(productDetails.price),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    productDetails.description,
+                    style: TextStyle(
+                      fontSize: 20
+                    ),
+                  ),
+                  Text(productDetails.price,
+                    style: TextStyle(
+                        fontSize: 20
+                    ),),
+                  _buildPerMonth(productDetails)
+                ],
+              ),
             ),
           ),
         );
@@ -249,7 +262,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             width: MediaQuery.maybeOf(context)?.size.width,
           ),
           Container(
-            child: Text(' When i become a supersona,i can do:'),
+            child: Text(' When i become a supersona,i can do:',style: TextStyle(color: Color(0xffD4237A)),),
           ),
           Container(
             height: 318,
@@ -540,6 +553,29 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     }
     _subscription.cancel();
     super.dispose();
+  }
+
+  _buildPerMonth(ProductDetails details) {
+    String id=details.id;
+    String p='';
+    if(id==month){
+      return Container();
+    }else if(id==quarter){
+      // return Text('${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(1)}');
+      p='${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(2)}';
+    }
+    else if(id==biannually){
+      // return Text('${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(1)}');
+      p='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}';
+    }
+    else if(id==annually){
+      p='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}';
+      // return Text();
+    }
+    return Text(p,style: TextStyle(
+      color: Color(0xff4D4D4D),
+      fontSize: 14
+    ),);
   }
 }
 List<String> unlockFeatures=[
