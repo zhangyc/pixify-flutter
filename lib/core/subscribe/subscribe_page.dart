@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,9 +11,10 @@ import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
-import 'package:sona/account/providers/info.dart';
+import 'package:sona/account/models/user_info.dart';
 import 'package:sona/generated/assets.dart';
 
+import '../../account/providers/profile.dart';
 import '../../test_pay/_MyApp.dart';
 import '../../utils/providers/dio.dart';
 class SubscribePage extends ConsumerStatefulWidget {
@@ -22,21 +25,11 @@ class SubscribePage extends ConsumerStatefulWidget {
 }
 final bool _kAutoConsume = Platform.isIOS || true;
 
-const String _kConsumableId = 'consumable';
-const String _kUpgradeId = 'upgrade';
-const String _kSilverSubscriptionId = 'subscription_silver';
-const String _kGoldSubscriptionId = 'subscription_gold';
-const String _sona_test_1 = 'sona_test_1';
 const String annually = '1_annually';
 const String month = '1_month';
 const String quarter = '1_quarter';
 const String biannually = '1_biannually';
 const List<String> _kProductIds = <String>[
-  // _kConsumableId,
-  // _kUpgradeId,
-  // _kSilverSubscriptionId,
-  // _kGoldSubscriptionId,
-  // _sona_test_1,
   month,
   quarter,
   biannually,
@@ -48,7 +41,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   List<String> _notFoundIds = <String>[];
   List<ProductDetails> _products = <ProductDetails>[];
   List<PurchaseDetails> _purchases = <PurchaseDetails>[];
-  List<String> _consumables = <String>[];
+  // List<String> _consumables = <String>[];
   bool _isAvailable = false;
   bool _purchasePending = false;
   bool _loading = true;
@@ -61,7 +54,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         }, onDone: () {
           _subscription.cancel();
         }, onError: (Object error) {
-          // handle error here.
+          print(error);
         });
     initStoreInfo();
     super.initState();
@@ -193,7 +186,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         ///购买前购买详情，赋值给商品。
         final PurchaseDetails? previousPurchase = purchases[productDetails.id];
         return GestureDetector(
-          onTap: (){
+          onTap: () async {
             late PurchaseParam purchaseParam;
 
             if (Platform.isAndroid) {
@@ -201,8 +194,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               // verify the latest status of you your subscription by using server side receipt validation
               // and update the UI accordingly. The subscription purchase status shown
               // inside the app may not be accurate.
-              final GooglePlayPurchaseDetails? oldSubscription = _getOldSubscription(productDetails, purchases);
-
+              final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
               purchaseParam = GooglePlayPurchaseParam(
                   applicationUserName: ref.read(asyncMyProfileProvider).value!.id.toString(),
                   productDetails: productDetails,
@@ -216,15 +208,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                 productDetails: productDetails,
               );
             }
+            _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
 
-            if (productDetails.id == _kConsumableId) {
-              _inAppPurchase.buyConsumable(
-                  purchaseParam: purchaseParam,
-                  autoConsume: _kAutoConsume);
-            } else {
-              _inAppPurchase.buyNonConsumable(
-                  purchaseParam: purchaseParam);
-            }
           },
           child: Container(
             width: 135,
@@ -379,7 +364,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         ///没找到
         _notFoundIds = <String>[];
         ///消耗品的id集合
-        _consumables = <String>[];
+        // _consumables = <String>[];
         ///购买待定
         _purchasePending = false;
         ///正在载入
@@ -406,7 +391,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         _products = productDetailResponse.productDetails;
         _purchases = <PurchaseDetails>[];
         _notFoundIds = productDetailResponse.notFoundIDs;
-        _consumables = <String>[];
+        // _consumables = <String>[];
         _purchasePending = false;
         _loading = false;
       });
@@ -420,7 +405,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         _products = productDetailResponse.productDetails;
         _purchases = <PurchaseDetails>[];
         _notFoundIds = productDetailResponse.notFoundIDs;
-        _consumables = <String>[];
+        // _consumables = <String>[];
         _purchasePending = false;
         _loading = false;
       });
@@ -432,7 +417,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       _isAvailable = isAvailable;
       _products = productDetailResponse.productDetails;
       _notFoundIds = productDetailResponse.notFoundIDs;
-      _consumables = consumables;
+      // _consumables = consumables;
       _purchasePending = false;
       _loading = false;
     });
@@ -451,7 +436,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       "purchaseToken":purchaseDetails.verificationData.serverVerificationData,
       "serviceType":"SUBSCRIPTION"
     });
-    print(response);
     if(response!=null&&response.data!=null){
       if(response.data){
         return Future<bool>.value(true);
@@ -465,19 +449,20 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   ///传递
   Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
     // IMPORTANT!! Always verify purchase details before delivering the product.
-    if (purchaseDetails.productID == _kConsumableId) {
-      await ConsumableStore.save(purchaseDetails.purchaseID!);
-      final List<String> consumables = await ConsumableStore.load();
-      setState(() {
-        _purchasePending = false;
-        _consumables = consumables;
-      });
-    } else {
-      setState(() {
-        _purchases.add(purchaseDetails);
-        _purchasePending = false;
-      });
-    }
+    // if (purchaseDetails.productID == _kConsumableId) {
+    //   await ConsumableStore.save(purchaseDetails.purchaseID!);
+    //   final List<String> consumables = await ConsumableStore.load();
+    //   setState(() {
+    //     _purchasePending = false;
+    //     _consumables = consumables;
+    //   });
+    // } else {
+    //
+    // }
+    setState(() {
+      _purchases.add(purchaseDetails);
+      _purchasePending = false;
+    });
   }
   void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
     // handle invalid purchase here if  _verifyPurchase` failed.
@@ -510,14 +495,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             return;
           }
         }
-        if (Platform.isAndroid) {
-          if (!_kAutoConsume && purchaseDetails.productID == _kConsumableId) {
-            final InAppPurchaseAndroidPlatformAddition androidAddition =
-            _inAppPurchase.getPlatformAddition<
-                InAppPurchaseAndroidPlatformAddition>();
-            await androidAddition.consumePurchase(purchaseDetails);
-          }
-        }
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
         }
@@ -537,30 +514,21 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       await iapStoreKitPlatformAddition.showPriceConsentIfNeeded();
     }
   }
-
-  GooglePlayPurchaseDetails? _getOldSubscription(ProductDetails productDetails, Map<String, PurchaseDetails> purchases) {
-    // This is just to demonstrate a subscription upgrade or downgrade.
-    // This method assumes that you have only 2 subscriptions under a group, 'subscription_silver' & 'subscription_gold'.
-    // The 'subscription_silver' subscription can be upgraded to 'subscription_gold' and
-    // the 'subscription_gold' subscription can be downgraded to 'subscription_silver'.
-    // Please remember to replace the logic of finding the old subscription Id as per your app.
-    // The old subscription is only required on Android since Apple handles this internally
-    // by using the subscription group feature in iTunesConnect.
-
+//获取老订单
+  Future<GooglePlayPurchaseDetails?> _getOldSubscription() async {
     GooglePlayPurchaseDetails? oldSubscription;
-    if (productDetails.id == month && purchases[quarter] != null) {
-      oldSubscription = purchases[quarter]! as GooglePlayPurchaseDetails;
-    } else if (productDetails.id == quarter && purchases[month] != null) {
-      oldSubscription = purchases[month]! as GooglePlayPurchaseDetails;
+    if (Platform.isAndroid) {
+      final InAppPurchaseAndroidPlatformAddition androidAddition = _inAppPurchase.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
+      QueryPurchaseDetailsResponse oldPurchaseDetailsQuery = await androidAddition.queryPastPurchases();
+
+      for (var element in oldPurchaseDetailsQuery.pastPurchases) {
+        if (element.status == PurchaseStatus.purchased) {
+          oldSubscription = element;
+        }
+      }
     }
+
     return oldSubscription;
-  }
-  Future<void> consume(String id) async {
-    await ConsumableStore.consume(id);
-    final List<String> consumables = await ConsumableStore.load();
-    setState(() {
-      _consumables = consumables;
-    });
   }
   @override
   void dispose() {

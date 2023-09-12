@@ -2,7 +2,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/gender.dart';
 
 class MyProfile {
-  const MyProfile({
+  const MyProfile( {
     required this.id,
     required this.name,
     required this.gender,
@@ -12,7 +12,8 @@ class MyProfile {
     required this.position,
     this.bio,
     this.chatStyleId,
-    this.photos = const <ProfilePhoto>[]
+    this.photos = const <ProfilePhoto>[],
+    required this.ext,
   });
 
   final int id;
@@ -25,6 +26,7 @@ class MyProfile {
   final List<String> interests;
   final List<ProfilePhoto> photos;
   final Position position;
+  final String ext;
 
   bool get completed => _validate();
 
@@ -37,7 +39,9 @@ class MyProfile {
       avatar: json['avatar'],
       bio: json['description'],
       chatStyleId: json['chatStyleId'],
-      interests: json['interest'] != null ? (json['interest'] as String).split(',') : [],
+        ext: json['ext'],
+
+        interests: json['interest'] != null ? (json['interest'] as String).split(',') : [],
       photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
       position: Position.fromMap({'longitude': double.parse(json['longitude']), 'latitude': double.parse(json['latitude'])})
     );
@@ -55,7 +59,8 @@ class MyProfile {
       'interest': interests.join(','),
       'images': photos.map<Map<String, dynamic>>((photo) => photo.toJson()).toList(),
       'longitude': position.longitude.toString(),
-      'latitude': position.latitude.toString()
+      'latitude': position.latitude.toString(),
+      'ext':ext
     };
   }
 
