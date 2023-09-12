@@ -25,15 +25,17 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyProfile> {
   FutureOr<MyProfile> build() {
     try {
       final localCachedProfileString = ref.read(kvStoreProvider).getString('profile');
-      return MyProfile.fromJson(jsonDecode(localCachedProfileString!));
+      final profile = MyProfile.fromJson(jsonDecode(localCachedProfileString!));
+      refresh(true);
+      return profile;
     } catch(e) {
       ref.read(kvStoreProvider).remove('profile');
       return _fetchProfile();
     }
   }
 
-  Future<void> refresh() async {
-    state = const AsyncValue.loading();
+  Future<void> refresh([bool silence = false]) async {
+    if (!silence) state = const AsyncValue.loading();
     state = await AsyncValue.guard(() => _fetchProfile());
   }
 

@@ -22,7 +22,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
     this.controller,
     this.height,
     this.initialText,
-    this.hintText = 'Just give me a word',
+    this.hintText = 'Tell Sona your intention...',
     this.keyboardType = TextInputType.text,
     this.actionText = 'Sona',
     this.onInputChange,
@@ -53,7 +53,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     }
     _controller.addListener(_refreshUI);
     focusNode = widget.focusNode ?? FocusNode();
-    height = widget.height ?? 70;
+    height = widget.height ?? 38;
     super.initState();
   }
 
@@ -77,35 +77,17 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
         children: [
           Row(
             children: [
-              GradientColoredText(
-                  text: 'S',
-                  style: TextStyle(fontSize: 16)
-              ),
-              SizedBox(width: 6),
-              Text(
-                  'What you wanna talk about?',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                  )
-              ),
-              SizedBox(width: 16),
-            ],
-          ),
-          Row(
-            children: [
-              IconButton(
-                onPressed: _toggleChatStyles,
-                icon: Container(
-                  width: 26,
-                  height: 26,
+              GestureDetector(
+                onTap: _toggleChatStyles,
+                child: Container(
+                  width: 33,
+                  height: 33,
                   decoration: BoxDecoration(
-                    image: currentChatStyleId != null ? DecorationImage(
-                      image: CachedNetworkImageProvider(ref.read(asyncChatStylesProvider).value!.firstWhere((style) => style.id == currentChatStyleId).icon)
-                    ) : null,
                     shape: BoxShape.circle
                   ),
                   clipBehavior: Clip.antiAlias,
                   alignment: Alignment.center,
+                  child: Text('✍️'),
                 )
               ),
               Expanded(
@@ -118,15 +100,36 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   keyboardAppearance: Brightness.dark,
                   keyboardType: widget.keyboardType,
                   textInputAction: TextInputAction.send,
+                  style: Theme.of(context).textTheme.bodySmall,
+                  autocorrect: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(height/2),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    isDense: true,
+                    prefixIcon: GestureDetector(
+                      onTap: _toggleChatStyles,
+                      child: Container(
+                        width: 33,
+                        height: 33,
+                        margin: EdgeInsets.symmetric(horizontal: 2.5),
+                        decoration: BoxDecoration(
+                          image: currentChatStyleId != null ? DecorationImage(
+                            image: CachedNetworkImageProvider(
+                                ref.read(asyncChatStylesProvider).value!.firstWhere((style) => style.id == currentChatStyleId).icon
+                            )
+                          ) : null,
+                          shape: BoxShape.circle
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        alignment: Alignment.center,
+                      )
+                    ),
+                    prefixIconConstraints: BoxConstraints.tightFor(height: height),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                    // isDense: true,
                     filled: true,
-                    fillColor: Color(0xFFFAFAFF),
+                    fillColor: Color(0xFFF6F6F6),
                     focusColor: Color(0xFF6D91F4),
                     hintText: widget.hintText,
                     hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
