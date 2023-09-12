@@ -3,8 +3,6 @@ import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/widgets/message/message_from_me.dart';
 import 'package:sona/core/chat/widgets/message/message_from_other.dart';
 
-import '../../../../utils/dialog/input.dart';
-
 class MessageWidget extends StatelessWidget {
   const MessageWidget({
     super.key,

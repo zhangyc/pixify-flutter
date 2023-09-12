@@ -1,20 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/common/widgets/text/gradient_colored_text.dart';
+import 'package:sona/core/chat/providers/chat_mode.dart';
 import 'package:sona/core/chat/providers/chat_style.dart';
 
 class ChatInstructionInput extends ConsumerStatefulWidget {
   final TextEditingController? controller;
   final double? height;
   final String? initialText;
-  final String hintText;
   final TextInputType keyboardType;
-  final String actionText;
   final Function(String)? onInputChange;
   final void Function(String text)? onSubmit;
   final int maxLength;
-  final FocusNode? focusNode;
   final bool autofocus;
 
   const ChatInstructionInput({
@@ -22,13 +19,10 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
     this.controller,
     this.height,
     this.initialText,
-    this.hintText = 'Tell Sona your intention...',
     this.keyboardType = TextInputType.text,
-    this.actionText = 'Sona',
     this.onInputChange,
     this.onSubmit,
     this.maxLength = 30,
-    this.focusNode,
     this.autofocus = false
   }) : super(key: key);
 
@@ -38,7 +32,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
 
 class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with AutomaticKeepAliveClientMixin {
   late final TextEditingController _controller;
-  late FocusNode focusNode;
+  late final FocusNode _focusNode;
   late double height;
   bool _chatStylesVisible = false;
 
@@ -52,7 +46,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
       _controller.text = widget.initialText!;
     }
     _controller.addListener(_refreshUI);
-    focusNode = widget.focusNode ?? FocusNode();
+    _focusNode = FocusNode();
+    _focusNode.addListener(_focusNodeListener);
     height = widget.height ?? 38;
     super.initState();
   }
@@ -61,7 +56,14 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
   void dispose() {
     _controller.removeListener(_refreshUI);
     _controller.dispose();
+    _focusNode.removeListener(_focusNodeListener);
     super.dispose();
+  }
+
+  void _focusNodeListener() {
+    if (_focusNode.hasFocus) {
+
+    }
   }
 
   @override
@@ -78,7 +80,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
           Row(
             children: [
               GestureDetector(
-                onTap: _toggleChatStyles,
+                onTap: () {
+                  if (ref.read(inputModeProvider) == InputMode.sona) {
+                    ref.read(inputModeProvider.notifier).state = InputMode.manual;
+                  } else {
+                    ref.read(inputModeProvider.notifier).state = InputMode.sona;
+                  }
+                },
                 child: Container(
                   width: 33,
                   height: 33,
@@ -107,7 +115,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(height/2),
                     ),
-                    prefixIcon: GestureDetector(
+                    prefixIcon: ref.watch(inputModeProvider) == InputMode.sona ? GestureDetector(
                       onTap: _toggleChatStyles,
                       child: Container(
                         width: 33,
@@ -124,14 +132,14 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                         clipBehavior: Clip.antiAlias,
                         alignment: Alignment.center,
                       )
-                    ),
+                    ) : null,
                     prefixIconConstraints: BoxConstraints.tightFor(height: height),
                     contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                     // isDense: true,
                     filled: true,
                     fillColor: Color(0xFFF6F6F6),
                     focusColor: Color(0xFF6D91F4),
-                    hintText: widget.hintText,
+                    hintText: ref.watch(inputModeProvider) == InputMode.sona ? 'Tell Sona your intention...' : 'Message',
                     hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Theme.of(context).hintColor
                     )
@@ -143,7 +151,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     onSubmit(text);
                     _controller.text = '';
                   },
-                  focusNode: focusNode,
+                  focusNode: _focusNode,
                   autofocus: widget.autofocus,
                 ),
               ),
@@ -151,7 +159,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   onPressed: () {
                     onSubmit(_controller.text);
                   },
-                  child: Text(widget.actionText)
+                  child: Text(ref.watch(inputModeProvider) == InputMode.sona ? 'Sona' : 'Send')
               )
             ],
           ),
@@ -159,11 +167,11 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
             offstage: !_chatStylesVisible,
             child: Container(
               height: 230,
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
               alignment: Alignment.topCenter,
               child: ref.watch(asyncChatStylesProvider).when(
                   data: (styles) => GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       mainAxisSpacing: 5,
                       crossAxisSpacing: 5,
@@ -183,7 +191,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   error: (_, __) => GestureDetector(
                     child: Center(child: Text('Error, click to retry')),
                   ),
-                  loading: () => Center(
+                  loading: () => const Center(
                     child: SizedBox(
                       width: 36,
                       height: 36,
@@ -210,7 +218,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
   void onSubmit(String text) async {
     if (widget.onSubmit != null) widget.onSubmit!(text);
     _controller.clear();
-    focusNode.unfocus();
+    _focusNode.unfocus();
     ref.invalidate(currentChatStyleIdProvider);
   }
 

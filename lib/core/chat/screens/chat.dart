@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
@@ -13,7 +12,6 @@ import 'package:sona/core/chat/providers/chat_style.dart';
 import 'package:sona/core/chat/screens/info.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/chat_actions.dart';
-import 'package:sona/core/chat/widgets/chat_input.dart';
 import 'package:sona/core/chat/widgets/chat_instruction_input.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 
@@ -107,7 +105,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           bottom: MediaQuery.of(context).viewInsets.bottom + 12
         ),
         color: Colors.white,
-        child: ref.watch(inputModeProvider) == InputMode.sona ? ChatInstructionInput(onSubmit: _onSona, autofocus: true,) :  ChatInput(onSubmit: (String content) => _sendMessage(content, ImMessageType.manual), autofocus: true,),
+        child: ChatInstructionInput(onSubmit: _onSona, autofocus: true),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -166,12 +164,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       ref.read(chatModeProvider.notifier).state = ChatMode.docker;
       return;
     }
-
+    final type = ref.read(inputModeProvider) == InputMode.sona ? CallSonaType.INPUT : CallSonaType.MANUAL;
     return callSona(
       httpClient: ref.read(dioProvider),
       userId: widget.otherSide.id,
       input: text,
-      type: CallSonaType.INPUT,
+      type: type,
       chatStyleId: ref.read(currentChatStyleIdProvider)
     );
   }
@@ -264,22 +262,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         );
       }
     );
-  }
-
-  Future _onEditMessage(ImMessage message) async {
-    Fluttertoast.showToast(msg: 'todo');
-  }
-
-  Future _onAddKnowledge(ImMessage message) async {
-    final dio = ref.read(dioProvider);
-    final resp = await dio.post('/knowledge', data: {'content': message.content});
-    final data = resp.data;
-    if (data['code'] == 1 ) {
-      message.knowledgeAdded = true;
-      if (mounted) {
-        setState(() {});
-      }
-    }
   }
 
   Future _deleteAllMessages() async {
