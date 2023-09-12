@@ -1,7 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:lottie/lottie.dart';
+import 'package:sona/core/match/widgets/like_animation.dart';
 
 import '../../../common/models/user.dart';
+import '../../../generated/assets.dart';
 
 class UserCard extends StatefulWidget {
   const UserCard(
@@ -78,24 +82,9 @@ class _UserCardState extends State<UserCard> {
         Positioned(
           right: 20,
           bottom: MediaQuery.of(context).viewInsets.bottom + 120,
-          child: Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                    width: 1,
-                    color: Theme.of(context).colorScheme.secondaryContainer)),
-            alignment: Alignment.center,
-            child: IconButton(
-              icon: Icon(
-                Icons.favorite,
-                color: Theme.of(context).colorScheme.primaryContainer,
-                size: 33,
-              ),
-              onPressed: widget.onLike,
-            ),
-          ),
-        )
+          child: LikeAnimation(onTap:widget.onLike),
+        ),
+
       ],
     );
   }
