@@ -29,13 +29,13 @@ class ImMessage {
     );
   }
 
-  // Map<String, dynamic> toJson() => <String, dynamic>{
-  //   'target': conversation,
-  //   'sender': sender.toJson(),
-  //   'receiver': receiver.toJson(),
-  //   'content': content,
-  //   'knowledge_added': knowledgeAdded
-  // };
+  @override
+  bool operator ==(Object other) {
+    return super == other || other is ImMessage && other.sender.id == sender.id && other.time == time;
+  }
+
+  @override
+  int get hashCode => identityHashCode('${sender.id}_${time.microsecondsSinceEpoch}');
 }
 
 

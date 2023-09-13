@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
@@ -6,7 +5,6 @@ import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 
 import '../../../common/widgets/button/colored.dart';
-import '../widgets/match_loading.dart';
 import '../widgets/scroller.dart';
 
 class MatchScreen extends StatefulHookConsumerWidget {
@@ -76,7 +74,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                   },
                   onArrow: () => ref
                       .read(asyncMatchRecommendedProvider.notifier)
-                      .superlike(users[index].id),
+                      .arrow(users[index].id),
                 ),
               ),
             ),
@@ -103,7 +101,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       },
       error: (err, stack) => GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: () => ref.watch(asyncMatchRecommendedProvider.notifier).refresh(),
+        onTap: () => ref.refresh(asyncMatchRecommendedProvider),
         child: Container(
           color: Colors.white,
           alignment: Alignment.center,

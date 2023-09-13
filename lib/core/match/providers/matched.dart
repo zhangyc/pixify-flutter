@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dio/src/response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
@@ -16,14 +15,15 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     final setting = ref.read(matchSettingProvider);
 
     return fetchMatchPeople(
-            httpClient: ref.read(dioProvider),
-            position: position!,
-            gender: setting.gender,
-            range: setting.ageRange)
-        .then<List>((resp) => resp.data as List)
-        .then<List<UserInfo>>(
-            (data) => data.map<UserInfo>((m) => UserInfo.fromJson(m)).toList())
-        .catchError((e) => <UserInfo>[]);
+      httpClient: ref.read(dioProvider),
+      position: position!,
+      gender: setting.gender,
+      range: setting.ageRange
+    )
+    .then<List>((resp) => resp.data as List)
+    .then<List<UserInfo>>(
+        (data) => data.map<UserInfo>((m) => UserInfo.fromJson(m)).toList()
+    );
   }
 
   @override
@@ -31,34 +31,26 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     return _fetchMatched();
   }
 
-  Future refresh() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() {
-      return _fetchMatched();
-    });
-  }
-
-  Future<Response> like(int id) {
-   return _action(id, MatchAction.like);
+  void like(int id) {
+    _action(id, MatchAction.like);
   }
 
   void skip(int id) {
     _action(id, MatchAction.skip);
   }
 
-  void superlike(int id) {
+  void arrow(int id) {
     _action(id, MatchAction.arrow);
   }
 
-  Future<Response> _action(int id, MatchAction action) {
-   return matchAction(
+  void _action(int id, MatchAction action) {
+    matchAction(
         httpClient: ref.read(dioProvider),
         userId: id,
         action: MatchAction.like);
   }
 }
 
-final asyncMatchRecommendedProvider =
-    AsyncNotifierProvider<AsyncMatchRecommendedNotifier, List<UserInfo>>(
+final asyncMatchRecommendedProvider = AsyncNotifierProvider<AsyncMatchRecommendedNotifier, List<UserInfo>>(
   () => AsyncMatchRecommendedNotifier(),
 );
