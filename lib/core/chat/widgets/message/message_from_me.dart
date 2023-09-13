@@ -87,23 +87,6 @@ class _MessageFromMeState extends State<MessageFromMe> {
                   child: Text('\u{270D}'),
                 ),
               ),
-              Visibility(
-                visible: !widget.message.knowledgeAdded,
-                child: GestureDetector(
-                  onTap: () => null,
-                  child: Container(
-                    height: 28,
-                    width: 28,
-                    margin: EdgeInsets.only(left: 20),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.black, width: 1)
-                    ),
-                    alignment: Alignment.center,
-                    child: GradientColoredText(text: 'S', style: TextStyle(color: Colors.pinkAccent, fontWeight: FontWeight.w700)),
-                  ),
-                ),
-              ),
               SizedBox(width: 12)
             ],
           )
