@@ -69,7 +69,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
 
     if (FocusManager.instance.primaryFocus?.hasFocus == true) {
       ref.read(keyboardChatStyleVisibleProvider.notifier).update((state) => false);
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(milliseconds: 1000), () {
         if (!mounted) return;
         final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
         if (keyboardHeight > 0) {
@@ -230,11 +230,10 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
 
   void _toggleChatStyles() {
     ref.read(keyboardChatStyleVisibleProvider.notifier).update((state) {
-      final newState = !state;
-      if (newState) {
+      if (!state) {
         FocusManager.instance.primaryFocus?.unfocus();
       }
-      return newState;
+      return !state;
     });
   }
 
