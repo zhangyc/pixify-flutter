@@ -71,7 +71,7 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
     state = state.copyWith(
       ageRange: ageRange
     );
-    debounce.run(ref.read(asyncMatchRecommendedProvider.notifier).refresh);
+    debounce.run(() => ref.refresh(asyncMatchRecommendedProvider));
     ref.read(kvStoreProvider).setString(ageRangeKey, [ageRange.start.toInt(), ageRange.end.toInt()].join(':'));
   }
 
@@ -80,7 +80,7 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
     state = state.copyWith(
       gender: gender
     );
-    debounce.run(ref.read(asyncMatchRecommendedProvider.notifier).refresh);
+    debounce.run(() => ref.refresh(asyncMatchRecommendedProvider));
     if (gender != null) {
       ref.read(kvStoreProvider).setInt(genderKey, gender.index);
     } else {

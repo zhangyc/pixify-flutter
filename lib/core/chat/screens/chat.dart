@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
@@ -14,6 +15,7 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/chat_actions.dart';
 import 'package:sona/core/chat/widgets/chat_instruction_input.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/utils/providers/keyboard.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/providers/dio.dart';
@@ -32,6 +34,12 @@ class ChatScreen extends StatefulHookConsumerWidget {
 }
 
 class _ChatScreenState extends ConsumerState<ChatScreen> {
+
+  @override
+  void dispose() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +68,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         behavior: HitTestBehavior.opaque,
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
-          ref.read(chatModeProvider.notifier).state = ChatMode.docker;
+          ref.read(keyboardHeightProvider.notifier).update((state) => 0);
+          ref.read(chatModeProvider.notifier).update((state) => ChatMode.docker);
         },
         child: Stack(
           children: [
             Positioned.fill(
-              bottom: 100,
+              bottom: 60 + ref.watch(keyboardHeightProvider),
               child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
                 data: (messages) => messages.isNotEmpty ? Container(
                   alignment: Alignment.topCenter,
@@ -92,22 +101,38 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 )
               )
             ),
+            Positioned(
+              bottom: ref.watch(keyboardBottomPositionProvider),
+              left: 0,
+              right: 0,
+              child: Visibility(
+                visible: ref.watch(chatModeProvider) == ChatMode.input,
+                child: Container(
+                  padding: const EdgeInsets.only(
+                    top: 8,
+                    bottom: 8
+                  ),
+                  color: Colors.white,
+                  child: ChatInstructionInput(onSubmit: _onSona, autofocus: true),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: MediaQuery.of(context).viewPadding.bottom + 20,
+              left: 0,
+              right: 0,
+              child: Visibility(
+                visible: ref.watch(chatModeProvider) == ChatMode.docker,
+                child: ChatActions(
+                    onHookTap: _onHookTap,
+                    onSuggestionTap: _onSuggestionTap,
+                    onSonaTap: _onSonaTap
+                ),
+              )
+            )
           ],
         ),
       ),
-      floatingActionButton: ref.watch(chatModeProvider) == ChatMode.docker ? ChatActions(
-        onHookTap: _onHookTap,
-        onSuggestionTap: _onSuggestionTap,
-        onSonaTap: _onSonaTap
-      ) : Container(
-        padding: EdgeInsets.only(
-          top: 12,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 12
-        ),
-        color: Colors.white,
-        child: ChatInstructionInput(onSubmit: _onSona, autofocus: true),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -175,7 +200,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _showInfo() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatInfoScreen(user: widget.otherSide)));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: widget.otherSide)));
   }
 
   Future _startUpLine() {

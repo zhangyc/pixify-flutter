@@ -15,26 +15,20 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     final setting = ref.read(matchSettingProvider);
 
     return fetchMatchPeople(
-            httpClient: ref.read(dioProvider),
-            position: position!,
-            gender: setting.gender,
-            range: setting.ageRange)
-        .then<List>((resp) => resp.data as List)
-        .then<List<UserInfo>>(
-            (data) => data.map<UserInfo>((m) => UserInfo.fromJson(m)).toList())
-        .catchError((e) => <UserInfo>[]);
+      httpClient: ref.read(dioProvider),
+      position: position!,
+      gender: setting.gender,
+      range: setting.ageRange
+    )
+    .then<List>((resp) => resp.data as List)
+    .then<List<UserInfo>>(
+        (data) => data.map<UserInfo>((m) => UserInfo.fromJson(m)).toList()
+    );
   }
 
   @override
   Future<List<UserInfo>> build() async {
     return _fetchMatched();
-  }
-
-  Future refresh() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() {
-      return _fetchMatched();
-    });
   }
 
   void like(int id) {
@@ -45,7 +39,7 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     _action(id, MatchAction.skip);
   }
 
-  void superlike(int id) {
+  void arrow(int id) {
     _action(id, MatchAction.arrow);
   }
 
@@ -57,7 +51,6 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
   }
 }
 
-final asyncMatchRecommendedProvider =
-    AsyncNotifierProvider<AsyncMatchRecommendedNotifier, List<UserInfo>>(
+final asyncMatchRecommendedProvider = AsyncNotifierProvider<AsyncMatchRecommendedNotifier, List<UserInfo>>(
   () => AsyncMatchRecommendedNotifier(),
 );
