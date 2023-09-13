@@ -31,6 +31,7 @@ class _LikeAnimationState extends State<LikeAnimation> with SingleTickerProvider
   Widget build(BuildContext context) {
     return GestureDetector(child: Lottie.asset(Assets.lottieLike,controller: _animationController,repeat: false),
       onTap: (){
+
         _animationController.forward();
       },
     );

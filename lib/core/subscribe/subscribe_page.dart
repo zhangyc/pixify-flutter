@@ -204,6 +204,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               } else {
                 purchaseParam = PurchaseParam(
                   productDetails: productDetails,
+                  applicationUserName: ref.read(asyncMyProfileProvider).value!.id.toString(),
                 );
               }
               _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
@@ -245,7 +246,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         },
       ));
     }
-    print(productList);
     return Column(
         children: <Widget>[
 
@@ -441,13 +441,24 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     });
   }
   Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) async{
+    Map<String,dynamic> map={};
+    if(Platform.isAndroid){
+      map={
+        "packageName":"com.planetwalk.sona",
+        "productId":purchaseDetails.productID,
+        "purchaseToken":purchaseDetails.verificationData.serverVerificationData,
+        "serviceType":"SUBSCRIPTION"
+      };
+    }else if(Platform.isIOS){
+      map={
+        "packageName":"com.planetwalk.sona",
+        "productId":purchaseDetails.productID,
+        "purchaseToken":purchaseDetails.verificationData.serverVerificationData,
+        "serviceType":"SUBSCRIPTION_APPLE"
+      };
+    }
 
-    final response=await ref.read(dioProvider).post('/callback/google-pay',data: {
-      "packageName":"com.planetwalk.sona",
-      "productId":purchaseDetails.productID,
-      "purchaseToken":purchaseDetails.verificationData.serverVerificationData,
-      "serviceType":"SUBSCRIPTION"
-    });
+    final response=await ref.read(dioProvider).post('/callback/google-pay',data: map);
     if(response!=null&&response.data!=null){
       if(response.data){
         return Future<bool>.value(true);

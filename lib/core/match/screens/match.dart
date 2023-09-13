@@ -22,6 +22,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   void _handleCallbackEvent(ScrollDirection direction, ScrollSuccess success,
       {int? currentIndex}) {
+
+
     print(
         "Scroll callback received with data: {direction: $direction, success: $success and index: ${currentIndex ?? 'not given'}}");
   }
@@ -63,7 +65,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                   key: ValueKey(users[index].id),
                   user: users[index],
                   onLike: () {
-                    ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
+                    ///like某个用户
+                    ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((value){
+
+                    });
+
                     if (index < users.length - 1) {
                       controller.animateToPosition(index + 1);
                     }
@@ -72,7 +78,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       .read(asyncMatchRecommendedProvider.notifier)
                       .superlike(users[index].id),
                 ),
-              )
+              ),
             ),
             Positioned(
               top: 0,

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/src/response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
@@ -37,8 +38,8 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     });
   }
 
-  void like(int id) {
-    _action(id, MatchAction.like);
+  Future<Response> like(int id) {
+   return _action(id, MatchAction.like);
   }
 
   void skip(int id) {
@@ -49,8 +50,8 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     _action(id, MatchAction.arrow);
   }
 
-  void _action(int id, MatchAction action) {
-    matchAction(
+  Future<Response> _action(int id, MatchAction action) {
+   return matchAction(
         httpClient: ref.read(dioProvider),
         userId: id,
         action: MatchAction.like);
