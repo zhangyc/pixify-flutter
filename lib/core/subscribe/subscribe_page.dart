@@ -8,10 +8,13 @@ import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:sona/generated/assets.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../account/providers/profile.dart';
 import '../../test_pay/_MyApp.dart';
 import '../../utils/providers/dio.dart';
+
+Uuid uuid=Uuid();
 class SubscribePage extends ConsumerStatefulWidget {
   const SubscribePage({super.key});
 
@@ -205,7 +208,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                 purchaseParam = AppStorePurchaseParam(
                   simulatesAskToBuyInSandbox: true,
                   productDetails: productDetails,
-                  applicationUserName: ref.read(asyncMyProfileProvider).value!.id.toString(),
+                  applicationUserName: uuid.v4(),
                 );
               }
               _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
@@ -510,6 +513,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             ///恢复购买
             purchaseDetails.status == PurchaseStatus.restored) {
+
           final bool valid = await _verifyPurchase(purchaseDetails);
           if (valid) {
             unawaited(deliverProduct(purchaseDetails));
