@@ -64,10 +64,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                   user: users[index],
                   onLike: () {
                     ///like某个用户
-                    ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((value){
-
-                    });
-
+                    ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
                     if (index < users.length - 1) {
                       controller.animateToPosition(index + 1);
                     }
