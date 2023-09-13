@@ -78,7 +78,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
                 data: (messages) {
                   final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
-                  final msgs = [...localPendingMessages, ...messages]..sort((m1, m2) => m1.time.compareTo(m2.time));
+                  final msgs = [...localPendingMessages, ...messages]..sort((m1, m2) => m2.time.compareTo(m1.time));
                   if (msgs.isNotEmpty) {
                     return ListView.separated(
                       shrinkWrap: true,
