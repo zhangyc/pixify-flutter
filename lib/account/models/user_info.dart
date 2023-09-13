@@ -13,7 +13,7 @@ class MyProfile {
     this.bio,
     this.chatStyleId,
     this.photos = const <ProfilePhoto>[],
-    required this.ext,
+    required this.vipEndDate,
   });
 
   final int id;
@@ -26,7 +26,7 @@ class MyProfile {
   final List<String> interests;
   final List<ProfilePhoto> photos;
   final Position position;
-  final String ext;
+  final int vipEndDate;
 
   bool get completed => _validate();
 
@@ -39,7 +39,7 @@ class MyProfile {
       avatar: json['avatar'],
       bio: json['description'],
       chatStyleId: json['chatStyleId'],
-        ext: json['ext'],
+        vipEndDate: json['vipEndDate'],
 
         interests: json['interest'] != null ? (json['interest'] as String).split(',') : [],
       photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
@@ -60,7 +60,7 @@ class MyProfile {
       'images': photos.map<Map<String, dynamic>>((photo) => photo.toJson()).toList(),
       'longitude': position.longitude.toString(),
       'latitude': position.latitude.toString(),
-      'ext':ext
+      'vipEndDate':vipEndDate
     };
   }
 
