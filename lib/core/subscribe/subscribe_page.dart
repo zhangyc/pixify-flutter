@@ -156,11 +156,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     final List<Widget> productList = <Widget>[];
     if (_notFoundIds.isNotEmpty) {
       ///产品未找到
-      productList.add(ListTile(
-          title: Text('[${_notFoundIds.join(", ")}] not found',
-              style: TextStyle(color: ThemeData.light().colorScheme.error)),
-          subtitle: const Text(
-              'This app needs special configuration to run. Please see example/README.md for instructions.')));
+      productList.add(Text('[${_notFoundIds.join(", ")}] not found',
+          style: TextStyle(color: ThemeData.light().colorScheme.error)),);
     }
 
     // This loading previous purchases code is just a demo. Please do not use this as it is.
@@ -176,81 +173,85 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         }));
     ///产品列表，继续转换一下数据类型
     _products.sort((l,r)=>l.rawPrice.compareTo(r.rawPrice));
+    if(_products.isNotEmpty){
+      productList.addAll(_products.map(
+            (ProductDetails productDetails) {
+          ///购买前购买详情，赋值给商品。
+          final PurchaseDetails? previousPurchase = purchases[productDetails.id];
+          return GestureDetector(
+            onTap: () async {
+              late PurchaseParam purchaseParam;
+              if(_productDetails!=productDetails){
+                _productDetails=productDetails;
+                setState(() {
 
-    productList.addAll(_products.map(
-          (ProductDetails productDetails) {
-        ///购买前购买详情，赋值给商品。
-        final PurchaseDetails? previousPurchase = purchases[productDetails.id];
-        return GestureDetector(
-          onTap: () async {
-            late PurchaseParam purchaseParam;
-            if(_productDetails!=productDetails){
-              _productDetails=productDetails;
-              setState(() {
-
-              });
-            }
-            if (Platform.isAndroid) {
-              // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
-              // verify the latest status of you your subscription by using server side receipt validation
-              // and update the UI accordingly. The subscription purchase status shown
-              // inside the app may not be accurate.
-              final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
-              purchaseParam = GooglePlayPurchaseParam(
-                  applicationUserName: ref.read(asyncMyProfileProvider).value!.id.toString(),
+                });
+              }
+              if (Platform.isAndroid) {
+                // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
+                // verify the latest status of you your subscription by using server side receipt validation
+                // and update the UI accordingly. The subscription purchase status shown
+                // inside the app may not be accurate.
+                final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
+                purchaseParam = GooglePlayPurchaseParam(
+                    applicationUserName: ref.read(asyncMyProfileProvider).value!.id.toString(),
+                    productDetails: productDetails,
+                    changeSubscriptionParam: (oldSubscription != null)
+                        ? ChangeSubscriptionParam(
+                      oldPurchaseDetails: oldSubscription,
+                      prorationMode: ProrationMode.immediateAndChargeFullPrice,
+                    ) : null);
+              } else {
+                purchaseParam = PurchaseParam(
                   productDetails: productDetails,
-                  changeSubscriptionParam: (oldSubscription != null)
-                      ? ChangeSubscriptionParam(
-                    oldPurchaseDetails: oldSubscription,
-                    prorationMode: ProrationMode.immediateAndChargeFullPrice,
-                  ) : null);
-            } else {
-              purchaseParam = PurchaseParam(
-                productDetails: productDetails,
-              );
-            }
-            _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                );
+              }
+              _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
 
-          },
-          child: Container(
-            width: 135,
-            height: 151,
-            margin: EdgeInsets.only(right: 11),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              gradient: _productDetails==productDetails?LinearGradient(colors: [
-                Color(0xffFFC36A),
-                Color(0xffFFDF8E),
-              ]):null
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    productDetails.description,
-                    style: TextStyle(
-                      fontSize: 20
+            },
+            child: Container(
+              width: 135,
+              height: 151,
+              margin: EdgeInsets.only(right: 11),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: _productDetails==productDetails?LinearGradient(colors: [
+                    Color(0xffFFC36A),
+                    Color(0xffFFDF8E),
+                  ]):null
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      productDetails.description,
+                      style: TextStyle(
+                          fontSize: 20
+                      ),
                     ),
-                  ),
-                  Text(productDetails.price,
-                    style: TextStyle(
-                        fontSize: 20
-                    ),),
-                  _buildPerMonth(productDetails)
-                ],
+                    Text(productDetails.price,
+                      style: TextStyle(
+                          fontSize: 20
+                      ),),
+                    _buildPerMonth(productDetails)
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
-    ));
-
+          );
+        },
+      ));
+    }
+    print(productList);
     return Column(
         children: <Widget>[
+
           SizedBox(
+            height: 151,
+            width: MediaQuery.maybeOf(context)?.size.width,
             child: ListView(
               padding: EdgeInsets.symmetric(
                   horizontal: 20
@@ -258,8 +259,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               scrollDirection: Axis.horizontal,
               children: productList,
             ),
-            height: 151,
-            width: MediaQuery.maybeOf(context)?.size.width,
           ),
           Container(
             child: Text(' When i become a supersona,i can do:',style: TextStyle(color: Color(0xffD4237A)),),
