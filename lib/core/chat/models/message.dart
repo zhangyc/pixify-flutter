@@ -3,41 +3,31 @@ import 'package:sona/common/models/user.dart';
 
 class ImMessage {
   ImMessage({
-    required this.conversationId,
+    required this.id,
     required this.sender,
     required this.receiver,
     required this.content,
     required this.time,
-    this.knowledgeAdded = false
   });
 
-  final int conversationId;
+  final int id;
   final String content;
   final UserInfo sender;
   final UserInfo receiver;
   final DateTime time;
-  bool knowledgeAdded;
+  Future? pending;
+  Future Function()? func;
 
   factory ImMessage.fromJson(Map<String, dynamic> json) {
     return ImMessage(
-      conversationId: json['id'],
+      id: json['id'],
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
       content: json['message'],
       time: (json['createDate'] as Timestamp).toDate(),
-      knowledgeAdded: json['knowledge_added'] ?? false
     );
   }
-
-  @override
-  bool operator ==(Object other) {
-    return super == other || other is ImMessage && other.sender.id == sender.id && other.time == time;
-  }
-
-  @override
-  int get hashCode => identityHashCode('${sender.id}_${time.microsecondsSinceEpoch}');
 }
-
 
 enum CallSonaType {
   PROLOGUE,

@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/gender.dart';
+import 'package:sona/common/models/user.dart';
 
 class MyProfile {
   const MyProfile( {
@@ -70,6 +71,18 @@ class MyProfile {
         && birthday != null
         && avatar != null
         && interests.length >= 3;
+  }
+
+  UserInfo toUser() {
+    return UserInfo(
+      id: id,
+      name: name,
+      avatar: avatar,
+      birthday: birthday,
+      gender: gender,
+      bio: bio,
+      photos: photos.map((photo) => photo.url).toList()
+    );
   }
 }
 

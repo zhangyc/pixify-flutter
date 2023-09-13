@@ -76,20 +76,25 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             Positioned.fill(
               bottom: 60 + ref.watch(keyboardHeightProvider),
               child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
-                data: (messages) => messages.isNotEmpty ? Container(
-                  alignment: Alignment.topCenter,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(horizontal: 2),
-                    reverse: true,
-                    itemBuilder: (BuildContext context, int index) => MessageWidget(
-                      message: messages[index],
-                      fromMe: ref.read(asyncMyProfileProvider).value!.id == messages[index].sender.id
-                    ),
-                    itemCount: messages.length,
-                    separatorBuilder: (_, __) => SizedBox(height: 5),
-                  ),
-                ) : _startupline(),
+                data: (messages) {
+                  final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
+                  final msgs = [...localPendingMessages, ...messages]..sort((m1, m2) => m1.time.compareTo(m2.time));
+                  if (msgs.isNotEmpty) {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.symmetric(horizontal: 2),
+                      reverse: true,
+                      itemBuilder: (BuildContext context, int index) => MessageWidget(
+                          message: msgs[index],
+                          fromMe: ref.read(asyncMyProfileProvider).value!.id == msgs[index].sender.id
+                      ),
+                      itemCount: msgs.length,
+                      separatorBuilder: (_, __) => SizedBox(height: 5),
+                    );
+                  } else {
+                    return _startupline();
+                  }
+                },
                 error: (error, __) => Container(child: Text(error.toString()),),
                 loading: () => Container(
                   alignment: Alignment.center,
@@ -113,7 +118,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     bottom: 8
                   ),
                   color: Colors.white,
-                  child: ChatInstructionInput(onSubmit: _onSona, autofocus: true),
+                  child: ChatInstructionInput(onSubmit: _onSend, autofocus: true),
                 ),
               ),
             ),
@@ -183,20 +188,40 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     ref.read(chatModeProvider.notifier).state = ChatMode.docker;
   }
 
-  Future _onSona(String? text) async {
+  int _lastLocalId = -9999;
+  Future _onSend(String? text) async {
     if (text == null || text.trim().isEmpty) {
       FocusManager.instance.primaryFocus?.unfocus();
       ref.read(chatModeProvider.notifier).state = ChatMode.docker;
       return;
     }
-    final type = ref.read(inputModeProvider) == InputMode.sona ? CallSonaType.INPUT : CallSonaType.MANUAL;
-    return callSona(
-      httpClient: ref.read(dioProvider),
-      userId: widget.otherSide.id,
-      input: text,
-      type: type,
-      chatStyleId: ref.read(currentChatStyleIdProvider)
+    if (ref.read(inputModeProvider) == InputMode.manual) {
+      return _sendMessage(text, ImMessageType.manual);
+    }
+    func() => callSona(
+        httpClient: ref.read(dioProvider),
+        userId: widget.otherSide.id,
+        input: text,
+        type: CallSonaType.INPUT,
+        chatStyleId: ref.read(currentChatStyleIdProvider)
     );
+    final message = ImMessage(
+      id: _lastLocalId++,
+      content: text,
+      sender: ref.read(asyncMyProfileProvider).value!.toUser(),
+      receiver: widget.otherSide,
+      time: DateTime.now(),
+    );
+    final pending = func();
+    message
+      ..func = func
+      ..pending = pending;
+    ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
+    pending.then((value) {
+      if (mounted) {
+        ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
+      }
+    });
   }
 
   void _showInfo() {

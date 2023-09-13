@@ -23,6 +23,10 @@ final messagePaginationProvider = StateProvider.family.autoDispose<DocumentSnaps
     (ref, roomId) => null
 );
 
+final localPendingMessagesProvider = StateProvider.autoDispose.family<List<ImMessage>, int>(
+  (ref, arg) => <ImMessage>[]
+);
+
 final messageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>, int>(
   (ref, roomId) async* {
     List<ImMessage> messages = [];
