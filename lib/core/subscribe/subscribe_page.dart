@@ -202,7 +202,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                       prorationMode: ProrationMode.immediateAndChargeFullPrice,
                     ) : null);
               } else {
-                purchaseParam = PurchaseParam(
+                purchaseParam = AppStorePurchaseParam(
+                  simulatesAskToBuyInSandbox: true,
                   productDetails: productDetails,
                   applicationUserName: ref.read(asyncMyProfileProvider).value!.id.toString(),
                 );
