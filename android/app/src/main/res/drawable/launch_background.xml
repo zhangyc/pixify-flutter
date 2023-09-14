@@ -3,7 +3,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/bg" android:gravity="fill"/>
     <item android:drawable="@drawable/sona"
-        android:width="48dp"
+        android:width="281dp"
+        android:height="105dp"
         android:gravity="center"/>
 
     <!-- You can insert your own image assets here -->

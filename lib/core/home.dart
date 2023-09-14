@@ -62,21 +62,23 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         currentIndex: _currentIndex,
         onTap: _onPageChange,
         selectedItemColor: Colors.white,
+        // unselectedItemColor: Colors.red,
         items: const [
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 48),
+              icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 48,color: Colors.grey,),
               activeIcon:
-                  SonaIcon(icon: SonaIcons.navicon_sona, size: 48),
+                  SonaIcon(icon: SonaIcons.navicon_sona, size: 48,color: Colors.white,),
               label: 'SONA'),
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 48),
+              icon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 48,color: Colors.grey,),
               activeIcon:
-                  SonaIcon(icon: SonaIcons.navicon_match_active, size: 48),
+                  SonaIcon(icon: SonaIcons.navicon_match_active, size: 48,color: Colors.white,),
               label: 'Match'),
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 48),
+
+              icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 48,color: Colors.grey,),
               activeIcon:
-                  SonaIcon(icon: SonaIcons.navicon_chat, size: 48),
+                  SonaIcon(icon: SonaIcons.navicon_chat, size: 48,color: Colors.white,),
               label: 'Chat')
         ],
       ),

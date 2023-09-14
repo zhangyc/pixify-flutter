@@ -269,7 +269,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             margin: EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
+              borderRadius: BorderRadius.only( 
                 topLeft: Radius.zero,
                 topRight: Radius.circular(15),
                 bottomLeft: Radius.circular(15),
@@ -367,7 +367,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   Future<void> initStoreInfo() async {
     ///可用
     final bool isAvailable = await _inAppPurchase.isAvailable();
-    if (!isAvailable&&mounted) {
+    if (!isAvailable&&mounted ) {
       setState(() {
         _isAvailable = isAvailable;
         ///产品详情
