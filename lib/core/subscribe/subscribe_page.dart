@@ -197,7 +197,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                 // inside the app may not be accurate.
                 final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
                 purchaseParam = GooglePlayPurchaseParam(
-                    applicationUserName: ref.read(asyncMyProfileProvider).value!.id.toString(),
                     productDetails: productDetails,
                     changeSubscriptionParam: (oldSubscription != null)
                         ? ChangeSubscriptionParam(
@@ -206,7 +205,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                     ) : null);
               } else {
                 purchaseParam = AppStorePurchaseParam(
-                  simulatesAskToBuyInSandbox: true,
                   productDetails: productDetails,
                   applicationUserName: uuid.v4(),
                 );
@@ -428,7 +426,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       return;
     }
     ///载入本地保存的消耗品的id
-    final List<String> consumables = await ConsumableStore.load();
     setState(() {
       _isAvailable = isAvailable;
       _products = productDetailResponse.productDetails;
@@ -525,6 +522,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
+
         }
       }
     }
