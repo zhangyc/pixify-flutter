@@ -77,9 +77,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 2),
                         reverse: true,
                         itemBuilder: (BuildContext context, int index) => MessageWidget(
-                            prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
-                            message: msgs[index],
-                            fromMe: ref.read(asyncMyProfileProvider).value!.id == msgs[index].sender.id
+                          prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
+                          message: msgs[index],
+                          fromMe: ref.read(asyncMyProfileProvider).value!.id == msgs[index].sender.id,
+                          onPendingMessageSucceed: _onPendingMessageSucceed,
                         ),
                         itemCount: msgs.length,
                         separatorBuilder: (_, __) => SizedBox(height: 5),
@@ -191,10 +192,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       ..pending = pending;
     ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
     pending.then((value) {
-      if (mounted) {
-        ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
-      }
+      _onPendingMessageSucceed(message);
     });
+  }
+
+  void _onPendingMessageSucceed(ImMessage message) {
+    if (mounted) {
+      ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
+    }
   }
 
   void _showInfo() {

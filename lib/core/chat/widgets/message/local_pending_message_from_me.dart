@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/models/message.dart';
 
 import '../../../../utils/dialog/input.dart';
 
-class LocalPendingMessageFromMe extends StatefulWidget {
-  const LocalPendingMessageFromMe({super.key, required this.message});
+class LocalPendingMessageFromMe extends ConsumerStatefulWidget {
+  const LocalPendingMessageFromMe({super.key, required this.message, required this.onSucceed});
   final ImMessage message;
+  final Function() onSucceed;
 
   @override
-  State<StatefulWidget> createState() => _LocalPendingMessageFromMeState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LocalPendingMessageFromMeState();
 }
 
-class _LocalPendingMessageFromMeState extends State<LocalPendingMessageFromMe> {
+class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageFromMe> {
 
   @override
   void initState() {
@@ -46,6 +48,9 @@ class _LocalPendingMessageFromMeState extends State<LocalPendingMessageFromMe> {
               return GestureDetector(
                 onTap: () {
                   widget.message.pending = widget.message.func!();
+                  widget.message.pending!.then((value) {
+                    widget.onSucceed();
+                  });
                   setState(() {});
                 },
                 child: SizedBox(
