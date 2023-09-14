@@ -25,58 +25,49 @@ class _LocalPendingMessageFromMeState extends State<LocalPendingMessageFromMe> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 70, bottom: 12, right: 16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onLongPress: _onLongPress,
-                  child: Container(
-                    padding: EdgeInsets.only(right: 8),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            right: BorderSide(color: Theme.of(context).colorScheme.secondaryContainer, width: 2)
-                        )
-                    ),
-                    alignment: Alignment.centerRight,
-                    child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
-                  ),
-                ),
-              ),
-              SizedBox(width: 20),
-              FutureBuilder<void>(
-                future: widget.message.pending,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return GestureDetector(
-                      child: SizedBox(
-                        height: 24,
-                        width: 48,
-                        child: Text('Resend', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.red))
-                      ),
-                    );
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator()
-                      ),
-                    );
-                  }
-                  return Container();
-                }
-              )
-            ],
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onLongPress: _onLongPress,
+            child: Container(
+              padding: EdgeInsets.only(right: 8),
+              alignment: Alignment.centerRight,
+              child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
+            ),
           ),
-        ],
-      ),
+        ),
+        SizedBox(width: 20),
+        FutureBuilder<void>(
+          key: ValueKey(widget.message.pending),
+          future: widget.message.pending,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return GestureDetector(
+                onTap: () {
+                  widget.message.pending = widget.message.func!();
+                  setState(() {});
+                },
+                child: SizedBox(
+                  height: 24,
+                  width: 48,
+                  child: Text('Resend', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.red))
+                ),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator()
+                ),
+              );
+            }
+            return Container();
+          }
+        )
+      ],
     );
   }
 

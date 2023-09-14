@@ -40,9 +40,22 @@ enum CallSonaType {
 extension DateTimeExt on DateTime {
   String toMessageTime() {
     final now = DateTime.now();
-    if (year == now.year && month == now.month && day == now.day) {
-      return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+    if (year == now.year) {
+      if (month == now.month) {
+        if (day == now.day) {
+          if (now.difference(this) < const Duration(hours: 1)) {
+            return '${now.difference(this).inMinutes} minutes before';
+          } else {
+            return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+          }
+        } else {
+          return '${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+        }
+      } else {
+        return '${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+      }
+    } else {
+      return '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
     }
-    return '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
   }
 }

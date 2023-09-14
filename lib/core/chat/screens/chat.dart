@@ -8,18 +8,15 @@ import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
-import 'package:sona/core/chat/providers/chat_mode.dart';
 import 'package:sona/core/chat/providers/chat_style.dart';
-import 'package:sona/core/chat/screens/info.dart';
 import 'package:sona/core/chat/services/chat.dart';
-import 'package:sona/core/chat/widgets/chat_actions.dart';
-import 'package:sona/core/chat/widgets/chat_instruction_input.dart';
+import 'package:sona/core/chat/widgets/inputbar/chat_instruction_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
-import 'package:sona/utils/providers/keyboard.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/providers/dio.dart';
 import '../models/message_type.dart';
+import '../widgets/inputbar/mode_provider.dart';
 import '../widgets/message/message.dart';
 
 class ChatScreen extends StatefulHookConsumerWidget {
@@ -36,19 +33,16 @@ class ChatScreen extends StatefulHookConsumerWidget {
 class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
-  void dispose() {
-    FocusManager.instance.primaryFocus?.unfocus();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(Icons.arrow_back_ios_outlined),
         ),
+        elevation: 4,
         titleSpacing: 0,
         title: Row(
           children: [
@@ -60,21 +54,17 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         centerTitle: false,
         actions: [
           IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
-          IconButton(onPressed: _showInfo, icon: Icon(Icons.info_outline))
+          IconButton(onPressed: _showInfo, icon: Icon(Icons.more_vert_outlined))
         ],
       ),
-      resizeToAvoidBottomInset: false,
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
-          ref.read(keyboardHeightProvider.notifier).update((state) => 0);
-          ref.read(chatModeProvider.notifier).update((state) => ChatMode.docker);
         },
-        child: Stack(
+        child: Column(
           children: [
-            Positioned.fill(
-              bottom: 60 + ref.watch(keyboardHeightProvider),
+            Expanded(
               child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
                 data: (messages) {
                   final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
@@ -85,11 +75,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 2),
                       reverse: true,
                       itemBuilder: (BuildContext context, int index) => MessageWidget(
+                          prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
                           message: msgs[index],
                           fromMe: ref.read(asyncMyProfileProvider).value!.id == msgs[index].sender.id
                       ),
                       itemCount: msgs.length,
                       separatorBuilder: (_, __) => SizedBox(height: 5),
+                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                     );
                   } else {
                     return _startupline();
@@ -106,35 +98,20 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 )
               )
             ),
-            Positioned(
-              bottom: ref.watch(keyboardBottomPositionProvider),
-              left: 0,
-              right: 0,
-              child: Visibility(
-                visible: ref.watch(chatModeProvider) == ChatMode.input,
-                child: Container(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    bottom: 8
-                  ),
-                  color: Colors.white,
-                  child: ChatInstructionInput(onSubmit: _onSend, autofocus: true),
-                ),
+            Container(
+              padding: const EdgeInsets.only(
+                left: 8,
+                top: 8,
+                right: 8,
+                bottom: 8
+              ),
+              child: ChatInstructionInput(
+                  chatId: widget.otherSide.id,
+                  onSubmit: _onSend,
+                  onSuggestionTap: _onSuggestionTap,
+                  autofocus: false
               ),
             ),
-            Positioned(
-              bottom: MediaQuery.of(context).viewPadding.bottom + 20,
-              left: 0,
-              right: 0,
-              child: Visibility(
-                visible: ref.watch(chatModeProvider) == ChatMode.docker,
-                child: ChatActions(
-                    onHookTap: _onHookTap,
-                    onSuggestionTap: _onSuggestionTap,
-                    onSonaTap: _onSonaTap
-                ),
-              )
-            )
           ],
         ),
       ),
@@ -173,31 +150,24 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _sendMessage(String text, ImMessageType type) async {
-    if (text.trim().isEmpty) {
-      FocusManager.instance.primaryFocus?.unfocus();
-      ref.read(chatModeProvider.notifier).state = ChatMode.docker;
-      return;
-    }
+    if (text.trim().isEmpty) return;
+
     await sendMessage(
       httpClient: ref.read(dioProvider),
       userId: widget.otherSide.id,
       type: type,
       content: text,
     );
-    FocusManager.instance.primaryFocus?.unfocus();
-    ref.read(chatModeProvider.notifier).state = ChatMode.docker;
   }
 
   int _lastLocalId = -9999;
   Future _onSend(String? text) async {
-    if (text == null || text.trim().isEmpty) {
-      FocusManager.instance.primaryFocus?.unfocus();
-      ref.read(chatModeProvider.notifier).state = ChatMode.docker;
-      return;
-    }
-    if (ref.read(inputModeProvider) == InputMode.manual) {
+    if (text == null || text.trim().isEmpty) return;
+
+    if (ref.read(inputModeProvider(widget.otherSide.id)) == InputMode.manual) {
       return _sendMessage(text, ImMessageType.manual);
     }
+
     func() => callSona(
         httpClient: ref.read(dioProvider),
         userId: widget.otherSide.id,
@@ -237,7 +207,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _onSonaTap() {
-    ref.read(chatModeProvider.notifier).state = ChatMode.input;
+    // ref.read(chatModeProvider.notifier).state = ChatMode.input;
   }
 
   Future _onHookTap() async {

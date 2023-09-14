@@ -13,6 +13,8 @@ final themeData = ThemeData(
   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.transparent,
+    surfaceTintColor: Colors.transparent,
+    scrolledUnderElevation: 4,
     titleTextStyle: GoogleFonts.inder(
       textStyle: const TextStyle(
         color: fontColour,

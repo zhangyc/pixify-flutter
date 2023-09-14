@@ -1,13 +1,27 @@
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/core/chat/providers/chat_mode.dart';
 import 'package:sona/core/chat/providers/chat_style.dart';
-import 'package:sona/utils/providers/keyboard.dart';
+
+import 'mode_provider.dart';
 
 class ChatInstructionInput extends ConsumerStatefulWidget {
+  const ChatInstructionInput({
+    Key? key,
+    required this.chatId,
+    this.controller,
+    this.height,
+    this.initialText,
+    this.keyboardType = TextInputType.multiline,
+    this.onInputChange,
+    this.onSubmit,
+    this.maxLength = 256,
+    this.focusNode,
+    this.autofocus = false,
+    required this.onSuggestionTap
+  }) : super(key: key);
+
+  final int chatId;
   final TextEditingController? controller;
   final double? height;
   final String? initialText;
@@ -15,84 +29,56 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   final Function(String)? onInputChange;
   final void Function(String text)? onSubmit;
   final int maxLength;
+  final FocusNode? focusNode;
   final bool autofocus;
-
-  const ChatInstructionInput({
-    Key? key,
-    this.controller,
-    this.height,
-    this.initialText,
-    this.keyboardType = TextInputType.multiline,
-    this.onInputChange,
-    this.onSubmit,
-    this.maxLength = 30,
-    this.autofocus = false
-  }) : super(key: key);
+  final Future Function() onSuggestionTap;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatInstructionInputState();
 }
 
-class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with AutomaticKeepAliveClientMixin {
+class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
   late final TextEditingController _controller;
-  late double height;
-  Timer? _timer;
-
-  @override
-  bool get wantKeepAlive => true;
+  late final _focusNode = widget.focusNode ?? FocusNode();
+  late final _height = widget.height ?? 38;
 
   @override
   void initState() {
-    _controller = widget.controller ?? TextEditingController();
-    if (widget.initialText != null && widget.initialText!.isNotEmpty) {
-      _controller.text = widget.initialText!;
-    }
-    _controller.addListener(_refreshUI);
-    FocusManager.instance.primaryFocus?.addListener(_focusNodeListener);
-    height = widget.height ?? 38;
+    _controller = widget.controller ?? TextEditingController()
+      ..text = widget.initialText ?? ''
+      ..addListener(_onInputChange);
+    _focusNode.addListener(_focusChangeListener);
     super.initState();
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
-    _controller.removeListener(_refreshUI);
-    _controller.dispose();
-    FocusManager.instance.primaryFocus?.removeListener(_focusNodeListener);
-    ref.read(keyboardHeightProvider.notifier).update((state) => 0);
+    _controller
+      ..removeListener(_onInputChange)
+      ..dispose();
+    _focusNode
+      ..removeListener(_focusChangeListener)
+      ..unfocus();
     super.dispose();
   }
 
-  void _focusNodeListener() {
-    if (!mounted) return;
-    if (_timer != null && _timer!.isActive) _timer!.cancel();
-
-    if (FocusManager.instance.primaryFocus?.hasFocus == true) {
-      ref.read(keyboardChatStyleVisibleProvider.notifier).update((state) => false);
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        if (!mounted) return;
-        final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
-        if (keyboardHeight > 0) {
-          ref.read(keyboardMaxHeightProvider.notifier).update((state) => height);
-        }
-      });
+  void _focusChangeListener() {
+    if (_focusNode.hasFocus) {
+      ref.read(chatStylesVisibleProvider(widget.chatId).notifier).update((state) => false);
     }
+  }
 
-    _timer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
-      if (!mounted) return;
-      final height = MediaQuery.of(context).viewInsets.bottom;
-      ref.read(keyboardHeightProvider.notifier).update((state) => height);
-      if (timer.tick == 10) {
-        _timer?.cancel();
-        _timer = null;
-      }
-    });
+  void _onInputChange() {
+    final mode = ref.read(inputModeProvider(widget.chatId));
+    if (mode == InputMode.sona) {
+      ref.read(sonaInputProvider(widget.chatId).notifier).update((state) => _controller.text);
+    } else {
+      ref.read(manualInputProvider(widget.chatId).notifier).update((state) => _controller.text);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     final currentChatStyleId = ref.watch(currentChatStyleIdProvider);
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -101,28 +87,28 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
         Row(
           children: [
             GestureDetector(
-              onTap: () {
-                if (ref.read(inputModeProvider) == InputMode.sona) {
-                  ref.read(inputModeProvider.notifier).state = InputMode.manual;
-                } else {
-                  ref.read(inputModeProvider.notifier).state = InputMode.sona;
-                }
-              },
+              onTap: _toggleMode,
               child: Container(
-                width: 33,
-                height: 33,
+                width: 38,
+                height: 38,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle
                 ),
                 clipBehavior: Clip.antiAlias,
                 alignment: Alignment.center,
-                child: Text('✍️'),
+                child: Text(
+                  ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'So\nna': 'Man\nual',
+                  softWrap: false,
+                  maxLines: 2,
+                  style: TextStyle(fontSize: 12, height: 1),
+                ),
               )
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 16,
+              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 16 - 16 - 10,
               child: TextField(
                   controller: _controller,
+                  focusNode: _focusNode,
                   textAlign: TextAlign.left,
                   textAlignVertical: TextAlignVertical.center,
                   maxLines: 5,
@@ -132,12 +118,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   textInputAction: TextInputAction.send,
                   style: Theme.of(context).textTheme.bodySmall,
                   autocorrect: true,
+                  cursorWidth: 1.8,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(height/2),
+                      borderRadius: BorderRadius.circular(_height/2),
                     ),
-                    prefixIcon: ref.watch(inputModeProvider) == InputMode.sona ? GestureDetector(
+                    suffixIcon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? GestureDetector(
                       onTap: _toggleChatStyles,
                       child: Container(
                         width: 33,
@@ -155,13 +142,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                         alignment: Alignment.center,
                       )
                     ) : null,
-                    prefixIconConstraints: BoxConstraints.tightFor(height: height),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    suffixIconConstraints: BoxConstraints.tight(Size.square(33)),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                     isDense: true,
                     filled: true,
                     fillColor: Color(0xFFF6F6F6),
                     focusColor: Color(0xFF6D91F4),
-                    hintText: ref.watch(inputModeProvider) == InputMode.sona ? 'Tell Sona your intention...' : 'Message',
+                    hintText: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Tell Sona your intention...' : 'Write sth...',
                     hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: Theme.of(context).hintColor
                     )
@@ -177,33 +164,61 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   autofocus: widget.autofocus,
               ),
             ),
-            TextButton(
-                onPressed: () {
-                  onSubmit(_controller.text);
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: Text(ref.watch(inputModeProvider) == InputMode.sona ? 'Sona' : 'Send')
+            Visibility(
+              visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
+              child: TextButton(
+                  onPressed: () {
+                    onSubmit(_controller.text);
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  child: Text(ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Sona' : 'Send')
+              ),
+            ),
+            Visibility(
+              visible: ref.watch(currentInputEmptyProvider(widget.chatId)),
+              child: TextButton(
+                  onPressed: widget.onSuggestionTap,
+                  child: Text('Sugg')
+              ),
             )
           ],
         ),
         Visibility(
-          visible: ref.watch(keyboardChatStyleVisibleProvider),
+          visible: ref.watch(chatStylesVisibleProvider(widget.chatId)),
           child: Container(
-            height: ref.watch(keyboardMaxHeightProvider),
+            height: ref.watch(softKeyboardHeightProvider),
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
             alignment: Alignment.topCenter,
             child: ref.watch(asyncChatStylesProvider).when(
                 data: (styles) => GridView(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
+                    crossAxisCount: 2,
                     mainAxisSpacing: 5,
                     crossAxisSpacing: 5,
                     childAspectRatio: 3
                   ),
                   children: styles.map<Widget>((s) => GestureDetector(
                     child: Container(
-                      color: currentChatStyleId == s.id ? Theme.of(context).colorScheme.secondaryContainer : Colors.transparent,
-                        child: Text(s.title)
+                      color: currentChatStyleId == s.id ? Theme.of(context).colorScheme.secondaryContainer : Color(0x11CCCCCC),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 33,
+                            height: 33,
+                            margin: EdgeInsets.symmetric(horizontal: 2.5),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: CachedNetworkImageProvider(s.icon)
+                              ),
+                              shape: BoxShape.circle
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            alignment: Alignment.center,
+                          ),
+                          SizedBox(width: 12),
+                          Text(s.title, style: Theme.of(context).textTheme.bodySmall),
+                        ],
+                      )
                     ),
                     onTap: () {
                       ref.read(currentChatStyleIdProvider.notifier).state = s.id;
@@ -228,10 +243,24 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     );
   }
 
+  void _toggleMode() {
+    ref.read(inputModeProvider(widget.chatId).notifier).update((state) {
+      if (state == InputMode.sona) {
+        _controller.text = '';
+        return InputMode.manual;
+      } else {
+        _controller.text = '';
+        return InputMode.sona;
+      }
+    });
+  }
+
   void _toggleChatStyles() {
-    ref.read(keyboardChatStyleVisibleProvider.notifier).update((state) {
+    ref.read(chatStylesVisibleProvider(widget.chatId).notifier).update((state) {
       if (!state) {
         FocusManager.instance.primaryFocus?.unfocus();
+      } else {
+        FocusManager.instance.primaryFocus?.requestFocus();
       }
       return !state;
     });
@@ -240,11 +269,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
   void onSubmit(String text) async {
     if (widget.onSubmit != null) widget.onSubmit!(text);
     _controller.clear();
-    FocusManager.instance.primaryFocus?.unfocus();
     ref.invalidate(currentChatStyleIdProvider);
-  }
-
-  void _refreshUI() {
-    if (mounted) setState(() {});
   }
 }

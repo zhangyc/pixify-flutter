@@ -16,47 +16,11 @@ class MessageFromOther extends StatefulWidget {
 class _MessageFromOtherState extends State<MessageFromOther> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 70, bottom: 12, left: 16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          GestureDetector(
-            onLongPress: _onLongPress,
-            child: Container(
-              padding: EdgeInsets.only(left: 8),
-              decoration: BoxDecoration(
-                border: Border(
-                  left: BorderSide(color: Theme.of(context).colorScheme.secondaryContainer, width: 2)
-                )
-              ),
-              alignment: Alignment.centerLeft,
-              child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
-            ),
-          ),
-          SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(width: 18),
-              GestureDetector(
-                child: Container(
-                  height: 28,
-                  width: 28,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.black, width: 1)
-                  ),
-                  alignment: Alignment.center,
-                  child: Text('❤️'),
-                ),
-              ),
-              SizedBox(width: 12),
-              Text(widget.message.time.toMessageTime(), style: Theme.of(context).textTheme.bodySmall),
-            ],
-          )
-        ],
+    return GestureDetector(
+      onLongPress: _onLongPress,
+      child: Container(
+        alignment: Alignment.centerLeft,
+        child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
       ),
     );
   }
