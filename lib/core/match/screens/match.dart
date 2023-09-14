@@ -1,12 +1,20 @@
+import 'dart:ui';
+
+
+import 'package:another_transformer_page_view/another_transformer_page_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
+import 'package:sona/core/match/widgets/match_itm.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 
 import '../../../common/widgets/button/colored.dart';
 import '../widgets/match_init_animation.dart';
 import '../widgets/scroller.dart';
+import '../widgets/sona_transform.dart';
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});
@@ -16,7 +24,7 @@ class MatchScreen extends StatefulHookConsumerWidget {
 }
 
 class _MatchScreenState extends ConsumerState<MatchScreen>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin,SingleTickerProviderStateMixin {
   late final Controller controller;
 
   void _handleCallbackEvent(ScrollDirection direction, ScrollSuccess success,
@@ -29,15 +37,39 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   void initState() {
+    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+
     controller = Controller()
       ..addListener((event) {
         _handleCallbackEvent(event.direction, event.success);
       });
     super.initState();
   }
+  String imageUrl='';
 
+  late AnimationController _controller;
+  int currentPage=0;
+  PageController pageController=PageController(viewportFraction: 0.5);
   @override
   Widget build(BuildContext context) {
+    // return PageView(
+    //   scrollDirection:Axis.vertical ,
+    //   onPageChanged: (value){
+    //     setState(() {
+    //       currentPage=value;
+    //     });
+    //   },
+    //   children: [
+    //     Container(
+    //       alignment: Alignment.center,
+    //       color: Colors.red,
+    //     ),
+    //     Container(
+    //       alignment: Alignment.center,
+    //       color: Colors.green,
+    //     )
+    //   ],
+    // );
     super.build(context);
     return ref.watch(asyncMatchRecommendedProvider).when<Widget>(
       data: (List<UserInfo> users) {
@@ -50,32 +82,84 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         return Stack(
           children: [
             Positioned.fill(
-              child: TikTokStyleFullPageScroller(
-                contentSize: users.length,
-                swipePositionThreshold: 0.2,
-                // ^ the fraction of the screen needed to scroll
-                swipeVelocityThreshold: 1000,
-                // ^ the velocity threshold for smaller scrolls
-                animationDuration: const Duration(milliseconds: 400),
-                // ^ how long the animation will take
-                controller: controller,
-                // ^ registering our own function to listen to page changes
-                builder: (context, index) => UserCard(
-                  key: ValueKey(users[index].id),
-                  user: users[index],
-                  onLike: () {
-                    ///like某个用户
-                    ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
-                    if (index < users.length - 1) {
-                      controller.animateToPosition(index + 1);
-                    }
-                  },
-                  onArrow: () => ref
-                      .read(asyncMatchRecommendedProvider.notifier)
-                      .arrow(users[index].id),
-                ),
+              child: TransformerPageView(itemCount: users.length,
+                itemBuilder: (c,index){
+                  return UserCard(
+                    key: ValueKey(users[index].id),
+                    user: users[index],
+                    onLike: () {
+                      ///like某个用户
+                      ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
+                      if (index < users.length - 1) {
+                        controller.animateToPosition(index + 1);
+                      }
+                    },
+                    onArrow: () => ref
+                        .read(asyncMatchRecommendedProvider.notifier)
+                        .arrow(users[index].id),
+                  );
+                },
+                scrollDirection: Axis.vertical,
+                transformer: ScaleAndFadeTransformer(),
               ),
             ),
+            // Positioned.fill(
+            //   child: TikTokStyleFullPageScroller(
+            //     contentSize: users.length,
+            //     swipePositionThreshold: 0.2,
+            //     // ^ the fraction of the screen needed to scroll
+            //     swipeVelocityThreshold: 1000,
+            //     // ^ the velocity threshold for smaller scrolls
+            //     animationDuration: const Duration(milliseconds: 400),
+            //     // ^ how long the animation will take
+            //     controller: controller,
+            //     // ^ registering our own function to listen to page changes
+            //     builder: (context, index) => UserCard(
+            //       key: ValueKey(users[index].id),
+            //       user: users[index],
+            //       onLike: () {
+            //         ///like某个用户
+            //         ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
+            //         if (index < users.length - 1) {
+            //           controller.animateToPosition(index + 1);
+            //         }
+            //       },
+            //       onArrow: () => ref
+            //           .read(asyncMatchRecommendedProvider.notifier)
+            //           .arrow(users[index].id),
+            //     ),
+            //   ),
+            // ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //       image: CachedNetworkImageProvider("$imageUrl"),
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            //   child: BackdropFilter(
+            //     filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+            //     child: Container(
+            //       decoration:
+            //       BoxDecoration(color: Colors.white.withOpacity(0.0)),
+            //     ),
+            //   ),
+            // ),
+            // Center(
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       CardStack(onCardChanged: (u){
+            //         setState(() {
+            //            imageUrl=u;
+            //         });
+            //       },
+            //       user: users,
+            //       )
+            //     ],
+            //   ),
+            // ),
+
             Positioned(
               top: 0,
               left: 0,
@@ -174,7 +258,27 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       },
     );
   }
-
+  Widget _buildWidget(int position, Color color) {
+    return Container(
+      color: color,
+      constraints: BoxConstraints.expand(),
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              "0x${position.toRadixString(16).toUpperCase()}",
+              style: TextStyle(
+                color: Color(0xFF2e282a),
+                fontSize: 40.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
   @override
   bool get wantKeepAlive => true;
 }

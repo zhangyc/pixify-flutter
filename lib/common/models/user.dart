@@ -2,7 +2,9 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
 
 class UserInfo {
-  const UserInfo({
+  int index=0;
+
+  UserInfo({
     required this.id,
     required this.name,
     required this.gender,
