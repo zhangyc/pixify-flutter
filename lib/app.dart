@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lottie/lottie.dart';
 import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/screens/login.dart';
 import 'package:sona/account/providers/profile.dart';
@@ -14,7 +10,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sona/theme/theme.dart';
 
 import 'core/home.dart';
-import 'generated/assets.dart';
 
 class SonaApp extends HookConsumerWidget {
   const SonaApp({super.key});

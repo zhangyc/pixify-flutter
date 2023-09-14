@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class GradientColoredText extends StatelessWidget {
   const GradientColoredText({
@@ -22,9 +21,7 @@ class GradientColoredText extends StatelessWidget {
         ]
       ).createShader(rect),
       blendMode: BlendMode.srcATop,
-      child: Text(text, style: GoogleFonts.inder(
-        textStyle: style
-      )),
+      child: Text(text, style: style)
     );
   }
 }

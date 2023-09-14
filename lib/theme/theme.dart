@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'const.dart';
 
@@ -11,51 +10,43 @@ final themeData = ThemeData(
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   dividerColor: dividerColor,
   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     surfaceTintColor: Colors.transparent,
     scrolledUnderElevation: 4,
-    titleTextStyle: GoogleFonts.inder(
-      textStyle: const TextStyle(
+    titleTextStyle: TextStyle(
         color: fontColour,
         fontSize: 16,
         fontWeight: FontWeight.w500,
         letterSpacing: 1
-      )
     ),
     elevation: 0,
     centerTitle: true,
-    iconTheme: const IconThemeData(color: fontColour),
-    systemOverlayStyle: const SystemUiOverlayStyle(
+    iconTheme: IconThemeData(color: fontColour),
+    systemOverlayStyle: SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark,
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light
     )
   ),
   textTheme: TextTheme(
-    headlineLarge: GoogleFonts.inder(
-      textStyle: const TextStyle(
-        color: fontColour,
-        fontSize: 32,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1
-      )
+    headlineLarge: const TextStyle(
+      color: fontColour,
+      fontSize: 32,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 1
     ),
-    bodyMedium: GoogleFonts.inder(
-      textStyle: const TextStyle(
-        color: fontColour,
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 1
-      )
+    bodyMedium: const TextStyle(
+      color: fontColour,
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 1
     ),
-    bodySmall: GoogleFonts.inder(
-      textStyle: const TextStyle(
+    bodySmall: const TextStyle(
         color: fontColour,
         fontSize: 14,
         fontWeight: FontWeight.w400,
         letterSpacing: 1
-      )
     )
   ),
   buttonTheme: const ButtonThemeData(

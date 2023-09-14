@@ -44,7 +44,11 @@ extension DateTimeExt on DateTime {
       if (month == now.month) {
         if (day == now.day) {
           if (now.difference(this) < const Duration(hours: 1)) {
-            return '${now.difference(this).inMinutes} minutes before';
+            if (now.difference(this) < const Duration(minutes: 1)) {
+              return 'just now';
+            } else {
+              return '${now.difference(this).inMinutes} minute${now.difference(this).inMinutes == 1 ? '' : 's'} before';
+            }
           } else {
             return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
           }

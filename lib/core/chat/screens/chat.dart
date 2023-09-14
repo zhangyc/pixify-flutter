@@ -70,18 +70,21 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
                   final msgs = [...localPendingMessages, ...messages]..sort((m1, m2) => m2.time.compareTo(m1.time));
                   if (msgs.isNotEmpty) {
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(horizontal: 2),
-                      reverse: true,
-                      itemBuilder: (BuildContext context, int index) => MessageWidget(
-                          prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
-                          message: msgs[index],
-                          fromMe: ref.read(asyncMyProfileProvider).value!.id == msgs[index].sender.id
+                    return Container(
+                      alignment: Alignment.topCenter,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.symmetric(horizontal: 2),
+                        reverse: true,
+                        itemBuilder: (BuildContext context, int index) => MessageWidget(
+                            prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
+                            message: msgs[index],
+                            fromMe: ref.read(asyncMyProfileProvider).value!.id == msgs[index].sender.id
+                        ),
+                        itemCount: msgs.length,
+                        separatorBuilder: (_, __) => SizedBox(height: 5),
+                        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                       ),
-                      itemCount: msgs.length,
-                      separatorBuilder: (_, __) => SizedBox(height: 5),
-                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                     );
                   } else {
                     return _startupline();
