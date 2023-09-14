@@ -40,7 +40,7 @@ Future<MyProfile> getMyInfo({
     final d = MyProfile.fromJson(resp.data);
     return d;
   } catch(e) {
-    debugPrint(e.toString());
+    debugPrint('get-my-info-error: ${e.toString()}');
     rethrow;
   }
 }
