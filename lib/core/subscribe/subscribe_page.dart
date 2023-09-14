@@ -206,7 +206,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               } else {
                 purchaseParam = AppStorePurchaseParam(
                   productDetails: productDetails,
-                  applicationUserName: uuid.v4(),
                 );
               }
               _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
@@ -368,7 +367,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   Future<void> initStoreInfo() async {
     ///可用
     final bool isAvailable = await _inAppPurchase.isAvailable();
-    if (!isAvailable) {
+    if (!isAvailable&&mounted) {
       setState(() {
         _isAvailable = isAvailable;
         ///产品详情
@@ -399,41 +398,48 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     await _inAppPurchase.queryProductDetails(_kProductIds.toSet());
     ///如果没有错误
     if (productDetailResponse.error != null) {
-      setState(() {
-        _queryProductError = productDetailResponse.error!.message;
-        _isAvailable = isAvailable;
-        _products = productDetailResponse.productDetails;
-        _purchases = <PurchaseDetails>[];
-        _notFoundIds = productDetailResponse.notFoundIDs;
-        // _consumables = <String>[];
-        _purchasePending = false;
-        _loading = false;
-      });
+      if(mounted){
+        setState(() {
+          _queryProductError = productDetailResponse.error!.message;
+          _isAvailable = isAvailable;
+          _products = productDetailResponse.productDetails;
+          _purchases = <PurchaseDetails>[];
+          _notFoundIds = productDetailResponse.notFoundIDs;
+          // _consumables = <String>[];
+          _purchasePending = false;
+          _loading = false;
+        });
+      }
       return;
     }
     ///产品详情为空
     if (productDetailResponse.productDetails.isEmpty) {
+      if(mounted){
+        setState(() {
+          _queryProductError = null;
+          _isAvailable = isAvailable;
+          _products = productDetailResponse.productDetails;
+          _purchases = <PurchaseDetails>[];
+          _notFoundIds = productDetailResponse.notFoundIDs;
+          // _consumables = <String>[];
+          _purchasePending = false;
+          _loading = false;
+        });
+      }
+      return;
+    }
+    if(mounted){
+      ///载入本地保存的消耗品的id
       setState(() {
-        _queryProductError = null;
         _isAvailable = isAvailable;
         _products = productDetailResponse.productDetails;
-        _purchases = <PurchaseDetails>[];
         _notFoundIds = productDetailResponse.notFoundIDs;
-        // _consumables = <String>[];
+        // _consumables = consumables;
         _purchasePending = false;
         _loading = false;
       });
-      return;
     }
-    ///载入本地保存的消耗品的id
-    setState(() {
-      _isAvailable = isAvailable;
-      _products = productDetailResponse.productDetails;
-      _notFoundIds = productDetailResponse.notFoundIDs;
-      // _consumables = consumables;
-      _purchasePending = false;
-      _loading = false;
-    });
+
   }
   ///
   void handleError(IAPError error) {
