@@ -94,13 +94,16 @@ class ZoomOutPageTransformer extends PageTransformer {
       final opacity =
           minAlpha + (scaleFactor - minScale) / (1 - minScale) * (1 - minAlpha);
 
-      return Opacity(
-        opacity: opacity,
-        child: Transform.translate(
-          offset: Offset(dx, 0.0),
-          child: Transform.scale(
-            scale: scaleFactor,
-            child: child,
+      return ColoredBox(
+        color: Color(0xff000000),
+        child: Opacity(
+          opacity: opacity,
+          child: Transform.translate(
+            offset: Offset(dx, 0.0),
+            child: Transform.scale(
+              scale: scaleFactor,
+              child: child,
+            ),
           ),
         ),
       );
@@ -167,11 +170,14 @@ class ScaleAndFadeTransformer extends PageTransformer {
     final fadeFactor = (1 - position.abs()) * (1 - _fade);
     final opacity = _fade + fadeFactor;
     final scale = _scale + scaleFactor;
-    return Opacity(
-      opacity: opacity,
-      child: Transform.scale(
-        scale: scale,
-        child: child,
+    return ColoredBox(
+      color: Color(0xff000000),
+      child: Opacity(
+        opacity: opacity,
+        child: Transform.scale(
+          scale: scale,
+          child: child,
+        ),
       ),
     );
   }

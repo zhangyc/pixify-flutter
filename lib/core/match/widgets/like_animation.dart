@@ -29,6 +29,51 @@ class _LikeAnimationState extends State<LikeAnimation> with SingleTickerProvider
   }
   @override
   Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          GestureDetector(child: Container(child: Lottie.asset(Assets.lottieLike,controller: _animationController,repeat: false),
+             decoration: BoxDecoration(
+               borderRadius: BorderRadius.only(
+                 topLeft: Radius.circular(25),
+                 bottomLeft: Radius.circular(25),
+                 topRight: Radius.zero,
+                 bottomRight: Radius.zero
+               ),
+               color: Colors.white.withOpacity(0.7)
+             ),
+            width: 100,
+            height: 48,
+            ),
+            onTap: (){
+
+              _animationController.forward();
+            },
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          GestureDetector(child: Container(child: Lottie.asset(Assets.lottieLike,controller: _animationController,repeat: false),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                    topRight: Radius.zero,
+                    bottomRight: Radius.zero
+                ),
+                color: Colors.white.withOpacity(0.7)
+            ),
+            width: 100,
+            height: 48,
+          ),
+            onTap: (){
+
+              _animationController.forward();
+            },
+          )
+        ],
+      ),
+    );
     return GestureDetector(child: Lottie.asset(Assets.lottieLike,controller: _animationController,repeat: false),
       onTap: (){
 

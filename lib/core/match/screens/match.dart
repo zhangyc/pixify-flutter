@@ -10,6 +10,7 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/match_itm.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
+import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../common/widgets/button/colored.dart';
 import '../widgets/match_init_animation.dart';
@@ -49,7 +50,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   late AnimationController _controller;
   int currentPage=0;
-  PageController pageController=PageController(viewportFraction: 0.5);
+  PageController pageController=PageController();
   @override
   Widget build(BuildContext context) {
     // return PageView(
@@ -81,28 +82,49 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         }
         return Stack(
           children: [
-            Positioned.fill(
-              child: TransformerPageView(itemCount: users.length,
-                itemBuilder: (c,index){
-                  return UserCard(
-                    key: ValueKey(users[index].id),
-                    user: users[index],
-                    onLike: () {
-                      ///like某个用户
-                      ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
-                      if (index < users.length - 1) {
-                        controller.animateToPosition(index + 1);
-                      }
-                    },
-                    onArrow: () => ref
-                        .read(asyncMatchRecommendedProvider.notifier)
-                        .arrow(users[index].id),
-                  );
+            Positioned.fill(child: PageView.builder(itemBuilder: (c,index){
+              return StackPageView(index: index, controller: pageController, child: UserCard(
+                key: ValueKey(users[index].id),
+                user: users[index],
+                onLike: () {
+                  ///like某个用户
+                  ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
+                  if (index < users.length - 1) {
+                    pageController.animateToPage(index + 1, duration: Duration(milliseconds: 500), curve: Curves.linearToEaseOut);
+                  }
                 },
-                scrollDirection: Axis.vertical,
-                transformer: ScaleAndFadeTransformer(),
-              ),
+                onArrow: () => ref
+                    .read(asyncMatchRecommendedProvider.notifier)
+                    .arrow(users[index].id),
+              ));
+            },
+              itemCount: users.length,
+              scrollDirection: Axis.vertical,
+              controller: pageController,
+             )
             ),
+            // Positioned.fill(
+            //   child: TransformerPageView(itemCount: users.length,
+            //     itemBuilder: (c,index){
+            //       return UserCard(
+            //         key: ValueKey(users[index].id),
+            //         user: users[index],
+            //         onLike: () {
+            //           ///like某个用户
+            //           ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
+            //           if (index < users.length - 1) {
+            //             controller.animateToPosition(index + 1);
+            //           }
+            //         },
+            //         onArrow: () => ref
+            //             .read(asyncMatchRecommendedProvider.notifier)
+            //             .arrow(users[index].id),
+            //       );
+            //     },
+            //     scrollDirection: Axis.vertical,
+            //     transformer: ScaleAndFadeTransformer(),
+            //   ),
+            // ),
             // Positioned.fill(
             //   child: TikTokStyleFullPageScroller(
             //     contentSize: users.length,

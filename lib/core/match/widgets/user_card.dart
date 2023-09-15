@@ -80,7 +80,7 @@ class _UserCardState extends State<UserCard> {
                               : Colors.black26))),
             )),
         Positioned(
-          right: 20,
+          right: 0,
           bottom: MediaQuery.of(context).viewInsets.bottom + 120,
           child: LikeAnimation(onTap:widget.onLike),
         ),
