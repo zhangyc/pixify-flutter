@@ -11,18 +11,20 @@ class MessageWidget extends StatelessWidget {
     super.key,
     required this.prevMessage,
     required this.message,
-    required this.fromMe
+    required this.fromMe,
+    required this.onPendingMessageSucceed
   });
   final ImMessage? prevMessage;
   final ImMessage message;
   final bool fromMe;
+  final Function(ImMessage message) onPendingMessageSucceed;
 
   @override
   Widget build(BuildContext context) {
     Widget _message;
     if (fromMe) {
       if (message.pending != null) {
-        _message = LocalPendingMessageFromMe(message: message);
+        _message = LocalPendingMessageFromMe(message: message, onSucceed: () => onPendingMessageSucceed(message));
       } else {
         _message = MessageFromMe(message: message);
       }
