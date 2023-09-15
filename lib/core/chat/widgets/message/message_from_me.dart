@@ -18,10 +18,9 @@ class _MessageFromMeState extends State<MessageFromMe> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: _onLongPress,
-      child: Container(
-        alignment: Alignment.centerRight,
-        child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
-      ),
+      child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall?.copyWith(
+        color: Colors.white
+      )),
     );
   }
 

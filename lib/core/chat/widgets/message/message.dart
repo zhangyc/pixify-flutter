@@ -32,27 +32,30 @@ class MessageWidget extends StatelessWidget {
       _message = MessageFromOther(message: message);
     }
 
-    return Column(
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Visibility(
             visible: prevMessage == null || prevMessage!.time.add(const Duration(minutes: 5)).isBefore(message.time),
             child: MessageTime(time: message.time)
           ),
           Container(
-              margin: EdgeInsets.only(left: fromMe ? 70 : 16, bottom: 12, right: fromMe ? 16 : 70),
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              decoration: BoxDecoration(
-                color: fromMe ? Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1) : Theme.of(context).colorScheme.tertiaryContainer.withOpacity(0.1),
-                border: Border(
-                  left: fromMe ? BorderSide.none : BorderSide(color: Theme.of(context).colorScheme.tertiaryContainer, width: 2),
-                  right: fromMe ? BorderSide(color: Theme.of(context).colorScheme.secondaryContainer, width: 2) : BorderSide.none
-                )
-              ),
-              child: _message
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.75
+            ),
+            margin: EdgeInsets.only(bottom: 12),
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              color: fromMe ? Theme.of(context).primaryColor : Color(0xFFF9F9F9),
+              borderRadius: BorderRadius.circular(24)
+            ),
+            child: _message
           )
         ],
-  );
+  ),
+    );
   }
 }
