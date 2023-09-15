@@ -3,15 +3,17 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
+import 'package:sona/core/match/widgets/custom_scrollphysics.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../common/widgets/button/colored.dart';
 import '../widgets/match_init_animation.dart';
-import '../widgets/scroller.dart';
+// import '../widgets/scroller.dart' as s;
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});
@@ -22,24 +24,24 @@ class MatchScreen extends StatefulHookConsumerWidget {
 
 class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin,SingleTickerProviderStateMixin {
-  late final Controller controller;
-
-  void _handleCallbackEvent(ScrollDirection direction, ScrollSuccess success,
-      {int? currentIndex}) {
-
-
-    print(
-        "Scroll callback received with data: {direction: $direction, success: $success and index: ${currentIndex ?? 'not given'}}");
-  }
+  // late final s.Controller controller;
+  //
+  // void _handleCallbackEvent(ScrollDirection direction, s.ScrollSuccess success,
+  //     {int? currentIndex}) {
+  //
+  //
+  //   print(
+  //       "Scroll callback received with data: {direction: $direction, success: $success and index: ${currentIndex ?? 'not given'}}");
+  // }
 
   @override
   void initState() {
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
 
-    controller = Controller()
-      ..addListener((event) {
-        _handleCallbackEvent(event.direction, event.success);
-      });
+    // controller = s.Controller()
+    //   ..addListener((s.ScrollEvent event) {
+    //     _handleCallbackEvent(event.direction, event.success);
+    //   });
     super.initState();
   }
   String imageUrl='';
@@ -47,26 +49,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   late AnimationController _controller;
   int currentPage=0;
   PageController pageController=PageController();
+  bool scrolling=true;
+  ScrollPhysics scrollPhysics=AlwaysScrollableScrollPhysics();
   @override
   Widget build(BuildContext context) {
-    // return PageView(
-    //   scrollDirection:Axis.vertical ,
-    //   onPageChanged: (value){
-    //     setState(() {
-    //       currentPage=value;
-    //     });
-    //   },
-    //   children: [
-    //     Container(
-    //       alignment: Alignment.center,
-    //       color: Colors.red,
-    //     ),
-    //     Container(
-    //       alignment: Alignment.center,
-    //       color: Colors.green,
-    //     )
-    //   ],
-    // );
     super.build(context);
     return ref.watch(asyncMatchRecommendedProvider).when<Widget>(
       data: (List<UserInfo> users) {
@@ -97,7 +83,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               itemCount: users.length,
               scrollDirection: Axis.vertical,
               controller: pageController,
-             )
+              onPageChanged: (value){
+
+              },
+              // physics: scrollPhysics,
+            ),
             ),
             // Positioned.fill(
             //   child: TransformerPageView(itemCount: users.length,

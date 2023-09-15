@@ -82,7 +82,7 @@ class _UserCardState extends State<UserCard> {
         Positioned(
           right: 0,
           bottom: MediaQuery.of(context).viewInsets.bottom + 120,
-          child: LikeAnimation(onTap:widget.onLike),
+          child: ActionAnimation(onTap:widget.onLike,onArrow: widget.onArrow,),
         ),
 
       ],
