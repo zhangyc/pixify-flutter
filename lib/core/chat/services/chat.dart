@@ -28,10 +28,11 @@ Future<Response> fetchMessageList({
 
 Future<Response> callSona({
   required Dio httpClient,
-  required int userId,
+  int? userId,
   required CallSonaType type,
   int? chatStyleId,
   String? input,
+  int? messageId
 }) async {
   return httpClient.post(
       '/prompt/common',
@@ -40,6 +41,7 @@ Future<Response> callSona({
         'type': type.name,
         'chatStyleId': chatStyleId,
         'input': input,
+        'messageId': messageId
       }
   );
 }

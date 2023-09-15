@@ -34,7 +34,10 @@ enum CallSonaType {
   AUTO,
   SUGGEST,
   INPUT,
-  MANUAL
+  MANUAL,
+  BIO,
+  HOOK,
+  SIMPLE
 }
 
 extension DateTimeExt on DateTime {
