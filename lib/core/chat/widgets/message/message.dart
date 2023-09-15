@@ -15,12 +15,14 @@ class MessageWidget extends StatelessWidget {
     required this.prevMessage,
     required this.message,
     required this.fromMe,
-    required this.onPendingMessageSucceed
+    required this.onPendingMessageSucceed,
+    required this.shortenMessage
   });
   final ImMessage? prevMessage;
   final ImMessage message;
   final bool fromMe;
-  final Function(ImMessage message) onPendingMessageSucceed;
+  final void Function(ImMessage message) onPendingMessageSucceed;
+  final Future Function(ImMessage message) shortenMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,28 @@ class MessageWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24)
               ),
               child: _message
-            )
+            ),
+            Visibility(
+              visible: fromMe && message.shortenTimes < 2,
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                  onTap: () => shortenMessage(message),
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    margin: const EdgeInsets.only(right: 8.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+                      shape: BoxShape.circle
+                    ),
+                    alignment: Alignment.center,
+                    child: Icon(Icons.switch_access_shortcut_add_outlined, size: 16, color: Theme.of(context).colorScheme.tertiary)
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 12)
           ],
         ),
       ),

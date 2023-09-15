@@ -8,6 +8,7 @@ class ImMessage {
     required this.receiver,
     required this.content,
     required this.time,
+    required this.shortenTimes
   });
 
   final int id;
@@ -15,6 +16,7 @@ class ImMessage {
   final UserInfo sender;
   final UserInfo receiver;
   final DateTime time;
+  final int shortenTimes;
   Future? pending;
   Future Function()? func;
 
@@ -25,6 +27,7 @@ class ImMessage {
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
       content: json['message'],
       time: (json['createDate'] as Timestamp).toDate(),
+      shortenTimes: json['simplifyNum'] ?? 0
     );
   }
 }

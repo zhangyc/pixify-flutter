@@ -86,6 +86,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           message: msgs[index],
                           fromMe: ref.read(asyncMyProfileProvider).value!.id == msgs[index].sender.id,
                           onPendingMessageSucceed: _onPendingMessageSucceed,
+                          shortenMessage: _shortenMessage,
                         ),
                         itemCount: msgs.length,
                         separatorBuilder: (_, __) => SizedBox(height: 5),
@@ -190,6 +191,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       sender: ref.read(asyncMyProfileProvider).value!.toUser(),
       receiver: widget.otherSide,
       time: DateTime.now(),
+      shortenTimes: 2
     );
     final pending = func();
     message
@@ -205,6 +207,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (mounted) {
       ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
     }
+  }
+
+  Future _shortenMessage(ImMessage message) {
+    return callSona(
+      httpClient: ref.read(dioProvider),
+      type: CallSonaType.SIMPLE,
+      userId: widget.otherSide.id,
+      messageId: message.id
+    );
   }
 
   void _showInfo() {

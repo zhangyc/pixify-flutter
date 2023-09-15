@@ -30,10 +30,9 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        GestureDetector(
-            onLongPress: _onLongPress,
-            child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
-        ),
+        Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall?.copyWith(
+          color: Colors.white
+        )),
         SizedBox(width: 20),
         FutureBuilder<void>(
           key: ValueKey(widget.message.pending),
@@ -50,7 +49,7 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
                 },
                 child: SizedBox(
                   height: 24,
-                  width: 48,
+                  width: 58,
                   child: Text('Resend', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.red))
                 ),
               );
@@ -69,16 +68,5 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
         )
       ],
     );
-  }
-
-
-  void _onLongPress() async {
-    final action = await showRadioFieldDialog(context: context, options: {'Copy': 'copy', 'Delete': 'delete'}, dismissible: true);
-    if (action == 'copy') {
-      Clipboard.setData(ClipboardData(text: widget.message.content));
-      Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-    } else if (action == 'delete') {
-      Fluttertoast.showToast(msg: 'todo');
-    }
   }
 }
