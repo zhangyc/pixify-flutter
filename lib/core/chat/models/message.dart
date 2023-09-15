@@ -34,7 +34,10 @@ enum CallSonaType {
   AUTO,
   SUGGEST,
   INPUT,
-  MANUAL
+  MANUAL,
+  BIO,
+  HOOK,
+  SIMPLE
 }
 
 extension DateTimeExt on DateTime {
@@ -47,19 +50,37 @@ extension DateTimeExt on DateTime {
             if (now.difference(this) < const Duration(minutes: 1)) {
               return 'just now';
             } else {
-              return '${now.difference(this).inMinutes} minute${now.difference(this).inMinutes == 1 ? '' : 's'} before';
+              return 'Today ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
             }
           } else {
             return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
           }
         } else {
-          return '${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+          return '${_getMonthShort(month)} ${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
         }
       } else {
-        return '${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+        return '${_getMonthShort(month)} ${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
       }
     } else {
-      return '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+      return '${_getMonthShort(month)} ${day.toString().padLeft(2, '0')}, $year ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
     }
   }
+}
+
+String _getMonthShort(int index) {
+  return switch (index) {
+    1 => 'Jan',
+    2 => 'Feb',
+    3 => 'Mar',
+    4 => 'Apr',
+    5 => 'May',
+    6 => 'Jun',
+    7 => 'Jul',
+    8 => 'Aug',
+    9 => 'Sep',
+    10 => 'Oct',
+    11 => 'Nov',
+    12 => 'Dec',
+    _ => 'Unknown'
+  };
 }

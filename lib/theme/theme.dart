@@ -5,6 +5,7 @@ import 'const.dart';
 
 final themeData = ThemeData(
   useMaterial3: true,
+  brightness: Brightness.light,
   primaryColor: primaryColor,
   disabledColor: disabledColor,
   scaffoldBackgroundColor: scaffoldBackgroundColor,
@@ -24,9 +25,9 @@ final themeData = ThemeData(
     centerTitle: true,
     iconTheme: IconThemeData(color: fontColour),
     systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light
+      statusBarIconBrightness: Brightness.dark
     )
   ),
   textTheme: TextTheme(

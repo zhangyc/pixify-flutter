@@ -18,13 +18,9 @@ class _MessageFromOtherState extends State<MessageFromOther> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: _onLongPress,
-      child: Container(
-        alignment: Alignment.centerLeft,
-        child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
-      ),
+      child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
     );
   }
-
 
   void _onLongPress() async {
     final action = await showRadioFieldDialog(

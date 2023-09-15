@@ -7,6 +7,8 @@ import 'package:sona/account/models/user_info.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/forward.dart';
+import 'package:sona/core/chat/models/message.dart';
+import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
 
@@ -64,26 +66,41 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                SizedBox(height: 56),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 26),
+                    child: Text('Bio', style: Theme.of(context).textTheme.titleMedium),
+                  ),
+                ),
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: _showBioEditor,
                   child: Container(
-                    height: 108,
-                    margin: EdgeInsets.only(left: 16, right: 16, top: 56, bottom: 8),
+                    constraints: BoxConstraints(maxHeight: 300),
+                    margin: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 8),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
                       border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
                       borderRadius: BorderRadius.circular(12)
                     ),
-                    alignment: Alignment.topLeft,
-                    child: Text(ref.watch(asyncMyProfileProvider).value!.bio ?? 'My Bio'),
+                    child: SingleChildScrollView(
+                      child: Text(
+                        ref.watch(asyncMyProfileProvider).value!.bio ?? 'You can just write a little,\nthen use Sona to help optimize',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
                   ),
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: _sonaWritesBio,
-                    child: Text('Sona Impression'),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text('Sona Impression', style: Theme.of(context).textTheme.bodySmall),
+                    ),
                   ),
                 ),
                 SizedBox(height: 12)
@@ -98,6 +115,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 text: '性别 ${_profile.gender!.name}',
               ),
             ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: 30),
           )
         ],
       ),
@@ -119,7 +139,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       child = CachedNetworkImage(imageUrl: photo.url, fit: BoxFit.cover);
     }
     return GestureDetector(
-      onLongPress: () => _showPhotoActions(_profile.photos[index]),
+      onLongPress: index != 0 ? () => _showPhotoActions(_profile.photos[index]) : null,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
@@ -150,8 +170,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       maxLength: 256
     );
     if (text != null && text.trim().isNotEmpty) {
-      await ref.read(asyncMyProfileProvider.notifier).updateInfo(bio: text.trim());
-      FocusManager.instance.primaryFocus?.unfocus();
+      await callSona(
+        httpClient: ref.read(dioProvider),
+        type: CallSonaType.BIO,
+        input: text
+      );
+      await ref.read(asyncMyProfileProvider.notifier).refresh();
     }
   }
 

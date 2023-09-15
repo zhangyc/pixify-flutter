@@ -28,16 +28,11 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: GestureDetector(
+        GestureDetector(
             onLongPress: _onLongPress,
-            child: Container(
-              padding: EdgeInsets.only(right: 8),
-              alignment: Alignment.centerRight,
-              child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
-            ),
-          ),
+            child: Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall),
         ),
         SizedBox(width: 20),
         FutureBuilder<void>(
