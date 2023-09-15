@@ -1,21 +1,17 @@
 import 'dart:ui';
 
 
-import 'package:another_transformer_page_view/another_transformer_page_view.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
-import 'package:sona/core/match/widgets/match_itm.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../common/widgets/button/colored.dart';
 import '../widgets/match_init_animation.dart';
 import '../widgets/scroller.dart';
-import '../widgets/sona_transform.dart';
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});

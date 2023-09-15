@@ -33,14 +33,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.2"
-  another_transformer_page_view:
-    dependency: "direct main"
-    description:
-      name: another_transformer_page_view
-      sha256: a7cd46ede62d621c5abe7e58c7cb2745abe67b3bfec64f59b8889c93d7be7a8e
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   appinio_swiper:
     dependency: "direct main"
     description:
@@ -640,6 +632,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  google_fonts:
+    dependency: "direct main"
+    description:
+      name: google_fonts
+      sha256: e20ff62b158b96f392bfc8afe29dee1503c94fbea2cbe8186fd59b756b8ae982
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.0"
   hooks_riverpod:
     dependency: "direct main"
     description:
@@ -1157,14 +1157,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
-  sprung:
-    dependency: transitive
-    description:
-      name: sprung
-      sha256: "54322638f5e393d2b808175f7eadbaa4836a4425456e98d93c3d676dc56ebdf1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   sqflite:
     dependency: transitive
     description:
@@ -1229,14 +1221,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  swipable_stack:
-    dependency: "direct main"
-    description:
-      name: swipable_stack
-      sha256: b04eef070455e868b68fdd5ae98f6718e561c877348acd017c07805f1439ef19
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   synchronized:
     dependency: transitive
     description:
