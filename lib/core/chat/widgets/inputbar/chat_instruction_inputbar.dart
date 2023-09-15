@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/core/chat/providers/chat_style.dart';
+import 'package:sona/account/providers/profile.dart';
+import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 
 import 'mode_provider.dart';
 
@@ -79,7 +81,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
 
   @override
   Widget build(BuildContext context) {
-    final currentChatStyleId = ref.watch(currentChatStyleIdProvider);
+    final currentChatStyle = ref.watch(currentChatStyleProvider(widget.chatId));
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -131,9 +133,9 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                         height: 33,
                         margin: EdgeInsets.symmetric(horizontal: 2.5),
                         decoration: BoxDecoration(
-                          image: currentChatStyleId != null ? DecorationImage(
+                          image: currentChatStyle != null ? DecorationImage(
                             image: CachedNetworkImageProvider(
-                                ref.read(asyncChatStylesProvider).value!.firstWhere((style) => style.id == currentChatStyleId).icon
+                              currentChatStyle.icon
                             )
                           ) : null,
                           shape: BoxShape.circle
@@ -199,7 +201,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   ),
                   children: styles.map<Widget>((s) => GestureDetector(
                     child: Container(
-                      color: currentChatStyleId == s.id ? Theme.of(context).colorScheme.secondaryContainer : Color(0x11CCCCCC),
+                      color: currentChatStyle?.id == s.id ? Theme.of(context).colorScheme.secondaryContainer : Color(0x11CCCCCC),
                       child: Row(
                         children: [
                           Container(
@@ -220,10 +222,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                         ],
                       )
                     ),
-                    onTap: () {
-                      ref.read(currentChatStyleIdProvider.notifier).state = s.id;
-                      _toggleChatStyles();
-                    },
+                    onTap: () => _setChatStyle(s.id),
                   )).toList(),
                 ),
                 error: (_, __) => GestureDetector(
@@ -245,13 +244,14 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
 
   void _toggleMode() {
     ref.read(inputModeProvider(widget.chatId).notifier).update((state) {
-      if (state == InputMode.sona) {
-        _controller.text = '';
-        return InputMode.manual;
-      } else {
-        _controller.text = '';
-        return InputMode.sona;
-      }
+      var newMode = state == InputMode.sona ? InputMode.manual : InputMode.sona;
+      _controller.clear();
+      FirebaseFirestore.instance.collection('users')
+          .doc(ref.read(asyncMyProfileProvider).value!.id.toString())
+          .collection('rooms').doc(widget.chatId.toString())
+          .set({'inputMode': newMode})
+          .catchError((_) {});
+      return newMode;
     });
   }
 
@@ -266,9 +266,16 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
     });
   }
 
+  void _setChatStyle(int id) {
+    ref.read(currentChatStyleProvider(widget.chatId).notifier)
+        .update((state) => ref.read(asyncChatStylesProvider)
+        .value!
+        .firstWhere((style) => style.id == id));
+    _toggleChatStyles();
+  }
+
   void onSubmit(String text) async {
     if (widget.onSubmit != null) widget.onSubmit!(text);
     _controller.clear();
-    ref.invalidate(currentChatStyleIdProvider);
   }
 }

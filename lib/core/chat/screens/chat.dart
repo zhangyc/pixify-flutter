@@ -8,7 +8,7 @@ import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
-import 'package:sona/core/chat/providers/chat_style.dart';
+import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_instruction_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
@@ -56,6 +56,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
           IconButton(onPressed: _showInfo, icon: Icon(Icons.more_vert_outlined))
         ],
+        // systemOverlayStyle: const SystemUiOverlayStyle(
+        //     statusBarBrightness: Brightness.light,
+        //     statusBarColor: Colors.transparent,
+        //     statusBarIconBrightness: Brightness.dark
+        // )
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -177,7 +182,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         userId: widget.otherSide.id,
         input: text,
         type: CallSonaType.INPUT,
-        chatStyleId: ref.read(currentChatStyleIdProvider)
+        chatStyleId: ref.read(currentChatStyleProvider(widget.otherSide.id))?.id
     );
     final message = ImMessage(
       id: _lastLocalId++,

@@ -9,6 +9,7 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/providers/dio.dart';
 
+import '../widgets/inputbar/chat_style.dart';
 import '../widgets/liked_me.dart';
 
 class ConversationScreen extends StatefulHookConsumerWidget {
@@ -20,6 +21,14 @@ class ConversationScreen extends StatefulHookConsumerWidget {
 }
 
 class _ConversationScreenState extends ConsumerState<ConversationScreen> with AutomaticKeepAliveClientMixin {
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(asyncChatStylesProvider);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

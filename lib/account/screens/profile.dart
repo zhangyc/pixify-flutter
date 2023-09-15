@@ -119,7 +119,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       child = CachedNetworkImage(imageUrl: photo.url, fit: BoxFit.cover);
     }
     return GestureDetector(
-      onLongPress: () => _showPhotoActions(_profile.photos[index]),
+      onLongPress: index != 0 ? () => _showPhotoActions(_profile.photos[index]) : null,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
