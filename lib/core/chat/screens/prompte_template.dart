@@ -71,7 +71,7 @@ class _PromptTemplateScreenState extends ConsumerState<PromptTemplateScreen> {
     }
     var text = await showTextFieldDialog(
       context: context,
-      initialText: initialText
+      controller: TextEditingController(text: initialText),
     );
     final dio = ref.read(dioProvider);
     final resp = await dio.post('/template/$key', data: {"key": key, "value": text});

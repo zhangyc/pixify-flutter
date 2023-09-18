@@ -57,7 +57,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
-        backgroundColor: Colors.black.withOpacity(0.2),
+        backgroundColor: Color(0x18000000),
         iconSize: 48,
         currentIndex: _currentIndex,
         onTap: _onPageChange,
