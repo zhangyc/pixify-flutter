@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/mode_provider.dart';
 import 'package:sona/utils/providers/dio.dart';
+import 'package:sona/utils/providers/kv_store.dart';
 
 import '../../../../account/providers/profile.dart';
 import '../../services/chat_style.dart';
@@ -41,7 +43,19 @@ class AsyncChatStylesNotifier extends AsyncNotifier<List<ChatStyle>> {
 
   @override
   FutureOr<List<ChatStyle>> build() {
-    return _fetchChatStyles();
+    try {
+      final jsonString = ref.read(kvStoreProvider).getString('styles');
+      final styles = (jsonDecode(jsonString!) as List).map<ChatStyle>(ChatStyle.fromJson).toList();
+      refresh(true);
+      return styles;
+    } catch (_) {
+      return _fetchChatStyles();
+    }
+  }
+
+  Future<void> refresh([bool silence = false]) async {
+    if (!silence) state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => _fetchChatStyles());
   }
 }
 

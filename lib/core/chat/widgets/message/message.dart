@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,7 +7,6 @@ import 'package:sona/core/chat/widgets/message/message_from_me.dart';
 import 'package:sona/core/chat/widgets/message/message_from_other.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
 
-import '../../../../utils/dialog/input.dart';
 import 'local_pending_message_from_me.dart';
 
 class MessageWidget extends StatelessWidget {
@@ -15,14 +15,16 @@ class MessageWidget extends StatelessWidget {
     required this.prevMessage,
     required this.message,
     required this.fromMe,
+    required this.onDelete,
     required this.onPendingMessageSucceed,
-    required this.shortenMessage
+    required this.onShorten
   });
   final ImMessage? prevMessage;
   final ImMessage message;
   final bool fromMe;
-  final void Function(ImMessage message) onPendingMessageSucceed;
-  final Future Function(ImMessage message) shortenMessage;
+  final Future Function(ImMessage) onDelete;
+  final void Function(ImMessage) onPendingMessageSucceed;
+  final Future Function(ImMessage) onShorten;
 
   @override
   Widget build(BuildContext context) {
@@ -37,61 +39,73 @@ class MessageWidget extends StatelessWidget {
       _message = MessageFromOther(message: message);
     }
 
-    return GestureDetector(
-      onLongPress: () async {
-        final action = await showRadioFieldDialog(context: context, options: {'Copy': 'copy', 'Delete': 'delete'}, dismissible: true);
-        if (action == 'copy') {
-          Clipboard.setData(ClipboardData(text: message.content));
-          Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-        } else if (action == 'delete') {
-          Fluttertoast.showToast(msg: 'todo');
-        }
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-          children: [
-            Visibility(
-              visible: prevMessage == null || prevMessage!.time.add(const Duration(minutes: 5)).isBefore(message.time),
-              child: MessageTime(time: message.time)
-            ),
-            Container(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.75
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Visibility(
+            visible: prevMessage == null || prevMessage!.time.add(const Duration(minutes: 5)).isBefore(message.time),
+            child: MessageTime(time: message.time)
+          ),
+          CupertinoContextMenu.builder(
+            actions: <Widget>[
+              CupertinoContextMenuAction(
+                child: const Text('Copy'),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Clipboard.setData(ClipboardData(text: message.content));
+                  Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
+                },
               ),
-              margin: EdgeInsets.only(bottom: 12),
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              decoration: BoxDecoration(
-                color: fromMe ? Theme.of(context).primaryColor : Color(0xFFF9F9F9),
-                borderRadius: BorderRadius.circular(24)
+              CupertinoContextMenuAction(
+                child: const Text('Delete'),
+                onPressed: () {
+                  Navigator.pop(context);
+                  onDelete(message);
+                },
               ),
-              child: _message
-            ),
-            Visibility(
-              visible: fromMe && message.shortenTimes < 2,
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: GestureDetector(
-                  onTap: () => shortenMessage(message),
-                  child: Container(
-                    width: 28,
-                    height: 28,
-                    margin: const EdgeInsets.only(right: 8.0),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
-                      shape: BoxShape.circle
-                    ),
-                    alignment: Alignment.center,
-                    child: Icon(Icons.switch_access_shortcut_add_outlined, size: 16, color: Theme.of(context).colorScheme.tertiary)
+            ],
+            builder:(BuildContext context, Animation<double> animation) {
+              return Container(
+                // decoration:
+                //   animation.value < CupertinoContextMenu.animationOpensAt ? boxDecorationAnimation.value : null,
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.75
+                ),
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                decoration: BoxDecoration(
+                    color: fromMe ? Theme.of(context).primaryColor : Color(0xFFF9F9F9),
+                    borderRadius: BorderRadius.circular(24),
+                ),
+                child: _message
+              );
+            },
+          ),
+          SizedBox(height: 12),
+          Visibility(
+            visible: fromMe && message.shortenTimes < 2,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: GestureDetector(
+                onTap: () => onShorten(message),
+                child: Container(
+                  width: 28,
+                  height: 28,
+                  margin: const EdgeInsets.only(right: 8.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+                    shape: BoxShape.circle
                   ),
+                  alignment: Alignment.center,
+                  child: Icon(Icons.switch_access_shortcut_add_outlined, size: 16, color: Theme.of(context).colorScheme.tertiary)
                 ),
               ),
             ),
-            SizedBox(height: 12)
-          ],
-        ),
+          ),
+          SizedBox(height: 12)
+        ],
       ),
     );
   }

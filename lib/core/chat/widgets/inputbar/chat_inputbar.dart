@@ -87,6 +87,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             GestureDetector(
               onTap: _toggleMode,
@@ -106,8 +107,19 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                 ),
               )
             ),
-            SizedBox(
+            Container(
               width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 16 - 16 - 10,
+              decoration: BoxDecoration(
+                gradient: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? const LinearGradient(
+                  colors: [
+                    Color(0xFFE880F1),
+                    Color(0xFFFCD8FF),
+                    Color(0xFF2969E9),
+                  ],
+                ) : null,
+                borderRadius: BorderRadius.circular(_height/2)
+              ),
+              padding: EdgeInsets.all(1.5),
               child: TextField(
                   controller: _controller,
                   focusNode: _focusNode,
@@ -124,7 +136,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(_height/2),
+                      borderRadius: BorderRadius.circular(_height/2 - 1),
                     ),
                     suffixIcon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? GestureDetector(
                       onTap: _toggleChatStyles,
@@ -160,7 +172,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   },
                   onSubmitted: (String text) {
                     onSubmit(text);
-                    FocusManager.instance.primaryFocus?.unfocus();
                     _controller.text = '';
                   },
                   autofocus: widget.autofocus,
@@ -169,11 +180,10 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
             Visibility(
               visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
               child: TextButton(
-                  onPressed: () {
-                    onSubmit(_controller.text);
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                  child: Text(ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Sona' : 'Send')
+                onPressed: () {
+                  onSubmit(_controller.text);
+                },
+                child: Text(ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Sona' : 'Send')
               ),
             ),
             Visibility(
@@ -258,9 +268,9 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
   void _toggleChatStyles() {
     ref.read(chatStylesVisibleProvider(widget.chatId).notifier).update((state) {
       if (!state) {
-        FocusManager.instance.primaryFocus?.unfocus();
+        _focusNode.unfocus();
       } else {
-        FocusManager.instance.primaryFocus?.requestFocus();
+        _focusNode.requestFocus();
       }
       return !state;
     });
@@ -275,7 +285,9 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
   }
 
   void onSubmit(String text) async {
-    if (widget.onSubmit != null) widget.onSubmit!(text);
+    if (widget.onSubmit != null) {
+      widget.onSubmit!(text);
+    }
     _controller.clear();
   }
 }
