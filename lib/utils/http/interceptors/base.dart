@@ -1,8 +1,13 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/utils/providers/dio.dart';
+
+import '../../../account/screens/login.dart';
+import '../../../core/providers/navigator_key.dart';
 
 
 class BaseInterceptor extends Interceptor {
@@ -27,8 +32,17 @@ class BaseInterceptor extends Interceptor {
       response.data = response.data['data'];
     } else if (response.data['code'] == '10040') {
       ref.read(tokenProvider.notifier).state = null;
-    } else {
+    } else if(response.data['code']=="10030"){
+      ref.read(tokenProvider.notifier).state = null;
+
+      // Navigator.pushAndRemoveUntil(ref.watch(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder: (c){
+      //   return LoginScreen();
+      // }), (route) => false);
+      ref.read(dioProvider).close();
+
+    }else {
       throw CustomDioException(requestOptions: response.requestOptions, code: response.data['code']);
+
     }
     super.onResponse(response, handler);
   }

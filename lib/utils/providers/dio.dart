@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/utils/http/interceptors/token_interceptor.dart';
 import 'package:sona/utils/providers/env.dart';
 
 import '../http/interceptors/base.dart';
@@ -28,5 +29,7 @@ final dioProvider = Provider<Dio>((ref) {
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true, logPrint: (i) => log(i.toString())));
   }
   dio.interceptors.add(BaseInterceptor(ref: ref));
+  // dio.interceptors.add(TokenInterceptor(ref: ref));
+
   return dio;
 });
