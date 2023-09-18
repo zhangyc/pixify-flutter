@@ -74,14 +74,26 @@ Future<Response> deleteChat({
   );
 }
 
+Future<Response> deleteMessage({
+  required Dio httpClient,
+  required int messageId
+}) async {
+  return httpClient.post(
+      '/message/delete',
+      data: {
+        'id': messageId,
+      }
+  );
+}
+
 Future<Response> deleteAllMessages({
   required Dio httpClient,
-  required int id
+  required int chatId
 }) async {
   return httpClient.post(
       '/message/delete-all',
       data: {
-        'id': id,
+        'id': chatId,
       }
   );
 }

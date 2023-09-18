@@ -10,7 +10,7 @@ import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/core/chat/services/chat.dart';
-import 'package:sona/core/chat/widgets/inputbar/chat_instruction_inputbar.dart';
+import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 
 import '../../../common/models/user.dart';
@@ -86,7 +86,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           message: msgs[index],
                           fromMe: ref.read(asyncMyProfileProvider).value!.id == msgs[index].sender.id,
                           onPendingMessageSucceed: _onPendingMessageSucceed,
-                          shortenMessage: _shortenMessage,
+                          onShorten: _shortenMessage,
+                          onDelete: _deleteMessage,
                         ),
                         itemCount: msgs.length,
                         separatorBuilder: (_, __) => SizedBox(height: 5),
@@ -218,6 +219,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
   }
 
+  Future _deleteMessage(ImMessage message) {
+    return deleteMessage(
+      httpClient: ref.read(dioProvider),
+      messageId: message.id
+    );
+  }
+
   void _showInfo() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: widget.otherSide)));
   }
@@ -309,7 +317,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   Future _deleteAllMessages() async {
-    await deleteAllMessages(httpClient: ref.read(dioProvider), id: widget.otherSide.id);
+    await deleteAllMessages(httpClient: ref.read(dioProvider), chatId: widget.otherSide.id);
     var allMsgs = await FirebaseFirestore.instance
         .collection('users')
         .doc(ref.read(asyncMyProfileProvider).value!.id.toString())
