@@ -314,7 +314,7 @@ Future<String?> showTextFieldDialog({
               Navigator.pop(context);
             }),
       ),
-      const SizedBox(width: 5),
+      const SizedBox(width: 10),
       Expanded(
         flex: saveFlex,
         child: ColoredButton(
