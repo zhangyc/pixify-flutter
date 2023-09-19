@@ -5,10 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/custom_scrollphysics.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
+import 'package:sona/generated/assets.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../common/widgets/button/colored.dart';
@@ -25,29 +27,25 @@ class MatchScreen extends StatefulHookConsumerWidget {
 
 class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin,SingleTickerProviderStateMixin {
-  // late final s.Controller controller;
-  //
-  // void _handleCallbackEvent(ScrollDirection direction, s.ScrollSuccess success,
-  //     {int? currentIndex}) {
-  //
-  //
-  //   print(
-  //       "Scroll callback received with data: {direction: $direction, success: $success and index: ${currentIndex ?? 'not given'}}");
-  // }
+  late AnimationController _animationController2;
 
   @override
   void initState() {
-    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _animationController2=AnimationController(vsync: this,duration: Duration(milliseconds: 1500));
+    _animationController2.addStatusListener((s) {
+           setState(() {
 
-    // controller = s.Controller()
-    //   ..addListener((s.ScrollEvent event) {
-    //     _handleCallbackEvent(event.direction, event.success);
-    //   });
+           });
+    });
     super.initState();
+  }
+  @override
+  void dispose() {
+    _animationController2.dispose();
+    super.dispose();
   }
   String imageUrl='';
 
-  late AnimationController _controller;
   int currentPage=0;
   PageController pageController=PageController();
   bool scrolling=true;
@@ -76,21 +74,38 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       user: users[index],
                       actions: [
                         Positioned(
+                          child: ColoredBox(
+                            color: _animationController2.isAnimating?Colors.black.withOpacity(0.5):Colors.transparent,
+                            child: Center(child: _animationController2.isAnimating?Lottie.asset(Assets.lottieArrowAnimation,
+                                controller: _animationController2,repeat: true):Container()),
+                          ),
+                        ),
+                        Positioned(
                           right: 0,
                           bottom: MediaQuery.of(context).viewInsets.bottom + 120,
                           child: ActionAnimation(
-                            onTap: () {
+
+                              userInfo: users[index],
+                              onLike: () {
+                              users[index].matched=true;
                               ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
                               if (index < users.length - 1) {
-                                pageController.animateToPage(index + 1, duration: Duration(milliseconds: 500), curve: Curves.linearToEaseOut);
-                              }
-                            },
-                            onArrow: () {
-                              ref.read(asyncMatchRecommendedProvider.notifier)
+                                pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 500),
+                                    curve: Curves.linearToEaseOut);
+                                }
+                              },
+                              onArrow: () {
+                                users[index].arrowed=true;
+                                ref.read(asyncMatchRecommendedProvider.notifier)
                                   .arrow(users[index].id);
-                            }
+                                if (index < users.length - 1) {
+                                  pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 500),
+                                      curve: Curves.linearToEaseOut);
+                                }
+                            }, arrowController: _animationController2,
                           ),
                         ),
+
                         // 加action组件
                       ],
                     )
@@ -99,7 +114,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 itemCount: users.length,
                 scrollDirection: Axis.vertical,
                 controller: pageController,
-                onPageChanged: (value){},
+                onPageChanged: (value){
+                  ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
+                  if(users[value-1].arrowed||users[value-1].matched){
+                    return;
+                  }else {
+                    users[value-1].skipped=true;
+                    ref.read(asyncMatchRecommendedProvider.notifier)
+                        .skip(users[value-1].id);
+                  }
+                },
               ),
             ),
             Positioned(

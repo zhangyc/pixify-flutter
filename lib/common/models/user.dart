@@ -3,7 +3,9 @@ import 'package:sona/account/models/gender.dart';
 
 class UserInfo {
   int index=0;
-
+  bool arrowed=false;
+  bool matched=false;
+  bool skipped=false;
   UserInfo({
     required this.id,
     required this.name,

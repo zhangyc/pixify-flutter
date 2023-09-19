@@ -53,7 +53,7 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
      await matchAction(
           httpClient: ref.read(dioProvider),
           userId: id,
-          action: MatchAction.like);
+          action: action);
     }catch(e){
       print(e);
       // if(e.code=="10150"){

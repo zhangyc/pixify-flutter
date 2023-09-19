@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/user_info.dart';
@@ -236,14 +238,31 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
     final bytes = await file.readAsBytes();
+    print(bytes.length);
+    final res=await compressList(bytes);
+    print(res.length);
+    if(res.isEmpty){
+      throw Exception('Handle fail');
+    }
     final dio = ref.read(dioProvider);
     // todo 通过provider
-    await addPhoto(httpClient: dio, bytes: bytes, filename: file.name);
+    await addPhoto(httpClient: dio, bytes: res, filename: file.name);
     ref.read(asyncMyProfileProvider.notifier).refresh();
   }
 
   Future _onRemovePhoto(int photoId) async {
     await removePhoto(httpClient: ref.read(dioProvider), photoId: photoId);
     ref.read(asyncMyProfileProvider.notifier).refresh();
+  }
+  // 4. compress Uint8List and get another Uint8List.
+  Future<Uint8List> compressList(Uint8List list) async {
+    var result = await FlutterImageCompress.compressWithList(
+      list,
+      minHeight: 1920,
+      minWidth: 1080,
+      quality: 80,
+      rotate: 0,
+    );
+    return result;
   }
 }

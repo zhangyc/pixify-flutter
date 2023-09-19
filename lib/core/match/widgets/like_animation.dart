@@ -1,93 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sona/common/models/user.dart';
 import 'package:sona/generated/assets.dart';
 
 class ActionAnimation extends StatefulWidget {
-  const ActionAnimation({super.key, required this.onTap, required this.onArrow});
-  final Function onTap;
+  const ActionAnimation({super.key, required this.onLike, required this.onArrow, required this.userInfo, required this.arrowController});
+  final Function onLike;
   final Function onArrow;
+  final UserInfo userInfo;
+  final AnimationController arrowController;
   @override
   State<ActionAnimation> createState() => _LikeAnimationState();
 }
 
 class _LikeAnimationState extends State<ActionAnimation> with TickerProviderStateMixin{
   late AnimationController _animationController;
-  late AnimationController _animationController2;
 
   @override
   void initState() {
-    _animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 200));
-    _animationController2=AnimationController(vsync: this,duration: Duration(milliseconds: 200));
+    _animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 1000));
 
     _animationController.addListener(() {
+      setState(() {
+
+      });
       if(_animationController.isCompleted){
-        widget.onTap.call();
+        widget.onLike.call();
+
       }
     });
-    _animationController2.addListener(() {
-      if(_animationController2.isCompleted){
+    widget.arrowController.addListener(() {
+      if(widget.arrowController.isCompleted){
         widget.onArrow.call();
       }
     });
+    widget.arrowController.addStatusListener((status) {
+      print(status);
+    });
+
     super.initState();
   }
   @override
   void dispose() {
     _animationController.dispose();
-    _animationController2.dispose();
     super.dispose();
   }
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(
+        right: 20
+      ),
       child: Column(
         children: [
-          GestureDetector(child: Container(child: Lottie.asset(Assets.lottieLike,controller: _animationController,repeat: false),
-             decoration: BoxDecoration(
-               borderRadius: BorderRadius.only(
-                 topLeft: Radius.circular(25),
-                 bottomLeft: Radius.circular(25),
-                 topRight: Radius.zero,
-                 bottomRight: Radius.zero
-               ),
-               color: Colors.white.withOpacity(0.7)
-             ),
-            width: 100,
-            height: 48,
-            ),
+          GestureDetector(child: Container(
+            child: UnconstrainedBox(child: _animationController.isAnimating?
+             Lottie.asset(Assets.lottieLike,controller: _animationController,repeat: true,width: 50,height: 50,):
+             Image.asset(Assets.iconsLike,width: 50,height: 50,),),
+          ),
             onTap: (){
+              _animationController.reset();
               _animationController.forward();
-
             },
           ),
           SizedBox(
             height: 20,
           ),
-          GestureDetector(child: Container(child: Lottie.asset(Assets.lottieLike,controller: _animationController2,repeat: false),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    bottomLeft: Radius.circular(25),
-                    topRight: Radius.zero,
-                    bottomRight: Radius.zero
-                ),
-                color: Colors.white.withOpacity(0.7)
-            ),
-            width: 100,
-            height: 48,
-          ),
+          GestureDetector(child: UnconstrainedBox(child: SizedBox(child: Image.asset(Assets.iconsArrow),width: 50,height: 50,)),
             onTap: (){
-              _animationController2.forward();
+              widget.arrowController.reset();
+              widget.arrowController.forward();
             },
           )
         ],
       ),
-    );
-    return GestureDetector(child: Lottie.asset(Assets.lottieLike,controller: _animationController,repeat: false),
-      onTap: (){
-
-        _animationController.forward();
-      },
     );
   }
 }

@@ -56,6 +56,7 @@ Future<Response> addPhoto({
       filename: filename
     )
   });
+
   return httpClient.post(
     '/user/upload-image',
     data: formData
