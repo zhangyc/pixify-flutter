@@ -15,18 +15,24 @@ class ChatStyle {
   const ChatStyle._({
     required this.id,
     required this.icon,
-    required this.title
+    required this.title,
+    required this.isDefault,
+    required this.memberOnly
   });
 
   final int id;
   final String icon;
   final String title;
+  final bool isDefault;
+  final bool memberOnly;
 
   factory ChatStyle.fromJson(json) {
     return ChatStyle._(
-        id: json['id'],
-        icon: json['icon'],
-        title: json['title']
+      id: json['id'],
+      icon: json['icon'],
+      title: json['title'],
+      isDefault: json['hasDef'],
+      memberOnly: json['hasVip']
     );
   }
 }
@@ -76,7 +82,7 @@ final currentChatStyleProvider = StateProvider.family<ChatStyle?, int>(
     try {
       final convo = ref.watch(conversationStreamProvider).value!.firstWhere((convo) => convo.convoId == arg);
       final styles = ref.watch(asyncChatStylesProvider).value!;
-      return styles.firstWhere((style) => style.id == convo.chatStyleId, orElse: () => styles.first);
+      return styles.firstWhere((style) => style.id == convo.chatStyleId, orElse: () => styles.firstWhere((style) => style.isDefault, orElse: () => styles.first));
     } catch (_) {
       //
     }

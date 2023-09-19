@@ -30,6 +30,7 @@ class MyProfile {
   final int? vipEndDate;
 
   bool get completed => _validate();
+  bool get isMember => vipEndDate != null && vipEndDate! > DateTime.now().millisecondsSinceEpoch;
 
   factory MyProfile.fromJson(Map<String, dynamic> json) {
     return MyProfile(
