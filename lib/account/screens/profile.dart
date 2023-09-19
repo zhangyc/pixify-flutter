@@ -172,23 +172,35 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       hint: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          GestureDetector(
+          ColoredButton(
+            size: ColoredButtonSize.small,
+            color: Colors.transparent,
             onTap: () async {
               final resp = await callSona(
                 httpClient: ref.read(dioProvider),
                 type: CallSonaType.BIO,
                 input: controller.text
               );
-              if (resp.data['txt'] != null) controller.text = resp.data['txt'];
+              if (resp.statusCode == 0) {
+                Navigator.pop(context);
+                final result = await showConfirm(
+                  context: context,
+                  title: 'Apply?',
+                  content: resp.data['txt']
+                );
+                if (result == true) {
+                  ref.read(asyncMyProfileProvider.notifier).updateInfo(bio: resp.data['txt']);
+                }
+              }
             },
-            child: Text('Ask Sona to Optimize', style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).primaryColor
-            ))
+            loadingWhenAsyncAction: true,
+            text: 'Ask Sona to Optimize',
+            fontColor: Theme.of(context).primaryColor
           ),
           SizedBox(width: 40),
         ],
       ),
-      maxLength: 256,
+      maxLength: 360,
       saveFlex: 3,
       cancelFlex: 2
     );
