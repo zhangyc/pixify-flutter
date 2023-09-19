@@ -38,10 +38,11 @@ class BaseInterceptor extends Interceptor {
       // Navigator.pushAndRemoveUntil(ref.watch(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder: (c){
       //   return LoginScreen();
       // }), (route) => false);
-      ref.read(dioProvider).close();
-
+      //ref.read(dioProvider).close();
     }else {
-      throw CustomDioException(requestOptions: response.requestOptions, code: response.data['code']);
+      print(response);
+      var e = CustomDioException(requestOptions: response.requestOptions, code: response.data['code']);
+      throw e;
 
     }
     super.onResponse(response, handler);

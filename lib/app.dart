@@ -60,7 +60,7 @@ class SonaApp extends HookConsumerWidget {
                     child: const SizedBox(
                         width: 16,
                         height: 16,
-                        child: CircularProgressIndicator()),
+                        child: CircularProgressIndicator(color: Colors.transparent,)),
                   ),
                   error: (err, stack) => token == null
                       ? const Opacity(opacity: 0)

@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/services/match.dart';
+import 'package:sona/core/providers/navigator_key.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/utils/http/interceptors/base.dart';
 import 'package:sona/utils/providers/dio.dart';
 
 /// 可能需要把分页数据也封装进来，no more data 等
@@ -43,11 +48,21 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     _action(id, MatchAction.arrow);
   }
 
-  void _action(int id, MatchAction action) {
-    matchAction(
-        httpClient: ref.read(dioProvider),
-        userId: id,
-        action: MatchAction.like);
+  void _action(int id, MatchAction action) async{
+    try{
+     await matchAction(
+          httpClient: ref.read(dioProvider),
+          userId: id,
+          action: MatchAction.like);
+    }catch(e){
+      print(e);
+      // if(e.code=="10150"){
+      //   Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+      //     return SubscribePage();
+      //   }));
+      // }
+    }
+
   }
 }
 
