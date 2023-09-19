@@ -12,6 +12,7 @@ import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../common/widgets/button/colored.dart';
+import '../widgets/like_animation.dart';
 import '../widgets/match_init_animation.dart';
 // import '../widgets/scroller.dart' as s;
 
@@ -64,110 +65,43 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         }
         return Stack(
           children: [
-            Positioned.fill(child: PageView.builder(itemBuilder: (c,index){
-              return StackPageView(index: index, controller: pageController, child: UserCard(
-                key: ValueKey(users[index].id),
-                user: users[index],
-                onLike: () {
-                  ///like某个用户
-                  ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
-                  if (index < users.length - 1) {
-                    pageController.animateToPage(index + 1, duration: Duration(milliseconds: 500), curve: Curves.linearToEaseOut);
-                  }
+            Positioned.fill(
+              child: PageView.builder(
+                itemBuilder: (c,index) {
+                  return StackPageView(
+                    index: index,
+                    controller: pageController,
+                    child: UserCard(
+                      key: ValueKey(users[index].id),
+                      user: users[index],
+                      actions: [
+                        Positioned(
+                          right: 0,
+                          bottom: MediaQuery.of(context).viewInsets.bottom + 120,
+                          child: ActionAnimation(
+                            onTap: () {
+                              ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
+                              if (index < users.length - 1) {
+                                pageController.animateToPage(index + 1, duration: Duration(milliseconds: 500), curve: Curves.linearToEaseOut);
+                              }
+                            },
+                            onArrow: () {
+                              ref.read(asyncMatchRecommendedProvider.notifier)
+                                  .arrow(users[index].id);
+                            }
+                          ),
+                        ),
+                        // 加action组件
+                      ],
+                    )
+                  );
                 },
-                onArrow: () => ref
-                    .read(asyncMatchRecommendedProvider.notifier)
-                    .arrow(users[index].id),
-              ));
-            },
-              itemCount: users.length,
-              scrollDirection: Axis.vertical,
-              controller: pageController,
-              onPageChanged: (value){
-
-              },
-              // physics: scrollPhysics,
+                itemCount: users.length,
+                scrollDirection: Axis.vertical,
+                controller: pageController,
+                onPageChanged: (value){},
+              ),
             ),
-            ),
-            // Positioned.fill(
-            //   child: TransformerPageView(itemCount: users.length,
-            //     itemBuilder: (c,index){
-            //       return UserCard(
-            //         key: ValueKey(users[index].id),
-            //         user: users[index],
-            //         onLike: () {
-            //           ///like某个用户
-            //           ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
-            //           if (index < users.length - 1) {
-            //             controller.animateToPosition(index + 1);
-            //           }
-            //         },
-            //         onArrow: () => ref
-            //             .read(asyncMatchRecommendedProvider.notifier)
-            //             .arrow(users[index].id),
-            //       );
-            //     },
-            //     scrollDirection: Axis.vertical,
-            //     transformer: ScaleAndFadeTransformer(),
-            //   ),
-            // ),
-            // Positioned.fill(
-            //   child: TikTokStyleFullPageScroller(
-            //     contentSize: users.length,
-            //     swipePositionThreshold: 0.2,
-            //     // ^ the fraction of the screen needed to scroll
-            //     swipeVelocityThreshold: 1000,
-            //     // ^ the velocity threshold for smaller scrolls
-            //     animationDuration: const Duration(milliseconds: 400),
-            //     // ^ how long the animation will take
-            //     controller: controller,
-            //     // ^ registering our own function to listen to page changes
-            //     builder: (context, index) => UserCard(
-            //       key: ValueKey(users[index].id),
-            //       user: users[index],
-            //       onLike: () {
-            //         ///like某个用户
-            //         ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
-            //         if (index < users.length - 1) {
-            //           controller.animateToPosition(index + 1);
-            //         }
-            //       },
-            //       onArrow: () => ref
-            //           .read(asyncMatchRecommendedProvider.notifier)
-            //           .arrow(users[index].id),
-            //     ),
-            //   ),
-            // ),
-            // Container(
-            //   decoration: BoxDecoration(
-            //     image: DecorationImage(
-            //       image: CachedNetworkImageProvider("$imageUrl"),
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            //   child: BackdropFilter(
-            //     filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-            //     child: Container(
-            //       decoration:
-            //       BoxDecoration(color: Colors.white.withOpacity(0.0)),
-            //     ),
-            //   ),
-            // ),
-            // Center(
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       CardStack(onCardChanged: (u){
-            //         setState(() {
-            //            imageUrl=u;
-            //         });
-            //       },
-            //       user: users,
-            //       )
-            //     ],
-            //   ),
-            // ),
-
             Positioned(
               top: 0,
               left: 0,

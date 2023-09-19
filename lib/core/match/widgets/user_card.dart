@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/providers/profile.dart';
-import 'package:sona/core/match/widgets/like_animation.dart';
 
 import '../../../common/models/user.dart';
 
@@ -10,12 +8,10 @@ class UserCard extends ConsumerStatefulWidget {
   const UserCard({
     super.key,
     required this.user,
-    required this.onLike,
-    required this.onArrow
+    this.actions = const <Positioned>[],
   });
   final UserInfo user;
-  final void Function() onLike;
-  final void Function() onArrow;
+  final List<Positioned> actions;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ConsumerUserCardState();
@@ -95,11 +91,7 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> {
               ),
             )
         ),
-        Positioned(
-          right: 0,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 120,
-          child: ActionAnimation(onTap:widget.onLike, onArrow: widget.onArrow,),
-        ),
+        ...widget.actions,
       ],
     );
   }

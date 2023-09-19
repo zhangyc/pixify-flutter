@@ -3,6 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/providers/profile.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
+import 'package:sona/utils/dialog/input.dart';
+
+import '../widgets/button/colored.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
   static const String routeName = '/user-profile';
@@ -18,18 +21,28 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_outlined),
-          onPressed: Navigator.of(context).pop,
-        ),
-      ),
       extendBodyBehindAppBar: true,
       body: ref.watch(asyncOthersProfileProvider(widget.user.id)).when(
         data: (user) => UserCard(
             user: user,
-            onLike: () {  },
-            onArrow: () {  }
+            actions: [
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 8,
+                left: 12,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back_ios_new_outlined),
+                  onPressed: Navigator.of(context).pop,
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 8,
+                right: 20,
+                child: IconButton(
+                  icon: Icon(Icons.more_horiz_outlined),
+                  onPressed: _showActions,
+                ),
+              )
+            ],
         ),
         error: (err, stack) => GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -55,5 +68,14 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         ),
       )
     );
+  }
+
+  void _showActions() async {
+    final action = await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
+    if (action == 'report') {
+      await showRadioFieldDialog(context: context, options: {'Spam': 'spam', 'Inappropriate': 'inappropriate'});
+    } else if (action == 'block') {
+      await showRadioFieldDialog(context: context, options: {'Block': 'block', 'Unblock': 'unblock'});
+    }
   }
 }
