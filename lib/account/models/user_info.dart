@@ -12,6 +12,7 @@ class MyProfile {
     required this.interests,
     required this.position,
     this.bio,
+    this.impression,
     this.chatStyleId,
     this.photos = const <ProfilePhoto>[],
     required this.vipEndDate,
@@ -23,6 +24,7 @@ class MyProfile {
   final DateTime? birthday;
   final String? avatar;
   final String? bio;
+  final String? impression;
   final int? chatStyleId;
   final List<String> interests;
   final List<ProfilePhoto> photos;
@@ -40,6 +42,7 @@ class MyProfile {
       birthday: json['birthday'] != null ? DateTime.tryParse(json['birthday']) : null,
       avatar: json['avatar'],
       bio: json['description'],
+      impression: json['impression'],
       chatStyleId: json['chatStyleId'],
       vipEndDate: json['vipEndDate'],
       interests: json['interest'] != null ? (json['interest'] as String).split(',') : [],
@@ -56,6 +59,7 @@ class MyProfile {
       'birthday': birthday?.toString(),
       'avatar': avatar,
       'description': bio,
+      'impression': impression,
       'chatStyleId': chatStyleId,
       'interest': interests.join(','),
       'images': photos.map<Map<String, dynamic>>((photo) => photo.toJson()).toList(),
@@ -69,8 +73,7 @@ class MyProfile {
     return name != null
         && gender != null
         && birthday != null
-        && avatar != null
-        && interests.length >= 3;
+        && avatar != null;
   }
 
   UserInfo toUser() {

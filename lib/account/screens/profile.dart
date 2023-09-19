@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/user_info.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/chat/models/message.dart';
@@ -14,6 +15,7 @@ import 'package:sona/utils/picker/gender.dart';
 
 import '../../common/widgets/button/colored.dart';
 import '../../utils/providers/dio.dart';
+import 'interests.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -96,11 +98,32 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    onPressed: _sonaWritesBio,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: Text('Sona Impression', style: Theme.of(context).textTheme.bodySmall),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Sona Impression', style: Theme.of(context).textTheme.bodySmall),
+                            SizedBox(width: 8),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Text('ℹ️', style: Theme.of(context).textTheme.bodySmall),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                            ref.watch(asyncMyProfileProvider).value!.impression ?? '',
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 20
+                            )
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -112,8 +135,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: ForwardButton(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return InterestsScreen();
+                })),
+                text: 'Interests',
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: ForwardButton(
                 onTap: _showGenderEditor,
-                text: '性别 ${_profile.gender!.name}',
+                text: 'Gender ${_profile.gender!.name}',
               ),
             ),
           ),
