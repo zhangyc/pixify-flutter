@@ -248,12 +248,88 @@ Future<String?> showSingleLineTextField(
 
 Future<String?> showTextFieldDialog({
   required BuildContext context,
-  String initialText = '',
+  required TextEditingController controller,
   String? title,
   String? hintText,
+  Widget? hint,
   int? maxLength,
+  String saveText = 'Save',
+  String cancelText = 'Cancel',
+  int saveFlex = 1,
+  int cancelFlex = 1
 }) {
-  final controller = TextEditingController(text: initialText);
+  final children = <Widget>[];
+  children.addAll([
+    const SizedBox(height: 10),
+    Container(
+      width: 30,
+      height: 3,
+      color: Colors.black12,
+    ),
+    const SizedBox(height: 24)
+  ]);
+  if (title != null) {
+    children.add(Text(
+        title ?? '',
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 18)
+    ));
+  }
+  children.add(Container(
+    margin: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+        color: const Color(0xFFF1F1F1),
+        borderRadius: BorderRadius.circular(4)
+    ),
+    child: TextField(
+      controller: controller,
+      decoration: InputDecoration(
+          hintText: hintText,
+          fillColor: Color(0xFFF1F1F1),
+          alignLabelWithHint: true,
+          border: const OutlineInputBorder(
+              borderSide: BorderSide.none
+          ),
+          contentPadding: EdgeInsets.zero
+      ),
+      keyboardType: TextInputType.multiline,
+      maxLines: 7,
+      minLines: 7,
+      maxLength: maxLength,
+      autofocus: true,
+    ),
+  ));
+  if (hint != null) children.add(hint);
+  children.add(const SizedBox(height: 10));
+  children.add(Row(
+    children: [
+      const SizedBox(width: 40),
+      Expanded(
+        flex: cancelFlex,
+        child: ColoredButton(
+            color: Colors.white,
+            text: cancelText,
+            onTap: () {
+              Navigator.pop(context);
+            }),
+      ),
+      const SizedBox(width: 10),
+      Expanded(
+        flex: saveFlex,
+        child: ColoredButton(
+            text: saveText,
+            onTap: () {
+              if (controller.text.isNotEmpty) {
+                Navigator.pop(context, controller.text);
+              }
+            }),
+      ),
+      const SizedBox(width: 40)
+    ],
+  ));
+  children.add(const SizedBox(height: 30));
+
   return showModalBottomSheet<String>(
     context: context,
     backgroundColor: Colors.white,
@@ -268,81 +344,7 @@ Future<String?> showTextFieldDialog({
         padding: MediaQuery.of(context).viewInsets,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 10),
-            Container(
-              width: 30,
-              height: 3,
-              color: Colors.black12,
-            ),
-            SizedBox(height: 24),
-            Visibility(
-              visible: title != null && title.isNotEmpty,
-              child: Text(title ?? '',
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 18)),
-            ),
-            SizedBox(height: 20),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFF1F1F1),
-                        borderRadius: BorderRadius.circular(4)),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextField(
-                          controller: controller,
-                          decoration: InputDecoration(
-                              hintText: hintText,
-                              fillColor: Color(0xFFF1F1F1),
-                              alignLabelWithHint: true,
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              contentPadding: EdgeInsets.all(0)),
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 7,
-                          minLines: 7,
-                          maxLength: maxLength,
-                          autofocus: true,
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: ColoredButton(
-                            color: Colors.white,
-                            text: 'Cancel',
-                            onTap: () {
-                              Navigator.pop(context);
-                            }),
-                      ),
-                      SizedBox(width: 5),
-                      Expanded(
-                        flex: 1,
-                        child: ColoredButton(
-                            text: 'Confirm',
-                            onTap: () {
-                              if (controller.text.isNotEmpty) {
-                                Navigator.pop(context, controller.text);
-                              }
-                            }),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            SizedBox(height: 40)
-          ],
+          children: children
         ),
       );
     },

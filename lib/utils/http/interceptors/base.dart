@@ -32,26 +32,17 @@ class BaseInterceptor extends Interceptor {
       response.data = response.data['data'];
     } else if (response.data['code'] == '10040') {
       ref.read(tokenProvider.notifier).state = null;
-    } else if(response.data['code']=="10030"){
+    } else if(response.data['code'] == '10030'){
       ref.read(tokenProvider.notifier).state = null;
-
-      // Navigator.pushAndRemoveUntil(ref.watch(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder: (c){
-      //   return LoginScreen();
-      // }), (route) => false);
-      //ref.read(dioProvider).close();
-    }else {
-      print(response);
-      var e = CustomDioException(requestOptions: response.requestOptions, code: response.data['code']);
-      throw e;
-
+    } else {
+      throw CustomDioException(requestOptions: response.requestOptions, code: response.data['code']);
     }
     super.onResponse(response, handler);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    final customErr = CustomDioException(requestOptions: err.requestOptions, code: err.response?.statusCode.toString());
-    super.onError(customErr, handler);
+    super.onError(err, handler);
   }
 }
 

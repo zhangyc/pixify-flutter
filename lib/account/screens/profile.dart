@@ -12,6 +12,7 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
 
+import '../../common/widgets/button/colored.dart';
 import '../../utils/providers/dio.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -76,7 +77,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 ),
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
-                  onTap: _showBioEditor,
+                  onTap: onBioEdit,
                   child: Container(
                     constraints: BoxConstraints(maxHeight: 300),
                     margin: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 8),
@@ -163,11 +164,33 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
   }
 
-  Future _showBioEditor() async {
+  Future onBioEdit() async {
+    final controller = TextEditingController(text: ref.read(asyncMyProfileProvider).value!.bio ?? '');
     final text = await showTextFieldDialog(
       context: context,
-      initialText: ref.read(asyncMyProfileProvider).value!.bio ?? '',
-      maxLength: 256
+      controller: controller,
+      hint: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTap: () async {
+              final resp = await callSona(
+                httpClient: ref.read(dioProvider),
+                type: CallSonaType.BIO,
+                input: controller.text
+              );
+              if (resp.data['txt'] != null) controller.text = resp.data['txt'];
+            },
+            child: Text('Ask Sona to Optimize', style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).primaryColor
+            ))
+          ),
+          SizedBox(width: 40),
+        ],
+      ),
+      maxLength: 256,
+      saveFlex: 3,
+      cancelFlex: 2
     );
     if (text != null && text.trim().isNotEmpty) {
       await callSona(

@@ -632,14 +632,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  google_fonts:
-    dependency: "direct main"
-    description:
-      name: google_fonts
-      sha256: e20ff62b158b96f392bfc8afe29dee1503c94fbea2cbe8186fd59b756b8ae982
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.0"
   hooks_riverpod:
     dependency: "direct main"
     description:
@@ -1229,22 +1221,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
-  tencent_cloud_chat_sdk:
-    dependency: "direct main"
-    description:
-      name: tencent_cloud_chat_sdk
-      sha256: "013f8c9d96bbeed06d5fe971b7802d8ddf830c776332d6c6de6ccb9de8956d83"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.8"
-  tencent_im_sdk_plugin_platform_interface:
-    dependency: transitive
-    description:
-      name: tencent_im_sdk_plugin_platform_interface
-      sha256: "1f9814d654dc1ad0a4cb62936f0849defac058c3bdca471472efc8b64b63cc5e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.22"
   term_glyph:
     dependency: transitive
     description:

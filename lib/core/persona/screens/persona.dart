@@ -112,7 +112,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
   }
 
   Future _onAddKnowledge() async {
-    var text = await showTextFieldDialog(context: context);
+    var text = await showTextFieldDialog(context: context, controller: TextEditingController());
     final dio = ref.read(dioProvider);
     final resp = await dio.post('/knowledge', data: {'content': text});
     final data = resp.data;
