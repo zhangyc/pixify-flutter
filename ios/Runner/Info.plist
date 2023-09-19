@@ -30,6 +30,10 @@
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string></string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

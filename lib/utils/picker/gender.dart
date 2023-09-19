@@ -9,10 +9,7 @@ Future<Gender?> showGenderPicker({
   String? title,
   bool dismissible = true
 }) {
-  final options = {
-    Gender.male.name: Gender.male,
-    Gender.female.name: Gender.female,
-  };
+  final options = Map.fromEntries(Gender.all.map((g) => MapEntry(g.name, g)));
   return showRadioFieldDialog<Gender?>(
     context: context,
     initialValue: initialValue,
