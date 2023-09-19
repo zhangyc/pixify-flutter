@@ -51,7 +51,7 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyProfile> {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final dio = ref.watch(dioProvider);
-      await updateMyInfo(
+      final resp = await updateMyInfo(
         httpClient: dio,
         name: name,
         gender: gender,
@@ -61,7 +61,11 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyProfile> {
         bio: bio,
         position: position
       );
-      return _fetchProfile();
+      if (resp.statusCode == 0) {
+        return _fetchProfile();
+      } else {
+        return state.value!;
+      }
     });
   }
 }

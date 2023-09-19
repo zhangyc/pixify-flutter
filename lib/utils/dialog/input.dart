@@ -276,7 +276,7 @@ Future<String?> showTextFieldDialog({
     ));
   }
   children.add(Container(
-    margin: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+    margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
         color: const Color(0xFFF1F1F1),
@@ -328,7 +328,7 @@ Future<String?> showTextFieldDialog({
       const SizedBox(width: 40)
     ],
   ));
-  children.add(const SizedBox(height: 30));
+  children.add(const SizedBox(height: 20));
 
   return showModalBottomSheet<String>(
     context: context,
