@@ -225,35 +225,32 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   // var _currentRetryTime = 0;
   Future _sendPin() async {
     final dio = ref.read(dioProvider);
-    try {
-      await sendPin(httpClient: dio, countryCode: _countryCode, phoneNumber: _phoneNumber);
-    } on CustomDioException catch (e) {
+    final resp = await sendPin(httpClient: dio, countryCode: _countryCode, phoneNumber: _phoneNumber);
+    if (resp.statusCode != 0) {
       Fluttertoast.showToast(msg: 'Sending pin message failed');
-      rethrow;
     }
   }
 
   Future _complete() async {
     if (_pinKey.currentState!.validate()) {
-      try {
-        final resp = await login(
-            httpClient: ref.read(dioProvider),
-            countryCode: _countryCode,
-            phoneNumber: _phoneNumber,
-            pinCode: _pinController.text
-        );
+      final resp = await login(
+          httpClient: ref.read(dioProvider),
+          countryCode: _countryCode,
+          phoneNumber: _phoneNumber,
+          pinCode: _pinController.text
+      );
+      if (resp.statusCode == 0 || resp.statusCode == 2) {
         final token = resp.data['token'];
 
         ref.read(tokenProvider.notifier).state = token;
         ref.read(asyncMyProfileProvider.notifier).refresh();
-      } on CustomDioException catch (e) {
-        if (e.code == '2') {
-          if (mounted) {
-            await Navigator.push(context, MaterialPageRoute(
-                builder: (_) => RequiredInfoFormScreen()));
-          }
+      }
+
+      if (resp.statusCode == 2) {
+        if (mounted) {
+          await Navigator.push(context, MaterialPageRoute(
+              builder: (_) => RequiredInfoFormScreen()));
         }
-        Fluttertoast.showToast(msg: e.toString());
       }
     }
   }

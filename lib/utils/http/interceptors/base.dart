@@ -28,25 +28,16 @@ class BaseInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    if (response.data['code'] == '0') {
+    if (response.statusCode == 200) {
+      if (response.data['code'] == '10040') {
+        ref.read(tokenProvider.notifier).state = null;
+      } else if(response.data['code'] == '10030') {
+        ref.read(tokenProvider.notifier).state = null;
+      }
+      response.statusCode = int.parse(response.data['code']);
       response.data = response.data['data'];
-    } else if (response.data['code'] == '10040') {
-      ref.read(tokenProvider.notifier).state = null;
-    } else if(response.data['code'] == '10030'){
-      ref.read(tokenProvider.notifier).state = null;
-    } else {
-      throw CustomDioException(requestOptions: response.requestOptions, code: response.data['code']);
+      super.onResponse(response, handler);
     }
     super.onResponse(response, handler);
   }
-
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    super.onError(err, handler);
-  }
-}
-
-class CustomDioException extends DioException {
-  CustomDioException({required super.requestOptions, this.code});
-  final String? code;
 }
