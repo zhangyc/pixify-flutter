@@ -36,7 +36,6 @@ class BaseInterceptor extends Interceptor {
       }
       response.statusCode = int.parse(response.data['code']);
       response.data = response.data['data'];
-      super.onResponse(response, handler);
     }
     super.onResponse(response, handler);
   }

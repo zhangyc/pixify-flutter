@@ -1,27 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:lottie/lottie.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/match/widgets/like_animation.dart';
 
 import '../../../common/models/user.dart';
-import '../../../generated/assets.dart';
 
-class UserCard extends StatefulWidget {
-  const UserCard(
-      {super.key,
-      required this.user,
-      required this.onLike,
-      required this.onArrow});
+class UserCard extends ConsumerStatefulWidget {
+  const UserCard({
+    super.key,
+    required this.user,
+    required this.onLike,
+    required this.onArrow
+  });
   final UserInfo user;
   final void Function() onLike;
   final void Function() onArrow;
 
   @override
-  State<StatefulWidget> createState() => _UserCardState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ConsumerUserCardState();
 }
 
-class _UserCardState extends State<UserCard> {
+class _ConsumerUserCardState extends ConsumerState<UserCard> {
   final _pageController = PageController();
   double _page = 0;
 
@@ -46,6 +46,9 @@ class _UserCardState extends State<UserCard> {
 
   @override
   Widget build(BuildContext context) {
+    final hasBio = widget.user.bio != null;
+    final itemCount = widget.user.photos.length + (hasBio ? 1 : 0);
+
     return Stack(
       children: [
         Positioned.fill(
@@ -55,12 +58,20 @@ class _UserCardState extends State<UserCard> {
               if (index == 0) {
                 return _userInfo();
               } else if (index == 1) {
-                return _userBio();
+                if (hasBio) {
+                  return _userBio();
+                } else {
+                  return _userPhoto(widget.user.photos[index]);
+                }
               } else {
-                return _userPhoto(widget.user.photos[index - 1]);
+                if (hasBio) {
+                  return _userPhoto(widget.user.photos[index - 1]);
+                } else {
+                  return _userPhoto(widget.user.photos[index]);
+                }
               }
             },
-            itemCount: widget.user.photos.length + 1,
+            itemCount: itemCount,
           ),
         ),
         Positioned(
@@ -68,23 +79,27 @@ class _UserCardState extends State<UserCard> {
             left: 20,
             right: 20,
             height: 5,
-            child: Row(
-              children: List.generate(
-                  widget.user.photos.length + 1,
+            child: Visibility(
+              visible: itemCount > 1,
+              child: Row(
+                children: List.generate(
+                  itemCount,
                   (index) => Flexible(
-                      child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 2),
-                          height: 3,
-                          color: index == _page.round()
-                              ? Colors.white54
-                              : Colors.black26))),
-            )),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 2),
+                      height: 3,
+                      color: index == _page.round() ? Colors.white54 : Colors.black26
+                    )
+                  )
+                ),
+              ),
+            )
+        ),
         Positioned(
           right: 0,
           bottom: MediaQuery.of(context).viewInsets.bottom + 120,
-          child: ActionAnimation(onTap:widget.onLike,onArrow: widget.onArrow,),
+          child: ActionAnimation(onTap:widget.onLike, onArrow: widget.onArrow,),
         ),
-
       ],
     );
   }

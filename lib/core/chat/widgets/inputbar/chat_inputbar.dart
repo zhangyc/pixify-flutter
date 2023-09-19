@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
@@ -82,6 +83,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
   @override
   Widget build(BuildContext context) {
     final currentChatStyle = ref.watch(currentChatStyleProvider(widget.chatId));
+    final isMember = ref.watch(asyncMyProfileProvider).value!.isMember;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -212,6 +215,9 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   children: styles.map<Widget>((s) => GestureDetector(
                     child: Container(
                       color: currentChatStyle?.id == s.id ? Theme.of(context).colorScheme.secondaryContainer : Color(0x11CCCCCC),
+                      foregroundDecoration: s.memberOnly && !isMember ? BoxDecoration(
+                        color: Colors.black12
+                      ) : null,
                       child: Row(
                         children: [
                           Container(
@@ -232,7 +238,14 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                         ],
                       )
                     ),
-                    onTap: () => _setChatStyle(s.id),
+                    onTap: () {
+                      if (s.memberOnly && !isMember) {
+                        // todo: 唤起付费弹窗
+                        Fluttertoast.showToast(msg: 'members only');
+                        return;
+                      }
+                      _setChatStyle(s.id);
+                    },
                   )).toList(),
                 ),
                 error: (_, __) => GestureDetector(
