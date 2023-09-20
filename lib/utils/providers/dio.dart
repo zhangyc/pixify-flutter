@@ -12,6 +12,11 @@ import '../http/interceptors/base.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final token = ref.watch(tokenProvider);
+  ref.listen(tokenProvider, (previous, next) {
+    if (previous != null && next == null) {
+      ref.state.close(force: true);
+    }
+  });
   final baseUrl = ref.watch(envProvider);
   final options = BaseOptions(
     connectTimeout: const Duration(milliseconds: 25000),

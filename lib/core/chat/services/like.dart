@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 
-Future<Response> fetchMatchedList({
+Future<Response> fetchLikedMeList({
   required Dio httpClient
 }) async {
   return httpClient.post(
-    '/user/friend/find-like'
+    '/user/friend/find-like-me'
   );
 }

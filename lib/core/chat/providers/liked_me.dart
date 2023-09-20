@@ -18,7 +18,7 @@ class LikedMe {
 class AsyncLikedMeUsersNotifier extends AsyncNotifier<List<UserInfo>> {
 
   Future<List<UserInfo>> _fetchLikedMeData() {
-    return fetchMatchedList(
+    return fetchLikedMeList(
       httpClient: ref.read(dioProvider)
     ).then(
       (resp) => (resp.data as List).map<UserInfo>((m) => UserInfo.fromJson(m)).toList()
