@@ -36,7 +36,8 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyProfile> {
 
   Future<void> refresh([bool silence = false]) async {
     if (!silence) state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() => _fetchProfile());
+    final profile = await _fetchProfile();
+    state = AsyncValue.data(profile);
   }
 
   Future<void> updateInfo({
