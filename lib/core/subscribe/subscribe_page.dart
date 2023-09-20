@@ -44,6 +44,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   String? _queryProductError;
   @override
   void initState() {
+
     final Stream<List<PurchaseDetails>> purchaseUpdated = _inAppPurchase.purchaseStream;
     _subscription = purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
           _listenToPurchaseUpdated(purchaseDetailsList);
