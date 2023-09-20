@@ -25,7 +25,7 @@ Future<Response> matchAction({
   required Dio httpClient,
   required int userId,
   required MatchAction action
-}) async {
+}) {
   return httpClient.post(
       '/user/update-relation',
       data: {

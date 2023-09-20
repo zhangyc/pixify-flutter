@@ -35,13 +35,13 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context){
-              return SubscribePage();
-            }));
-          }, icon: Icon(Icons.subscriptions))
-        ],
+        // actions: [
+        //   IconButton(onPressed: (){
+        //     Navigator.push(context, MaterialPageRoute(builder: (context){
+        //       return SubscribePage();
+        //     }));
+        //   }, icon: Icon(Icons.subscriptions))
+        // ],
       ),
       extendBody: true,
       extendBodyBehindAppBar: true,

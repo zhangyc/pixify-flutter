@@ -14,6 +14,7 @@ class Gender {
   static const all = [male, female, nonBinary];
 
   factory Gender.fromIndex(int index) {
+
     return switch(index) {
       _male => male,
       _female => female,

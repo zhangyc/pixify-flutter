@@ -14,6 +14,9 @@ import 'package:sona/generated/assets.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../common/widgets/button/colored.dart';
+import '../../../common/widgets/button/forward.dart';
+import '../../../utils/dialog/input.dart';
+import '../providers/setting.dart';
 import '../widgets/like_animation.dart';
 import '../widgets/match_init_animation.dart';
 // import '../widgets/scroller.dart' as s;
@@ -37,6 +40,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
            });
     });
+
     super.initState();
   }
   @override
@@ -45,106 +49,223 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     super.dispose();
   }
   String imageUrl='';
-
+  String? _gender='All';
   int currentPage=0;
   PageController pageController=PageController();
   bool scrolling=true;
   ScrollPhysics scrollPhysics=AlwaysScrollableScrollPhysics();
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return ref.watch(asyncMatchRecommendedProvider).when<Widget>(
       data: (List<UserInfo> users) {
-        if (users.isEmpty) {
-          return Container(
-            alignment: Alignment.center,
-            child: const Text('No more.'),
-          );
-        }
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: PageView.builder(
-                itemBuilder: (c,index) {
-                  return StackPageView(
-                    index: index,
-                    controller: pageController,
-                    child: UserCard(
-                      key: ValueKey(users[index].id),
-                      user: users[index],
-                      actions: [
-                        Positioned(
-                          child: ColoredBox(
-                            color: _animationController2.isAnimating?Colors.black.withOpacity(0.5):Colors.transparent,
-                            child: Center(child: _animationController2.isAnimating?Lottie.asset(Assets.lottieArrowAnimation,
-                                controller: _animationController2,repeat: true):Container()),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          bottom: MediaQuery.of(context).viewInsets.bottom + 120,
-                          child: ActionAnimation(
-
-                              userInfo: users[index],
-                              onLike: () {
-                              users[index].matched=true;
-                              ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
-                              if (index < users.length - 1) {
-                                pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 500),
-                                    curve: Curves.linearToEaseOut);
-                                }
-                              },
-                              onArrow: () {
-                                users[index].arrowed=true;
-                                ref.read(asyncMatchRecommendedProvider.notifier)
-                                  .arrow(users[index].id);
+        // if (users.isEmpty) {
+        //   return Container(
+        //     alignment: Alignment.center,
+        //     child: const Text('No more.'),
+        //   );
+        // }
+        return Container(
+          color: Colors.black.withOpacity(0.5),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: PageView.builder(
+                  itemBuilder: (c,index) {
+                    return StackPageView(
+                      index: index,
+                      controller: pageController,
+                      child: UserCard(
+                        key: ValueKey(users[index].id),
+                        user: users[index],
+                        actions: [
+                          Positioned(
+                            right: 0,
+                            bottom: MediaQuery.of(context).viewInsets.bottom + 120,
+                            child: ActionAnimation(
+                                userInfo: users[index],
+                                onLike: () {
+                                users[index].matched=true;
+                                ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
                                 if (index < users.length - 1) {
                                   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 500),
                                       curve: Curves.linearToEaseOut);
-                                }
-                            }, arrowController: _animationController2,
+                                  }
+                                },
+                                onArrow: () {
+                                  users[index].arrowed=true;
+                                  ref.read(asyncMatchRecommendedProvider.notifier)
+                                    .arrow(users[index].id);
+                                  if (index < users.length - 1) {
+                                    pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 500),
+                                        curve: Curves.linearToEaseOut);
+                                  }
+                              }, arrowController: _animationController2,
+                            ),
                           ),
-                        ),
 
-                        // 加action组件
-                      ],
-                    )
-                  );
-                },
-                itemCount: users.length,
-                scrollDirection: Axis.vertical,
-                controller: pageController,
-                onPageChanged: (value){
-                  ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
-                  if(users[value-1].arrowed||users[value-1].matched){
-                    return;
-                  }else {
-                    users[value-1].skipped=true;
-                    ref.read(asyncMatchRecommendedProvider.notifier)
-                        .skip(users[value-1].id);
-                  }
-                },
+                          // 加action组件
+                        ],
+                      )
+                    );
+                  },
+                  itemCount: users.length,
+                  scrollDirection: Axis.vertical,
+                  controller: pageController,
+                  onPageChanged: (value){
+                    ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
+
+                    if(users[value-1].arrowed||users[value-1].matched){
+                      return;
+                    }else {
+                      users[value-1].skipped=true;
+                      ref.read(asyncMatchRecommendedProvider.notifier)
+                          .skip(users[value-1].id);
+                    }
+                  },
+                ),
               ),
-            ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              height: MediaQuery.of(context).padding.top,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.2),
-                      Colors.black.withOpacity(0.0),
-                    ]
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: ColoredBox(
+                    color: _animationController2.isAnimating?Colors.black.withOpacity(0.5):Colors.transparent,
+                    child: Center(child: _animationController2.isAnimating?Lottie.asset(Assets.lottieArrowAnimation,
+                        controller: _animationController2,repeat: true):Container()),
                   ),
                 ),
               ),
-            )
-          ],
+              Positioned(
+                right: 20,
+                top: 73,
+                child: Column(
+                  children: [
+                    GestureDetector(child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),onTap: (){
+                      showDialog(context: context, builder: (c){
+                        return Consumer(builder: (_,ref,__){
+                          return Column(
+                            children: [
+                              Container(
+                                width:335,
+                                height: 230,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff2969E9),
+                                    borderRadius: BorderRadius.circular(40)
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 90
+                                ),
+                                child: Column(
+                                    children: [
+                                      Text('Gender'),
+                                      SizedBox(
+                                        height: 24,
+                                      ),
+                                      ...["Female","Male","All"].map((e) => GestureDetector(
+                                        onTap: (){
+                                          if(_gender!=e){
+                                            _gender=e;
+                                          }
+                                          // s(() {
+                                          //
+                                          // });
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            _gender==e?Image.asset(Assets.iconsSelected,width: 28,height: 28,):Container(),
+                                            Text(e)
+                                          ],
+                                        ),
+                                      )).toList(),
+                                    ]
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                width:335,
+                                height: 158,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff2969E9),
+                                    borderRadius: BorderRadius.circular(40)
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text('Age'),
+                                    // ForwardButton(
+                                    //     onTap: () {},
+                                    //     text: '年龄  ${ref.watch(matchSettingProvider).ageRange.start.toInt()} - ${ref.watch(matchSettingProvider).ageRange.end.toInt()}'
+                                    // ),
+                                    SizedBox(height: 8),
+                                    SizedBox(child: RangeSlider(
+                                        min: 18,
+                                        max: 80,
+                                        divisions: 10,
+                                        labels: RangeLabels(ref.watch(matchSettingProvider).ageRange.start.toString(), ref.watch(matchSettingProvider).ageRange.end.toString()),
+                                        values: ref.watch(matchSettingProvider).ageRange,
+                                        onChanged: (rv) {
+                                          ref.read(matchSettingProvider.notifier).setAgeRange(rv);
+                                        }
+                                    ),width: 277,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              GestureDetector(
+                                child: Container(
+                                  width:335,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xff2969E9),
+                                      borderRadius: BorderRadius.circular(40)
+                                  ),
+                                  child: Text('Save'),
+                                  alignment: Alignment.center,
+                                ),
+                                onTap: (){
+                                  Navigator.pop(context);
+                                },
+                              )
+
+                            ],
+                          );
+                        });
+                      });
+                    },),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    GestureDetector(child: Image.asset(Assets.iconsMore,width: 24,height: 24,),onTap: (){
+                      showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
+                    },)
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: MediaQuery.of(context).padding.top,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.2),
+                        Colors.black.withOpacity(0.0),
+                      ]
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         );
       },
       error: (err, stack) => GestureDetector(

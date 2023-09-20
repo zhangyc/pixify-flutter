@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/services/match.dart';
@@ -50,10 +51,11 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
 
   void _action(int id, MatchAction action) async{
     try{
-     await matchAction(
+     final resp= await matchAction(
           httpClient: ref.read(dioProvider),
           userId: id,
           action: action);
+     print(resp);
     }catch(e){
       print(e);
       // if(e.code=="10150"){
@@ -69,3 +71,72 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
 final asyncMatchRecommendedProvider = AsyncNotifierProvider<AsyncMatchRecommendedNotifier, List<UserInfo>>(
   () => AsyncMatchRecommendedNotifier(),
 );
+
+///过滤条件
+final filterProvider = StateNotifierProvider<FilterNotifier, Filter>((ref) {
+  return FilterNotifier()..loadFilter();
+});
+
+class Filter {
+  int? minAge;
+  int? maxAge;
+  String? gender;
+
+  Filter copyWith({
+    int? minAge,
+    int? maxAge,
+    String? gender,
+  }) {
+    return Filter(
+      minAge: minAge ?? this.minAge,
+      maxAge: maxAge ?? this.maxAge,
+      gender: gender ?? this.gender,
+    );
+  }
+  Filter({this.minAge, this.maxAge, this.gender});
+}
+
+class FilterNotifier extends StateNotifier<Filter> {
+  FilterNotifier() : super(Filter());
+
+  void updateAge({int? min, int? max}) {
+    state = state.copyWith(minAge: min, maxAge: max);
+    _saveToCache();
+  }
+
+  void updateGender(String? gender) {
+    state = state.copyWith(gender: gender);
+    _saveToCache();
+  }
+
+  Future<void> _saveToCache() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (state.minAge != null) {
+      prefs.setInt('minAge', state.minAge!);
+    }
+    if (state.maxAge != null) {
+      prefs.setInt('maxAge', state.maxAge!);
+    }
+    if (state.gender != null) {
+      prefs.setString('gender', state.gender!);
+    }
+  }
+
+  Future<void> _loadFromCache() async {
+    final prefs = await SharedPreferences.getInstance();
+    final minAge = prefs.getInt('minAge',);
+    final maxAge = prefs.getInt('maxAge');
+    final gender = prefs.getString('gender');
+    if (minAge != null && maxAge != null && gender != null) {
+      state = Filter(
+        minAge: minAge,
+        maxAge: maxAge,
+        gender: gender,
+      );
+    }
+  }
+
+  Future<void> loadFilter() async {
+    await _loadFromCache();
+  }
+}

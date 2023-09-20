@@ -25,6 +25,7 @@ final dioProvider = Provider<Dio>((ref) {
     }
   );
   final dio = Dio(options);
+
   if (kDebugMode) {
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true, logPrint: (i) => log(i.toString())));
   }
