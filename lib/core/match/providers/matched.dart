@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/src/response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,31 +38,29 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     return _fetchMatched();
   }
 
-  void like(int id) {
-    _action(id, MatchAction.like);
+  Future<Response?> like(int id) {
+   return _action(id, MatchAction.like);
   }
 
   void skip(int id) {
     _action(id, MatchAction.skip);
   }
 
-  void arrow(int id) {
-    _action(id, MatchAction.arrow);
+  Future<Response?> arrow(int id) {
+    return _action(id, MatchAction.arrow);
   }
 
-  void _action(int id, MatchAction action) async{
+  Future<Response?> _action(int id, MatchAction action) async{
     try{
      final resp= await matchAction(
           httpClient: ref.read(dioProvider),
           userId: id,
           action: action);
-     print(resp);
+     return resp;
     }catch(e){
       print(e);
       // if(e.code=="10150"){
-      //   Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
-      //     return SubscribePage();
-      //   }));
+
       // }
     }
 

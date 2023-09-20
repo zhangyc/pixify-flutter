@@ -16,6 +16,8 @@ import 'package:stacked_page_view/stacked_page_view.dart';
 import '../../../common/widgets/button/colored.dart';
 import '../../../common/widgets/button/forward.dart';
 import '../../../utils/dialog/input.dart';
+import '../../providers/navigator_key.dart';
+import '../../subscribe/subscribe_page.dart';
 import '../providers/setting.dart';
 import '../widgets/like_animation.dart';
 import '../widgets/match_init_animation.dart';
@@ -87,7 +89,18 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                 userInfo: users[index],
                                 onLike: () {
                                 users[index].matched=true;
-                                ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
+                                ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
+                                  if(resp==null){
+                                    return;
+                                  }
+                                  if(resp.statusCode==10150){
+                                    /// 判断如果不是会员，跳转道会员页面
+                                    Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+                                      return SubscribePage();
+                                    }));
+                                    ///如果是会员，提示超过限制
+                                  }
+                                });
                                 if (index < users.length - 1) {
                                   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 500),
                                       curve: Curves.linearToEaseOut);
