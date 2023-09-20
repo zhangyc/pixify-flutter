@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class UserAvatar extends StatelessWidget {
-  const UserAvatar({super.key, required this.url, this.size = 42});
+  const UserAvatar({
+    super.key,
+    required this.url,
+    this.size = 42
+  });
   final String url;
   final double size;
 
@@ -14,7 +18,7 @@ class UserAvatar extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Theme.of(context).colorScheme.secondaryContainer)
+        border: Border.all(color: Color(0xFFD9D9D9), width: 0.2)
       ),
       alignment: Alignment.center,
       clipBehavior: Clip.antiAlias,

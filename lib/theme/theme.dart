@@ -31,6 +31,12 @@ final themeData = ThemeData(
     )
   ),
   textTheme: TextTheme(
+    titleSmall: const TextStyle(
+        color: fontColour,
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 1
+    ),
     headlineLarge: const TextStyle(
       color: fontColour,
       fontSize: 32,
@@ -45,7 +51,13 @@ final themeData = ThemeData(
     ),
     bodySmall: const TextStyle(
         color: fontColour,
-        fontSize: 14,
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 1
+    ),
+    labelSmall: const TextStyle(
+        color: Color(0xA8111111),
+        fontSize: 12,
         fontWeight: FontWeight.w400,
         letterSpacing: 1
     )

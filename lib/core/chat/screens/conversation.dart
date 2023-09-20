@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/conversation.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/services/chat.dart';
+import 'package:sona/core/chat/widgets/conversation.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/providers/dio.dart';
 
@@ -36,32 +38,35 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Chat'),
+        title: const Text('Chat', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black)),
       ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: LikedMeListView(onMatchedTap: (UserInfo u) => _chat(ChatEntry.match, u)),
+            child: LikedMeListView(onTap: (UserInfo u) => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u)))),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, bottom: 20),
+              child: Text('Messages', style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Colors.black,
+                fontWeight: FontWeight.bold
+              )),
+            ),
           ),
           ref.watch(conversationStreamProvider).when(
             data: (conversations) => SliverList.separated(
               itemBuilder: (BuildContext context, int index) {
                 final conversation = conversations[index];
-                return GestureDetector(
+                return ConversationItemWidget(
                   key: ValueKey(conversation.otherSide.id),
+                  conversation: conversation,
                   onTap: () => _chat(ChatEntry.conversation, conversation.otherSide),
                   onLongPress: () => _showConversationActions(conversation),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    child: ListTile(
-                      leading: UserAvatar(key: ValueKey(conversation.otherSide.id), url: conversation.otherSide.avatar!),
-                      title: Text(conversation.otherSide.name ?? '')
-                    )
-                  )
                 );
               },
               itemCount: conversations.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 5),
+              separatorBuilder: (_, __) => const SizedBox(height: 20),
             ),
             error: (_, __) => SliverToBoxAdapter(child: Container()),
             loading: () => SliverToBoxAdapter(child: Container(
@@ -81,15 +86,15 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     );
   }
 
-  void _showConversationActions(ImConversation conversation) async {
+  Future _showConversationActions(ImConversation conversation) async {
     final choice = await showRadioFieldDialog<String>(context: context, options: {'Delete': 'delete'});
     if (choice == 'delete') {
       deleteChat(httpClient: ref.read(dioProvider), id: conversation.otherSide.id);
     }
   }
 
-  void _chat(ChatEntry entry, UserInfo u) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(entry: entry, otherSide: u)));
+  Future _chat(ChatEntry entry, UserInfo u) {
+    return Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(entry: entry, otherSide: u)));
   }
 
   @override

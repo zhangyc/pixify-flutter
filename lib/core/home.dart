@@ -4,6 +4,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
 import 'package:sona/core/persona/screens/persona.dart';
+import 'package:sona/core/providers/notice.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/location/location.dart';
 
@@ -34,15 +35,15 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context){
-              return SubscribePage();
-            }));
-          }, icon: Icon(Icons.subscriptions))
-        ],
-      ),
+      // appBar: AppBar(
+      //   actions: [
+      //     IconButton(onPressed: (){
+      //       Navigator.push(context, MaterialPageRoute(builder: (context){
+      //         return SubscribePage();
+      //       }));
+      //     }, icon: Icon(Icons.subscriptions))
+      //   ],
+      // ),
       extendBody: true,
       extendBodyBehindAppBar: true,
       body: PageView(
@@ -50,36 +51,35 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: _onPageChange,
         children: const [
-          PersonaScreen(),
-          MatchScreen(),
           ConversationScreen(),
+          MatchScreen(),
+          PersonaScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
-        backgroundColor: Color(0x18000000),
+        backgroundColor: Colors.transparent,
         iconSize: 48,
         currentIndex: _currentIndex,
         onTap: _onPageChange,
-        selectedItemColor: Colors.white,
-        // unselectedItemColor: Colors.red,
-        items: const [
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
+        items: [
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 48,color: Colors.grey,),
-              activeIcon:
-                  SonaIcon(icon: SonaIcons.navicon_sona, size: 48,color: Colors.white,),
-              label: 'SONA'),
+              icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.grey, activeProvider: chatNoticeProvider),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
+              label: 'Chat'
+          ),
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 48,color: Colors.grey,),
-              activeIcon:
-                  SonaIcon(icon: SonaIcons.navicon_match_active, size: 48,color: Colors.white,),
-              label: 'Match'),
+              icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.grey,),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.black,),
+              label: 'Match'
+          ),
           BottomNavigationBarItem(
-
-              icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 48,color: Colors.grey,),
-              activeIcon:
-                  SonaIcon(icon: SonaIcons.navicon_chat, size: 48,color: Colors.white,),
-              label: 'Chat')
+              icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.grey,),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.black,),
+              label: 'Profile'
+          )
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/chat/widgets/inputbar/mode_provider.dart';
 
@@ -20,6 +21,7 @@ class ImConversation {
   final String? lastMessageContent;
   final InputMode? inputMode;
   final int? chatStyleId;
+  DateTime? checkTime;
 
   factory ImConversation.fromJson(Map<String, dynamic> json) {
     return ImConversation._(
@@ -36,4 +38,6 @@ class ImConversation {
       chatStyleId: json['chatStyleId']
     );
   }
+
+  bool get hasUnreadMessage => lastMessageContent != null && (checkTime == null || checkTime!.isBefore(dateTime));
 }
