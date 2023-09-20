@@ -50,21 +50,16 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
   }
 
   void _action(int id, MatchAction action) async{
-    try{
-     final resp= await matchAction(
-          httpClient: ref.read(dioProvider),
-          userId: id,
-          action: action);
-     print(resp);
-    }catch(e){
-      print(e);
-      // if(e.code=="10150"){
-      //   Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
-      //     return SubscribePage();
-      //   }));
-      // }
+    final resp= await matchAction(
+        httpClient: ref.read(dioProvider),
+        userId: id,
+        action: action
+    );
+    if (resp.statusCode == 10150) {
+      Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+        return SubscribePage();
+      }));
     }
-
   }
 }
 

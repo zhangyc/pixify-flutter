@@ -17,7 +17,7 @@ final dioProvider = Provider<Dio>((ref) {
       ref.state.close(force: true);
     }
   });
-  final baseUrl = ref.watch(envProvider);
+  final baseUrl = ref.read(envProvider);
   final options = BaseOptions(
     connectTimeout: const Duration(milliseconds: 25000),
     receiveTimeout: const Duration(milliseconds: 25000),
@@ -38,4 +38,4 @@ final dioProvider = Provider<Dio>((ref) {
   // dio.interceptors.add(TokenInterceptor(ref: ref));
 
   return dio;
-});
+}, dependencies: [tokenProvider]);
