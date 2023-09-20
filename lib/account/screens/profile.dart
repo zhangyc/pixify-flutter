@@ -70,6 +70,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           SliverToBoxAdapter(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(height: 56),
                 Align(
