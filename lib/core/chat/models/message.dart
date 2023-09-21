@@ -4,6 +4,7 @@ import 'package:sona/common/models/user.dart';
 class ImMessage {
   ImMessage({
     required this.id,
+    required this.type,
     required this.sender,
     required this.receiver,
     required this.content,
@@ -12,6 +13,7 @@ class ImMessage {
   });
 
   final int id;
+  final int? type;
   final String content;
   final UserInfo sender;
   final UserInfo receiver;
@@ -27,7 +29,8 @@ class ImMessage {
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
       content: json['message'],
       time: (json['createDate'] as Timestamp).toDate(),
-      shortenTimes: json['simplifyNum'] ?? 0
+      shortenTimes: json['simplifyNum'] ?? 0,
+      type: json['messageType']
     );
   }
 }

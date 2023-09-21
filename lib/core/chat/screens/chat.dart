@@ -120,6 +120,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   chatId: widget.otherSide.id,
                   onSubmit: _onSend,
                   onSuggestionTap: _onSuggestionTap,
+                  onHookTap: _onHookTap,
                   autofocus: false
               ),
             ),
@@ -188,6 +189,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
     final message = ImMessage(
       id: _lastLocalId++,
+      type: CallSonaType.INPUT.index + 1,
       content: text,
       sender: ref.read(asyncMyProfileProvider).value!.toUser(),
       receiver: widget.otherSide,
@@ -227,7 +229,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _showInfo() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: widget.otherSide)));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: widget.otherSide, relation: Relation.matched)));
   }
 
   Future _startUpLine() {
@@ -246,7 +248,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     return callSona(
       httpClient: ref.read(dioProvider),
       userId: widget.otherSide.id,
-      type: CallSonaType.AUTO
+      type: CallSonaType.HOOK
     );
   }
 

@@ -9,7 +9,9 @@ class ImConversation {
     required this.otherSide,
     required this.dateTime,
     required this.lastMessageId,
+    required this.lastMessageType,
     required this.lastMessageContent,
+    required this.lastMessageSenderId,
     required this.inputMode,
     required this.chatStyleId
   });
@@ -18,7 +20,9 @@ class ImConversation {
   final UserInfo otherSide;
   final DateTime dateTime;
   final int? lastMessageId;
+  final int? lastMessageType;
   final String? lastMessageContent;
+  final int? lastMessageSenderId;
   final InputMode? inputMode;
   final int? chatStyleId;
 
@@ -49,11 +53,16 @@ class ImConversation {
       }),
       dateTime: (json['createDate'] as Timestamp).toDate(),
       lastMessageId: json['id'],
+      lastMessageType: json['type'],
       lastMessageContent: json['message'],
+      lastMessageSenderId: json['sendUserId'],
       inputMode: InputMode.values[json['inputMode'] ?? 0],
       chatStyleId: json['chatStyleId']
     );
   }
 
-  bool get hasUnreadMessage => lastMessageContent != null && (checkTime == null || checkTime!.isBefore(dateTime));
+  bool get hasUnreadMessage =>
+      lastMessageContent != null
+        && convoId == lastMessageSenderId
+        && (checkTime == null || checkTime!.isBefore(dateTime));
 }

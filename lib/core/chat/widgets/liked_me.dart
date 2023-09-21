@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
-import 'package:sona/core/match/providers/matched.dart';
 
 
 class LikedMeListView extends StatefulHookConsumerWidget {
