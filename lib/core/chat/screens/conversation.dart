@@ -11,6 +11,7 @@ import 'package:sona/core/chat/widgets/conversation.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/providers/dio.dart';
 
+import '../models/message.dart';
 import '../widgets/inputbar/chat_style.dart';
 import '../widgets/liked_me.dart';
 
@@ -43,7 +44,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: LikedMeListView(onTap: (UserInfo u) => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u)))),
+            child: LikedMeListView(onTap: (UserInfo u) => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u, relation: Relation.likeMe)))),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -60,6 +61,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
                   conversation: conversation,
                   onTap: () => _chat(ChatEntry.conversation, conversation.otherSide),
                   onLongPress: () => _showConversationActions(conversation),
+                  onHookTap: () => _onHookTap(conversation.convoId)
                 );
               },
               itemCount: conversations.length,
@@ -92,6 +94,14 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
 
   Future _chat(ChatEntry entry, UserInfo u) {
     return Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(entry: entry, otherSide: u)));
+  }
+
+  Future _onHookTap(int userId) async {
+    return callSona(
+        httpClient: ref.read(dioProvider),
+        userId: userId,
+        type: CallSonaType.HOOK
+    );
   }
 
   @override

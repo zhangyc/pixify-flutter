@@ -9,6 +9,7 @@ class ImConversation {
     required this.otherSide,
     required this.dateTime,
     required this.lastMessageId,
+    required this.lastMessageType,
     required this.lastMessageContent,
     required this.lastMessageSenderId,
     required this.inputMode,
@@ -19,6 +20,7 @@ class ImConversation {
   final UserInfo otherSide;
   final DateTime dateTime;
   final int? lastMessageId;
+  final int? lastMessageType;
   final String? lastMessageContent;
   final int? lastMessageSenderId;
   final InputMode? inputMode;
@@ -51,6 +53,7 @@ class ImConversation {
       }),
       dateTime: (json['createDate'] as Timestamp).toDate(),
       lastMessageId: json['id'],
+      lastMessageType: json['type'],
       lastMessageContent: json['message'],
       lastMessageSenderId: json['sendUserId'],
       inputMode: InputMode.values[json['inputMode'] ?? 0],

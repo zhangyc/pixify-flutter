@@ -9,12 +9,14 @@ class ConversationItemWidget extends ConsumerStatefulWidget {
   final ImConversation conversation;
   final Future Function() onTap;
   final Future Function() onLongPress;
+  final Future Function() onHookTap;
 
   const ConversationItemWidget({
     super.key,
     required this.conversation,
     required this.onTap,
-    required this.onLongPress
+    required this.onLongPress,
+    required this.onHookTap
   });
 
   @override
@@ -57,14 +59,20 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                   )
                 ],
               ),
-              trailing: widget.conversation.hasUnreadMessage ? Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(4)
-                ),
-              ) : null
+              trailing: widget.conversation.hasUnreadMessage
+                  ? widget.conversation.lastMessageType == 7
+                    ? InkWell(
+                      onTap: widget.onHookTap,
+                      child: Image.asset('assets/images/quick_reply.png', width: 40),
+                    )
+                    : Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(4)
+                      ),
+                  ) : null
             )
         )
     );

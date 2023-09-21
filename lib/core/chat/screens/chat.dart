@@ -229,7 +229,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _showInfo() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: widget.otherSide)));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: widget.otherSide, relation: Relation.matched)));
   }
 
   Future _startUpLine() {
@@ -248,7 +248,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     return callSona(
       httpClient: ref.read(dioProvider),
       userId: widget.otherSide.id,
-      type: CallSonaType.AUTO
+      type: CallSonaType.HOOK
     );
   }
 
