@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,6 +13,7 @@ import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/firebase/sona_firebase.dart';
 import 'package:sona/utils/http/interceptors/base.dart';
 import 'package:sona/utils/providers/dio.dart';
 
@@ -210,6 +214,39 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future _next() async {
+    // await FirebaseAuth.instance.verifyPhoneNumber(
+    //   phoneNumber: '+44 7444 555666',
+    //   verificationCompleted: (PhoneAuthCredential credential) async{
+    //      if(Platform.isAndroid){
+    //        final  userCredential=await authService.signInWithCredential(credential);
+    //        print(userCredential.user);
+    //      }
+    //   },
+    //   verificationFailed: (FirebaseAuthException e) {
+    //      print(e);
+    //   },
+    //   codeSent: (String verificationId, int? resendToken) async {
+    //     PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: '123456');
+    //
+    //     // Sign the user in (or link) with the credential
+    //     final  userCredential= await authService.signInWithCredential(credential);
+    //     final  idToken=await userCredential.user?.getIdToken();
+    //     print(idToken);
+    //     print(userCredential.credential?.token);
+    //     print(userCredential.credential?.accessToken);
+    //
+    //   },
+    //   codeAutoRetrievalTimeout: (String verificationId) {
+    //     print(verificationId);
+    //   },
+    // );
+    // authService.idTokenChanges().listen((event) {
+    //   print(event);
+    // });
+    // authService.userChanges().listen((event) {
+    //   print(event);
+    // });
+
     if (_phoneKey.currentState!.validate()) {
       _sendPin();
       if (mounted) setState(() {});
