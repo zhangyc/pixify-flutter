@@ -18,26 +18,22 @@ class _LikeAnimationState extends State<ActionAnimation> with TickerProviderStat
 
   @override
   void initState() {
-    _animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 1000));
+    _animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 800),lowerBound: 0.1,upperBound: 1);
 
     _animationController.addListener(() {
       setState(() {
 
       });
-      if(_animationController.isCompleted){
+      if(_animationController.value.toStringAsFixed(1)=='0.8'){
         widget.onLike.call();
-
       }
+
     });
     widget.arrowController.addListener(() {
       if(widget.arrowController.isCompleted){
         widget.onArrow.call();
       }
     });
-    widget.arrowController.addStatusListener((status) {
-      print(status);
-    });
-
     super.initState();
   }
   @override

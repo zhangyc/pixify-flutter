@@ -4,8 +4,10 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/custom_scrollphysics.dart';
@@ -13,6 +15,7 @@ import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
+import '../../../account/models/gender.dart';
 import '../../../common/widgets/button/colored.dart';
 import '../../../common/widgets/button/forward.dart';
 import '../../../utils/dialog/input.dart';
@@ -38,9 +41,15 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   void initState() {
     _animationController2=AnimationController(vsync: this,duration: Duration(milliseconds: 1500));
     _animationController2.addStatusListener((s) {
-           setState(() {
 
-           });
+           if(s==AnimationStatus.completed){
+             tapArrow=false;
+           }
+    });
+    _animationController2.addListener(() {
+      setState(() {
+
+      });
     });
 
     super.initState();
@@ -51,12 +60,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     super.dispose();
   }
   String imageUrl='';
-  String? _gender='All';
+  Gender? _gender=Gender.all;
   int currentPage=0;
   PageController pageController=PageController();
   bool scrolling=true;
   ScrollPhysics scrollPhysics=AlwaysScrollableScrollPhysics();
-
+  bool tapArrow=false;
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -94,30 +103,48 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                     return;
                                   }
                                   if(resp.statusCode==10150){
-                                    /// 判断如果不是会员，跳转道会员页面
                                     Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
                                       return SubscribePage();
                                     }));
-                                    ///如果是会员，提示超过限制
                                   }
                                 });
                                 if (index < users.length - 1) {
-                                  pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 500),
+                                  pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
                                       curve: Curves.linearToEaseOut);
                                   }
                                 },
                                 onArrow: () {
-                                  users[index].arrowed=true;
+                                  tapArrow=true;
+                                  setState(() {
+
+                                  });
                                   ref.read(asyncMatchRecommendedProvider.notifier)
-                                    .arrow(users[index].id);
-                                  if (index < users.length - 1) {
-                                    pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 500),
-                                        curve: Curves.linearToEaseOut);
-                                  }
+                                    .arrow(users[index].id).then((resp){
+                                    if(resp==null){
+                                      return;
+                                    }
+                                    if(resp.statusCode==10150){
+                                      /// 判断如果不是会员，跳转道会员页面
+                                      if(ref.read(asyncMyProfileProvider).value?.isMember??false){
+                                        Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+                                          return SubscribePage();
+                                        }));
+                                      }else {
+                                        Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                                      }
+                                      ///如果是会员，提示超过限制
+                                    }else if(resp.statusCode==200){
+                                      users[index].arrowed=true;
+                                      if (index < users.length - 1) {
+                                        pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+                                            curve: Curves.linearToEaseOut);
+                                      }
+                                    }
+                                  });
+
                               }, arrowController: _animationController2,
                             ),
                           ),
-
                           // 加action组件
                         ],
                       )
@@ -129,25 +156,17 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                   onPageChanged: (value){
                     ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
 
-                    if(users[value-1].arrowed||users[value-1].matched){
-                      return;
-                    }else {
-                      users[value-1].skipped=true;
-                      ref.read(asyncMatchRecommendedProvider.notifier)
-                          .skip(users[value-1].id);
-                    }
+                    // if(users[value-1].arrowed||users[value-1].matched){
+                    //   return;
+                    // }else {
+                    //   users[value-1].skipped=true;
+                    //   ref.read(asyncMatchRecommendedProvider.notifier)
+                    //       .skip(users[value-1].id);
+                    // }
                   },
                 ),
               ),
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: ColoredBox(
-                    color: _animationController2.isAnimating?Colors.black.withOpacity(0.5):Colors.transparent,
-                    child: Center(child: _animationController2.isAnimating?Lottie.asset(Assets.lottieArrowAnimation,
-                        controller: _animationController2,repeat: true):Container()),
-                  ),
-                ),
-              ),
+              Arrow(animationController2: _animationController2),
               Positioned(
                 right: 20,
                 top: 73,
@@ -165,31 +184,41 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                     color: Color(0xff2969E9),
                                     borderRadius: BorderRadius.circular(40)
                                 ),
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 90
                                 ),
                                 child: Column(
                                     children: [
-                                      Text('Gender'),
-                                      SizedBox(
-                                        height: 24,
+                                      const SizedBox(
+                                        height: 10,
                                       ),
-                                      ...["Female","Male","All"].map((e) => GestureDetector(
+                                      const Text('Gender',style: TextStyle(
+                                        fontSize: 24,
+                                        color: Color(0xfff9f9f9)
+                                      ),),
+                                      // SizedBox(
+                                      //   height: 24,
+                                      // ),
+                                      ...Gender.allTypes.map((e) => GestureDetector(
                                         onTap: (){
-                                          if(_gender!=e){
-                                            _gender=e;
-                                          }
-                                          // s(() {
-                                          //
-                                          // });
+                                          _gender=e;
+                                          ref.read(matchSettingProvider.notifier).setGender(e);
                                         },
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            _gender==e?Image.asset(Assets.iconsSelected,width: 28,height: 28,):Container(),
-                                            Text(e)
-                                          ],
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 10
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              e==_gender?Image.asset(Assets.iconsSelected,width: 28,height: 28,):Container(),
+                                              Text(e.name,style: TextStyle(
+                                                  fontSize: 36,
+                                                  color:e==_gender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
+                                              ),)
+                                            ],
+                                          ),
                                         ),
                                       )).toList(),
                                     ]
@@ -207,17 +236,23 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                 ),
                                 child: Column(
                                   children: [
-                                    Text('Age'),
+                                    Text('Age',style: TextStyle(
+                                        fontSize: 29,
+                                        color: Color(0xfff9f9f9)
+                                    ),),
                                     // ForwardButton(
                                     //     onTap: () {},
                                     //     text: '年龄  ${ref.watch(matchSettingProvider).ageRange.start.toInt()} - ${ref.watch(matchSettingProvider).ageRange.end.toInt()}'
                                     // ),
                                     SizedBox(height: 8),
                                     SizedBox(child: RangeSlider(
+                                      activeColor: Colors.white,
+                                        inactiveColor:Color(0xff54b7ed) ,
                                         min: 18,
                                         max: 80,
                                         divisions: 10,
-                                        labels: RangeLabels(ref.watch(matchSettingProvider).ageRange.start.toString(), ref.watch(matchSettingProvider).ageRange.end.toString()),
+                                        labels: RangeLabels(ref.watch(matchSettingProvider).ageRange.start.toString(),
+                                            ref.watch(matchSettingProvider).ageRange.end.toString()),
                                         values: ref.watch(matchSettingProvider).ageRange,
                                         onChanged: (rv) {
                                           ref.read(matchSettingProvider.notifier).setAgeRange(rv);
@@ -237,7 +272,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                       color: Color(0xff2969E9),
                                       borderRadius: BorderRadius.circular(40)
                                   ),
-                                  child: Text('Save'),
+                                  child: Text('Save',style: TextStyle(
+                                      fontSize: 36,
+                                      color: Color(0xfff9f9f9)
+                                  ),),
                                   alignment: Alignment.center,
                                 ),
                                 onTap: (){
@@ -253,8 +291,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     SizedBox(
                       height: 20,
                     ),
-                    GestureDetector(child: Image.asset(Assets.iconsMore,width: 24,height: 24,),onTap: (){
-                      showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
+                    GestureDetector(child: Image.asset(Assets.iconsMore,width: 24,height: 24,),onTap: () async {
+                      var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
+                      if(result!=null){
+                        Fluttertoast.showToast(msg: result);
+                      }
                     },)
                   ],
                 ),
@@ -381,4 +422,38 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
   @override
   bool get wantKeepAlive => true;
+}
+
+class Arrow extends StatelessWidget {
+  const Arrow({
+    super.key,
+    required AnimationController animationController2,
+  }) : _animationController2 = animationController2;
+
+  final AnimationController _animationController2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: IgnorePointer(
+        child: ColoredBox(
+          color: _animationController2.isAnimating?Colors.black.withOpacity(0.5):Colors.transparent,
+          child: Center(child: _animationController2.isAnimating?Stack(
+            alignment: Alignment.center,
+            children: [
+              AnimatedContainer(duration: Duration(milliseconds: 1500),
+                child: Image.asset(Assets.imagesArrow,),
+                curve: Curves.fastOutSlowIn,
+                width: 300,
+                height:300,
+              ),
+              Lottie.asset(Assets.lottieArrowAnimation,
+                  controller: _animationController2,repeat: true),
+
+            ],
+           ):Container()),
+        ),
+      ),
+    );
+  }
 }

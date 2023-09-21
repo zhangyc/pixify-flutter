@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/setting/screens/about.dart';
+import 'package:sona/utils/providers/dio.dart';
 
 import '../../utils/dialog/input.dart';
 import '../../utils/providers/env.dart';
@@ -14,6 +17,12 @@ class SettingScreen extends StatefulHookConsumerWidget {
 }
 
 class _SettingScreen extends ConsumerState<SettingScreen> {
+  bool openNotification=true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +30,24 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: TextButton(
-              onPressed: () {},
-              child: Text('Notification')
+            child: Row(
+              children: [
+                Text('Notification'),
+                CupertinoSwitch(
+                  value: openNotification,
+                  onChanged: (bool value) {
+                     openNotification=value;
+                     ref.read(dioProvider).post('/user/update',data: {
+                       'openPush':value
+                     }).then((value){
+
+                     });
+                     setState(() {
+
+                     });
+                  },
+                ),
+              ],
             ),
           ),
           SliverToBoxAdapter(
@@ -34,8 +58,22 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
           ),
           SliverToBoxAdapter(
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (c){
+                  return AboutPage();
+                }));
+              },
               child: Text('About')
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: TextButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (c){
+                    return AboutPage();
+                  }));
+                },
+                child: Text('Paid management')
             ),
           ),
           SliverToBoxAdapter(

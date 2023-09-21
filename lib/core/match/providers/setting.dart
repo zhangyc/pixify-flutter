@@ -58,7 +58,7 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
       final values = ageRangeValues.split(':');
       ageRange = RangeValues(double.parse(values[0]), double.parse(values[1]));
     } else {
-      ageRange = RangeValues(16, 60);
+      ageRange = RangeValues(18, 60);
     }
     return MatchSetting(
       gender: gender,

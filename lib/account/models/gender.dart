@@ -9,16 +9,16 @@ class Gender {
 
   static const male = Gender._(index: _male, name: 'Male');
   static const female = Gender._(index: _female, name: 'Female');
-  static const nonBinary = Gender._(index: _nonBinary, name: 'Non-binary');
+  static const all = Gender._(index: _nonBinary, name: 'All');
 
-  static const all = [male, female, nonBinary];
+  static const allTypes = [male, female, all];
 
   factory Gender.fromIndex(int index) {
 
     return switch(index) {
       _male => male,
       _female => female,
-      _nonBinary => nonBinary,
+      _nonBinary => all,
       _ => throw('Invalid gender index: $index')
     };
   }
