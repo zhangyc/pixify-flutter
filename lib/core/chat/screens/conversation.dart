@@ -38,7 +38,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Chat', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black)),
+        title: Text('Chat', style: Theme.of(context).textTheme.headlineMedium),
       ),
       body: CustomScrollView(
         slivers: [
@@ -47,11 +47,8 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30, bottom: 20),
-              child: Text('Messages', style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.black,
-                fontWeight: FontWeight.bold
-              )),
+              padding: const EdgeInsets.only(left: 16, bottom: 20),
+              child: Text('Messages', style: Theme.of(context).textTheme.titleMedium),
             ),
           ),
           ref.watch(conversationStreamProvider).when(

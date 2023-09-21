@@ -31,7 +31,8 @@ class AsyncLikedMeUsersNotifier extends AsyncNotifier<List<UserInfo>> {
   }
 
   Future refresh() async {
-    state = await AsyncValue.guard(() => _fetchLikedMeData());
+    final data = await _fetchLikedMeData();
+    state = AsyncValue.data(data);
   }
 }
 

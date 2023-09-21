@@ -35,7 +35,7 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
         },
         onLongPress: widget.onLongPress,
         child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            margin: EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
               leading: UserAvatar(url: widget.conversation.otherSide.avatar!, size: 52),
               title: Column(
