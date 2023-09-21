@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sona/utils/global/global.dart' as global;
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/chat/widgets/inputbar/mode_provider.dart';
 
@@ -21,7 +21,23 @@ class ImConversation {
   final String? lastMessageContent;
   final InputMode? inputMode;
   final int? chatStyleId;
-  DateTime? checkTime;
+
+  DateTime? _checkTime;
+  DateTime? get checkTime {
+    if (_checkTime == null) {
+      final msse = global.kvStore.getInt('convo_${convoId}_check_time');
+      if (msse != null) _checkTime = DateTime.fromMillisecondsSinceEpoch(msse);
+    }
+    return _checkTime;
+  }
+  set checkTime(DateTime? dateTime) {
+    if (dateTime == null) {
+      global.kvStore.remove('convo_${convoId}_check_time');
+    } else {
+      global.kvStore.setInt('convo_${convoId}_check_time', dateTime.millisecondsSinceEpoch);
+    }
+    _checkTime = dateTime;
+  }
 
   factory ImConversation.fromJson(Map<String, dynamic> json) {
     return ImConversation._(

@@ -9,6 +9,7 @@ import 'package:sona/utils/providers/kv_store.dart';
 
 import 'app.dart';
 import 'firebase_options.dart';
+import 'utils/global/global.dart' as global;
 import 'utils/local_notification/local_lotification_manager.dart';
 import 'utils/providers/app_lifecycle.dart';
 
@@ -28,12 +29,12 @@ void main() async {
   if(firebase.name=='sona'){
     initFireBaseService(firebase);
   }
-  final preferences = await SharedPreferences.getInstance();
+  await global.init();
   runApp(
     ProviderScope(
       overrides: [
         // firebaseProvider.overrideWithValue(firebase),
-        kvStoreProvider.overrideWithValue(preferences)
+        kvStoreProvider.overrideWithValue(global.kvStore)
       ],
       child: const SonaApp()
     )

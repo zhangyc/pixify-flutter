@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/providers/notice.dart';
 
 class SonaIcon extends ConsumerWidget {
   const SonaIcon({
@@ -12,7 +13,7 @@ class SonaIcon extends ConsumerWidget {
   final SonaIcons icon;
   final double size;
   final Color? color;
-  final StateProvider<bool>? activeProvider;
+  final StateProvider? activeProvider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,12 +36,12 @@ class SonaIcon extends ConsumerWidget {
               top: 0,
               right: 0,
               child: Visibility(
-                visible: ref.watch(activeProvider!),
+                visible: ref.watch(activeProvider!) != ChatNoticeMode.none,
                 child: Container(
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: ref.watch(activeProvider!) == ChatNoticeMode.message ? Colors.red : Colors.orange,
                     borderRadius: BorderRadius.circular(4),
                     border: Border.all(color: Colors.black, width: 1)
                   ),

@@ -31,6 +31,12 @@ final themeData = ThemeData(
     )
   ),
   textTheme: TextTheme(
+    titleMedium: const TextStyle(
+        color: Colors.black,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 1
+    ),
     titleSmall: const TextStyle(
         color: fontColour,
         fontSize: 14,
@@ -43,6 +49,18 @@ final themeData = ThemeData(
       fontWeight: FontWeight.w700,
       letterSpacing: 1
     ),
+    headlineMedium: const TextStyle(
+      color: fontColour,
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 1
+    ),
+    bodyLarge: const TextStyle(
+        color: Colors.black,
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 1
+    ),
     bodyMedium: const TextStyle(
       color: fontColour,
       fontSize: 16,
@@ -51,7 +69,7 @@ final themeData = ThemeData(
     ),
     bodySmall: const TextStyle(
         color: fontColour,
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: FontWeight.w400,
         letterSpacing: 1
     ),

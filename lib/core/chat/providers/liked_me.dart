@@ -31,10 +31,20 @@ class AsyncLikedMeUsersNotifier extends AsyncNotifier<List<UserInfo>> {
   }
 
   Future refresh() async {
-    state = await AsyncValue.guard(() => _fetchLikedMeData());
+    final data = await _fetchLikedMeData();
+    if (state.value != null && state.value!.isNotEmpty && data.isNotEmpty) {
+      if (state.value!.first.id != data.first.id) {
+        ref.read(likeMeNoticeNotifier.notifier).update((state) => true);
+      }
+    }
+    state = AsyncValue.data(data);
   }
 }
 
 final asyncLikedMeProvider = AsyncNotifierProvider<AsyncLikedMeUsersNotifier, List<UserInfo>>(
   () => AsyncLikedMeUsersNotifier()
 );
+
+final likeMeNoticeNotifier = StateProvider<bool>((ref) {
+  return false;
+});

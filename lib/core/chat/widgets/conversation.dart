@@ -22,30 +22,20 @@ class ConversationItemWidget extends ConsumerStatefulWidget {
 }
 
 class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget> {
-  void _computeUnread() {
-    final t = ref.read(kvStoreProvider).getInt('convo_${widget.conversation.convoId}_check_time');
-    widget.conversation.checkTime = t == null ? null : DateTime.fromMillisecondsSinceEpoch(t);
-  }
-
-  @override
-  void initState() {
-    _computeUnread();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           widget.onTap().then((value) {
-            _computeUnread();
+            widget.conversation.checkTime = DateTime.now();
             if (mounted) setState(() {});
           });
           ref.read(kvStoreProvider).setInt('convo_${widget.conversation.convoId}_check_time', DateTime.now().millisecondsSinceEpoch);
         },
         onLongPress: widget.onLongPress,
         child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            margin: EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
               leading: UserAvatar(url: widget.conversation.otherSide.avatar!, size: 52),
               title: Column(

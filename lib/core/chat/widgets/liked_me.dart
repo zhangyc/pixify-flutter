@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
+import 'package:sona/core/match/providers/matched.dart';
 
 
 class LikedMeListView extends StatefulHookConsumerWidget {
@@ -18,54 +21,86 @@ class LikedMeListView extends StatefulHookConsumerWidget {
 }
 
 class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
+
+  late Timer _timer;
+
+  @override
+  void initState() {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      if (mounted) ref.read(asyncLikedMeProvider.notifier).refresh();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ref.watch(asyncLikedMeProvider).when<Widget>(
       data: (likedMeUsers) {
         return likedMeUsers.isEmpty ? Container() : Container(
           margin: EdgeInsets.only(bottom: 38),
-          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('Liked You (${likedMeUsers.length})', textAlign: TextAlign.start),
-              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: Text(
+                  '${likedMeUsers.length} people liked you',
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              const SizedBox(height: 16),
               Container(
-                height: 208,
+                height: 68,
+                width: MediaQuery.of(context).size.width,
                 alignment: Alignment.centerLeft,
                 child: ListView.separated(
                   shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
                     final u = likedMeUsers[index];
                     return GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => widget.onTap(u),
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Container(
-                              decoration: true ? BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(color: Color(0xFFE74E27), width: 2)
-                              ) : null,
-                              child: UserAvatar(
-                                url: u.avatar!,
-                                size: 68
+                      child: SizedBox(
+                        width: 68,
+                        height: 68,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Positioned.fill(
+                              child: Container(
+                                decoration: true ? BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Color(0xFFE74E27), width: 2)
+                                ) : null,
+                                child: UserAvatar(
+                                  url: u.avatar!,
+                                  size: 68
+                                ),
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            child: Visibility(
-                              visible: true,
-                              child: Image.asset('assets/images/liked_me_new.png', width: 27)
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              child: Visibility(
+                                visible: true,
+                                child: Align(
+                                  alignment: Alignment.topCenter,
+                                    child: Image.asset('assets/images/liked_me_new.png', width: 30))
+                              )
                             )
-                          )
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
