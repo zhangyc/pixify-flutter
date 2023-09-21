@@ -66,7 +66,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.grey, activeProvider: chatNoticeProvider),
+              icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.grey, activeProvider: bottomChatNoticeProvider),
               activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
               label: 'Chat'
           ),

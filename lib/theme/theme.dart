@@ -69,7 +69,7 @@ final themeData = ThemeData(
     ),
     bodySmall: const TextStyle(
         color: fontColour,
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: FontWeight.w400,
         letterSpacing: 1
     ),
