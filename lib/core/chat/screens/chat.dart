@@ -120,6 +120,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   chatId: widget.otherSide.id,
                   onSubmit: _onSend,
                   onSuggestionTap: _onSuggestionTap,
+                  onHookTap: _onHookTap,
                   autofocus: false
               ),
             ),
@@ -188,6 +189,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
     final message = ImMessage(
       id: _lastLocalId++,
+      type: CallSonaType.INPUT.index + 1,
       content: text,
       sender: ref.read(asyncMyProfileProvider).value!.toUser(),
       receiver: widget.otherSide,

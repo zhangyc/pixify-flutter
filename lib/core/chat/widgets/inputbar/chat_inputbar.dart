@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,7 +22,8 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
     this.maxLength = 256,
     this.focusNode,
     this.autofocus = false,
-    required this.onSuggestionTap
+    required this.onSuggestionTap,
+    required this.onHookTap
   }) : super(key: key);
 
   final int chatId;
@@ -34,6 +36,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   final int maxLength;
   final FocusNode? focusNode;
   final bool autofocus;
+  final Future Function() onHookTap;
   final Future Function() onSuggestionTap;
 
   @override
@@ -111,7 +114,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
               )
             ),
             Container(
-              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 16 - 16 - 10,
+              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 16,
               decoration: BoxDecoration(
                 gradient: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? const LinearGradient(
                   colors: [
@@ -180,22 +183,63 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   autofocus: widget.autofocus,
               ),
             ),
-            Visibility(
-              visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
-              child: TextButton(
-                onPressed: () {
-                  onSubmit(_controller.text);
-                },
-                child: Text(ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Sona' : 'Send')
-              ),
+            SizedBox(width: 4),
+            Column(
+              children: [
+                Visibility(
+                  visible: ref.watch(hookVisibilityProvider(widget.chatId)),
+                  child: InkWell(
+                      onTap: widget.onHookTap,
+                      child: Container(
+                          width: 24,
+                          height: 32,
+                          margin: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(4)
+                          ),
+                          alignment: Alignment.center,
+                          child: Icon(CupertinoIcons.heart_fill, color: Colors.white, size: 24,)
+                      )
+                  )
+                ),
+                SizedBox(height: 6),
+                Visibility(
+                  visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
+                  child: InkWell(
+                      onTap: () {
+                        onSubmit(_controller.text);
+                      },
+                      child: Container(
+                        height: 38,
+                        width: 38,
+                        alignment: Alignment.center,
+                        child: Icon(
+                            Icons.send,
+                            size: 24,
+                            color: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Theme.of(context).primaryColor : Colors.grey),
+                      )
+                  ),
+                ),
+                Visibility(
+                  visible: ref.watch(currentInputEmptyProvider(widget.chatId)),
+                  child: InkWell(
+                      onTap: widget.onSuggestionTap,
+                      child: Container(
+                          width: 24,
+                          height: 32,
+                          margin: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                          decoration: BoxDecoration(
+                              color: Colors.yellow,
+                              borderRadius: BorderRadius.circular(4)
+                          ),
+                          alignment: Alignment.center,
+                          child: Icon(CupertinoIcons.sparkles, size: 24,)
+                      )
+                  ),
+                )
+              ],
             ),
-            Visibility(
-              visible: ref.watch(currentInputEmptyProvider(widget.chatId)),
-              child: TextButton(
-                  onPressed: widget.onSuggestionTap,
-                  child: Text('Sugg')
-              ),
-            )
           ],
         ),
         Visibility(

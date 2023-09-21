@@ -37,7 +37,7 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
         child: Container(
             margin: EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
-              leading: UserAvatar(url: widget.conversation.otherSide.avatar!, size: 52),
+              leading: UserAvatar(url: widget.conversation.otherSide.avatar ?? '', size: 52),
               title: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
