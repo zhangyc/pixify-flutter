@@ -247,12 +247,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       cancelFlex: 2
     );
     if (text != null && text.trim().isNotEmpty) {
-      await callSona(
-        httpClient: ref.read(dioProvider),
-        type: CallSonaType.BIO,
-        input: text
-      );
-      await ref.read(asyncMyProfileProvider.notifier).refresh();
+      ref.read(asyncMyProfileProvider.notifier).updateInfo(bio: text);
     }
   }
 

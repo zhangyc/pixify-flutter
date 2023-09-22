@@ -284,6 +284,7 @@ Future<String?> showTextFieldDialog({
     ),
     child: TextField(
       controller: controller,
+      style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
           hintText: hintText,
           fillColor: Color(0xFFF1F1F1),
