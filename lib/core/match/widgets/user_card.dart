@@ -8,7 +8,7 @@ import '../../../generated/assets.dart';
 import 'match_init_animation.dart';
 
 class UserCard extends ConsumerStatefulWidget {
-  UserCard({
+  const UserCard({
     super.key,
     required this.user,
     this.actions = const <Positioned>[],
@@ -16,7 +16,7 @@ class UserCard extends ConsumerStatefulWidget {
   });
   final UserInfo user;
   final List<Positioned> actions;
-  Function? onArrow;
+  final Function? onArrow;
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ConsumerUserCardState();
 }
