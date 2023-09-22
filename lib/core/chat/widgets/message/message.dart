@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/widgets/message/message_from_me.dart';
 import 'package:sona/core/chat/widgets/message/message_from_other.dart';
@@ -85,15 +86,16 @@ class MessageWidget extends StatelessWidget {
           ),
           SizedBox(height: 12),
           Visibility(
-            visible: fromMe && message.shortenTimes < 2,
+            visible: message.type == 4 && fromMe && message.shortenTimes < 2,
             child: Align(
               alignment: Alignment.bottomRight,
-              child: GestureDetector(
+              child: SIconButton(
+                size: 28,
                 onTap: () => onShorten(message),
+                loadingWhenAsyncAction: true,
                 child: Container(
                   width: 28,
                   height: 28,
-                  margin: const EdgeInsets.only(right: 8.0),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
                     shape: BoxShape.circle

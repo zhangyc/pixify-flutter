@@ -101,20 +101,24 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                 width: 38,
                 height: 38,
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle
+                  shape: BoxShape.circle,
+                  color: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Theme.of(context).primaryColor : Colors.grey
                 ),
                 clipBehavior: Clip.antiAlias,
                 alignment: Alignment.center,
-                child: Text(
-                  ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'So\nna': 'Man\nual',
-                  softWrap: false,
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 12, height: 1),
-                ),
+                child: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Text(
+                  'S',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ) : Icon(
+                  Icons.keyboard,
+                  size: 24,
+                  color: Colors.white,
+                )
               )
             ),
+            SizedBox(width: 8),
             Container(
-              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 16,
+              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 24,
               decoration: BoxDecoration(
                 gradient: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? const LinearGradient(
                   colors: [
@@ -163,7 +167,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                       )
                     ) : null,
                     suffixIconConstraints: BoxConstraints.tight(Size.square(33)),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 9),
                     isDense: true,
                     filled: true,
                     fillColor: Color(0xFFF6F6F6),

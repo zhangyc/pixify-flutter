@@ -47,20 +47,17 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
                   });
                   setState(() {});
                 },
-                child: SizedBox(
-                  height: 24,
-                  width: 58,
-                  child: Text('Resend', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.red))
+                child: Icon(
+                  Icons.refresh,
+                  size: 20,
                 ),
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator()
-                ),
+              return Container(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(strokeWidth: 1.5)
               );
             }
             return Container();
