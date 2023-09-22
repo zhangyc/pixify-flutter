@@ -14,6 +14,7 @@ import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
+import 'package:sona/utils/picker/interest.dart';
 
 import '../../common/widgets/button/colored.dart';
 import '../../utils/providers/dio.dart';
@@ -138,9 +139,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: ForwardButton(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return InterestsScreen();
-                })),
+                onTap: () => showInterestPicker(context: context),
                 text: 'Interests',
               ),
             ),

@@ -1,47 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/providers/interests.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 
 import '../providers/profile.dart';
 
-class InterestsScreen extends ConsumerStatefulWidget {
-  const InterestsScreen({super.key});
+class Interests extends ConsumerStatefulWidget {
+  const Interests({
+    super.key,
+    required this.availableValue,
+    required this.initialValue,
+  });
+  final List<String> availableValue;
+  final Set<String>? initialValue;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _InterestsScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _InterestsState();
 }
 
-class _InterestsScreenState extends ConsumerState<InterestsScreen> {
+class _InterestsState extends ConsumerState<Interests> {
 
-  late Set<String> _selected;
-
-  @override
-  void initState() {
-    _selected = ref.read(asyncMyProfileProvider).value!.interests.toSet();
-    super.initState();
-  }
+  late Set<String> _selected = widget.initialValue ?? {};
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Interests'),
-        actions: [
-          TextButton(
-            onPressed: _save,
-            child: const Text('Save', style: TextStyle(color: Colors.black))
-          )
-        ],
-      ),
-      body: ref.watch(asyncInterestsProvider).when(
-        data: (interests) => Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Wrap(
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Select your interests (${_selected.length}/10)', style: Theme.of(context).textTheme.titleMedium),
+          SizedBox(height: 16),
+          Wrap(
             spacing: 16,
             runSpacing: 16,
             children: [
-              for (final interest in interests)
+              for (final interest in widget.availableValue)
                 FittedBox(
                   child: ColoredButton(
                     size: ColoredButtonSize.small,
@@ -54,31 +46,29 @@ class _InterestsScreenState extends ConsumerState<InterestsScreen> {
                 )
             ],
           ),
-        ),
-        loading: () => Container(
-          color: Colors.white54,
-          alignment: Alignment.center,
-          child: const SizedBox(
-              width: 16,
-              height: 16,
-              child: CircularProgressIndicator()),
-        ),
-        error: (err, stack) => GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => ref
-              .refresh(asyncInterestsProvider),
-          child: Container(
-            color: Colors.white,
-            alignment: Alignment.center,
-            child: const Text(
-                'Cannot connect to server, tap to retry',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 16,
-                    decoration: TextDecoration.none)),
-          ),
-        )
-      )
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                flex: 1,
+                child: ColoredButton(
+                    color: Colors.white,
+                    text: 'Cancel',
+                    onTap: () => Navigator.pop(context)),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                flex: 1,
+                child: ColoredButton(
+                  text: 'Confirm',
+                  onTap: _save
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -86,14 +76,16 @@ class _InterestsScreenState extends ConsumerState<InterestsScreen> {
     if (_selected.contains(i)) {
       _selected.remove(i);
     } else {
+      if (_selected.length >= 10) {
+        return;
+      }
       _selected.add(i);
     }
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   void _save() {
     final interests = ref.read(asyncMyProfileProvider.notifier).updateInfo(interests: _selected);
+    Navigator.pop(context);
   }
 }

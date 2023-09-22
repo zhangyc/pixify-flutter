@@ -66,7 +66,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     super.dispose();
   }
   String imageUrl='';
-  Gender? _gender=Gender.all;
+  Gender? _gender=Gender.nonBinary;
   int currentPage=0;
   PageController pageController=PageController();
   bool scrolling=true;
