@@ -50,12 +50,18 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                         color: Colors.black,
                         fontWeight: FontWeight.w700
                     ),
-                  ),
-                  Text(
-                    widget.conversation.lastMessageContent ?? 'New matched',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    widget.conversation.lastMessageContent != null && widget.conversation.lastMessageContent!.isNotEmpty
+                        ? widget.conversation.lastMessageContent! : 'New matched',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: widget.conversation.hasUnreadMessage ? Theme.of(context).primaryColor : Colors.grey,
+                    ),
                   )
                 ],
               ),
