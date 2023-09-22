@@ -139,7 +139,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: ForwardButton(
-                onTap: () => showInterestPicker(context: context),
+                onTap: _onEditInterests,
                 text: 'Interests',
               ),
             ),
@@ -188,15 +188,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  Future _sonaWritesBio() async {
-    final dio = ref.read(dioProvider);
-    EasyLoading.show();
-    try {
-      final resp = await dio.post('/persona/intro/generation');
-    } catch (e) {
-      //
-    } finally {
-      EasyLoading.dismiss();
+  Future _onEditInterests() async {
+    final result = await showInterestPicker(context: context);
+    if (result != null) {
+      ref.read(asyncMyProfileProvider.notifier).updateInfo(interests: result);
     }
   }
 
