@@ -158,65 +158,50 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> {
   }
 
   Widget _userBio() {
-    return Stack(
-      children: [
-        CachedNetworkImage(imageUrl: widget.user.photos.firstOrNull ?? '',
-          placeholder: (_,__){
-            return Container(child: Center(child: MatchInitAnimation()),color: Colors.black,);
-          },
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          fit: BoxFit.cover,
-        ),
-        Container(
-            padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 40,
-                left: 20,
-                right: 20,
-                bottom: MediaQuery.of(context).viewInsets.bottom + 160),
-            // decoration: BoxDecoration(
-            //   image: DecorationImage(
-            //       image: CachedNetworkImageProvider(
-            //           widget.user.photos.firstOrNull ?? ''),
-            //       colorFilter:
-            //           const ColorFilter.mode(Colors.black54, BlendMode.srcATop),
-            //       fit: BoxFit.cover,
-            //       alignment: Alignment.center,
-            //       isAntiAlias: true),
-            // ),
-            // clipBehavior: Clip.antiAlias,
-            alignment: Alignment.topLeft,
-            child: Text(widget.user.bio ?? 'no bio',
-                textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    shadows: const <Shadow>[
-                      Shadow(
-                        blurRadius: 5.0,
-                        color: Color.fromARGB(10, 0, 0, 0),
-                      ),
-                    ]))),
-      ],
+    return Container(
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top + 40,
+          left: 20,
+          right: 20,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 160
+      ),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: CachedNetworkImageProvider(
+                widget.user.photos.firstOrNull ?? ''),
+            colorFilter:
+                const ColorFilter.mode(Colors.black54, BlendMode.srcATop),
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
+            isAntiAlias: true),
+      ),
+      clipBehavior: Clip.antiAlias,
+      alignment: Alignment.topLeft,
+      child: Text(widget.user.bio ?? '',
+          textAlign: TextAlign.start,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+              shadows: const <Shadow>[
+                Shadow(
+                  blurRadius: 5.0,
+                  color: Color.fromARGB(10, 0, 0, 0),
+                ),
+              ]
+          )
+      )
     );
   }
 
   Widget _userPhoto(String url) {
-    return CachedNetworkImage(imageUrl: widget.user.photos.firstOrNull ?? '',
-      placeholder: (_,__){
-        return Container(child: Center(child: MatchInitAnimation()),color: Colors.black,);
-      },
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      fit: BoxFit.cover,
-    );
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: CachedNetworkImageProvider(url),
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-            isAntiAlias: true),
+          image: CachedNetworkImageProvider(url),
+          fit: BoxFit.cover,
+          alignment: Alignment.center,
+          isAntiAlias: true
+        ),
       ),
     );
   }

@@ -9,6 +9,7 @@ import 'package:sona/account/models/user_info.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/info.dart';
+import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
@@ -177,6 +178,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
     return GestureDetector(
       onLongPress: index != 0 ? () => _showPhotoActions(_profile.photos[index]) : null,
+      onTap: index == 0 ? _seeMyProfile : null,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
@@ -186,6 +188,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         child: child,
       ),
     );
+  }
+
+  void _seeMyProfile() {
+    Navigator.push(context, MaterialPageRoute(
+        builder: (_) => UserProfileScreen(
+          user: ref.read(asyncMyProfileProvider).value!.toUser(),
+          relation: Relation.self,
+        )
+    ));
   }
 
   Future _onEditInterests() async {
