@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/chat/providers/chat.dart';
@@ -14,7 +15,11 @@ final tokenProvider = StateProvider<String?>(
     final kvStore = ref.watch(kvStoreProvider);
     ref.listenSelf((previous, next) {
       if (next == null) {
+        // 移除本地缓存
         kvStore.remove(tokenKey);
+        kvStore.remove(profileKey);
+
+        // 重置状态
         ref.invalidate(asyncMyProfileProvider);
         ref.invalidate(asyncLikedMeProvider);
         ref.invalidate(asyncPersonaProvider);
@@ -23,6 +28,7 @@ final tokenProvider = StateProvider<String?>(
         ref.invalidate(asyncChatStylesProvider);
       } else {
         kvStore.setString(tokenKey, next);
+        ref.read(asyncMyProfileProvider);
       }
     });
     final token = kvStore.getString(tokenKey);

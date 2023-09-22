@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
+import 'package:sona/utils/providers/kv_store.dart';
 
 
 class LikedMeListView extends StatefulHookConsumerWidget {
@@ -65,6 +66,28 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
                     final u = likedMeUsers[index];
+                    if (index >= 16) {
+                      return GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () => widget.onTap(u),
+                        child: Container(
+                          width: 68,
+                          height: 68,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFFE74E27)
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          alignment: Alignment.center,
+                          child: Text(
+                            '+${likedMeUsers.length - 16}',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Colors.white
+                            ),
+                          ),
+                        ),
+                      );
+                    }
                     return GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => widget.onTap(u),
@@ -103,7 +126,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                     );
                   },
                   separatorBuilder: (_, __) => const SizedBox(width: 12),
-                  itemCount: likedMeUsers.length
+                  itemCount: likedMeUsers.length > 16 ? 17 : likedMeUsers.length,
                 ),
               ),
             ],

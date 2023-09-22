@@ -11,13 +11,14 @@ import 'package:sona/utils/providers/kv_store.dart';
 import '../models/gender.dart';
 import '../models/user_info.dart';
 
+const profileKey = 'profile';
 
 @immutable
 class AsyncMyProfileNotifier extends AsyncNotifier<MyProfile> {
 
   Future<MyProfile> _fetchProfile() async {
     final profile = await getMyInfo(httpClient: ref.read(dioProvider));
-    ref.read(kvStoreProvider).setString('profile', jsonEncode(profile.toJson()));
+    ref.read(kvStoreProvider).setString(profileKey, jsonEncode(profile.toJson()));
     return profile;
   }
 
@@ -29,7 +30,7 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyProfile> {
       refresh(true);
       return profile;
     } catch(e) {
-      ref.read(kvStoreProvider).remove('profile');
+      ref.read(kvStoreProvider).remove(profileKey);
       return _fetchProfile();
     }
   }
