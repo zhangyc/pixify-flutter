@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -11,22 +10,17 @@ import 'package:lottie/lottie.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
-import 'package:sona/core/match/widgets/custom_scrollphysics.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/providers/dio.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../account/models/gender.dart';
-import '../../../common/widgets/button/colored.dart';
-import '../../../common/widgets/button/forward.dart';
 import '../../../utils/dialog/input.dart';
 import '../../providers/navigator_key.dart';
 import '../../subscribe/subscribe_page.dart';
-import '../providers/pageing_match.dart';
 import '../providers/setting.dart';
 import '../widgets/like_animation.dart';
-import '../widgets/match_init_animation.dart';
 // import '../widgets/scroller.dart' as s;
 
 class MatchScreen extends StatefulHookConsumerWidget {
@@ -56,137 +50,133 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return NotificationListener(child: Container(
-      color: Colors.black.withOpacity(0.5),
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: PageView.builder(
-              itemBuilder: (c,index) {
-                return StackPageView(
-                    index: index,
-                    controller: pageController,
-                    child: UserCard(
-                      key: ValueKey(users[index].id),
-                      user: users[index],
-                      onArrow: (){
-                        print('-------------onArrow--------------');
-                        ref.read(asyncMatchRecommendedProvider.notifier)
-                            .arrow(users[index].id).then((resp){
-                          if(resp==null){
-                            return;
+    return NotificationListener(child: Stack(
+      children: [
+        Positioned.fill(
+          child: PageView.builder(
+            itemBuilder: (c,index) {
+              return StackPageView(
+                  index: index,
+                  controller: pageController,
+                  child: UserCard(
+                    key: ValueKey(users[index].id),
+                    user: users[index],
+                    onArrow: (){
+                      ref.read(asyncMatchRecommendedProvider.notifier)
+                          .arrow(users[index].id).then((resp){
+                        if(resp==null){
+                          return;
+                        }
+                        if(resp.statusCode==10150){
+                          /// 判断如果不是会员，跳转道会员页面
+                          if(ref.read(asyncMyProfileProvider).value?.isMember??false){
+                            Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+                              return SubscribePage();
+                            }));
+                          }else {
+                            Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                           }
-                          if(resp.statusCode==10150){
-                            /// 判断如果不是会员，跳转道会员页面
-                            if(ref.read(asyncMyProfileProvider).value?.isMember??false){
-                              Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
-                                return SubscribePage();
-                              }));
-                            }else {
-                              Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                            }
-                            ///如果是会员，提示超过限制
-                          }else if(resp.statusCode==200){
-                            users[index].arrowed=true;
+                          ///如果是会员，提示超过限制
+                        }else if(resp.statusCode==200){
+                          users[index].arrowed=true;
+                          if (index < users.length - 1) {
+                            pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+                                curve: Curves.linearToEaseOut);
+                          }
+                        }
+                      });
+                    },
+                    actions: [
+                      Positioned(
+                        right: 20,
+                        bottom: MediaQuery.of(context).viewInsets.bottom + 150,
+                        child: LikeAnimation(
+                          key: ValueKey('key${users[index].index}'),
+                          userInfo: users[index],
+                          onLike: () {
+                            users[index].matched=true;
+                            ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
+                              if(resp==null){
+                                return;
+                              }
+                              if(resp.statusCode==10150){
+                                Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+                                  return SubscribePage();
+                                }));
+                              }
+                            });
                             if (index < users.length - 1) {
                               pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
                                   curve: Curves.linearToEaseOut);
                             }
-                          }
-                        });
-                      },
-                      actions: [
-                        Positioned(
-                          right: 20,
-                          bottom: MediaQuery.of(context).viewInsets.bottom + 150,
-                          child: LikeAnimation(
-                            key: ValueKey('key${users[index].index}'),
-                            userInfo: users[index],
-                            onLike: () {
-                              users[index].matched=true;
-                              ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
-                                if(resp==null){
-                                  return;
-                                }
-                                if(resp.statusCode==10150){
-                                  Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
-                                    return SubscribePage();
-                                  }));
-                                }
-                              });
-                              if (index < users.length - 1) {
-                                pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-                                    curve: Curves.linearToEaseOut);
-                              }
-                            },
-                          ),
+                          },
                         ),
-                        // 加action组件
-                      ],
-                    )
-                );
-              },
-              itemCount: users.length,
-              scrollDirection: Axis.vertical,
-              controller: pageController,
-              onPageChanged: (value){
-                if(value%5==0){
-                  current++;
-                  _loadMore();
-                }
-                // print('>>>>>>>>>>>>>>$value');
-                ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
+                      ),
+                      // 加action组件
+                    ],
+                  )
+              );
+            },
+            itemCount: users.length,
+            scrollDirection: Axis.vertical,
+            controller: pageController,
+            onPageChanged: (value){
+              if(value%5==0){
+                current++;
+                _loadMore();
+              }
+              // print('>>>>>>>>>>>>>>$value');
+              ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
 
-                // if(users[value-1].arrowed||users[value-1].matched){
-                //   return;
-                // }else {
-                //   users[value-1].skipped=true;
-                //   ref.read(asyncMatchRecommendedProvider.notifier)
-                //       .skip(users[value-1].id);
-                // }
-              },
-            ),
+              // if(users[value-1].arrowed||users[value-1].matched){
+              //   return;
+              // }else {
+              //   users[value-1].skipped=true;
+              //   ref.read(asyncMatchRecommendedProvider.notifier)
+              //       .skip(users[value-1].id);
+              // }
+            },
           ),
-          Positioned(
-            right: 20,
-            top: 73,
-            child: Column(
-              children: [
-                GestureDetector(child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),onTap: (){
-                  _showFliter(context);
-                },),
-                SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(child: Image.asset(Assets.iconsMore,width: 24,height: 24,),onTap: () async {
-                  var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
-                  if(result!=null){
-                    Fluttertoast.showToast(msg: result);
-                  }
-                },)
-              ],
-            ),
+        ),
+        Positioned(
+          right: 20,
+          top: 73,
+          child: Column(
+            children: [
+              GestureDetector(child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),onTap: (){
+                _showFliter(context);
+              },),
+              SizedBox(
+                height: 20,
+              ),
+              GestureDetector(child: Image.asset(Assets.iconsMore,width: 24,height: 24,),onTap: () async {
+                var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
+                if(result!=null){
+                  Fluttertoast.showToast(msg: result);
+                }
+              },)
+            ],
           ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: MediaQuery.of(context).padding.top,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.2),
-                      Colors.black.withOpacity(0.0),
-                    ]
-                ),
+        ),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          height: MediaQuery.of(context).padding.top,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.2),
+                    Colors.black.withOpacity(0.0),
+                  ]
               ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     ),
       onNotification: (scrollNotification) {
         if (scrollNotification is ScrollEndNotification &&
