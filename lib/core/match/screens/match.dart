@@ -10,6 +10,7 @@ import 'package:lottie/lottie.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
+import 'package:sona/core/match/screens/report.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/providers/dio.dart';
@@ -121,6 +122,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             scrollDirection: Axis.vertical,
             controller: pageController,
             onPageChanged: (value){
+              currentPage=value;
               if(value%5==0){
                 current++;
                 _loadMore();
@@ -152,7 +154,17 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               GestureDetector(child: Image.asset(Assets.iconsMore,width: 24,height: 24,),onTap: () async {
                 var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
                 if(result!=null){
-                  Fluttertoast.showToast(msg: result);
+                  if(result=='report'){
+                    Navigator.push(context, MaterialPageRoute(builder: (c){
+                      return Report(ReportType.user,users[currentPage].id);
+                    }));
+
+                  }else if(result=='block'){
+                    ref.read(dioProvider).post('/user/update-relation',data:{
+                      "userId":users[currentPage].id, // 对方用户ID
+                      "relationType":5 // 匹配结果：1:忽略，2：喜欢，3：ARROW 5拉黑 6查看
+                    });
+                  }
                 }
               },)
             ],
