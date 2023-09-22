@@ -16,7 +16,6 @@ import 'utils/providers/app_lifecycle.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stream<RemoteMessage> _stream = FirebaseMessaging.onMessageOpenedApp;
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler); ///后台消息处理
   initNotificationPlugin();
   var appStateObserver = AppStateObserver();

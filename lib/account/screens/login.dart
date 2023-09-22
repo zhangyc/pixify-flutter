@@ -214,8 +214,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future _next() async {
-    // await FirebaseAuth.instance.verifyPhoneNumber(
-    //   phoneNumber: '+44 7444 555666',
+    if (_phoneKey.currentState!.validate()) {
+      _sendPin();
+      if (mounted) setState(() {});
+      await _controller.animateToPage(1,
+          duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _pinFocusNode.requestFocus();
+      });
+    }
+    // await authService.verifyPhoneNumber(
+    //   phoneNumber: '+${_countryCode} ${_phoneNumber}',
+    //   timeout: Duration(seconds: 60),
     //   verificationCompleted: (PhoneAuthCredential credential) async{
     //      if(Platform.isAndroid){
     //        final  userCredential=await authService.signInWithCredential(credential);
@@ -230,10 +240,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     //
     //     // Sign the user in (or link) with the credential
     //     final  userCredential= await authService.signInWithCredential(credential);
-    //     final  idToken=await userCredential.user?.getIdToken();
+    //     final  idToken=await userCredential.user?.getIdToken();  //idToken上送给业务服务器
     //     print(idToken);
-    //     print(userCredential.credential?.token);
-    //     print(userCredential.credential?.accessToken);
+    //
     //
     //   },
     //   codeAutoRetrievalTimeout: (String verificationId) {
@@ -247,15 +256,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     //   print(event);
     // });
 
-    if (_phoneKey.currentState!.validate()) {
-      _sendPin();
-      if (mounted) setState(() {});
-      await _controller.animateToPage(1,
-          duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        _pinFocusNode.requestFocus();
-      });
-    }
+
   }
 
   // final _maxRetryTime = 1;

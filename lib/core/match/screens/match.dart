@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -36,25 +37,10 @@ class MatchScreen extends StatefulHookConsumerWidget {
 }
 
 class _MatchScreenState extends ConsumerState<MatchScreen>
-    with AutomaticKeepAliveClientMixin,SingleTickerProviderStateMixin {
-  late AnimationController _animationController2;
+    with AutomaticKeepAliveClientMixin {
 
   @override
   void initState() {
-    _animationController2=AnimationController(vsync: this,duration: Duration(milliseconds: 1500));
-    _animationController2.addStatusListener((s) {
-
-           if(s==AnimationStatus.completed){
-             tapArrow=false;
-           }
-    });
-    _animationController2.addListener(() {
-      setState(() {
-
-      });
-    });
-    //ref.read(pagingProvider.notifier).refresh(ref);
-
     _initData();
     super.initState();
   }
@@ -62,16 +48,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   void dispose() {
-    _animationController2.dispose();
     super.dispose();
   }
-  String imageUrl='';
   Gender? _gender=Gender.all;
   int currentPage=0;
   PageController pageController=PageController();
-  bool scrolling=true;
-  ScrollPhysics scrollPhysics=AlwaysScrollableScrollPhysics();
-  bool tapArrow=false;
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -93,6 +74,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           right: 0,
                           bottom: MediaQuery.of(context).viewInsets.bottom + 120,
                           child: ActionAnimation(
+                            key: ValueKey('key${users[index].index}'),
                             userInfo: users[index],
                             onLike: () {
                               users[index].matched=true;
@@ -112,10 +94,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                               }
                             },
                             onArrow: () {
-                              tapArrow=true;
-                              setState(() {
-
-                              });
+                              print('-------------onArrow--------------');
                               ref.read(asyncMatchRecommendedProvider.notifier)
                                   .arrow(users[index].id).then((resp){
                                 if(resp==null){
@@ -140,7 +119,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                 }
                               });
 
-                            }, arrowController: _animationController2,
+                            },
                           ),
                         ),
                         // 加action组件
@@ -156,7 +135,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                   current++;
                   _loadMore();
                 }
-                print('>>>>>>>>>>>>>>$value');
+                // print('>>>>>>>>>>>>>>$value');
                 ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
 
                 // if(users[value-1].arrowed||users[value-1].matched){
@@ -169,127 +148,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               },
             ),
           ),
-          Arrow(animationController2: _animationController2),
           Positioned(
             right: 20,
             top: 73,
             child: Column(
               children: [
                 GestureDetector(child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),onTap: (){
-                  showDialog(context: context, builder: (c){
-                    return Consumer(builder: (_,ref,__){
-                      return Column(
-                        children: [
-                          Container(
-                            width:335,
-                            height: 230,
-                            decoration: BoxDecoration(
-                                color: Color(0xff2969E9),
-                                borderRadius: BorderRadius.circular(40)
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 90
-                            ),
-                            child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Text('Gender',style: TextStyle(
-                                      fontSize: 24,
-                                      color: Color(0xfff9f9f9)
-                                  ),),
-                                  // SizedBox(
-                                  //   height: 24,
-                                  // ),
-                                  ...Gender.allTypes.map((e) => GestureDetector(
-                                    onTap: (){
-                                      _gender=e;
-                                      ref.read(matchSettingProvider.notifier).setGender(e);
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 10
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          e==_gender?Image.asset(Assets.iconsSelected,width: 28,height: 28,):Container(),
-                                          Text(e.name,style: TextStyle(
-                                              fontSize: 36,
-                                              color:e==_gender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
-                                          ),)
-                                        ],
-                                      ),
-                                    ),
-                                  )).toList(),
-                                ]
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            width:335,
-                            height: 158,
-                            decoration: BoxDecoration(
-                                color: Color(0xff2969E9),
-                                borderRadius: BorderRadius.circular(40)
-                            ),
-                            child: Column(
-                              children: [
-                                Text('Age',style: TextStyle(
-                                    fontSize: 29,
-                                    color: Color(0xfff9f9f9)
-                                ),),
-                                // ForwardButton(
-                                //     onTap: () {},
-                                //     text: '年龄  ${ref.watch(matchSettingProvider).ageRange.start.toInt()} - ${ref.watch(matchSettingProvider).ageRange.end.toInt()}'
-                                // ),
-                                SizedBox(height: 8),
-                                SizedBox(child: RangeSlider(
-                                    activeColor: Colors.white,
-                                    inactiveColor:Color(0xff54b7ed) ,
-                                    min: 18,
-                                    max: 80,
-                                    divisions: 10,
-                                    labels: RangeLabels(ref.watch(matchSettingProvider).ageRange.start.toString(),
-                                        ref.watch(matchSettingProvider).ageRange.end.toString()),
-                                    values: ref.watch(matchSettingProvider).ageRange,
-                                    onChanged: (rv) {
-                                      ref.read(matchSettingProvider.notifier).setAgeRange(rv);
-                                    }
-                                ),width: 277,),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          GestureDetector(
-                            child: Container(
-                              width:335,
-                              height: 70,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff2969E9),
-                                  borderRadius: BorderRadius.circular(40)
-                              ),
-                              child: Text('Save',style: TextStyle(
-                                  fontSize: 36,
-                                  color: Color(0xfff9f9f9)
-                              ),),
-                              alignment: Alignment.center,
-                            ),
-                            onTap: (){
-                              Navigator.pop(context);
-                            },
-                          )
-
-                        ],
-                      );
-                    });
-                  });
+                  _showFliter(context);
                 },),
                 SizedBox(
                   height: 20,
@@ -329,281 +194,398 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             scrollNotification.metrics.extentAfter == 0) {
           // 滚动到底部时加载下一页
           //ref.read(pagingProvider.notifier).refresh(ref);
-          current++;
+          //current++;
           //_loadMore();
         }
         return true;
       },
 
     );
-    return ref.watch(asyncMatchRecommendedProvider).when<Widget>(
-      data: (List<UserInfo> users) {
-        // if (users.isEmpty) {
-        //   return Container(
-        //     alignment: Alignment.center,
-        //     child: const Text('No more.'),
-        //   );
-        // }
-        return Container(
-          color: Colors.black.withOpacity(0.5),
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: PageView.builder(
-                  itemBuilder: (c,index) {
-                    return StackPageView(
-                      index: index,
-                      controller: pageController,
-                      child: UserCard(
-                        key: ValueKey(users[index].id),
-                        user: users[index],
-                        actions: [
-                          Positioned(
-                            right: 0,
-                            bottom: MediaQuery.of(context).viewInsets.bottom + 120,
-                            child: ActionAnimation(
-                                userInfo: users[index],
-                                onLike: () {
-                                users[index].matched=true;
-                                ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
-                                  if(resp==null){
-                                    return;
-                                  }
-                                  if(resp.statusCode==10150){
-                                    Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
-                                      return SubscribePage();
-                                    }));
-                                  }
-                                });
-                                if (index < users.length - 1) {
-                                  pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-                                      curve: Curves.linearToEaseOut);
-                                  }
-                                },
-                                onArrow: () {
-                                  tapArrow=true;
-                                  setState(() {
+    // return ref.watch(asyncMatchRecommendedProvider).when<Widget>(
+    //   data: (List<UserInfo> users) {
+    //     // if (users.isEmpty) {
+    //     //   return Container(
+    //     //     alignment: Alignment.center,
+    //     //     child: const Text('No more.'),
+    //     //   );
+    //     // }
+    //     return Container(
+    //       color: Colors.black.withOpacity(0.5),
+    //       child: Stack(
+    //         children: [
+    //           Positioned.fill(
+    //             child: PageView.builder(
+    //               itemBuilder: (c,index) {
+    //                 return StackPageView(
+    //                   index: index,
+    //                   controller: pageController,
+    //                   child: UserCard(
+    //                     key: ValueKey(users[index].id),
+    //                     user: users[index],
+    //                     actions: [
+    //                       Positioned(
+    //                         right: 0,
+    //                         bottom: MediaQuery.of(context).viewInsets.bottom + 120,
+    //                         child: ActionAnimation(
+    //                             userInfo: users[index],
+    //                             onLike: () {
+    //                             users[index].matched=true;
+    //                             ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
+    //                               if(resp==null){
+    //                                 return;
+    //                               }
+    //                               if(resp.statusCode==10150){
+    //                                 Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+    //                                   return SubscribePage();
+    //                                 }));
+    //                               }
+    //                             });
+    //                             if (index < users.length - 1) {
+    //                               pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+    //                                   curve: Curves.linearToEaseOut);
+    //                               }
+    //                             },
+    //                             onArrow: () {
+    //                               setState(() {
+    //
+    //                               });
+    //                               ref.read(asyncMatchRecommendedProvider.notifier)
+    //                                 .arrow(users[index].id).then((resp){
+    //                                 if(resp==null){
+    //                                   return;
+    //                                 }
+    //                                 if(resp.statusCode==10150){
+    //                                   /// 判断如果不是会员，跳转道会员页面
+    //                                   if(ref.read(asyncMyProfileProvider).value?.isMember??false){
+    //                                     Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+    //                                       return SubscribePage();
+    //                                     }));
+    //                                   }else {
+    //                                     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+    //                                   }
+    //                                   ///如果是会员，提示超过限制
+    //                                 }else if(resp.statusCode==200){
+    //                                   users[index].arrowed=true;
+    //                                   if (index < users.length - 1) {
+    //                                     pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+    //                                         curve: Curves.linearToEaseOut);
+    //                                   }
+    //                                 }
+    //                               });
+    //
+    //                           }, arrowController: _animationController2,
+    //                         ),
+    //                       ),
+    //                       // 加action组件
+    //                     ],
+    //                   )
+    //                 );
+    //               },
+    //               itemCount: users.length,
+    //               scrollDirection: Axis.vertical,
+    //               controller: pageController,
+    //               onPageChanged: (value){
+    //                 ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
+    //
+    //                 // if(users[value-1].arrowed||users[value-1].matched){
+    //                 //   return;
+    //                 // }else {
+    //                 //   users[value-1].skipped=true;
+    //                 //   ref.read(asyncMatchRecommendedProvider.notifier)
+    //                 //       .skip(users[value-1].id);
+    //                 // }
+    //               },
+    //             ),
+    //           ),
+    //           Arrow(animationController2: _animationController2),
+    //           Positioned(
+    //             right: 20,
+    //             top: 73,
+    //             child: Column(
+    //               children: [
+    //                 GestureDetector(child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),onTap: (){
+    //                   showDialog(context: context, builder: (c){
+    //                     return Consumer(builder: (_,ref,__){
+    //                       return Column(
+    //                         children: [
+    //                           Container(
+    //                             width:335,
+    //                             height: 230,
+    //                             decoration: BoxDecoration(
+    //                                 color: Color(0xff2969E9),
+    //                                 borderRadius: BorderRadius.circular(40)
+    //                             ),
+    //                             padding: const EdgeInsets.symmetric(
+    //                                 horizontal: 90
+    //                             ),
+    //                             child: Column(
+    //                                 children: [
+    //                                   const SizedBox(
+    //                                     height: 10,
+    //                                   ),
+    //                                   const Text('Gender',style: TextStyle(
+    //                                     fontSize: 24,
+    //                                     color: Color(0xfff9f9f9)
+    //                                   ),),
+    //                                   // SizedBox(
+    //                                   //   height: 24,
+    //                                   // ),
+    //                                   ...Gender.allTypes.map((e) => GestureDetector(
+    //                                     onTap: (){
+    //                                       _gender=e;
+    //                                       ref.read(matchSettingProvider.notifier).setGender(e);
+    //                                     },
+    //                                     child: Padding(
+    //                                       padding: EdgeInsets.only(
+    //                                         top: 10
+    //                                       ),
+    //                                       child: Row(
+    //                                         mainAxisAlignment: MainAxisAlignment.start,
+    //                                         crossAxisAlignment: CrossAxisAlignment.center,
+    //                                         children: [
+    //                                           e==_gender?Image.asset(Assets.iconsSelected,width: 28,height: 28,):Container(),
+    //                                           Text(e.name,style: TextStyle(
+    //                                               fontSize: 36,
+    //                                               color:e==_gender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
+    //                                           ),)
+    //                                         ],
+    //                                       ),
+    //                                     ),
+    //                                   )).toList(),
+    //                                 ]
+    //                             ),
+    //                           ),
+    //                           SizedBox(
+    //                             height: 20,
+    //                           ),
+    //                           Container(
+    //                             width:335,
+    //                             height: 158,
+    //                             decoration: BoxDecoration(
+    //                                 color: Color(0xff2969E9),
+    //                                 borderRadius: BorderRadius.circular(40)
+    //                             ),
+    //                             child: Column(
+    //                               children: [
+    //                                 Text('Age',style: TextStyle(
+    //                                     fontSize: 29,
+    //                                     color: Color(0xfff9f9f9)
+    //                                 ),),
+    //                                 // ForwardButton(
+    //                                 //     onTap: () {},
+    //                                 //     text: '年龄  ${ref.watch(matchSettingProvider).ageRange.start.toInt()} - ${ref.watch(matchSettingProvider).ageRange.end.toInt()}'
+    //                                 // ),
+    //                                 SizedBox(height: 8),
+    //                                 SizedBox(child: RangeSlider(
+    //                                   activeColor: Colors.white,
+    //                                     inactiveColor:Color(0xff54b7ed) ,
+    //                                     min: 18,
+    //                                     max: 80,
+    //                                     divisions: 10,
+    //                                     labels: RangeLabels(ref.watch(matchSettingProvider).ageRange.start.toString(),
+    //                                         ref.watch(matchSettingProvider).ageRange.end.toString()),
+    //                                     values: ref.watch(matchSettingProvider).ageRange,
+    //                                     onChanged: (rv) {
+    //                                       ref.read(matchSettingProvider.notifier).setAgeRange(rv);
+    //                                     }
+    //                                 ),width: 277,),
+    //                               ],
+    //                             ),
+    //                           ),
+    //                           SizedBox(
+    //                             height: 20,
+    //                           ),
+    //                           GestureDetector(
+    //                             child: Container(
+    //                               width:335,
+    //                               height: 70,
+    //                               decoration: BoxDecoration(
+    //                                   color: Color(0xff2969E9),
+    //                                   borderRadius: BorderRadius.circular(40)
+    //                               ),
+    //                               child: Text('Save',style: TextStyle(
+    //                                   fontSize: 36,
+    //                                   color: Color(0xfff9f9f9)
+    //                               ),),
+    //                               alignment: Alignment.center,
+    //                             ),
+    //                             onTap: (){
+    //                               Navigator.pop(context);
+    //                             },
+    //                           )
+    //
+    //                         ],
+    //                       );
+    //                     });
+    //                   });
+    //                 },),
+    //                 SizedBox(
+    //                   height: 20,
+    //                 ),
+    //                 GestureDetector(child: Image.asset(Assets.iconsMore,width: 24,height: 24,),onTap: () async {
+    //                   var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
+    //                   if(result!=null){
+    //                     Fluttertoast.showToast(msg: result);
+    //                   }
+    //                 },)
+    //               ],
+    //             ),
+    //           ),
+    //           Positioned(
+    //             top: 0,
+    //             left: 0,
+    //             right: 0,
+    //             height: MediaQuery.of(context).padding.top,
+    //             child: DecoratedBox(
+    //               decoration: BoxDecoration(
+    //                 gradient: LinearGradient(
+    //                   begin: Alignment.topCenter,
+    //                   end: Alignment.bottomCenter,
+    //                   colors: [
+    //                     Colors.black.withOpacity(0.2),
+    //                     Colors.black.withOpacity(0.0),
+    //                   ]
+    //                 ),
+    //               ),
+    //             ),
+    //           )
+    //         ],
+    //       ),
+    //     );
+    //   },
+    //   error: (err, stack) => GestureDetector(
+    //     behavior: HitTestBehavior.translucent,
+    //     onTap: () => ref.refresh(asyncMatchRecommendedProvider),
+    //     child: Container(
+    //       color: Colors.white,
+    //       alignment: Alignment.center,
+    //       child: const Text(
+    //         'Load match data error\nclick the screen to try again.',
+    //         textAlign: TextAlign.center,
+    //         style: TextStyle(fontSize: 16, decoration: TextDecoration.none)
+    //       ),
+    //     ),
+    //   ),
+    //   loading: () => MatchInitAnimation(),
+    // );
+  }
 
-                                  });
-                                  ref.read(asyncMatchRecommendedProvider.notifier)
-                                    .arrow(users[index].id).then((resp){
-                                    if(resp==null){
-                                      return;
-                                    }
-                                    if(resp.statusCode==10150){
-                                      /// 判断如果不是会员，跳转道会员页面
-                                      if(ref.read(asyncMyProfileProvider).value?.isMember??false){
-                                        Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
-                                          return SubscribePage();
-                                        }));
-                                      }else {
-                                        Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                                      }
-                                      ///如果是会员，提示超过限制
-                                    }else if(resp.statusCode==200){
-                                      users[index].arrowed=true;
-                                      if (index < users.length - 1) {
-                                        pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-                                            curve: Curves.linearToEaseOut);
-                                      }
-                                    }
-                                  });
-
-                              }, arrowController: _animationController2,
-                            ),
-                          ),
-                          // 加action组件
-                        ],
-                      )
-                    );
-                  },
-                  itemCount: users.length,
-                  scrollDirection: Axis.vertical,
-                  controller: pageController,
-                  onPageChanged: (value){
-                    ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
-
-                    // if(users[value-1].arrowed||users[value-1].matched){
-                    //   return;
-                    // }else {
-                    //   users[value-1].skipped=true;
-                    //   ref.read(asyncMatchRecommendedProvider.notifier)
-                    //       .skip(users[value-1].id);
-                    // }
-                  },
-                ),
+  void _showFliter(BuildContext context) {
+    showDialog(context: context, builder: (c){
+      return Consumer(builder: (_,ref,__){
+        return Column(
+          children: [
+            Container(
+              width:335,
+              height: 230,
+              decoration: BoxDecoration(
+                  color: Color(0xff2969E9),
+                  borderRadius: BorderRadius.circular(40)
               ),
-              Arrow(animationController2: _animationController2),
-              Positioned(
-                right: 20,
-                top: 73,
-                child: Column(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 90
+              ),
+              child: Column(
                   children: [
-                    GestureDetector(child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),onTap: (){
-                      showDialog(context: context, builder: (c){
-                        return Consumer(builder: (_,ref,__){
-                          return Column(
-                            children: [
-                              Container(
-                                width:335,
-                                height: 230,
-                                decoration: BoxDecoration(
-                                    color: Color(0xff2969E9),
-                                    borderRadius: BorderRadius.circular(40)
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 90
-                                ),
-                                child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      const Text('Gender',style: TextStyle(
-                                        fontSize: 24,
-                                        color: Color(0xfff9f9f9)
-                                      ),),
-                                      // SizedBox(
-                                      //   height: 24,
-                                      // ),
-                                      ...Gender.allTypes.map((e) => GestureDetector(
-                                        onTap: (){
-                                          _gender=e;
-                                          ref.read(matchSettingProvider.notifier).setGender(e);
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            top: 10
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              e==_gender?Image.asset(Assets.iconsSelected,width: 28,height: 28,):Container(),
-                                              Text(e.name,style: TextStyle(
-                                                  fontSize: 36,
-                                                  color:e==_gender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
-                                              ),)
-                                            ],
-                                          ),
-                                        ),
-                                      )).toList(),
-                                    ]
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                width:335,
-                                height: 158,
-                                decoration: BoxDecoration(
-                                    color: Color(0xff2969E9),
-                                    borderRadius: BorderRadius.circular(40)
-                                ),
-                                child: Column(
-                                  children: [
-                                    Text('Age',style: TextStyle(
-                                        fontSize: 29,
-                                        color: Color(0xfff9f9f9)
-                                    ),),
-                                    // ForwardButton(
-                                    //     onTap: () {},
-                                    //     text: '年龄  ${ref.watch(matchSettingProvider).ageRange.start.toInt()} - ${ref.watch(matchSettingProvider).ageRange.end.toInt()}'
-                                    // ),
-                                    SizedBox(height: 8),
-                                    SizedBox(child: RangeSlider(
-                                      activeColor: Colors.white,
-                                        inactiveColor:Color(0xff54b7ed) ,
-                                        min: 18,
-                                        max: 80,
-                                        divisions: 10,
-                                        labels: RangeLabels(ref.watch(matchSettingProvider).ageRange.start.toString(),
-                                            ref.watch(matchSettingProvider).ageRange.end.toString()),
-                                        values: ref.watch(matchSettingProvider).ageRange,
-                                        onChanged: (rv) {
-                                          ref.read(matchSettingProvider.notifier).setAgeRange(rv);
-                                        }
-                                    ),width: 277,),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              GestureDetector(
-                                child: Container(
-                                  width:335,
-                                  height: 70,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xff2969E9),
-                                      borderRadius: BorderRadius.circular(40)
-                                  ),
-                                  child: Text('Save',style: TextStyle(
-                                      fontSize: 36,
-                                      color: Color(0xfff9f9f9)
-                                  ),),
-                                  alignment: Alignment.center,
-                                ),
-                                onTap: (){
-                                  Navigator.pop(context);
-                                },
-                              )
-
-                            ],
-                          );
-                        });
-                      });
-                    },),
-                    SizedBox(
-                      height: 20,
+                    const SizedBox(
+                      height: 10,
                     ),
-                    GestureDetector(child: Image.asset(Assets.iconsMore,width: 24,height: 24,),onTap: () async {
-                      var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
-                      if(result!=null){
-                        Fluttertoast.showToast(msg: result);
-                      }
-                    },)
-                  ],
-                ),
+                    const Text('Gender',style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xfff9f9f9)
+                    ),),
+                    // SizedBox(
+                    //   height: 24,
+                    // ),
+                    ...Gender.allTypes.map((e) => GestureDetector(
+                      onTap: (){
+                        _gender=e;
+                        ref.read(matchSettingProvider.notifier).setGender(e);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: 10
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            e==_gender?Image.asset(Assets.iconsSelected,width: 28,height: 28,):Container(),
+                            Text(e.name,style: TextStyle(
+                                fontSize: 36,
+                                color:e==_gender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
+                            ),)
+                          ],
+                        ),
+                      ),
+                    )).toList(),
+                  ]
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                height: MediaQuery.of(context).padding.top,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black.withOpacity(0.2),
-                        Colors.black.withOpacity(0.0),
-                      ]
-                    ),
-                  ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              width:335,
+              height: 158,
+              decoration: BoxDecoration(
+                  color: Color(0xff2969E9),
+                  borderRadius: BorderRadius.circular(40)
+              ),
+              child: Column(
+                children: [
+                  Text('Age',style: TextStyle(
+                      fontSize: 29,
+                      color: Color(0xfff9f9f9)
+                  ),),
+                  // ForwardButton(
+                  //     onTap: () {},
+                  //     text: '年龄  ${ref.watch(matchSettingProvider).ageRange.start.toInt()} - ${ref.watch(matchSettingProvider).ageRange.end.toInt()}'
+                  // ),
+                  SizedBox(height: 8),
+                  SizedBox(child: RangeSlider(
+                      activeColor: Colors.white,
+                      inactiveColor:Color(0xff54b7ed) ,
+                      min: 18,
+                      max: 80,
+                      divisions: 10,
+                      labels: RangeLabels(ref.watch(matchSettingProvider).ageRange.start.toString(),
+                          ref.watch(matchSettingProvider).ageRange.end.toString()),
+                      values: ref.watch(matchSettingProvider).ageRange,
+                      onChanged: (rv) {
+                        ref.read(matchSettingProvider.notifier).setAgeRange(rv);
+                      }
+                  ),width: 277,),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              child: Container(
+                width:335,
+                height: 70,
+                decoration: BoxDecoration(
+                    color: Color(0xff2969E9),
+                    borderRadius: BorderRadius.circular(40)
                 ),
-              )
-            ],
-          ),
+                alignment: Alignment.center,
+                child: Text('Save',style: TextStyle(
+                    fontSize: 36,
+                    color: Color(0xfff9f9f9)
+                ),),
+              ),
+              onTap: (){
+                _initData();
+                Navigator.pop(context);
+              },
+            )
+
+          ],
         );
-      },
-      error: (err, stack) => GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () => ref.refresh(asyncMatchRecommendedProvider),
-        child: Container(
-          color: Colors.white,
-          alignment: Alignment.center,
-          child: const Text(
-            'Load match data error\nclick the screen to try again.',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, decoration: TextDecoration.none)
-          ),
-        ),
-      ),
-      loading: () => MatchInitAnimation(),
-    );
+      });
+    });
   }
 
   void _showActions(UserInfo user) {

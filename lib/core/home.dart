@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
@@ -24,6 +25,10 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   @override
   void initState() {
     _determinePosition();
+    Stream<RemoteMessage> stream = FirebaseMessaging.onMessageOpenedApp;
+    stream.listen((event) {
+       print(event);
+    });
     super.initState();
   }
 
