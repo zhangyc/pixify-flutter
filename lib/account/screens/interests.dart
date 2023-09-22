@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 
-import '../providers/profile.dart';
-
 class Interests extends ConsumerStatefulWidget {
   const Interests({
     super.key,
@@ -85,7 +83,7 @@ class _InterestsState extends ConsumerState<Interests> {
   }
 
   void _save() {
-    final interests = ref.read(asyncMyProfileProvider.notifier).updateInfo(interests: _selected);
-    Navigator.pop(context);
+    // final interests = ref.read(asyncMyProfileProvider.notifier).updateInfo(interests: _selected);
+    Navigator.pop(context, _selected);
   }
 }

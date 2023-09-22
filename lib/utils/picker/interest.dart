@@ -4,8 +4,6 @@ import 'package:sona/account/providers/interests.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/interests.dart';
 
-import '../../common/widgets/button/colored.dart';
-
 Future<Set<String>?> showInterestPicker({
   required BuildContext context,
   Set<String>? initialValue = const {},
@@ -65,7 +63,9 @@ Future<Set<String>?> showInterestPicker({
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 16,
-                                    decoration: TextDecoration.none)),
+                                    decoration: TextDecoration.none
+                                )
+                            ),
                           ),
                         )
                     );

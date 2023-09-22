@@ -7,6 +7,7 @@ import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/text/colorful_sona.dart';
 import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/picker/interest.dart';
 
 import '../../core/persona/widgets/sona_message.dart';
 import '../../utils/picker/gender.dart';
@@ -50,23 +51,34 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     _actions = [
       FieldAcquireAction(
           field: null,
-          text:
-              'Hi\n\nI\'m SONA😊\n\nYour social\nadvisor to coach\nyou on\nmeaningful\nfriendships!',
-          action: null),
+          text: 'Hi\n\nI\'m SONA😊\n\nYour social\nadvisor to coach\nyou on\nmeaningful\nfriendships!',
+          action: null
+      ),
       FieldAcquireAction(
-          field: 'name', text: 'What\'s your name?', action: _getName),
+          field: 'name',
+          text: 'What\'s your name?',
+          action: _getName
+      ),
       FieldAcquireAction(
-          field: 'birthday', text: 'How old are you?', action: _getBirthday),
+          field: 'birthday',
+          text: 'How old\n are you?',
+          action: _getBirthday
+      ),
       FieldAcquireAction(
-          field: 'gender', text: 'Plz choose your Gender', action: _getGender),
+          field: 'gender',
+          text: 'Plz choose\n your Gender',
+          action: _getGender
+      ),
       FieldAcquireAction(
           field: 'avatar',
-          text: 'Choose a photo for your avatar',
-          action: _getAPhotoAndUpload),
+          text: 'Choose a photo\n for your avatar',
+          action: _getAPhotoAndUpload
+      ),
       FieldAcquireAction(
           field: 'interests',
           text: 'Choose your interests',
-          action: _chooseInterests),
+          action: _chooseInterests
+      ),
     ];
   }
 
@@ -90,14 +102,13 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                             action.value = await action.action!();
                           }
                           if (action.field == 'avatar') {
-                            ref
-                                .read(asyncMyProfileProvider.notifier)
-                                .updateInfo(
-                                    name: _name,
-                                    birthday: _birthday,
-                                    gender: _gender,
-                                    avatar: _avatar,
-                                    interests: _interests);
+                            ref.read(asyncMyProfileProvider.notifier).updateInfo(
+                              name: _name,
+                              birthday: _birthday,
+                              gender: _gender,
+                              avatar: _avatar,
+                              interests: _interests
+                            );
                           } else {
                             _pageController.nextPage(
                                 duration: const Duration(microseconds: 400),
@@ -178,11 +189,10 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     return value;
   }
 
-  Future<Gender> _chooseInterests() async {
-    final value = await showDialog(
-        context: context, builder: (context) => const InterestsSelector());
+  Future<Set<String>> _chooseInterests() async {
+    final value = await showInterestPicker(context: context);
     if (value == null) {
-      return _getGender();
+      return _chooseInterests();
     } else {
       _actions.firstWhere((action) => action.field == 'interests')
         ..value = value
@@ -194,8 +204,11 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
 }
 
 class FieldAcquireAction<T> {
-  FieldAcquireAction(
-      {required this.field, required this.text, required this.action});
+  FieldAcquireAction({
+    required this.field,
+    required this.text,
+    required this.action
+  });
   final String? field;
   String text;
   final Future<T> Function()? action;

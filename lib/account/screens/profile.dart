@@ -284,9 +284,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
     final bytes = await file.readAsBytes();
-    print(bytes.length);
     final res=await compressList(bytes);
-    print(res.length);
     if(res.isEmpty){
       throw Exception('Handle fail');
     }
