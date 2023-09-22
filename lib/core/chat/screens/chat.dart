@@ -256,9 +256,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final resp = await callSona(
       httpClient: ref.read(dioProvider),
       userId: widget.otherSide.id,
-      type: CallSonaType.SUGGEST
+      type: CallSonaType.SUGGEST_V2
     );
-    final options = resp.data['options'] as List;
+    final options = resp.data['optionV2'] as List;
 
     if (!mounted) return;
     await showDialog(
@@ -288,13 +288,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       childAspectRatio: 155 / 130
                     ),
                     children: [
-                      ...options.map((m) => GestureDetector(
+                      ...options.map((opt) => GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () async {
                           Navigator.pop(context);
-                          _sendMessage(
-                            m['message'],
-                            ImMessageType.suggestion
+                          callSona(
+                            httpClient: ref.read(dioProvider),
+                            userId: widget.otherSide.id,
+                            type: CallSonaType.SUGGEST_FUNC,
+                            input: opt
                           );
                         },
                         child: Container(
@@ -302,7 +304,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                             height: 155,
                             color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7),
                             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                            child: Text(m['summary'], style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            child: Text(opt ?? '', style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.black
                             ))
                         )
