@@ -9,11 +9,13 @@ import 'package:sona/account/models/user_info.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/info.dart';
+import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
+import 'package:sona/utils/picker/interest.dart';
 
 import '../../common/widgets/button/colored.dart';
 import '../../utils/providers/dio.dart';
@@ -138,9 +140,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: ForwardButton(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return InterestsScreen();
-                })),
+                onTap: _onEditInterests,
                 text: 'Interests',
               ),
             ),
@@ -178,6 +178,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
     return GestureDetector(
       onLongPress: index != 0 ? () => _showPhotoActions(_profile.photos[index]) : null,
+      onTap: index == 0 ? _seeMyProfile : null,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
@@ -189,15 +190,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  Future _sonaWritesBio() async {
-    final dio = ref.read(dioProvider);
-    EasyLoading.show();
-    try {
-      final resp = await dio.post('/persona/intro/generation');
-    } catch (e) {
-      //
-    } finally {
-      EasyLoading.dismiss();
+  void _seeMyProfile() {
+    Navigator.push(context, MaterialPageRoute(
+        builder: (_) => UserProfileScreen(
+          user: ref.read(asyncMyProfileProvider).value!.toUser(),
+          relation: Relation.self,
+        )
+    ));
+  }
+
+  Future _onEditInterests() async {
+    final result = await showInterestPicker(context: context);
+    if (result != null) {
+      ref.read(asyncMyProfileProvider.notifier).updateInfo(interests: result);
     }
   }
 
@@ -242,12 +247,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       cancelFlex: 2
     );
     if (text != null && text.trim().isNotEmpty) {
-      await callSona(
-        httpClient: ref.read(dioProvider),
-        type: CallSonaType.BIO,
-        input: text
-      );
-      await ref.read(asyncMyProfileProvider.notifier).refresh();
+      ref.read(asyncMyProfileProvider.notifier).updateInfo(bio: text);
     }
   }
 
@@ -285,9 +285,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
     final bytes = await file.readAsBytes();
-    print(bytes.length);
     final res=await compressList(bytes);
-    print(res.length);
     if(res.isEmpty){
       throw Exception('Handle fail');
     }

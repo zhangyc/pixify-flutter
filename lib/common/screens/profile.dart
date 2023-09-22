@@ -51,9 +51,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               Positioned(
                 top: MediaQuery.of(context).padding.top + 8,
                 right: 20,
-                child: IconButton(
-                  icon: Icon(Icons.more_horiz_outlined),
-                  onPressed: _showActions,
+                child: Visibility(
+                  visible: widget.relation != Relation.self,
+                  child: IconButton(
+                    icon: Icon(Icons.more_horiz_outlined),
+                    onPressed: _showActions,
+                  ),
                 ),
               ),
               Positioned(
@@ -128,5 +131,6 @@ enum Relation {
   normal,
   likeOther,
   likeMe,
-  matched
+  matched,
+  self
 }
