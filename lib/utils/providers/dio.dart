@@ -5,23 +5,17 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/providers/token.dart';
-import 'package:sona/utils/http/interceptors/token_interceptor.dart';
 import 'package:sona/utils/providers/env.dart';
 
 import '../http/interceptors/base.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final token = ref.watch(tokenProvider);
-  ref.listen(tokenProvider, (previous, next) {
-    if (previous != null && next == null) {
-      ref.state.close(force: true);
-    }
-  });
   final baseUrl = ref.read(envProvider);
   final options = BaseOptions(
-    connectTimeout: const Duration(milliseconds: 25000),
-    receiveTimeout: const Duration(milliseconds: 25000),
-    sendTimeout: const Duration(milliseconds: 25000),
+    connectTimeout: const Duration(milliseconds: 15000),
+    receiveTimeout: const Duration(milliseconds: 15000),
+    sendTimeout: const Duration(milliseconds: 15000),
     baseUrl: baseUrl,
     headers: {
       'device': Platform.operatingSystem,

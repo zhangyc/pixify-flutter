@@ -28,7 +28,6 @@ final tokenProvider = StateProvider<String?>(
         ref.invalidate(asyncChatStylesProvider);
       } else {
         kvStore.setString(tokenKey, next);
-        ref.read(asyncMyProfileProvider);
       }
     });
     final token = kvStore.getString(tokenKey);

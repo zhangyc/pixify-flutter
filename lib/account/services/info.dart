@@ -34,11 +34,10 @@ Future<MyProfile> getMyInfo({
   required Dio httpClient,
 }) async {
   final resp = await httpClient.post(
-      '/user/find-myself'
+    '/user/find-myself'
   );
   try {
-
-    final d = MyProfile.fromJson(resp?.data);
+    final d = MyProfile.fromJson(resp.data);
     return d;
   } catch(e) {
     debugPrint('get-my-info-error: ${e.toString()}');

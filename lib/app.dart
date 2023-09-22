@@ -34,53 +34,52 @@ class SonaApp extends HookConsumerWidget {
               children: [
                 Positioned.fill(child: child!),
                 Positioned.fill(
-                    child: asyncMyProfile.when(
-                  data: (myProfile) {
-                    if (myProfile.completed) {
-                      return const Opacity(
-                        opacity: 0,
-                      );
-                    } else {
-                      final pages = [
-                        const MaterialPage(child: RequiredInfoFormScreen())
-                      ];
-                      return HeroControllerScope.none(
-                          child: Navigator(
-                        pages: pages,
-                        onPopPage: (Route<dynamic> route, dynamic result) {
-                          pages.remove(route.settings);
-                          return route.didPop(result);
-                        },
-                      ));
-                    }
-                  },
-                  loading: () => Container(
-                    color: Colors.white54,
-                    alignment: Alignment.center,
-                    child: const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(color: Colors.green,)),
-                  ),
-                  error: (err, stack) => token == null
-                      ? const Opacity(opacity: 0)
-                      : GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () => ref
-                              .watch(asyncMyProfileProvider.notifier)
-                              .refresh(),
-                          child: Container(
-                            color: Colors.white,
-                            alignment: Alignment.center,
-                            child: const Text(
-                                'Cannot connect to server, tap to retry',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    decoration: TextDecoration.none)),
+                  child: asyncMyProfile.when(
+                    data: (myProfile) {
+                      if (myProfile.completed) {
+                        return const Opacity(
+                          opacity: 0,
+                        );
+                      } else {
+                        final pages = [
+                          const MaterialPage(child: RequiredInfoFormScreen())
+                        ];
+                        return HeroControllerScope.none(child: Navigator(
+                          pages: pages,
+                          onPopPage: (Route<dynamic> route, dynamic result) {
+                            pages.remove(route.settings);
+                            return route.didPop(result);
+                          },
+                        ));
+                      }
+                    },
+                    loading: () => Container(
+                      color: Colors.white54,
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(color: Theme.of(context).primaryColor)
+                      ),
+                    ),
+                    error: (err, stack) => token == null
+                        ? const Opacity(opacity: 0)
+                        : GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: ref.read(asyncMyProfileProvider.notifier).refresh,
+                            child: Container(
+                              color: Colors.white,
+                              alignment: Alignment.center,
+                              child: const Text(
+                                  'Cannot connect to server, tap to retry',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      decoration: TextDecoration.none)),
+                            ),
                           ),
-                        ),
-                ))
+                  )
+                )
               ],
             );
           }),
