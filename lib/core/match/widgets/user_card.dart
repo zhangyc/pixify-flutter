@@ -1,38 +1,54 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/match/screens/match.dart';
 
 import '../../../common/models/user.dart';
+import '../../../generated/assets.dart';
 import 'match_init_animation.dart';
 
 class UserCard extends ConsumerStatefulWidget {
-  const UserCard({
+  UserCard({
     super.key,
     required this.user,
     this.actions = const <Positioned>[],
+    this.onArrow,
   });
   final UserInfo user;
   final List<Positioned> actions;
-
+  Function? onArrow;
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ConsumerUserCardState();
 }
 
-class _ConsumerUserCardState extends ConsumerState<UserCard> {
+class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerProviderStateMixin{
   final _pageController = PageController();
   double _page = 0;
+  late AnimationController arrowController;
 
   @override
   void initState() {
+    arrowController=AnimationController(vsync: this,duration: Duration(milliseconds: 1500),lowerBound: 0.1,upperBound: 1);
+    arrowController.addListener(() {
+      if(arrowController.isCompleted){
+        widget.onArrow?.call();
+        setState(() {
+
+        });
+      }
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _pageController.addListener(_pageControllerListener);
     });
+
     super.initState();
   }
 
   @override
   void dispose() {
     _pageController.removeListener(_pageControllerListener);
+    arrowController.dispose();
     super.dispose();
   }
 
@@ -91,6 +107,22 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> {
                 ),
               ),
             )
+        ),
+        Positioned.fill(child: Arrow(animationController: arrowController)),
+
+        Positioned(
+          right: 20,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 80,
+          child:  GestureDetector(child: Image.asset(Assets.iconsArrow,width: 50,height: 50,),
+            onTap: (){
+               ///内存中取一下
+               arrowController.reset();
+               arrowController.forward();
+               setState(() {
+
+               });
+            },
+          )
         ),
         ...widget.actions,
       ],
