@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sona/common/widgets/button/icon.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/widgets/message/message_from_me.dart';
 import 'package:sona/core/chat/widgets/message/message_from_other.dart';
@@ -97,11 +98,11 @@ class MessageWidget extends StatelessWidget {
                   width: 28,
                   height: 28,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+                    color: Color(0xFFF5F5F5),
                     shape: BoxShape.circle
                   ),
                   alignment: Alignment.center,
-                  child: Icon(Icons.switch_access_shortcut_add_outlined, size: 16, color: Theme.of(context).colorScheme.tertiary)
+                  child: SonaIcon(icon: SonaIcons.sparkles, size: 16)
                 ),
               ),
             ),

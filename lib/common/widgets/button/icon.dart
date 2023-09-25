@@ -11,6 +11,7 @@ class SIconButton extends StatefulWidget {
     this.color = const Color(0xFFFFFFFF),
     required this.child,
     this.borderColor = const Color(0x00000000),
+    this.indicatorColor = Colors.yellow,
     this.disabled = false
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class SIconButton extends StatefulWidget {
   final Color color;
   final Widget child;
   final Color borderColor;
+  final Color indicatorColor;
   final bool disabled;
 
   @override
@@ -48,9 +50,9 @@ class _SIconButtonState extends State<SIconButton> {
 
   Widget get child => !_loading ? widget.child : Padding(
     padding: EdgeInsets.all(4),
-    child: const CircularProgressIndicator(
-      backgroundColor: Color(0xFFD4D4D4),
-      valueColor: AlwaysStoppedAnimation(Color(0xFF888888)),
+    child: CircularProgressIndicator(
+      backgroundColor: Color(0xFFF5F5F5),
+      valueColor: AlwaysStoppedAnimation(widget.indicatorColor),
       strokeWidth: 1.5,
     ),
   );

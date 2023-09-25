@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 
 import 'mode_provider.dart';
@@ -192,12 +193,15 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
               children: [
                 Visibility(
                   visible: ref.watch(hookVisibilityProvider(widget.chatId)),
-                  child: InkWell(
+                  child: SIconButton(
                       onTap: widget.onHookTap,
+                      loadingWhenAsyncAction: true,
+                      size: 32,
+                      indicatorColor: Theme.of(context).primaryColor,
                       child: Container(
-                          width: 24,
+                          width: 32,
                           height: 32,
-                          margin: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                          margin: EdgeInsets.symmetric(vertical: 3, horizontal: 3),
                           decoration: BoxDecoration(
                               color: Theme.of(context).primaryColor,
                               borderRadius: BorderRadius.circular(4)
@@ -227,12 +231,14 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                 ),
                 Visibility(
                   visible: ref.watch(currentInputEmptyProvider(widget.chatId)),
-                  child: InkWell(
+                  child: SIconButton(
                       onTap: widget.onSuggestionTap,
+                      loadingWhenAsyncAction: true,
+                      size: 36,
                       child: Container(
-                          width: 24,
-                          height: 32,
-                          margin: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                          width: 36,
+                          height: 36,
+                          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
                           decoration: BoxDecoration(
                               color: Colors.yellow,
                               borderRadius: BorderRadius.circular(4)
