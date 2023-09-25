@@ -14,7 +14,7 @@ final tokenProvider = StateProvider<String?>(
     ref.listenSelf((previous, next) {
       global.token = next;
       if (next == null) {
-        global.navigatorKey.currentState!.pushNamedAndRemoveUntil('login', (route) => false);
+        global.navigatorKey.currentState?.pushNamedAndRemoveUntil('login', (route) => false);
       }
 
       ref.invalidate(myProfileProvider);
