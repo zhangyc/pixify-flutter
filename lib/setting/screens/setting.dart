@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/providers/token.dart';
@@ -101,8 +102,13 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
 
   Future _delete() async {
     final warningConfirm = await _showWarningConfirm();
+    bool? finalConfirm;
     if (warningConfirm == true) {
-      final finalConfirm = await _showFinalConfirm();
+      if (ref.read(asyncMyProfileProvider).value!.isMember) {
+        finalConfirm = await _showFinalConfirm();
+      } else {
+        finalConfirm = true;
+      }
       if (finalConfirm == true) {
         final resp = await deleteAccount(httpClient: ref.read(dioProvider));
         if (resp.statusCode == 0) {
@@ -117,10 +123,11 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
 
   Future<bool?> _showWarningConfirm() {
     return showConfirm(
-        context: context,
-        title: 'Delete Account',
-        confirmDelay: const Duration(seconds: 20),
-        content: 'Deleting your account is permanent.\nAll your data will be deleted and can\'t be recovered.\nAre you sure you want to proceed?'
+      context: context,
+      title: 'Delete Account',
+      confirmDelay: const Duration(seconds: 20),
+      content: 'Deleting your account is permanent.\nAll your data will be deleted and can\'t be recovered.\nAre you sure you want to proceed?',
+      confirmText: 'Delete',
     );
   }
 
