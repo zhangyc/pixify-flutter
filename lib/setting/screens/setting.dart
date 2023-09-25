@@ -1,17 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/setting/screens/about.dart';
-import 'package:sona/utils/providers/dio.dart';
-import 'package:sona/utils/providers/kv_store.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../utils/dialog/input.dart';
-import '../../utils/providers/env.dart';
 
 class SettingScreen extends StatefulHookConsumerWidget {
   const SettingScreen({super.key});
@@ -41,7 +38,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   value: openNotification,
                   onChanged: (bool value) {
                      openNotification=value;
-                     ref.read(dioProvider).post('/user/update',data: {
+                     dio.post('/user/update',data: {
                        'openPush':value
                      }).then((value){
 
@@ -98,19 +95,20 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
 
   void _logout() {
     ref.read(tokenProvider.notifier).state = null;
+
   }
 
   Future _delete() async {
     final warningConfirm = await _showWarningConfirm();
     bool? finalConfirm;
     if (warningConfirm == true) {
-      if (ref.read(asyncMyProfileProvider).value!.isMember) {
+      if (ref.read(myProfileProvider)!.isMember) {
         finalConfirm = await _showFinalConfirm();
       } else {
         finalConfirm = true;
       }
       if (finalConfirm == true) {
-        final resp = await deleteAccount(httpClient: ref.read(dioProvider));
+        final resp = await deleteAccount();
         if (resp.statusCode == 0) {
           if (mounted) {
             Navigator.popUntil(context, (route) => route.isFirst);

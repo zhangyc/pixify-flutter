@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:sona/utils/global/global.dart';
 
-Future<Response> fetchChatStyles({
-  required Dio httpClient
-}) async {
-  return httpClient.post(
+Future<Response> fetchChatStyles() async {
+  return dio.post(
     '/chat-style/find',
   );
 }

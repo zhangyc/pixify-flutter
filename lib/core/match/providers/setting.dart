@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/models/user_info.dart';
+import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/match/providers/matched.dart';
-import 'package:sona/utils/providers/kv_store.dart';
 import 'package:sona/utils/timer/debounce.dart';
 
 import '../../../account/models/gender.dart';
+import '../../../utils/global/global.dart';
 
 final positionProvider = StateProvider<Position?>((ref) {
-  Position? position = ref.read(asyncMyProfileProvider).value?.position;
-  ref.listen(asyncMyProfileProvider, (AsyncValue<MyProfile>? prev, AsyncValue<MyProfile> next) {
-    if (next.value?.position != null && position != next.value!.position) {
-      position = next.value!.position;
-    }
-  });
-  return position;
-}, dependencies: [asyncMyProfileProvider]);
+  return ref.watch(myProfileProvider)?.position;
+}, dependencies: [myProfileProvider]);
 
 
 @immutable
@@ -44,8 +38,6 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
 
   @override
   MatchSetting build() {
-    final kvStore = ref.read(kvStoreProvider);
-
     Gender? gender;
     final storageGenderValue = kvStore.getInt(genderKey);
     if (storageGenderValue != null) {
@@ -72,7 +64,7 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
       ageRange: ageRange
     );
     debounce.run(() => ref.refresh(asyncMatchRecommendedProvider));
-    ref.read(kvStoreProvider).setString(ageRangeKey, [ageRange.start.toInt(), ageRange.end.toInt()].join(':'));
+    kvStore.setString(ageRangeKey, [ageRange.start.toInt(), ageRange.end.toInt()].join(':'));
   }
 
   void setGender(Gender? gender) {
@@ -82,9 +74,9 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
     );
     debounce.run(() => ref.refresh(asyncMatchRecommendedProvider));
     if (gender != null) {
-      ref.read(kvStoreProvider).setInt(genderKey, gender.index);
+      kvStore.setInt(genderKey, gender.index);
     } else {
-      ref.read(kvStoreProvider).remove(genderKey);
+      kvStore.remove(genderKey);
     }
   }
 }

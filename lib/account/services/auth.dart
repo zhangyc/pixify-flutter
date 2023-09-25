@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../firebase/sona_firebase.dart';
 Future<Response> sendPin({
-  required Dio httpClient,
   required String countryCode,
   required String phoneNumber
 }) async {
-  return httpClient.post(
+  return dio.post(
       '/auth/send-phone-code',
       data: {
         'phonePrefix': countryCode,
@@ -16,12 +16,11 @@ Future<Response> sendPin({
 }
 
 Future<Response> login({
-  required Dio httpClient,
   required String countryCode,
   required String phoneNumber,
   required String pinCode
 }) async {
-  return httpClient.post(
+  return dio.post(
       '/auth/login-phone-code',
       data: {
         'phonePrefix': countryCode,

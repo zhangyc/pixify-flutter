@@ -4,9 +4,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/providers/chat.dart';
-import 'package:sona/core/chat/widgets/inputbar/mode_provider.dart';
-import 'package:sona/utils/providers/dio.dart';
-import 'package:sona/utils/providers/kv_store.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../../account/providers/profile.dart';
 import '../../services/chat_style.dart';
@@ -40,9 +38,7 @@ class ChatStyle {
 
 class AsyncChatStylesNotifier extends AsyncNotifier<List<ChatStyle>> {
   Future<List<ChatStyle>> _fetchChatStyles() {
-    return fetchChatStyles(
-        httpClient: ref.read(dioProvider)
-    ).then<List<ChatStyle>>(
+    return fetchChatStyles().then<List<ChatStyle>>(
         (resp) => (resp.data as List).map<ChatStyle>(ChatStyle.fromJson).toList()
     );
   }
@@ -50,7 +46,7 @@ class AsyncChatStylesNotifier extends AsyncNotifier<List<ChatStyle>> {
   @override
   FutureOr<List<ChatStyle>> build() {
     try {
-      final jsonString = ref.read(kvStoreProvider).getString('styles');
+      final jsonString = kvStore.getString('styles');
       final styles = (jsonDecode(jsonString!) as List).map<ChatStyle>(ChatStyle.fromJson).toList();
       refresh(true);
       return styles;
@@ -74,7 +70,7 @@ final currentChatStyleProvider = StateProvider.family<ChatStyle?, int>(
   (ref, arg) {
     ref.listenSelf((previous, next) {
       FirebaseFirestore.instance.collection('users')
-          .doc(ref.read(asyncMyProfileProvider).value!.id.toString())
+          .doc(ref.read(myProfileProvider)!.id.toString())
           .collection('rooms').doc(arg.toString())
           .set({'chatStyleId': next?.id}, SetOptions(merge: true))
           .catchError((_) {});

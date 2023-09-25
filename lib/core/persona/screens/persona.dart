@@ -3,9 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/screens/profile.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/setting/screens/setting.dart';
-import 'package:sona/utils/providers/dio.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../utils/dialog/input.dart';
 
@@ -111,27 +111,8 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
     );
   }
 
-  Future _onAddKnowledge() async {
-    var text = await showTextFieldDialog(context: context, controller: TextEditingController());
-    final dio = ref.read(dioProvider);
-    final resp = await dio.post('/knowledge', data: {'content': text});
-    final data = resp.data;
-    if (data['code'] == 1 ) {
-      _fetchKnowledge();
-    }
-  }
-
   void _goSetting() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingScreen()));
-  }
-
-  Future _removeKnowledge(String content) async {
-    final dio = ref.read(dioProvider);
-    final resp = await dio.delete('/knowledge', data: {'content': content});
-    final data = resp.data;
-    if (data['code'] == 1 ) {
-      _fetchKnowledge();
-    }
   }
 
   @override

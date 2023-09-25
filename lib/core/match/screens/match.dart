@@ -13,12 +13,12 @@ import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/screens/report.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/generated/assets.dart';
-import 'package:sona/utils/providers/dio.dart';
+import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/global/global.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../account/models/gender.dart';
 import '../../../utils/dialog/input.dart';
-import '../../providers/navigator_key.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/setting.dart';
 import '../widgets/like_animation.dart';
@@ -70,8 +70,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         }
                         if(resp.statusCode==10150){
                           /// 判断如果不是会员，跳转道会员页面
-                          if(ref.read(asyncMyProfileProvider).value?.isMember??false){
-                            Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+                          if(ref.read(myProfileProvider)?.isMember??false){
+                            navigatorKey.currentState?.push(MaterialPageRoute(builder:(c){
                               return SubscribePage();
                             }));
                           }else {
@@ -101,7 +101,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                 return;
                               }
                               if(resp.statusCode==10150){
-                                Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+                                navigatorKey.currentState?.push(MaterialPageRoute(builder:(c){
                                   return SubscribePage();
                                 }));
                               }
@@ -160,7 +160,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     }));
 
                   }else if(result=='block'){
-                    ref.read(dioProvider).post('/user/update-relation',data:{
+                    dio.post('/user/update-relation',data:{
                       "userId":users[currentPage].id, // 对方用户ID
                       "relationType":5 // 匹配结果：1:忽略，2：喜欢，3：ARROW 5拉黑 6查看
                     });
@@ -328,7 +328,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     final position = ref.read(positionProvider);
     final setting = ref.read(matchSettingProvider);
    try{
-     final resp=await ref.read(dioProvider).post('/user/match-v2',data: {
+     final resp=await dio.post('/user/match-v2',data: {
        'gender': setting.gender?.index,
        'minAge': setting.ageRange.start.toInt(),
        'maxAge': setting.ageRange.end.toInt(),
@@ -352,7 +352,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     final position = ref.read(positionProvider);
     final setting = ref.read(matchSettingProvider);
     try{
-      final resp=await ref.read(dioProvider).post('/user/match-v2',data: {
+      final resp=await dio.post('/user/match-v2',data: {
         'gender': setting.gender?.index,
         'minAge': setting.ageRange.start.toInt(),
         'maxAge': setting.ageRange.end.toInt(),

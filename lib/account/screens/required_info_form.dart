@@ -12,7 +12,6 @@ import 'package:sona/utils/picker/interest.dart';
 
 import '../../core/persona/widgets/sona_message.dart';
 import '../../utils/picker/gender.dart';
-import '../../utils/providers/dio.dart';
 import '../models/gender.dart';
 
 class RequiredInfoFormScreen extends ConsumerStatefulWidget {
@@ -109,7 +108,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                             action.value = await action.action!();
                           }
                           if (action.field == 'avatar') {
-                            ref.read(asyncMyProfileProvider.notifier).updateInfo(
+                            ref.read(myProfileProvider.notifier).updateField(
                               name: _name,
                               birthday: _birthday,
                               gender: _gender,
@@ -186,9 +185,8 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
     final bytes = await file.readAsBytes();
-    final dio = ref.read(dioProvider);
     final value =
-        await uploadFile(httpClient: dio, bytes: bytes, filename: file.name);
+        await uploadFile(bytes: bytes, filename: file.name);
     _actions.firstWhere((action) => action.field == 'avatar')
       ..value = value
       ..done = true;
@@ -244,9 +242,8 @@ class _InterestsSelectorState extends ConsumerState<InterestsSelector> {
   }
 
   Future _fetchAvailableInterests() async {
-    final dio = ref.read(dioProvider);
     try {
-      final resp = await fetchAvailableInterests(httpClient: dio);
+      final resp = await fetchAvailableInterests();
       _availableInterests = List<Map<String, dynamic>>.from(resp.data);
       if (mounted) setState(() {});
     } catch (e) {

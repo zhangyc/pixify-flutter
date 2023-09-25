@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/services/common.dart';
-import 'package:sona/utils/providers/dio.dart';
 
 class AsyncInterestsNotifier extends AsyncNotifier<List<String>> {
 
   FutureOr<List<String>> _fetchInterests() async {
-    final interests = await fetchAvailableInterests(httpClient: ref.read(dioProvider));
+    final interests = await fetchAvailableInterests();
     if (interests.statusCode == 0) {
       return (interests.data as List).map<String>((i) => i['code']).toList();
     } else {

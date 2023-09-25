@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/utils/providers/dio.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../utils/dialog/input.dart';
 
@@ -25,7 +25,6 @@ class _PromptTemplateScreenState extends ConsumerState<PromptTemplateScreen> {
   }
 
   Future<String?> _getTemplate(String key) async {
-    final dio = ref.read(dioProvider);
     final resp = await dio.get('/template/$key');
     final data = resp.data;
     if (data['code'] == 1 && data['data']['value'] != null) {
@@ -73,7 +72,6 @@ class _PromptTemplateScreenState extends ConsumerState<PromptTemplateScreen> {
       context: context,
       controller: TextEditingController(text: initialText),
     );
-    final dio = ref.read(dioProvider);
     final resp = await dio.post('/template/$key', data: {"key": key, "value": text});
     final data = resp.data;
     if (data['code'] == 1 ) {

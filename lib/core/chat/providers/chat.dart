@@ -8,7 +8,7 @@ import '../models/conversation.dart';
 import '../models/message.dart';
 
 final conversationStreamProvider = StreamProvider<List<ImConversation>>((ref) async* {
-  final userId = ref.read(asyncMyProfileProvider).value!.id;
+  final userId = ref.read(myProfileProvider)!.id;
   final stream = FirebaseFirestore.instance
       .collection('users').doc('$userId')
       .collection('rooms').orderBy('id', descending: true).limit(100)
@@ -30,7 +30,7 @@ final localPendingMessagesProvider = StateProvider.autoDispose.family<List<ImMes
 final messageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>, int>(
   (ref, roomId) async* {
     List<ImMessage> messages = [];
-    final userId = ref.read(asyncMyProfileProvider).value!.id;
+    final userId = ref.read(myProfileProvider)!.id;
     final stream = FirebaseFirestore.instance
         .collection('users').doc('$userId')
         .collection('rooms').doc('$roomId')

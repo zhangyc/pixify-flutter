@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:sona/utils/global/global.dart';
 
-Future<Response> fetchLikedMeList({
-  required Dio httpClient
-}) async {
-  return httpClient.post(
+Future<Response> fetchLikedMeList() async {
+  return dio.post(
     '/user/friend/find-like-me'
   );
 }
