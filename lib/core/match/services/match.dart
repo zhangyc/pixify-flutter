@@ -6,12 +6,12 @@ import 'package:sona/utils/global/global.dart';
 
 import '../../../utils/providers/dio.dart';
 
-Future<Response> fetchMatchPeople({
+Future<HttpResult> fetchMatchPeople({
   required Position position,
   Gender? gender,
   RangeValues? range
-}) async {
-  return dio.post(
+}) {
+  return post(
     '/user/match-v2',
     data: {
       'gender': gender?.index,

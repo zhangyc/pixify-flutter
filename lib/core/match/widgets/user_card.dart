@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/screens/match.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/models/user.dart';
 import '../../../generated/assets.dart';
-import '../../providers/navigator_key.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
 import 'match_init_animation.dart';
@@ -125,8 +125,8 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
                     print(resp);
                 if(resp.statusCode==10150){
                   /// 判断如果不是会员，跳转道会员页面
-                  if(ref.read(asyncMyProfileProvider).value?.isMember??false){
-                    Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+                  if(ref.read(myProfileProvider)?.isMember??false){
+                    Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
                       return SubscribePage();
                     }));
                   }else {

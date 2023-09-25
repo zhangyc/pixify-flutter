@@ -10,30 +10,7 @@ import 'package:sona/utils/providers/env.dart';
 
 import '../http/interceptors/base.dart';
 
-final dioProvider = Provider<Dio>((ref) {
-  final token = ref.watch(tokenProvider);
-  final baseUrl = ref.read(envProvider);
-  final options = BaseOptions(
-    connectTimeout: const Duration(milliseconds: 15000),
-    receiveTimeout: const Duration(milliseconds: 15000),
-    sendTimeout: const Duration(milliseconds: 15000),
-    baseUrl: baseUrl,
-    headers: {
-      'device': Platform.operatingSystem,
-      'version': 'v1.0.0',
-      'token': token
-    }
-  );
-  final dio = Dio(options);
-
-  if (kDebugMode) {
-    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true, logPrint: (i) => log(i.toString())));
-  }
-  dio.interceptors.add(BaseInterceptor(ref: ref));
-  // dio.interceptors.add(TokenInterceptor(ref: ref));
-
-  return dio;
-}, dependencies: [tokenProvider]);
+//
 
 
 
