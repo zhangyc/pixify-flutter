@@ -38,7 +38,7 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     return _fetchMatched();
   }
 
-  Future<Response?> like(int id) {
+  Future<HttpResult> like(int id) {
    return _action(id, MatchAction.like);
   }
 
@@ -46,24 +46,15 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     _action(id, MatchAction.skip);
   }
 
-  Future<Response?> arrow(int id) {
+  Future<HttpResult> arrow(int id) {
     return _action(id, MatchAction.arrow);
   }
 
-  Future<Response?> _action(int id, MatchAction action) async{
-    try{
-     final resp= await matchAction(
-          httpClient: ref.read(dioProvider),
-          userId: id,
-          action: action);
-     return resp;
-    }catch(e){
-      print(e);
-      // if(e.code=="10150"){
-
-      // }
-    }
-
+  Future<HttpResult> _action(int id, MatchAction action) async{
+    final resp= await matchAction(
+        userId: id,
+        action: action);
+    return resp;
   }
 }
 

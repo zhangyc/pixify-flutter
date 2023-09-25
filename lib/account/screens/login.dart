@@ -216,6 +216,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future _next() async {
     if (_phoneKey.currentState!.validate()) {
       _sendPin();
+      // _verifyNumber();
       if (mounted) setState(() {});
       await _controller.animateToPage(1,
           duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
@@ -223,32 +224,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         _pinFocusNode.requestFocus();
       });
     }
-    // await authService.verifyPhoneNumber(
-    //   phoneNumber: '+${_countryCode} ${_phoneNumber}',
-    //   timeout: Duration(seconds: 60),
-    //   verificationCompleted: (PhoneAuthCredential credential) async{
-    //      if(Platform.isAndroid){
-    //        final  userCredential=await authService.signInWithCredential(credential);
-    //        print(userCredential.user);
-    //      }
-    //   },
-    //   verificationFailed: (FirebaseAuthException e) {
-    //      print(e);
-    //   },
-    //   codeSent: (String verificationId, int? resendToken) async {
-    //     PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId, smsCode: '123456');
-    //
-    //     // Sign the user in (or link) with the credential
-    //     final  userCredential= await authService.signInWithCredential(credential);
-    //     final  idToken=await userCredential.user?.getIdToken();  //idToken上送给业务服务器
-    //     print(idToken);
-    //
-    //
-    //   },
-    //   codeAutoRetrievalTimeout: (String verificationId) {
-    //     print(verificationId);
-    //   },
-    // );
+
     // authService.idTokenChanges().listen((event) {
     //   print(event);
     // });
@@ -258,7 +234,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
 
   }
-
+  String? verificationId;
+  _verifyNumber() async{
+    await authService.verifyPhoneNumber(
+      phoneNumber: '+${_countryCode} ${_phoneNumber}',
+      timeout: Duration(seconds: 60),
+      verificationCompleted: (PhoneAuthCredential credential) async{
+        if(Platform.isAndroid){
+          final  userCredential=await authService.signInWithCredential(credential);
+          print(userCredential.user);
+        }
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print(e);
+      },
+      codeSent: (String verificationId, int? resendToken) async {
+        this.verificationId=verificationId;
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        print(verificationId);
+      },
+    );
+  }
   // final _maxRetryTime = 1;
   // var _currentRetryTime = 0;
   Future _sendPin() async {
@@ -270,13 +267,38 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future _complete() async {
-    if (_pinKey.currentState!.validate()) {
+    // if (_pinKey.currentState!.validate()&&verificationId!=null) {
+      if (_pinKey.currentState!.validate()) {
+
+     //  PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: _pinController.text);
+     //
+     //  // Sign the user in (or link) with the credential
+     //  final  userCredential= await authService.signInWithCredential(credential);
+     //  final  idToken=await userCredential.user?.getIdToken();  //idToken上送给业务服务器
+     //
+     //
+     // final resp= await post('/auth/login-firebase',data: {
+     //    "token":idToken, //
+     //    "deviceToken":deviceToken, // 设备 token 可为空
+     //    "timezone":'${DateTime.now().timeZoneOffset.inHours}',
+     //
+     //    // 用户所在时区 可为空
+     //  });
+     // if(resp.isSuccess){
+     //   token=resp.data['token'];
+     // }else if(resp.statusCode == 2){
+     //   if (mounted) {
+     //     await Navigator.push(context, MaterialPageRoute(
+     //         builder: (_) => RequiredInfoFormScreen()));
+     //   }
+     // }
       final resp = await login(
           httpClient: ref.read(dioProvider),
           countryCode: _countryCode,
           phoneNumber: _phoneNumber,
           pinCode: _pinController.text
       );
+
       if (resp.statusCode == 0 || resp.statusCode == 2) {
         final token = resp.data['token'];
 

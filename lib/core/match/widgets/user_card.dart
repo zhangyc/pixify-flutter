@@ -1,10 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/screens/match.dart';
 
+import '../../../account/providers/profile.dart';
 import '../../../common/models/user.dart';
 import '../../../generated/assets.dart';
+import '../../providers/navigator_key.dart';
+import '../../subscribe/subscribe_page.dart';
+import '../providers/matched.dart';
 import 'match_init_animation.dart';
 
 class UserCard extends ConsumerStatefulWidget {
@@ -115,9 +120,28 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
           bottom: MediaQuery.of(context).viewInsets.bottom + 80,
           child:  GestureDetector(child: Image.asset(Assets.iconsArrow,width: 50,height: 50,),
             onTap: (){
-               ///内存中取一下
-               arrowController.reset();
-               arrowController.forward();
+              ref.read(asyncMatchRecommendedProvider.notifier)
+                  .arrow(widget.user.id).then((resp){
+                    print(resp);
+                if(resp.statusCode==10150){
+                  /// 判断如果不是会员，跳转道会员页面
+                  if(ref.read(asyncMyProfileProvider).value?.isMember??false){
+                    Navigator.push(ref.read(navigatorKeyProvider).currentContext!, MaterialPageRoute(builder:(c){
+                      return SubscribePage();
+                    }));
+                  }else {
+                    Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                  }
+                  ///如果是会员，提示超过限制
+                }else if(resp.isSuccess){
+                  widget.user.arrowed=true;
+                  ///内存中取一下
+                  arrowController.reset();
+                  arrowController.forward();
+
+                }
+              });
+
                setState(() {
 
                });

@@ -1,0 +1,163 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/common/models/user.dart';
+import 'package:sona/core/match/screens/match.dart';
+import 'package:sona/utils/global/global.dart';
+
+import '../../../account/models/gender.dart';
+import '../../../generated/assets.dart';
+import '../providers/setting.dart';
+
+void showFilter(BuildContext context,VoidCallback onSave) {
+  showDialog(context: context, builder: (c){
+    return Consumer(builder: (_,ref,__){
+      return Column(
+        children: [
+          Container(
+            width:335,
+            height: 230,
+            decoration: BoxDecoration(
+                color: Color(0xff2969E9),
+                borderRadius: BorderRadius.circular(40)
+            ),
+            padding: const EdgeInsets.symmetric(
+                horizontal: 90
+            ),
+            child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text('Gender',style: TextStyle(
+                      fontSize: 24,
+                      color: Color(0xfff9f9f9)
+                  ),),
+                  ...FilterGender.values.map((e) => GestureDetector(
+                    onTap: (){
+                      currentFilterGender=e.index;
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: 10
+                      ),
+                      child:  ValueListenableBuilder(valueListenable: appCommonBox.listenable(), builder: (c,b,_){
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            e.index==currentFilterGender?Image.asset(Assets.iconsSelected,width: 28,height: 28,):Container(),
+                            Text(e.name,style: TextStyle(
+                                fontSize: 30,
+                                color:e.index==currentFilterGender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
+                            ),)
+                          ],
+                        );
+                      })
+                    ),
+                  )).toList(),
+                ]
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width:335,
+            height: 158,
+            decoration: BoxDecoration(
+                color: Color(0xff2969E9),
+                borderRadius: BorderRadius.circular(40)
+            ),
+            child: Column(
+              children: [
+                Text('Age',style: TextStyle(
+                    fontSize: 29,
+                    color: Color(0xfff9f9f9)
+                ),),
+                SizedBox(height: 8),
+                SizedBox(width: 277,child: ValueListenableBuilder(valueListenable: appCommonBox.listenable(), builder: (c,b,_){
+                  RangeValues rv=RangeValues(currentFilterMinAge.toDouble(), currentFilterMaxAge.toDouble());
+                  return RangeSlider(
+                      activeColor: Colors.white,
+                      inactiveColor:Color(0xff54b7ed) ,
+                      min: 18,
+                      max: 80,
+                      divisions: 10,
+                      labels: RangeLabels(rv.start.toString(), rv.end.toString()),
+                      values: ref.watch(matchSettingProvider).ageRange,
+                      onChanged: (rv) {
+                        currentFilterMinAge=rv.start.toInt();
+                        currentFilterMaxAge=rv.end.toInt();
+                        // ref.read(matchSettingProvider.notifier).setAgeRange(rv);
+                      }
+                  );
+                }),),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          GestureDetector(
+            child: Container(
+              width:335,
+              height: 70,
+              decoration: BoxDecoration(
+                  color: Color(0xff2969E9),
+                  borderRadius: BorderRadius.circular(40)
+              ),
+              alignment: Alignment.center,
+              child: Text('Save',style: TextStyle(
+                  fontSize: 36,
+                  color: Color(0xfff9f9f9)
+              ),),
+            ),
+            onTap: (){
+              onSave.call();
+              Navigator.pop(context);
+            },
+          )
+
+        ],
+      );
+    });
+  });
+}
+void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo own,required UserInfo target}) {
+  showDialog(context: context, builder: (c){
+    return Container(
+      color: Color(0xffe74e27),
+      child: Stack(
+        children: [
+          Image.asset(Assets.imagesMatched),
+          Positioned(
+            left: 30,
+            child: ClipOval(
+              child: CachedNetworkImage(imageUrl: own.avatar??'',width: 160,height: 160,),
+            ),
+          ),
+          Positioned(
+            right: 30,
+            child: ClipOval(
+              child: CachedNetworkImage(imageUrl: own.avatar??'',width: 160,height: 160,),
+            ),
+          ),
+        ],
+      ),
+    );
+  });
+}
+int get currentFilterGender => appCommonBox.get('currentFilterGender',defaultValue: 0);
+set currentFilterGender(value){
+  appCommonBox.put('currentFilterGender', value);
+}
+int get currentFilterMinAge => appCommonBox.get('currentFilterMinAge',defaultValue: 18);
+set currentFilterMinAge(value){
+  appCommonBox.put('currentFilterMinAge', value);
+}
+int get currentFilterMaxAge => appCommonBox.get('currentFilterMaxAge',defaultValue: 80);
+set currentFilterMaxAge(value){
+  appCommonBox.put('currentFilterMaxAge', value);
+}
