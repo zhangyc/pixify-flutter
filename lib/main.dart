@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sona/firebase/sona_firebase.dart';
-import 'package:sona/utils/providers/kv_store.dart';
 
 import 'app.dart';
 import 'firebase_options.dart';
@@ -33,10 +32,6 @@ void main() async {
   await global.init();
   runApp(
     ProviderScope(
-      overrides: [
-        // firebaseProvider.overrideWithValue(firebase),
-        kvStoreProvider.overrideWithValue(global.kvStore)
-      ],
       child: const SonaApp()
     )
   );

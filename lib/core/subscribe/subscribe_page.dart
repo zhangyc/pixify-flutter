@@ -8,11 +8,11 @@ import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:sona/generated/assets.dart';
+import 'package:sona/utils/global/global.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../account/providers/profile.dart';
 import '../../test_pay/_MyApp.dart';
-import '../../utils/providers/dio.dart';
 
 Uuid uuid=Uuid();
 class SubscribePage extends ConsumerStatefulWidget {
@@ -466,8 +466,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       };
     }
 
-    final response=await ref.read(dioProvider).post('/callback/google-pay',data: map);
-    if(response!=null&&response.data!=null){
+    final response=await dio.post('/callback/google-pay',data: map);
+    if(response.data!=null){
       if(response.data){
         return Future<bool>.value(true);
       }else {

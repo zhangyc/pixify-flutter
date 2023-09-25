@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,11 +8,12 @@ import 'package:pinput/pinput.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/auth.dart';
+import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/core/home.dart';
 import 'package:sona/core/providers/token.dart';
-import 'package:sona/firebase/sona_firebase.dart';
-import 'package:sona/utils/http/interceptors/base.dart';
-import 'package:sona/utils/providers/dio.dart';
+
+import '../models/my_profile.dart';
 
 class LoginScreen extends StatefulHookConsumerWidget {
   const LoginScreen({super.key});
@@ -259,8 +257,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   // final _maxRetryTime = 1;
   // var _currentRetryTime = 0;
   Future _sendPin() async {
-    final dio = ref.read(dioProvider);
-    final resp = await sendPin(httpClient: dio, countryCode: _countryCode, phoneNumber: _phoneNumber);
+    final resp = await sendPin(countryCode: _countryCode, phoneNumber: _phoneNumber);
     if (resp.statusCode != 0) {
       Fluttertoast.showToast(msg: 'Sending pin message failed');
     }
@@ -293,7 +290,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
      //   }
      // }
       final resp = await login(
-          httpClient: ref.read(dioProvider),
           countryCode: _countryCode,
           phoneNumber: _phoneNumber,
           pinCode: _pinController.text
@@ -301,16 +297,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       if (resp.statusCode == 0 || resp.statusCode == 2) {
         final token = resp.data['token'];
-
         ref.read(tokenProvider.notifier).state = token;
-        ref.read(asyncMyProfileProvider.notifier).refresh();
-      }
-
-      if (resp.statusCode == 2) {
-        if (mounted) {
-          await Navigator.push(context, MaterialPageRoute(
-              builder: (_) => RequiredInfoFormScreen()));
+        // 未注册
+        if (resp.statusCode == 2) {
+          if (mounted) {
+            await Navigator.push(context, MaterialPageRoute(
+                builder: (_) => RequiredInfoFormScreen()));
+          }
+          return;
         }
+
+        final response = await getMyProfile();
+        if (response.statusCode == 0) {
+          final profile = MyProfile.fromJson(response.data);
+          ref.read(myProfileProvider.notifier).update(profile);
+          Fluttertoast.showToast(msg: 'Welcome back, ${profile.name}');
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        } else {
+          Fluttertoast.showToast(msg: 'Failed to get profile, try again later');
+        }
+      } else {
+        Fluttertoast.showToast(msg: 'Failed to login, try again later');
       }
     }
   }

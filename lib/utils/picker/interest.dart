@@ -43,7 +43,7 @@ Future<Set<String>?> showInterestPicker({
                 Consumer(
                   builder: (context, ref, child) {
                     return ref.watch(asyncInterestsProvider).when(
-                      data: (interests) => Interests(availableValue: interests, initialValue: ref.read(asyncMyProfileProvider).value!.interests.toSet()),
+                      data: (interests) => Interests(availableValue: interests, initialValue: ref.read(myProfileProvider)!.interests.toSet()),
                         loading: () => Container(
                           color: Colors.white54,
                           alignment: Alignment.center,

@@ -9,7 +9,7 @@ final softKeyboardHeightProvider = StateProvider<double>((ref) => 300);
 final inputModeProvider = StateProvider.family<InputMode, int>((ref, arg) {
   ref.listenSelf((previous, next) {
     FirebaseFirestore.instance.collection('users')
-      .doc(ref.read(asyncMyProfileProvider).value!.id.toString())
+      .doc(ref.read(myProfileProvider)!.id.toString())
       .collection('rooms').doc(arg.toString())
       .set({'inputMode': next.index}, SetOptions(merge: true))
       .catchError((_) {});
@@ -45,7 +45,7 @@ final currentInputEmptyProvider = StateProvider.autoDispose.family<bool, int>((r
 
 final hookVisibilityProvider = StateProvider.autoDispose.family<bool, int>((ref, arg) {
   final messages = ref.watch(messageStreamProvider(arg));
-  final lastOtherSideMessageIndex = messages.value?.lastIndexWhere((msg) => msg.receiver.id == ref.read(asyncMyProfileProvider).value!.id);
+  final lastOtherSideMessageIndex = messages.value?.lastIndexWhere((msg) => msg.receiver.id == ref.read(myProfileProvider)!.id);
   if (lastOtherSideMessageIndex != null && lastOtherSideMessageIndex >= 0) {
     final lastOtherSideMessage = messages.value![lastOtherSideMessageIndex];
     return DateTime.now().difference(lastOtherSideMessage.time).inMinutes >= 30;

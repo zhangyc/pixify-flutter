@@ -2,16 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/gender.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../utils/providers/dio.dart';
 
 Future<Response> fetchMatchPeople({
-  required Dio httpClient,
   required Position position,
   Gender? gender,
   RangeValues? range
 }) async {
-  return httpClient.post(
+  return dio.post(
     '/user/match-v2',
     data: {
       'gender': gender?.index,

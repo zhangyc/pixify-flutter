@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
-import 'package:sona/utils/providers/kv_store.dart';
 
 
 class LikedMeListView extends StatefulHookConsumerWidget {

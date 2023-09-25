@@ -1,11 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:sona/utils/global/global.dart';
 
-Future<Response> fetchAvailableInterests({
-  required Dio httpClient,
-}) async {
-  return httpClient.post(
+Future<Response> fetchAvailableInterests() async {
+  return dio.post(
     '/common/dict',
     data: {
       'type': 'INTEREST'
@@ -15,7 +14,6 @@ Future<Response> fetchAvailableInterests({
 
 /// * return url
 Future<String> uploadFile({
-  required Dio httpClient,
   required Uint8List bytes,
   required String filename
 }) async {
@@ -25,7 +23,7 @@ Future<String> uploadFile({
         filename: filename
     )
   });
-  return httpClient.post(
+  return dio.post(
       '/common/file-upload',
       data: formData
   ).then((resp) => resp.data);

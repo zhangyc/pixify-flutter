@@ -14,7 +14,6 @@ import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 
 import '../../../common/models/user.dart';
-import '../../../utils/providers/dio.dart';
 import '../models/message_type.dart';
 import '../widgets/inputbar/mode_provider.dart';
 import '../widgets/message/message.dart';
@@ -84,7 +83,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         itemBuilder: (BuildContext context, int index) => MessageWidget(
                           prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
                           message: msgs[index],
-                          fromMe: ref.read(asyncMyProfileProvider).value!.id == msgs[index].sender.id,
+                          fromMe: ref.read(myProfileProvider)!.id == msgs[index].sender.id,
                           onPendingMessageSucceed: _onPendingMessageSucceed,
                           onShorten: _shortenMessage,
                           onDelete: _deleteMessage,
@@ -165,7 +164,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (text.trim().isEmpty) return;
 
     await sendMessage(
-      httpClient: ref.read(dioProvider),
       userId: widget.otherSide.id,
       type: type,
       content: text,
@@ -181,7 +179,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     }
 
     func() => callSona(
-        httpClient: ref.read(dioProvider),
         userId: widget.otherSide.id,
         input: text,
         type: CallSonaType.INPUT,
@@ -191,7 +188,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       id: _lastLocalId++,
       type: CallSonaType.INPUT.index + 1,
       content: text,
-      sender: ref.read(asyncMyProfileProvider).value!.toUser(),
+      sender: ref.read(myProfileProvider)!.toUser(),
       receiver: widget.otherSide,
       time: DateTime.now(),
       shortenTimes: 2
@@ -214,7 +211,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   Future _shortenMessage(ImMessage message) {
     return callSona(
-      httpClient: ref.read(dioProvider),
       type: CallSonaType.SIMPLE,
       userId: widget.otherSide.id,
       messageId: message.id
@@ -223,7 +219,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   Future _deleteMessage(ImMessage message) {
     return deleteMessage(
-      httpClient: ref.read(dioProvider),
       messageId: message.id
     );
   }
@@ -234,7 +229,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   Future _startUpLine() {
     return callSona(
-      httpClient: ref.read(dioProvider),
       userId: widget.otherSide.id,
       type: CallSonaType.PROLOGUE
     );
@@ -246,7 +240,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   Future _onHookTap() async {
     return callSona(
-      httpClient: ref.read(dioProvider),
       userId: widget.otherSide.id,
       type: CallSonaType.HOOK
     );
@@ -254,7 +247,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   Future _onSuggestionTap() async {
     final resp = await callSona(
-      httpClient: ref.read(dioProvider),
       userId: widget.otherSide.id,
       type: CallSonaType.SUGGEST_V2
     );
@@ -293,7 +285,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         onTap: () async {
                           Navigator.pop(context);
                           callSona(
-                            httpClient: ref.read(dioProvider),
                             userId: widget.otherSide.id,
                             type: CallSonaType.SUGGEST_FUNC,
                             input: opt
@@ -321,10 +312,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   Future _deleteAllMessages() async {
-    await deleteAllMessages(httpClient: ref.read(dioProvider), chatId: widget.otherSide.id);
+    await deleteAllMessages(chatId: widget.otherSide.id);
     var allMsgs = await FirebaseFirestore.instance
         .collection('users')
-        .doc(ref.read(asyncMyProfileProvider).value!.id.toString())
+        .doc(ref.read(myProfileProvider)!.id.toString())
         .collection('rooms')
         .doc(widget.otherSide.id.toString())
         .collection('msgs')

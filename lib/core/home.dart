@@ -34,7 +34,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
 
   void _determinePosition() async {
     final position = await determinePosition();
-    ref.read(asyncMyProfileProvider.notifier).updateInfo(position: position);
+    ref.read(myProfileProvider.notifier).updateField(position: position);
   }
 
   @override

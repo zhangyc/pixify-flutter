@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/utils/global/global.dart';
 
-import '../../../utils/providers/dio.dart';
 
 class Report extends ConsumerStatefulWidget {
   const Report(this.type, this.userId, {super.key});
@@ -49,7 +49,7 @@ class _ReportState extends ConsumerState<Report> {
             if(_textEditingController.text.isEmpty){
               return;
             }
-            ref.read(dioProvider).post('/report/create',data: {
+            dio.post('/report/create',data: {
               "sourceType":widget.type==ReportType.user?1:2, // 举报类型，见枚举，目前固定 1，举报用户
               "sourceId":widget.userId, // 被举报的用户ID
               "reasonId":rc.code, // 举报原因：见枚举

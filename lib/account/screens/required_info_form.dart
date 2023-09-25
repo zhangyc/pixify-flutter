@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
@@ -11,7 +12,6 @@ import 'package:sona/utils/picker/interest.dart';
 
 import '../../core/persona/widgets/sona_message.dart';
 import '../../utils/picker/gender.dart';
-import '../../utils/providers/dio.dart';
 import '../models/gender.dart';
 
 class RequiredInfoFormScreen extends ConsumerStatefulWidget {
@@ -51,34 +51,39 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     _actions = [
       FieldAcquireAction(
           field: null,
-          text: 'Hi\n\nI\'m SONA😊\n\nYour social\nadvisor to coach\nyou on\nmeaningful\nfriendships!',
+          textBuilder: () => 'Hi\n\nI\'m SONA\n\nYour social\nadvisor to coach\nyou on\nmeaningful\nfriendships!',
+          highlights: ['SONA', 'social\nadvisor'],
           action: null
       ),
       FieldAcquireAction(
           field: 'name',
-          text: 'What\'s your name?',
+          textBuilder: () => 'First, what do\nyou want to be\ncalled?',
+          highlights: [],
           action: _getName
       ),
       FieldAcquireAction(
           field: 'birthday',
-          text: 'How old\n are you?',
+          textBuilder: () => 'Hi $_name,\nPlz choose your\nage',
+          highlights: ['age'],
           action: _getBirthday
       ),
       FieldAcquireAction(
           field: 'gender',
-          text: 'Plz choose\n your Gender',
+          textBuilder: () => 'Got ${_birthday!.toAge()}\nPlz choose your\ngender',
+          highlights: ['gender'],
           action: _getGender
       ),
       FieldAcquireAction(
           field: 'avatar',
-          text: 'Choose a photo\n for your avatar',
+          textBuilder: () => '${_gender!.name}\nPlz pick a photo\nrepresents you',
+          highlights: ['pick a photo'],
           action: _getAPhotoAndUpload
       ),
-      FieldAcquireAction(
-          field: 'interests',
-          text: 'Choose your interests',
-          action: _chooseInterests
-      ),
+      // FieldAcquireAction(
+      //     field: 'interests',
+      //     textBuilder: () => 'Choose your interests',
+      //     action: _chooseInterests
+      // ),
     ];
   }
 
@@ -95,14 +100,15 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 50),
                     child: Typwriter(
-                        text: action.text,
-                        duration: const Duration(milliseconds: 100),
+                        textBuilder: action.textBuilder,
+                        highlights: action.highlights,
+                        duration: const Duration(milliseconds: 80),
                         onDone: () async {
                           if (action.action != null) {
                             action.value = await action.action!();
                           }
                           if (action.field == 'avatar') {
-                            ref.read(asyncMyProfileProvider.notifier).updateInfo(
+                            ref.read(myProfileProvider.notifier).updateField(
                               name: _name,
                               birthday: _birthday,
                               gender: _gender,
@@ -179,9 +185,8 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
     final bytes = await file.readAsBytes();
-    final dio = ref.read(dioProvider);
     final value =
-        await uploadFile(httpClient: dio, bytes: bytes, filename: file.name);
+        await uploadFile(bytes: bytes, filename: file.name);
     _actions.firstWhere((action) => action.field == 'avatar')
       ..value = value
       ..done = true;
@@ -206,11 +211,13 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
 class FieldAcquireAction<T> {
   FieldAcquireAction({
     required this.field,
-    required this.text,
+    required this.textBuilder,
+    required this.highlights,
     required this.action
   });
   final String? field;
-  String text;
+  String Function() textBuilder;
+  List<String> highlights;
   final Future<T> Function()? action;
   T? value;
   bool done = false;
@@ -235,9 +242,8 @@ class _InterestsSelectorState extends ConsumerState<InterestsSelector> {
   }
 
   Future _fetchAvailableInterests() async {
-    final dio = ref.read(dioProvider);
     try {
-      final resp = await fetchAvailableInterests(httpClient: dio);
+      final resp = await fetchAvailableInterests();
       _availableInterests = List<Map<String, dynamic>>.from(resp.data);
       if (mounted) setState(() {});
     } catch (e) {

@@ -1,11 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/utils/providers/dio.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../models/persona.dart';
 
 class PersonaNotifier extends AsyncNotifier<Persona?> {
   Future<Persona?> _fetchPersona() async {
-     final dio = ref.watch(dioProvider);
      final persona = Persona.fromJson(((await dio.get('/persona/character')) as Map)['data']['data']);
      return persona;
   }
@@ -18,7 +17,6 @@ class PersonaNotifier extends AsyncNotifier<Persona?> {
   Future<void> setCharacter(String name) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      final dio = ref.watch(dioProvider);
       await dio.post('/persona', data: {'character': name});
       return _fetchPersona();
     });
@@ -27,7 +25,6 @@ class PersonaNotifier extends AsyncNotifier<Persona?> {
   Future<void> setIntro(String content) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      final dio = ref.watch(dioProvider);
       await dio.post('/persona', data: state.value);
       return _fetchPersona();
     });

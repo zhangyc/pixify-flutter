@@ -6,15 +6,10 @@ import 'package:sona/common/providers/profile.dart';
 import 'package:sona/common/services/report.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/utils/dialog/input.dart';
-import 'package:sona/utils/providers/dio.dart';
 
-import '../../account/providers/profile.dart';
 import '../../core/match/providers/matched.dart';
-import '../../core/match/widgets/like_animation.dart';
-import '../../core/providers/navigator_key.dart';
 import '../../core/subscribe/subscribe_page.dart';
 import '../../generated/assets.dart';
-import '../widgets/button/colored.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
   static const String routeName = '/user-profile';
@@ -111,7 +106,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         }
       );
       if (reason != null) {
-        final resp = await report(httpClient: ref.read(dioProvider), type: 1, id: widget.user.id, reason: 1);
+        final resp = await report(type: 1, id: widget.user.id, reason: 1);
         if (resp.statusCode == 200) {
           Fluttertoast.showToast(msg: 'Reported');
         }

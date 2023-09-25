@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/chat/services/like.dart';
-import 'package:sona/utils/providers/dio.dart';
 
 
 class LikedMe {
@@ -18,9 +17,7 @@ class LikedMe {
 class AsyncLikedMeUsersNotifier extends AsyncNotifier<List<UserInfo>> {
 
   Future<List<UserInfo>> _fetchLikedMeData() {
-    return fetchLikedMeList(
-      httpClient: ref.read(dioProvider)
-    ).then(
+    return fetchLikedMeList().then(
       (resp) => (resp.data as List).map<UserInfo>((m) => UserInfo.fromJson(m)).toList()
     );
   }

@@ -1,22 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/models/message_type.dart';
+import 'package:sona/utils/global/global.dart';
 
-Future<Response> fetchChatList({
-  required Dio httpClient
-}) async {
-  return httpClient.post(
+Future<Response> fetchChatList() async {
+  return dio.post(
       '/user/friend/find-chat'
   );
 }
 
 Future<Response> fetchMessageList({
-  required Dio httpClient,
   required int userId,
   required int page,
   int pageSize = 20
 }) async {
-  return httpClient.post(
+  return dio.post(
     '/message/find',
     data: {
       'userId': userId,
@@ -27,14 +25,13 @@ Future<Response> fetchMessageList({
 }
 
 Future<Response> callSona({
-  required Dio httpClient,
   int? userId,
   required CallSonaType type,
   int? chatStyleId,
   String? input,
   int? messageId
 }) async {
-  return httpClient.post(
+  return dio.post(
       '/prompt/common',
       data: {
         'userId': userId,
@@ -47,12 +44,11 @@ Future<Response> callSona({
 }
 
 Future<Response> sendMessage({
-  required Dio httpClient,
   required int userId,
   required ImMessageType type,
   required String content,
 }) async {
-  return httpClient.post(
+  return dio.post(
       '/message/send',
       data: {
         'userId': userId,
@@ -63,10 +59,9 @@ Future<Response> sendMessage({
 }
 
 Future<Response> deleteChat({
-  required Dio httpClient,
   required int id
 }) async {
-  return httpClient.post(
+  return dio.post(
       '/message/delete-chat',
       data: {
         'id': id,
@@ -75,10 +70,9 @@ Future<Response> deleteChat({
 }
 
 Future<Response> deleteMessage({
-  required Dio httpClient,
   required int messageId
 }) async {
-  return httpClient.post(
+  return dio.post(
       '/message/delete',
       data: {
         'id': messageId,
@@ -87,10 +81,9 @@ Future<Response> deleteMessage({
 }
 
 Future<Response> deleteAllMessages({
-  required Dio httpClient,
   required int chatId
 }) async {
-  return httpClient.post(
+  return dio.post(
       '/message/delete-all',
       data: {
         'id': chatId,

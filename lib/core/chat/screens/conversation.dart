@@ -9,7 +9,6 @@ import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/conversation.dart';
 import 'package:sona/utils/dialog/input.dart';
-import 'package:sona/utils/providers/dio.dart';
 
 import '../models/message.dart';
 import '../widgets/inputbar/chat_style.dart';
@@ -88,7 +87,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
   Future _showConversationActions(ImConversation conversation) async {
     final choice = await showRadioFieldDialog<String>(context: context, options: {'Delete': 'delete'});
     if (choice == 'delete') {
-      deleteChat(httpClient: ref.read(dioProvider), id: conversation.otherSide.id);
+      deleteChat(id: conversation.otherSide.id);
     }
   }
 
@@ -98,7 +97,6 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
 
   Future _onHookTap(int userId) async {
     return callSona(
-        httpClient: ref.read(dioProvider),
         userId: userId,
         type: CallSonaType.HOOK
     );

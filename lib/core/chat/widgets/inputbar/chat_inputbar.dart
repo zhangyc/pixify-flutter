@@ -86,7 +86,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
   @override
   Widget build(BuildContext context) {
     final currentChatStyle = ref.watch(currentChatStyleProvider(widget.chatId));
-    final isMember = ref.watch(asyncMyProfileProvider).value!.isMember;
+    final isMember = ref.watch(myProfileProvider)!.isMember;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -318,7 +318,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
       var newMode = state == InputMode.sona ? InputMode.manual : InputMode.sona;
       _controller.clear();
       FirebaseFirestore.instance.collection('users')
-          .doc(ref.read(asyncMyProfileProvider).value!.id.toString())
+          .doc(ref.read(myProfileProvider)!.id.toString())
           .collection('rooms').doc(widget.chatId.toString())
           .set({'inputMode': newMode})
           .catchError((_) {});

@@ -1,47 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/services/info.dart';
-import 'package:sona/utils/providers/dio.dart';
-import 'package:sona/utils/providers/kv_store.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../models/gender.dart';
-import '../models/user_info.dart';
+import '../models/my_profile.dart';
 
 const profileKey = 'profile';
 
-@immutable
-class AsyncMyProfileNotifier extends AsyncNotifier<MyProfile> {
+class MyProfileNotifier extends StateNotifier<MyProfile?> {
+  MyProfileNotifier(super.state);
 
-  Future<MyProfile> _fetchProfile() async {
-    final profile = await getMyInfo(httpClient: ref.read(dioProvider));
-    ref.read(kvStoreProvider).setString(profileKey, jsonEncode(profile.toJson()));
-    return profile;
+  void update(MyProfile? profile) {
+    state = profile;
   }
 
-  @override
-  FutureOr<MyProfile> build() {
-    try {
-      final localCachedProfileString = ref.read(kvStoreProvider).getString('profile');
-      final profile = MyProfile.fromJson(jsonDecode(localCachedProfileString!));
-      refresh(true);
-      return profile;
-    } catch(e) {
-      ref.read(kvStoreProvider).remove(profileKey);
-      return _fetchProfile();
-    }
-  }
-
-  Future<void> refresh([bool silence = false]) async {
-    if (!silence) state = const AsyncValue.loading();
-    final profile = await _fetchProfile();
-    state = AsyncValue.data(profile);
-  }
-
-  Future<void> updateInfo({
+  Future<void> updateField({
     String? name,
     Gender? gender,
     DateTime? birthday,
@@ -50,28 +27,35 @@ class AsyncMyProfileNotifier extends AsyncNotifier<MyProfile> {
     String? bio,
     Position? position
   }) async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      final dio = ref.watch(dioProvider);
-      final resp = await updateMyInfo(
-        httpClient: dio,
-        name: name,
-        gender: gender,
-        birthday: birthday,
-        interests: interests,
-        avatar: avatar,
-        bio: bio,
-        position: position
-      );
-      if (resp.statusCode == 0) {
-        return _fetchProfile();
-      } else {
-        return state.value!;
-      }
-    });
+    final resp = await updateMyProfile(
+      name: name,
+      gender: gender,
+      birthday: birthday,
+      interests: interests,
+      avatar: avatar,
+      bio: bio,
+      position: position
+    );
+    if (resp.statusCode == 0) {
+      state = MyProfile.fromJson(resp.data);
+    } else {
+      //
+    }
+  }
+
+  Future<void> refresh() async {
+    final resp = await getMyProfile();
+    if (resp.statusCode == 0) {
+      state = MyProfile.fromJson(resp.data);
+    } else {
+      //
+    }
   }
 }
 
-final asyncMyProfileProvider = AsyncNotifierProvider<AsyncMyProfileNotifier, MyProfile>(
-  () => AsyncMyProfileNotifier()
+final myProfileProvider = StateNotifierProvider<MyProfileNotifier, MyProfile?>(
+  (ref) {
+    final profile = kvStore.getString(profileKey);
+    return MyProfileNotifier(profile != null ? MyProfile.fromJson(jsonDecode(profile)) : null);
+  }
 );

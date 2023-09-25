@@ -1,21 +1,14 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/core/providers/token.dart';
-import 'package:sona/utils/providers/dio.dart';
-
-import '../../../account/screens/login.dart';
-import '../../../core/providers/navigator_key.dart';
+import 'package:sona/utils/global/global.dart';
 
 
 class BaseInterceptor extends Interceptor {
-  BaseInterceptor({required this.ref});
-  final Ref ref;
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    options.headers.addAll({'token': token});
     if (options.method.toUpperCase() == 'POST') {
       if (options.data is FormData) {
         options.headers.addAll({HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType});
@@ -30,9 +23,9 @@ class BaseInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (response.statusCode == 200) {
       if (response.data['code'] == '10040') {
-        ref.read(tokenProvider.notifier).state = null;
+        token = null;
       } else if(response.data['code'] == '10030') {
-        ref.read(tokenProvider.notifier).state = null;
+        token = null;
       }
       response.statusCode = int.parse(response.data['code']);
       response.data = response.data['data'];

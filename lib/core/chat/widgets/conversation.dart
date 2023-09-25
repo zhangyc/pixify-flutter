@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/models/conversation.dart';
-import 'package:sona/utils/providers/kv_store.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../common/widgets/image/user_avatar.dart';
 
@@ -33,7 +33,7 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
             widget.conversation.checkTime = DateTime.now();
             if (mounted) setState(() {});
           });
-          ref.read(kvStoreProvider).setInt('convo_${widget.conversation.convoId}_check_time', DateTime.now().millisecondsSinceEpoch);
+          kvStore.setInt('convo_${widget.conversation.convoId}_check_time', DateTime.now().millisecondsSinceEpoch);
         },
         onLongPress: widget.onLongPress,
         child: Container(

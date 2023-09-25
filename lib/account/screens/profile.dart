@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sona/account/models/user_info.dart';
+import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
-import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/button/forward.dart';
@@ -18,8 +16,6 @@ import 'package:sona/utils/picker/gender.dart';
 import 'package:sona/utils/picker/interest.dart';
 
 import '../../common/widgets/button/colored.dart';
-import '../../utils/providers/dio.dart';
-import 'interests.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -39,7 +35,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _profile = ref.watch(asyncMyProfileProvider).value!;
+    _profile = ref.watch(myProfileProvider)!;
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -95,7 +91,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ),
                     child: SingleChildScrollView(
                       child: Text(
-                        ref.watch(asyncMyProfileProvider).value!.bio ?? 'You can just write a little,\nthen use Sona to help optimize',
+                        _profile.bio ?? 'You can just write a little,\nthen use Sona to help optimize',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
@@ -122,7 +118,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         ),
                         SizedBox(height: 4),
                         Text(
-                            ref.watch(asyncMyProfileProvider).value!.impression ?? '',
+                            ref.watch(myProfileProvider)!.impression ?? '',
                             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               color: Theme.of(context).primaryColor,
                               fontSize: 20
@@ -178,7 +174,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
     return GestureDetector(
       onLongPress: index != 0 ? () => _showPhotoActions(_profile.photos[index]) : null,
-      onTap: index == 0 ? _seeMyProfile : null,
+      onTap: _seeMyProfile,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
@@ -193,7 +189,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   void _seeMyProfile() {
     Navigator.push(context, MaterialPageRoute(
         builder: (_) => UserProfileScreen(
-          user: ref.read(asyncMyProfileProvider).value!.toUser(),
+          user: ref.read(myProfileProvider)!.toUser(),
           relation: Relation.self,
         )
     ));
@@ -202,12 +198,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future _onEditInterests() async {
     final result = await showInterestPicker(context: context);
     if (result != null) {
-      ref.read(asyncMyProfileProvider.notifier).updateInfo(interests: result);
+      ref.read(myProfileProvider.notifier).updateField(interests: result);
     }
   }
 
   Future onBioEdit() async {
-    final controller = TextEditingController(text: ref.read(asyncMyProfileProvider).value!.bio ?? '');
+    final controller = TextEditingController(text: ref.read(myProfileProvider)!.bio ?? '');
     final text = await showTextFieldDialog(
       context: context,
       controller: controller,
@@ -219,7 +215,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             color: Colors.transparent,
             onTap: () async {
               final resp = await callSona(
-                httpClient: ref.read(dioProvider),
                 type: CallSonaType.BIO,
                 input: controller.text
               );
@@ -231,7 +226,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   content: resp.data['txt']
                 );
                 if (result == true) {
-                  ref.read(asyncMyProfileProvider.notifier).updateInfo(bio: resp.data['txt']);
+                  ref.read(myProfileProvider.notifier).updateField(bio: resp.data['txt']);
                 }
               }
             },
@@ -247,17 +242,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       cancelFlex: 2
     );
     if (text != null && text.trim().isNotEmpty) {
-      ref.read(asyncMyProfileProvider.notifier).updateInfo(bio: text);
+      ref.read(myProfileProvider.notifier).updateField(bio: text);
     }
   }
 
   Future _showGenderEditor() async {
     var gender = await showGenderPicker(
         context: context,
-        initialValue: ref.read(asyncMyProfileProvider).value!.gender,
+        initialValue: ref.read(myProfileProvider)!.gender,
     );
     if (gender != null && gender != _profile.gender) {
-      ref.read(asyncMyProfileProvider.notifier).updateInfo(gender: gender);
+      ref.read(myProfileProvider.notifier).updateField(gender: gender);
     }
   }
 
@@ -266,12 +261,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if (action == 'delete') {
       _onRemovePhoto(photo.id);
     } else if (action == 'set-default') {
-      final photos = ref.read(asyncMyProfileProvider).value!.photos;
+      final photos = ref.read(myProfileProvider)!.photos;
       photos..remove(photo)..insert(0, photo);
       final data = photos.asMap().entries.map<Map<String, dynamic>>((entry) => {'id': entry.value.id, 'sort': entry.key}).toList();
       // todo 通过provider
-      await updatePhotoSorts(httpClient: ref.read(dioProvider), data: data);
-      ref.read(asyncMyProfileProvider.notifier).refresh();
+      await updatePhotoSorts(data: data);
+      ref.read(myProfileProvider.notifier).refresh();
     }
   }
 
@@ -289,15 +284,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if(res.isEmpty){
       throw Exception('Handle fail');
     }
-    final dio = ref.read(dioProvider);
     // todo 通过provider
-    await addPhoto(httpClient: dio, bytes: res, filename: file.name);
-    ref.read(asyncMyProfileProvider.notifier).refresh();
+    await addPhoto(bytes: res, filename: file.name);
+    ref.read(myProfileProvider.notifier).refresh();
   }
 
   Future _onRemovePhoto(int photoId) async {
-    await removePhoto(httpClient: ref.read(dioProvider), photoId: photoId);
-    ref.read(asyncMyProfileProvider.notifier).refresh();
+    await removePhoto(photoId: photoId);
+    ref.read(myProfileProvider.notifier).refresh();
   }
   // 4. compress Uint8List and get another Uint8List.
   Future<Uint8List> compressList(Uint8List list) async {

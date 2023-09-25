@@ -12,6 +12,7 @@ class ColoredButton extends StatefulWidget {
     required this.text,
     this.fontColor = const Color(0xFF000000),
     this.borderColor = const Color(0x00000000),
+    this.confirmDelay,
     this.disabled = false
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class ColoredButton extends StatefulWidget {
   final String text;
   final Color borderColor;
   final Color fontColor;
+  final Duration? confirmDelay;
   final bool disabled;
 
   @override
@@ -29,18 +31,20 @@ class ColoredButton extends StatefulWidget {
 }
 
 class _ColoredButtonState extends State<ColoredButton> {
+  late bool _disabled = widget.disabled;
   bool _loading = false;
+  Timer? _timer;
 
   void Function()? get onTap => !_loading ? () {
-    if (widget.disabled || widget.onTap == null) return;
+    if (_disabled || widget.onTap == null) return;
     if (widget.loadingWhenAsyncAction) {
       _loading = true;
-      refreshUI();
+      _refreshUI();
       final result = widget.onTap!();
       if (result is Future) {
         result.whenComplete(() {
           _loading = false;
-          refreshUI();
+          _refreshUI();
         });
       }
     } else {
@@ -48,11 +52,32 @@ class _ColoredButtonState extends State<ColoredButton> {
     }
   } : null;
 
+  @override
+  void initState() {
+    if (widget.confirmDelay != null) {
+      _disabled = true;
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        _refreshUI();
+        if (timer.tick >= widget.confirmDelay!.inSeconds) {
+          _disabled = false;
+          timer.cancel();
+        }
+      });
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (_timer != null && _timer!.isActive) _timer!.cancel();
+    super.dispose();
+  }
+
   Widget get child => !_loading ? Text(
-      widget.text,
+      _timer != null && _timer!.isActive ? '${widget.confirmDelay!.inSeconds - _timer!.tick}s' : widget.text,
       textAlign: TextAlign.center,
       style: TextStyle(
-          color: widget.disabled ? Color(0xFF888888) : widget.fontColor,
+          color: _disabled ? Colors.white : widget.fontColor,
           fontWeight: FontWeight.w500,
           fontSize: widget.size.fontSize
       )
@@ -76,7 +101,7 @@ class _ColoredButtonState extends State<ColoredButton> {
         customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(widget.size.borderRadiusCircular)),
         child: Ink(
             decoration: BoxDecoration(
-                color: widget.disabled ? Color(0xFF888888) : widget.color,
+                color: _disabled ? Color(0xFF888888) : widget.color,
                 borderRadius: BorderRadius.circular(widget.size.borderRadiusCircular),
                 border: Border.all(color: widget.borderColor, width: widget.size.borderWidth)
             ),
@@ -88,7 +113,7 @@ class _ColoredButtonState extends State<ColoredButton> {
     );
   }
 
-  void refreshUI() {
+  void _refreshUI() {
     if (mounted) setState(() {});
   }
 }
