@@ -76,20 +76,23 @@ Future<bool?> showInfo(
   );
 }
 
-Future<bool?> showConfirm(
-    {required BuildContext context,
-    String? title = 'Are you sure',
-    String confirmText = 'Sure',
-    String cancelText = 'No',
-    required String content}) {
+Future<bool?> showConfirm({
+  required BuildContext context,
+  String? title = 'Are you sure',
+  String confirmText = 'Sure',
+  String cancelText = 'No',
+  Duration? confirmDelay,
+  required String content
+}) {
   return showModalBottomSheet<bool>(
     context: context,
     backgroundColor: Colors.white,
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(30),
-      topRight: Radius.circular(30),
-    )),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      )
+    ),
     builder: (BuildContext context) {
       return SafeArea(
         top: false,
@@ -119,9 +122,11 @@ Future<bool?> showConfirm(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(content,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.caption),
+                  Text(
+                    content,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context).textTheme.bodySmall
+                  ),
                   SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,7 +144,9 @@ Future<bool?> showConfirm(
                         child: ColoredButton(
                             color: Color(0xFFE2E2F6),
                             text: confirmText,
-                            onTap: () => Navigator.of(context).pop(true)),
+                            confirmDelay: confirmDelay,
+                            onTap: () => Navigator.of(context).pop(true)
+                        ),
                       )
                     ],
                   )

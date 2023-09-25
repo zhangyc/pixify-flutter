@@ -82,3 +82,11 @@ Future<Response> updatePhotoSorts({
       data: data
   );
 }
+
+Future<Response> deleteAccount({
+  required Dio httpClient,
+}) async {
+  return httpClient.post(
+      '/user/delete'
+  );
+}
