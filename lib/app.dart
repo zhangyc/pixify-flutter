@@ -17,25 +17,12 @@ import 'core/home.dart';
 class SonaApp extends HookConsumerWidget {
   const SonaApp({super.key});
 
-  MyProfile? _readLocalProfile() {
-    try {
-      final kvStore = global.kvStore;
-      final localCachedProfileString = kvStore.getString(profileKey);
-      if (localCachedProfileString != null) {
-        return MyProfile.fromJson(jsonDecode(localCachedProfileString));
-      }
-    } catch(e) {
-      if (kDebugMode) print(e);
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final token = ref.read(tokenProvider);
     MyProfile? profile;
     if (token != null) {
-      profile = _readLocalProfile();
+      profile = ref.read(myProfileProvider);
     }
     final navigatorKey = global.navigatorKey;
     final initialRoute = profile == null ? 'login' : '/';

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/services/info.dart';
@@ -15,6 +16,11 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
   MyProfileNotifier(super.state);
 
   void update(MyProfile? profile) {
+    if (profile == null) {
+      kvStore.remove(profileKey);
+    } else {
+      kvStore.setString(profileKey, jsonEncode(profile.toJson()));
+    }
     state = profile;
   }
 
@@ -37,7 +43,7 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
       position: position
     );
     if (resp.statusCode == 0) {
-      state = MyProfile.fromJson(resp.data);
+      await refresh();
     } else {
       //
     }
@@ -46,7 +52,7 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
   Future<void> refresh() async {
     final resp = await getMyProfile();
     if (resp.statusCode == 0) {
-      state = MyProfile.fromJson(resp.data);
+      update(MyProfile.fromJson(resp.data));
     } else {
       //
     }
@@ -55,7 +61,15 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
 
 final myProfileProvider = StateNotifierProvider<MyProfileNotifier, MyProfile?>(
   (ref) {
-    final profile = kvStore.getString(profileKey);
-    return MyProfileNotifier(profile != null ? MyProfile.fromJson(jsonDecode(profile)) : null);
+    MyProfile? profile;
+    try {
+      final localCachedProfileString = kvStore.getString(profileKey);
+      if (localCachedProfileString != null) {
+        profile = MyProfile.fromJson(jsonDecode(localCachedProfileString));
+      }
+    } catch(e) {
+      if (kDebugMode) print(e);
+    }
+    return MyProfileNotifier(profile);
   }
 );
