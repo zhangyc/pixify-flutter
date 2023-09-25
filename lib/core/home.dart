@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
+import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/notice.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
@@ -71,19 +72,22 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.grey, activeProvider: bottomChatNoticeProvider),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
-              label: 'Chat'
+            icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.grey, activeProvider: bottomChatNoticeProvider),
+            activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
+            label: 'Chat'
           ),
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.grey,),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.black,),
-              label: 'Match'
+            icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.grey,),
+            activeIcon: GestureDetector(
+              onDoubleTap: () => ref.refresh(asyncMatchRecommendedProvider),
+              child: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.black,)
+            ),
+            label: 'Match'
           ),
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.grey,),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.black,),
-              label: 'Profile'
+            icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.grey,),
+            activeIcon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.black,),
+            label: 'Profile'
           )
         ],
       ),
