@@ -19,16 +19,22 @@ final tokenProvider = StateProvider<String?>(
         kvStore.remove(tokenKey);
         kvStore.remove(profileKey);
 
-        // 重置状态
-        ref.invalidate(asyncMyProfileProvider);
-        ref.invalidate(asyncLikedMeProvider);
-        ref.invalidate(asyncPersonaProvider);
-        ref.invalidate(asyncMatchRecommendedProvider);
-        ref.invalidate(conversationStreamProvider);
-        ref.invalidate(asyncChatStylesProvider);
+        // // 重置状态
+        // ref.invalidate(asyncMyProfileProvider);
+        // ref.invalidate(asyncLikedMeProvider);
+        // ref.invalidate(asyncPersonaProvider);
+        // ref.invalidate(asyncMatchRecommendedProvider);
+        // ref.invalidate(conversationStreamProvider);
+        // ref.invalidate(asyncChatStylesProvider);
       } else {
         kvStore.setString(tokenKey, next);
       }
+      ref.invalidate(asyncMyProfileProvider);
+      ref.invalidate(asyncLikedMeProvider);
+      ref.invalidate(asyncPersonaProvider);
+      ref.invalidate(asyncMatchRecommendedProvider);
+      ref.invalidate(conversationStreamProvider);
+      ref.invalidate(asyncChatStylesProvider);
     });
     final token = kvStore.getString(tokenKey);
     return token;

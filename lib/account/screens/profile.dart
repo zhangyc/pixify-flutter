@@ -178,7 +178,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
     return GestureDetector(
       onLongPress: index != 0 ? () => _showPhotoActions(_profile.photos[index]) : null,
-      onTap: index == 0 ? _seeMyProfile : null,
+      onTap: _seeMyProfile,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),

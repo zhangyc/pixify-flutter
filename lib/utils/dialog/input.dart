@@ -170,7 +170,7 @@ Future<String?> showSingleLineTextField(
   final controller = TextEditingController();
   return showModalBottomSheet<String>(
     context: context,
-    backgroundColor: Colors.black26,
+    backgroundColor: Colors.white,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
