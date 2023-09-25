@@ -24,7 +24,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
 
   @override
   void initState() {
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 120), (timer) {
       if (mounted) ref.read(asyncLikedMeProvider.notifier).refresh();
     });
     super.initState();
