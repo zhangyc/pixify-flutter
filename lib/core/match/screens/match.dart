@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
@@ -104,6 +105,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             onPageChanged: (value){
 
               currentPage=value;
+
               if(value%5==0){
                 current++;
                 _loadMore();
@@ -211,9 +213,15 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
        "pageSize":10 // 每页数量
      });
      if(resp.isSuccess){
-       List list= resp.data;
-       users=list.map((e) => UserInfo.fromJson(e)).toList();
 
+       List list= resp.data;
+
+       users=list.map((e) => UserInfo.fromJson(e)).toList();
+       for (var element in users) {
+         if(element.avatar!=null){
+           DefaultCacheManager().downloadFile(element.avatar!);
+         }
+       }
        setState(() {
 
        });
@@ -237,7 +245,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       });
       if(resp.isSuccess){
         List list= resp.data;
+
         List users1=list.map((e) => UserInfo.fromJson(e)).toList();
+        for (var element in users1) {
+          if(element.avatar!=null){
+            DefaultCacheManager().downloadFile(element.avatar!);
+          }
+        }
         users=[...users,...users1];
         setState(() {
 

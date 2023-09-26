@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../common/models/user.dart';
@@ -120,6 +121,7 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             fit: BoxFit.cover,
+            cacheManager: DefaultCacheManager(),
           ),
           Positioned(
             left: 20,

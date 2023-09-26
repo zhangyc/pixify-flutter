@@ -280,12 +280,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
     final bytes = await file.readAsBytes();
-    final res=await compressList(bytes);
-    if(res.isEmpty){
+    // final res=await compressList(bytes);
+    if(bytes.isEmpty){
       throw Exception('Handle fail');
     }
     // todo 通过provider
-    await addPhoto(bytes: res, filename: file.name);
+    await addPhoto(bytes: bytes, filename: file.name);
     ref.read(myProfileProvider.notifier).refresh();
   }
 
