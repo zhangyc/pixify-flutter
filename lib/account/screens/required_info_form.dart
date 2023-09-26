@@ -115,6 +115,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                               avatar: _avatar,
                               interests: _interests
                             );
+                            Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                           } else {
                             _pageController.nextPage(
                                 duration: const Duration(microseconds: 400),
