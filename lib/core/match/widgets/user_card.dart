@@ -129,7 +129,10 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${widget.user.name}',
+                Text(
+                    '${widget.user.name}',
+                    maxLines: 2,
+                    softWrap: true,
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w800,
@@ -142,8 +145,6 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
                     )),
                 Text(
                   '${widget.user.age}',
-                  maxLines: 2,
-                  softWrap: true,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
