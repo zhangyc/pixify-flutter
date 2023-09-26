@@ -51,4 +51,8 @@ set userToken(String token){
   appCommonBox.put('token', token);
 }
 
-Dio _dio=Dio(options);
+Dio _dio=Dio(options)..interceptors.add(InterceptorsWrapper(
+  onRequest: (q,h){
+    print(q.headers);
+  }
+));
