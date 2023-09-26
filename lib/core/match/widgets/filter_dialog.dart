@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/screens/match.dart';
+import 'package:sona/core/match/widgets/avatar_animation.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../account/models/gender.dart';
@@ -149,27 +150,21 @@ void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo tar
                   ],
                 ),
                 Positioned(
-                  left: 30,
+                  left: 60,
                   top: 212,
-                  child: Column(
-                    children: [
-                      ClipOval(
-                        child: CachedNetworkImage(imageUrl: ref.watch(myProfileProvider)?.avatar??'',width: 160,height: 160,fit: BoxFit.cover,),
-                      ),
-                      Text(ref.watch(myProfileProvider)?.name??'')
-                    ],
+                  child: AvatarAnimation(
+                      avatar: ref.watch(myProfileProvider)?.avatar??'',
+                      name: ref.watch(myProfileProvider)?.name??'',
+                      direction: AnimationDirection.right,
                   ),
                 ),
                 Positioned(
-                  right: 30,
+                  right: 60,
                   top: 212,
-                  child: Column(
-                    children: [
-                      ClipOval(
-                        child: CachedNetworkImage(imageUrl: target.avatar??'',width: 160,height: 160,fit: BoxFit.cover,),
-                      ),
-                      Text(target.name??'')
-                    ],
+                  child: AvatarAnimation(
+                      avatar: target.avatar??'',
+                      name: target.name??'',
+                      direction: AnimationDirection.left,
                   ),
                 ),
                 Column(
@@ -189,18 +184,30 @@ void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo tar
                         callSona(
                             userId: target.id,
                             type: CallSonaType.PROLOGUE);
-                       }, child: Text(sayHi)),
+                       }, child: Text(sayHi,style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16
+                      ),),
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(
+                            color: Colors.white,
+                            width: 2
+                          )
+                        ),
+                      ),
                     ),
                     sayHi=='Sent √'?Container():TextButton(onPressed: (){
                       Navigator.pop(context);
-                     }, child: Text('Later'))
+                     }, child: Text('Later',style: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 16
+                    ),))
                   ],
                 )
               ],
             ),
           );
         },
-        //child: ,
       );
     });
   });
