@@ -59,42 +59,46 @@ class MessageWidget extends StatelessWidget {
           onDelete(message);
         },
       ));
-      actions.addAll([
-        CupertinoContextMenuAction(
-          child: Icon(
-            message.feedback == MessageFeedbackType.like
-                ? CupertinoIcons.hand_thumbsup_fill
-                : CupertinoIcons.hand_thumbsup,
-            color: Theme.of(context).primaryColor,
-            size: 16,
+
+      // AI消息
+      if ([1, 2, 3, 4, 7].contains(message.type)) {
+        actions.addAll([
+          CupertinoContextMenuAction(
+            child: Icon(
+              message.feedback == MessageFeedbackType.like
+                  ? CupertinoIcons.hand_thumbsup_fill
+                  : CupertinoIcons.hand_thumbsup,
+              color: Theme.of(context).primaryColor,
+              size: 16,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              if (message.feedback == MessageFeedbackType.like) {
+                feedback(messageId: message.id, type: MessageFeedbackType.none);
+              } else {
+                feedback(messageId: message.id, type: MessageFeedbackType.like);
+              }
+            },
           ),
-          onPressed: () {
-            Navigator.pop(context);
-            if (message.feedback == MessageFeedbackType.like) {
-              feedback(messageId: message.id, type: MessageFeedbackType.none);
-            } else {
-              feedback(messageId: message.id, type: MessageFeedbackType.like);
-            }
-          },
-        ),
-        CupertinoContextMenuAction(
-          child: Icon(
-            message.feedback == MessageFeedbackType.dislike
-                ? CupertinoIcons.hand_thumbsdown_fill
-                : CupertinoIcons.hand_thumbsdown,
-            color: Theme.of(context).primaryColor,
-            size: 16,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-            if (message.feedback == MessageFeedbackType.dislike) {
-              feedback(messageId: message.id, type: MessageFeedbackType.none);
-            } else {
-              feedback(messageId: message.id, type: MessageFeedbackType.dislike);
-            }
-          },
-        )
-      ]);
+          CupertinoContextMenuAction(
+            child: Icon(
+              message.feedback == MessageFeedbackType.dislike
+                  ? CupertinoIcons.hand_thumbsdown_fill
+                  : CupertinoIcons.hand_thumbsdown,
+              color: Theme.of(context).primaryColor,
+              size: 16,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              if (message.feedback == MessageFeedbackType.dislike) {
+                feedback(messageId: message.id, type: MessageFeedbackType.none);
+              } else {
+                feedback(messageId: message.id, type: MessageFeedbackType.dislike);
+              }
+            },
+          )
+        ]);
+      }
     }
 
     return Container(
