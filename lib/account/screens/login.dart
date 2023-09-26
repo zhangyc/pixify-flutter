@@ -246,11 +246,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       verificationCompleted: (PhoneAuthCredential credential) async{
         if(Platform.isAndroid){
           final  userCredential=await authService.signInWithCredential(credential);
-          print(userCredential.user);
         }
       },
       verificationFailed: (FirebaseAuthException e) {
-        print(e);
+        if (e.message != null) Fluttertoast.showToast(msg: e.message!);
         completer.completeError(e);
       },
       codeSent: (String verificationId, int? resendToken) async {
@@ -258,8 +257,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         completer.complete(verificationId);
       },
       codeAutoRetrievalTimeout: (String verificationId) {
-        print(verificationId);
-        completer.completeError(verificationId);
+        // print(verificationId);
       },
     );
     return completer.future;

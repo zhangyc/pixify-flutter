@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/core/chat/services/chat.dart';
 
 class ImMessage {
   ImMessage({
@@ -9,7 +10,8 @@ class ImMessage {
     required this.receiver,
     required this.content,
     required this.time,
-    required this.shortenTimes
+    required this.shortenTimes,
+    this.feedback = MessageFeedbackType.none
   });
 
   final int id;
@@ -19,6 +21,7 @@ class ImMessage {
   final UserInfo receiver;
   final DateTime time;
   final int shortenTimes;
+  final MessageFeedbackType feedback;
   Future? pending;
   Future Function()? func;
 
@@ -30,7 +33,8 @@ class ImMessage {
       content: json['message'],
       time: (json['createDate'] as Timestamp).toDate(),
       shortenTimes: json['simplifyNum'] ?? 0,
-      type: json['messageType']
+      type: json['messageType'],
+      feedback: MessageFeedbackType.fromStatus(json['feedbackStatus'] ?? 0)
     );
   }
 }
