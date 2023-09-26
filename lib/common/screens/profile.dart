@@ -9,8 +9,10 @@ import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../core/match/providers/matched.dart';
+import '../../core/match/widgets/filter_dialog.dart';
 import '../../core/subscribe/subscribe_page.dart';
 import '../../generated/assets.dart';
+import '../../utils/global/global.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
   static const String routeName = '/user-profile';
@@ -143,14 +145,35 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     Navigator.of(context).pop();
   }
 
-  Future _onLike() {
+  Future _onLike() async {
+    final resp=await ref.read(asyncMatchRecommendedProvider.notifier).like(widget.user.id);
+    if(resp.isSuccess){
+      if(resp.data['resultType']==2){
+        // if (index < users.length - 1) {
+        //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+        //       curve: Curves.linearToEaseOut);
+        // }
+      }else if(resp.data['resultType']==1){
+        showMatched(context, () {
+          // if (index < users.length - 1) {
+          //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+          //       curve: Curves.linearToEaseOut);
+          // }
+        },target: widget.user);
+      }
+    }else if(resp.statusCode==10150){
+      Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+        return const SubscribePage();
+      }));
+    }
     return ref.read(asyncMatchRecommendedProvider.notifier).like(widget.user.id).then((resp){
-      if (mounted && resp?.statusCode == 200) {
+
+      if (mounted && resp.isSuccess) {
         setState(() {
           _liked = true;
         });
       }
-      if (mounted && resp?.statusCode == 10150) {
+      if (mounted && resp.statusCode == 10150) {
         Navigator.push(context, MaterialPageRoute(builder:(c){
           return SubscribePage();
         }));

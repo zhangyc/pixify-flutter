@@ -67,15 +67,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         }
                         if(resp.isSuccess){
                           if(resp.data['resultType']==2){
-
-                            // if(users[value-1].arrowed||users[value-1].matched){
-                            //   return;
-                            // }else {
-                            //   users[value-1].skipped=true;
-                            //   ref.read(asyncMatchRecommendedProvider.notifier)
-                            //       .skip(users[value-1].id);
-                            // }
-
                             if (index < users.length - 1) {
                               pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
                                   curve: Curves.linearToEaseOut);
