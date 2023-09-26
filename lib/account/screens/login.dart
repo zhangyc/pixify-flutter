@@ -219,8 +219,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future _next() async {
     if (_phoneKey.currentState!.validate()) {
-      _sendPin();
-      // _verifyNumber();
+      // _sendPin();
+      _verifyNumber();
       if (mounted) setState(() {});
       await _controller.animateToPage(1,
           duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);

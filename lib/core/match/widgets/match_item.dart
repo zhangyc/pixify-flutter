@@ -16,13 +16,13 @@ class MatchItem extends ConsumerStatefulWidget {
   const MatchItem(this.index, {super.key,
     required this.userInfo,
     required this.controller,
-    required this.onArrow,
+    // required this.onArrow,
     required this.onLike,
     required this.length,
   });
   final UserInfo userInfo;
   final PageController controller;
-  final Function onArrow;
+  // final Function onArrow;
   final Function onLike;
   final int index;
   final int length;
@@ -38,7 +38,10 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
     arrowController=AnimationController(vsync: this,duration: Duration(milliseconds: 1500),lowerBound: 0.1,upperBound: 1);
     arrowController.addListener(() {
       if(arrowController.isCompleted){
-        widget.onArrow.call();
+        if (widget.index < widget.length - 1) {
+          widget.controller.animateToPage(widget.index + 1, duration: const Duration(milliseconds: 200),
+              curve: Curves.linearToEaseOut);
+        }
         setState(() {
 
         });
@@ -71,12 +74,8 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
                 final resp=await ref.read(asyncMatchRecommendedProvider.notifier).arrow(widget.userInfo.id);
                 if(resp.isSuccess){
                   arrowController.reset();
-                  arrowController.forward();
+                  arrowController.forward() ;
                   widget.userInfo.arrowed=true;
-                  if (widget.index < widget.length - 1) {
-                    widget.controller.animateToPage(widget.index + 1, duration: const Duration(milliseconds: 200),
-                        curve: Curves.linearToEaseOut);
-                  }
                 }else if(resp.statusCode==10150){
                   /// 判断如果不是会员，跳转道会员页面
                   if(ref.read(myProfileProvider)?.isMember??false){

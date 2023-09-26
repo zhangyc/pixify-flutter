@@ -64,9 +64,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     userInfo: users[index],
                     controller: pageController,
 
-                    onArrow: () async {
-
-                    },
+                    // onArrow: () async {
+                    //
+                    // },
                     onLike: (){
                       users[index].matched=true;
                       ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
