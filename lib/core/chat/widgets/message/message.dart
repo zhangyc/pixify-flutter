@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/models/message.dart';
+import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/message/message_from_me.dart';
 import 'package:sona/core/chat/widgets/message/message_from_other.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
@@ -41,6 +42,65 @@ class MessageWidget extends StatelessWidget {
       _message = MessageFromOther(message: message);
     }
 
+    final actions = <Widget>[];
+    actions.add(CupertinoContextMenuAction(
+      child: const Text('Copy'),
+      onPressed: () {
+        Navigator.pop(context);
+        Clipboard.setData(ClipboardData(text: message.content));
+        Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
+      },
+    ));
+    if (fromMe) {
+      actions.add(CupertinoContextMenuAction(
+        child: const Text('Delete'),
+        onPressed: () {
+          Navigator.pop(context);
+          onDelete(message);
+        },
+      ));
+
+      // AI消息
+      if ([1, 2, 3, 4, 7].contains(message.type)) {
+        actions.addAll([
+          CupertinoContextMenuAction(
+            child: Icon(
+              message.feedback == MessageFeedbackType.like
+                  ? CupertinoIcons.hand_thumbsup_fill
+                  : CupertinoIcons.hand_thumbsup,
+              color: Theme.of(context).primaryColor,
+              size: 16,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              if (message.feedback == MessageFeedbackType.like) {
+                feedback(messageId: message.id, type: MessageFeedbackType.none);
+              } else {
+                feedback(messageId: message.id, type: MessageFeedbackType.like);
+              }
+            },
+          ),
+          CupertinoContextMenuAction(
+            child: Icon(
+              message.feedback == MessageFeedbackType.dislike
+                  ? CupertinoIcons.hand_thumbsdown_fill
+                  : CupertinoIcons.hand_thumbsdown,
+              color: Theme.of(context).primaryColor,
+              size: 16,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              if (message.feedback == MessageFeedbackType.dislike) {
+                feedback(messageId: message.id, type: MessageFeedbackType.none);
+              } else {
+                feedback(messageId: message.id, type: MessageFeedbackType.dislike);
+              }
+            },
+          )
+        ]);
+      }
+    }
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -52,23 +112,7 @@ class MessageWidget extends StatelessWidget {
             child: MessageTime(time: message.time)
           ),
           CupertinoContextMenu.builder(
-            actions: <Widget>[
-              CupertinoContextMenuAction(
-                child: const Text('Copy'),
-                onPressed: () {
-                  Navigator.pop(context);
-                  Clipboard.setData(ClipboardData(text: message.content));
-                  Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-                },
-              ),
-              CupertinoContextMenuAction(
-                child: const Text('Delete'),
-                onPressed: () {
-                  Navigator.pop(context);
-                  onDelete(message);
-                },
-              ),
-            ],
+            actions: actions,
             builder:(BuildContext context, Animation<double> animation) {
               return Container(
                 // decoration:

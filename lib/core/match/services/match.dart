@@ -39,7 +39,9 @@ Future<HttpResult> matchAction({
 enum MatchAction {
   skip(1),
   like(2),
-  arrow(3);
+  arrow(3),
+  block(5),
+  check(6);
 
   const MatchAction(this.value);
   final int value;

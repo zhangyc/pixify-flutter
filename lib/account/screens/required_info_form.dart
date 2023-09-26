@@ -102,7 +102,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                     child: Typwriter(
                         textBuilder: action.textBuilder,
                         highlights: action.highlights,
-                        duration: const Duration(milliseconds: 80),
+                        duration: const Duration(milliseconds: 60),
                         onDone: () async {
                           if (action.action != null) {
                             action.value = await action.action!();

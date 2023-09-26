@@ -1,15 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/core/match/screens/match.dart';
-import 'package:sona/utils/global/global.dart';
 
-import '../../../account/providers/profile.dart';
 import '../../../common/models/user.dart';
-import '../../../generated/assets.dart';
-import '../../subscribe/subscribe_page.dart';
-import '../providers/matched.dart';
 import 'match_init_animation.dart';
 
 class UserCard extends ConsumerStatefulWidget {
@@ -130,6 +123,7 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
           ),
           Positioned(
             left: 20,
+            right: 60,
             bottom: MediaQuery.of(context).viewInsets.bottom + 160,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,20 +136,25 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
                       shadows: const <Shadow>[
                         Shadow(
                           blurRadius: 5.0,
-                          color: Color.fromARGB(10, 0, 0, 0),
+                          color: Color.fromARGB(120, 0, 0, 0),
                         ),
                       ],
                     )),
-                Text('${widget.user.age}',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        shadows: const <Shadow>[
-                          Shadow(
-                            blurRadius: 5.0,
-                            color: Color.fromARGB(10, 0, 0, 0),
-                          ),
-                        ]))
+                Text(
+                  '${widget.user.age}',
+                  maxLines: 2,
+                  softWrap: true,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      shadows: const <Shadow>[
+                        Shadow(
+                          blurRadius: 5.0,
+                          color: Color.fromARGB(120, 0, 0, 0),
+                        ),
+                      ]
+                  )
+                )
               ],
             ),
           ),
@@ -180,7 +179,8 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
                 const ColorFilter.mode(Colors.black54, BlendMode.srcATop),
             fit: BoxFit.cover,
             alignment: Alignment.center,
-            isAntiAlias: true),
+            isAntiAlias: true
+        ),
       ),
       clipBehavior: Clip.antiAlias,
       alignment: Alignment.topLeft,
@@ -192,7 +192,7 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
               shadows: const <Shadow>[
                 Shadow(
                   blurRadius: 5.0,
-                  color: Color.fromARGB(10, 0, 0, 0),
+                  color: Color.fromARGB(20, 0, 0, 0),
                 ),
               ]
           )

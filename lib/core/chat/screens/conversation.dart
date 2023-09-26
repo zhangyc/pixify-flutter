@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
@@ -9,6 +10,7 @@ import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/conversation.dart';
 import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../models/message.dart';
 import '../widgets/inputbar/chat_style.dart';
@@ -43,7 +45,14 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: LikedMeListView(onTap: (UserInfo u) => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u, relation: Relation.likeMe)))),
+            child: LikedMeListView(onTap: ([UserInfo? u]) {
+              if (ref.read(myProfileProvider)!.isMember) {
+                if (u == null) return;
+                Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u!, relation: Relation.likeMe)));
+              } else {
+                showSubscription();
+              }
+            }),
           ),
           SliverToBoxAdapter(
             child: Padding(

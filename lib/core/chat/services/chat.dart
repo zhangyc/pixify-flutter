@@ -90,3 +90,35 @@ Future<Response> deleteAllMessages({
       }
   );
 }
+
+Future<Response> feedback({
+  required int messageId,
+  required MessageFeedbackType type,
+}) async {
+  return dio.post(
+      '/message/feedback',
+      data: {
+        'messageId': messageId,
+        'feedbackStatus': type.status
+      }
+  );
+}
+
+enum MessageFeedbackType {
+  none(0),
+  like(1),
+  dislike(2);
+
+  const MessageFeedbackType(this.status);
+
+  factory MessageFeedbackType.fromStatus(int status) {
+    return switch(status) {
+      0 => MessageFeedbackType.none,
+      1 => MessageFeedbackType.like,
+      2 => MessageFeedbackType.dislike,
+      _ => MessageFeedbackType.none
+    };
+  }
+
+  final int status;
+}
