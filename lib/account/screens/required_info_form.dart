@@ -185,9 +185,8 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     final picker = ImagePicker();
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
-    final bytes = await file.readAsBytes();
-    final value =
-        await uploadFile(bytes: bytes, filename: file.name);
+    var bytes = await file.readAsBytes();
+    final value = await uploadFile(bytes: bytes, filename: file.name);
     _actions.firstWhere((action) => action.field == 'avatar')
       ..value = value
       ..done = true;

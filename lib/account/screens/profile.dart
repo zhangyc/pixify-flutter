@@ -280,28 +280,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
     final bytes = await file.readAsBytes();
-    final res=await compressList(bytes);
-    if(res.isEmpty){
-      throw Exception('Handle fail');
-    }
-    // todo 通过provider
-    await addPhoto(bytes: res, filename: file.name);
+    await addPhoto(bytes: bytes, filename: file.name);
     ref.read(myProfileProvider.notifier).refresh();
   }
 
   Future _onRemovePhoto(int photoId) async {
     await removePhoto(photoId: photoId);
     ref.read(myProfileProvider.notifier).refresh();
-  }
-  // 4. compress Uint8List and get another Uint8List.
-  Future<Uint8List> compressList(Uint8List list) async {
-    var result = await FlutterImageCompress.compressWithList(
-      list,
-      minHeight: 1920,
-      minWidth: 1080,
-      quality: 80,
-      rotate: 0,
-    );
-    return result;
   }
 }
