@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -38,8 +40,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
       _nameValidate &&
       _gender != null &&
       _birthday != null &&
-      _avatar != null &&
-      _interests.length >= 3;
+      _avatar != null && _avatar!.isNotEmpty;
 
   @override
   void initState() {
@@ -106,16 +107,22 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                         onDone: () async {
                           if (action.action != null) {
                             action.value = await action.action!();
+                            action.value ??= await action.action!();
+                            if (action.value == null) return;
                           }
                           if (action.field == 'avatar') {
-                            ref.read(myProfileProvider.notifier).updateField(
-                              name: _name,
-                              birthday: _birthday,
-                              gender: _gender,
-                              avatar: _avatar,
-                              interests: _interests
-                            );
-                            Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                            if (_validate) {
+                              ref.read(myProfileProvider.notifier).updateField(
+                                  name: _name,
+                                  birthday: _birthday,
+                                  gender: _gender,
+                                  avatar: _avatar,
+                                  interests: _interests
+                              );
+                              Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                            } else {
+                              Fluttertoast.showToast(msg: 'Invalid info');
+                            }
                           } else {
                             _pageController.nextPage(
                                 duration: const Duration(microseconds: 400),
