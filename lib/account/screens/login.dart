@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +17,7 @@ import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/home.dart';
 import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../firebase/sona_firebase.dart';
 import '../models/my_profile.dart';
@@ -219,8 +221,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future _next() async {
     if (_phoneKey.currentState!.validate()) {
-      _sendPin();
-      // _verifyNumber();
+      // _sendPin();
+      try {
+        await _verifyNumber();
+      } catch (e) {
+        Fluttertoast.showToast(msg: 'Send message error, try again later');
+        return;
+      }
       if (mounted) setState(() {});
       await _controller.animateToPage(1,
           duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
@@ -228,19 +235,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         _pinFocusNode.requestFocus();
       });
     }
-
-    // authService.idTokenChanges().listen((event) {
-    //   print(event);
-    // });
-    // authService.userChanges().listen((event) {
-    //   print(event);
-    // });
-
-
   }
+
   String? verificationId;
-  _verifyNumber() async{
-    await authService.verifyPhoneNumber(
+  Future _verifyNumber() async{
+    final completer = Completer();
+    authService.verifyPhoneNumber(
       phoneNumber: '+${_countryCode} ${_phoneNumber}',
       timeout: Duration(seconds: 60),
       verificationCompleted: (PhoneAuthCredential credential) async{
@@ -251,14 +251,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       },
       verificationFailed: (FirebaseAuthException e) {
         print(e);
+        completer.completeError(e);
       },
       codeSent: (String verificationId, int? resendToken) async {
         this.verificationId=verificationId;
+        completer.complete(verificationId);
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         print(verificationId);
+        completer.completeError(verificationId);
       },
     );
+    return completer.future;
   }
   // final _maxRetryTime = 1;
   // var _currentRetryTime = 0;
@@ -280,7 +284,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       final  idToken=await userCredential.user?.getIdToken();  //idToken上送给业务服务器
 
 
-     final resp= await post('/auth/login-firebase',data: {
+     final resp = await dio.post('/auth/login-firebase',data: {
         "token":idToken, //
         "deviceToken":deviceToken, // 设备 token 可为空
         "timezone":'${DateTime.now().timeZoneOffset.inHours}',
@@ -288,45 +292,40 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         "phone":_phoneNumber, // 手机号
         // 用户所在时区 可为空
       });
-     if(resp.isSuccess){
-       userToken=resp.data['token'];
-     }else if(resp.statusCode == 2){
-       if (mounted) {
-         await Navigator.push(context, MaterialPageRoute(
-             builder: (_) => RequiredInfoFormScreen()));
-       }
-     }
-     //  final resp = await login(
-     //      countryCode: _countryCode,
-     //      phoneNumber: _phoneNumber,
-     //      pinCode: _pinController.text
-     //  );
-     //
-     //  if (resp.statusCode == 0 || resp.statusCode == 2) {
-     //    final token = resp.data['token'];
-     //    ref.read(tokenProvider.notifier).state = token;
-     //    userToken=token;
-     //    // 未注册
-     //    if (resp.statusCode == 2) {
-     //      if (mounted) {
-     //        await Navigator.push(context, MaterialPageRoute(
-     //            builder: (_) => RequiredInfoFormScreen()));
-     //      }
-     //      return;
-     //    }
-     //
-     //    final response = await getMyProfile();
-     //    if (response.statusCode == 0) {
-     //      final profile = MyProfile.fromJson(response.data);
-     //      ref.read(myProfileProvider.notifier).update(profile);
-     //      Fluttertoast.showToast(msg: 'Welcome back, ${profile.name}');
-     //      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-     //    } else {
-     //      Fluttertoast.showToast(msg: 'Failed to get profile, try again later');
-     //    }
-     //  } else {
-     //    Fluttertoast.showToast(msg: 'Failed to login, try again later');
-     //  }
+
+      if (resp.statusCode == 0 || resp.statusCode == 2) {
+        final token = resp.data['token'];
+        ref.read(tokenProvider.notifier).state = token;
+        userToken=token;
+        // 未注册
+        if (resp.statusCode == 2) {
+          _completeRequiredInfo();
+          return;
+        }
+
+        final response = await getMyProfile();
+        if (response.statusCode == 0) {
+          final profile = MyProfile.fromJson(response.data);
+          ref.read(myProfileProvider.notifier).update(profile);
+          if (!profile.completed) {
+            _completeRequiredInfo();
+            return;
+          }
+          Fluttertoast.showToast(msg: 'Welcome back, ${profile.name}');
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        } else {
+          Fluttertoast.showToast(msg: 'Failed to get profile, try again later');
+        }
+      } else {
+        Fluttertoast.showToast(msg: 'Failed to login, try again later');
+      }
+    }
+  }
+
+  void _completeRequiredInfo() async {
+    if (mounted) {
+      await Navigator.push(context, MaterialPageRoute(
+          builder: (_) => RequiredInfoFormScreen()));
     }
   }
 }
