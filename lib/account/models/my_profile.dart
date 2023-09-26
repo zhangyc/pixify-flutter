@@ -9,7 +9,7 @@ class MyProfile {
     required this.gender,
     required this.birthday,
     required this.avatar,
-    required this.interests,
+    this.interests = const <String>[],
     required this.position,
     this.bio,
     this.impression,
@@ -28,13 +28,19 @@ class MyProfile {
   final int? chatStyleId;
   final List<String> interests;
   final List<ProfilePhoto> photos;
-  final Position position;
+  final Position? position;
   final int? vipEndDate;
 
   bool get completed => _validate();
   bool get isMember => vipEndDate != null && vipEndDate! > DateTime.now().millisecondsSinceEpoch;
 
   factory MyProfile.fromJson(Map<String, dynamic> json) {
+    final longitudeStr = json['longitude'];
+    final latitudeStr = json['latitude'];
+    Position? pos;
+    if (longitudeStr != null && latitudeStr != null) {
+      pos = Position.fromMap({'longitude': double.tryParse(longitudeStr), 'latitude': double.tryParse(latitudeStr)});
+    }
     return MyProfile(
       id: json['id'],
       name: json['nickname'],
@@ -47,7 +53,7 @@ class MyProfile {
       vipEndDate: json['vipEndDate'],
       interests: json['interest'] != null ? (json['interest'] as String).split(',') : [],
       photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
-      position: Position.fromMap({'longitude': double.parse(json['longitude']), 'latitude': double.parse(json['latitude'])})
+      position: pos
     );
   }
 
@@ -63,8 +69,8 @@ class MyProfile {
       'chatStyleId': chatStyleId,
       'interest': interests.join(','),
       'images': photos.map<Map<String, dynamic>>((photo) => photo.toJson()).toList(),
-      'longitude': position.longitude.toString(),
-      'latitude': position.latitude.toString(),
+      'longitude': position?.longitude.toString(),
+      'latitude': position?.latitude.toString(),
       'vipEndDate':vipEndDate
     };
   }
