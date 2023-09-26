@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/utils/global/global.dart';
 
-import '../../../utils/providers/dio.dart';
+import '../util/http_util.dart';
 
 Future<HttpResult> fetchMatchPeople({
   required Position position,

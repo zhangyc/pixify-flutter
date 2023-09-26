@@ -17,11 +17,9 @@ class UserCard extends ConsumerStatefulWidget {
     super.key,
     required this.user,
     this.actions = const <Positioned>[],
-    this.onArrow,
   });
   final UserInfo user;
   final List<Positioned> actions;
-  final Function? onArrow;
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ConsumerUserCardState();
 }
@@ -29,20 +27,9 @@ class UserCard extends ConsumerStatefulWidget {
 class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerProviderStateMixin{
   final _pageController = PageController();
   double _page = 0;
-  late AnimationController arrowController;
 
   @override
   void initState() {
-    arrowController=AnimationController(vsync: this,duration: Duration(milliseconds: 1500),lowerBound: 0.1,upperBound: 1);
-    arrowController.addListener(() {
-      if(arrowController.isCompleted){
-        widget.onArrow?.call();
-        setState(() {
-
-        });
-      }
-    });
-
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _pageController.addListener(_pageControllerListener);
     });
@@ -53,7 +40,6 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
   @override
   void dispose() {
     _pageController.removeListener(_pageControllerListener);
-    arrowController.dispose();
     super.dispose();
   }
 
@@ -112,41 +98,6 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
                 ),
               ),
             )
-        ),
-        Positioned.fill(child: Arrow(animationController: arrowController)),
-
-        Positioned(
-          right: 20,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 80,
-          child:  GestureDetector(child: Image.asset(Assets.iconsArrow,width: 50,height: 50,),
-            onTap: (){
-              ref.read(asyncMatchRecommendedProvider.notifier)
-                  .arrow(widget.user.id).then((resp){
-                    print(resp);
-                if(resp.statusCode==10150){
-                  /// 判断如果不是会员，跳转道会员页面
-                  if(ref.read(myProfileProvider)?.isMember??false){
-                    Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                      return SubscribePage();
-                    }));
-                  }else {
-                    Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                  }
-                  ///如果是会员，提示超过限制
-                }else if(resp.isSuccess){
-                  widget.user.arrowed=true;
-                  ///内存中取一下
-                  arrowController.reset();
-                  arrowController.forward();
-
-                }
-              });
-
-               setState(() {
-
-               });
-            },
-          )
         ),
         ...widget.actions,
       ],

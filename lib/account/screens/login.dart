@@ -14,10 +14,12 @@ import 'package:sona/account/services/auth.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/home.dart';
+import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/providers/token.dart';
 
 import '../../firebase/sona_firebase.dart';
 import '../models/my_profile.dart';
+
 
 class LoginScreen extends StatefulHookConsumerWidget {
   const LoginScreen({super.key});
@@ -271,58 +273,60 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     // if (_pinKey.currentState!.validate()&&verificationId!=null) {
       if (_pinKey.currentState!.validate()) {
 
-     //  PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: _pinController.text);
-     //
-     //  // Sign the user in (or link) with the credential
-     //  final  userCredential= await authService.signInWithCredential(credential);
-     //  final  idToken=await userCredential.user?.getIdToken();  //idToken上送给业务服务器
-     //
-     //
-     // final resp= await post('/auth/login-firebase',data: {
-     //    "token":idToken, //
-     //    "deviceToken":deviceToken, // 设备 token 可为空
-     //    "timezone":'${DateTime.now().timeZoneOffset.inHours}',
-     //
-     //    // 用户所在时区 可为空
-     //  });
-     // if(resp.isSuccess){
-     //   token=resp.data['token'];
-     // }else if(resp.statusCode == 2){
-     //   if (mounted) {
-     //     await Navigator.push(context, MaterialPageRoute(
-     //         builder: (_) => RequiredInfoFormScreen()));
-     //   }
-     // }
-      final resp = await login(
-          countryCode: _countryCode,
-          phoneNumber: _phoneNumber,
-          pinCode: _pinController.text
-      );
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: _pinController.text);
 
-      if (resp.statusCode == 0 || resp.statusCode == 2) {
-        final token = resp.data['token'];
-        ref.read(tokenProvider.notifier).state = token;
-        // 未注册
-        if (resp.statusCode == 2) {
-          if (mounted) {
-            await Navigator.push(context, MaterialPageRoute(
-                builder: (_) => RequiredInfoFormScreen()));
-          }
-          return;
-        }
+      // Sign the user in (or link) with the credential
+      final  userCredential= await authService.signInWithCredential(credential);
+      final  idToken=await userCredential.user?.getIdToken();  //idToken上送给业务服务器
 
-        final response = await getMyProfile();
-        if (response.statusCode == 0) {
-          final profile = MyProfile.fromJson(response.data);
-          ref.read(myProfileProvider.notifier).update(profile);
-          Fluttertoast.showToast(msg: 'Welcome back, ${profile.name}');
-          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-        } else {
-          Fluttertoast.showToast(msg: 'Failed to get profile, try again later');
-        }
-      } else {
-        Fluttertoast.showToast(msg: 'Failed to login, try again later');
-      }
+
+     final resp= await post('/auth/login-firebase',data: {
+        "token":idToken, //
+        "deviceToken":deviceToken, // 设备 token 可为空
+        "timezone":'${DateTime.now().timeZoneOffset.inHours}',
+        "phonePrefix":_countryCode, // 手机号前缀
+        "phone":_phoneNumber, // 手机号
+        // 用户所在时区 可为空
+      });
+     if(resp.isSuccess){
+       userToken=resp.data['token'];
+     }else if(resp.statusCode == 2){
+       if (mounted) {
+         await Navigator.push(context, MaterialPageRoute(
+             builder: (_) => RequiredInfoFormScreen()));
+       }
+     }
+     //  final resp = await login(
+     //      countryCode: _countryCode,
+     //      phoneNumber: _phoneNumber,
+     //      pinCode: _pinController.text
+     //  );
+     //
+     //  if (resp.statusCode == 0 || resp.statusCode == 2) {
+     //    final token = resp.data['token'];
+     //    ref.read(tokenProvider.notifier).state = token;
+     //    userToken=token;
+     //    // 未注册
+     //    if (resp.statusCode == 2) {
+     //      if (mounted) {
+     //        await Navigator.push(context, MaterialPageRoute(
+     //            builder: (_) => RequiredInfoFormScreen()));
+     //      }
+     //      return;
+     //    }
+     //
+     //    final response = await getMyProfile();
+     //    if (response.statusCode == 0) {
+     //      final profile = MyProfile.fromJson(response.data);
+     //      ref.read(myProfileProvider.notifier).update(profile);
+     //      Fluttertoast.showToast(msg: 'Welcome back, ${profile.name}');
+     //      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+     //    } else {
+     //      Fluttertoast.showToast(msg: 'Failed to get profile, try again later');
+     //    }
+     //  } else {
+     //    Fluttertoast.showToast(msg: 'Failed to login, try again later');
+     //  }
     }
   }
 }

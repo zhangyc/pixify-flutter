@@ -61,31 +61,44 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
           PersonaScreen(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        iconSize: 48,
-        currentIndex: _currentIndex,
-        onTap: _onPageChange,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.grey, activeProvider: bottomChatNoticeProvider),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
-              label: 'Chat'
-          ),
-          BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.grey,),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.black,),
-              label: 'Match'
-          ),
-          BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.grey,),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.black,),
-              label: 'Profile'
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Colors.transparent,
+            Colors.black.withOpacity(0.2),
+            Colors.black,
+          ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter
+
           )
-        ],
+        ),
+        child: BottomNavigationBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          iconSize: 48,
+          currentIndex: _currentIndex,
+          onTap: _onPageChange,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          items: [
+            BottomNavigationBarItem(
+                icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.grey, activeProvider: bottomChatNoticeProvider),
+                activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
+                label: 'Chat'
+            ),
+            BottomNavigationBarItem(
+                icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.grey,),
+                activeIcon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.black,),
+                label: 'Match'
+            ),
+            BottomNavigationBarItem(
+                icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.grey,),
+                activeIcon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.black,),
+                label: 'Profile'
+            )
+          ],
+        ),
       ),
     );
   }

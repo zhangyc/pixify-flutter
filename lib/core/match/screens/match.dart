@@ -7,20 +7,20 @@ import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/screens/report.dart';
+import 'package:sona/core/match/widgets/match_item.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/global/global.dart';
-import 'package:sona/utils/providers/dio.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
-import '../../../account/models/gender.dart';
+import '../../../account/providers/profile.dart';
 import '../../../utils/dialog/input.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/setting.dart';
+import '../util/http_util.dart';
 import '../widgets/filter_dialog.dart';
 import '../widgets/like_animation.dart';
 // import '../widgets/scroller.dart' as s;
@@ -44,6 +44,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   void dispose() {
+    pageController.dispose();
     super.dispose();
   }
   int currentPage=0;
@@ -56,48 +57,35 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         Positioned.fill(
           child: PageView.builder(
             itemBuilder: (c,index) {
-              return StackPageView(
-                  index: index,
+              return StackPageView(index: index,
                   controller: pageController,
-                  child: UserCard(
-                    key: ValueKey(users[index].id),
-                    user: users[index],
-                    onArrow: (){
+                  child: MatchItem(index,
+                    length: users.length,
+                    userInfo: users[index],
+                    controller: pageController,
+
+                    onArrow: () async {
+
+                    },
+                    onLike: (){
+                      users[index].matched=true;
+                      ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
+                        if(resp==null){
+                          return;
+                        }
+                        if(resp.statusCode==10150){
+                          Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                            return const SubscribePage();
+                          }));
+                        }
+                      });
                       if (index < users.length - 1) {
                         pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
                             curve: Curves.linearToEaseOut);
                       }
                     },
-                    actions: [
-                      Positioned(
-                        right: 20,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 150,
-                        child: LikeAnimation(
-                          key: ValueKey('key${users[index].index}'),
-                          userInfo: users[index],
-                          onLike: () {
-                            users[index].matched=true;
-                            ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
-                              if(resp==null){
-                                return;
-                              }
-                              if(resp.statusCode==10150){
-                                Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                                  return const SubscribePage();
-                                }));
-                              }
-                            });
-                            if (index < users.length - 1) {
-                              pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-                                  curve: Curves.linearToEaseOut);
-                            }
-                          },
-                        ),
-                      ),
-                      // 加action组件
-                    ],
-                  )
-              );
+
+                  ));
             },
             itemCount: users.length,
             scrollDirection: Axis.vertical,
@@ -126,7 +114,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           top: 73,
           child: Column(
             children: [
-              GestureDetector(child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),onTap: (){
+              GestureDetector(child: Container(
+                child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
+                  ]
+                ),
+              ),onTap: (){
                 showFilter(context,(){
                   _initData();
                 });
@@ -202,12 +197,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
        "page":current,    // 页码
        "pageSize":10 // 每页数量
      });
-     List list= resp.data;
-     users=list.map((e) => UserInfo.fromJson(e)).toList();
+     if(resp.isSuccess){
+       List list= resp.data;
+       users=list.map((e) => UserInfo.fromJson(e)).toList();
 
-     setState(() {
+       setState(() {
 
-     });
+       });
+     }
    }catch(e){
      print(e);
    }
@@ -225,12 +222,15 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         "page":current,    // 页码
         "pageSize":10 // 每页数量
       });
-      List list= resp.data;
-      List users1=list.map((e) => UserInfo.fromJson(e)).toList();
-      users=[...users,...users1];
-      setState(() {
+      if(resp.isSuccess){
+        List list= resp.data;
+        List users1=list.map((e) => UserInfo.fromJson(e)).toList();
+        users=[...users,...users1];
+        setState(() {
 
-      });
+        });
+      }
+
     }catch(e){
       print(e);
     }
@@ -238,37 +238,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
 }
 
-class Arrow extends StatelessWidget {
-  const Arrow({
-    super.key,
-    required AnimationController animationController,
-  }) : _animationController2 = animationController;
 
-  final AnimationController _animationController2;
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: ColoredBox(
-        color: _animationController2.isAnimating?Colors.black.withOpacity(0.5):Colors.transparent,
-        child: Center(child: _animationController2.isAnimating?Stack(
-          alignment: Alignment.center,
-          children: [
-            AnimatedContainer(duration: Duration(milliseconds: 1500),
-              child: Image.asset(Assets.imagesArrow,),
-              curve: Curves.fastOutSlowIn,
-              width: 300,
-              height:300,
-            ),
-            Lottie.asset(Assets.lottieArrowAnimation,
-                controller: _animationController2,repeat: true),
-
-          ],
-        ):Container()),
-      ),
-    );
-  }
-}
 enum FilterGender{
   male,
   female,

@@ -2,7 +2,8 @@
 <!-- Modify this file to customize your launch splash screen -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/splash"
-        android:gravity="fill"/>
+        android:gravity="center|fill"
+        />
 <!--    <item android:drawable="@drawable/sona"-->
 <!--        android:width="281dp"-->
 <!--        android:height="105dp"-->

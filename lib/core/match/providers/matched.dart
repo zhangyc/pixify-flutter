@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dio/src/response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,8 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/services/match.dart';
 
-import '../../../utils/providers/dio.dart';
+import '../util/http_util.dart';
+
 
 /// 可能需要把分页数据也封装进来，no more data 等
 @immutable
