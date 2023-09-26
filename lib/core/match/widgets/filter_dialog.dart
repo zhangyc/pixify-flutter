@@ -2,12 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/screens/match.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../account/models/gender.dart';
 import '../../../generated/assets.dart';
+import '../../chat/models/message.dart';
+import '../../chat/services/chat.dart';
 import '../providers/setting.dart';
 
 void showFilter(BuildContext context,VoidCallback onSave) {
@@ -125,29 +128,86 @@ void showFilter(BuildContext context,VoidCallback onSave) {
     });
   });
 }
-void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo own,required UserInfo target}) {
-  showDialog(context: context, builder: (c){
-    return Container(
-      color: Color(0xffe74e27),
-      child: Stack(
-        children: [
-          Image.asset(Assets.imagesMatched),
-          Positioned(
-            left: 30,
-            child: ClipOval(
-              child: CachedNetworkImage(imageUrl: own.avatar??'',width: 160,height: 160,),
+void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo target}) {
+  String sayHi='Let SONA Say Hi';
+
+  showGeneralDialog(context: context, pageBuilder: (_,__,___){
+    return Consumer(builder: (b,ref,_){
+      return StatefulBuilder(
+        builder: (BuildContext context, void Function(void Function()) setState) {
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            color: Color(0xffe74e27),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 358,
+                    ),
+                    Image.asset(Assets.imagesMatched),
+                  ],
+                ),
+                Positioned(
+                  left: 30,
+                  top: 212,
+                  child: Column(
+                    children: [
+                      ClipOval(
+                        child: CachedNetworkImage(imageUrl: ref.watch(myProfileProvider)?.avatar??'',width: 160,height: 160,fit: BoxFit.cover,),
+                      ),
+                      Text(ref.watch(myProfileProvider)?.name??'')
+                    ],
+                  ),
+                ),
+                Positioned(
+                  right: 30,
+                  top: 212,
+                  child: Column(
+                    children: [
+                      ClipOval(
+                        child: CachedNetworkImage(imageUrl: target.avatar??'',width: 160,height: 160,fit: BoxFit.cover,),
+                      ),
+                      Text(target.name??'')
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 515,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: OutlinedButton(onPressed: (){
+                        sayHi='Sent √';
+                        setState((){});
+                        Future.delayed(Duration(milliseconds: 500),(){
+                          onSave.call();
+                          Navigator.pop(context);
+                        });
+                        callSona(
+                            userId: target.id,
+                            type: CallSonaType.PROLOGUE);
+                       }, child: Text(sayHi)),
+                    ),
+                    sayHi=='Sent √'?Container():TextButton(onPressed: (){
+                      Navigator.pop(context);
+                     }, child: Text('Later'))
+                  ],
+                )
+              ],
             ),
-          ),
-          Positioned(
-            right: 30,
-            child: ClipOval(
-              child: CachedNetworkImage(imageUrl: own.avatar??'',width: 160,height: 160,),
-            ),
-          ),
-        ],
-      ),
-    );
+          );
+        },
+        //child: ,
+      );
+    });
   });
+  // showDialog(context: context, builder: (c){
+  //   return
+  //
+  // });
 }
 int get currentFilterGender => appCommonBox.get('currentFilterGender',defaultValue: 0);
 set currentFilterGender(value){

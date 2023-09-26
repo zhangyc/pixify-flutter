@@ -14,10 +14,11 @@ class Assets {
   static const String iconsNaviconSona = 'assets/icons/navicon_sona.png';
   static const String iconsNaviconSonaActive = 'assets/icons/navicon_sona_active.png';
   static const String iconsSelected = 'assets/icons/selected.png';
+  static const String iconsSparkles = 'assets/icons/sparkles.png';
   static const String iconsSuper = 'assets/icons/super.png';
   static const String imagesArrow = 'assets/images/arrow.png';
   static const String imagesLikedMeNew = 'assets/images/liked_me_new.png';
-  static const String imagesMatched = 'assets/images/matched.jpg';
+  static const String imagesMatched = 'assets/images/matched.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
   static const String lottieAnimation1 = 'assets/lottie/animation1.json';
   static const String lottieArrowAnimation = 'assets/lottie/arrow_animation.json';

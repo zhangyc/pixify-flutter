@@ -42,9 +42,9 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
           widget.controller.animateToPage(widget.index + 1, duration: const Duration(milliseconds: 200),
               curve: Curves.linearToEaseOut);
         }
-        setState(() {
-
-        });
+        // setState(() {
+        //
+        // });
       }
     });
     super.initState();

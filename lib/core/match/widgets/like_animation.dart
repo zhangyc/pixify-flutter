@@ -23,8 +23,12 @@ class _LikeAnimationState extends State<LikeAnimation> with TickerProviderStateM
       setState(() {
 
       });
-      if(_animationController.value.toStringAsFixed(1)=='0.8'){
+      // if(_animationController.value.toStringAsFixed(1)=='0.8'){
+      //   widget.onLike.call();
+      // }
+      if(_animationController.isCompleted){
         widget.onLike.call();
+
       }
 
     });
@@ -41,9 +45,9 @@ class _LikeAnimationState extends State<LikeAnimation> with TickerProviderStateM
 
     return GestureDetector(child: Container(
       child: UnconstrainedBox(child: _animationController.isAnimating?
-       Lottie.asset(Assets.lottieLike,controller: _animationController,repeat: true,width: 50,height: 50,):
+       Lottie.asset(Assets.lottieLike,controller: _animationController,repeat: false,width: 50,height: 50,):
        Image.asset(Assets.iconsLike,width: 50,height: 50,),),
-    ),
+     ),
       onTap: (){
         _animationController.reset();
         _animationController.forward();

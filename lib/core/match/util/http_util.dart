@@ -23,10 +23,9 @@ class HttpResult{
   }
 }
 Future<HttpResult> post(String path,{Object? data, Map<String, dynamic>? queryParameters,CancelToken? cancelToken}) async{
-  Response? resp;
   try{
-    resp=await _dio.post(path,data: data,queryParameters: queryParameters,cancelToken: cancelToken);
-    return HttpResult(resp);
+    Response resp=await _dio.post(path,data: data,queryParameters: queryParameters,cancelToken: cancelToken);
+    return Future.value(HttpResult(resp));
   } catch(e){
     log(e.toString());
     return HttpResult.error(e);
@@ -51,8 +50,4 @@ set userToken(String token){
   appCommonBox.put('token', token);
 }
 
-Dio _dio=Dio(options)..interceptors.add(InterceptorsWrapper(
-  onRequest: (q,h){
-    print(q.headers);
-  }
-));
+Dio _dio=Dio(options);

@@ -4,25 +4,20 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lottie/lottie.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/screens/report.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
-import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
-import '../../../account/providers/profile.dart';
 import '../../../utils/dialog/input.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/setting.dart';
 import '../util/http_util.dart';
 import '../widgets/filter_dialog.dart';
-import '../widgets/like_animation.dart';
 // import '../widgets/scroller.dart' as s;
 
 class MatchScreen extends StatefulHookConsumerWidget {
@@ -63,26 +58,42 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     length: users.length,
                     userInfo: users[index],
                     controller: pageController,
-
-                    // onArrow: () async {
-                    //
-                    // },
                     onLike: (){
                       users[index].matched=true;
                       ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
                         if(resp==null){
                           return;
                         }
-                        if(resp.statusCode==10150){
+                        if(resp.isSuccess){
+                          if(resp.data['resultType']==2){
+
+                            // if(users[value-1].arrowed||users[value-1].matched){
+                            //   return;
+                            // }else {
+                            //   users[value-1].skipped=true;
+                            //   ref.read(asyncMatchRecommendedProvider.notifier)
+                            //       .skip(users[value-1].id);
+                            // }
+
+                            if (index < users.length - 1) {
+                              pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+                                  curve: Curves.linearToEaseOut);
+                            }
+                          }else if(resp.data['resultType']==1){
+                            showMatched(context, () {
+                              if (index < users.length - 1) {
+                                pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+                                    curve: Curves.linearToEaseOut);
+                              }
+                            },target: users[index]);
+                          }
+                        }else if(resp.statusCode==10150){
                           Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
                             return const SubscribePage();
                           }));
                         }
                       });
-                      if (index < users.length - 1) {
-                        pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-                            curve: Curves.linearToEaseOut);
-                      }
+
                     },
 
                   ));
@@ -91,6 +102,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             scrollDirection: Axis.vertical,
             controller: pageController,
             onPageChanged: (value){
+
               currentPage=value;
               if(value%5==0){
                 current++;
@@ -99,13 +111,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               // print('>>>>>>>>>>>>>>$value');
               ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
 
-              // if(users[value-1].arrowed||users[value-1].matched){
-              //   return;
-              // }else {
-              //   users[value-1].skipped=true;
-              //   ref.read(asyncMatchRecommendedProvider.notifier)
-              //       .skip(users[value-1].id);
-              // }
+
             },
           ),
         ),
@@ -129,7 +135,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               SizedBox(
                 height: 20,
               ),
-              GestureDetector(child: Image.asset(Assets.iconsMore,width: 24,height: 24,),onTap: () async {
+              GestureDetector(child: Container(
+                  child: Image.asset(Assets.iconsMore,width: 24,height: 24,),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
+                    ]
+                ),
+              ),onTap: () async {
                 var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
                 if(result!=null){
                   if(result=='report'){
@@ -186,7 +199,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   bool get wantKeepAlive => true;
   int current=1;
   void _initData() async{
-    final position = ref.read(positionProvider);
+    final position =ref.read(positionProvider);
    try{
      final resp=await post('/user/match-v2',data: {
        'gender': currentFilterGender,
