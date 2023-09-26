@@ -22,7 +22,7 @@ Future<String> uploadFile({
   final formData = FormData.fromMap({
     'file': MultipartFile.fromBytes(
         data.toList(growable: false),
-        filename: filename
+        filename: '.webp'
     )
   });
   return dio.post(

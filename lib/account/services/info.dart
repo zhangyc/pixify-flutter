@@ -46,7 +46,7 @@ Future<Response> addPhoto({
   final formData = FormData.fromMap({
     'file': MultipartFile.fromBytes(
       data.toList(growable: false),
-      filename: filename
+      filename: '.webp'
     )
   });
 
