@@ -41,7 +41,16 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                 top: MediaQuery.of(context).padding.top + 8,
                 left: 12,
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back_ios_new_outlined),
+                  icon: Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 5.0,
+                        color: Color.fromARGB(120, 0, 0, 0),
+                      ),
+                    ],
+                  ),
                   onPressed: _onBack,
                 ),
               ),
@@ -51,7 +60,16 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                 child: Visibility(
                   visible: widget.relation != Relation.self,
                   child: IconButton(
-                    icon: Icon(Icons.more_horiz_outlined),
+                    icon: Icon(
+                      Icons.more_horiz_outlined,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 5.0,
+                          color: Color.fromARGB(120, 0, 0, 0),
+                        ),
+                      ],
+                    ),
                     onPressed: _showActions,
                   ),
                 ),
