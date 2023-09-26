@@ -221,13 +221,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future _next() async {
     if (_phoneKey.currentState!.validate()) {
-      // _sendPin();
-      try {
-        await _verifyNumber();
-      } catch (e) {
-        Fluttertoast.showToast(msg: 'Send message error, try again later');
-        return;
-      }
+      final result = await _sendPin();
+      if (!result) return;
       if (mounted) setState(() {});
       await _controller.animateToPage(1,
           duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
@@ -262,34 +257,44 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
     return completer.future;
   }
-  // final _maxRetryTime = 1;
-  // var _currentRetryTime = 0;
-  Future _sendPin() async {
-    final resp = await sendPin(countryCode: _countryCode, phoneNumber: _phoneNumber);
-    if (resp.statusCode != 0) {
+
+  Future<bool> _sendPin() async {
+    try {
+      final resp = await sendPin(countryCode: _countryCode, phoneNumber: _phoneNumber);
+      if (resp.statusCode != 0) {
+        Fluttertoast.showToast(msg: 'Sending pin message failed');
+        return false;
+      } else {
+        return true;
+      }
+    } catch (e) {
       Fluttertoast.showToast(msg: 'Sending pin message failed');
+      return false;
     }
   }
 
   Future _complete() async {
-    // if (_pinKey.currentState!.validate()&&verificationId!=null) {
-      if (_pinKey.currentState!.validate()) {
+    if (_pinKey.currentState!.validate()) {
 
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: _pinController.text);
+    // PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: _pinController.text);
+    //
+    // // Sign the user in (or link) with the credential
+    // final  userCredential= await authService.signInWithCredential(credential);
+    // final  idToken=await userCredential.user?.getIdToken();  //idToken上送给业务服务器
 
-      // Sign the user in (or link) with the credential
-      final  userCredential= await authService.signInWithCredential(credential);
-      final  idToken=await userCredential.user?.getIdToken();  //idToken上送给业务服务器
-
-
-     final resp = await dio.post('/auth/login-firebase',data: {
-        "token":idToken, //
-        "deviceToken":deviceToken, // 设备 token 可为空
-        "timezone":'${DateTime.now().timeZoneOffset.inHours}',
-        "phonePrefix":_countryCode, // 手机号前缀
-        "phone":_phoneNumber, // 手机号
-        // 用户所在时区 可为空
-      });
+    // final resp = await dio.post('/auth/login-firebase',data: {
+    //   "token":idToken, //
+    //   "deviceToken":deviceToken, // 设备 token 可为空
+    //   "timezone":'${DateTime.now().timeZoneOffset.inHours}',
+    //   "phonePrefix":_countryCode, // 手机号前缀
+    //   "phone":_phoneNumber, // 手机号
+    //   // 用户所在时区 可为空
+    // });
+      final resp = await login(
+          countryCode: _countryCode,
+          phoneNumber: _phoneNumber,
+          pinCode: _pinController.text
+      );
 
       if (resp.statusCode == 0 || resp.statusCode == 2) {
         final token = resp.data['token'];

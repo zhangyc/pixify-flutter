@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
@@ -12,7 +13,7 @@ class LikedMeListView extends StatefulHookConsumerWidget {
     super.key,
     required this.onTap
   });
-  final void Function(UserInfo) onTap;
+  final void Function([UserInfo]) onTap;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LikedMeListViewState();
@@ -64,11 +65,10 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
-                    final u = likedMeUsers[index];
                     if (index >= 16) {
                       return GestureDetector(
                         behavior: HitTestBehavior.translucent,
-                        onTap: () => widget.onTap(u),
+                        onTap: () => widget.onTap(),
                         child: Container(
                           width: 68,
                           height: 68,
@@ -87,6 +87,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                         ),
                       );
                     }
+                    final u = likedMeUsers[index];
                     return GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => widget.onTap(u),
@@ -102,6 +103,11 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                                   shape: BoxShape.circle,
                                   border: Border.all(color: Color(0xFFE74E27), width: 2)
                                 ) : null,
+                                foregroundDecoration: ref.watch(myProfileProvider)!.isMember ? null : BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    backgroundBlendMode: BlendMode.hue
+                                ),
+                                clipBehavior: Clip.antiAlias,
                                 child: UserAvatar(
                                   url: u.avatar!,
                                   size: 68

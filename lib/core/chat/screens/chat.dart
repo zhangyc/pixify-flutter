@@ -14,6 +14,7 @@ import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 
 import '../../../common/models/user.dart';
+import '../../../utils/dialog/subsciption.dart';
 import '../models/message_type.dart';
 import '../widgets/inputbar/mode_provider.dart';
 import '../widgets/message/message.dart';
@@ -198,8 +199,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       ..func = func
       ..pending = pending;
     ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
-    pending.then((value) {
-      _onPendingMessageSucceed(message);
+    pending.then((resp) {
+      if (resp.statusCode == 10015) {
+        showSubscription();
+      } else if (resp.statusCode == 0) {
+        _onPendingMessageSucceed(message);
+      }
     });
   }
 
@@ -227,11 +232,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: widget.otherSide, relation: Relation.matched)));
   }
 
-  Future _startUpLine() {
-    return callSona(
+  Future _startUpLine() async {
+    final resp = await callSona(
       userId: widget.otherSide.id,
       type: CallSonaType.PROLOGUE
     );
+    if (resp.statusCode == 10015) {
+      showSubscription();
+    }
   }
 
   void _onSonaTap() {
@@ -239,10 +247,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   Future _onHookTap() async {
-    return callSona(
+    final resp = await callSona(
       userId: widget.otherSide.id,
       type: CallSonaType.HOOK
     );
+    if (resp.statusCode == 10015) {
+      showSubscription();
+    }
   }
 
   Future _onSuggestionTap() async {
@@ -250,6 +261,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       userId: widget.otherSide.id,
       type: CallSonaType.SUGGEST_V2
     );
+    if (resp.statusCode == 10015) {
+      showSubscription();
+    }
     final options = resp.data['optionV2'] as List;
 
     if (!mounted) return;

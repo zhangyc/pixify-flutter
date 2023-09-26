@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
+import 'package:sona/utils/dialog/subsciption.dart';
 
 import 'mode_provider.dart';
 
@@ -295,7 +296,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                     onTap: () {
                       if (s.memberOnly && !isMember) {
                         // todo: 唤起付费弹窗
-                        Fluttertoast.showToast(msg: 'members only');
+                        showSubscription();
                         return;
                       }
                       _setChatStyle(s.id);

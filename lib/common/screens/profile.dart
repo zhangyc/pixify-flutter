@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/providers/profile.dart';
 import 'package:sona/common/services/report.dart';
+import 'package:sona/core/match/services/match.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/utils/dialog/input.dart';
 
@@ -125,12 +126,16 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
       );
       if (reason != null) {
         final resp = await report(type: 1, id: widget.user.id, reason: 1);
-        if (resp.statusCode == 200) {
-          Fluttertoast.showToast(msg: 'Reported');
+        if (resp.statusCode == 0) {
+          Fluttertoast.showToast(msg: 'the user has been reported');
         }
       }
     } else if (action == 'block') {
       await showRadioFieldDialog(context: context, options: {'Block': 'block', 'Unblock': 'unblock'});
+      final resp = await matchAction(userId: widget.user.id, action: MatchAction.block);
+      if (resp.statusCode == 0) {
+        Fluttertoast.showToast(msg: 'the user has been blocked');
+      }
     }
   }
 
