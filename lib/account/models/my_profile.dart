@@ -79,7 +79,7 @@ class MyProfile {
     return name != null
         && gender != null
         && birthday != null
-        && avatar != null;
+        && avatar != null && avatar!.isNotEmpty;
   }
 
   UserInfo toUser() {

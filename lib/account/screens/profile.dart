@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/my_profile.dart';
@@ -279,12 +280,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final picker = ImagePicker();
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
-    final bytes = await file.readAsBytes();
-    // final res=await compressList(bytes);
-    if(bytes.isEmpty){
-      throw Exception('Handle fail');
+    if (file.name.toLowerCase().endsWith('.gif')) {
+      Fluttertoast.showToast(msg: 'GIF is not allowed');
+      return;
     }
-    // todo 通过provider
+    final bytes = await file.readAsBytes();
     await addPhoto(bytes: bytes, filename: file.name);
     ref.read(myProfileProvider.notifier).refresh();
   }
@@ -292,16 +292,5 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future _onRemovePhoto(int photoId) async {
     await removePhoto(photoId: photoId);
     ref.read(myProfileProvider.notifier).refresh();
-  }
-  // 4. compress Uint8List and get another Uint8List.
-  Future<Uint8List> compressList(Uint8List list) async {
-    var result = await FlutterImageCompress.compressWithList(
-      list,
-      minHeight: 1920,
-      minWidth: 1080,
-      quality: 80,
-      rotate: 0,
-    );
-    return result;
   }
 }

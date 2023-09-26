@@ -101,16 +101,25 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                               child: Container(
                                 decoration: true ? BoxDecoration(
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: Color(0xFFE74E27), width: 2)
+                                  border: Border.all(color: Color(0xFFE74E27), width: 2),
                                 ) : null,
-                                foregroundDecoration: ref.watch(myProfileProvider)!.isMember ? null : BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    backgroundBlendMode: BlendMode.hue
-                                ),
                                 clipBehavior: Clip.antiAlias,
                                 child: UserAvatar(
                                   url: u.avatar!,
                                   size: 68
+                                ),
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: Visibility(
+                                visible: !ref.watch(myProfileProvider)!.isMember,
+                                child: Container(
+                                  decoration: true ? BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white.withOpacity(0.88),
+                                    backgroundBlendMode: BlendMode.exclusion
+                                  ) : null,
+                                  clipBehavior: Clip.antiAlias,
                                 ),
                               ),
                             ),

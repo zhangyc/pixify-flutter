@@ -6,6 +6,8 @@ import 'package:sona/account/models/gender.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../common/services/common.dart';
+
 Future<Response> updateMyProfile({
   String? name,
   Gender? gender,
@@ -40,10 +42,11 @@ Future<Response> addPhoto({
   required Uint8List bytes,
   required String filename
 }) async {
+  final data = await compressImage(bytes);
   final formData = FormData.fromMap({
     'file': MultipartFile.fromBytes(
-      bytes.toList(growable: false),
-      filename: filename
+      data.toList(growable: false),
+      filename: '.webp'
     )
   });
 
