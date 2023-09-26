@@ -60,4 +60,5 @@ enum SonaIcons {
   navicon_sona,
   navicon_match,
   navicon_chat,
+  sparkles
 }
