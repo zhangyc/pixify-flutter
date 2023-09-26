@@ -173,25 +173,33 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   }
 
   Future<String> _getAPhotoAndUpload() async {
-    final source = await showRadioFieldDialog(
-      context: context,
-      options: {
-        'Choose a photo': ImageSource.gallery,
-        'Take a photo': ImageSource.camera
-      },
-      dismissible: false
-    );
-    if (source == null) throw Exception('No source');
-    final picker = ImagePicker();
-    final file = await picker.pickImage(source: source);
-    if (file == null) throw Exception('No file');
-    var bytes = await file.readAsBytes();
-    final value = await uploadFile(bytes: bytes, filename: file.name);
-    _actions.firstWhere((action) => action.field == 'avatar')
-      ..value = value
-      ..done = true;
-    _avatar = value;
-    return value;
+    try {
+      final source = await showRadioFieldDialog(
+          context: context,
+          options: {
+            'Choose a photo': ImageSource.gallery,
+            'Take a photo': ImageSource.camera
+          },
+          dismissible: false
+      );
+      if (source == null) throw Exception('No source');
+      final picker = ImagePicker();
+      final file = await picker.pickImage(source: source);
+      if (file == null) throw Exception('No file');
+      if (file.name.toLowerCase().endsWith('.gif')) {
+        Fluttertoast.showToast(msg: 'GIF is not allowed');
+        throw Error();
+      }
+      var bytes = await file.readAsBytes();
+      final value = await uploadFile(bytes: bytes, filename: file.name);
+      _actions.firstWhere((action) => action.field == 'avatar')
+        ..value = value
+        ..done = true;
+      _avatar = value;
+      return value;
+    } catch (e) {
+      return _getAPhotoAndUpload();
+    }
   }
 
   Future<Set<String>> _chooseInterests() async {

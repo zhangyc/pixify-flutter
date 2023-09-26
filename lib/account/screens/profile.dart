@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/my_profile.dart';
@@ -279,6 +280,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final picker = ImagePicker();
     final file = await picker.pickImage(source: source);
     if (file == null) throw Exception('No file');
+    if (file.name.toLowerCase().endsWith('.gif')) {
+      Fluttertoast.showToast(msg: 'GIF is not allowed');
+      return;
+    }
     final bytes = await file.readAsBytes();
     await addPhoto(bytes: bytes, filename: file.name);
     ref.read(myProfileProvider.notifier).refresh();
