@@ -1,10 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/models/age.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/profile.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
+import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../utils/dialog/input.dart';
@@ -18,29 +23,6 @@ class PersonaScreen extends StatefulHookConsumerWidget {
 
 class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKeepAliveClientMixin {
 
-  var _controller = TextEditingController();
-  String? _currentCharacter;
-  List<String> _knowledge = [];
-
-  @override
-  void initState() {
-    _fetchKnowledge();
-    super.initState();
-  }
-
-  Future _fetchKnowledge() async {
-    // final dio = ref.read(dioProvider);
-    // final resp = await dio.get('/knowledge');
-    // final data = resp.data;
-    // if (data['code'] == 1) {
-    //   if (mounted) {
-    //     setState(() {
-    //       _knowledge = List<String>.from(data['data']);
-    //     });
-    //   }
-    // }
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -53,60 +35,140 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
       ),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              height: 212,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 2),
+                    color: Colors.black.withOpacity(0.15),
+                    blurRadius: 20,
+                  )
+                ]
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const GradientColoredText(
-                      text: 'SONA',
-                      style: TextStyle(
-                        fontSize: 50,
-                        letterSpacing: 12.0,
-                      )
+                  CachedNetworkImage(
+                      imageUrl: ref.watch(myProfileProvider)!.avatar!,
+                      width: 112,
+                      height: 168,
+                      alignment: Alignment.center,
+                      fit: BoxFit.cover,
                   ),
-                  Container()
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Container(
+                      height: 168,
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Visibility(
+                            visible: ref.watch(myProfileProvider)!.impression != null,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE5E5E5),
+                                borderRadius: BorderRadius.circular(20)
+                              ),
+                              clipBehavior: Clip.antiAlias,
+                              child: Text(
+                                ref.watch(myProfileProvider)!.impression ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            ref.watch(myProfileProvider)!.name ?? '',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            '${ref.watch(myProfileProvider)!.birthday!.toAge()} | ${ref.watch(myProfileProvider)!.gender!.name}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          Expanded(child: Container()),
+                          ElevatedButton(
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(
+                                builder: (_) => const ProfileScreen()
+                            )),
+                            child: Text(
+                              'Edit Profile',
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                color: Color(0xFF555555)
+                              ),
+                            )
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 12),
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ColoredButton(
-                        onTap: () => Navigator.push(context, MaterialPageRoute(
-                            builder: (_) => const ProfileScreen()
-                        )),
-                        text: 'My Profile'
-                    ),
-                    SizedBox(height: 5),
-                    ColoredButton(onTap: () => null, text: 'Sona Status'),
-                    SizedBox(height: 5),
-                    ColoredButton(onTap: () => null, text: 'Becoming Super Sona')
-                  ],
-                ),
+            ),
+            SizedBox(height: 30),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 258,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/super_sona_bg.png'),
+                  fit: BoxFit.fill
+                )
               ),
-              SizedBox(height: 24),
-              _sonaChat()
-            ],
-          ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 12,
+                    left: 0,
+                    child: Text(
+                      '❤️ Unlimited Likes\n👀 See who liked you\n🤖 100 AI SONA messages / day\nnand more…',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontStyle: FontStyle.italic,
+                        height: 2
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 60,
+                    right: 60,
+                    bottom: 0,
+                    child: OutlinedButton(
+                      onPressed: showSubscription,
+                      child: Text(
+                        'UPGRADE',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
-      ),
-    );
-  }
-  
-  Widget _sonaChat() {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SonaMessage(content: 'Hey there! I\'m SONA, your social AI agent!\nThe more you share with me, the better I can help you connect with people.'),
-          SonaMessage(content: 'So, Any favorite singers or bands? \nI\'d love to hear which artists get you excited!')
-        ],
       ),
     );
   }
