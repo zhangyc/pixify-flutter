@@ -128,7 +128,6 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     ///kill
     RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     if(initialMessage==null){
-      Fluttertoast.showToast(msg: 'msg is null');
       return;
     }
     if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
