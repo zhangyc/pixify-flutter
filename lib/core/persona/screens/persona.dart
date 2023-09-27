@@ -155,7 +155,14 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                     right: 60,
                     bottom: 0,
                     child: OutlinedButton(
-                      onPressed: showSubscription,
+                      onPressed: () {
+                        if (ref.read(myProfileProvider)!.isMember) {
+                          return;
+                        } else {
+                          showSubscription();
+                          SonaAnalytics.log('profile_golock');
+                        }
+                      },
                       child: Text(
                         'UPGRADE',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(

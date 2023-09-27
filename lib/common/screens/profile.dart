@@ -137,6 +137,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
       final resp = await matchAction(userId: widget.user.id, action: MatchAction.block);
       if (resp.statusCode == 0) {
         Fluttertoast.showToast(msg: 'the user has been blocked');
+        SonaAnalytics.log('chat_block');
       }
     }
   }
@@ -148,6 +149,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   Future _onLike() async {
     final resp=await ref.read(asyncMatchRecommendedProvider.notifier).like(widget.user.id);
     if(resp.isSuccess){
+      SonaAnalytics.log('chatlist_member_like');
       if(resp.data['resultType']==2){
         // if (index < users.length - 1) {
         //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
