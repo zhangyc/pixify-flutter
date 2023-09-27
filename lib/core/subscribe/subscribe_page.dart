@@ -648,7 +648,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       p='6 Month';
       per='Save ${(1-(details.rawPrice/6)/monthBill).toStringAsFixed(2)}';
 
-     // per='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}';
+     // per='${detail s.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}';
     }
     else if(id==annually){
       p='12 Month';

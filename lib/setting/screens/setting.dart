@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/setting/screens/about.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../common/widgets/webview.dart';
+import '../../core/match/util/http_util.dart';
 import '../../utils/dialog/input.dart';
 
 class SettingScreen extends StatefulHookConsumerWidget {
@@ -31,17 +35,31 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
+            child: Column(
+              children: [
+                UserAvatar(url: ref.read(myProfileProvider)?.avatar??'',size: 80,)
+              ],
+            ),
+          ),
+          SliverToBoxAdapter(
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Notification'),
                 CupertinoSwitch(
                   value: openNotification,
                   onChanged: (bool value) {
-                     openNotification=value;
-                     dio.post('/user/update',data: {
+                    //openNotification=value;
+                    post('/user/update',data: {
                        'openPush':value
-                     }).then((value){
-
+                     }).then((resp){
+                       if(resp.isSuccess){
+                         openNotification=value;
+                         Fluttertoast.showToast(msg: 'Modification succeeded');
+                       }else {
+                         Fluttertoast.showToast(msg: 'Modification failed');
+                       }
                      });
                      setState(() {
 
@@ -53,16 +71,35 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
           ),
           SliverToBoxAdapter(
             child: TextButton(
-              onPressed: () {},
+              onPressed: () async{
+
+              },
               child: Text('Account')
             ),
           ),
           SliverToBoxAdapter(
             child: TextButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (c){
-                  return AboutPage();
-                }));
+              onPressed: () async{
+                var result=await showRadioFieldDialog(context: context, options:
+                {'Privacy Policy': '1',
+                  'Disclaimer': '2',
+                  'Terms and Conditions':'3'
+                });
+                if(result!=null){
+                  if(result=='1'){
+                    Navigator.push(context, MaterialPageRoute(builder: (c){
+                      return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
+                    }));
+                  }else if(result=='2'){
+                    Navigator.push(context, MaterialPageRoute(builder: (c){
+                      return WebView(url: 'https://h5.sona.pinpon.fun/disclaimer.html', title: 'Disclaimer');
+                    }));
+                  }else if(result=='3'){
+                    Navigator.push(context, MaterialPageRoute(builder: (c){
+                      return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                    }));
+                  }
+                }
               },
               child: Text('About')
             ),
