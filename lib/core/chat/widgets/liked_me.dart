@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -104,25 +105,44 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                                   shape: BoxShape.circle,
                                   border: Border.all(color: Color(0xFFE74E27), width: 2),
                                 ) : null,
-                                child: UserAvatar(
-                                  url: u.avatar!,
-                                  size: 68
+                                child: Stack(
+                                  children: [
+                                    UserAvatar(
+                                      url: u.avatar!,
+                                      size: 68,
+                                    ),
+                                    SizedBox(
+                                      width: 68,
+                                      height: 68,
+                                      child: Visibility(
+                                        visible: !ref.watch(myProfileProvider)!.isMember,
+                                        child:  ClipOval(
+                                          child: BackdropFilter(
+                                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                                            child: Container(
+                                              color: Colors.white.withOpacity(0.5),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            Positioned.fill(
-                              child: Visibility(
-                                visible: !ref.watch(myProfileProvider)!.isMember,
-                                child: Container(
-                                  decoration: true ? BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white.withOpacity(0.88),
-                                    backgroundBlendMode: BlendMode.exclusion
-                                  ) : null,
-                                  clipBehavior: Clip.antiAlias,
-                                ),
-                              ),
-                            ),
+                            // Positioned.fill(
+                            //   child: Visibility(
+                            //     visible: !ref.watch(myProfileProvider)!.isMember,
+                            //     child:  BackdropFilter(
+                            //       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            //       child: Container(
+                            //         color: Colors.white.withOpacity(0.5),
+                            //         width: 68,
+                            //         height: 68,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                             Positioned(
                               top: 0,
                               left: 0,

@@ -90,11 +90,10 @@ void showFilter(BuildContext context,VoidCallback onSave) {
                       max: 80,
                       divisions: 10,
                       labels: RangeLabels(rv.start.toString(), rv.end.toString()),
-                      values: ref.watch(matchSettingProvider).ageRange,
+                      values: rv,
                       onChanged: (rv) {
                         currentFilterMinAge=rv.start.toInt();
                         currentFilterMaxAge=rv.end.toInt();
-                        // ref.read(matchSettingProvider.notifier).setAgeRange(rv);
                       }
                   );
                 }),),

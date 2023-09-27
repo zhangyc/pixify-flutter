@@ -77,14 +77,15 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
                   arrowController.forward() ;
                   widget.userInfo.arrowed=true;
                 }else if(resp.statusCode==10150){
-                  /// 判断如果不是会员，跳转道会员页面
-                  if(ref.read(myProfileProvider)?.isMember??false){
+                  bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                  if(isMember){
+                    Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                  }else{
                     Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
                       return SubscribePage();
                     }));
-                  }else {
-                    Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                   }
+                  /// 判断如果不是会员，跳转道会员页面
                 }
                 setState(() {
 

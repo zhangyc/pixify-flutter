@@ -1,18 +1,21 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class UserAvatar extends StatelessWidget {
-  const UserAvatar({
+import '../../../account/providers/profile.dart';
+
+class UserAvatar extends ConsumerWidget {
+  UserAvatar({
     super.key,
     required this.url,
-    this.size = 42
+    this.size = 42,
   });
   final String url;
   final double size;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: size,
       height: size,
@@ -27,7 +30,7 @@ class UserAvatar extends StatelessWidget {
         imageUrl: url,
         fit: BoxFit.cover,
         alignment: Alignment.center,
-      )
+      ),
     );
   }
 }
