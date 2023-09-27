@@ -18,7 +18,10 @@ class AsyncLikedMeUsersNotifier extends AsyncNotifier<List<UserInfo>> {
 
   Future<List<UserInfo>> _fetchLikedMeData() {
     return fetchLikedMeList().then(
-      (resp) => (resp.data as List).map<UserInfo>((m) => UserInfo.fromJson(m)).toList()
+      (resp) => (resp.data as List).map<UserInfo>(
+        (m) => UserInfo.fromJson(m)
+          ..likeDate = DateTime.fromMillisecondsSinceEpoch(m['likeDate'])
+      ).toList()
     );
   }
 

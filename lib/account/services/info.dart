@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
-import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../common/services/common.dart';

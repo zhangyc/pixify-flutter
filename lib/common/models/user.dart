@@ -26,6 +26,7 @@ class UserInfo {
   final int? chatStyleId;
   final List<String> photos;
 
+  DateTime? likeDate;
   int get age => birthday!.toAge();
 
   factory UserInfo.fromJson(Map<String, dynamic> json) {
