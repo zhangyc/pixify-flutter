@@ -193,7 +193,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
             Column(
               children: [
                 Visibility(
-                  visible: ref.watch(hookVisibilityProvider(widget.chatId)),
+                  visible: false && ref.watch(hookVisibilityProvider(widget.chatId)),
                   child: SIconButton(
                       onTap: widget.onHookTap,
                       loadingWhenAsyncAction: true,

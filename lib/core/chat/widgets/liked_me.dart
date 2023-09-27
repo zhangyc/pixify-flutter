@@ -25,7 +25,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
 
   @override
   void initState() {
-    _timer = Timer.periodic(const Duration(seconds: 120), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
       if (mounted) ref.read(asyncLikedMeProvider.notifier).refresh();
     });
     super.initState();
@@ -88,6 +88,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                       );
                     }
                     final u = likedMeUsers[index];
+                    final newLike = u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2;
                     return GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => widget.onTap(u),
@@ -99,11 +100,10 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                           children: [
                             Positioned.fill(
                               child: Container(
-                                decoration: true ? BoxDecoration(
+                                decoration: newLike ? BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(color: Color(0xFFE74E27), width: 2),
                                 ) : null,
-                                clipBehavior: Clip.antiAlias,
                                 child: UserAvatar(
                                   url: u.avatar!,
                                   size: 68
@@ -128,7 +128,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                               left: 0,
                               right: 0,
                               child: Visibility(
-                                visible: true,
+                                visible: newLike,
                                 child: Align(
                                   alignment: Alignment.topCenter,
                                     child: Image.asset('assets/images/liked_me_new.png', width: 30))
