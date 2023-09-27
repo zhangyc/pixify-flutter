@@ -54,7 +54,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         ),
         centerTitle: false,
         actions: [
-          IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
+          // IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
           IconButton(onPressed: _showInfo, icon: Icon(Icons.more_horiz_outlined))
         ],
         // systemOverlayStyle: const SystemUiOverlayStyle(
