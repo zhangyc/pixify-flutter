@@ -157,19 +157,41 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                     left: 60,
                     right: 60,
                     bottom: 0,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        if (ref.read(myProfileProvider)!.isMember) {
-                          return;
-                        } else {
+                    child: Visibility(
+                      visible: !ref.watch(myProfileProvider)!.isMember,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          if (ref.read(myProfileProvider)!.isMember) {
+                            return;
+                          } else {
+                            showSubscription();
+                            SonaAnalytics.log('profile_golock');
+                          }
+                        },
+                        child: Text(
+                          'UPGRADE',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    bottom: 0,
+                    child: Visibility(
+                      visible: ref.watch(myProfileProvider)!.isMember,
+                      child: TextButton(
+                        onPressed: () {
                           showSubscription();
-                          SonaAnalytics.log('profile_golock');
-                        }
-                      },
-                      child: Text(
-                        'UPGRADE',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          SonaAnalytics.log('profile_myplan');
+                        },
+                        child: Text(
+                          'My Subscription Plan',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontStyle: FontStyle.italic,
+                          ),
                         ),
                       ),
                     ),
