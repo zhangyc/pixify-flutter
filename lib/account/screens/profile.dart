@@ -12,6 +12,7 @@ import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
+import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
 import 'package:sona/utils/picker/interest.dart';
@@ -292,7 +293,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       Fluttertoast.showToast(msg: 'GIF is not allowed');
       return;
     }
-    final bytes = await file.readAsBytes();
+    var bytes = await file.readAsBytes();
+    bytes = await cropImage(bytes);
     await addPhoto(bytes: bytes, filename: file.name);
     ref.read(myProfileProvider.notifier).refresh();
   }
