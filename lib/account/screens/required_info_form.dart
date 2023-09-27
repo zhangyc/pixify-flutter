@@ -9,6 +9,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/text/colorful_sona.dart';
+import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/interest.dart';
 
@@ -198,6 +199,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
         throw Error();
       }
       var bytes = await file.readAsBytes();
+      bytes = cropImage(bytes);
       final value = await uploadFile(bytes: bytes, filename: file.name);
       _actions.firstWhere((action) => action.field == 'avatar')
         ..value = value

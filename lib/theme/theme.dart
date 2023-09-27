@@ -31,6 +31,12 @@ final themeData = ThemeData(
     )
   ),
   textTheme: TextTheme(
+    titleLarge: const TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 1
+    ),
     titleMedium: const TextStyle(
         color: Colors.black,
         fontSize: 16,

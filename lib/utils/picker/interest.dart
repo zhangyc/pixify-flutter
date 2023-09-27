@@ -4,6 +4,8 @@ import 'package:sona/account/providers/interests.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/interests.dart';
 
+import '../../common/widgets/button/colored.dart';
+
 Future<Set<String>?> showInterestPicker({
   required BuildContext context,
   Set<String>? initialValue = const {},
@@ -17,6 +19,8 @@ Future<Set<String>?> showInterestPicker({
     isScrollControlled: true,
     useSafeArea: true,
     builder: (context) {
+      Set<String>? _selected;
+
       return ProviderScope(
         parent: ProviderScope.containerOf(context),
         child: Container(
@@ -40,37 +44,68 @@ Future<Set<String>?> showInterestPicker({
                         style: TextStyle(fontSize: 18)),
                   ),
                 ),
-                Consumer(
-                  builder: (context, ref, child) {
-                    return ref.watch(asyncInterestsProvider).when(
-                      data: (interests) => Interests(availableValue: interests, initialValue: ref.read(myProfileProvider)!.interests.toSet()),
-                        loading: () => Container(
-                          color: Colors.white54,
-                          alignment: Alignment.center,
-                          child: const SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(color: Colors.transparent,)),
-                        ),
-                        error: (err, stack) => GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () => ref.refresh(asyncInterestsProvider.notifier),
-                          child: Container(
-                            color: Colors.white,
-                            alignment: Alignment.center,
-                            child: const Text(
-                                'Cannot connect to server, tap to retry',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    decoration: TextDecoration.none
-                                )
-                            ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Consumer(
+                      builder: (context, ref, child) {
+                        return ref.watch(asyncInterestsProvider).when(
+                          data: (interests) => Interests(
+                            availableValue: interests,
+                            initialValue: ref.read(myProfileProvider)!.interests.toSet(),
+                            onChange: (Set<String> selected) {
+                              _selected = selected;
+                            }
                           ),
-                        )
-                    );
-                  }
+                          loading: () => Container(
+                            color: Colors.white54,
+                            alignment: Alignment.center,
+                            child: const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(color: Colors.transparent,)),
+                          ),
+                          error: (err, stack) => GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () => ref.refresh(asyncInterestsProvider.notifier),
+                            child: Container(
+                              color: Colors.white,
+                              alignment: Alignment.center,
+                              child: const Text(
+                                  'Cannot connect to server, tap to retry',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      decoration: TextDecoration.none
+                                  )
+                              ),
+                            ),
+                          )
+                        );
+                      }
+                    ),
+                  ),
                 ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: ColoredButton(
+                          color: Colors.white,
+                          text: 'Cancel',
+                          onTap: () => Navigator.pop(context)),
+                    ),
+                    SizedBox(width: 5),
+                    Expanded(
+                      flex: 1,
+                      child: ColoredButton(
+                          text: 'Confirm',
+                          onTap: () => Navigator.pop(context, _selected)
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
           ),

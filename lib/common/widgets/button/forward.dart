@@ -11,7 +11,7 @@ class ForwardButton extends StatelessWidget {
   final String text;
 
   double get _radius => 6;
-  double get _fontSize => 15;
+  double get _fontSize => 14;
   double get _borderWidth => 2;
 
   @override
@@ -24,22 +24,28 @@ class ForwardButton extends StatelessWidget {
         customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(_borderWidth)),
         child: Ink(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(_radius),
-                border: Border.all(color: Theme.of(context).colorScheme.primaryContainer, width: _borderWidth)
+              borderRadius: BorderRadius.circular(_radius),
+              border: Border.all(color: Color(0xFFF3F3F3), width: _borderWidth),
+              color: Color(0xFFF3F3F3)
             ),
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                Expanded(
+                  child: Text(
                     text,
                     textAlign: TextAlign.start,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        fontSize: _fontSize
+                        fontSize: _fontSize,
+                      color: Color(0xFF3F3F3F)
                     )
+                  ),
                 ),
-                Icon(Icons.arrow_forward_ios_outlined, color: Theme.of(context).colorScheme.onBackground)
+                Icon(Icons.arrow_forward_ios_outlined, size: 12, color: Color(0xFFB9B9B9))
               ],
             )
         ),

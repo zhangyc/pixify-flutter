@@ -51,7 +51,7 @@ class MyProfile {
       impression: json['impression'],
       chatStyleId: json['chatStyleId'],
       vipEndDate: json['vipEndDate'],
-      interests: json['interest'] != null ? (json['interest'] as String).split(',') : [],
+      interests: json['interest'] != null ? (json['interest'] as String).trim().split(',') : [],
       photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
       position: pos
     );
