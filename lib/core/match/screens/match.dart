@@ -67,18 +67,18 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         }
                         if(resp.isSuccess){
                           if(resp.data['resultType']==2){
+
+                            if (index < users.length - 1) {
+                              pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+                                  curve: Curves.linearToEaseOut);
+                            }
+                          }else if(resp.data['resultType']==1){
                             showMatched(context, () {
                               if (index < users.length - 1) {
                                 pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
                                     curve: Curves.linearToEaseOut);
                               }
                             },target: users[index]);
-                            // if (index < users.length - 1) {
-                            //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-                            //       curve: Curves.linearToEaseOut);
-                            // }
-                          }else if(resp.data['resultType']==1){
-
                           }
                         }else if(resp.statusCode==10150){
                           Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
