@@ -12,6 +12,7 @@ import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/dialog/subsciption.dart';
@@ -53,7 +54,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         ),
         centerTitle: false,
         actions: [
-          IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
+          // IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
           IconButton(onPressed: _showInfo, icon: Icon(Icons.more_horiz_outlined))
         ],
         // systemOverlayStyle: const SystemUiOverlayStyle(
@@ -176,6 +177,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (text == null || text.trim().isEmpty) return;
 
     if (ref.read(inputModeProvider(widget.otherSide.id)) == InputMode.manual) {
+      SonaAnalytics.log('chat_handwriting');
       return _sendMessage(text, ImMessageType.manual);
     }
 
@@ -206,6 +208,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         _onPendingMessageSucceed(message);
       }
     });
+    SonaAnalytics.log('chat_sona');
   }
 
   void _onPendingMessageSucceed(ImMessage message) {
@@ -215,6 +218,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   Future _shortenMessage(ImMessage message) {
+    SonaAnalytics.log('chat_shorten');
     return callSona(
       type: CallSonaType.SIMPLE,
       userId: widget.otherSide.id,
@@ -229,6 +233,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _showInfo() {
+    SonaAnalytics.log('chat_card');
     Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: widget.otherSide, relation: Relation.matched)));
   }
 
@@ -237,6 +242,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       userId: widget.otherSide.id,
       type: CallSonaType.PROLOGUE
     );
+    SonaAnalytics.log('chat_starter');
     if (resp.statusCode == 10015) {
       showSubscription();
     }
@@ -254,6 +260,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (resp.statusCode == 10015) {
       showSubscription();
     }
+    SonaAnalytics.log('chat_hook');
   }
 
   Future _onSuggestionTap() async {
@@ -267,6 +274,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final options = resp.data['optionV2'] as List;
 
     if (!mounted) return;
+
     await showDialog(
       context: context,
       barrierColor: Colors.black54,
@@ -303,6 +311,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                             type: CallSonaType.SUGGEST_FUNC,
                             input: opt
                           );
+                          SonaAnalytics.log('chat_sendsuggest');
                         },
                         child: Container(
                             width: 130,
@@ -323,6 +332,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         );
       }
     );
+    SonaAnalytics.log('chat_suggest');
   }
 
   Future _deleteAllMessages() async {

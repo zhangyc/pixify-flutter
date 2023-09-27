@@ -14,6 +14,7 @@ import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/picker/gender.dart';
 import 'package:sona/utils/picker/interest.dart';
 
@@ -206,6 +207,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Future _onEditInterests() async {
+    SonaAnalytics.log('profile_interests');
     final result = await showInterestPicker(context: context);
     if (result != null) {
       ref.read(myProfileProvider.notifier).updateField(interests: result);
@@ -237,6 +239,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 );
                 if (result == true) {
                   ref.read(myProfileProvider.notifier).updateField(bio: resp.data['txt']);
+                  SonaAnalytics.log('profile_sona_bio');
                 }
               }
             },
@@ -253,6 +256,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
     if (text != null && text.trim().isNotEmpty) {
       ref.read(myProfileProvider.notifier).updateField(bio: text);
+      SonaAnalytics.log('profile_bio');
     }
   }
 
@@ -263,6 +267,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
     if (gender != null && gender != _profile.gender) {
       ref.read(myProfileProvider.notifier).updateField(gender: gender);
+      SonaAnalytics.log('profile_gender');
     }
   }
 

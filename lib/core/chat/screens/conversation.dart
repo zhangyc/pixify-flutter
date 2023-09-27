@@ -7,12 +7,15 @@ import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/conversation.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/chat.dart';
+import 'package:sona/core/chat/screens/like_me.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/conversation.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../models/message.dart';
+import '../providers/liked_me.dart';
 import '../widgets/inputbar/chat_style.dart';
 import '../widgets/liked_me.dart';
 
@@ -47,9 +50,15 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
           SliverToBoxAdapter(
             child: LikedMeListView(onTap: ([UserInfo? u]) {
               if (ref.read(myProfileProvider)!.isMember) {
-                if (u == null) return;
-                Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u!, relation: Relation.likeMe)));
+                if (u == null) {
+                  SonaAnalytics.log('chatlist_golikedme');
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
+                } else {
+                  SonaAnalytics.log('chatlist_member_card');
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u, relation: Relation.likeMe)));
+                }
               } else {
+                SonaAnalytics.log('chatlist_tapblur');
                 showSubscription();
               }
             }),
@@ -67,7 +76,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
                 return ConversationItemWidget(
                   key: ValueKey(conversation.otherSide.id),
                   conversation: conversation,
-                  onTap: () => _chat(ChatEntry.conversation, conversation.otherSide),
+                  onTap: () => _chat(ChatEntry.conversation, conversation),
                   onLongPress: () => _showConversationActions(conversation),
                   onHookTap: () => _onHookTap(conversation.convoId)
                 );
@@ -100,11 +109,13 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     }
   }
 
-  Future _chat(ChatEntry entry, UserInfo u) {
-    return Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(entry: entry, otherSide: u)));
+  Future _chat(ChatEntry entry, ImConversation convo) {
+    if (convo.hasUnreadMessage) SonaAnalytics.log('chatlist_unread');
+    return Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(entry: entry, otherSide: convo.otherSide)));
   }
 
   Future _onHookTap(int userId) async {
+    SonaAnalytics.log('chatlist_quickreply');
     return callSona(
         userId: userId,
         type: CallSonaType.HOOK

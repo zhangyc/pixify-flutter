@@ -8,6 +8,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
+import 'package:sona/utils/global/global.dart';
 
 import 'mode_provider.dart';
 
@@ -295,11 +296,11 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                     ),
                     onTap: () {
                       if (s.memberOnly && !isMember) {
-                        // todo: 唤起付费弹窗
                         showSubscription();
-                        return;
+                        SonaAnalytics.log('chat_style_gopay');
+                      } else {
+                        _setChatStyle(s.id);
                       }
-                      _setChatStyle(s.id);
                     },
                   )).toList(),
                 ),
@@ -342,6 +343,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
       }
       return !state;
     });
+    SonaAnalytics.log('chat_style');
   }
 
   void _setChatStyle(int id) {

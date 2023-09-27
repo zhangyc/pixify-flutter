@@ -7,6 +7,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
+import 'package:sona/utils/global/global.dart';
 
 
 class LikedMeListView extends StatefulHookConsumerWidget {
@@ -163,6 +164,24 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   itemCount: likedMeUsers.length > 16 ? 17 : likedMeUsers.length,
                 ),
               ),
+              SizedBox(height: 24),
+              Center(
+                child: FilledButton(
+                  onPressed: () {
+                    SonaAnalytics.log('chatlist_gopay');
+                    widget.onTap();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Color(0xFF2969E9))
+                  ),
+                  child: Text(
+                    'See who like you',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.white
+                    ),
+                  ),
+                )
+              )
             ],
           ),
         );
