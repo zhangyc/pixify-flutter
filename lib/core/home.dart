@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/icon.dart';
+import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/persona/screens/persona.dart';
@@ -28,10 +33,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   void initState() {
     SonaAnalytics.init();
     _determinePosition();
-    Stream<RemoteMessage> stream = FirebaseMessaging.onMessageOpenedApp;
-    stream.listen((event) {
-       print(event);
-    });
+    _setUpFcmListener();
     super.initState();
   }
 
@@ -120,5 +122,31 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       };
       SonaAnalytics.log('home_tab_$tabName');
     }
+  }
+
+  void _setUpFcmListener() async{
+    ///kill
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if(initialMessage==null){
+      Fluttertoast.showToast(msg: 'msg is null');
+      return;
+    }
+    if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
+      String ext= initialMessage.data['ext'];
+      UserInfo info =UserInfo.fromJson(jsonDecode(ext));
+      Navigator.push(context, MaterialPageRoute(builder: (c){
+        return ChatScreen(entry: ChatEntry.push, otherSide: info);
+      }));
+    }
+    ///background start
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
+        String ext= initialMessage.data['ext'];
+        UserInfo info =UserInfo.fromJson(jsonDecode(ext));
+        Navigator.push(context, MaterialPageRoute(builder: (c){
+          return ChatScreen(entry: ChatEntry.push, otherSide: info);
+        }));
+      }
+    });
   }
 }

@@ -26,7 +26,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   //await Firebase.initializeApp();
   //showLocalNotification(message);
-  print("Handling a background message: ${message.messageId}");
+  print("Handling a background message: ${message.toMap()}");
 }
 ///fcm前台
 void foreground(RemoteMessage message) {

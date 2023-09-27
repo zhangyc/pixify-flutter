@@ -343,5 +343,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 enum ChatEntry {
   match,
   arrow,
-  conversation
+  conversation,
+  push
 }
