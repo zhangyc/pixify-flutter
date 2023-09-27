@@ -11,6 +11,7 @@ import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/text/colorful_sona.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/picker/interest.dart';
 
 import '../../core/persona/widgets/sona_message.dart';
@@ -120,6 +121,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                                   avatar: _avatar,
                                   interests: _interests
                               );
+                              SonaAnalytics.log('reg_confirm');
                               Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                             } else {
                               Fluttertoast.showToast(msg: 'Invalid info');
@@ -139,10 +141,11 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   }
 
   Future<String> _getName() async {
-    final value = await showSingleLineTextField(context: context, title: null);
+    final value = await showSingleLineTextField(context: context, title: null, maxLength: 32);
     if (value == null) {
       return _getName();
     } else {
+      SonaAnalytics.log('reg_name');
       _actions.firstWhere((action) => action.field == 'name')
         ..value = value
         ..done = true;
@@ -159,6 +162,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     if (value == null) {
       return _getBirthday();
     } else {
+      SonaAnalytics.log('reg_birthday');
       _actions.firstWhere((action) => action.field == 'birthday')
         ..value = value
         ..done = true;
@@ -172,6 +176,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     if (value == null) {
       return _getGender();
     } else {
+      SonaAnalytics.log('reg_gender');
       _actions.firstWhere((action) => action.field == 'gender')
         ..value = value
         ..done = true;
@@ -201,6 +206,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
       var bytes = await file.readAsBytes();
       bytes = cropImage(bytes);
       final value = await uploadFile(bytes: bytes, filename: file.name);
+      SonaAnalytics.log('reg_avatar_${source.name}');
       _actions.firstWhere((action) => action.field == 'avatar')
         ..value = value
         ..done = true;

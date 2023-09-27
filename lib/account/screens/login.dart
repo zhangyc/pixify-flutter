@@ -229,6 +229,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         _pinFocusNode.requestFocus();
       });
+      SonaAnalytics.log('reg_phone');
     }
   }
 
@@ -297,6 +298,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       );
 
       if (resp.statusCode == 0 || resp.statusCode == 2) {
+        SonaAnalytics.log('reg_code');
         final token = resp.data['token'];
         ref.read(tokenProvider.notifier).state = token;
         userToken=token;
