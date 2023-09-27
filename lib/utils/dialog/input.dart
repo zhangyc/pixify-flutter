@@ -5,11 +5,12 @@ import 'package:sona/common/widgets/button/option.dart';
 
 import '../../common/widgets/button/colored.dart';
 
-Future<bool?> showInfo(
-    {required BuildContext context,
-    String? title,
-    String content = '',
-    String buttonText = 'Sure'}) {
+Future<bool?> showInfo({
+  required BuildContext context,
+  String? title,
+  String content = '',
+  String buttonText = 'Sure'
+}) {
   return showModalBottomSheet<bool>(
     context: context,
     backgroundColor: Colors.white,
@@ -49,9 +50,11 @@ Future<bool?> showInfo(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(content,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyText2),
+                      Text(
+                          content,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.bodySmall
+                      ),
                       SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

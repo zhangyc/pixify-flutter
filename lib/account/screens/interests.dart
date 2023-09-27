@@ -7,9 +7,11 @@ class Interests extends ConsumerStatefulWidget {
     super.key,
     required this.availableValue,
     required this.initialValue,
+    required this.onChange
   });
   final List<String> availableValue;
   final Set<String>? initialValue;
+  final void Function(Set<String>) onChange;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _InterestsState();
@@ -21,8 +23,7 @@ class _InterestsState extends ConsumerState<Interests> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
+    return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text('Select your interests (${_selected.length}/10)', style: Theme.of(context).textTheme.titleMedium),
@@ -44,29 +45,8 @@ class _InterestsState extends ConsumerState<Interests> {
                 )
             ],
           ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(
-                flex: 1,
-                child: ColoredButton(
-                    color: Colors.white,
-                    text: 'Cancel',
-                    onTap: () => Navigator.pop(context)),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                flex: 1,
-                child: ColoredButton(
-                  text: 'Confirm',
-                  onTap: _save
-                ),
-              )
-            ],
-          )
+          SizedBox(height: 20,)
         ],
-      ),
     );
   }
 
@@ -79,11 +59,7 @@ class _InterestsState extends ConsumerState<Interests> {
       }
       _selected.add(i);
     }
+    widget.onChange(_selected);
     setState(() {});
-  }
-
-  void _save() {
-    // final interests = ref.read(asyncMyProfileProvider.notifier).updateInfo(interests: _selected);
-    Navigator.pop(context, _selected);
   }
 }

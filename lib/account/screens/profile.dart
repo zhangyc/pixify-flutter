@@ -39,115 +39,119 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     _profile = ref.watch(myProfileProvider)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Edit Profile'),
         centerTitle: true,
       ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: Container(
-              margin: EdgeInsets.only(top: 16, bottom: 24),
-              alignment: Alignment.center,
-              child: Text('更多真实照片会增加匹配成功率'),
-            ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            sliver: SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                _photoBuilder,
-                childCount: 9
+            child: Visibility(
+              visible: _profile.impression == null,
+              child: Container(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                            child: Text('Sona Impression', style: Theme.of(context).textTheme.titleMedium)
+                        ),
+                        GestureDetector(
+                          onTap: () => showInfo(
+                            context: context,
+                            content: 'Sona will notice changes to your bio and interests, and form impressions of you based on them.\nSona\'s impression tags update every Monday at 1am GMT, as long as your profile information has changed.\nThere may be delays for different users.'
+                          ),
+                          child: Icon(Icons.info_outline_rounded, size: 12)
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 4),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        ref.watch(myProfileProvider)!.impression ?? 'Sona will notice changes to your bio and interests',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).primaryColor
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                childAspectRatio: 600 / 848
-              )
-            ),
+            )
           ),
           SliverToBoxAdapter(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 56),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 26),
-                    child: Text('Bio', style: Theme.of(context).textTheme.titleMedium),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Row(
+                    children: [
+                      Text('Photos', style: Theme.of(context).textTheme.titleMedium),
+                      SizedBox(width: 8),
+                      Text('(${_profile.photos.length}/9)', style: Theme.of(context).textTheme.bodySmall)
+                    ],
+                  )
+                ),
+                SizedBox(width: 6),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 144,
+                  child: ListView.separated(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: _photoBuilder,
+                    separatorBuilder: (_, __) => SizedBox(width: 12),
+                    itemCount: _profile.photos.length + (_profile.photos.length < 9 ? 1 : 0)
                   ),
                 ),
-                GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: onBioEdit,
-                  child: Container(
-                    constraints: BoxConstraints(maxHeight: 300),
-                    margin: EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 8),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
-                      borderRadius: BorderRadius.circular(12)
-                    ),
-                    child: SingleChildScrollView(
-                      child: Text(
-                        _profile.bio ?? 'You can just write a little,\nthen use Sona to help optimize',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16, top: 16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('Sona Impression', style: Theme.of(context).textTheme.bodySmall),
-                            SizedBox(width: 8),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Text('ℹ️', style: Theme.of(context).textTheme.bodySmall),
-                            )
-                          ],
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                            ref.watch(myProfileProvider)!.impression ?? '',
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 20
-                            )
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 12)
               ],
             )
           ),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              child: ForwardButton(
-                onTap: _onEditInterests,
-                text: 'Interests',
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 12),
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('Bio', style: Theme.of(context).textTheme.titleMedium),
+                  SizedBox(height: 8),
+                  ForwardButton(onTap: onBioEdit, text: _profile.bio ?? 'You can just write a little,\nthen use Sona to help optimize')
+                ],
               ),
             ),
           ),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              child: ForwardButton(
-                onTap: _showGenderEditor,
-                text: 'Gender ${_profile.gender!.name}',
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 12),
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('Hobby', style: Theme.of(context).textTheme.titleMedium),
+                  SizedBox(height: 8),
+                  ForwardButton(
+                    onTap: _onEditInterests,
+                    text: _profile.interests.isNotEmpty ? _profile.interests.join(' , ') : 'Add your Hobbies',
+                  )
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 12),
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('Gender', style: Theme.of(context).textTheme.titleMedium),
+                  SizedBox(height: 8),
+                  ForwardButton(onTap: _showGenderEditor, text: _profile.gender!.name)
+                ],
               ),
             ),
           ),
@@ -167,11 +171,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         onTap: () {
           _onAddPhoto();
         },
-        child: Center(child: Icon(Icons.add, size: 36))
+        child: Container(
+          width: 96,
+          height: 144,
+          child: Icon(Icons.add, size: 36)
+        )
       );
     } else {
       final photo = _profile.photos[index];
-      child = CachedNetworkImage(imageUrl: photo.url, fit: BoxFit.cover);
+      child = CachedNetworkImage(imageUrl: photo.url, fit: BoxFit.cover, width: 96, height: 144, alignment: Alignment.center,);
     }
     return GestureDetector(
       onLongPress: index != 0 ? () => _showPhotoActions(_profile.photos[index]) : null,
