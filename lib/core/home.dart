@@ -8,6 +8,7 @@ import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/notice.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/location/location.dart';
 
 import 'match/screens/match.dart';
@@ -25,6 +26,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
 
   @override
   void initState() {
+    SonaAnalytics.init();
     _determinePosition();
     Stream<RemoteMessage> stream = FirebaseMessaging.onMessageOpenedApp;
     stream.listen((event) {
@@ -110,6 +112,13 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         _currentIndex = index;
         _pageController.jumpToPage(_currentIndex);
       });
+      final tabName = switch(index) {
+        0 => 'chat',
+        1 => 'match',
+        2 => 'profile',
+        _ => 'none'
+      };
+      SonaAnalytics.log('home_tab_$tabName');
     }
   }
 }
