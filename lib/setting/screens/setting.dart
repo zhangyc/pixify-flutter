@@ -8,6 +8,7 @@ import 'package:sona/core/providers/token.dart';
 import 'package:sona/setting/screens/about.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../common/widgets/webview.dart';
 import '../../utils/dialog/input.dart';
 
 class SettingScreen extends StatefulHookConsumerWidget {
@@ -60,10 +61,27 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
           SliverToBoxAdapter(
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (c){
-                  return AboutPage();
-                }));
+              onTap: () async {
+                var result=await showRadioFieldDialog(context: context, options:
+                {'Privacy Policy': '1',
+                  'Disclaimer': '2',
+                  'Terms and Conditions':'3'
+                });
+                if(result!=null){
+                  if(result=='1'){
+                    Navigator.push(context, MaterialPageRoute(builder: (c){
+                      return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
+                    }));
+                  }else if(result=='2'){
+                    Navigator.push(context, MaterialPageRoute(builder: (c){
+                      return WebView(url: 'https://h5.sona.pinpon.fun/disclaimer.html', title: 'Disclaimer');
+                    }));
+                  }else if(result=='3'){
+                    Navigator.push(context, MaterialPageRoute(builder: (c){
+                      return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                    }));
+                  }
+                }
               },
               child: Row(
                 children: [
