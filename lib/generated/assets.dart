@@ -15,6 +15,13 @@ class Assets {
   static const String iconsNaviconSonaActive = 'assets/icons/navicon_sona_active.png';
   static const String iconsSelected = 'assets/icons/selected.png';
   static const String iconsSparkles = 'assets/icons/sparkles.png';
+  static const String iconsSub1 = 'assets/icons/sub1.png';
+  static const String iconsSub2 = 'assets/icons/sub2.png';
+  static const String iconsSub3 = 'assets/icons/sub3.png';
+  static const String iconsSub4 = 'assets/icons/sub4.png';
+  static const String iconsSub5 = 'assets/icons/sub5.png';
+  static const String iconsSub6 = 'assets/icons/sub6.png';
+  static const String iconsSub7 = 'assets/icons/sub7.png';
   static const String iconsSuper = 'assets/icons/super.png';
   static const String imagesArrow = 'assets/images/arrow.png';
   static const String imagesLikedMeNew = 'assets/images/liked_me_new.png';

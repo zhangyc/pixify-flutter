@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -12,7 +13,9 @@ import 'package:sona/utils/global/global.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../account/providers/profile.dart';
+import '../../common/widgets/webview.dart';
 import '../../test_pay/_MyApp.dart';
+import 'widgets/powers_widget.dart';
 
 Uuid uuid=Uuid();
 class SubscribePage extends ConsumerStatefulWidget {
@@ -42,6 +45,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   bool _purchasePending = false;
   bool _loading = true;
   String? _queryProductError;
+  ProductDetails? _productDetails;
   @override
   void initState() {
 
@@ -104,7 +108,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(Assets.iconsSuper,width: 85,height: 40,),
+              Image.asset(Assets.iconsSuper,width: 48,height: 19,),
               Text('SONA',style: TextStyle(
                 color: Colors.black
               ),),
@@ -112,7 +116,77 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           ),
         ),
         body: Stack(
-          children: stack,
+          children: [
+            ...stack,
+            Positioned(bottom: 0,
+              width: MediaQuery.of(context).size.width,child: Column(
+              children: [
+                ElevatedButton(onPressed: () async{
+                  late PurchaseParam purchaseParam;
+                  if(_productDetails==null){
+                    return;
+                  }
+                  if (Platform.isAndroid) {
+                    // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
+                    // verify the latest status of you your subscription by using server side receipt validation
+                    // and update the UI accordingly. The subscription purchase status shown
+                    // inside the app may not be accurate.
+                    final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
+                    purchaseParam = GooglePlayPurchaseParam(
+                        productDetails: _productDetails!,
+                        changeSubscriptionParam: (oldSubscription != null)
+                            ? ChangeSubscriptionParam(
+                          oldPurchaseDetails: oldSubscription,
+                          prorationMode: ProrationMode.immediateAndChargeFullPrice,
+                        ) : null);
+                  } else {
+                    purchaseParam = AppStorePurchaseParam(
+                      productDetails: _productDetails!,
+                    );
+                  }
+                  _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                },
+                  child: Container(child: Text('Continue'),
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                          Color(0xffFF0099),
+                          Color(0xffF5326D),
+                        ])
+                    ),
+                    alignment: Alignment.center,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: Size(346, 50),
+                      padding: EdgeInsets.zero
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+
+                  child: RichText(text:TextSpan(text: _terms,
+                    style: TextStyle(
+                      color: Color(0xffa9a9a9)
+                    ),
+                    children: [
+                      TextSpan(text: ' Terms',recognizer: TapGestureRecognizer()..onTap=(){
+                        Navigator.push(context, MaterialPageRoute(builder: (c){
+                          return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                        }));
+                       },
+                        style: TextStyle(
+                          color: Color(0xffEA01FF)
+                        )
+                      ),
+                      TextSpan(text: '.')
+                    ]
+                  ),
+
+                  ),
+                )
+              ],
+             ),
+            )
+          ],
         ),
       ),
     );
@@ -145,7 +219,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     }
     return Card(child: Column(children: children));
   }
-  ProductDetails? _productDetails;
   ///产品列表
   Widget _buildProductList() {
     if (_loading) {
@@ -177,71 +250,75 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         }));
     ///产品列表，继续转换一下数据类型
     _products.sort((l,r)=>l.rawPrice.compareTo(r.rawPrice));
+    double monthBill;
+    try{
+      monthBill =_products.firstWhere((element) => element.id==month).rawPrice;
+    }catch(e){
+      return const Text('Error');
+    }
     if(_products.isNotEmpty){
+
       productList.addAll(_products.map(
             (ProductDetails productDetails) {
           ///购买前购买详情，赋值给商品。
           final PurchaseDetails? previousPurchase = purchases[productDetails.id];
           return GestureDetector(
             onTap: () async {
-              late PurchaseParam purchaseParam;
+
               if(_productDetails!=productDetails){
                 _productDetails=productDetails;
                 setState(() {
 
                 });
               }
-              if (Platform.isAndroid) {
-                // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
-                // verify the latest status of you your subscription by using server side receipt validation
-                // and update the UI accordingly. The subscription purchase status shown
-                // inside the app may not be accurate.
-                final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
-                purchaseParam = GooglePlayPurchaseParam(
-                    productDetails: productDetails,
-                    changeSubscriptionParam: (oldSubscription != null)
-                        ? ChangeSubscriptionParam(
-                      oldPurchaseDetails: oldSubscription,
-                      prorationMode: ProrationMode.immediateAndChargeFullPrice,
-                    ) : null);
-              } else {
-                purchaseParam = AppStorePurchaseParam(
-                  productDetails: productDetails,
-                );
-              }
-              _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
 
             },
-            child: Container(
-              width: 135,
-              height: 151,
-              margin: EdgeInsets.only(right: 11),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: _productDetails==productDetails?LinearGradient(colors: [
-                    Color(0xffFFC36A),
-                    Color(0xffFFDF8E),
-                  ]):null
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      productDetails.description,
-                      style: TextStyle(
-                          fontSize: 20
+            child: SizedBox(
+              width: 211,
+              height: 126,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Container(
+                    width: 211,
+                    height: 111,
+                    margin: EdgeInsets.only(right: 11,top: 14),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        // gradient: _productDetails==productDetails?const LinearGradient(colors: [
+                        //   Color(0xffFFC36A),
+                        //   Color(0xffFFDF8E),
+                        // ]):null,
+                        border: Border.all(
+                          color: _productDetails==productDetails?Color(0xffFF37A3):Color(0xffFFB3DC),
+                          width: 4
+                        )
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _buildSubTitle(productDetails,monthBill),
+                          _buildPerMonth(productDetails)
+                        ],
                       ),
                     ),
-                    Text(productDetails.price,
-                      style: TextStyle(
-                          fontSize: 20
-                      ),),
-                    _buildPerMonth(productDetails)
-                  ],
-                ),
+                  ),
+                  Container(
+                    width: 96,
+                    height: 28,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: _productDetails==productDetails?Color(0xffFF37A3):Color(0xffFFB3DC),
+                    ),
+                    child: Text('${productDetails.price}',style: TextStyle(
+                      color: Colors.white
+                    ),),
+                  )
+                ],
               ),
             ),
           );
@@ -263,11 +340,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             ),
           ),
           Container(
-            child: Text(' When i become a supersona,i can do:',style: TextStyle(color: Color(0xffD4237A)),),
-          ),
-          Container(
-            height: 318,
-            margin: EdgeInsets.all(20),
+            height: 365,
+            margin: EdgeInsets.symmetric(horizontal: 20),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only( 
@@ -277,30 +351,9 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                 bottomRight: Radius.circular(15),
               )
             ),
-            child: ListView.separated(itemBuilder: (_,i){
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: 12
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(left: 25),
-                  child: Text(unlockFeatures[i]),
-                ),
-              );
-
-            }, separatorBuilder: (_,i){
-              return Container(
-                color: Colors.grey,
-                height: 2,
-              );
-            }, itemCount: unlockFeatures.length
-
-            ),
+            child: PowersWidget()
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text('到期自动续费，可随时取消到期自动续费，可随时取消到期自动续费，可随时取消'),
-          )
+
         ]);
   }
 
@@ -395,8 +448,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
     }
     ///产品详情响应
-    final ProductDetailsResponse productDetailResponse =
-    await _inAppPurchase.queryProductDetails(_kProductIds.toSet());
+    final ProductDetailsResponse productDetailResponse = await _inAppPurchase.queryProductDetails(_kProductIds.toSet());
     ///如果没有错误
     if (productDetailResponse.error != null) {
       if(mounted){
@@ -404,6 +456,11 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           _queryProductError = productDetailResponse.error!.message;
           _isAvailable = isAvailable;
           _products = productDetailResponse.productDetails;
+          // for (var element in _products) {
+          //   if(element.id==month){
+          //     monthBill=element.rawPrice;
+          //   }
+          // }
           _purchases = <PurchaseDetails>[];
           _notFoundIds = productDetailResponse.notFoundIDs;
           // _consumables = <String>[];
@@ -508,6 +565,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   Future<void> _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) async {
     ///遍历购买列表
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
+
       if (purchaseDetails.status == PurchaseStatus.pending) {
         showPendingUI();
       } else {
@@ -574,30 +632,71 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     _subscription.cancel();
     super.dispose();
   }
+  _buildSubTitle(ProductDetails details, double monthBill) {
+    String id=details.id;
+    String p='';
+    String per='';
 
+    if(id==month){
+      p='1 Month';
+      // return Container();
+    }else if(id==quarter){
+      per='Save ${(1-(details.rawPrice/3)/monthBill).toStringAsFixed(2)}';
+      p='3 Month';
+    }
+    else if(id==biannually){
+      p='6 Month';
+      per='Save ${(1-(details.rawPrice/6)/monthBill).toStringAsFixed(2)}';
+
+     // per='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}';
+    }
+    else if(id==annually){
+      p='12 Month';
+      per='Save ${(1-(details.rawPrice/12)/monthBill).toStringAsFixed(2)}';
+
+      //(details.rawPrice/12)/monthBill;
+     //per='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}';
+      // return Text();
+    }
+    return Column(
+      children: [
+        Text(p,style: TextStyle(
+            color: Colors.black,
+            fontSize: 20
+        ),),
+        Text('${(per)}',style: TextStyle(
+            color: Color(0xffFF5C8D),
+            fontSize: 12
+        ),),
+      ],
+    );
+  }
   _buildPerMonth(ProductDetails details) {
     String id=details.id;
     String p='';
     if(id==month){
-      return Container();
+      p='${details.currencySymbol}${(details.rawPrice).toStringAsFixed(2)}/mo';
+      //return Container();
     }else if(id==quarter){
       // return Text('${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(1)}');
-      p='${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(2)}';
+      p='${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(2)}/mo';
     }
     else if(id==biannually){
       // return Text('${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(1)}');
-      p='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}';
+      p='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}/mo';
     }
     else if(id==annually){
-      p='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}';
+      p='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}/mo';
       // return Text();
     }
     return Text(p,style: TextStyle(
-      color: Color(0xff4D4D4D),
+      color: Color(0xffFF185D),
       fontSize: 14
     ),);
   }
 }
+
+
 List<String> unlockFeatures=[
   '查看谁喜欢了我',
   'Arrow',
@@ -607,3 +706,4 @@ List<String> unlockFeatures=[
   'sona建议',
   'hook'
 ];
+String _terms='By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via Play Store settings, and you agree to our';
