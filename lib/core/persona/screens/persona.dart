@@ -75,10 +75,11 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                           Visibility(
                             visible: ref.watch(myProfileProvider)!.impression != null,
                             child: Container(
+                              margin: EdgeInsets.only(bottom: 4),
                               padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                               decoration: BoxDecoration(
-                                color: Color(0xFFE5E5E5),
-                                borderRadius: BorderRadius.circular(20)
+                                color: Color(0xFFE880F1),
+                                borderRadius: BorderRadius.circular(8)
                               ),
                               clipBehavior: Clip.antiAlias,
                               child: Text(
@@ -86,19 +87,21 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: true,
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  color: Colors.white
+                                ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 3),
                           Text(
                             ref.watch(myProfileProvider)!.name ?? '',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             softWrap: true,
-                            style: Theme.of(context).textTheme.titleLarge,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 3),
                           Text(
                             '${ref.watch(myProfileProvider)!.birthday!.toAge()} | ${ref.watch(myProfileProvider)!.gender!.name}',
                             maxLines: 1,
