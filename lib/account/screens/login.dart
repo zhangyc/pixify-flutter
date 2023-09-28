@@ -106,7 +106,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               borderSide: BorderSide(),
                             ),
                           ),
-                          initialCountryCode: 'CN',
                           onChanged: (PhoneNumber? pn) {
                             _countryCode = pn?.countryCode.replaceAll('+', '');
                             _phoneNumber = pn?.number;
