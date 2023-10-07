@@ -38,7 +38,7 @@ final options = BaseOptions(
     connectTimeout: const Duration(milliseconds: 15000),
     receiveTimeout: const Duration(milliseconds: 15000),
     sendTimeout: const Duration(milliseconds: 15000),
-    baseUrl: 'http://admin-test.sona.pinpon.fun/api',
+    baseUrl: 'https://admin-test.sona.pinpon.fun/api',
     headers: {
       'device': Platform.operatingSystem,
       'version': 'v1.0.0',
