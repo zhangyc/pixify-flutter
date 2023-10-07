@@ -132,8 +132,8 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
     final value = await showRadioFieldDialog(
       context: context,
       options: {
-        'on': true,
-        'off': false
+        'On': true,
+        'Off': false
       },
     );
     if (value != null) toggleNotification(value);
