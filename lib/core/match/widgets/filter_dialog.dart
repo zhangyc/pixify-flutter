@@ -13,6 +13,7 @@ import '../../../generated/assets.dart';
 import '../../chat/models/message.dart';
 import '../../chat/services/chat.dart';
 import '../providers/setting.dart';
+import '../util/event.dart';
 
 void showFilter(BuildContext context,VoidCallback onSave) {
   showDialog(context: context, builder: (c){
@@ -178,6 +179,7 @@ void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo tar
                         setState((){});
                         Future.delayed(Duration(milliseconds: 500),(){
                           onSave.call();
+                          SonaAnalytics.log(MatchEvent.match_popup_sona.name);
                           Navigator.pop(context);
                         });
                         callSona(

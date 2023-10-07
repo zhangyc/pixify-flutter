@@ -17,6 +17,7 @@ import 'package:stacked_page_view/stacked_page_view.dart';
 import '../../../utils/dialog/input.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/setting.dart';
+import '../util/event.dart';
 import '../util/http_util.dart';
 import '../widgets/filter_dialog.dart';
 // import '../widgets/scroller.dart' as s;
@@ -30,11 +31,21 @@ class MatchScreen extends StatefulHookConsumerWidget {
 
 class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin {
-
+  ScrollDirection? direction;
   @override
   void initState() {
     _initData();
     super.initState();
+    pageController.addListener(() {
+      //页面正在向上滑动
+      if (pageController.position.userScrollDirection == ScrollDirection.reverse) {
+          direction=ScrollDirection.reverse;
+      }
+      //页面正在向下滑动
+      else if(pageController.position.userScrollDirection == ScrollDirection.forward){
+        direction=ScrollDirection.forward;
+      }
+    });
   }
   List<UserInfo> users =[];
 
@@ -48,10 +59,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return NotificationListener(child: Stack(
+    return Stack(
       children: [
         Positioned.fill(
-          child: PageView.builder(
+          child: users.isEmpty?const Center(child: Text('No more'),):PageView.builder(
             itemBuilder: (c,index) {
               return StackPageView(index: index,
                   controller: pageController,
@@ -66,6 +77,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           return;
                         }
                         if(resp.isSuccess){
+                          SonaAnalytics.log(MatchEvent.match_like.name);
                           if(resp.data['resultType']==2){
 
                             if (index < users.length - 1) {
@@ -81,8 +93,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             },target: users[index]);
                           }
                         }else if(resp.statusCode==10150){
+                          SonaAnalytics.log(MatchEvent.match_like_limit.name);
                           Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                            return const SubscribePage();
+                            return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
                           }));
                         }
                       });
@@ -95,12 +108,28 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             scrollDirection: Axis.vertical,
             controller: pageController,
             onPageChanged: (value){
-
               currentPage=value;
-
               if(value%5==0){
                 current++;
                 _loadMore();
+              }
+              if(direction!=null){
+                if(ScrollDirection.forward==direction){
+                  SonaAnalytics.log(MatchEvent.match_swipe_down.name);
+
+                }else if(ScrollDirection.reverse==direction){
+                  if(value==0){
+                    return;
+                  }
+                  SonaAnalytics.log(MatchEvent.match_swipe_up.name);
+                  if(users[value-1].arrowed||users[value-1].matched){
+                    return;
+                  }else {
+                    users[value-1].skipped=true;
+                    ref.read(asyncMatchRecommendedProvider.notifier)
+                        .skip(users[value-1].id);
+                  }
+                }
               }
               // print('>>>>>>>>>>>>>>$value');
               ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
@@ -117,9 +146,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               GestureDetector(child: Container(
                 child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),
                 decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
-                  ]
+                    boxShadow: [
+                      BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
+                    ]
                 ),
               ),onTap: (){
                 showFilter(context,(){
@@ -130,8 +159,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 height: 20,
               ),
               GestureDetector(child: Container(
-                  child: Image.asset(Assets.iconsMore,width: 24,height: 24,),
-                  decoration: BoxDecoration(
+                child: Image.asset(Assets.iconsMore,width: 24,height: 24,),
+                decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
                     ]
@@ -140,6 +169,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
                 if(result!=null){
                   if(result=='report'){
+                    SonaAnalytics.log(MatchEvent.match_report.name);
                     Navigator.push(context, MaterialPageRoute(builder: (c){
                       return Report(ReportType.user,users[currentPage].id);
                     }));
@@ -174,18 +204,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           ),
         )
       ],
-    ),
-      onNotification: (scrollNotification) {
-        if (scrollNotification is ScrollEndNotification &&
-            scrollNotification.metrics.extentAfter == 0) {
-          // 滚动到底部时加载下一页
-          //ref.read(pagingProvider.notifier).refresh(ref);
-          //current++;
-          //_loadMore();
-        }
-        return true;
-      },
-
     );
   }
 
@@ -193,10 +211,20 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   bool get wantKeepAlive => true;
   int current=1;
   void _initData() async{
+    int? gender=null;
+    if(currentFilterGender==FilterGender.male.index){
+      gender=1;
+
+    }else if(currentFilterGender==FilterGender.female.index){
+      gender=2;
+
+    }else if(currentFilterGender==FilterGender.all.index){
+      gender=null;
+    }
     final position =ref.read(positionProvider);
    try{
      final resp=await post('/user/match-v2',data: {
-       'gender': currentFilterGender,
+       'gender': gender,
        'minAge': currentFilterMinAge,
        'maxAge': currentFilterMaxAge,
        'longitude': position?.longitude,
@@ -224,10 +252,20 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   }
   void _loadMore() async{
+    int? gender=null;
+    if(currentFilterGender==FilterGender.male.index){
+      gender=1;
+
+    }else if(currentFilterGender==FilterGender.female.index){
+      gender=2;
+
+    }else if(currentFilterGender==FilterGender.all.index){
+      gender=null;
+    }
     final position = ref.read(positionProvider);
     try{
       final resp=await post('/user/match-v2',data: {
-        'gender': currentFilterGender,
+        'gender': gender,
         'minAge': currentFilterMinAge,
         'maxAge': currentFilterMaxAge,
         'longitude': position?.longitude,

@@ -12,6 +12,7 @@ import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../common/models/user.dart';
@@ -203,7 +204,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
     pending.then((resp) {
       if (resp.statusCode == 10015) {
-        showSubscription();
+        showSubscription(FromTag.pay_chat_sonamsg);
       } else if (resp.statusCode == 0) {
         _onPendingMessageSucceed(message);
       }
@@ -244,7 +245,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
     SonaAnalytics.log('chat_starter');
     if (resp.statusCode == 10015) {
-      showSubscription();
+      showSubscription(FromTag.chat_starter);
     }
   }
 
@@ -258,7 +259,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       type: CallSonaType.HOOK
     );
     if (resp.statusCode == 10015) {
-      showSubscription();
+      showSubscription(FromTag.pay_chat_hook);
     }
     SonaAnalytics.log('chat_hook');
   }
@@ -269,7 +270,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       type: CallSonaType.SUGGEST_V2
     );
     if (resp.statusCode == 10015) {
-      showSubscription();
+      showSubscription(FromTag.pay_chat_suggest);
     }
     final options = resp.data['optionV2'] as List;
 

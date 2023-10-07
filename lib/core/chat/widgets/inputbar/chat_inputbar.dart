@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
 
@@ -296,7 +297,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                     ),
                     onTap: () {
                       if (s.memberOnly && !isMember) {
-                        showSubscription();
+                        showSubscription(FromTag.pay_chat_style);
                         SonaAnalytics.log('chat_style_gopay');
                       } else {
                         _setChatStyle(s.id);

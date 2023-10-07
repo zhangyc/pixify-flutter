@@ -165,7 +165,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
       }
     }else if(resp.statusCode==10150){
       Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-        return const SubscribePage();
+        return const SubscribePage(fromTag: FromTag.pay_profile,);
       }));
     }
     return ref.read(asyncMatchRecommendedProvider.notifier).like(widget.user.id).then((resp){
@@ -177,7 +177,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
       }
       if (mounted && resp.statusCode == 10150) {
         Navigator.push(context, MaterialPageRoute(builder:(c){
-          return SubscribePage();
+          return SubscribePage(fromTag: FromTag.pay_profile,);
         }));
       }
     });

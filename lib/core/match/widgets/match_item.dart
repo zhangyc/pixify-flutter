@@ -9,6 +9,7 @@ import '../../../generated/assets.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
+import '../util/event.dart';
 import 'like_animation.dart';
 import 'user_card.dart';
 
@@ -73,6 +74,7 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
               onTap: () async {
                 final resp=await ref.read(asyncMatchRecommendedProvider.notifier).arrow(widget.userInfo.id);
                 if(resp.isSuccess){
+                  SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                   arrowController.reset();
                   arrowController.forward() ;
                   widget.userInfo.arrowed=true;
@@ -81,8 +83,8 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
                   if(isMember){
                     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                   }else{
-                    Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                      return SubscribePage();
+                     Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                      return SubscribePage(fromTag: FromTag.pay_match_arrow,);
                     }));
                   }
                   /// 判断如果不是会员，跳转道会员页面

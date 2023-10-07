@@ -15,12 +15,13 @@ import 'package:uuid/uuid.dart';
 import '../../account/providers/profile.dart';
 import '../../common/widgets/webview.dart';
 import '../../test_pay/_MyApp.dart';
+import '../match/util/event.dart';
 import 'widgets/powers_widget.dart';
 
 Uuid uuid=Uuid();
 class SubscribePage extends ConsumerStatefulWidget {
-  const SubscribePage({super.key});
-
+  const SubscribePage( {super.key,required this.fromTag,});
+  final FromTag fromTag;
   @override
   ConsumerState createState() => _SubscribePageState();
 }
@@ -48,7 +49,9 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   ProductDetails? _productDetails;
   @override
   void initState() {
-
+    SonaAnalytics.log(ChatEvent.pay_page_open.name,{
+      "fromTag":widget.fromTag.name
+    });
     final Stream<List<PurchaseDetails>> purchaseUpdated = _inAppPurchase.purchaseStream;
     _subscription = purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
           _listenToPurchaseUpdated(purchaseDetailsList);
@@ -144,7 +147,9 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                       productDetails: _productDetails!,
                     );
                   }
+                  
                   _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                  SonaAnalytics.log(PayEvent.pay_continue.name);
                 },
                   child: Container(child: Text('Continue'),
                     decoration: BoxDecoration(
@@ -695,7 +700,19 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     ),);
   }
 }
-
+enum FromTag{
+  pay_profile,
+  pay_chatlist_likedme,
+  pay_chatlist_blur,
+  pay_chat_sonamsg,
+  pay_chat_suggest,
+  pay_chat_style,
+  pay_chat_hook,
+  pay_match_arrow,
+  pay_match_likelimit,
+  chat_starter,
+  profile_myplan
+}
 
 List<String> unlockFeatures=[
   '查看谁喜欢了我',

@@ -6,6 +6,7 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/profile.dart';
 import 'package:sona/core/persona/widgets/sona_message.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/text/gradient_colored_text.dart';
@@ -164,7 +165,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                           if (ref.read(myProfileProvider)!.isMember) {
                             return;
                           } else {
-                            showSubscription();
+                            showSubscription(FromTag.pay_profile);
                             SonaAnalytics.log('profile_golock');
                           }
                         },
@@ -184,7 +185,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                       visible: ref.watch(myProfileProvider)!.isMember,
                       child: TextButton(
                         onPressed: () {
-                          showSubscription();
+                          showSubscription(FromTag.profile_myplan);
                           SonaAnalytics.log('profile_myplan');
                         },
                         child: Text(

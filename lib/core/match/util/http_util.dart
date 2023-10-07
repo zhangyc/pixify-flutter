@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sona/utils/global/global.dart';
 
 class HttpResult{
@@ -50,4 +51,8 @@ set userToken(String token){
   appCommonBox.put('token', token);
 }
 
-Dio _dio=Dio(options);
+Dio _dio=Dio(options)..interceptors.add(LogInterceptor(
+  requestBody: true,
+  responseBody: true,
+  logPrint: (e)=> kDebugMode?log(e.toString()):{},
+));

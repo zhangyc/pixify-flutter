@@ -14,6 +14,7 @@ import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../subscribe/subscribe_page.dart';
 import '../models/message.dart';
 import '../providers/liked_me.dart';
 import '../widgets/inputbar/chat_style.dart';
@@ -59,7 +60,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
                 }
               } else {
                 SonaAnalytics.log('chatlist_tapblur');
-                showSubscription();
+                showSubscription(FromTag.pay_chatlist_blur);
               }
             }),
           ),
