@@ -3,7 +3,7 @@ part of './global.dart';
 final dio = _createDioInstance();
 
 Dio _createDioInstance() {
-  const baseUrl = 'http://admin-test.sona.pinpon.fun/api';
+  const baseUrl = 'https://admin-test.sona.pinpon.fun/api';
 
   final options = BaseOptions(
       connectTimeout: const Duration(milliseconds: 15000),
