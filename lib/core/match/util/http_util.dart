@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:sona/common/env.dart';
 import 'package:sona/utils/global/global.dart';
 
 class HttpResult{
@@ -38,7 +39,7 @@ final options = BaseOptions(
     connectTimeout: const Duration(milliseconds: 15000),
     receiveTimeout: const Duration(milliseconds: 15000),
     sendTimeout: const Duration(milliseconds: 15000),
-    baseUrl: kReleaseMode?'https://manager.sona.pinpon.fun/api':'https://admin-test.sona.pinpon.fun/api',
+    baseUrl: env.apiServer,
     headers: {
       'device': Platform.operatingSystem,
       'version': 'v1.0.0',

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/common/env.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/utils/global/global.dart';
 
@@ -69,7 +70,7 @@ final asyncChatStylesProvider = AsyncNotifierProvider<AsyncChatStylesNotifier, L
 final currentChatStyleProvider = StateProvider.family<ChatStyle?, int>(
   (ref, arg) {
     ref.listenSelf((previous, next) {
-      FirebaseFirestore.instance.collection('users')
+      FirebaseFirestore.instance.collection('${env.firestorePrefix}_users')
           .doc(ref.read(myProfileProvider)!.id.toString())
           .collection('rooms').doc(arg.toString())
           .set({'chatStyleId': next?.id}, SetOptions(merge: true))
