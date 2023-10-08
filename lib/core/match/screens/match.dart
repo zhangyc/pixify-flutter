@@ -64,7 +64,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     return Stack(
       children: [
         Positioned.fill(
-          child: users.isEmpty?Container(child: Center(child: MatchInitAnimation()),color: Colors.black,):PageView.builder(
+          child: _state==PageState.loading?
+          Container(child: Center(child: MatchInitAnimation()),color: Colors.black,):_state==PageState.noData?
+          Center(child: Text('No data'),):
+          PageView.builder(
             itemBuilder: (c,index) {
               return StackPageView(index: index,
                   controller: pageController,
@@ -238,7 +241,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
      if(resp.isSuccess){
 
        List list= resp.data;
-
+       if(list.isEmpty){
+         _state=PageState.noData;
+       }else {
+         _state=PageState.success;
+       }
        users=list.map((e) => UserInfo.fromJson(e)).toList();
        for (var element in users) {
          if(element.avatar!=null){
@@ -296,10 +303,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }
 
   }
+  late PageState _state= PageState.loading;
 }
 enum PageState{
   loading,
   noData,
+  success
 }
 
 enum FilterGender{
