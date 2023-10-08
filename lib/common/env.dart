@@ -5,10 +5,9 @@ const _apiServer = _env == 'prod'
 const _firestorePrefix = _env == 'prod'
   ? 'prod'
   : 'test';
-final env = _Env(env: _env, apiServer: _apiServer, firestorePrefix: _firestorePrefix);
 
 class _Env {
-  _Env({
+  const _Env({
     required this.env,
     required this.apiServer,
     required this.firestorePrefix
@@ -17,3 +16,5 @@ class _Env {
   final String apiServer;
   final String firestorePrefix;
 }
+
+const env = _Env(env: _env, apiServer: _apiServer, firestorePrefix: _firestorePrefix);
