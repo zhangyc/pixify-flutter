@@ -31,15 +31,35 @@ Future<String> uploadFile({
   ).then((resp) => resp.data);
 }
 
+Future<String> uploadImage({
+  required Uint8List bytes
+}) async {
+  final data = await compressImage(bytes);
+  final formData = FormData.fromMap({
+    'file': MultipartFile.fromBytes(
+        data.toList(growable: false),
+        filename: '.webp'
+    )
+  });
+  return dio.post(
+      '/common/file-upload',
+      data: formData
+  ).then((resp) => resp.data);
+}
 
-Future<Uint8List> compressImage(Uint8List list) async {
-  var result = await FlutterImageCompress.compressWithList(
+Future<Uint8List> compressImage(
+  Uint8List list, {
+  minHeight = 800,
+  minWidth = 600,
+  quality = 80,
+  format = CompressFormat.webp
+}) async {
+  return FlutterImageCompress.compressWithList(
     list,
-    minHeight: 800,
-    minWidth: 600,
-    quality: 80,
+    minHeight: minHeight,
+    minWidth: minWidth,
+    quality: quality,
     rotate: 0,
-    format: CompressFormat.webp,
+    format: format,
   );
-  return result;
 }

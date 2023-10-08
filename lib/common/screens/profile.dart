@@ -3,10 +3,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/providers/profile.dart';
-import 'package:sona/common/services/report.dart';
 import 'package:sona/core/match/services/match.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/dialog/report.dart';
 
 import '../../core/match/providers/matched.dart';
 import '../../core/match/widgets/filter_dialog.dart';
@@ -119,19 +119,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   void _showActions() async {
     final action = await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
     if (action == 'report' && mounted) {
-      final reason = await showRadioFieldDialog(
-        context: context,
-        options: {
-          'Spam': 1,
-          'Inappropriate': 2
-        }
-      );
-      if (reason != null) {
-        final resp = await report(type: 1, id: widget.user.id, reason: 1);
-        if (resp.statusCode == 0) {
-          Fluttertoast.showToast(msg: 'the user has been reported');
-        }
-      }
+      showReport(context, widget.user.id);
     } else if (action == 'block' && mounted) {
       await showRadioFieldDialog(context: context, options: {'Block': 'block', 'Unblock': 'unblock'});
       final resp = await matchAction(userId: widget.user.id, action: MatchAction.block);
