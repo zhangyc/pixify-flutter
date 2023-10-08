@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/screens/profile.dart';
-import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/conversation.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/chat.dart';

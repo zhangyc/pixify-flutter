@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
+// ignore: missing_provider_scope
   runApp(_MyApp());
 }
 

@@ -14,11 +14,12 @@ Future<bool?> showInfo({
   return showModalBottomSheet<bool>(
     context: context,
     backgroundColor: Colors.white,
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(30),
-      topRight: Radius.circular(30),
-    )),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      )
+    ),
     builder: (BuildContext context) {
       return SafeArea(
         top: false,
@@ -27,13 +28,13 @@ Future<bool?> showInfo({
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Container(
                 width: 30,
                 height: 3,
                 color: Colors.black26,
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
               Visibility(
                 visible: title != null,
                 child: Container(
@@ -214,7 +215,7 @@ Future<String?> showSingleLineTextField(
                       padding: EdgeInsets.only(
                           left: 12, right: 12, top: 0, bottom: 12),
                       child: Text(tip ?? '',
-                          style: Theme.of(context).textTheme.caption),
+                          style: Theme.of(context).textTheme.bodySmall),
                     ),
                   ),
                   TextField(
@@ -280,7 +281,7 @@ Future<String?> showTextFieldDialog({
   ]);
   if (title != null) {
     children.add(Text(
-        title ?? '',
+        title,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 18)
     ));

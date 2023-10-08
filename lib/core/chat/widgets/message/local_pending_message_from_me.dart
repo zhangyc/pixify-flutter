@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/models/message.dart';
-
-import '../../../../utils/dialog/input.dart';
 
 class LocalPendingMessageFromMe extends ConsumerStatefulWidget {
   const LocalPendingMessageFromMe({super.key, required this.message, required this.onSucceed});
@@ -47,14 +43,14 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
                   });
                   setState(() {});
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.refresh,
                   size: 20,
                 ),
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
+              return const SizedBox(
                 width: 16,
                 height: 16,
                 child: CircularProgressIndicator(strokeWidth: 1.5)

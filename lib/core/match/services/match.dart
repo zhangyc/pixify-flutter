@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/gender.dart';
-import 'package:sona/utils/global/global.dart';
 
 import '../util/http_util.dart';
 

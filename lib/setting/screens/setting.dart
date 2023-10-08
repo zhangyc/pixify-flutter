@@ -5,7 +5,6 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/providers/token.dart';
-import 'package:sona/setting/screens/about.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../common/widgets/webview.dart';
@@ -67,7 +66,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   'Disclaimer': '2',
                   'Terms and Conditions':'3'
                 });
-                if(result!=null){
+                if (result != null && mounted){
                   if(result=='1'){
                     Navigator.push(context, MaterialPageRoute(builder: (c){
                       return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');

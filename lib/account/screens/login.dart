@@ -14,7 +14,6 @@ import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
-import 'package:sona/core/home.dart';
 import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/global/global.dart';
@@ -151,7 +150,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'we sent to $_countryCode $_phoneNumber',
+                              text: 'we sent to +$_countryCode $_phoneNumber',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                             WidgetSpan(child: SizedBox(width: 8)),
@@ -319,7 +318,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             return;
           }
           Fluttertoast.showToast(msg: 'Welcome back, ${profile.name}');
-          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          if (mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         } else {
           Fluttertoast.showToast(msg: 'Failed to get profile, try again later');
         }

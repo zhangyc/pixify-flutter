@@ -64,9 +64,11 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
           user: widget.userInfo,
         ),
         Arrow(animationController: arrowController),
-        Positioned(child: LikeAnimation(onLike: widget.onLike, userInfo: widget.userInfo),
+        Positioned(
           right: 20,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 150,),
+          bottom: MediaQuery.of(context).viewInsets.bottom + 150,
+          child: LikeAnimation(onLike: widget.onLike, userInfo: widget.userInfo)
+        ),
         Positioned(
             right: 20,
             bottom: MediaQuery.of(context).viewInsets.bottom + 80,
@@ -115,11 +117,11 @@ class Arrow extends StatelessWidget {
         child: Center(child: _animationController2.isAnimating?Stack(
           alignment: Alignment.center,
           children: [
-            AnimatedContainer(duration: Duration(milliseconds: 1500),
-              child: Image.asset(Assets.imagesArrow,),
+            AnimatedContainer(duration: const Duration(milliseconds: 1500),
               curve: Curves.fastOutSlowIn,
               width: 300,
               height:300,
+              child: Image.asset(Assets.imagesArrow,),
             ),
             Lottie.asset(Assets.lottieArrowAnimation,
                 controller: _animationController2,repeat: true),

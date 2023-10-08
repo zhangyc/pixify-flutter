@@ -345,9 +345,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         .doc(widget.otherSide.id.toString())
         .collection('msgs')
         .get();
-    allMsgs.docs.forEach((doc) {
+    for (var doc in allMsgs.docs) {
       doc.reference.delete();
-    });
+    }
   }
 }
 

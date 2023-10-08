@@ -1,19 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/profile.dart';
-import 'package:sona/core/persona/widgets/sona_message.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/setting/screens/setting.dart';
-import 'package:sona/common/widgets/button/colored.dart';
-import 'package:sona/common/widgets/text/gradient_colored_text.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
-
-import '../../../utils/dialog/input.dart';
 
 class PersonaScreen extends StatefulHookConsumerWidget {
   const PersonaScreen({super.key});
