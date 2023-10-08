@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
@@ -16,7 +17,9 @@ import 'package:sona/utils/dialog/report.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
+import '../../../account/providers/profile.dart';
 import '../../../utils/dialog/input.dart';
+import '../../../utils/location/location.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/setting.dart';
 import '../services/match.dart';
@@ -36,9 +39,21 @@ class MatchScreen extends StatefulHookConsumerWidget {
 class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin {
   ScrollDirection? direction;
+  void _determinePosition() async {
+    final position = await determinePosition();
+  }
   @override
   void initState() {
-    _initData();
+      determinePosition().then((value) async {
+        if(value!=null){
+          await ref.read(myProfileProvider.notifier).updateField(position: value);
+          await _initData();
+        }
+      }).catchError((e){
+        Fluttertoast.showToast(msg: 'Failed to obtain permission.');
+      });
+
+    // _determinePosition();
     super.initState();
     pageController.addListener(() {
       //页面正在向上滑动
@@ -212,15 +227,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   bool get wantKeepAlive => true;
   int current=1;
-  void _initData() async{
+  Future<void> _initData() async{
     int? gender;
     current=1;
     if(currentFilterGender==FilterGender.male.index){
       gender=1;
-
     }else if(currentFilterGender==FilterGender.female.index){
       gender=2;
-
     }else if(currentFilterGender==FilterGender.all.index){
       gender=null;
     }

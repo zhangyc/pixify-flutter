@@ -22,7 +22,7 @@ dependencies:
   appinio_swiper: ^2.0.2
   fluttertoast: ^8.2.2
   flutter_easyloading: ^3.0.5
-  permission_handler: ^10.4.3
+  permission_handler: ^11.0.1
   image_picker: ^1.0.2
   cached_network_image: ^3.2.3
   crop_your_image: ^0.7.5
