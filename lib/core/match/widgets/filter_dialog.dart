@@ -90,7 +90,7 @@ void showFilter(BuildContext context,VoidCallback onSave) {
                       min: 18,
                       max: 80,
                       divisions: 10,
-                      labels: RangeLabels(rv.start.toString(), rv.end.toString()),
+                      labels: RangeLabels(rv.start.toStringAsFixed(0), rv.end.toStringAsFixed(0)),
                       values: rv,
                       onChanged: (rv) {
                         currentFilterMinAge=rv.start.toInt();
