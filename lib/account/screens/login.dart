@@ -18,6 +18,7 @@ import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../common/widgets/webview.dart';
 import '../../firebase/sona_firebase.dart';
 import '../models/my_profile.dart';
 
@@ -83,15 +84,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   right: 16,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
                         'Create Account',
+                        textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       SizedBox(height: 4),
                       Text(
                         'using phone number',
+                        textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       SizedBox(height: 32),
@@ -112,6 +115,37 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
+                      SizedBox(height: 20),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Sign up agrees to\n'
+                            ),
+                            TextSpan(
+                              text: 'Terms of Service',
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
+                                  return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                                }))
+                            ),
+                            TextSpan(
+                                text: ' and '
+                            ),
+                            TextSpan(
+                              text: 'Privacy Policy',
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
+                                  return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
+                                }))
+                            ),
+                          ]
+                        ),
+                        style: Theme.of(context).textTheme.bodySmall,
+                        textAlign: TextAlign.center,
+                      )
                     ],
                   ),
                 ),

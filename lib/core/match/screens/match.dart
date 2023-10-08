@@ -190,10 +190,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 if(result!=null){
                   if (result == 'report' && mounted){
                     SonaAnalytics.log(MatchEvent.match_report.name);
-                    showReport(context, users[currentPage].id);
+                    final r = await showReport(context, users[currentPage].id);
+                    if (r == true) {
+                      users.removeAt(currentPage);
+                      if (mounted) setState(() {});
+                    }
                   }else if(result=='block'){
                     final resp = await matchAction(userId: users[currentPage].id, action: MatchAction.block);
                     if (resp.statusCode == 0) {
+                      users.removeAt(currentPage);
+                      if (mounted) setState(() {});
                       Fluttertoast.showToast(msg: 'The user has been blocked');
                       SonaAnalytics.log('post_block');
                     }
