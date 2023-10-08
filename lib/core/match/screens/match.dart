@@ -215,7 +215,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   void _initData() async{
     int? gender;
     current=1;
-    int? gender=null;
     if(currentFilterGender==FilterGender.male.index){
       gender=1;
 
