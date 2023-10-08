@@ -8,10 +8,11 @@ import '../../common/services/report.dart';
 import '../../common/widgets/button/colored.dart';
 import 'input.dart';
 
-Future<void> showReport(BuildContext context, int userId) async {
+Future<bool?> showReport(BuildContext context, int userId) async {
   final reason = await _showReportReason(context);
-  if (reason == null) return;
-  if (context.mounted) await _showReportForm(context, userId, reason);
+  if (reason == null) return null;
+  if (context.mounted) return _showReportForm(context, userId, reason);
+  return null;
 }
 
 Future<int?> _showReportReason(BuildContext context) async {
@@ -27,7 +28,7 @@ Future<int?> _showReportReason(BuildContext context) async {
   );
 }
 
-Future _showReportForm(BuildContext context, int userId, int reason) {
+Future<bool?> _showReportForm(BuildContext context, int userId, int reason) {
   XFile? _file;
   final _controller = TextEditingController();
   final children = <Widget>[];
@@ -113,8 +114,8 @@ Future _showReportForm(BuildContext context, int userId, int reason) {
                 final resp = await report(type: 1, id: userId, reason: reason, imageUrl: imageUrl, desc: _controller.text);
                 if (resp.statusCode == 0) {
                   Fluttertoast.showToast(msg: 'We have received your report and will process it within 24 hours.');
+                  if (context.mounted) Navigator.pop(context, true);
                 }
-                if (context.mounted) Navigator.pop(context);
               } catch (e) {
                 Fluttertoast.showToast(msg: 'Network error, please try again later.');
               }
@@ -125,7 +126,7 @@ Future _showReportForm(BuildContext context, int userId, int reason) {
   ));
   children.add(const SizedBox(height: 20));
 
-  return showModalBottomSheet(
+  return showModalBottomSheet<bool>(
     context: context,
     backgroundColor: Colors.white,
     isScrollControlled: true,
