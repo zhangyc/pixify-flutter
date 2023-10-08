@@ -335,20 +335,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
     SonaAnalytics.log('chat_suggest');
   }
-
-  Future _deleteAllMessages() async {
-    await deleteAllMessages(chatId: widget.otherSide.id);
-    var allMsgs = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(ref.read(myProfileProvider)!.id.toString())
-        .collection('rooms')
-        .doc(widget.otherSide.id.toString())
-        .collection('msgs')
-        .get();
-    for (var doc in allMsgs.docs) {
-      doc.reference.delete();
-    }
-  }
 }
 
 enum ChatEntry {

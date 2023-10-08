@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/env.dart';
 
 import '../models/conversation.dart';
 import '../models/message.dart';
@@ -8,7 +9,7 @@ import '../models/message.dart';
 final conversationStreamProvider = StreamProvider<List<ImConversation>>((ref) async* {
   final userId = ref.read(myProfileProvider)!.id;
   final stream = FirebaseFirestore.instance
-      .collection('users').doc('$userId')
+      .collection('${env.firestorePrefix}_users').doc('$userId')
       .collection('rooms').orderBy('id', descending: true).limit(100)
       .snapshots();
   await for (var snapshot in stream) {
@@ -30,14 +31,14 @@ final messageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>,
     List<ImMessage> messages = [];
     final userId = ref.read(myProfileProvider)!.id;
     final stream = FirebaseFirestore.instance
-        .collection('users').doc('$userId')
+        .collection('${env.firestorePrefix}_users').doc('$userId')
         .collection('rooms').doc('$roomId')
         .collection('msgs').orderBy('id', descending: true)
         .snapshots();
     ref.listen(messagePaginationProvider(roomId), (previous, next) async {
       if (next != null) {
         final historyMessages = await FirebaseFirestore.instance
-            .collection('users').doc('$userId')
+            .collection('${env.firestorePrefix}_users').doc('$userId')
             .collection('rooms').doc('$roomId')
             .collection('msgs').orderBy('id', descending: true).startAfterDocument(next)
             .get()

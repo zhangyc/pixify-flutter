@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/env.dart';
 import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
@@ -325,7 +326,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
     ref.read(inputModeProvider(widget.chatId).notifier).update((state) {
       var newMode = state == InputMode.sona ? InputMode.manual : InputMode.sona;
       _controller.clear();
-      FirebaseFirestore.instance.collection('users')
+      FirebaseFirestore.instance.collection('${env.firestorePrefix}_users')
           .doc(ref.read(myProfileProvider)!.id.toString())
           .collection('rooms').doc(widget.chatId.toString())
           .set({'inputMode': newMode})

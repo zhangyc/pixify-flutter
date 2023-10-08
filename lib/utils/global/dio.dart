@@ -3,13 +3,11 @@ part of './global.dart';
 final dio = _createDioInstance();
 
 Dio _createDioInstance() {
-  const baseUrl = kReleaseMode?'https://manager.sona.pinpon.fun/api':'https://admin-test.sona.pinpon.fun/api';
-
   final options = BaseOptions(
       connectTimeout: const Duration(milliseconds: 15000),
       receiveTimeout: const Duration(milliseconds: 15000),
       sendTimeout: const Duration(milliseconds: 15000),
-      baseUrl: baseUrl,
+      baseUrl: env.apiServer,
       headers: {
         'device': Platform.operatingSystem,
         'version': 'v1.0.0',
