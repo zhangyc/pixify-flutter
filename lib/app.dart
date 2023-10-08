@@ -25,7 +25,7 @@ class SonaApp extends HookConsumerWidget {
       profile = ref.read(myProfileProvider);
     }
     final navigatorKey = global.navigatorKey;
-    final initialRoute = profile == null ? 'login' : '/';
+    final initialRoute = profile == null || !profile.completed ? 'login' : '/';
 
     return MaterialApp(
       key: ValueKey(token),
@@ -44,78 +44,6 @@ class SonaApp extends HookConsumerWidget {
       // routes: _routes,
       onGenerateRoute: _onGenerateRoute,
     );
-
-    // return MaterialApp(
-    //   key: ValueKey(token),
-    //   navigatorKey: navigatorKey,
-    //   builder: EasyLoading.init(builder: (BuildContext context, Widget? child) {
-    //     return GestureDetector(
-    //       behavior: HitTestBehavior.opaque,
-    //       onTap: () {
-    //         FocusManager.instance.primaryFocus?.unfocus();
-    //       },
-    //       child: Builder(builder: (context) {
-    //         final asyncMyProfile = ref.watch(asyncMyProfileProvider);
-    //         return Stack(
-    //           children: [
-    //             Positioned.fill(child: child!),
-    //             Positioned.fill(
-    //               child: asyncMyProfile.when(
-    //                 data: (myProfile) {
-    //                   if (myProfile.completed) {
-    //                     return const Opacity(
-    //                       opacity: 0,
-    //                     );
-    //                   } else {
-    //                     final pages = [
-    //                       const MaterialPage(child: RequiredInfoFormScreen())
-    //                     ];
-    //                     return HeroControllerScope.none(child: Navigator(
-    //                       pages: pages,
-    //                       onPopPage: (Route<dynamic> route, dynamic result) {
-    //                         pages.remove(route.settings);
-    //                         return route.didPop(result);
-    //                       },
-    //                     ));
-    //                   }
-    //                 },
-    //                 loading: () => Container(
-    //                   color: Colors.white54,
-    //                   alignment: Alignment.center,
-    //                   child: SizedBox(
-    //                       width: 16,
-    //                       height: 16,
-    //                       child: CircularProgressIndicator(color: Theme.of(context).primaryColor)
-    //                   ),
-    //                 ),
-    //                 error: (err, stack) => token == null
-    //                     ? const Opacity(opacity: 0)
-    //                     : GestureDetector(
-    //                         behavior: HitTestBehavior.translucent,
-    //                         onTap: ref.read(asyncMyProfileProvider.notifier).refresh,
-    //                         child: Container(
-    //                           color: Colors.white,
-    //                           alignment: Alignment.center,
-    //                           child: const Text(
-    //                               'Cannot connect to server, tap to retry',
-    //                               textAlign: TextAlign.center,
-    //                               style: TextStyle(
-    //                                   fontSize: 16,
-    //                                   decoration: TextDecoration.none)),
-    //                         ),
-    //                       ),
-    //               )
-    //             )
-    //           ],
-    //         );
-    //       }),
-    //     );
-    //   }),
-    //   theme: themeData,
-    //   initialRoute: token == null ? 'login' : '/',
-    //   // routes: _routes,
-    //   onGenerateRoute: _onGenerateRoute,
-    // );
   }
 }
 

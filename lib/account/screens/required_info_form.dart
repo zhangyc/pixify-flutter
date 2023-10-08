@@ -1,4 +1,6 @@
 import 'dart:ffi';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -54,7 +56,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     _actions = [
       FieldAcquireAction(
           field: null,
-          textBuilder: () => 'Hi\n\nI\'m SONA\n\nYour social\nadvisor to coach\nyou on\nmeaningful\nfriendships!',
+          textBuilder: () => 'Hi\n\nI\'m SONA\n\nYour social\nadvisor to\ncoach you on\nmeaningful\nfriendships!',
           highlights: ['SONA', 'social\nadvisor'],
           action: null
       ),
@@ -162,6 +164,11 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     if (value == null) {
       return _getBirthday();
     } else {
+      if (value.toAge() < 17 && mounted) {
+        await showInfo(context: context, content: 'You must be 17+ to register.\n'
+            'You entered an underage birthdate so you cannot complete registration.');
+        exit(0);
+      }
       SonaAnalytics.log('reg_birthday');
       _actions.firstWhere((action) => action.field == 'birthday')
         ..value = value
@@ -203,8 +210,11 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
         Fluttertoast.showToast(msg: 'GIF is not allowed');
         throw Error();
       }
-      var bytes = await file.readAsBytes();
-      bytes = cropImage(bytes);
+      Uint8List? bytes = await file.readAsBytes();
+      bytes = await cropImage(bytes);
+      if (bytes == null) {
+        throw Exception('No file');
+      }
       final value = await uploadFile(bytes: bytes, filename: file.name);
       SonaAnalytics.log('reg_avatar_${source.name}');
       _actions.firstWhere((action) => action.field == 'avatar')

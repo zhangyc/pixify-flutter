@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sona/utils/global/global.dart';
 
-cropImage(Uint8List data) {
+Future<Uint8List?> cropImage(Uint8List data) {
   return navigatorKey.currentState!.push(MaterialPageRoute(builder: (_) => _CropImageScreen(data: data)));
 }
 
