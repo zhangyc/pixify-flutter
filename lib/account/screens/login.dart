@@ -151,7 +151,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'we sent to $_countryCode $_phoneNumber',
+                              text: 'we sent to +$_countryCode $_phoneNumber',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                             WidgetSpan(child: SizedBox(width: 8)),
