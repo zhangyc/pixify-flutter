@@ -44,15 +44,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
   @override
   void initState() {
-      determinePosition().then((value) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      determinePosition().then((value){
         if(value!=null){
-          await ref.read(myProfileProvider.notifier).updateField(position: value);
-          await _initData();
+          ref.read(myProfileProvider.notifier).updateField(position: value);
+          _initData();
         }
       }).catchError((e){
         Fluttertoast.showToast(msg: 'Failed to obtain permission.');
       });
-
+    });
     // _determinePosition();
     super.initState();
     pageController.addListener(() {

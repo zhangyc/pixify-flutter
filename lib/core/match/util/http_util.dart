@@ -52,8 +52,21 @@ set userToken(String token){
   appCommonBox.put('token', token);
 }
 
-Dio _dio=Dio(options)..interceptors.add(LogInterceptor(
-  requestBody: true,
-  responseBody: true,
-  logPrint: (e)=> kDebugMode?log(e.toString()):{},
-));
+Dio _dio=Dio(options)..interceptors.addAll([
+  LogInterceptor(
+    requestBody: true,
+    responseBody: true,
+    logPrint: (e)=> kDebugMode?log(e.toString()):{},
+  ),
+  InterceptorsWrapper(
+    // onResponse: (Response response, ResponseInterceptorHandler handler){
+    //   if (response.statusCode == 200) {
+    //     if (response.data['code'] == '10040') {
+    //       token = null;
+    //     } else if(response.data['code'] == '10030') {
+    //       token = null;
+    //     }
+    //   }
+    // }
+  )
+]);

@@ -14,7 +14,8 @@ class UserInfo {
     required this.avatar,
     this.bio,
     this.chatStyleId,
-    this.photos = const <String>[]
+    this.photos = const <String>[],
+    this.allScore,
   });
 
   final int id;
@@ -25,7 +26,7 @@ class UserInfo {
   final String? bio;
   final int? chatStyleId;
   final List<String> photos;
-
+  final String? allScore;
   DateTime? likeDate;
   int get age => birthday!.toAge();
 
@@ -47,7 +48,8 @@ class UserInfo {
         avatar: json['avatar'],
         bio: json['description'],
         chatStyleId: json['chatStyleId'],
-        photos: photos
+        photos: photos,
+        allScore: json['allScore']?.toStringAsFixed(2)
     );
   }
 }

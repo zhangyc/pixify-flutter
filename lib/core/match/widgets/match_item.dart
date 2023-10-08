@@ -70,6 +70,10 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
           child: LikeAnimation(onLike: widget.onLike, userInfo: widget.userInfo)
         ),
         Positioned(
+            top: 50,
+            child: Text(widget.userInfo.allScore??'')
+        ),
+        Positioned(
             right: 20,
             bottom: MediaQuery.of(context).viewInsets.bottom + 80,
             child:  GestureDetector(child: Image.asset(Assets.iconsArrow,width: 50,height: 50,),
