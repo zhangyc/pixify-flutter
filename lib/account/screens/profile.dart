@@ -298,8 +298,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       Fluttertoast.showToast(msg: 'GIF is not allowed');
       return;
     }
-    var bytes = await file.readAsBytes();
+    Uint8List? bytes = await file.readAsBytes();
     bytes = await cropImage(bytes);
+    if (bytes == null) return;
     await addPhoto(bytes: bytes, filename: file.name);
     ref.read(myProfileProvider.notifier).refresh();
   }

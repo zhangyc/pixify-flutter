@@ -261,11 +261,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<bool> _sendPin() async {
     try {
       final resp = await sendPin(countryCode: _countryCode, phoneNumber: _phoneNumber);
-      if (resp.statusCode != 0) {
-        Fluttertoast.showToast(msg: 'Sending pin message failed');
+      if (resp.statusCode == 0) {
+        return true;
+      } else if (resp.statusCode == 10070) {
+        Fluttertoast.showToast(msg: 'Code requests too frequent. Wait minutes before trying again.');
         return false;
       } else {
-        return true;
+        Fluttertoast.showToast(msg: 'Sending pin message failed');
+        return false;
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Sending pin message failed');

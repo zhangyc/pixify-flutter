@@ -27,15 +27,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to camera when open.</string>
+	<string>Allow Sona to access your camera for taking photos.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
+	<string>Allow Sona to access your location while using the app for recommending people nearby.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>This app needs access to location when open.</string>
+    <string>Allow Sona to access your location at all times for recommending people nearby.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>This app needs access to photo when open.</string>
+    <string>Allow Sona to access your photos for uploading.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app needs access to photo when open.</string>
+	<string>Allow Sona to save photos to your library.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
