@@ -6,18 +6,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
-import 'package:sona/core/match/screens/report.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
 import 'package:sona/generated/assets.dart';
+import 'package:sona/utils/dialog/report.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../utils/dialog/input.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/setting.dart';
+import '../services/match.dart';
 import '../util/event.dart';
 import '../util/http_util.dart';
 import '../widgets/filter_dialog.dart';
@@ -78,9 +80,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     onLike: (){
                       users[index].matched=true;
                       ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
-                        if(resp==null){
-                          return;
-                        }
                         if(resp.isSuccess){
                           SonaAnalytics.log(MatchEvent.match_like.name);
                           if(resp.data['resultType']==2){
@@ -175,15 +174,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 if(result!=null){
                   if (result == 'report' && mounted){
                     SonaAnalytics.log(MatchEvent.match_report.name);
-                    Navigator.push(context, MaterialPageRoute(builder: (c){
-                      return Report(ReportType.user,users[currentPage].id);
-                    }));
-
+                    showReport(context, users[currentPage].id);
                   }else if(result=='block'){
-                    post('/user/update-relation',data:{
-                      "userId":users[currentPage].id, // 对方用户ID
-                      "relationType":5 // 匹配结果：1:忽略，2：喜欢，3：ARROW 5拉黑 6查看
-                    });
+                    final resp = await matchAction(userId: users[currentPage].id, action: MatchAction.block);
+                    if (resp.statusCode == 0) {
+                      Fluttertoast.showToast(msg: 'The user has been blocked');
+                      SonaAnalytics.log('post_block');
+                    }
                   }
                 }
               },)
