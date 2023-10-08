@@ -177,12 +177,16 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
       decoration: BoxDecoration(
         image: DecorationImage(
             image: CachedNetworkImageProvider(
-                widget.user.photos.firstOrNull ?? ''),
+                widget.user.photos.firstOrNull ?? ''
+            ,
+              cacheManager: DefaultCacheManager(),
+            ),
             colorFilter:
                 const ColorFilter.mode(Colors.black54, BlendMode.srcATop),
             fit: BoxFit.cover,
             alignment: Alignment.center,
-            isAntiAlias: true
+            isAntiAlias: true,
+
         ),
       ),
       clipBehavior: Clip.antiAlias,
@@ -207,7 +211,9 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: CachedNetworkImageProvider(url),
+          image: CachedNetworkImageProvider(url,
+            cacheManager: DefaultCacheManager(),
+          ),
           fit: BoxFit.cover,
           alignment: Alignment.center,
           isAntiAlias: true

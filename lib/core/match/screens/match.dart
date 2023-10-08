@@ -20,6 +20,7 @@ import '../providers/setting.dart';
 import '../util/event.dart';
 import '../util/http_util.dart';
 import '../widgets/filter_dialog.dart';
+import '../widgets/match_init_animation.dart';
 // import '../widgets/scroller.dart' as s;
 
 class MatchScreen extends StatefulHookConsumerWidget {
@@ -62,7 +63,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     return Stack(
       children: [
         Positioned.fill(
-          child: users.isEmpty?const Center(child: Text('No more'),):PageView.builder(
+          child: users.isEmpty?Container(child: Center(child: MatchInitAnimation()),color: Colors.black,):PageView.builder(
             itemBuilder: (c,index) {
               return StackPageView(index: index,
                   controller: pageController,
@@ -211,6 +212,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   bool get wantKeepAlive => true;
   int current=1;
   void _initData() async{
+    current=1;
     int? gender=null;
     if(currentFilterGender==FilterGender.male.index){
       gender=1;
@@ -294,7 +296,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   }
 }
-
+enum PageState{
+  loading,
+  noData,
+}
 
 enum FilterGender{
   male,
