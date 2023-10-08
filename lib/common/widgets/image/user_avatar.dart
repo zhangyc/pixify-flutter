@@ -1,19 +1,17 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../account/providers/profile.dart';
-
 class UserAvatar extends ConsumerWidget {
-  UserAvatar({
+  const UserAvatar({
     super.key,
     required this.url,
     this.size = 42,
   });
+
   final String url;
   final double size;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
@@ -21,7 +19,7 @@ class UserAvatar extends ConsumerWidget {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Color(0xFFD9D9D9), width: 0.2)
+        border: Border.all(color: const Color(0xFFD9D9D9), width: 0.2)
       ),
       alignment: Alignment.center,
       clipBehavior: Clip.antiAlias,

@@ -8,11 +8,9 @@ import 'package:sona/core/match/screens/match.dart';
 import 'package:sona/core/match/widgets/avatar_animation.dart';
 import 'package:sona/utils/global/global.dart';
 
-import '../../../account/models/gender.dart';
 import '../../../generated/assets.dart';
 import '../../chat/models/message.dart';
 import '../../chat/services/chat.dart';
-import '../providers/setting.dart';
 import '../util/event.dart';
 
 void showFilter(BuildContext context,VoidCallback onSave) {
@@ -185,16 +183,16 @@ void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo tar
                         callSona(
                             userId: target.id,
                             type: CallSonaType.PROLOGUE);
-                       }, child: Text(sayHi,style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16
-                      ),),
+                       },
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(
                             color: Colors.white,
                             width: 2
                           )
-                        ),
+                        ), child: Text(sayHi,style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16
+                      ),),
                       ),
                     ),
                     sayHi=='Sent √'?Container():TextButton(onPressed: (){

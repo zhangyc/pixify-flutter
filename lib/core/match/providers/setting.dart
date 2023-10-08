@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/utils/timer/debounce.dart';

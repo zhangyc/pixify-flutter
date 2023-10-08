@@ -2,6 +2,7 @@ import 'dart:ui';
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -144,31 +145,31 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           child: Column(
             children: [
               GestureDetector(child: Container(
-                child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
                     ]
                 ),
+                child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),
               ),onTap: (){
                 showFilter(context,(){
                   _initData();
                 });
               },),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GestureDetector(child: Container(
-                child: Image.asset(Assets.iconsMore,width: 24,height: 24,),
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
                     ]
                 ),
+                child: Image.asset(Assets.iconsMore,width: 24,height: 24,),
               ),onTap: () async {
                 var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
                 if(result!=null){
-                  if(result=='report'){
+                  if (result == 'report' && mounted){
                     SonaAnalytics.log(MatchEvent.match_report.name);
                     Navigator.push(context, MaterialPageRoute(builder: (c){
                       return Report(ReportType.user,users[currentPage].id);
@@ -211,7 +212,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   bool get wantKeepAlive => true;
   int current=1;
   void _initData() async{
-    int? gender=null;
+    int? gender;
     if(currentFilterGender==FilterGender.male.index){
       gender=1;
 
@@ -247,12 +248,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
        });
      }
    }catch(e){
-     print(e);
+     if (kDebugMode) print(e);
    }
 
   }
   void _loadMore() async{
-    int? gender=null;
+    int? gender;
     if(currentFilterGender==FilterGender.male.index){
       gender=1;
 
@@ -289,7 +290,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       }
 
     }catch(e){
-      print(e);
+      if (kDebugMode) print(e);
     }
 
   }

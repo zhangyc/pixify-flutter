@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,7 +19,7 @@ import '../../test_pay/_MyApp.dart';
 import '../match/util/event.dart';
 import 'widgets/powers_widget.dart';
 
-Uuid uuid=Uuid();
+Uuid uuid=const Uuid();
 class SubscribePage extends ConsumerStatefulWidget {
   const SubscribePage( {super.key,required this.fromTag,});
   final FromTag fromTag;
@@ -58,7 +59,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         }, onDone: () {
           _subscription.cancel();
         }, onError: (Object error) {
-          print(error);
+          if (kDebugMode) print(error);
         });
     initStoreInfo();
     super.initState();
@@ -151,34 +152,33 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                   _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
                   SonaAnalytics.log(PayEvent.pay_continue.name);
                 },
-                  child: Container(child: Text('Continue'),
-                    decoration: BoxDecoration(
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: Size(346, 50),
+                      padding: EdgeInsets.zero
+                  ),
+                  child: Container(decoration: const BoxDecoration(
                         gradient: LinearGradient(colors: [
                           Color(0xffFF0099),
                           Color(0xffF5326D),
                         ])
                     ),
-                    alignment: Alignment.center,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(346, 50),
-                      padding: EdgeInsets.zero
+                    alignment: Alignment.center,child: const Text('Continue'),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
 
                   child: RichText(text:TextSpan(text: _terms,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xffa9a9a9)
                     ),
                     children: [
                       TextSpan(text: ' Terms',recognizer: TapGestureRecognizer()..onTap=(){
                         Navigator.push(context, MaterialPageRoute(builder: (c){
-                          return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                          return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
                         }));
                        },
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xffEA01FF)
                         )
                       ),

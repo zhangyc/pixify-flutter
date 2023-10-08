@@ -10,6 +10,13 @@ class MatchInitAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(color: Colors.black,
-     child: UnconstrainedBox(child: SizedBox(child: Lottie.asset(Assets.lottieSearch),width: 200,height: 200)));
+      child: UnconstrainedBox(
+         child: SizedBox(
+             width: 200,
+             height: 200,
+             child: Lottie.asset(Assets.lottieSearch)
+         )
+      )
+    );
   }
 }

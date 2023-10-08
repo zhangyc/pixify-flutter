@@ -60,10 +60,17 @@ class _AvatarAnimationState extends State<AvatarAnimation>  with SingleTickerPro
               },),
           ),
         ),
-        Container(child: Text(showName?widget.name??'':'',maxLines: 2,style: TextStyle(
-          color: Colors.white,
-          fontSize: 14
-        ),),width: 115,alignment: Alignment.center,)
+        Container(
+          width: 115,alignment: Alignment.center,
+          child: Text(
+            showName ? widget.name : '',
+            maxLines: 2,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14
+            )
+          )
+        )
       ],
     );
   }

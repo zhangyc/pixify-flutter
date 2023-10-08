@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -10,7 +9,6 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
-import 'package:sona/common/widgets/text/colorful_sona.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
@@ -115,7 +113,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                             if (action.value == null) return;
                           }
                           if (action.field == 'avatar') {
-                            if (_validate) {
+                            if (_validate && mounted) {
                               ref.read(myProfileProvider.notifier).updateField(
                                   name: _name,
                                   birthday: _birthday,

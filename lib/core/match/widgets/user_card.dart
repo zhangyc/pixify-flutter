@@ -116,7 +116,7 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
         children: [
           CachedNetworkImage(imageUrl: widget.user.photos.firstOrNull ?? '',
             placeholder: (_,__){
-              return Container(child: Center(child: MatchInitAnimation()),color: Colors.black,);
+              return Container(color: Colors.black,child: const Center(child: MatchInitAnimation()));
             },
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,

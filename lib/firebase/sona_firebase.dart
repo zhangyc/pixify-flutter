@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sona/utils/local_notification/local_lotification_manager.dart';
 
 import '../utils/providers/app_lifecycle.dart';
@@ -26,16 +27,16 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   //await Firebase.initializeApp();
   //showLocalNotification(message);
-  print("Handling a background message: ${message.toMap()}");
+  if (kDebugMode) print("Handling a background message: ${message.toMap()}");
 }
 ///fcm前台
 void foreground(RemoteMessage message) {
-  print('Got a message whilst in the foreground!');
-  print('Message data: ${message.data}');
+  if (kDebugMode) print('Got a message whilst in the foreground!');
+  if (kDebugMode) print('Message data: ${message.data}');
   //showLocalNotification(message);
 
   if (message.notification != null) {
-    print('Message also contained a notification: ${message.notification}');
+    if (kDebugMode) print('Message also contained a notification: ${message.notification}');
   }
 }
 Future<void> initFireBaseService(FirebaseApp firebase) async {

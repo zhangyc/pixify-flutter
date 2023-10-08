@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -230,7 +229,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 type: CallSonaType.BIO,
                 input: controller.text
               );
-              if (resp.statusCode == 0) {
+              if (resp.statusCode == 0 && mounted) {
                 Navigator.pop(context);
                 final result = await showConfirm(
                   context: context,

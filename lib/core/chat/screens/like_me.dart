@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pinput/pinput.dart';
 import 'package:sona/account/models/age.dart';
 
 import '../../../common/models/user.dart';
@@ -11,7 +10,7 @@ class LikeMeScreen extends StatefulWidget {
   final List<UserInfo> data;
 
   @override
-  _LikeMeScreenState createState() => _LikeMeScreenState();
+  State<StatefulWidget> createState() => _LikeMeScreenState();
 }
 
 class _LikeMeScreenState extends State<LikeMeScreen> {

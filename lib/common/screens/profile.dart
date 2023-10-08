@@ -118,7 +118,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
   void _showActions() async {
     final action = await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
-    if (action == 'report') {
+    if (action == 'report' && mounted) {
       final reason = await showRadioFieldDialog(
         context: context,
         options: {
@@ -132,7 +132,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
           Fluttertoast.showToast(msg: 'the user has been reported');
         }
       }
-    } else if (action == 'block') {
+    } else if (action == 'block' && mounted) {
       await showRadioFieldDialog(context: context, options: {'Block': 'block', 'Unblock': 'unblock'});
       final resp = await matchAction(userId: widget.user.id, action: MatchAction.block);
       if (resp.statusCode == 0) {
@@ -155,7 +155,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
         //       curve: Curves.linearToEaseOut);
         // }
-      }else if(resp.data['resultType']==1){
+      }else if(resp.data['resultType']==1 && mounted){
         showMatched(context, () {
           // if (index < users.length - 1) {
           //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),

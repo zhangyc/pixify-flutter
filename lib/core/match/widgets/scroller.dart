@@ -2,6 +2,7 @@ library tiktoklikescroller;
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 /// A fullscreen vertical scroller like TikTok
@@ -342,9 +343,9 @@ class Controller {
   /// and [animateToPosition] along with their associated data..
   Stream<ControllerFeedback>? attach() {
     feedback = StreamController.broadcast(onListen: () {
-      print("Something is listening to the stream of feedback events");
+      if (kDebugMode) print("Something is listening to the stream of feedback events");
     }, onCancel: () {
-      print("onCancel has been called");
+      if (kDebugMode) print("onCancel has been called");
     });
     return feedback?.stream;
   }
@@ -361,9 +362,9 @@ class Controller {
     if (event.pageNo != null) {
       _page = event.pageNo!;
     }
-    _listeners.forEach((listener) {
+    for (var listener in _listeners) {
       listener.call(event);
-    });
+    }
   }
 
   /// Remove all listeners to ensure there are no memory leaks.
@@ -417,9 +418,9 @@ class ScrollEvent {
     if (other is! ScrollEvent) {
       return false;
     }
-    return this.direction == other.direction &&
-        this.success == other.success &&
-        this.pageNo == other.pageNo;
+    return direction == other.direction &&
+        success == other.success &&
+        pageNo == other.pageNo;
   }
 
   @override
