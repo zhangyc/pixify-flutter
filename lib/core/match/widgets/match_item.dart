@@ -121,7 +121,7 @@ class Arrow extends StatelessWidget {
         child: Center(child: _animationController2.isAnimating?Stack(
           alignment: Alignment.center,
           children: [
-            AnimatedContainer(duration: const Duration(milliseconds: 1500),
+            _animationController2.isCompleted?Container():AnimatedContainer(duration: const Duration(milliseconds: 1500),
               curve: Curves.fastOutSlowIn,
               width: 300,
               height:300,

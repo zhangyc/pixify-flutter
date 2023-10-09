@@ -1,4 +1,4 @@
-const _env = String.fromEnvironment('env', defaultValue: 'prod');
+const _env = String.fromEnvironment('env', defaultValue: 'test');
 const _apiServer = _env == 'prod'
   ? 'https://manager.sona.pinpon.fun/api'
   : 'https://admin-test.sona.pinpon.fun/api';

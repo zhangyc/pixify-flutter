@@ -336,7 +336,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         SonaAnalytics.log('reg_code');
         final token = resp.data['token'];
         ref.read(tokenProvider.notifier).state = token;
-        userToken=token;
+        //userToken=token;
         // 未注册
         if (resp.statusCode == 2) {
           _completeRequiredInfo();

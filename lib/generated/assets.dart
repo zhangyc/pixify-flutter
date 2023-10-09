@@ -2,7 +2,6 @@
 class Assets {
   Assets._();
 
-  static const String assetsKael = 'assets/kael.jpeg';
   static const String iconsArrow = 'assets/icons/arrow.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsLike = 'assets/icons/like.png';
@@ -27,6 +26,7 @@ class Assets {
   static const String imagesLikedMeNew = 'assets/images/liked_me_new.png';
   static const String imagesMatched = 'assets/images/matched.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
+  static const String imagesSuperSonaBg = 'assets/images/super_sona_bg.png';
   static const String lottieAnimation1 = 'assets/lottie/animation1.json';
   static const String lottieArrowAnimation = 'assets/lottie/arrow_animation.json';
   static const String lottieLike = 'assets/lottie/like.json';

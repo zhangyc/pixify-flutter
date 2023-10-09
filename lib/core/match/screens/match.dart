@@ -12,6 +12,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
+import 'package:sona/core/match/widgets/no_data.dart';
+import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/dialog/report.dart';
 import 'package:sona/utils/global/global.dart';
@@ -84,9 +86,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         Positioned.fill(
           child: _state==PageState.loading?
           Container(child: Center(child: MatchInitAnimation()),color: Colors.black,):_state==PageState.noData?
-          Center(child: Text('No data'),):
+          NoDataWidget():
           PageView.builder(
             itemBuilder: (c,index) {
+              if(index==users.length-1){
+                return NoMoreWidget();
+              }
               return StackPageView(index: index,
                   controller: pageController,
                   child: MatchItem(index,
@@ -151,10 +156,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                   }
                 }
               }
-              // print('>>>>>>>>>>>>>>$value');
-              ///滑动结束后调用这个回调，来表示当前是哪个index。此时需要处理上个page上的数据，来表示不喜欢的状态
-
-
             },
           ),
         ),
@@ -303,7 +304,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       if(resp.isSuccess){
         List list= resp.data;
 
-        List users1=list.map((e) => UserInfo.fromJson(e)).toList();
+        List<UserInfo> users1=list.map((e) => UserInfo.fromJson(e)).toList();
+        if(users1.isEmpty){
+          users1.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+        }
         for (var element in users1) {
           if(element.avatar!=null){
             DefaultCacheManager().downloadFile(element.avatar!);

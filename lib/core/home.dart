@@ -9,6 +9,7 @@ import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
 import 'package:sona/core/persona/screens/persona.dart';
+import 'package:sona/core/providers/home_provider.dart';
 import 'package:sona/core/providers/notice.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/location/location.dart';
@@ -42,15 +43,6 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   actions: [
-      //     IconButton(onPressed: (){
-      //       Navigator.push(context, MaterialPageRoute(builder: (context){
-      //         return SubscribePage();
-      //       }));
-      //     }, icon: Icon(Icons.subscriptions))
-      //   ],
-      // ),
       extendBody: true,
       extendBodyBehindAppBar: true,
       body: PageView(
@@ -63,49 +55,65 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
           PersonaScreen(),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Colors.transparent,
-            Colors.black.withOpacity(0.2),
-            Colors.black,
-          ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter
+      bottomNavigationBar: Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          final bottomItem = ref.watch(backgroundColorProvider);
+          return Container(
+            decoration: (bottomItem.index==0||bottomItem.index==2)?BoxDecoration(
+              color: bottomItem.color
+            ):BoxDecoration(
+                gradient: LinearGradient(colors: [
 
-          )
-        ),
-        child: BottomNavigationBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          iconSize: 48,
-          currentIndex: _currentIndex,
-          onTap: _onPageChange,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Color(0xff9f9f9f),
-          items: [
-            BottomNavigationBarItem(
-                icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Color(0xff9f9f9f), activeProvider: bottomChatNoticeProvider),
-                activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.white,),
-                label: 'Chat'
+                  Colors.black.withOpacity(0.2),
+                  bottomItem.color,
+                  ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter
+
+                )
             ),
-            BottomNavigationBarItem(
-                icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Color(0xff9f9f9f),),
-                activeIcon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.white,),
-                label: 'Match'
+            child: BottomNavigationBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              iconSize: 48,
+              currentIndex: _currentIndex,
+              onTap: _onPageChange,
+              selectedItemColor: (bottomItem.index==0||bottomItem.index==2)?Colors.black:  Colors.white,
+              unselectedItemColor: Color(0xff9f9f9f),
+              items: [
+                BottomNavigationBarItem(
+                    icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Color(0xff9f9f9f), activeProvider: bottomChatNoticeProvider),
+                    activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
+                    label: 'Chat'
+                ),
+                BottomNavigationBarItem(
+                    icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Color(0xff9f9f9f),),
+                    activeIcon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.white,),
+                    label: 'Match'
+                ),
+                BottomNavigationBarItem(
+                    icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Color(0xff9f9f9f),),
+                    activeIcon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.black,),
+                    label: 'Profile'
+                )
+              ],
             ),
-            BottomNavigationBarItem(
-                icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Color(0xff9f9f9f),),
-                activeIcon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.white,),
-                label: 'Profile'
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 
   void _onPageChange(int index) {
+    if (index == 0) {
+      ref.read(backgroundColorProvider.notifier).updateColor(BottomColor(Colors.white, 0));
+    } else if (index == 1) {
+      ref.read(backgroundColorProvider.notifier).updateColor(BottomColor(Colors.black, 1));
+      // 更新其他颜色
+    }else if(index == 2){
+      ref.read(backgroundColorProvider.notifier).updateColor(BottomColor(Colors.white, 2));
+
+    }
     if (index != _currentIndex) {
       setState(() {
         _currentIndex = index;

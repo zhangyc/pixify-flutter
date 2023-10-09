@@ -12,21 +12,21 @@ class HttpResult{
   bool get isSuccess =>0==statusCode;
   int statusCode=-1;
   dynamic data;
-  String message='';
+  // String message='';
   HttpResult(Response response){
-    statusCode=int.tryParse(response.data['code'])??-1;
-    data=response.data['data'];
-    message=response.data['msg'];
+    statusCode=response.statusCode??-1;
+    data=response.data;
+    // message=response.data['msg'];
   }
   HttpResult.error(e){
     statusCode=-1;
     data=e;
-    message='framework error';
+    // message='framework error';
   }
 }
 Future<HttpResult> post(String path,{Object? data, Map<String, dynamic>? queryParameters,CancelToken? cancelToken}) async{
   try{
-    Response resp=await _dio.post(path,data: data,queryParameters: queryParameters,cancelToken: cancelToken);
+    Response resp=await dio.post(path,data: data,queryParameters: queryParameters,cancelToken: cancelToken);
     return Future.value(HttpResult(resp));
   } catch(e){
     log(e.toString());
@@ -35,38 +35,39 @@ Future<HttpResult> post(String path,{Object? data, Map<String, dynamic>? queryPa
   }
 }///start
 
-final options = BaseOptions(
-    connectTimeout: const Duration(milliseconds: 15000),
-    receiveTimeout: const Duration(milliseconds: 15000),
-    sendTimeout: const Duration(milliseconds: 15000),
-    baseUrl: env.apiServer,
-    headers: {
-      'device': Platform.operatingSystem,
-      'version': 'v1.0.0',
-      'token': userToken
-    }
-);
+// final options = BaseOptions(
+//     connectTimeout: const Duration(milliseconds: 15000),
+//     receiveTimeout: const Duration(milliseconds: 15000),
+//     sendTimeout: const Duration(milliseconds: 15000),
+//     baseUrl: env.apiServer,
+//     headers: {
+//       'device': Platform.operatingSystem,
+//       'version': 'v1.0.0',
+//       'token': userToken
+//     }
+// );
 
-String get userToken => appCommonBox.get('token',defaultValue: '');
-set userToken(String token){
-  appCommonBox.put('token', token);
-}
-
-Dio _dio=Dio(options)..interceptors.addAll([
-  LogInterceptor(
-    requestBody: true,
-    responseBody: true,
-    logPrint: (e)=> kDebugMode?log(e.toString()):{},
-  ),
-  InterceptorsWrapper(
-    // onResponse: (Response response, ResponseInterceptorHandler handler){
-    //   if (response.statusCode == 200) {
-    //     if (response.data['code'] == '10040') {
-    //       token = null;
-    //     } else if(response.data['code'] == '10030') {
-    //       token = null;
-    //     }
-    //   }
-    // }
-  )
-]);
+// String get userToken => appCommonBox.get('token',defaultValue: '');
+// set userToken(String token){
+//   appCommonBox.put('token', token);
+// }
+//
+// Dio _dio=Dio(options)..interceptors.addAll([
+//   LogInterceptor(
+//     requestBody: true,
+//     responseBody: true,
+//     logPrint: (e)=> kDebugMode?log(e.toString()):{},
+//   ),
+//   InterceptorsWrapper(
+//     onResponse: (Response response, ResponseInterceptorHandler handler){
+//       if (response.statusCode == 200) {
+//         if (response.data['code'] == '10040') {
+//           token = null;
+//         } else if(response.data['code'] == '10030') {
+//           token = null;
+//         }
+//       }
+//       return handler.next(response);
+//     }
+//   )
+// ]);

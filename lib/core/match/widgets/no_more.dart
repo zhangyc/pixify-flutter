@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+
+import '../../../generated/assets.dart';
+
+class NoMoreWidget extends StatelessWidget {
+  const NoMoreWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(color: Colors.black,child: Column(
+      children: [
+        SizedBox(height: 128,),
+        ClipOval(
+          child: Image.asset(Assets.imagesSuperSonaBg,width: 239,height: 239,fit: BoxFit.cover,),
+        ),
+        SizedBox(height: 10,),
+        const Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: 55
+          ),
+          child: Text('Your recommendation is on cooldown It will be available again tomorrow',
+            style: TextStyle(
+                color: Colors.white
+            ),
+          ),
+        )
+      ],
+    ),);
+  }
+}
