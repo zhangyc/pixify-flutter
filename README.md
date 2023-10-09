@@ -2,15 +2,18 @@
 
 A new Flutter project.
 
-## Getting Started
+## Build
 
-This project is a starting point for a Flutter application.
+## Test
+### APK
+flutter build apk --split-per-abi --dart-define=ENV=prod
+flutter build apk --split-per-abi --dart-define=ENV=test
+### IPA
+flutter build ip --release --export-method=ad-hoc --dart-define=ENV=prod
+flutter build ip --release --export-method=ad-hoc --dart-define=ENV=test
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Release
+### AAR
+flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/bundle/release/ --dart-define=ENV=prod
+### IPA
+flutter build ipa --release --dart-define=ENV=prod
