@@ -15,6 +15,7 @@ import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/location/location.dart';
 
 import 'match/screens/match.dart';
+import 'match/widgets/filter_dialog.dart';
 
 class SonaHome extends StatefulHookConsumerWidget {
   const SonaHome({super.key});
@@ -37,6 +38,8 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
 
   void _determinePosition() async {
     final position = await determinePosition();
+    longitude=position.longitude;
+    latitude=position.latitude;
     ref.read(myProfileProvider.notifier).updateField(position: position);
   }
 

@@ -41,14 +41,13 @@ class MatchScreen extends StatefulHookConsumerWidget {
 class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin {
   ScrollDirection? direction;
-  void _determinePosition() async {
-    final position = await determinePosition();
-  }
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       determinePosition().then((value){
         if(value!=null){
+          longitude=value.longitude;
+          latitude=value.latitude;
           ref.read(myProfileProvider.notifier).updateField(position: value);
           _initData();
         }
@@ -124,7 +123,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           }));
                         }
                       });
-
                     },
 
                   ));
