@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/screens/profile.dart';
@@ -14,6 +15,7 @@ import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/toast/cooldown.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/dialog/subsciption.dart';
@@ -203,8 +205,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       ..pending = pending;
     ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
     pending.then((resp) {
-      if (resp.statusCode == 10015) {
-        showSubscription(FromTag.pay_chat_sonamsg);
+      if (resp.statusCode == 10150) {
+        if (ref.read(myProfileProvider)!.isMember) {
+          coolDown();
+        } else {
+          showSubscription(FromTag.pay_chat_sonamsg);
+        }
       } else if (resp.statusCode == 0) {
         _onPendingMessageSucceed(message);
       }
@@ -244,8 +250,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       type: CallSonaType.PROLOGUE
     );
     SonaAnalytics.log('chat_starter');
-    if (resp.statusCode == 10015) {
-      showSubscription(FromTag.chat_starter);
+    if (resp.statusCode == 10150) {
+      if (ref.read(myProfileProvider)!.isMember) {
+        coolDown();
+      } else {
+        showSubscription(FromTag.chat_starter);
+      }
     }
   }
 
@@ -258,8 +268,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       userId: widget.otherSide.id,
       type: CallSonaType.HOOK
     );
-    if (resp.statusCode == 10015) {
-      showSubscription(FromTag.pay_chat_hook);
+    if (resp.statusCode == 10150) {
+      if (ref.read(myProfileProvider)!.isMember) {
+        coolDown();
+      } else {
+        showSubscription(FromTag.pay_chat_hook);
+      }
     }
     SonaAnalytics.log('chat_hook');
   }
@@ -269,10 +283,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       userId: widget.otherSide.id,
       type: CallSonaType.SUGGEST_V2
     );
-    if (resp.statusCode == 10015) {
-      showSubscription(FromTag.pay_chat_suggest);
+    if (resp.statusCode == 10150) {
+      if (ref.read(myProfileProvider)!.isMember) {
+        coolDown();
+      } else {
+        showSubscription(FromTag.pay_chat_suggest);
+      }
+      return;
     }
     final options = resp.data['optionV2'] as List;
+    if (options.isEmpty) return;
 
     if (!mounted) return;
 
