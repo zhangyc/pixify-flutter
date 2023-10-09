@@ -33,8 +33,8 @@ class LoginScreen extends StatefulHookConsumerWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final PageController _controller = PageController();
   final _phoneController = TextEditingController();
-  var _countryCode;
-  var _phoneNumber;
+  String? _countryCode;
+  String? _phoneNumber;
   final _pinController = TextEditingController();
   final _phoneFocusNode = FocusNode();
   final _pinFocusNode = FocusNode();
@@ -108,6 +108,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               borderSide: BorderSide(),
                             ),
                           ),
+                          initialCountryCode: _countryCode,
                           onChanged: (PhoneNumber? pn) {
                             _countryCode = pn?.countryCode.replaceAll('+', '');
                             _phoneNumber = pn?.number;
@@ -293,7 +294,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<bool> _sendPin() async {
     try {
-      final resp = await sendPin(countryCode: _countryCode, phoneNumber: _phoneNumber);
+      final resp = await sendPin(countryCode: _countryCode!, phoneNumber: _phoneNumber!);
       if (resp.statusCode == 0) {
         return true;
       } else if (resp.statusCode == 10070) {
@@ -327,8 +328,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     //   // 用户所在时区 可为空
     // });
       final resp = await login(
-          countryCode: _countryCode,
-          phoneNumber: _phoneNumber,
+          countryCode: _countryCode!,
+          phoneNumber: _phoneNumber!,
           pinCode: _pinController.text
       );
 
