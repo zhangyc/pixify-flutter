@@ -441,7 +441,7 @@ Future<DateTime?> showBirthdayPicker({
     context: context,
     barrierDismissible: dismissible,
     builder: (BuildContext context) => Container(
-      height: 208,
+      height: 308,
       padding: const EdgeInsets.only(top: 6.0),
       margin: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -463,7 +463,7 @@ Future<DateTime?> showBirthdayPicker({
           ),
           SizedBox(height: 24),
           SizedBox(
-            height: 108,
+            height: 188,
             child: CupertinoDatePicker(
                 initialDateTime: initialDate,
                 mode: CupertinoDatePickerMode.date,
@@ -473,6 +473,7 @@ Future<DateTime?> showBirthdayPicker({
                 },
                 itemExtent: 40),
           ),
+          SizedBox(height: 20),
           ColoredButton(
               text: 'Confirm',
               onTap: () {
