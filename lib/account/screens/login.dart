@@ -32,9 +32,8 @@ class LoginScreen extends StatefulHookConsumerWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final PageController _controller = PageController();
-  final _phoneController = TextEditingController();
-  var _countryCode;
-  var _phoneNumber;
+  // final _phoneController = TextEditingController();
+  PhoneNumber? _pn;
   final _pinController = TextEditingController();
   final _phoneFocusNode = FocusNode();
   final _pinFocusNode = FocusNode();
@@ -101,16 +100,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Form(
                         key: _phoneKey,
                         child: IntlPhoneField(
-                          controller: _phoneController,
+                          // controller: _phoneController,
                           focusNode: _phoneFocusNode,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderSide: BorderSide(),
                             ),
                           ),
+                          initialValue: _pn?.completeNumber,
                           onChanged: (PhoneNumber? pn) {
-                            _countryCode = pn?.countryCode.replaceAll('+', '');
-                            _phoneNumber = pn?.number;
+                            _pn = pn;
                           },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
@@ -184,7 +183,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'we sent to +$_countryCode $_phoneNumber',
+                              text: 'we sent to ${_pn?.countryCode} ${_pn?.number}',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                             WidgetSpan(child: SizedBox(width: 8)),
@@ -269,7 +268,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future _verifyNumber() async{
     final completer = Completer();
     authService.verifyPhoneNumber(
-      phoneNumber: '+${_countryCode} ${_phoneNumber}',
+      phoneNumber: '${_pn!.countryCode} ${_pn!.number}',
       timeout: Duration(seconds: 60),
       verificationCompleted: (PhoneAuthCredential credential) async{
         if(Platform.isAndroid){
@@ -293,7 +292,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<bool> _sendPin() async {
     try {
-      final resp = await sendPin(countryCode: _countryCode, phoneNumber: _phoneNumber);
+      final resp = await sendPin(countryCode: _pn!.countryCode.substring(1), phoneNumber: _pn!.number);
       if (resp.statusCode == 0) {
         return true;
       } else if (resp.statusCode == 10070) {
@@ -327,8 +326,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     //   // 用户所在时区 可为空
     // });
       final resp = await login(
-          countryCode: _countryCode,
-          phoneNumber: _phoneNumber,
+          countryCode: _pn!.countryCode.substring(1),
+          phoneNumber: _pn!.number,
           pinCode: _pinController.text
       );
 
