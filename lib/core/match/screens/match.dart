@@ -8,7 +8,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
@@ -83,79 +82,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     return Stack(
       children: [
         Positioned.fill(
-          child: _state==PageState.loading?
-          Container(child: Center(child: MatchInitAnimation()),color: Colors.black,):_state==PageState.noData?
-          NoDataWidget():
-          PageView.builder(
-            itemBuilder: (c,index) {
-              if(index==users.length-1){
-                return NoMoreWidget();
-              }
-              return StackPageView(index: index,
-                  controller: pageController,
-                  child: MatchItem(index,
-                    length: users.length,
-                    userInfo: users[index],
-                    controller: pageController,
-                    onLike: (){
-                      users[index].matched=true;
-                      ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
-                        if(resp.isSuccess){
-                          SonaAnalytics.log(MatchEvent.match_like.name);
-                          if(resp.data['resultType']==2){
-
-                            if (index < users.length - 1) {
-                              pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-                                  curve: Curves.linearToEaseOut);
-                            }
-                          }else if(resp.data['resultType']==1){
-                            showMatched(context, () {
-                              if (index < users.length - 1) {
-                                pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-                                    curve: Curves.linearToEaseOut);
-                              }
-                            },target: users[index]);
-                          }
-                        }else if(resp.statusCode==10150){
-                          SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                          Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                            return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
-                          }));
-                        }
-                      });
-                    },
-
-                  ));
-            },
-            itemCount: users.length,
-            scrollDirection: Axis.vertical,
-            controller: pageController,
-            onPageChanged: (value){
-              currentPage=value;
-              if(value%5==0){
-                current++;
-                _loadMore();
-              }
-              if(direction!=null){
-                if(ScrollDirection.forward==direction){
-                  SonaAnalytics.log(MatchEvent.match_swipe_down.name);
-
-                }else if(ScrollDirection.reverse==direction){
-                  if(value==0){
-                    return;
-                  }
-                  SonaAnalytics.log(MatchEvent.match_swipe_up.name);
-                  if(users[value-1].arrowed||users[value-1].matched){
-                    return;
-                  }else {
-                    users[value-1].skipped=true;
-                    ref.read(asyncMatchRecommendedProvider.notifier)
-                        .skip(users[value-1].id);
-                  }
-                }
-              }
-            },
-          ),
+          child: _buildMatch()
         ),
         Positioned(
           right: 20,
@@ -315,19 +242,110 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         setState(() {
 
         });
+      }else {
+        _state=PageState.fail;
+        setState(() {
+
+        });
       }
 
     }catch(e){
       if (kDebugMode) print(e);
+      _state=PageState.fail;
+      setState(() {
+
+      });
     }
 
   }
   late PageState _state= PageState.loading;
+
+  _buildMatch() {
+    if(_state==PageState.loading){
+     return  Container(child: Center(child: MatchInitAnimation()),color: Colors.black,);
+    }else if(_state==PageState.fail){
+      return NoDataWidget();
+    }else if(_state==PageState.success){
+      return PageView.builder(
+        itemBuilder: (c,index) {
+          if(index==users.length-1){
+            return NoMoreWidget();
+          }
+          return StackPageView(index: index,
+              controller: pageController,
+              child: MatchItem(index,
+                length: users.length,
+                userInfo: users[index],
+                controller: pageController,
+                onLike: (){
+                  users[index].matched=true;
+                  ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
+                    if(resp.isSuccess){
+                      SonaAnalytics.log(MatchEvent.match_like.name);
+                      if(resp.data['resultType']==2){
+
+                        if (index < users.length - 1) {
+                          pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+                              curve: Curves.linearToEaseOut);
+                        }
+                      }else if(resp.data['resultType']==1){
+                        showMatched(context, () {
+                          if (index < users.length - 1) {
+                            pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+                                curve: Curves.linearToEaseOut);
+                          }
+                        },target: users[index]);
+                      }
+                    }else if(resp.statusCode==10150){
+                      SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                      Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                        return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                      }));
+                    }
+                  });
+                },
+
+              ));
+        },
+        itemCount: users.length,
+        scrollDirection: Axis.vertical,
+        controller: pageController,
+        onPageChanged: (value){
+          currentPage=value;
+          if(value%5==0){
+            current++;
+            _loadMore();
+          }
+          if(direction!=null){
+            if(ScrollDirection.forward==direction){
+              SonaAnalytics.log(MatchEvent.match_swipe_down.name);
+
+            }else if(ScrollDirection.reverse==direction){
+              if(value==0){
+                return;
+              }
+              SonaAnalytics.log(MatchEvent.match_swipe_up.name);
+              if(users[value-1].arrowed||users[value-1].matched){
+                return;
+              }else {
+                users[value-1].skipped=true;
+                ref.read(asyncMatchRecommendedProvider.notifier)
+                    .skip(users[value-1].id);
+              }
+            }
+          }
+        },
+      );
+    }else if(_state==PageState.noData){
+      return NoMoreWidget();
+    }
+  }
 }
 enum PageState{
   loading,
   noData,
-  success
+  success,
+  fail
 }
 
 enum FilterGender{

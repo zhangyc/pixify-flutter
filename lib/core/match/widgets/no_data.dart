@@ -17,7 +17,7 @@ class NoDataWidget extends StatelessWidget {
         ),
         SizedBox(height: 10,),
         ClipOval(
-          child: Image.asset(Assets.imagesSuperSonaBg,width: 239,height: 239,fit: BoxFit.cover,),
+          child: Image.asset(Assets.imagesError,width: 151,height: 148,fit: BoxFit.cover,),
         ),
         SizedBox(height: 10,),
         const Padding(
