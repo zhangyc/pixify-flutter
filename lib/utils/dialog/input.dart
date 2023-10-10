@@ -374,8 +374,9 @@ Future<T?> showRadioFieldDialog<T>({
     context: context,
     backgroundColor: Colors.white,
     isScrollControlled: true,
+    elevation: 0,
     shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
+      borderRadius: BorderRadius.only(
       topLeft: Radius.circular(16),
       topRight: Radius.circular(16),
     )),

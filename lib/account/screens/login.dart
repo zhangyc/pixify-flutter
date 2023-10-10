@@ -32,7 +32,7 @@ class LoginScreen extends StatefulHookConsumerWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final PageController _controller = PageController();
-  // final _phoneController = TextEditingController();
+  final _phoneController = TextEditingController();
   PhoneNumber? _pn;
   final _pinController = TextEditingController();
   final _phoneFocusNode = FocusNode();
@@ -100,7 +100,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       Form(
                         key: _phoneKey,
                         child: IntlPhoneField(
-                          // controller: _phoneController,
+                          controller: _phoneController,
                           focusNode: _phoneFocusNode,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
@@ -114,37 +114,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                       ),
-                      SizedBox(height: 20),
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Sign up agrees to\n'
-                            ),
-                            TextSpan(
-                              text: 'Terms of Service',
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
-                                  return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
-                                }))
-                            ),
-                            TextSpan(
-                                text: ' and '
-                            ),
-                            TextSpan(
-                              text: 'Privacy Policy',
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
-                                  return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
-                                }))
-                            ),
-                          ]
-                        ),
-                        style: Theme.of(context).textTheme.bodySmall,
-                        textAlign: TextAlign.center,
-                      )
                     ],
                   ),
                 ),
@@ -152,13 +121,54 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   left: 16,
                   right: 16,
                   bottom: 16,
-                  child: ColoredButton(
-                    size: ColoredButtonSize.large,
-                    color: Theme.of(context).colorScheme.tertiary,
-                    fontColor: Colors.white.withAlpha(200),
-                    text: 'Continue',
-                    onTap: _next,
-                    loadingWhenAsyncAction: true,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Text.rich(
+                          TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: 'By tapping “Continue”, you agree to our '
+                                ),
+                                TextSpan(
+                                    text: 'Privacy Policy',
+                                    style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
+                                        return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
+                                      }))
+                                ),
+                                TextSpan(
+                                    text: ' and '
+                                ),
+                                TextSpan(
+                                    text: 'Terms of Service',
+                                    style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
+                                        return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                                      }))
+                                ),
+                              ]
+                          ),
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.black54
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      ColoredButton(
+                        size: ColoredButtonSize.large,
+                        color: Theme.of(context).colorScheme.tertiary,
+                        fontColor: Colors.white.withAlpha(200),
+                        text: 'Continue',
+                        onTap: _next,
+                        loadingWhenAsyncAction: true,
+                      ),
+                    ],
                   ),
                 )
               ],
