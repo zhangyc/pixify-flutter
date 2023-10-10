@@ -17,33 +17,22 @@ Future<Set<String>?> showInterestPicker({
   return showModalBottomSheet<Set<String>>(
     context: context,
     isScrollControlled: true,
-    useSafeArea: true,
+    backgroundColor: Colors.black54,
     builder: (context) {
       Set<String>? _selected;
 
       return ProviderScope(
         parent: ProviderScope.containerOf(context),
         child: Container(
+          margin: EdgeInsets.only(
+            top: MediaQuery.of(context).viewPadding.top,
+            bottom: MediaQuery.of(context).viewPadding.bottom
+          ),
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(height: 10),
-                Container(
-                  width: 30,
-                  height: 3,
-                  color: Color(0xFF888888),
-                ),
-                SizedBox(height: 25),
-                Visibility(
-                  visible: title != null && title.isNotEmpty,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                    child: Text(title ?? '',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18)),
-                  ),
-                ),
+                SizedBox(height: 30),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Consumer(
@@ -86,25 +75,28 @@ Future<Set<String>?> showInterestPicker({
                   ),
                 ),
                 SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: ColoredButton(
-                          color: Colors.white,
-                          text: 'Cancel',
-                          onTap: () => Navigator.pop(context)),
-                    ),
-                    SizedBox(width: 5),
-                    Expanded(
-                      flex: 1,
-                      child: ColoredButton(
-                          text: 'Confirm',
-                          onTap: () => Navigator.pop(context, _selected)
+                Container(
+                  color: Colors.transparent,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: ColoredButton(
+                            color: Colors.white,
+                            text: 'Cancel',
+                            onTap: () => Navigator.pop(context)),
                       ),
-                    )
-                  ],
+                      SizedBox(width: 5),
+                      Expanded(
+                        flex: 1,
+                        child: ColoredButton(
+                            text: 'Confirm',
+                            onTap: () => Navigator.pop(context, _selected)
+                        ),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
