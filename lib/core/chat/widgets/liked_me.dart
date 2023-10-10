@@ -119,7 +119,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                                         visible: !ref.watch(myProfileProvider)!.isMember,
                                         child:  ClipOval(
                                           child: BackdropFilter(
-                                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                                            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                                             child: Container(
                                               color: Colors.white.withOpacity(0.5),
                                             ),

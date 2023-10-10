@@ -198,9 +198,18 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
        setState(() {
 
        });
+     }else {
+       _state=PageState.fail;
+       setState(() {
+
+       });
      }
    }catch(e){
      if (kDebugMode) print(e);
+     _state=PageState.fail;
+     setState(() {
+
+     });
    }
 
   }
@@ -268,7 +277,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }else if(_state==PageState.success){
       return PageView.builder(
         itemBuilder: (c,index) {
-          if(index==users.length-1){
+          if(index!=0&&index==users.length-1){
             return NoMoreWidget();
           }
           return StackPageView(index: index,
