@@ -97,5 +97,11 @@ final themeData = ThemeData(
       textStyle: MaterialStatePropertyAll(TextStyle(color: fontColour)),
       alignment: Alignment.center
     )
+  ),
+  bottomSheetTheme: BottomSheetThemeData(
+    elevation: 0
+  ),
+  dialogTheme: DialogTheme(
+    elevation: 0
   )
 );

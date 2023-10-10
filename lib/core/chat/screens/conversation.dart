@@ -66,11 +66,14 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(left: 16, bottom: 20),
-              child: Text('Messages', style: Theme.of(context).textTheme.titleMedium),
+              child: Visibility(
+                visible: ref.watch(conversationStreamProvider).hasValue && ref.watch(conversationStreamProvider).value!.isNotEmpty,
+                child: Text('Messages', style: Theme.of(context).textTheme.titleMedium),
+              ),
             ),
           ),
           ref.watch(conversationStreamProvider).when(
-            data: (conversations) => SliverList.separated(
+            data: (conversations) => conversations.isEmpty ? _noChats() : SliverList.separated(
               itemBuilder: (BuildContext context, int index) {
                 final conversation = conversations[index];
                 return ConversationItemWidget(
@@ -119,6 +122,26 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     return callSona(
         userId: userId,
         type: CallSonaType.HOOK
+    );
+  }
+
+  Widget _noChats() {
+    return SliverToBoxAdapter(
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 40),
+            Image.asset('assets/images/no_chat.png', width: 135),
+            const SizedBox(height: 20),
+            Text(
+              'No chats yet\nMatch with someone to start talking',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall,
+            )
+          ],
+        ),
+      ),
     );
   }
 
