@@ -18,7 +18,7 @@ class NoMoreWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               horizontal: 55
           ),
-          child: Text('Your recommendation is on cooldown It will be available again tomorrow',
+          child: Text('Your recommendation is on cooldown \n It will be available again tomorrow',
             style: TextStyle(
                 color: Colors.white
             ),

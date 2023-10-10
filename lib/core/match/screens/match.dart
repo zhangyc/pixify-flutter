@@ -103,6 +103,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 showFilter(context,(){
                   //_initData();
                   current=1;
+                  _state=PageState.loading;
                   _loadMore();
                 });
               },),
