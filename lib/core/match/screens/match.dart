@@ -21,6 +21,7 @@ import 'package:stacked_page_view/stacked_page_view.dart';
 import '../../../account/providers/profile.dart';
 import '../../../utils/dialog/input.dart';
 import '../../../utils/location/location.dart';
+import '../../providers/home_provider.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/setting.dart';
 import '../services/match.dart';
@@ -48,7 +49,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           longitude=value.longitude;
           latitude=value.latitude;
           ref.read(myProfileProvider.notifier).updateField(position: value);
-          _initData();
+          current=1;
+          _loadMore();
         }
       }).catchError((e){
         Fluttertoast.showToast(msg: 'Failed to obtain permission.');
@@ -79,12 +81,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    int iconIndex= ref.watch(matchIconProvider);
     return Stack(
       children: [
         Positioned.fill(
           child: _buildMatch()
         ),
-        Positioned(
+        iconIndex==1?Container():Positioned(
           right: 20,
           top: 73,
           child: Column(
@@ -98,7 +101,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),
               ),onTap: (){
                 showFilter(context,(){
-                  _initData();
+                  //_initData();
+                  current=1;
+                  _loadMore();
                 });
               },),
               const SizedBox(
@@ -160,67 +165,67 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   bool get wantKeepAlive => true;
   int current=1;
-  Future<void> _initData() async{
-    int? gender;
-    current=1;
-    if(currentFilterGender==FilterGender.male.index){
-      gender=1;
-    }else if(currentFilterGender==FilterGender.female.index){
-      gender=2;
-    }else if(currentFilterGender==FilterGender.all.index){
-      gender=null;
-    }
-   try{
-     final resp=await post('/user/match-v2',data: {
-       'gender': gender,
-       'minAge': currentFilterMinAge,
-       'maxAge': currentFilterMaxAge,
-       'longitude': longitude,
-       'latitude': latitude,
-       "page":current,    // 页码
-       "pageSize":10 // 每页数量
-     });
-     if(resp.isSuccess){
-
-       List list= resp.data;
-       if(list.isEmpty){
-         _state=PageState.noData;
-       }else {
-         _state=PageState.success;
-       }
-       users=list.map((e) => UserInfo.fromJson(e)).toList();
-       for (var element in users) {
-         if(element.avatar!=null){
-           DefaultCacheManager().downloadFile(element.avatar!);
-         }
-       }
-       setState(() {
-
-       });
-     }else {
-       _state=PageState.fail;
-       setState(() {
-
-       });
-     }
-   }catch(e){
-     if (kDebugMode) print(e);
-     _state=PageState.fail;
-     setState(() {
-
-     });
-   }
-
-  }
+  // Future<void> _initData() async{
+  //   int? gender;
+  //   current=1;
+  //   if(currentFilterGender==FilterGender.Male.index){
+  //     gender=1;
+  //   }else if(currentFilterGender==FilterGender.Female.index){
+  //     gender=2;
+  //   }else if(currentFilterGender==FilterGender.All.index){
+  //     gender=null;
+  //   }
+  //  try{
+  //    final resp=await post('/user/match-v2',data: {
+  //      'gender': gender,
+  //      'minAge': currentFilterMinAge,
+  //      'maxAge': currentFilterMaxAge,
+  //      'longitude': longitude,
+  //      'latitude': latitude,
+  //      "page":current,    // 页码
+  //      "pageSize":10 // 每页数量
+  //    });
+  //    if(resp.isSuccess){
+  //
+  //      List list= resp.data;
+  //      if(list.isEmpty){
+  //        _state=PageState.noData;
+  //      }else {
+  //        _state=PageState.success;
+  //      }
+  //      users=list.map((e) => UserInfo.fromJson(e)).toList();
+  //      for (var element in users) {
+  //        if(element.avatar!=null){
+  //          DefaultCacheManager().downloadFile(element.avatar!);
+  //        }
+  //      }
+  //      setState(() {
+  //
+  //      });
+  //    }else {
+  //      _state=PageState.fail;
+  //      setState(() {
+  //
+  //      });
+  //    }
+  //  }catch(e){
+  //    if (kDebugMode) print(e);
+  //    _state=PageState.fail;
+  //    setState(() {
+  //
+  //    });
+  //  }
+  //
+  // }
   void _loadMore() async{
     int? gender;
-    if(currentFilterGender==FilterGender.male.index){
+    if(currentFilterGender==FilterGender.Male.index){
       gender=1;
 
-    }else if(currentFilterGender==FilterGender.female.index){
+    }else if(currentFilterGender==FilterGender.Female.index){
       gender=2;
 
-    }else if(currentFilterGender==FilterGender.all.index){
+    }else if(currentFilterGender==FilterGender.All.index){
       gender=null;
     }
     try{
@@ -235,17 +240,26 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       });
       if(resp.isSuccess){
         List list= resp.data;
+        if(list.isEmpty){
+          _state=PageState.noData;
+        }else {
+          _state=PageState.success;
+        }
 
         List<UserInfo> users1=list.map((e) => UserInfo.fromJson(e)).toList();
-        if(users1.isEmpty&&users.every((element) => element.id!=-1)){
-          users1.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
-        }
+        users.addAll(users1);
         for (var element in users1) {
           if(element.avatar!=null){
             DefaultCacheManager().downloadFile(element.avatar!);
           }
         }
-        users=[...users,...users1];
+        // users=[...users1,...[UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null)]];
+        if(users.every((element) => element.id!=-1)){
+          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+        }else {
+          users.removeWhere((element) => element.id==-1);
+          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+        }
         setState(() {
 
         });
@@ -275,12 +289,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }else if(_state==PageState.success){
       return PageView.builder(
         itemBuilder: (c,index) {
-          if(index!=0&&index==users.length-1){
-            return NoMoreWidget();
-          }
+
           return StackPageView(index: index,
               controller: pageController,
-              child: MatchItem(index,
+          //     if(index!=0&&index==users.length-1){
+          //   return NoMoreWidget();
+          // }
+              child: (index!=0&&index==users.length-1)?NoMoreWidget(): MatchItem(index,
                 length: users.length,
                 userInfo: users[index],
                 controller: pageController,
@@ -319,7 +334,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         controller: pageController,
         onPageChanged: (value){
           currentPage=value;
-          if(value%5==0){
+          if(value!=0&&value%5==0&&ScrollDirection.reverse==direction){
             current++;
             _loadMore();
           }
@@ -344,7 +359,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         },
       );
     }else if(_state==PageState.noData){
-      return NoMoreWidget();
+      return const NoMoreWidget();
     }
   }
 }
@@ -356,7 +371,7 @@ enum PageState{
 }
 
 enum FilterGender{
-  male,
-  female,
-  all
+  Male,
+  Female,
+  All
 }

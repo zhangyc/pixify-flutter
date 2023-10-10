@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/providers/home_provider.dart';
 
 import '../../../common/models/user.dart';
 import 'match_init_animation.dart';
@@ -70,6 +71,9 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
               }
             },
             itemCount: itemCount,
+            onPageChanged: (value){
+              ref.read(matchIconProvider.notifier).updateIndex(value);
+            },
           ),
         ),
         Positioned(
@@ -85,8 +89,13 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
                   (index) => Flexible(
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 2),
-                      height: 3,
-                      color: index == _page.round() ? Colors.white54 : Colors.black26
+                      height: 8,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: index == _page.round() ? Colors.white54 : Colors.black26
+
+                      ),
+                      width: index == _page.round() ?32:12,
                     )
                   )
                 ),
@@ -114,14 +123,19 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
       alignment: Alignment.bottomCenter,
       child: Stack(
         children: [
-          CachedNetworkImage(imageUrl: widget.user.photos.firstOrNull ?? '',
-            placeholder: (_,__){
-              return Container(color: Colors.black,child: const Center(child: MatchInitAnimation()));
+          GestureDetector(
+            child: CachedNetworkImage(imageUrl: widget.user.photos.firstOrNull ?? '',
+              placeholder: (_,__){
+                return Container(color: Colors.black,child: const Center(child: MatchInitAnimation()));
+              },
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              fit: BoxFit.cover,
+              cacheManager: DefaultCacheManager(),
+            ),
+            onTap: (){
+              _pageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.bounceIn);
             },
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            fit: BoxFit.cover,
-            cacheManager: DefaultCacheManager(),
           ),
           Positioned(
             left: 20,
@@ -131,6 +145,19 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                widget.user.impression==null?Container():Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xffE880F1),
+                    borderRadius: BorderRadius.circular(8)
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16
+                  ),
+                  child: Text(widget.user.impression??"",maxLines: 1,style: const TextStyle(
+                    color: Colors.white
+                  ),),
+                ),
                 Text(
                     '${widget.user.name}',
                     maxLines: 2,
@@ -167,56 +194,103 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
   }
 
   Widget _userBio() {
-    return Container(
-      padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top + 40,
-          left: 20,
-          right: 20,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 160
-      ),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: CachedNetworkImageProvider(
-                widget.user.photos.firstOrNull ?? ''
-            ,
-              cacheManager: DefaultCacheManager(),
-            ),
-            colorFilter:
-                const ColorFilter.mode(Colors.black54, BlendMode.srcATop),
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-            isAntiAlias: true,
-
+    return GestureDetector(
+      onTap: (){
+        _pageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.bounceIn);
+      },
+      child: Container(
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 40,
+            left: 20,
+            right: 20,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 160
         ),
-      ),
-      clipBehavior: Clip.antiAlias,
-      alignment: Alignment.topLeft,
-      child: Text(widget.user.bio ?? '',
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-              shadows: const <Shadow>[
-                Shadow(
-                  blurRadius: 5.0,
-                  color: Color.fromARGB(20, 0, 0, 0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: CachedNetworkImageProvider(
+                  widget.user.photos.firstOrNull ?? '',
+                cacheManager: DefaultCacheManager(),
+              ),
+              colorFilter: const ColorFilter.mode(Colors.black54, BlendMode.srcATop),
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+              isAntiAlias: true,
+
+          ),
+        ),
+        clipBehavior: Clip.antiAlias,
+        alignment: Alignment.topLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Wrap(
+              spacing: 4,
+              runSpacing: 4,
+              children: widget.user.interest.map((e) => Container(
+                decoration: BoxDecoration(
+                  color: Color(0xffFBC8FF),
+                  borderRadius: BorderRadius.circular(100)
                 ),
-              ]
-          )
-      )
+                child: Text('${e.name}',style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14
+                ),),
+                padding: EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 16
+                ),
+              )).toList(),
+            ),
+            SizedBox(
+              height: 42,
+            ),
+            Text('Bio',style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                shadows: const <Shadow>[
+                  Shadow(
+                    blurRadius: 5.0,
+                    color: Color.fromARGB(20, 0, 0, 0),
+                  ),
+                ]
+            )),
+            SizedBox(
+              height: 14,
+            ),
+            Text(widget.user.bio ?? '',
+                textAlign: TextAlign.start,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    shadows: const <Shadow>[
+                      Shadow(
+                        blurRadius: 5.0,
+                        color: Color.fromARGB(20, 0, 0, 0),
+                      ),
+                    ]
+                )
+            ),
+          ],
+        )
+      ),
     );
   }
 
   Widget _userPhoto(String url) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(url,
-            cacheManager: DefaultCacheManager(),
+    return GestureDetector(
+      onTap: (){
+        _pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(url,
+              cacheManager: DefaultCacheManager(),
+            ),
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
+            isAntiAlias: true
           ),
-          fit: BoxFit.cover,
-          alignment: Alignment.center,
-          isAntiAlias: true
         ),
       ),
     );

@@ -20,7 +20,7 @@ void showFilter(BuildContext context,VoidCallback onSave) {
         children: [
           Container(
             width:335,
-            height: 230,
+            height: 200,
             decoration: BoxDecoration(
                 color: Color(0xff2969E9),
                 borderRadius: BorderRadius.circular(40)
@@ -37,29 +37,35 @@ void showFilter(BuildContext context,VoidCallback onSave) {
                       fontSize: 24,
                       color: Color(0xfff9f9f9)
                   ),),
-                  ...FilterGender.values.map((e) => GestureDetector(
-                    onTap: (){
-                      currentFilterGender=e.index;
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: 10
-                      ),
-                      child:  ValueListenableBuilder(valueListenable: appCommonBox.listenable(), builder: (c,b,_){
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            e.index==currentFilterGender?Image.asset(Assets.iconsSelected,width: 28,height: 28,):Container(),
-                            Text(e.name,style: TextStyle(
-                                fontSize: 30,
-                                color:e.index==currentFilterGender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
-                            ),)
-                          ],
-                        );
-                      })
-                    ),
-                  )).toList(),
+                  Expanded(child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ...FilterGender.values.map((e) => GestureDetector(
+                        onTap: (){
+                          currentFilterGender=e.index;
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                top: 10
+                            ),
+                            child:  ValueListenableBuilder(valueListenable: appCommonBox.listenable(), builder: (c,b,_){
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  e.index==currentFilterGender?Image.asset(Assets.iconsSelected,width: 24,height: 24,):Container(),
+                                  Text(e.name,style: TextStyle(
+                                      fontSize: 24,
+                                      color:e.index==currentFilterGender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
+                                  ),)
+                                ],
+                              );
+                            })
+                        ),
+                      )).toList(),
+                    ],
+                  ))
+
                 ]
             ),
           ),
@@ -68,15 +74,18 @@ void showFilter(BuildContext context,VoidCallback onSave) {
           ),
           Container(
             width:335,
-            height: 158,
+            height: 138,
             decoration: BoxDecoration(
                 color: Color(0xff2969E9),
                 borderRadius: BorderRadius.circular(40)
             ),
             child: Column(
               children: [
+                const SizedBox(
+                  height: 10,
+                ),
                 Text('Age',style: TextStyle(
-                    fontSize: 29,
+                    fontSize: 24,
                     color: Color(0xfff9f9f9)
                 ),),
                 SizedBox(height: 8),
@@ -112,7 +121,7 @@ void showFilter(BuildContext context,VoidCallback onSave) {
               ),
               alignment: Alignment.center,
               child: Text('Save',style: TextStyle(
-                  fontSize: 36,
+                  fontSize: 24,
                   color: Color(0xfff9f9f9)
               ),),
             ),

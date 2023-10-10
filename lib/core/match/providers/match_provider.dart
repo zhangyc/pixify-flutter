@@ -29,13 +29,13 @@ class UsersNotifier extends StateNotifier<List<UserInfo>> {
   void getUsers(int page) async {
     // Simulate API request
     int? gender;
-    if(currentFilterGender==FilterGender.male.index){
+    if(currentFilterGender==FilterGender.Male.index){
       gender=1;
 
-    }else if(currentFilterGender==FilterGender.female.index){
+    }else if(currentFilterGender==FilterGender.Female.index){
       gender=2;
 
-    }else if(currentFilterGender==FilterGender.all.index){
+    }else if(currentFilterGender==FilterGender.All.index){
       gender=null;
     }
     try{
