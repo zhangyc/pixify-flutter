@@ -66,7 +66,7 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
         Arrow(animationController: arrowController),
         Positioned(
           right: 20,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 150,
+          top: 554,
           child: LikeAnimation(onLike: widget.onLike, userInfo: widget.userInfo)
         ),
         Positioned(
@@ -75,7 +75,7 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
         ),
         Positioned(
             right: 20,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 80,
+            top: 554+50+10,
             child:  GestureDetector(child: Image.asset(Assets.iconsArrow,width: 50,height: 50,),
               onTap: () async {
                 final resp=await ref.read(asyncMatchRecommendedProvider.notifier).arrow(widget.userInfo.id);

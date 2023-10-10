@@ -140,7 +140,7 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
           Positioned(
             left: 20,
             right: 120,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 160,
+            top: 554,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,

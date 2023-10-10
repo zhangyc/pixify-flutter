@@ -34,6 +34,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     _determinePosition();
     _setUpFcmListener();
     super.initState();
+
   }
 
   void _determinePosition() async {
