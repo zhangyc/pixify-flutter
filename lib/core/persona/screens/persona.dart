@@ -123,7 +123,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                 ],
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
