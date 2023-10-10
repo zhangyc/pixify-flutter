@@ -116,7 +116,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                 )
               )
             ),
-            SizedBox(width: 8),
             Container(
               width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 24,
               decoration: BoxDecoration(
