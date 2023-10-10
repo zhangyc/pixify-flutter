@@ -124,6 +124,20 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
               ),
             ),
             SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                ref.read(myProfileProvider)!.isMember
+                    ? 'YOU’RE SUPER SONA'
+                    : 'BECOMING SUPER SONA',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: ref.read(myProfileProvider)!.isMember ? Colors.black : Color(0xFFE880F1),
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.italic
+                ),
+              ),
+            ),
+            SizedBox(height: 12),
             Container(
               width: MediaQuery.of(context).size.width,
               height: 258,
@@ -141,7 +155,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                     top: 12,
                     left: 0,
                     child: Text(
-                      '❤️ Unlimited Likes\n👀 See who liked you\n🤖 100 AI SONA messages / day\nnand more…',
+                      '❤️ Unlimited Likes\n👀 See who liked you\n🤖 100 AI SONA messages / day\nand more…',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontStyle: FontStyle.italic,
                         height: 2
@@ -173,7 +187,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                     ),
                   ),
                   Positioned(
-                    right: 0,
+                    left: 0,
                     bottom: 0,
                     child: Visibility(
                       visible: ref.watch(myProfileProvider)!.isMember,
@@ -184,7 +198,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         },
                         child: Text(
                           'My Subscription Plan',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             fontStyle: FontStyle.italic,
                           ),
                         ),
