@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
 import 'package:sona/common/widgets/button/icon.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
@@ -106,17 +107,12 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                 height: 38,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Theme.of(context).primaryColor : Colors.grey
                 ),
                 clipBehavior: Clip.antiAlias,
                 alignment: Alignment.center,
-                child: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Text(
-                  'S',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ) : Icon(
-                  Icons.keyboard,
-                  size: 24,
-                  color: Colors.white,
+                child: SonaIcon(
+                  icon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? SonaIcons.sona_message : SonaIcons.manual_message,
+                  size: 32,
                 )
               )
             ),
@@ -124,13 +120,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
             Container(
               width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 24,
               decoration: BoxDecoration(
-                gradient: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? const LinearGradient(
-                  colors: [
-                    Color(0xFFE880F1),
-                    Color(0xFFFCD8FF),
-                    Color(0xFF2969E9),
-                  ],
-                ) : null,
+                color: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Color(0xFFE880F1) : Color(0xFF8D8D8D),
                 borderRadius: BorderRadius.circular(_height/2)
               ),
               padding: EdgeInsets.all(1.5),
@@ -174,7 +164,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                     contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 9),
                     isDense: true,
                     filled: true,
-                    fillColor: Color(0xFFF6F6F6),
+                    fillColor: Colors.white,
                     focusColor: Color(0xFF6D91F4),
                     hintText: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Tell Sona your intention...' : 'Write sth...',
                     hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -222,8 +212,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                         onSubmit(_controller.text);
                       },
                       child: Container(
-                        height: 38,
-                        width: 38,
+                        height: 32,
+                        width: 32,
                         alignment: Alignment.center,
                         child: Icon(
                             Icons.send,
@@ -237,20 +227,23 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   child: SIconButton(
                       onTap: widget.onSuggestionTap,
                       loadingWhenAsyncAction: true,
-                      size: 36,
+                      size: 32,
+                      indicatorColor: Colors.black54,
                       child: Container(
-                          width: 36,
-                          height: 36,
+                          width: 27,
+                          height: 32,
                           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
                           decoration: BoxDecoration(
-                              color: Colors.yellow,
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black),
                               borderRadius: BorderRadius.circular(4)
                           ),
                           alignment: Alignment.center,
-                          child: Icon(CupertinoIcons.sparkles, size: 24,)
+                          child: Icon(CupertinoIcons.sparkles, size: 18, color: Colors.black,)
                       )
                   ),
-                )
+                ),
+                SizedBox(height: 3)
               ],
             ),
           ],
