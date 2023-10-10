@@ -123,7 +123,7 @@ enum ColoredButtonSize {
   large(
       height: 64,
       fontSize: 17,
-      borderWidth: 4,
+      borderWidth: 2.5,
       borderRadiusCircular: 10
   ),
   medium(
