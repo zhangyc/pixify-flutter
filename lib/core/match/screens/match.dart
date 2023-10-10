@@ -170,14 +170,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }else if(currentFilterGender==FilterGender.all.index){
       gender=null;
     }
-    final position =ref.read(positionProvider);
    try{
      final resp=await post('/user/match-v2',data: {
        'gender': gender,
        'minAge': currentFilterMinAge,
        'maxAge': currentFilterMaxAge,
-       'longitude': position?.longitude,
-       'latitude': position?.latitude,
+       'longitude': longitude,
+       'latitude': latitude,
        "page":current,    // 页码
        "pageSize":10 // 每页数量
      });
@@ -224,14 +223,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }else if(currentFilterGender==FilterGender.all.index){
       gender=null;
     }
-    final position = ref.read(positionProvider);
     try{
       final resp=await post('/user/match-v2',data: {
         'gender': gender,
         'minAge': currentFilterMinAge,
         'maxAge': currentFilterMaxAge,
-        'longitude': position?.longitude,
-        'latitude': position?.latitude,
+        'longitude': longitude,
+        'latitude': latitude,
         "page":current,    // 页码
         "pageSize":10 // 每页数量
       });
@@ -239,7 +237,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         List list= resp.data;
 
         List<UserInfo> users1=list.map((e) => UserInfo.fromJson(e)).toList();
-        if(users1.isEmpty){
+        if(users1.isEmpty&&users.every((element) => element.id!=-1)){
           users1.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
         }
         for (var element in users1) {
