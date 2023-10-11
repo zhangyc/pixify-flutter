@@ -1,0 +1,42 @@
+import '../../core/match/util/http_util.dart';
+import '../../utils/global/global.dart';
+
+int get hook => appCommonBox.get('hook',defaultValue: 0);
+set hook(value){
+  appCommonBox.put('hook', value);
+}
+int get arrow => appCommonBox.get('arrow',defaultValue: 0);
+set arrow(value){
+  appCommonBox.put('arrow', value);
+}
+int get sona => appCommonBox.get('sona',defaultValue: 0);
+set sona(value){
+  appCommonBox.put('sona', value);
+}
+int get suggest => appCommonBox.get('suggest',defaultValue: 0);
+set suggest(value){
+  appCommonBox.put('suggest', value);
+}
+int get like => appCommonBox.get('like',defaultValue: 0);
+set like(value){
+  appCommonBox.put('like', value);
+}
+
+bool get canHook =>hook>0;
+bool get canArrow =>arrow>0;
+bool get canSona =>sona>0;
+bool get canSuggest =>suggest>0;
+bool get canLike =>like>0||like==-1;
+
+///初始化用户权限数据
+void initUserPermission() async{
+  HttpResult result=await post('/user/permission');
+  if(result. isSuccess){
+    hook=result.data['hook'];
+    arrow=result.data['arrow'];
+    sona=result.data['sona'];
+    suggest=result.data['suggest'];
+    like=result.data['like'];
+
+  }
+}

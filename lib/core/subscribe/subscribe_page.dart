@@ -723,4 +723,6 @@ List<String> unlockFeatures=[
   'sona建议',
   'hook'
 ];
-String _terms='By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via Play Store settings, and you agree to our';
+String _terms='''
+By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via Play Store settings, and you agree to our
+''';

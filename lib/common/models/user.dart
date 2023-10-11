@@ -18,6 +18,7 @@ class UserInfo {
     this.allScore,
     this.impression,
     this.interest=const [],
+    this.likeMe=0
   });
 
   final int id;
@@ -32,6 +33,7 @@ class UserInfo {
   DateTime? likeDate;
   int get age => birthday!.toAge();
   final String? impression;
+  int likeMe=0;  //1 喜欢了，0 无
   List<Interest> interest=[];
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     final images = json['images'];
@@ -60,8 +62,8 @@ class UserInfo {
         photos: photos,
         allScore: json['allScore']?.toStringAsFixed(2),
         impression:json['impression'],
-        interest: _interest
-
+        interest: _interest,
+        likeMe: json['likeMe']??0
     );
   }
 }

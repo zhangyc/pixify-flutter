@@ -17,7 +17,7 @@ class _LikeAnimationState extends State<LikeAnimation> with TickerProviderStateM
 
   @override
   void initState() {
-    _animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 800),lowerBound: 0.1,upperBound: 1);
+    _animationController=AnimationController(vsync: this,duration: Duration(milliseconds: 500),lowerBound: 0.1,upperBound: 1);
 
     _animationController.addListener(() {
       setState(() {

@@ -9,6 +9,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/common/permission/permission.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
@@ -127,7 +128,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       users.removeAt(currentPage);
                       if (mounted) setState(() {});
                     }
-                  }else if(result=='block'){
+                  }else if(result=='block'&& mounted){
                     final resp = await matchAction(userId: users[currentPage].id, action: MatchAction.block);
                     if (resp.statusCode == 0) {
                       users.removeAt(currentPage);
@@ -166,58 +167,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   bool get wantKeepAlive => true;
   int current=1;
-  // Future<void> _initData() async{
-  //   int? gender;
-  //   current=1;
-  //   if(currentFilterGender==FilterGender.Male.index){
-  //     gender=1;
-  //   }else if(currentFilterGender==FilterGender.Female.index){
-  //     gender=2;
-  //   }else if(currentFilterGender==FilterGender.All.index){
-  //     gender=null;
-  //   }
-  //  try{
-  //    final resp=await post('/user/match-v2',data: {
-  //      'gender': gender,
-  //      'minAge': currentFilterMinAge,
-  //      'maxAge': currentFilterMaxAge,
-  //      'longitude': longitude,
-  //      'latitude': latitude,
-  //      "page":current,    // 页码
-  //      "pageSize":10 // 每页数量
-  //    });
-  //    if(resp.isSuccess){
-  //
-  //      List list= resp.data;
-  //      if(list.isEmpty){
-  //        _state=PageState.noData;
-  //      }else {
-  //        _state=PageState.success;
-  //      }
-  //      users=list.map((e) => UserInfo.fromJson(e)).toList();
-  //      for (var element in users) {
-  //        if(element.avatar!=null){
-  //          DefaultCacheManager().downloadFile(element.avatar!);
-  //        }
-  //      }
-  //      setState(() {
-  //
-  //      });
-  //    }else {
-  //      _state=PageState.fail;
-  //      setState(() {
-  //
-  //      });
-  //    }
-  //  }catch(e){
-  //    if (kDebugMode) print(e);
-  //    _state=PageState.fail;
-  //    setState(() {
-  //
-  //    });
-  //  }
-  //
-  // }
   void _loadMore() async{
     int? gender;
     if(currentFilterGender==FilterGender.Male.index){
@@ -301,31 +250,30 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 userInfo: users[index],
                 controller: pageController,
                 onLike: (){
-                  users[index].matched=true;
-                  ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id).then((resp){
-                    if(resp.isSuccess){
-                      SonaAnalytics.log(MatchEvent.match_like.name);
-                      if(resp.data['resultType']==2){
-
+                  if(canLike){
+                    like=like-1;
+                    users[index].matched=true;
+                    SonaAnalytics.log(MatchEvent.match_like.name);
+                    if(users[index].likeMe==1){
+                      showMatched(context, () {
                         if (index < users.length - 1) {
-                          pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
+                          pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
                               curve: Curves.linearToEaseOut);
                         }
-                      }else if(resp.data['resultType']==1){
-                        showMatched(context, () {
-                          if (index < users.length - 1) {
-                            pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-                                curve: Curves.linearToEaseOut);
-                          }
-                        },target: users[index]);
+                      },target: users[index]);
+                    }else if(users[index].likeMe==0){
+                      if (index < users.length - 1) {
+                        pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
+                            curve: Curves.linearToEaseOut);
                       }
-                    }else if(resp.statusCode==10150){
-                      SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                      Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                        return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
-                      }));
                     }
-                  });
+                  }else {
+                    SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                    Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                      return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                    }));
+                  }
+                  ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
                 },
 
               ));

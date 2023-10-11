@@ -196,7 +196,8 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
   Widget _userBio() {
     return GestureDetector(
       onTap: (){
-        _pageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.bounceIn);
+
+        _pageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.linear);
       },
       child: Container(
         padding: EdgeInsets.only(

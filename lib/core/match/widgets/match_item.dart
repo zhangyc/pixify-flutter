@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sona/common/permission/permission.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/models/user.dart';
@@ -77,24 +78,32 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
             right: 20,
             top: 554+50+10,
             child:  GestureDetector(child: Image.asset(Assets.iconsArrow,width: 50,height: 50,),
-              onTap: () async {
-                final resp=await ref.read(asyncMatchRecommendedProvider.notifier).arrow(widget.userInfo.id);
-                if(resp.isSuccess){
+              onTap: (){
+                if(canArrow){
+                  arrow=arrow-1;
+                  ref.read(asyncMatchRecommendedProvider.notifier).arrow(widget.userInfo.id);
                   SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                   arrowController.reset();
                   arrowController.forward() ;
                   widget.userInfo.arrowed=true;
-                }else if(resp.statusCode==10150){
+                }else {
                   bool isMember=ref.read(myProfileProvider)?.isMember??false;
                   if(isMember){
                     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                   }else{
-                     Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                    Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
                       return SubscribePage(fromTag: FromTag.pay_match_arrow,);
                     }));
                   }
-                  /// 判断如果不是会员，跳转道会员页面
                 }
+                // if(resp.isSuccess){
+                //   SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                //   arrowController.reset();
+                //   arrowController.forward() ;
+                //   widget.userInfo.arrowed=true;
+                // }else if(resp.statusCode==10150){
+                //
+                // }
                 setState(() {
 
                 });

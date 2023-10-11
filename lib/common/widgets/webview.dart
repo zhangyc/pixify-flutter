@@ -32,6 +32,7 @@ class _WebViewExampleState extends State<WebView> {
     late final PlatformWebViewControllerCreationParams params;
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
       params = WebKitWebViewControllerCreationParams(
+
         allowsInlineMediaPlayback: true,
         mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
       );
@@ -44,6 +45,7 @@ class _WebViewExampleState extends State<WebView> {
     // #enddocregion platform_features
 
     controller
+
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
