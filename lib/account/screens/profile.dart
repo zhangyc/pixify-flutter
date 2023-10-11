@@ -46,39 +46,50 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: Visibility(
-              visible: _profile.impression == null,
-              child: Container(
-                child: Column(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                            child: Text('Sona Impression', style: Theme.of(context).textTheme.titleMedium)
-                        ),
-                        GestureDetector(
-                          onTap: () => showInfo(
-                            context: context,
-                            content: 'Sona will notice changes to your bio and interests, and form impressions of you based on them.\nSona\'s impression tags update every Monday at 1am GMT, as long as your profile information has changed.\nThere may be delays for different users.'
-                          ),
-                          child: Icon(Icons.info_outline_rounded, size: 12)
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 4),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        ref.watch(myProfileProvider)!.impression ?? 'Sona will notice changes to your bio and interests',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).primaryColor
-                        ),
-                      ),
+                        padding: EdgeInsets.only(left: 16, right: 8, top: 4, bottom: 4),
+                        child: Text('Sona Impression', style: Theme.of(context).textTheme.titleMedium)
+                    ),
+                    GestureDetector(
+                      onTap: _showImpressionDesc,
+                      child: Icon(Icons.info_outline_rounded, size: 12)
                     )
                   ],
                 ),
-              ),
+                SizedBox(height: 4),
+                Visibility(
+                  visible: _profile.impression != null,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      _profile.impression!,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).primaryColor
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: _profile.impression == null,
+                  child: GestureDetector(
+                    onTap: _showImpressionDesc,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        '👀How to get a Sona Impression...',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).primaryColor
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
             )
           ),
           SliverToBoxAdapter(
@@ -182,8 +193,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       final photo = _profile.photos[index];
       child = CachedNetworkImage(imageUrl: photo.url, fit: BoxFit.cover, width: 96, height: 144, alignment: Alignment.center,);
     }
+    final actions = <String, String>{};
+    if (_profile.photos.length > 1) {
+      if (index != 0) {
+        actions['Set Default'] = 'set_default';
+      }
+      actions['Delete'] = 'delete';
+    }
     return GestureDetector(
-      onLongPress: index != 0 ? () => _showPhotoActions(_profile.photos[index]) : null,
+      onLongPress: () => _showPhotoActions(index, actions),
       onTap: _seeMyProfile,
       child: Container(
         foregroundDecoration: BoxDecoration(
@@ -273,15 +291,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
   }
 
-  void _showPhotoActions(ProfilePhoto photo) async {
-    final action = await showRadioFieldDialog(context: context, options: {'Set Default': 'set-default', 'Delete': 'delete'});
+  void _showPhotoActions(int index, Map<String, String> actions) async {
+    if (actions.isEmpty) return;
+    final photo = _profile.photos[index];
+    final action = await showRadioFieldDialog(context: context, options: actions);
     if (action == 'delete') {
       _onRemovePhoto(photo.id);
-    } else if (action == 'set-default') {
+    } else if (action == 'set_default') {
       final photos = ref.read(myProfileProvider)!.photos;
       photos..remove(photo)..insert(0, photo);
       final data = photos.asMap().entries.map<Map<String, dynamic>>((entry) => {'id': entry.value.id, 'sort': entry.key}).toList();
-      // todo 通过provider
       await updatePhotoSorts(data: data);
       ref.read(myProfileProvider.notifier).refresh();
     }
@@ -310,5 +329,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future _onRemovePhoto(int photoId) async {
     await removePhoto(photoId: photoId);
     ref.read(myProfileProvider.notifier).refresh();
+  }
+
+  void _showImpressionDesc() {
+    showInfo(
+        context: context,
+        content: 'Sona will notice changes to your bio and interests, and form impressions of you based on them.\nSona\'s impression tags update every Monday at 1am GMT, as long as your profile information has changed.\nThere may be delays for different users.'
+    );
   }
 }
