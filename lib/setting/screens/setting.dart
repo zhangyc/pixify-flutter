@@ -130,6 +130,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
   void _showNotificationSetting() async {
     final value = await showRadioFieldDialog(
       context: context,
+      initialValue: ref.read(myProfileProvider)!.pushEnabled,
       options: {
         'On': true,
         'Off': false
@@ -141,8 +142,10 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
   Future toggleNotification(bool value) {
     return dio.post('/user/update',data: {
       'openPush': value
-    }).then((value){
-
+    }).then((resp){
+      if (resp.statusCode  == 0) {
+        ref.read(myProfileProvider.notifier).updatePushEnabled(value);
+      }
     });
   }
 

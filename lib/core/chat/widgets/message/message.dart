@@ -64,12 +64,22 @@ class MessageWidget extends StatelessWidget {
       if ([1, 2, 3, 4, 7].contains(message.type)) {
         actions.addAll([
           CupertinoContextMenuAction(
-            child: Icon(
-              message.feedback == MessageFeedbackType.like
-                  ? CupertinoIcons.hand_thumbsup_fill
-                  : CupertinoIcons.hand_thumbsup,
-              color: Theme.of(context).primaryColor,
-              size: 16,
+            child: Row(
+              children: [
+                Icon(
+                  message.feedback == MessageFeedbackType.like
+                      ? CupertinoIcons.hand_thumbsup_fill
+                      : CupertinoIcons.hand_thumbsup,
+                  color: Theme.of(context).primaryColor,
+                  size: 16,
+                ),
+                Row(
+                  children: [
+                    SizedBox(width: 12),
+                    Text('Smart Sona'),
+                  ],
+                )
+              ],
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -81,12 +91,18 @@ class MessageWidget extends StatelessWidget {
             },
           ),
           CupertinoContextMenuAction(
-            child: Icon(
-              message.feedback == MessageFeedbackType.dislike
-                  ? CupertinoIcons.hand_thumbsdown_fill
-                  : CupertinoIcons.hand_thumbsdown,
-              color: Theme.of(context).primaryColor,
-              size: 16,
+            child: Row(
+              children: [
+                Icon(
+                  message.feedback == MessageFeedbackType.dislike
+                      ? CupertinoIcons.hand_thumbsdown_fill
+                      : CupertinoIcons.hand_thumbsdown,
+                  color: Theme.of(context).primaryColor,
+                  size: 16,
+                ),
+                SizedBox(width: 12),
+                Text('Stupid Sona')
+              ],
             ),
             onPressed: () {
               Navigator.pop(context);

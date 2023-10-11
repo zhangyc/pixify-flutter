@@ -25,8 +25,41 @@ class _InterestsState extends ConsumerState<Interests> {
   Widget build(BuildContext context) {
     return Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Select your interests (${_selected.length}/10)', style: Theme.of(context).textTheme.titleMedium),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                    'Choose Hobbies\nFor\nBetter Matches',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Colors.white
+                    )
+                ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white
+                      ),
+                      padding: EdgeInsets.all(6),
+                      child: Icon(Icons.close, size: 28)
+                    )
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                      '${_selected.length}/10',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              )
+            ],
+          ),
           SizedBox(height: 16),
           Wrap(
             spacing: 16,
@@ -34,13 +67,22 @@ class _InterestsState extends ConsumerState<Interests> {
             children: [
               for (final interest in widget.availableValue)
                 FittedBox(
-                  child: ColoredButton(
-                    size: ColoredButtonSize.small,
-                    color: _selected.contains(interest) ? Theme.of(context).primaryColor : Colors.transparent,
-                    fontColor: _selected.contains(interest) ? Colors.white : Colors.black,
-                    borderColor: Colors.black12,
-                    text: interest,
-                    onTap: () => _toggleInterest(interest)
+                  child: GestureDetector(
+                    onTap: () => _toggleInterest(interest),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+                      decoration: BoxDecoration(
+                        color: _selected.contains(interest) ? Theme.of(context).primaryColor : Colors.white,
+                        border: Border.all(color: Colors.black12),
+                        borderRadius: BorderRadius.circular(6)
+                      ),
+                      child: Text(
+                        interest,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: _selected.contains(interest) ? Colors.white : Colors.black
+                        ),
+                      ),
+                    ),
                   ),
                 )
             ],

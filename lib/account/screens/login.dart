@@ -14,7 +14,6 @@ import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
-import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/global/global.dart';
 

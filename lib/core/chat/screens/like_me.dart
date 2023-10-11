@@ -32,7 +32,7 @@ class _LikeMeScreenState extends State<LikeMeScreen> {
           crossAxisCount: 3,
           mainAxisSpacing: 8,
           crossAxisSpacing: 8,
-          childAspectRatio: 1080/1920
+          childAspectRatio: 112/168
         ),
         itemBuilder: _itemBuilder,
         itemCount: widget.data.length

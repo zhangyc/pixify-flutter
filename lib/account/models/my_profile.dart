@@ -11,6 +11,7 @@ class MyProfile {
     required this.avatar,
     this.interests = const <String>[],
     required this.position,
+    this.pushEnabled = true,
     this.bio,
     this.impression,
     this.chatStyleId,
@@ -29,6 +30,7 @@ class MyProfile {
   final List<String> interests;
   final List<ProfilePhoto> photos;
   final Position? position;
+  final bool pushEnabled;
   final int? vipEndDate;
 
   bool get completed => _validate();
@@ -53,7 +55,8 @@ class MyProfile {
       vipEndDate: json['vipEndDate'],
       interests: json['interest'] != null ? (json['interest'] as String).trim().split(',') : [],
       photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
-      position: pos
+      position: pos,
+      pushEnabled: json['openPush'] ?? true
     );
   }
 
@@ -71,6 +74,7 @@ class MyProfile {
       'images': photos.map<Map<String, dynamic>>((photo) => photo.toJson()).toList(),
       'longitude': position?.longitude.toString(),
       'latitude': position?.latitude.toString(),
+      'openPush': pushEnabled,
       'vipEndDate':vipEndDate
     };
   }
@@ -91,6 +95,15 @@ class MyProfile {
       gender: gender,
       bio: bio,
       photos: photos.map((photo) => photo.url).toList()
+    );
+  }
+
+  MyProfile copyWith({
+    bool? pushEnabled
+  }) {
+    final json = toJson();
+    return MyProfile.fromJson(
+      json..['openPush'] = pushEnabled ?? json['openPush']
     );
   }
 }

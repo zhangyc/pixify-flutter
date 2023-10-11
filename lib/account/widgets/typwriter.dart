@@ -64,8 +64,8 @@ class _TypwriterState extends State<Typwriter> {
             ...List.generate(_index, (index) => index).map((index) => TextSpan(
               text: _text[index],
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: matches.any((range) => index >= range.start && index <= range.end) ? Colors.yellow : Colors.white,
-                  fontSize: 40
+                  color: matches.any((range) => index >= range.start && index <= range.end) ? Color(0xFFDD70E0) : Color(0xFF5D5D5F),
+                  fontSize: 20
               )
             ))
           ]

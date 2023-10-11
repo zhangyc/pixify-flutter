@@ -133,7 +133,10 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   keyboardAppearance: Brightness.dark,
                   keyboardType: widget.keyboardType,
                   textInputAction: TextInputAction.send,
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500
+                  ),
                   autocorrect: true,
                   cursorWidth: 1.8,
                   decoration: InputDecoration(
@@ -144,9 +147,9 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                     suffixIcon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? GestureDetector(
                       onTap: _toggleChatStyles,
                       child: Container(
-                        width: 33,
-                        height: 33,
-                        margin: EdgeInsets.symmetric(horizontal: 2.5),
+                        width: 26,
+                        height: 26,
+                        margin: EdgeInsets.symmetric(horizontal: 3),
                         decoration: BoxDecoration(
                           image: currentChatStyle != null ? DecorationImage(
                             image: CachedNetworkImageProvider(
@@ -159,15 +162,16 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                         alignment: Alignment.center,
                       )
                     ) : null,
-                    suffixIconConstraints: BoxConstraints.tight(Size.square(33)),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+                    suffixIconConstraints: BoxConstraints.tight(Size.square(32)),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                     isDense: true,
                     filled: true,
                     fillColor: Colors.white,
                     focusColor: Color(0xFF6D91F4),
                     hintText: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Tell Sona your intention...' : 'Write sth...',
-                    hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Theme.of(context).hintColor
+                    hintStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      color: Theme.of(context).hintColor,
+                      fontWeight: FontWeight.w500
                     )
                   ),
                   onChanged: (text) {
@@ -193,7 +197,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                       child: Container(
                           width: 32,
                           height: 32,
-                          margin: EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+                          margin: EdgeInsets.symmetric(horizontal: 3),
                           decoration: BoxDecoration(
                               color: Theme.of(context).primaryColor,
                               borderRadius: BorderRadius.circular(4)
@@ -234,7 +238,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(color: Colors.black),
+                              border: Border.all(color: Colors.black, width: 1.5),
                               borderRadius: BorderRadius.circular(4)
                           ),
                           alignment: Alignment.center,
@@ -242,7 +246,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                       )
                   ),
                 ),
-                SizedBox(height: 3)
               ],
             ),
           ],

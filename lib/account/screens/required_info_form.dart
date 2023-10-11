@@ -55,32 +55,32 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     _actions = [
       FieldAcquireAction(
           field: null,
-          textBuilder: () => 'Hi\n\nI\'m SONA\n\nYour social\nadvisor to\ncoach you on\nmeaningful\nfriendships!',
-          highlights: ['SONA', 'social\nadvisor'],
+          textBuilder: () => 'Hi\n\nI\'m SONA\n\nYour social advisor to coach\n\nyou on meaningful friendships.\n\nLet\'s add your information.',
+          highlights: ['SONA'],
           action: null
       ),
       FieldAcquireAction(
           field: 'name',
-          textBuilder: () => 'First, what do\nyou want to be\ncalled?',
+          textBuilder: () => 'First, what\'s your name?',
           highlights: [],
           action: _getName
       ),
       FieldAcquireAction(
           field: 'birthday',
-          textBuilder: () => 'Hi $_name,\nPlz choose your\nage',
-          highlights: ['age'],
+          textBuilder: () => 'Plz choose your birthday.',
+          highlights: [],
           action: _getBirthday
       ),
       FieldAcquireAction(
           field: 'gender',
-          textBuilder: () => 'Got ${_birthday!.toAge()}\nPlz choose your\ngender',
-          highlights: ['gender'],
+          textBuilder: () => 'Plz choose your gender.',
+          highlights: [],
           action: _getGender
       ),
       FieldAcquireAction(
           field: 'avatar',
-          textBuilder: () => '${_gender!.name}\nPlz pick a photo\nrepresents you',
-          highlights: ['pick a photo'],
+          textBuilder: () => 'Pick a photo represents you',
+          highlights: [],
           action: _getAPhotoAndUpload
       ),
       // FieldAcquireAction(
@@ -94,7 +94,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Color(0xFFF6E8F8),
       body: SafeArea(
         child: PageView(
           controller: _pageController,
@@ -102,11 +102,11 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
           children: _actions
               .map((action) => Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 50),
+                        horizontal: 12, vertical: 50),
                     child: Typwriter(
                         textBuilder: action.textBuilder,
                         highlights: action.highlights,
-                        duration: const Duration(milliseconds: 60),
+                        duration: const Duration(milliseconds: 40),
                         onDone: () async {
                           if (action.action != null) {
                             action.value = await action.action!();

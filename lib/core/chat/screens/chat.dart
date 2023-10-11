@@ -14,6 +14,7 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/toast/cooldown.dart';
 
@@ -146,18 +147,36 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('You matched!', style: TextStyle(color: Colors.grey, fontSize: 14)),
-          SizedBox(height: 10),
-          UserAvatar(url: widget.otherSide.avatar!, size: 200,),
-          SizedBox(height: 10),
-          Text('Not sure how to start?', style: TextStyle(color: Colors.grey, fontSize: 14)),
-          SizedBox(height: 10),
-          ColoredButton(
-            size: ColoredButtonSize.large,
-            loadingWhenAsyncAction: true,
-            onTap: _startUpLine,
-            text: '👋Have Sona say "Hi" for you',
-            borderColor: Theme.of(context).colorScheme.secondaryContainer,
+          Text('New Matched!', style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
+          SizedBox(height: 20),
+          Container(
+            width: 95,
+            height: 50,
+            child: Stack(
+              children: [
+                Positioned(
+                  left: 45,
+                  child: UserAvatar(url: ref.read(myProfileProvider)!.avatar!, size: 50)
+                ),
+                Positioned(
+                  left: 0,
+                  child: UserAvatar(url: widget.otherSide.avatar!, size: 50)
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 28),
+          Center(
+            child: SizedBox(
+              width: 248,
+              child: ColoredButton(
+                size: ColoredButtonSize.large,
+                loadingWhenAsyncAction: true,
+                onTap: _startUpLine,
+                text: '👋 Have Sona say "Hi"',
+                borderColor: Colors.black
+              ),
+            ),
           ),
           SizedBox(height: 5),
         ],
@@ -225,6 +244,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   Future _shortenMessage(ImMessage message) {
+    if (kvStore.getBool('chat_shorten') != true) {
+      kvStore.setBool('chat_shorten', true);
+      return showInfo(
+        context: context,
+        title: 'Concise',
+        content: 'Tap once -  The content more concise\nTap twice-  Back to what you  inputted',
+        buttonText: 'Got it'
+      );
+    }
     SonaAnalytics.log('chat_shorten');
     return callSona(
       type: CallSonaType.SIMPLE,

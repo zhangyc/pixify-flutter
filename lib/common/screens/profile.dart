@@ -10,8 +10,8 @@ import 'package:sona/utils/dialog/report.dart';
 
 import '../../core/match/providers/matched.dart';
 import '../../core/match/widgets/filter_dialog.dart';
+import '../../core/match/widgets/like_animation.dart';
 import '../../core/subscribe/subscribe_page.dart';
-import '../../generated/assets.dart';
 import '../../utils/global/global.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
@@ -82,9 +82,9 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   bottom: MediaQuery.of(context).viewInsets.bottom + 120,
                   child: Visibility(
                     visible: widget.relation == Relation.normal || widget.relation == Relation.likeMe,
-                    child: InkWell(
-                      onTap: _onLike,
-                      child: Image.asset(Assets.iconsLike,width: 50,height: 50, color: _liked ? Colors.red : null),
+                    child: LikeAnimation(
+                      onLike: _onLike,
+                      userInfo: widget.user
                     ),
                   )
               )
