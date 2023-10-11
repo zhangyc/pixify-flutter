@@ -164,23 +164,30 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   itemCount: likedMeUsers.length > 16 ? 17 : likedMeUsers.length,
                 ),
               ),
-              SizedBox(height: 24),
-              Center(
-                child: FilledButton(
-                  onPressed: () {
-                    SonaAnalytics.log('chatlist_gopay');
-                    widget.onTap();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Color(0xFF2969E9))
-                  ),
-                  child: Text(
-                    'See who like you',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.white
+              Visibility(
+                visible: !ref.read(myProfileProvider)!.isMember,
+                child: Container(
+                  margin: EdgeInsets.only(top: 18),
+                  alignment: Alignment.center,
+                  child: FilledButton(
+                    onPressed: () {
+                      SonaAnalytics.log('chatlist_gopay');
+                      widget.onTap();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Color(0xFF2969E9))
                     ),
-                  ),
-                )
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        'Let\'s see who likes you',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.white
+                        ),
+                      ),
+                    ),
+                  )
+                ),
               )
             ],
           ),

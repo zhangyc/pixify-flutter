@@ -186,8 +186,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       onLongPress: index != 0 ? () => _showPhotoActions(_profile.photos[index]) : null,
       onTap: _seeMyProfile,
       child: Container(
-        decoration: BoxDecoration(
+        foregroundDecoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
+          borderRadius: BorderRadius.circular(12)
+        ),
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12)
         ),
         clipBehavior: Clip.antiAlias,

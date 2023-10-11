@@ -51,12 +51,24 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  CachedNetworkImage(
-                      imageUrl: ref.watch(myProfileProvider)!.avatar!,
-                      width: 112,
-                      height: 168,
-                      alignment: Alignment.center,
-                      fit: BoxFit.cover,
+                  GestureDetector(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (_) => const ProfileScreen()
+                    )),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          // border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
+                          borderRadius: BorderRadius.circular(12)
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: CachedNetworkImage(
+                          imageUrl: ref.watch(myProfileProvider)!.avatar!,
+                          width: 112,
+                          height: 168,
+                          alignment: Alignment.center,
+                          fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   SizedBox(width: 16),
                   Expanded(
@@ -70,20 +82,23 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                           Visibility(
                             visible: ref.watch(myProfileProvider)!.impression != null,
                             child: Container(
-                              margin: EdgeInsets.only(bottom: 4),
-                              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE880F1),
-                                borderRadius: BorderRadius.circular(8)
-                              ),
-                              clipBehavior: Clip.antiAlias,
-                              child: Text(
-                                ref.watch(myProfileProvider)!.impression ?? '',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: true,
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  color: Colors.white
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 4),
+                                padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE880F1),
+                                  borderRadius: BorderRadius.circular(8)
+                                ),
+                                clipBehavior: Clip.antiAlias,
+                                child: Text(
+                                  ref.watch(myProfileProvider)!.impression ?? '',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: true,
+                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    color: Colors.white
+                                  ),
                                 ),
                               ),
                             ),
@@ -132,7 +147,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                     : 'BECOMING SUPER SONA',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: ref.read(myProfileProvider)!.isMember ? Colors.black : Color(0xFFE880F1),
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   fontStyle: FontStyle.italic
                 ),
               ),

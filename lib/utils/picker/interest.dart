@@ -77,25 +77,11 @@ Future<Set<String>?> showInterestPicker({
                 SizedBox(height: 20),
                 Container(
                   color: Colors.transparent,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: ColoredButton(
-                            color: Colors.white,
-                            text: 'Cancel',
-                            onTap: () => Navigator.pop(context)),
-                      ),
-                      SizedBox(width: 5),
-                      Expanded(
-                        flex: 1,
-                        child: ColoredButton(
-                            text: 'Confirm',
-                            onTap: () => Navigator.pop(context, _selected)
-                        ),
-                      )
-                    ],
+                  child: ColoredButton(
+                    text: 'Save',
+                    color: Color(0xFFDD70E0),
+                    fontColor: Colors.white,
+                    onTap: () => Navigator.pop(context, _selected)
                   ),
                 )
               ],

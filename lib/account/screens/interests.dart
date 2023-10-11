@@ -70,7 +70,7 @@ class _InterestsState extends ConsumerState<Interests> {
                   child: GestureDetector(
                     onTap: () => _toggleInterest(interest),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 13),
                       decoration: BoxDecoration(
                         color: _selected.contains(interest) ? Theme.of(context).primaryColor : Colors.white,
                         border: Border.all(color: Colors.black12),

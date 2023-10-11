@@ -24,6 +24,10 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
     state = profile;
   }
 
+  void updatePushEnabled(bool value) {
+    state = state?.copyWith(pushEnabled: value);
+  }
+
   Future<void> updateField({
     String? name,
     Gender? gender,
@@ -57,6 +61,8 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
       //
     }
   }
+
+
 }
 
 final myProfileProvider = StateNotifierProvider<MyProfileNotifier, MyProfile?>(

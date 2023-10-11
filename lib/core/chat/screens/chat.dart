@@ -14,6 +14,7 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/toast/cooldown.dart';
 
@@ -243,6 +244,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   Future _shortenMessage(ImMessage message) {
+    if (kvStore.getBool('chat_shorten') != true) {
+      kvStore.setBool('chat_shorten', true);
+      return showInfo(
+        context: context,
+        title: 'Concise',
+        content: 'Tap once -  The content more concise\nTap twice-  Back to what you  inputted',
+        buttonText: 'Got it'
+      );
+    }
     SonaAnalytics.log('chat_shorten');
     return callSona(
       type: CallSonaType.SIMPLE,

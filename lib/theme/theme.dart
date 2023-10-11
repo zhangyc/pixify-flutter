@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,6 +13,8 @@ final themeData = ThemeData(
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   dividerColor: dividerColor,
   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+  hintColor: const Color(0xFFBABABA),
+  fontFamily: Platform.isAndroid ? 'Roboto' : null,
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     surfaceTintColor: Colors.transparent,

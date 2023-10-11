@@ -399,7 +399,7 @@ Future<T?> showRadioFieldDialog<T>({
                     style: TextStyle(fontSize: 18)),
               ),
             ),
-            ListView.separated(
+            ListView.builder(
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
                 if (index == options.length) {
@@ -420,9 +420,9 @@ Future<T?> showRadioFieldDialog<T>({
                         : Colors.transparent,
                     text: key);
               },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(height: 1, indent: 0);
-              },
+              // separatorBuilder: (BuildContext context, int index) {
+              //   return Divider(height: 1, indent: 0);
+              // },
               itemCount: itemCount,
             ),
           ],
