@@ -68,6 +68,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF6E8F8),
       body: SafeArea(
         child: PageView(
           controller: _controller,
@@ -77,7 +78,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               fit: StackFit.expand,
               children: [
                 Positioned.fill(
-                  top: 32,
+                  top: 64,
                   left: 16,
                   right: 16,
                   child: Column(
@@ -85,15 +86,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        'Create Account',
+                        'Enter your phone',
                         textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'using phone number',
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       SizedBox(height: 32),
                       Form(
@@ -161,7 +156,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       SizedBox(height: 20),
                       ColoredButton(
                         size: ColoredButtonSize.large,
-                        color: Theme.of(context).colorScheme.tertiary,
+                        color: Color(0xFFDD70E0),
                         fontColor: Colors.white.withAlpha(200),
                         text: 'Continue',
                         onTap: _next,
@@ -176,7 +171,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               fit: StackFit.expand,
               children: [
                 Positioned.fill(
-                  top: 32,
+                  top: 64,
                   left: 16,
                   right: 16,
                   child: Column(
@@ -184,34 +179,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Enter Code',
-                        style: Theme.of(context).textTheme.headlineLarge,
+                        'Enter the code sent to',
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       SizedBox(height: 4),
-                      Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'we sent to ${_pn?.countryCode} ${_pn?.number}',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                            WidgetSpan(child: SizedBox(width: 8)),
-                            TextSpan(
-                              text: 'change number',
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).colorScheme.primary
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  _controller.animateToPage(0,
-                                      duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
-                                  _pinController.clear();
-                                  _pinFocusNode.unfocus();
-                                  _phoneFocusNode.requestFocus();
-                                }
-                            )
-                          ]
-                        )
+                      Text(
+                        '${_pn?.countryCode} ${_pn?.number}',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Color(0xFF515B24)
+                        ),
                       ),
                       SizedBox(height: 32),
                       Form(
@@ -244,7 +221,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   bottom: 16,
                   child: ColoredButton(
                     size: ColoredButtonSize.large,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Color(0xFFDD70E0),
                     fontColor: Colors.white.withAlpha(200),
                     text: 'Continue',
                     onTap: _complete,
