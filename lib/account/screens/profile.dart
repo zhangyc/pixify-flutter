@@ -67,7 +67,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      _profile.impression!,
+                      _profile.impression ?? '',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).primaryColor
                       ),
