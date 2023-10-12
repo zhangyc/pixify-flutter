@@ -11,7 +11,7 @@ class PowersWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.symmetric(
-          horizontal: 16
+          horizontal: 8
       ),
       children: [
         SizedBox(

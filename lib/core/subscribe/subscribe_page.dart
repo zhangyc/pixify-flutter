@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
@@ -153,8 +154,11 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                       productDetails: _productDetails!,
                     );
                   }
-                  
-                  _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                  try {
+                    await _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                  } catch (e) {
+                    _inAppPurchase.restorePurchases();
+                  }
                   SonaAnalytics.log(PayEvent.pay_continue.name);
                 },
                   style: ElevatedButton.styleFrom(
@@ -497,6 +501,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       return;
     }
     if(mounted){
+      _inAppPurchase.restorePurchases();
       ///载入本地保存的消耗品的id
       setState(() {
         _isAvailable = isAvailable;
@@ -577,8 +582,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
 
       if (purchaseDetails.status == PurchaseStatus.pending) {
-        purchaseDetails.status=PurchaseStatus.canceled;
-        showPendingUI();
+        _inAppPurchase.completePurchase(purchaseDetails);
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
           handleError(purchaseDetails.error!);
