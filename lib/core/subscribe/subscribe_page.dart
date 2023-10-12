@@ -9,6 +9,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
+import 'package:sona/common/permission/permission.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:uuid/uuid.dart';
@@ -592,7 +593,10 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
-
+          initUserPermission();
+          if(mounted){
+            ref.read(myProfileProvider.notifier).refresh();
+          }
         }
       }
     }

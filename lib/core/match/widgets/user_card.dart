@@ -134,7 +134,7 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
               cacheManager: DefaultCacheManager(),
             ),
             onTap: (){
-              _pageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.bounceIn);
+              _pageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.linear);
             },
           ),
           Positioned(
@@ -280,7 +280,7 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
   Widget _userPhoto(String url) {
     return GestureDetector(
       onTap: (){
-        _pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+        _pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.linear);
       },
       child: Container(
         decoration: BoxDecoration(

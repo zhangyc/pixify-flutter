@@ -92,7 +92,27 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   // Text(openNotification ? 'on': 'off'),
                   Icon(CupertinoIcons.forward),
                   SizedBox(width: 20),
+
                 ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 20,
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: UnconstrainedBox(
+              child: SizedBox(
+                width: 180,
+                child: ColoredButton(
+                  onTap: _logout,
+                  text: 'Logout',
+                  color: Colors.black,
+                  fontColor: Colors.white,
+                ),
               ),
             ),
           ),
@@ -103,16 +123,6 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
-                    width: 180,
-                    child: ColoredButton(
-                        onTap: _logout,
-                        text: 'Logout',
-                      color: Colors.black,
-                      fontColor: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 60),
                   TextButton(
                     onPressed: _delete,
                     child: Text('Delete Account', style: TextStyle(color: Colors.grey))
