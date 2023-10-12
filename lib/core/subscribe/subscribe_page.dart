@@ -84,21 +84,21 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         child: Text(_queryProductError!),
       ));
     }
-    if (_purchasePending) {
-      stack.add(
-        const Stack(
-          children: <Widget>[
-            Opacity(
-              opacity: 0.3,
-              child: ModalBarrier(dismissible: false, color: Colors.red),
-            ),
-            Center(
-              child: CircularProgressIndicator(),
-            ),
-          ],
-        ),
-      );
-    }
+    // if (_purchasePending) {
+    //   stack.add(
+    //     const Stack(
+    //       children: <Widget>[
+    //         Opacity(
+    //           opacity: 0.3,
+    //           child: ModalBarrier(dismissible: false, color: Colors.red),
+    //         ),
+    //         Center(
+    //           child: CircularProgressIndicator(),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
 
     return MaterialApp(
       home: Scaffold(
@@ -108,7 +108,10 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           centerTitle: true,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: IconButton(onPressed: ()=>Navigator.of(context).pop(), icon: Icon(Icons.arrow_back_ios)),
+          leading: IconButton(onPressed: (){
+            initUserPermission();
+            Navigator.of(context).pop();
+           }, icon: Icon(Icons.arrow_back_ios)),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -145,6 +148,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                           prorationMode: ProrationMode.immediateAndChargeFullPrice,
                         ) : null);
                   } else {
+                    //InAppPurchase.instance.restorePurchases();
                     purchaseParam = AppStorePurchaseParam(
                       productDetails: _productDetails!,
                     );
@@ -573,6 +577,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
 
       if (purchaseDetails.status == PurchaseStatus.pending) {
+        purchaseDetails.status=PurchaseStatus.canceled;
         showPendingUI();
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {

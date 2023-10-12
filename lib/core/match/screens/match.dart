@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/core/match/providers/matched.dart';
@@ -31,6 +32,7 @@ import '../util/http_util.dart';
 import '../widgets/filter_dialog.dart';
 import '../widgets/match_init_animation.dart';
 // import '../widgets/scroller.dart' as s;
+final clickSubject = BehaviorSubject <void>();
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});
@@ -56,6 +58,17 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       }).catchError((e){
         Fluttertoast.showToast(msg: 'Failed to obtain permission.');
       });
+    });
+    clickSubject
+        .debounceTime(Duration(seconds: 1))
+        .listen((_) {
+      showFilter(context,(){
+        //_initData();
+        current=1;
+        _state=PageState.loading;
+        _loadMore();
+      });
+      // 处理点击逻辑
     });
     // _determinePosition();
     super.initState();
@@ -101,18 +114,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 ),
                 child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),
               ),onTap: (){
-                showFilter(context,(){
-                  //_initData();
-                  current=1;
-                  _state=PageState.loading;
-                  _loadMore();
-                });
+                clickSubject.add(null);
               },),
               const SizedBox(
                 height: 20,
               ),
               GestureDetector(child: Container(
                 decoration: BoxDecoration(
+                    color: Colors.transparent,
                     boxShadow: [
                       BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
                     ]
