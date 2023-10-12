@@ -47,7 +47,9 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   SizedBox(width: 20),
                   Icon(CupertinoIcons.bell),
                   SizedBox(width: 8),
-                  Text('Notification', style: Theme.of(context).textTheme.bodyMedium),
+                  Text('Notification', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500
+                  )),
                   Expanded(child: Container()),
                   // Text(openNotification ? 'on': 'off'),
                   Icon(CupertinoIcons.forward),
@@ -87,7 +89,9 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   SizedBox(width: 20),
                   Icon(CupertinoIcons.info),
                   SizedBox(width: 8),
-                  Text('About', style: Theme.of(context).textTheme.bodyMedium),
+                  Text('About', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500
+                  )),
                   Expanded(child: Container()),
                   // Text(openNotification ? 'on': 'off'),
                   Icon(CupertinoIcons.forward),
@@ -99,17 +103,16 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
           ),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: 20,
+              height: 40,
             ),
           ),
-
           SliverToBoxAdapter(
             child: UnconstrainedBox(
               child: SizedBox(
                 width: 180,
                 child: ColoredButton(
                   onTap: _logout,
-                  text: 'Logout',
+                  text: 'Log out',
                   color: Colors.black,
                   fontColor: Colors.white,
                 ),

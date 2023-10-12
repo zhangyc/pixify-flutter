@@ -5,7 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:pinput/pinput.dart';
@@ -44,21 +46,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     height: 56,
     textStyle: TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
     decoration: BoxDecoration(
-      border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
       borderRadius: BorderRadius.circular(20),
+      color: Color(0xFFE9C6EE)
     ),
   );
 
   late final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-    border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
     borderRadius: BorderRadius.circular(8),
+    color: Color(0xFFDD70E0)
   );
 
   late final submittedPinTheme = defaultPinTheme.copyWith(
+    textStyle: TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.w500,
+      color: Color(0xFFDD70E0)
+    ),
     decoration: defaultPinTheme.decoration!.copyWith(
-      color: Color.fromRGBO(234, 239, 243, 1),
+      color: Colors.transparent,
     ),
   );
+
+  bool _validate = true;
 
   @override
   void initState() {
@@ -68,7 +77,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6E8F8),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: PageView(
           controller: _controller,
@@ -98,12 +107,35 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           focusNode: _phoneFocusNode,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(),
+                              borderSide: BorderSide.none,
                             ),
+                            hintText: 'Mobile Number',
+                            hintStyle: TextStyle(color: Color(0xFFE9C6EE))
                           ),
+                          flagsButtonMargin: EdgeInsets.only(right: 12),
+                          flagsButtonPadding: EdgeInsets.symmetric(horizontal: 4),
+                          showDropdownIcon: false,
+                          style: TextStyle(
+                            fontSize: 32,
+                            color: Color(0xFFDD70E0)
+                          ),
+                          dropdownDecoration: BoxDecoration(
+                            color: Color(0xFFF9F9FB),
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          disableLengthCheck: _validate,
                           initialValue: _pn?.completeNumber,
+                          invalidNumberMessage: _validate ? '' : 'Invalid Mobile Number',
                           onChanged: (PhoneNumber? pn) {
                             _pn = pn;
+                            if (pn == null) return;
+                            final country = countries.firstWhere((c) => c.code == pn.countryISOCode);
+                            if (pn.number.length > country.maxLength) {
+                              _validate = false;
+                            } else {
+                              _validate = true;
+                            }
+                            setState(() {});
                           },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
@@ -223,8 +255,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     size: ColoredButtonSize.large,
                     color: Color(0xFFDD70E0),
                     fontColor: Colors.white.withAlpha(200),
-                    text: 'Continue',
-                    onTap: _complete,
+                    text: 'Resend',
+                    onTap: _next,
+                    confirmDelay: Duration(seconds: 60),
                     loadingWhenAsyncAction: true,
                   ),
                 )
@@ -237,7 +270,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Future _next() async {
-    if (_phoneKey.currentState!.validate()) {
+    if (_pn == null) return;
+    if (_pn!.isValidNumber()) {
       final result = await _sendPin();
       if (!result) return;
       if (mounted) setState(() {});
@@ -247,6 +281,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         _pinFocusNode.requestFocus();
       });
       SonaAnalytics.log('reg_phone');
+    } else {
+      setState(() {
+        _validate = false;
+      });
     }
   }
 

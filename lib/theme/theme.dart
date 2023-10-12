@@ -44,13 +44,13 @@ final themeData = ThemeData(
     titleMedium: const TextStyle(
         color: Colors.black,
         fontSize: 16,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w600,
         letterSpacing: 1
     ),
     titleSmall: const TextStyle(
         color: fontColour,
         fontSize: 14,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w600,
         letterSpacing: 1
     ),
     headlineLarge: const TextStyle(

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sona/common/widgets/button/forward.dart';
+import 'package:sona/common/widgets/button/next.dart';
 import 'package:sona/common/widgets/button/option.dart';
 
 import '../../common/widgets/button/colored.dart';
@@ -159,6 +161,68 @@ Future<bool?> showConfirm({
             ),
           ],
         ),
+      );
+    },
+  );
+}
+
+Future<String?> showNameTextField({
+  required BuildContext context,
+}) {
+  final controller = TextEditingController();
+  return showModalBottomSheet<String>(
+    context: context,
+    elevation: 0,
+    backgroundColor: Colors.transparent,
+    barrierColor: Colors.transparent,
+    isDismissible: false,
+    isScrollControlled: true,
+    useSafeArea: true,
+    builder: (BuildContext context) {
+      return Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 40, left: 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              child: TextField(
+                controller: controller,
+                textAlign: TextAlign.left,
+                keyboardType: TextInputType.text,
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF515B24)
+                ),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none
+                  ),
+                  hintText: 'Your Name',
+                ),
+                maxLength: 24,
+                buildCounter: (BuildContext context, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
+                autofocus: true,
+              ),
+            ),
+            SizedBox(height: 20),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.only(right: 20),
+                child: NextButton(
+                  size: ButtonSize.large,
+                  loadingWhenAsyncAction: true,
+                  onTap: () => Navigator.pop(context, controller.text.trim()),
+                ),
+              ),
+            ),
+            SizedBox(height: 40)
+          ],
+        )
       );
     },
   );

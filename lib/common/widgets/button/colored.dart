@@ -91,6 +91,16 @@ class _ColoredButtonState extends State<ColoredButton> {
       ),
   );
 
+  Color get backgroundColor {
+    if (_timer?.isActive == true) {
+      return widget.color.withOpacity(0.7);
+    }
+    if (_disabled) {
+      return Color(0xFF888888);
+    }
+    return widget.color;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -101,7 +111,7 @@ class _ColoredButtonState extends State<ColoredButton> {
         customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(widget.size.borderRadiusCircular)),
         child: Ink(
             decoration: BoxDecoration(
-                color: _disabled ? Color(0xFF888888) : widget.color,
+                color: backgroundColor,
                 borderRadius: BorderRadius.circular(widget.size.borderRadiusCircular),
                 border: Border.all(color: widget.borderColor, width: widget.size.borderWidth)
             ),

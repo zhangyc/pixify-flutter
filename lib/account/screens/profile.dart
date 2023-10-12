@@ -81,9 +81,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
-                        '👀How to get a Sona Impression...',
+                        '👀 How to get a Sona Impression...',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Theme.of(context).primaryColor
+                            color: Color(0xFFE880F1)
                         ),
                       ),
                     ),
@@ -131,7 +131,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 children: [
                   Text('Bio', style: Theme.of(context).textTheme.titleMedium),
                   SizedBox(height: 8),
-                  ForwardButton(onTap: onBioEdit, text: _profile.bio ?? 'You can just write a little,\nthen use Sona to help optimize')
+                  ForwardButton(onTap: onBioEdit, text: _profile.bio, placeholder: 'Write sth and let Sona spruce it up')
                 ],
               ),
             ),
@@ -143,11 +143,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('Hobby', style: Theme.of(context).textTheme.titleMedium),
+                  Text('Hobbies', style: Theme.of(context).textTheme.titleMedium),
                   SizedBox(height: 8),
                   ForwardButton(
                     onTap: _onEditInterests,
-                    text: _profile.interests.isNotEmpty ? _profile.interests.join(' , ') : 'Add your Hobbies',
+                    text: _profile.interests.isNotEmpty ? _profile.interests.join(' , ') : null,
+                    placeholder: 'Add your hobbies',
                   )
                 ],
               ),
