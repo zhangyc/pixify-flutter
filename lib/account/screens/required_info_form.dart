@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/age.dart';
@@ -13,11 +14,13 @@ import 'package:sona/core/match/widgets/filter_dialog.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/location/location.dart';
 import 'package:sona/utils/picker/interest.dart';
 
 import '../../core/persona/widgets/sona_message.dart';
 import '../../utils/picker/gender.dart';
 import '../models/gender.dart';
+import 'confirm_photo.dart';
 
 class RequiredInfoFormScreen extends ConsumerStatefulWidget {
   const RequiredInfoFormScreen({super.key});
@@ -55,38 +58,39 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     _actions = [
       FieldAcquireAction(
           field: null,
-          textBuilder: () => 'Hi\n\nI\'m SONA\n\nYour social advisor to coach\n\nyou on meaningful friendships.\n\nLet\'s add your information.',
+          textBuilder: () => '\n\nHi\n\nI\'m SONA\n\nYour social advisor to coach\n\nyou on meaningful friendships.\n\nLet\'s add your information.',
           highlights: ['SONA'],
           action: null
       ),
       FieldAcquireAction(
           field: 'name',
-          textBuilder: () => 'First, what\'s your name?',
+          textBuilder: () => '\n\nFirst, what\'s your name?',
           highlights: [],
           action: _getName
       ),
       FieldAcquireAction(
           field: 'birthday',
-          textBuilder: () => 'Plz choose your birthday.',
+          textBuilder: () => '\n\nPlz choose your birthday.',
           highlights: [],
           action: _getBirthday
       ),
       FieldAcquireAction(
           field: 'gender',
-          textBuilder: () => 'Plz choose your gender.',
+          textBuilder: () => '\n\nPlz choose your gender.',
           highlights: [],
           action: _getGender
       ),
       FieldAcquireAction(
           field: 'avatar',
-          textBuilder: () => 'Pick a photo represents you',
+          textBuilder: () => '\n\nPick a photo represents you',
           highlights: [],
           action: _getAPhotoAndUpload
       ),
       // FieldAcquireAction(
-      //     field: 'interests',
-      //     textBuilder: () => 'Choose your interests',
-      //     action: _chooseInterests
+      //     field: 'location',
+      //     textBuilder: () => '\n\nPlz authorize your location\nand reminders',
+      //     highlights: [],
+      //     action: _determineLocation
       // ),
     ];
   }
@@ -94,7 +98,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF6E8F8),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: PageView(
           controller: _pageController,
@@ -142,8 +146,8 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   }
 
   Future<String> _getName() async {
-    final value = await showSingleLineTextField(context: context, title: null, maxLength: 32);
-    if (value == null) {
+    final value = await showNameTextField(context: context);
+    if (value == null || value.isEmpty) {
       return _getName();
     } else {
       SonaAnalytics.log('reg_name');
@@ -214,7 +218,10 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
       if (bytes == null) {
         throw Exception('No file');
       }
-      final value = await uploadFile(bytes: bytes, filename: file.name);
+      final value = await _confirmPhoto(bytes);
+      if (value == null) {
+        return _getAPhotoAndUpload();
+      }
       SonaAnalytics.log('reg_avatar_${source.name}');
       _actions.firstWhere((action) => action.field == 'avatar')
         ..value = value
@@ -224,6 +231,14 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     } catch (e) {
       return _getAPhotoAndUpload();
     }
+  }
+
+  // Future<Position> _determineLocation() async {
+  //   return determinePosition();
+  // }
+
+  Future<String?> _confirmPhoto(Uint8List bytes) {
+    return Navigator.push(context, MaterialPageRoute(builder: (_) => ConfirmPhotoScreen(bytes: bytes)));
   }
 
   Future<Set<String>> _chooseInterests() async {

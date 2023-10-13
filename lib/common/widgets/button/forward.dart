@@ -5,10 +5,12 @@ class ForwardButton extends StatelessWidget {
     Key? key,
     required this.onTap,
     required this.text,
+    this.placeholder
   }) : super(key: key);
 
   final void Function() onTap;
-  final String text;
+  final String? text;
+  final String? placeholder;
 
   double get _radius => 6;
   double get _fontSize => 14;
@@ -34,14 +36,14 @@ class ForwardButton extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    text,
+                    text ?? placeholder ?? '',
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: _fontSize,
-                      color: Color(0xFF3F3F3F)
+                      color: text != null ? Color(0xFF3F3F3F) : Color(0xFFBABABA)
                     )
                   ),
                 ),

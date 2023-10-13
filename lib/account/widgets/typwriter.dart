@@ -61,6 +61,18 @@ class _TypwriterState extends State<Typwriter> {
       child: Text.rich(
         TextSpan(
           children: [
+            WidgetSpan(
+              child: Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  shape: BoxShape.circle
+                ),
+                alignment: Alignment.center,
+                child: Text('SONA', style: TextStyle(fontSize: 7, fontWeight: FontWeight.w600)),
+              )
+            ),
             ...List.generate(_index, (index) => index).map((index) => TextSpan(
               text: _text[index],
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(

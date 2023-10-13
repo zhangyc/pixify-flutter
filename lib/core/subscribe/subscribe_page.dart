@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
@@ -169,11 +170,16 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                     } else {
                       //InAppPurchase.instance.restorePurchases();
                       purchaseParam = AppStorePurchaseParam(
+                        applicationUserName: ref.read(myProfileProvider)!.id.toString(),
                         productDetails: _productDetails!,
                       );
                     }
-
-                    inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                    try {
+                      await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                    } catch (e) {
+                      inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
+                    }
+                    //inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
                     SonaAnalytics.log(PayEvent.pay_continue.name);
                   },
                     style: ElevatedButton.styleFrom(
