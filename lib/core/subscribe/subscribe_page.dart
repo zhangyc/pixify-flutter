@@ -9,6 +9,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
+import 'package:intl/intl.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/global/global.dart';
@@ -17,7 +18,9 @@ import 'package:uuid/uuid.dart';
 import '../../account/providers/profile.dart';
 import '../../common/widgets/webview.dart';
 import '../../test_pay/_MyApp.dart';
+import '../../utils/dialog/input.dart';
 import '../match/util/event.dart';
+import '../match/util/iap_helper.dart';
 import 'widgets/powers_widget.dart';
 
 Uuid uuid=const Uuid();
@@ -39,7 +42,7 @@ const List<String> _kProductIds = <String>[
   annually,
 ];
 class _SubscribePageState extends ConsumerState<SubscribePage> {
-  final InAppPurchase _inAppPurchase = InAppPurchase.instance;
+  //final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
   List<String> _notFoundIds = <String>[];
   List<ProductDetails> _products = <ProductDetails>[];
@@ -49,12 +52,14 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   bool _loading = true;
   String? _queryProductError;
   ProductDetails? _productDetails;
+  ScrollController _scrollController=ScrollController();
   @override
   void initState() {
+
     SonaAnalytics.log(ChatEvent.pay_page_open.name,{
       "fromTag":widget.fromTag.name
     });
-    final Stream<List<PurchaseDetails>> purchaseUpdated = _inAppPurchase.purchaseStream;
+    // final Stream<List<PurchaseDetails>> purchaseUpdated = _inAppPurchase.purchaseStream;
     _subscription = purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
           _listenToPurchaseUpdated(purchaseDetailsList);
         }, onDone: () {
@@ -63,43 +68,19 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           if (kDebugMode) print(error);
         });
     initStoreInfo();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(Duration(milliseconds: 200),(){
+        _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
+        setState(() {
+
+        });
+
+      });
+    });
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    final List<Widget> stack = <Widget>[];
-    if (_queryProductError == null) {
-      stack.add(
-        ListView(
-          children: <Widget>[
-            _buildConnectionCheckTile(),
-            _buildProductList(),
-            // _buildConsumableBox(),
-            // _buildRestoreButton(),
-          ],
-        ),
-      );
-    } else {
-      stack.add(Center(
-        child: Text(_queryProductError!),
-      ));
-    }
-    // if (_purchasePending) {
-    //   stack.add(
-    //     const Stack(
-    //       children: <Widget>[
-    //         Opacity(
-    //           opacity: 0.3,
-    //           child: ModalBarrier(dismissible: false, color: Colors.red),
-    //         ),
-    //         Center(
-    //           child: CircularProgressIndicator(),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
-
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Color(0xffeaeaea),
@@ -111,95 +92,136 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           leading: IconButton(onPressed: (){
             initUserPermission();
             Navigator.of(context).pop();
-           }, icon: Icon(Icons.arrow_back_ios)),
+          }, icon: Icon(Icons.arrow_back_ios)),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(Assets.iconsSuper,width: 48,height: 19,),
-              Text('SONA',style: TextStyle(
-                color: Colors.black
+              // Image.asset(Assets.iconsSuper,width: 48,height: 19,),
+              Text('Super SONA',style: TextStyle(
+                  color: Colors.black
               ),),
             ],
           ),
+          actions: [
+            !ref.read(myProfileProvider)!.isMember?
+            TextButton(onPressed: () async {
+              var result=await showRadioFieldDialog(
+                  context: context,
+                  title: 'Manage Payments',
+                  options: {'Report': 'Next Billing Date: ${ref.read(myProfileProvider)?.vipEndDate}', 'Unsubscribe': 'Unsubscribe'});
+
+             }, child: Text('Manage',style: TextStyle(
+                color: Color(0xff555555)
+            ),)):
+            Container()
+          ],
         ),
         body: Stack(
           children: [
-            ...stack,
+            Stack(
+              children: [
+                _queryProductError==null?ListView(
+                  children: <Widget>[
+                    _buildConnectionCheckTile(),
+                    _buildProductList(),
+                    // _buildConsumableBox(),
+                    // _buildRestoreButton(),
+                  ],
+                ):Center(
+                  child: Text(_queryProductError!),
+                ),
+                _purchasePending?
+                const Stack(
+                  children: <Widget>[
+                    Opacity(
+                      opacity: 0.3,
+                      child: ModalBarrier(dismissible: false, color: Colors.red),
+                    ),
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ],
+                ):Container(),
+              ],
+            ),
             Positioned(bottom: 0,
               width: MediaQuery.of(context).size.width,child: Column(
-              children: [
-                ElevatedButton(onPressed: () async{
-                  late PurchaseParam purchaseParam;
-                  if(_productDetails==null){
-                    return;
-                  }
-                  if (Platform.isAndroid) {
-                    // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
-                    // verify the latest status of you your subscription by using server side receipt validation
-                    // and update the UI accordingly. The subscription purchase status shown
-                    // inside the app may not be accurate.
-                    final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
-                    purchaseParam = GooglePlayPurchaseParam(
+                children: [
+                  ElevatedButton(onPressed: () async{
+                    late PurchaseParam purchaseParam;
+                    if(_productDetails==null){
+                      return;
+                    }
+                    if (Platform.isAndroid) {
+                      // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
+                      // verify the latest status of you your subscription by using server side receipt validation
+                      // and update the UI accordingly. The subscription purchase status shown
+                      // inside the app may not be accurate.
+                      final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
+                      purchaseParam = GooglePlayPurchaseParam(
+                          productDetails: _productDetails!,
+                          changeSubscriptionParam: (oldSubscription != null)
+                              ? ChangeSubscriptionParam(
+                            oldPurchaseDetails: oldSubscription,
+                            prorationMode: ProrationMode.immediateAndChargeFullPrice,
+                          ) : null);
+                    } else {
+                      //InAppPurchase.instance.restorePurchases();
+                      purchaseParam = AppStorePurchaseParam(
                         productDetails: _productDetails!,
-                        changeSubscriptionParam: (oldSubscription != null)
-                            ? ChangeSubscriptionParam(
-                          oldPurchaseDetails: oldSubscription,
-                          prorationMode: ProrationMode.immediateAndChargeFullPrice,
-                        ) : null);
-                  } else {
-                    //InAppPurchase.instance.restorePurchases();
-                    purchaseParam = AppStorePurchaseParam(
-                      productDetails: _productDetails!,
-                    );
-                  }
-                  
-                  _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
-                  SonaAnalytics.log(PayEvent.pay_continue.name);
-                },
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: Size(346, 50),
-                      padding: EdgeInsets.zero
-                  ),
-                  child: Container(decoration: const BoxDecoration(
+                      );
+                    }
+
+                    inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                    SonaAnalytics.log(PayEvent.pay_continue.name);
+                  },
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: Size(346, 50),
+                        padding: EdgeInsets.zero
+                    ),
+                    child: Container(decoration: const BoxDecoration(
                         gradient: LinearGradient(colors: [
                           Color(0xffFF0099),
                           Color(0xffF5326D),
                         ])
                     ),
-                    alignment: Alignment.center,child: const Text('Continue'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-
-                  child: RichText(text:TextSpan(text: _terms,
-                    style: const TextStyle(
-                      color: Color(0xffa9a9a9)
+                      alignment: Alignment.center,child: const Text('Continue'),
                     ),
-                    children: [
-                      TextSpan(text: ' Terms',recognizer: TapGestureRecognizer()..onTap=(){
-                        Navigator.push(context, MaterialPageRoute(builder: (c){
-                          return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
-                        }));
-                       },
-                        style: const TextStyle(
-                          color: Color(0xffEA01FF)
-                        )
-                      ),
-                      TextSpan(text: '.')
-                    ]
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
 
-                  ),
-                )
-              ],
-             ),
+                    child: RichText(text:TextSpan(text: _terms,
+                        style: const TextStyle(
+                            color: Color(0xffa9a9a9)
+                        ),
+                        children: [
+                          TextSpan(text: ' Terms',recognizer: TapGestureRecognizer()..onTap=(){
+                            Navigator.push(context, MaterialPageRoute(builder: (c){
+                              return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                            }));
+                          },
+                              style: const TextStyle(
+                                  color: Color(0xffEA01FF)
+                              )
+                          ),
+                          TextSpan(text: '.')
+                        ]
+                    ),
+
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),
       ),
     );
+
+
+
   }
   ///连接检查
   Card _buildConnectionCheckTile() {
@@ -254,7 +276,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     final Map<String, PurchaseDetails> purchases = Map<String, PurchaseDetails>.fromEntries(
         _purchases.map((PurchaseDetails purchase) {
           if (purchase.pendingCompletePurchase) {
-            _inAppPurchase.completePurchase(purchase);
+            inAppPurchase.completePurchase(purchase);
           }
           return MapEntry<String, PurchaseDetails>(purchase.productID, purchase);
         }));
@@ -277,6 +299,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
               if(_productDetails!=productDetails){
                 _productDetails=productDetails;
+
                 setState(() {
 
                 });
@@ -342,6 +365,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             height: 151,
             width: MediaQuery.maybeOf(context)?.size.width,
             child: ListView(
+              controller: _scrollController,
               padding: EdgeInsets.symmetric(
                   horizontal: 20
               ),
@@ -430,7 +454,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   ///初始化店铺信息
   Future<void> initStoreInfo() async {
     ///可用
-    final bool isAvailable = await _inAppPurchase.isAvailable();
+    final bool isAvailable = await inAppPurchase.isAvailable();
     if (!isAvailable&&mounted ) {
       setState(() {
         _isAvailable = isAvailable;
@@ -452,13 +476,13 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     ///如果是苹果
     if (Platform.isIOS) {
       final InAppPurchaseStoreKitPlatformAddition iosPlatformAddition =
-      _inAppPurchase
+      inAppPurchase
           .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
       ///设置代理
       await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
     }
     ///产品详情响应
-    final ProductDetailsResponse productDetailResponse = await _inAppPurchase.queryProductDetails(_kProductIds.toSet());
+    final ProductDetailsResponse productDetailResponse = await inAppPurchase.queryProductDetails(_kProductIds.toSet());
     ///如果没有错误
     if (productDetailResponse.error != null) {
       if(mounted){
@@ -466,6 +490,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           _queryProductError = productDetailResponse.error!.message;
           _isAvailable = isAvailable;
           _products = productDetailResponse.productDetails;
+
           // for (var element in _products) {
           //   if(element.id==month){
           //     monthBill=element.rawPrice;
@@ -501,6 +526,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       setState(() {
         _isAvailable = isAvailable;
         _products = productDetailResponse.productDetails;
+        _productDetails=_products.last;
         _notFoundIds = productDetailResponse.notFoundIDs;
         // _consumables = consumables;
         _purchasePending = false;
@@ -557,6 +583,10 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     // } else {
     //
     // }
+    initUserPermission();
+    if(mounted){
+      ref.read(myProfileProvider.notifier).refresh();
+    }
     setState(() {
       _purchases.add(purchaseDetails);
       _purchasePending = false;
@@ -577,7 +607,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
 
       if (purchaseDetails.status == PurchaseStatus.pending) {
-        purchaseDetails.status=PurchaseStatus.canceled;
+        //purchaseDetails.status=PurchaseStatus.canceled;
+
         showPendingUI();
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
@@ -597,11 +628,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           }
         }
         if (purchaseDetails.pendingCompletePurchase) {
-          await _inAppPurchase.completePurchase(purchaseDetails);
-          initUserPermission();
-          if(mounted){
-            ref.read(myProfileProvider.notifier).refresh();
-          }
+          await inAppPurchase.completePurchase(purchaseDetails);
         }
       }
     }
@@ -614,7 +641,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     // information on price changes on Android.
     if (Platform.isIOS) {
       final InAppPurchaseStoreKitPlatformAddition iapStoreKitPlatformAddition =
-      _inAppPurchase
+      inAppPurchase
           .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
       await iapStoreKitPlatformAddition.showPriceConsentIfNeeded();
     }
@@ -623,7 +650,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   Future<GooglePlayPurchaseDetails?> _getOldSubscription() async {
     GooglePlayPurchaseDetails? oldSubscription;
     if (Platform.isAndroid) {
-      final InAppPurchaseAndroidPlatformAddition androidAddition = _inAppPurchase.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
+      final InAppPurchaseAndroidPlatformAddition androidAddition = inAppPurchase.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
       QueryPurchaseDetailsResponse oldPurchaseDetailsQuery = await androidAddition.queryPastPurchases();
 
       for (var element in oldPurchaseDetailsQuery.pastPurchases) {
@@ -639,7 +666,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   void dispose() {
     if (Platform.isIOS) {
       final InAppPurchaseStoreKitPlatformAddition iosPlatformAddition =
-      _inAppPurchase
+      inAppPurchase
           .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
       iosPlatformAddition.setDelegate(null);
     }
@@ -655,18 +682,18 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       p='1 Month';
       // return Container();
     }else if(id==quarter){
-      per='Save ${(1-(details.rawPrice/3)/monthBill).toStringAsFixed(2)}';
+      per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/3)/monthBill).toStringAsFixed(2)))}';
       p='3 Month';
     }
     else if(id==biannually){
       p='6 Month';
-      per='Save ${(1-(details.rawPrice/6)/monthBill).toStringAsFixed(2)}';
+      per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/6)/monthBill).toStringAsFixed(2)))}';
 
      // per='${detail s.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}';
     }
     else if(id==annually){
       p='12 Month';
-      per='Save ${(1-(details.rawPrice/12)/monthBill).toStringAsFixed(2)}';
+      per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/12)/monthBill).toStringAsFixed(2)))}';
 
       //(details.rawPrice/12)/monthBill;
      //per='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}';
@@ -732,6 +759,4 @@ List<String> unlockFeatures=[
   'sona建议',
   'hook'
 ];
-String _terms='''
-By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via Play Store settings, and you agree to our
-''';
+String _terms='''By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via Play Store settings, and you agree to our ''';

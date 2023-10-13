@@ -16,7 +16,7 @@ class NoMoreWidget extends StatelessWidget {
         SizedBox(height: 10,),
         const Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: 55
+              horizontal: 30
           ),
           child: Text('Your recommendation is on cooldown \nIt will be available again tomorrow',
             style: TextStyle(

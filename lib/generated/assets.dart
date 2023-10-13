@@ -3,8 +3,10 @@ class Assets {
   Assets._();
 
   static const String iconsArrow = 'assets/icons/arrow.png';
+  static const String iconsClose = 'assets/icons/close.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsLike = 'assets/icons/like.png';
+  static const String iconsManualMessage = 'assets/icons/manual_message.png';
   static const String iconsMore = 'assets/icons/more.png';
   static const String iconsNaviconChat = 'assets/icons/navicon_chat.png';
   static const String iconsNaviconChatActive = 'assets/icons/navicon_chat_active.png';
@@ -13,6 +15,7 @@ class Assets {
   static const String iconsNaviconSona = 'assets/icons/navicon_sona.png';
   static const String iconsNaviconSonaActive = 'assets/icons/navicon_sona_active.png';
   static const String iconsSelected = 'assets/icons/selected.png';
+  static const String iconsSonaMessage = 'assets/icons/sona_message.png';
   static const String iconsSparkles = 'assets/icons/sparkles.png';
   static const String iconsSub1 = 'assets/icons/sub1.png';
   static const String iconsSub2 = 'assets/icons/sub2.png';
@@ -28,6 +31,7 @@ class Assets {
   static const String imagesMatched = 'assets/images/matched.png';
   static const String imagesNoChat = 'assets/images/no_chat.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
+  static const String imagesRewardArrow = 'assets/images/reward_arrow.png';
   static const String imagesSuperSonaBg = 'assets/images/super_sona_bg.png';
   static const String lottieAnimation1 = 'assets/lottie/animation1.json';
   static const String lottieArrowAnimation = 'assets/lottie/arrow_animation.json';

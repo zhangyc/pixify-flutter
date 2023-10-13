@@ -21,7 +21,10 @@ int get like => appCommonBox.get('like',defaultValue: 0);
 set like(value){
   appCommonBox.put('like', value);
 }
-
+bool get showTags => appCommonBox.get('showTags',defaultValue: false);
+set showTags(value){
+  appCommonBox.put('showTags', value);
+}
 bool get canHook =>hook>0;
 bool get canArrow =>arrow>0;
 bool get canSona =>sona>0;

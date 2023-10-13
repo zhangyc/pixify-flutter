@@ -23,6 +23,7 @@ import 'package:stacked_page_view/stacked_page_view.dart';
 import '../../../account/providers/profile.dart';
 import '../../../utils/dialog/input.dart';
 import '../../../utils/location/location.dart';
+import '../../../utils/picker/interest.dart';
 import '../../providers/home_provider.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/setting.dart';
@@ -70,7 +71,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       });
       // 处理点击逻辑
     });
-    // _determinePosition();
     super.initState();
     pageController.addListener(() {
       //页面正在向上滑动
@@ -212,7 +212,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             DefaultCacheManager().downloadFile(element.avatar!);
           }
         }
-        // users=[...users1,...[UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null)]];
         if(users.every((element) => element.id!=-1)){
           users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
         }else {
@@ -290,7 +289,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         itemCount: users.length,
         scrollDirection: Axis.vertical,
         controller: pageController,
-        onPageChanged: (value){
+        onPageChanged: (value) async {
+
           currentPage=value;
           if(value!=0&&value%5==0&&ScrollDirection.reverse==direction){
             current++;
@@ -298,12 +298,24 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           }
           if(direction!=null){
             if(ScrollDirection.forward==direction){
+              /// down
               SonaAnalytics.log(MatchEvent.match_swipe_down.name);
 
             }else if(ScrollDirection.reverse==direction){
               if(value==0){
                 return;
               }
+              if(value==1){
+                final result = await showInterestPicker(context: context);
+                if (result != null) {
+                  ref.read(myProfileProvider.notifier).updateField(interests: result);
+                  Future.delayed(const Duration(milliseconds: 200),(){
+                    showArrowReward(context);
+                  });
+                }
+
+              }
+              ///up
               SonaAnalytics.log(MatchEvent.match_swipe_up.name);
               if(users[value-1].arrowed||users[value-1].matched){
                 return;

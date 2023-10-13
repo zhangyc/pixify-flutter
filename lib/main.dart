@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/firebase/sona_firebase.dart';
 
 import 'app.dart';
+import 'core/match/util/iap_helper.dart';
 import 'firebase_options.dart';
 import 'utils/global/global.dart' as global;
 import 'utils/local_notification/local_lotification_manager.dart';
@@ -15,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler); ///后台消息处理
   initNotificationPlugin();
+  initHelper();
   var appStateObserver = AppStateObserver();
   WidgetsBinding.instance.addObserver(appStateObserver);  ///判断app当前在前台还是后台
   final firebase = await Firebase.initializeApp(

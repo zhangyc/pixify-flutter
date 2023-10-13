@@ -111,28 +111,28 @@ class PowersWidget extends StatelessWidget {
             )),
           ],
         ),
-        SizedBox(
-          height: 9,
-        ),
-        Row(
-          children: [
-            Image.asset(Assets.iconsSub5,width: 36,height: 34,),
-            SizedBox(
-              width: 8,
-            ),
-            RichText(text: TextSpan(
-                children: [
-                  TextSpan(text: 'Hook - ',style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black
-                  )),
-                  TextSpan(text: 'Stand out and boost reply rate',style: TextStyle(
-                      color: Colors.black
-                  )),
-                ]
-            )),
-          ],
-        ),
+        // SizedBox(
+        //   height: 9,
+        // ),
+        // Row(
+        //   children: [
+        //     Image.asset(Assets.iconsSub5,width: 36,height: 34,),
+        //     SizedBox(
+        //       width: 8,
+        //     ),
+        //     RichText(text: TextSpan(
+        //         children: [
+        //           TextSpan(text: 'Hook - ',style: TextStyle(
+        //               fontWeight: FontWeight.bold,
+        //               color: Colors.black
+        //           )),
+        //           TextSpan(text: 'Stand out and boost reply rate',style: TextStyle(
+        //               color: Colors.black
+        //           )),
+        //         ]
+        //     )),
+        //   ],
+        // ),
         SizedBox(
           height: 9,
         ),
@@ -144,7 +144,7 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: 'Advisor - ',style: TextStyle(
+                  TextSpan(text: 'Strategy - ',style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
