@@ -151,13 +151,14 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                   } else {
                     //InAppPurchase.instance.restorePurchases();
                     purchaseParam = AppStorePurchaseParam(
+                      applicationUserName: ref.read(myProfileProvider)!.id.toString(),
                       productDetails: _productDetails!,
                     );
                   }
                   try {
                     await _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
                   } catch (e) {
-                    _inAppPurchase.restorePurchases();
+                    _inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
                   }
                   SonaAnalytics.log(PayEvent.pay_continue.name);
                 },
