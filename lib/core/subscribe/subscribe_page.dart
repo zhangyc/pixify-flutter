@@ -114,7 +114,9 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               var result=await showRadioFieldDialog(
                   context: context,
                   title: 'Manage Payments',
-                  options: {'Next Billing Date': '${ref.read(myProfileProvider)?.vipEndDate}', 'Unsubscribe': 'Unsubscribe'});
+                  options: {
+                    // 'Next Billing Date': '${ref.read(myProfileProvider)?.vipEndDate}',
+                    'Unsubscribe': 'Unsubscribe'});
                   if(result=='Unsubscribe'){
                     if(Platform.isAndroid){
                       launchUrl(Uri.parse('https://play.google.com/store/account/subscriptions?package=com.planetwalk.sona'), mode: LaunchMode.externalApplication);
