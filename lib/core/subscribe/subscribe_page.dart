@@ -72,7 +72,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         });
     initStoreInfo();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Future.delayed(Duration(milliseconds: 200),(){
+      Future.delayed(Duration(milliseconds: 500),(){
+
         _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
         setState(() {
 
@@ -108,7 +109,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             ],
           ),
           actions: [
-            !ref.read(myProfileProvider)!.isMember?
+            ref.read(myProfileProvider)!.isMember?
             TextButton(onPressed: () async {
               var result=await showRadioFieldDialog(
                   context: context,

@@ -24,17 +24,17 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
     name: 'sona'
   );
-  // purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
-  //   purchaseDetailsList.forEach((p) {
-  //     if(p.status==PurchaseStatus.purchased||p.status==PurchaseStatus.restored){
-  //       InAppPurchase.instance.completePurchase(p);
-  //     }
-  //   });
-  // }, onDone: () {
-  //   // _subscription.cancel();
-  // }, onError: (Object error) {
-  //   // if (kDebugMode) print(error);
-  // });
+  purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
+    purchaseDetailsList.forEach((p) {
+      if(p.status==PurchaseStatus.purchased||p.status==PurchaseStatus.restored){
+        InAppPurchase.instance.completePurchase(p);
+      }
+    });
+  }, onDone: () {
+    // _subscription.cancel();
+  }, onError: (Object error) {
+    // if (kDebugMode) print(error);
+  });
   ///成功初始化firebase app。
   if(firebase.name=='sona'){
     initFireBaseService(firebase);
