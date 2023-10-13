@@ -18,6 +18,7 @@ import 'package:sona/utils/global/global.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../account/providers/profile.dart';
+import '../../common/widgets/button/colored.dart';
 import '../../common/widgets/webview.dart';
 import '../../test_pay/_MyApp.dart';
 import '../../utils/dialog/input.dart';
@@ -116,7 +117,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                   options: {'Report': 'Next Billing Date: ${ref.read(myProfileProvider)?.vipEndDate}', 'Unsubscribe': 'Unsubscribe'});
                   if(result=='Unsubscribe'){
                     if(Platform.isAndroid){
-                      launchUrl(Uri.parse('https://play.google.com/store/account/subscriptions?sku=pro.monthly.testsku&package=com.planetwalk.sona'), mode: LaunchMode.externalApplication);
+                      launchUrl(Uri.parse('https://play.google.com/store/account/subscriptions?sku=${month}&package=com.planetwalk.sona'), mode: LaunchMode.externalApplication);
 
                     }else if(Platform.isIOS){
                       launchUrl(Uri.parse("https://apps.apple.com/account/subscriptions"), mode: LaunchMode.externalApplication);
@@ -145,71 +146,95 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                 ):Center(
                   child: Text(_queryProductError!),
                 ),
-                _purchasePending?
-                const Stack(
-                  children: <Widget>[
-                    Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    Opacity(
-                      opacity: 0.3,
-                      child: ModalBarrier(dismissible: false, color: Colors.red),
-                    ),
-
-                  ],
-                ):Container(),
+                // !_purchasePending?
+                // const Stack(
+                //   children: <Widget>[
+                //     Opacity(
+                //       opacity: 0.3,
+                //       child: ModalBarrier(dismissible: false, color: Colors.black),
+                //     ),
+                //     Center(
+                //       child: Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //         CircularProgressIndicator(),
+                //         SizedBox(
+                //           height: 16,
+                //         ),
+                //         Text("Payment processing. Don't exit to prevent errors.",style: TextStyle(color: Color(0xffE33E79)),)
+                //         ],
+                //       ),
+                //     ),
+                //
+                //
+                //   ],
+                // ):Container(),
               ],
             ),
             Positioned(bottom: 0,
               width: MediaQuery.of(context).size.width,child: Column(
                 children: [
-                  ElevatedButton(onPressed: () async{
-                    late PurchaseParam purchaseParam;
-                    if(_productDetails==null){
-                      return;
-                    }
-                    if (Platform.isAndroid) {
-                      // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
-                      // verify the latest status of you your subscription by using server side receipt validation
-                      // and update the UI accordingly. The subscription purchase status shown
-                      // inside the app may not be accurate.
-                      final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
-                      purchaseParam = GooglePlayPurchaseParam(
-                          applicationUserName: ref.read(myProfileProvider)!.id.toString(),
-                          productDetails: _productDetails!,
-                          changeSubscriptionParam: (oldSubscription != null)
-                              ? ChangeSubscriptionParam(
-                            oldPurchaseDetails: oldSubscription,
-                            prorationMode: ProrationMode.immediateAndChargeFullPrice,
-                          ) : null);
-                    } else {
-                      //InAppPurchase.instance.restorePurchases();
-                      purchaseParam = AppStorePurchaseParam(
-                        applicationUserName: ref.read(myProfileProvider)!.id.toString(),
-                        productDetails: _productDetails!,
-                      );
-                    }
-                    try {
-                      await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
-                    } catch (e) {
-                      inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
-                    }
-                    //inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
-                    SonaAnalytics.log(PayEvent.pay_continue.name);
-                  },
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: Size(346, 50),
-                        padding: EdgeInsets.zero
-                    ),
-                    child: Container(decoration: const BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                          Color(0xffFF0099),
-                          Color(0xffF5326D),
-                        ])
-                    ),
-                      alignment: Alignment.center,child: const Text('Continue'),
+                  SizedBox(
+                    width:346,
+                    height: 50,
+                    child: ColoredButton(
+                      size: ColoredButtonSize.large,
+                      color: Color(0xFFDD70E0),
+                      fontColor: Colors.white.withAlpha(200),
+                      text: 'Continue',
+                      onTap: () async{
+                        late PurchaseParam purchaseParam;
+                        if(_productDetails==null){
+                          return;
+                        }
+                        if (Platform.isAndroid) {
+                          // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
+                          // verify the latest status of you your subscription by using server side receipt validation
+                          // and update the UI accordingly. The subscription purchase status shown
+                          // inside the app may not be accurate.
+                          final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
+                          purchaseParam = GooglePlayPurchaseParam(
+                              applicationUserName: ref.read(myProfileProvider)!.id.toString(),
+                              productDetails: _productDetails!,
+                              changeSubscriptionParam: (oldSubscription != null)
+                                  ? ChangeSubscriptionParam(
+                                oldPurchaseDetails: oldSubscription,
+                                prorationMode: ProrationMode.immediateAndChargeFullPrice,
+                              ) : null);
+                        } else {
+                          //InAppPurchase.instance.restorePurchases();
+                          purchaseParam = AppStorePurchaseParam(
+                            applicationUserName: ref.read(myProfileProvider)!.id.toString(),
+                            productDetails: _productDetails!,
+                          );
+                        }
+                        try {
+                          await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                        } catch (e) {
+                          inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
+                        }
+                        //inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                        SonaAnalytics.log(PayEvent.pay_continue.name);
+                      },
+                      loadingWhenAsyncAction: true,
                     ),
                   ),
+                  // ElevatedButton(onPressed: () async{
+                  //
+                  // },
+                  //   style: ElevatedButton.styleFrom(
+                  //       fixedSize: Size(346, 50),
+                  //       padding: EdgeInsets.zero
+                  //   ),
+                  //   child: Container(decoration: const BoxDecoration(
+                  //       gradient: LinearGradient(colors: [
+                  //         Color(0xffFF0099),
+                  //         Color(0xffF5326D),
+                  //       ])
+                  //   ),
+                  //     alignment: Alignment.center,child: const Text('Continue'),
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
 
