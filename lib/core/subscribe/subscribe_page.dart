@@ -23,6 +23,7 @@ import '../../utils/dialog/input.dart';
 import '../match/util/event.dart';
 import '../match/util/iap_helper.dart';
 import 'widgets/powers_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Uuid uuid=const Uuid();
 class SubscribePage extends ConsumerStatefulWidget {
@@ -111,6 +112,16 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                   context: context,
                   title: 'Manage Payments',
                   options: {'Report': 'Next Billing Date: ${ref.read(myProfileProvider)?.vipEndDate}', 'Unsubscribe': 'Unsubscribe'});
+                  if(result=='Unsubscribe'){
+                    if(Platform.isAndroid){
+                      launchUrl(Uri.parse('https://play.google.com/store/account/subscriptions?sku=pro.monthly.testsku&package=com.planetwalk.sona'), mode: LaunchMode.externalApplication);
+
+                    }else if(Platform.isIOS){
+                      launchUrl(Uri.parse("https://apps.apple.com/account/subscriptions"), mode: LaunchMode.externalApplication);
+
+                    }
+                  }
+
 
              }, child: Text('Manage',style: TextStyle(
                 color: Color(0xff555555)
