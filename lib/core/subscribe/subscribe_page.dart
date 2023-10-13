@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
@@ -80,6 +81,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -135,13 +137,14 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                 _purchasePending?
                 const Stack(
                   children: <Widget>[
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
                     Opacity(
                       opacity: 0.3,
                       child: ModalBarrier(dismissible: false, color: Colors.red),
                     ),
-                    Center(
-                      child: CircularProgressIndicator(),
-                    ),
+
                   ],
                 ):Container(),
               ],
@@ -624,15 +627,22 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             ///恢复购买
             purchaseDetails.status == PurchaseStatus.restored) {
-
-          final bool valid = await _verifyPurchase(purchaseDetails);
-          if (valid) {
-            unawaited(deliverProduct(purchaseDetails));
-          } else {
-            ///处理无效的购买
-            _handleInvalidPurchase(purchaseDetails);
-            return;
+          try{
+            final bool valid = await _verifyPurchase(purchaseDetails);
+            if (valid) {
+              unawaited(deliverProduct(purchaseDetails));
+            } else {
+              ///处理无效的购买
+              _handleInvalidPurchase(purchaseDetails);
+              return;
+            }
+          } catch(e){
+            Fluttertoast.showToast(msg: 'Handle err');
+            setState(() {
+              _purchasePending = true;
+            });
           }
+
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await inAppPurchase.completePurchase(purchaseDetails);
@@ -678,6 +688,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       iosPlatformAddition.setDelegate(null);
     }
     _subscription.cancel();
+    _scrollController.dispose();
     super.dispose();
   }
   _buildSubTitle(ProductDetails details, double monthBill) {

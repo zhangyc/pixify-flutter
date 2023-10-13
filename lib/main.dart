@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:sona/firebase/sona_firebase.dart';
 
 import 'app.dart';
@@ -23,6 +24,17 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
     name: 'sona'
   );
+  // purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
+  //   purchaseDetailsList.forEach((p) {
+  //     if(p.status==PurchaseStatus.purchased||p.status==PurchaseStatus.restored){
+  //       InAppPurchase.instance.completePurchase(p);
+  //     }
+  //   });
+  // }, onDone: () {
+  //   // _subscription.cancel();
+  // }, onError: (Object error) {
+  //   // if (kDebugMode) print(error);
+  // });
   ///成功初始化firebase app。
   if(firebase.name=='sona'){
     initFireBaseService(firebase);
