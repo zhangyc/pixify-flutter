@@ -33,7 +33,7 @@ import '../util/http_util.dart';
 import '../widgets/filter_dialog.dart';
 import '../widgets/match_init_animation.dart';
 // import '../widgets/scroller.dart' as s;
-final clickSubject = BehaviorSubject <void>();
+// final clickSubject = BehaviorSubject <void>();
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});
@@ -60,17 +60,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         Fluttertoast.showToast(msg: 'Failed to obtain permission.');
       });
     });
-    clickSubject
-        .debounceTime(Duration(seconds: 1))
-        .listen((_) {
-      showFilter(context,(){
-        //_initData();
-        current=1;
-        _state=PageState.loading;
-        _loadMore();
-      });
-      // 处理点击逻辑
-    });
+    // clickSubject
+    //     .debounceTime(Duration(seconds: 1))
+    //     .listen((_) {
+    //
+    //   // 处理点击逻辑
+    // });
     super.initState();
     pageController.addListener(() {
       //页面正在向上滑动
@@ -114,7 +109,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 ),
                 child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),
               ),onTap: (){
-                clickSubject.add(null);
+                showFilter(context,(){
+                  //_initData();
+                  current=1;
+                  _state=PageState.loading;
+                  _loadMore();
+                });
+                // clickSubject.add(null);
               },),
               const SizedBox(
                 height: 20,
@@ -230,10 +231,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
     }catch(e){
       if (kDebugMode) print(e);
-      _state=PageState.fail;
-      setState(() {
+      if(mounted){
+        _state=PageState.fail;
+        setState(() {
 
-      });
+        });
+      }
     }
 
   }
@@ -305,9 +308,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               if(value==0){
                 return;
               }
-              if(value==1){
+              if(value==1&&isShowArrowReward){
                 final result = await showInterestPicker(context: context);
                 if (result != null) {
+                  isShowArrowReward=false;
                   ref.read(myProfileProvider.notifier).updateField(interests: result);
                   Future.delayed(const Duration(milliseconds: 200),(){
                     showArrowReward(context);

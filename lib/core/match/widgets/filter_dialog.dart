@@ -262,8 +262,10 @@ void showArrowReward(BuildContext context){
                   height: 64,
                 ),
                 Image.asset(Assets.iconsArrow,width: 96,height: 97,),
-
-                // Text('Use a star to directly start a chat with someone you like!')
+                Text('Use a star to directly start a chat with someone you like!',style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14
+                ),)
               ],
             ),
             Lottie.asset(Assets.lottieArrowAnimation,repeat: false,),
@@ -319,4 +321,8 @@ set longitude(value){
 double get latitude => appCommonBox.get('latitude',defaultValue: null);
 set latitude(value){
   appCommonBox.put('latitude', value);
+}
+bool get isShowArrowReward => appCommonBox.get('isShowArrowReward',defaultValue: true);
+set isShowArrowReward(value){
+  appCommonBox.put('isShowArrowReward', value);
 }
