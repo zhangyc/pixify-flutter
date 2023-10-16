@@ -25,6 +25,9 @@ class NoMoreWidget extends StatelessWidget {
           ),
         )
       ],
-    ),);
+    ),
+      width: MediaQuery.of(context).size.width,
+
+    );
   }
 }

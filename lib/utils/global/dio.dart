@@ -16,7 +16,11 @@ Dio _createDioInstance() {
   final dio = Dio(options);
 
   if (kDebugMode) {
-    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true, logPrint: (i) => kDebugMode?log(i.toString()):{}));
+    dio.interceptors.add(LogInterceptor(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        logPrint: (i) => kDebugMode?log(i.toString()):{}));
   }
   dio.interceptors.add(BaseInterceptor());
   // dio.interceptors.add(TokenInterceptor(ref: ref));

@@ -53,8 +53,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           longitude=value.longitude;
           latitude=value.latitude;
           ref.read(myProfileProvider.notifier).updateField(position: value);
-          current=1;
-          _loadMore();
+          _initData();
         }
       }).catchError((e){
         Fluttertoast.showToast(msg: 'Failed to obtain permission.');
@@ -111,9 +110,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               ),onTap: (){
                 showFilter(context,(){
                   //_initData();
-                  current=1;
                   _state=PageState.loading;
-                  _loadMore();
+                  _initData();
                 });
                 // clickSubject.add(null);
               },),
@@ -177,7 +175,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   bool get wantKeepAlive => true;
   int current=1;
-  void _loadMore() async{
+  void _initData() async{
+    current=1;
     int? gender;
     if(currentFilterGender==FilterGender.Male.index){
       gender=1;
@@ -207,17 +206,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         }
 
         List<UserInfo> users1=list.map((e) => UserInfo.fromJson(e)).toList();
-        users.addAll(users1);
+        users=users1;
+        if(users.every((element) => element.id!=-1)&&users.length<10){
+          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+        }
         for (var element in users1) {
           if(element.avatar!=null){
             DefaultCacheManager().downloadFile(element.avatar!);
           }
-        }
-        if(users.every((element) => element.id!=-1)){
-          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
-        }else {
-          users.removeWhere((element) => element.id==-1);
-          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
         }
         setState(() {
 
@@ -238,7 +234,71 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         });
       }
     }
+  }
+  void _loadMore() async{
+    int? gender;
+    if(currentFilterGender==FilterGender.Male.index){
+      gender=1;
 
+    }else if(currentFilterGender==FilterGender.Female.index){
+      gender=2;
+
+    }else if(currentFilterGender==FilterGender.All.index){
+      gender=null;
+    }
+    try{
+      final resp=await post('/user/match-v2',data: {
+        'gender': gender,
+        'minAge': currentFilterMinAge,
+        'maxAge': currentFilterMaxAge,
+        'longitude': longitude,
+        'latitude': latitude,
+        "page":current,    // 页码
+        "pageSize":10 // 每页数量
+      });
+      if(resp.isSuccess){
+        List list= resp.data;
+
+        // if(list.isEmpty){
+        //   _state=PageState.noData;
+        // }else {
+        //   _state=PageState.success;
+        // }
+        List<UserInfo> users1=list.map((e) => UserInfo.fromJson(e)).toList();
+        // users=[...users,...users1,...[UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null)]];
+
+
+        users.addAll(users1);
+        if(users.every((element) => element.id!=-1)){
+          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+        }else {
+          users.removeWhere((element) => element.id==-1);
+          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+        }
+        for (var element in users1) {
+          if(element.avatar!=null){
+            DefaultCacheManager().downloadFile(element.avatar!);
+          }
+        }
+        setState(() {
+
+        });
+      }else {
+        _state=PageState.fail;
+        setState(() {
+
+        });
+      }
+
+    }catch(e){
+      if (kDebugMode) print(e);
+      if(mounted){
+        _state=PageState.fail;
+        setState(() {
+
+        });
+      }
+    }
   }
   late PageState _state= PageState.loading;
 
@@ -247,16 +307,21 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
      return  Container(child: Center(child: MatchInitAnimation()),color: Colors.black,);
     }else if(_state==PageState.fail){
       return NoDataWidget();
-    }else if(_state==PageState.success){
+
+    }
+    // else if(_state==PageState.noData){
+    //   return NoMoreWidget();
+    // }
+    else if(_state==PageState.success){
       return PageView.builder(
         itemBuilder: (c,index) {
-
+          UserInfo _info=users[index];
           return StackPageView(index: index,
               controller: pageController,
           //     if(index!=0&&index==users.length-1){
           //   return NoMoreWidget();
           // }
-              child: (index!=0&&index==users.length-1)?NoMoreWidget(): MatchItem(index,
+              child: (_info.id==-1)?NoMoreWidget(): MatchItem(index,
                 length: users.length,
                 userInfo: users[index],
                 controller: pageController,
@@ -329,8 +394,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     .skip(users[value-1].id);
               }
             }
-          }
-        },
+          }        },
       );
     }else if(_state==PageState.noData){
       return const NoMoreWidget();

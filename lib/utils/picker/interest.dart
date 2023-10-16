@@ -51,7 +51,7 @@ Future<Set<String>?> showInterestPicker({
                             child: const SizedBox(
                                 width: 16,
                                 height: 16,
-                                child: CircularProgressIndicator(color: Colors.transparent,)),
+                                child: CircularProgressIndicator(color: Color(0xffE980F1),)),
                           ),
                           error: (err, stack) => GestureDetector(
                             behavior: HitTestBehavior.translucent,
