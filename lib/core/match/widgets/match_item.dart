@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sona/common/permission/permission.dart';
+import 'package:sona/core/match/providers/match_provider.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/models/user.dart';
@@ -41,7 +43,7 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
     arrowController.addListener(() {
       if(arrowController.isCompleted){
         if (widget.index < widget.length - 1) {
-          widget.controller.animateToPage(widget.index + 1, duration: const Duration(milliseconds: 200),
+          widget.controller.animateToPage(widget.index + 1, duration: const Duration(milliseconds: 1000),
               curve: Curves.linearToEaseOut);
         }
         // setState(() {
@@ -67,16 +69,16 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
         Arrow(animationController: arrowController),
         Positioned(
           right: 20,
-          top: 554,
+          bottom: MediaQuery.of(context).padding.bottom+16,
           child: LikeAnimation(onLike: widget.onLike, userInfo: widget.userInfo)
         ),
-        Positioned(
+        kReleaseMode?Container():Positioned(
             top: 50,
             child: Text(widget.userInfo.allScore??'')
         ),
         Positioned(
             right: 20,
-            top: 554+50+10,
+            bottom:  MediaQuery.of(context).padding.bottom+10+50+24,
             child:  GestureDetector(child: Image.asset(Assets.iconsArrow,width: 50,height: 50,),
               onTap: (){
                 if(canArrow){
@@ -96,14 +98,6 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
                     }));
                   }
                 }
-                // if(resp.isSuccess){
-                //   SonaAnalytics.log(MatchEvent.match_arrow_send.name);
-                //   arrowController.reset();
-                //   arrowController.forward() ;
-                //   widget.userInfo.arrowed=true;
-                // }else if(resp.statusCode==10150){
-                //
-                // }
                 setState(() {
 
                 });

@@ -262,6 +262,9 @@ void showArrowReward(BuildContext context){
                   height: 64,
                 ),
                 Image.asset(Assets.iconsArrow,width: 96,height: 97,),
+                SizedBox(
+                  height: 20,
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 20
