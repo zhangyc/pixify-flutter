@@ -8,6 +8,7 @@ import 'package:sona/setting/screens/setting.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sona/theme/theme.dart';
 import 'package:sona/utils/global/global.dart' as global;
+import 'package:sona/utils/global/global.dart';
 
 import 'core/home.dart';
 
@@ -38,6 +39,7 @@ class SonaApp extends HookConsumerWidget {
       }),
       theme: themeData,
       initialRoute: initialRoute,
+      navigatorObservers: [routeObserver],
       // routes: _routes,
       onGenerateRoute: _onGenerateRoute,
     );

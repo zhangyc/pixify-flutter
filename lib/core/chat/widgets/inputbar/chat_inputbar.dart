@@ -48,10 +48,14 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatInstructionInputState();
 }
 
-class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
+class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware {
   late final TextEditingController _controller;
   late final _focusNode = widget.focusNode ?? FocusNode();
   late final _height = widget.height ?? 38;
+  final _sonaKey = GlobalKey();
+  final _suggKey = GlobalKey();
+
+  static const enterTimesKey = 'enter_times';
 
   @override
   void initState() {
@@ -60,10 +64,19 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
       ..addListener(_onInputChange);
     _focusNode.addListener(_focusChangeListener);
     super.initState();
+    kvStore.setInt(enterTimesKey, (kvStore.getInt(enterTimesKey) ?? 0) + 1);
+    _addOverlay();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
   @override
   void dispose() {
+    routeObserver.unsubscribe(this);
     _controller
       ..removeListener(_onInputChange)
       ..dispose();
@@ -73,8 +86,41 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
     super.dispose();
   }
 
+  @override
+  void didPop() {
+    _removeOverlay();
+    super.didPopNext();
+  }
+
+  @override
+  void didPushNext() {
+    _removeOverlay();
+    super.didPushNext();
+  }
+
+  void _addOverlay() {
+    final enterTimes = kvStore.getInt(enterTimesKey);
+    if (enterTimes == 1) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _showSonaIndicator();
+      });
+    } else if (enterTimes == 2) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _showSuggIndicator();
+      });
+    }
+  }
+
+  void _removeOverlay() {
+    _sonaIndicatorEntry?.remove();
+    _sonaIndicatorEntry = null;
+    _suggIndicatorEntry?.remove();
+    _suggIndicatorEntry = null;
+  }
+
   void _focusChangeListener() {
     if (_focusNode.hasFocus) {
+      _removeOverlay();
       ref.read(chatStylesVisibleProvider(widget.chatId).notifier).update((state) => false);
     }
   }
@@ -103,6 +149,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
             GestureDetector(
               onTap: _toggleMode,
               child: Container(
+                key: _sonaKey,
                 width: 38,
                 height: 38,
                 decoration: BoxDecoration(
@@ -228,11 +275,16 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                 Visibility(
                   visible: ref.watch(currentInputEmptyProvider(widget.chatId)),
                   child: SIconButton(
-                      onTap: widget.onSuggestionTap,
+                      onTap: () {
+                        widget.onSuggestionTap();
+                        _suggIndicatorEntry?.remove();
+                        _suggIndicatorEntry = null;
+                      },
                       loadingWhenAsyncAction: true,
                       size: 32,
                       indicatorColor: Colors.black54,
                       child: Container(
+                          key: _suggKey,
                           width: 27,
                           height: 32,
                           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
@@ -317,6 +369,58 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
     );
   }
 
+  OverlayEntry? _sonaIndicatorEntry;
+  void _showSonaIndicator() {
+    final renderBox = _sonaKey.currentContext!.findRenderObject() as RenderBox?;
+    Offset offset = renderBox!.localToGlobal(Offset.zero);
+    _sonaIndicatorEntry = OverlayEntry(builder: (_) => Positioned(
+      top: offset.dy - 46,
+      left: 16,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Sona Mode: Sona will spice up your messages!',
+            style: TextStyle(fontSize: 10, color: Theme.of(context).primaryColor),
+          ),
+          SizedBox(height: 6),
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Image.asset('assets/images/magic_indicator.png', height: 30),
+          ),
+        ],
+      )
+    ));
+    Overlay.of(context).insert(_sonaIndicatorEntry!);
+  }
+
+  OverlayEntry? _suggIndicatorEntry;
+  void _showSuggIndicator() {
+    final renderBox = _suggKey.currentContext!.findRenderObject() as RenderBox?;
+    Offset offset = renderBox!.localToGlobal(Offset.zero);
+    _suggIndicatorEntry = OverlayEntry(builder: (_) => Positioned(
+        top: offset.dy - 54,
+        right: 28,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              'Get stuck? Sona got some good ideas!',
+              style: TextStyle(fontSize: 10, color: Theme.of(context).primaryColor),
+            ),
+            SizedBox(height: 6),
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Image.asset('assets/images/magic_indicator.png', height: 30),
+            ),
+          ],
+        )
+    ));
+    Overlay.of(context).insert(_suggIndicatorEntry!);
+  }
+
   void _toggleMode() {
     ref.read(inputModeProvider(widget.chatId).notifier).update((state) {
       var newMode = state == InputMode.sona ? InputMode.manual : InputMode.sona;
@@ -328,6 +432,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
           .catchError((_) {});
       return newMode;
     });
+    _sonaIndicatorEntry?.remove();
+    _sonaIndicatorEntry = null;
   }
 
   void _toggleChatStyles() {

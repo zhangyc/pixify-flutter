@@ -58,7 +58,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     _actions = [
       FieldAcquireAction(
           field: null,
-          textBuilder: () => '\n\nHi\n\nI\'m SONA\n\nYour social advisor to coach\n\nyou on meaningful friendships.\n\nLet\'s add your information.',
+          textBuilder: () => '\n\nHi\n\nI’m SONA, a ninja got your back\n\nI’ll help you find better matches and chat\n\nLet\’s add your information.',
           highlights: ['SONA'],
           action: null
       ),
