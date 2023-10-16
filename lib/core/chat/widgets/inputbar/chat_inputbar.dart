@@ -152,6 +152,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                 key: _sonaKey,
                 width: 38,
                 height: 38,
+                padding: EdgeInsets.only(top: 3),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                 ),
@@ -281,12 +282,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                         _suggIndicatorEntry = null;
                       },
                       loadingWhenAsyncAction: true,
-                      size: 32,
+                      size: 34,
                       indicatorColor: Colors.black54,
                       child: Container(
                           key: _suggKey,
                           width: 27,
-                          height: 32,
+                          height: 34,
+                          margin: EdgeInsets.only(bottom: 2),
                           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
                           decoration: BoxDecoration(
                               color: Colors.white,
