@@ -222,87 +222,93 @@ void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo tar
   });
 }
 void showArrowReward(BuildContext context){
-  showGeneralDialog(context: context, pageBuilder: (_,__,___){
+  showGeneralDialog(context: context,
+      pageBuilder: (_,__,___){
     return StatefulBuilder(builder: (BuildContext context, void Function(void Function()) setState){
-      return Container(
-        height:MediaQuery.of(context).size.height,
-        color: Color(0xff232323),
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).viewPadding.top,
-                ),
-                Row(
-                  children: [
-                    Spacer(),
-                    Container(
-                      // color: Colors.white,
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(onTap: (){
-                        Navigator.pop(context);
-                       }, child: Image.asset(Assets.iconsClose,
-                        width: 41,
-                        height: 41,
-                        color: Colors.white,)),
-                    ),
-                    SizedBox(
-                      width:  MediaQuery.of(context).viewPadding.top,
-                    )
-                  ],
-                ),
-                Image.asset(Assets.imagesRewardArrow,width: 165,height: 162,),
-
-                Text('You got 1 ninja star!',style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30
-                ),),
-                SizedBox(
-                  height: 64,
-                ),
-                Image.asset(Assets.iconsArrow,width: 96,height: 97,),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20
+      return GestureDetector(
+        onTap: (){
+          Navigator.pop(context);
+        },
+        child: Container(
+          height:MediaQuery.of(context).size.height,
+          color: Color(0xff232323),
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).viewPadding.top,
                   ),
-                  child: Text('Use a star to directly start a chat with someone you like!',style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14
+                  Row(
+                    children: [
+                      Spacer(),
+                      Container(
+                        // color: Colors.white,
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(onTap: (){
+                          Navigator.pop(context);
+                         }, child: Image.asset(Assets.iconsClose,
+                          width: 41,
+                          height: 41,
+                          color: Colors.white,)),
+                      ),
+                      SizedBox(
+                        width:  MediaQuery.of(context).viewPadding.top,
+                      )
+                    ],
+                  ),
+                  Image.asset(Assets.imagesRewardArrow,width: 165,height: 162,),
+
+                  Text('You got 1 ninja star!',style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30
                   ),),
-                )
-              ],
-            ),
-            Lottie.asset(Assets.lottieArrowAnimation,repeat: false,),
-            Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).viewPadding.top,
-                ),
-                Row(
-                  children: [
-                    Spacer(),
-                    Container(
-                      // color: Colors.white,
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(onTap: (){
-                        Navigator.pop(context);
-                       }, child: Image.asset(Assets.iconsClose,
-                        width: 41,
-                        height: 41,
-                        color: Colors.white,)),
+                  SizedBox(
+                    height: 64,
+                  ),
+                  Image.asset(Assets.iconsArrow,width: 96,height: 97,),
+                  SizedBox(
+                    height: 64,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20
                     ),
-                    SizedBox(
-                      width:  MediaQuery.of(context).viewPadding.top,
-                    )
-                  ],
-                ),
-              ],
-            )
-          ],
+                    child: Text('Use a star to directly start a chat with someone you like!',style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14
+                    ),),
+                  )
+                ],
+              ),
+              Lottie.asset(Assets.lottieArrowAnimation,repeat: false,),
+              Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).viewPadding.top,
+                  ),
+                  Row(
+                    children: [
+                      Spacer(),
+                      Container(
+                        // color: Colors.white,
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(onTap: (){
+                          Navigator.pop(context);
+                         }, child: Image.asset(Assets.iconsClose,
+                          width: 41,
+                          height: 41,
+                          color: Colors.white,)),
+                      ),
+                      SizedBox(
+                        width:  MediaQuery.of(context).viewPadding.top,
+                      )
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       );
     });
