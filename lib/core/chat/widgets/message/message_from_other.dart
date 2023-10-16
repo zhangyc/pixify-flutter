@@ -12,6 +12,8 @@ class MessageFromOther extends StatefulWidget {
 class _MessageFromOtherState extends State<MessageFromOther> {
   @override
   Widget build(BuildContext context) {
-    return Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall);
+    return Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall?.copyWith(
+      height: 1.5
+    ));
   }
 }

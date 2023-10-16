@@ -27,7 +27,8 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: Colors.white
+          color: Colors.white,
+          height: 1.5
         )),
         SizedBox(width: 20),
         FutureBuilder<void>(
