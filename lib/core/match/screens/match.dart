@@ -77,9 +77,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       }
     }
     );
-    Future.delayed(Duration(seconds: 3),(){
-      pageController.jumpTo(100);
-    });
+    if(showGuideAnimation){
+      Future.delayed(Duration(seconds: 4),(){
+        showGuideAnimation=false;
+        pageController.animateTo(200, duration: Duration(seconds: 1), curve: Curves.linear,);
+      });
+    }
 
   }
   List<UserInfo> users =[];

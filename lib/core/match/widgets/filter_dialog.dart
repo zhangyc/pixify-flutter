@@ -334,3 +334,7 @@ bool get isShowArrowReward => appCommonBox.get('isShowArrowReward',defaultValue:
 set isShowArrowReward(value){
   appCommonBox.put('isShowArrowReward', value);
 }
+bool get showGuideAnimation => appCommonBox.get('showGuideAnimation',defaultValue: true);
+set showGuideAnimation(value){
+  appCommonBox.put('showGuideAnimation', value);
+}

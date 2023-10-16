@@ -77,7 +77,9 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter
 
-                )
+                ),
+              color: bottomItem.color
+
             ),
             child: BottomNavigationBar(
               elevation: 0,
