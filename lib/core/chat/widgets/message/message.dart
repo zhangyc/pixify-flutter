@@ -134,7 +134,7 @@ class MessageWidget extends StatelessWidget {
                 // decoration:
                 //   animation.value < CupertinoContextMenu.animationOpensAt ? boxDecorationAnimation.value : null,
                 constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.75
+                    maxWidth: MediaQuery.of(context).size.width * 0.82
                 ),
                 padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 decoration: BoxDecoration(

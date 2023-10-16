@@ -78,10 +78,11 @@ final themeData = ThemeData(
       letterSpacing: 1
     ),
     bodySmall: const TextStyle(
-        color: fontColour,
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 1
+      color: fontColour,
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.12,
+      height: 21
     ),
     labelSmall: const TextStyle(
         color: Color(0xA8111111),
