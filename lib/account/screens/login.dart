@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -189,7 +190,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ColoredButton(
                         size: ColoredButtonSize.large,
                         color: Color(0xFFDD70E0),
-                        fontColor: Colors.white.withAlpha(200),
+                        fontColor: Colors.white,
                         text: 'Continue',
                         onTap: _next,
                         loadingWhenAsyncAction: true,
@@ -349,38 +350,45 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     //   "phone":_phoneNumber, // 手机号
     //   // 用户所在时区 可为空
     // });
-      final resp = await login(
-          countryCode: _pn!.countryCode.substring(1),
-          phoneNumber: _pn!.number,
-          pinCode: _pinController.text
-      );
+      try {
+        EasyLoading.show();
+        final resp = await login(
+            countryCode: _pn!.countryCode.substring(1),
+            phoneNumber: _pn!.number,
+            pinCode: _pinController.text
+        );
 
-      if (resp.statusCode == 0 || resp.statusCode == 2) {
-        SonaAnalytics.log('reg_code');
-        final token = resp.data['token'];
-        ref.read(tokenProvider.notifier).state = token;
-        //userToken=token;
-        // 未注册
-        if (resp.statusCode == 2) {
-          _completeRequiredInfo();
-          return;
-        }
-
-        final response = await getMyProfile();
-        if (response.statusCode == 0) {
-          final profile = MyProfile.fromJson(response.data);
-          ref.read(myProfileProvider.notifier).update(profile);
-          if (!profile.completed) {
+        if (resp.statusCode == 0 || resp.statusCode == 2) {
+          SonaAnalytics.log('reg_code');
+          final token = resp.data['token'];
+          ref.read(tokenProvider.notifier).state = token;
+          //userToken=token;
+          // 未注册
+          if (resp.statusCode == 2) {
             _completeRequiredInfo();
             return;
           }
-          Fluttertoast.showToast(msg: 'Welcome back, ${profile.name}');
-          if (mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+
+          final response = await getMyProfile();
+          if (response.statusCode == 0) {
+            final profile = MyProfile.fromJson(response.data);
+            ref.read(myProfileProvider.notifier).update(profile);
+            if (!profile.completed) {
+              _completeRequiredInfo();
+              return;
+            }
+            Fluttertoast.showToast(msg: 'Welcome back, ${profile.name}');
+            if (mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          } else {
+            Fluttertoast.showToast(msg: 'Failed to get profile, try again later');
+          }
         } else {
-          Fluttertoast.showToast(msg: 'Failed to get profile, try again later');
+          Fluttertoast.showToast(msg: 'Failed to login, try again later');
         }
-      } else {
+      } catch (e) {
         Fluttertoast.showToast(msg: 'Failed to login, try again later');
+      } finally {
+        EasyLoading.dismiss();
       }
     }
   }
