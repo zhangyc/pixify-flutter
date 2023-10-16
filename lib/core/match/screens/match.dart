@@ -75,7 +75,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       else if(pageController.position.userScrollDirection == ScrollDirection.forward){
         direction=ScrollDirection.forward;
       }
+    }
+    );
+    Future.delayed(Duration(seconds: 3),(){
+      pageController.jumpTo(100);
     });
+
   }
   List<UserInfo> users =[];
 
