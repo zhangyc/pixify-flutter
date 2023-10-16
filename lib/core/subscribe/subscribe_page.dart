@@ -73,12 +73,12 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     initStoreInfo();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(Duration(milliseconds: 500),(){
+        if(_scrollController.hasClients){
+          _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
+          setState(() {
 
-        _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
-        setState(() {
-
-        });
-
+          });
+        }
       });
     });
     super.initState();
