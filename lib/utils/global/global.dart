@@ -20,6 +20,7 @@ part './dio.dart';
 part './navigator_key.dart';
 part './token.dart';
 part './analytics.dart';
+part './route_observer.dart';
 
 Future<void> init() async {
   kvStore = await SharedPreferences.getInstance();
