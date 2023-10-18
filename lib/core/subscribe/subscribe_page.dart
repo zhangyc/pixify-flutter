@@ -620,10 +620,13 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     if(mounted){
       ref.read(myProfileProvider.notifier).refresh();
     }
-    setState(() {
-      _purchases.add(purchaseDetails);
-      _purchasePending = false;
-    });
+    if(mounted){
+      setState(() {
+        _purchases.add(purchaseDetails);
+        _purchasePending = false;
+      });
+    }
+
   }
   void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
     // handle invalid purchase here if  _verifyPurchase` failed.

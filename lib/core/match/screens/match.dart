@@ -383,7 +383,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 return;
               }
               if(value==1&&isShowArrowReward){
-                final result = await showInterestPicker(context: context);
+                final values=ref.read(myProfileProvider)?.interests;
+                final result = await showInterestPicker(context: context,initialValue: values?.toSet());
                 if (result != null) {
                   isShowArrowReward=false;
                   ref.read(myProfileProvider.notifier).updateField(interests: result);
