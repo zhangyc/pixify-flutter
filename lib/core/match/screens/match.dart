@@ -345,7 +345,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
                               curve: Curves.linearToEaseOut);
                         }
-                      },target: users[index]);
+                      },target: users[index],);
                     }else if(users[index].likeMe==0){
                       if (index < users.length - 1) {
                         pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),

@@ -54,6 +54,7 @@ void showFilter(BuildContext context,VoidCallback onSave) {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+
                                   e.index==currentFilterGender?Image.asset(Assets.iconsSelected,width: 24,height: 24,):Container(),
                                   Text(e.name,style: TextStyle(
                                       fontSize: 24,
@@ -137,7 +138,7 @@ void showFilter(BuildContext context,VoidCallback onSave) {
     });
   });
 }
-void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo target}) {
+void showMatched(BuildContext context,VoidCallback onSend,{required UserInfo target}) {
   String sayHi='Let SONA Say Hi';
 
   showGeneralDialog(context: context, pageBuilder: (_,__,___){
@@ -186,7 +187,7 @@ void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo tar
                         sayHi='Sent √';
                         setState((){});
                         Future.delayed(Duration(milliseconds: 500),(){
-                          onSave.call();
+                          onSend.call();
                           SonaAnalytics.log(MatchEvent.match_popup_sona.name);
                           Navigator.pop(context);
                         });
@@ -206,8 +207,9 @@ void showMatched(BuildContext context,VoidCallback onSave,{required UserInfo tar
                       ),
                     ),
                     sayHi=='Sent √'?Container():TextButton(onPressed: (){
+                      onSend.call();
                       Navigator.pop(context);
-                     }, child: Text('Later',style: TextStyle(
+                      }, child: Text('Later',style: TextStyle(
                         color: Colors.white.withOpacity(0.8),
                         fontSize: 16
                     ),))
@@ -276,7 +278,7 @@ void showArrowReward(BuildContext context){
                     ),
                     child: Text('Use a star to directly start a chat with someone you like!',style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14
+                        fontSize: 16
                     ),),
                   )
                 ],
@@ -315,7 +317,7 @@ void showArrowReward(BuildContext context){
   });
 }
 
-int get currentFilterGender => appCommonBox.get('currentFilterGender',defaultValue: 0);
+int? get currentFilterGender => appCommonBox.get('currentFilterGender',defaultValue: 2); ///默认为all
 set currentFilterGender(value){
   appCommonBox.put('currentFilterGender', value);
 }

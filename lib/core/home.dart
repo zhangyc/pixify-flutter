@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/icon.dart';
@@ -41,6 +42,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   }
 
   void _determinePosition() async {
+    Permission.locationWhenInUse.request();
     final position = await determinePosition();
     longitude=position.longitude;
     latitude=position.latitude;
