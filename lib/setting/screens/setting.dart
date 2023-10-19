@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -101,55 +102,40 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () async {
-                PackageInfo packageInfo = await PackageInfo.fromPlatform();
-                if(mounted){
-                  var result=await showRadioFieldDialog(context: context, options:
-                  {'appVersion:${ packageInfo.version}': packageInfo.version,
-                    'appCode:${ packageInfo.buildNumber}': packageInfo.buildNumber,
-                  });
-                }
-                // if (result != null && mounted){
-                //   if(result=='1'){
-                //     Navigator.push(context, MaterialPageRoute(builder: (c){
-                //       return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
-                //     }));
-                //   }else if(result=='2'){
-                //     Navigator.push(context, MaterialPageRoute(builder: (c){
-                //       return WebView(url: 'https://h5.sona.pinpon.fun/disclaimer.html', title: 'Disclaimer');
-                //     }));
-                //   }else if(result=='3'){
-                //     Navigator.push(context, MaterialPageRoute(builder: (c){
-                //       return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
-                //     }));
-                //   }
-                // }
-              },
-              child: Column(
-                children: [
-                  SizedBox(height: 24),
-                  Row(
-                    children: [
-                      SizedBox(width: 20),
-                      Icon(CupertinoIcons.app_badge),
-                      SizedBox(width: 8),
-                      Text('App info', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w500
-                      )),
-                      Expanded(child: Container()),
-                      // Text(openNotification ? 'on': 'off'),
-                      Icon(CupertinoIcons.forward),
-                      SizedBox(width: 20),
-
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // kDebugMode?SliverToBoxAdapter(
+          //   child: GestureDetector(
+          //     behavior: HitTestBehavior.translucent,
+          //     onTap: () async {
+          //       PackageInfo packageInfo = await PackageInfo.fromPlatform();
+          //       if(mounted){
+          //         var result=await showRadioFieldDialog(context: context, options:
+          //         {'appVersion:${ packageInfo.version}': packageInfo.version,
+          //           'appCode:${ packageInfo.buildNumber}': packageInfo.buildNumber,
+          //         });
+          //       }
+          //     },
+          //     child: Column(
+          //       children: [
+          //         SizedBox(height: 24),
+          //         Row(
+          //           children: [
+          //             SizedBox(width: 20),
+          //             Icon(CupertinoIcons.app_badge),
+          //             SizedBox(width: 8),
+          //             Text('App info', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          //                 fontWeight: FontWeight.w500
+          //             )),
+          //             Expanded(child: Container()),
+          //             // Text(openNotification ? 'on': 'off'),
+          //             Icon(CupertinoIcons.forward),
+          //             SizedBox(width: 20),
+          //
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           SliverToBoxAdapter(
             child: SizedBox(
               height: 40,
