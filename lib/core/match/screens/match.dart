@@ -335,8 +335,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 controller: pageController,
                 onLike: (){
                   if(canLike){
-
-                    like=like-1;
+                    if(like>0){
+                      like=like-1;
+                    }
                     users[index].matched=true;
                     SonaAnalytics.log(MatchEvent.match_like.name);
                     if(users[index].likeMe==1){
