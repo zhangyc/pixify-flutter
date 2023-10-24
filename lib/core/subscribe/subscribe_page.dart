@@ -740,7 +740,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/12)/monthBill).toStringAsFixed(2)))}';
 
       //(details.rawPrice/12)/monthBill;
-     //per='${(details.rawPrice/12).toStringAsFixed(2)}';
+     //per='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}';
       // return Text();
     }
     return Column(
@@ -760,18 +760,18 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     String id=details.id;
     String p='';
     if(id==month){
-      p='${(details.rawPrice).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice).toStringAsFixed(2)}/mo';
       //return Container();
     }else if(id==quarter){
-      // return Text('${(details.rawPrice/3).toStringAsFixed(1)}');
-      p='${(details.rawPrice/3).toStringAsFixed(2)}/mo';
+      // return Text('${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(1)}');
+      p='${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(2)}/mo';
     }
     else if(id==biannually){
-      // return Text('${(details.rawPrice/6).toStringAsFixed(1)}');
-      p='${(details.rawPrice/6).toStringAsFixed(2)}/mo';
+      // return Text('${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(1)}');
+      p='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}/mo';
     }
     else if(id==annually){
-      p='${(details.rawPrice/12).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}/mo';
       // return Text();
     }
     return Text(p,style: TextStyle(
