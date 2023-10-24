@@ -9,8 +9,8 @@ A new Flutter project.
 flutter build apk --split-per-abi --dart-define=ENV=prod
 flutter build apk --split-per-abi --dart-define=ENV=test
 ### IPA
-flutter build ip --release --export-method=ad-hoc --dart-define=ENV=prod
-flutter build ip --release --export-method=ad-hoc --dart-define=ENV=test
+flutter build ipa --release --export-method=ad-hoc --dart-define=ENV=prod
+flutter build ipa --release --export-method=ad-hoc --dart-define=ENV=test
 
 ## Release
 ### AAR
