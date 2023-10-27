@@ -203,19 +203,23 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
 
-                    child: RichText(text:TextSpan(text: _terms,
+                    child: RichText(
+                      text:TextSpan(
+                        text: _terms,
                         style: const TextStyle(
                             color: Color(0xffa9a9a9)
                         ),
                         children: [
-                          TextSpan(text: ' Terms',recognizer: TapGestureRecognizer()..onTap=(){
-                            Navigator.push(context, MaterialPageRoute(builder: (c){
-                              return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
-                            }));
-                          },
-                              style: const TextStyle(
-                                  color: Color(0xffEA01FF)
-                              )
+                          TextSpan(
+                            text: 'Terms',
+                            recognizer: TapGestureRecognizer()..onTap = () {
+                              Navigator.push(context, MaterialPageRoute(builder: (c){
+                                return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                              }));
+                            },
+                            style: const TextStyle(
+                                color: Color(0xffEA01FF)
+                            )
                           ),
                           TextSpan(text: '.')
                         ]
@@ -244,8 +248,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                     ],
                   ),
                 ),
-
-
               ],
             ):Container(),
           ],
@@ -803,4 +805,4 @@ List<String> unlockFeatures=[
   'sona建议',
   'hook'
 ];
-String _terms='''By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via Play Store settings, and you agree to our ''';
+String _terms='''By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via ${Platform.isAndroid ? 'Play Store' : 'Apple ID'} settings, and you agree to our ''';
