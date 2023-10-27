@@ -27,15 +27,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow access to camera to take and upload photos to your library.</string>
+	<string>Allow Sona to access your camera to capture photos to showcase yourself, which will be uploaded to your match profile.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Allow access to location at all times for recommending people nearby.</string>
+	<string>Allow Sona to access your location at all times for recommending people nearby.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow access to location while using the app for recommending people nearby.</string>
+	<string>Allow Sona to access your location while using the app for recommending people nearby.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allow access to photos to upload photos to your library.</string>
+	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow access to photos to upload photos to your library.</string>
+	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
