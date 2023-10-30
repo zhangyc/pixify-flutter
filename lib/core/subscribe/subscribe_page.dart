@@ -217,12 +217,23 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                                   color: Color(0xffEA01FF)
                               )
                           ),
-                          TextSpan(text: '.')
+                          TextSpan(text: '.'),
                         ]
                     ),
 
                     ),
-                  )
+                  ),
+                  TextButton(onPressed: (){
+                      bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                      if(isMember){
+                        Fluttertoast.showToast(msg: 'You are currently a member');
+                      }else {
+                        Fluttertoast.showToast(msg: 'There is no order information under your account');
+                      }
+                   }, child: Text("Restore",style: const TextStyle(
+                      color: Color(0xffEA01FF)
+                  ),))
+
                 ],
               ),
             ),
