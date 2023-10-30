@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -227,17 +228,22 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
                     ),
                   ),
-                  TextButton(onPressed: (){
+                  TextButton(
+                    onPressed: (){
                       bool isMember=ref.read(myProfileProvider)?.isMember??false;
                       if(isMember){
-                        Fluttertoast.showToast(msg: 'You are currently a member');
-                      }else {
-                        Fluttertoast.showToast(msg: 'There is no order information under your account');
+                        Fluttertoast.showToast(msg: 'You are Super SONA');
+                      } else {
+                        inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
                       }
-                   }, child: Text("Restore",style: const TextStyle(
+                    },
+                    child: Text(
+                      'Restore',
+                      style: const TextStyle(
                       color: Color(0xffEA01FF)
-                  ),))
-
+                      )
+                    )
+                  )
                 ],
               ),
             ),
@@ -587,7 +593,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       _purchasePending = false;
     });
   }
-  Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) async{
+
+  Future<Response> _verifyPurchase(PurchaseDetails purchaseDetails) async{
     Map<String,dynamic> map={};
     if(Platform.isAndroid){
       map={
@@ -605,16 +612,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       };
     }
 
-    final response=await dio.post('/callback/google-pay',data: map);
-    if(response.data!=null){
-      if(response.data){
-        return Future<bool>.value(true);
-      }else {
-        return Future<bool>.value(false);
-      }
-    }
-    return Future<bool>.value(false);
-
+    return dio.post('/callback/google-pay',data: map);
   }
   ///传递
   Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
@@ -630,16 +628,13 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     //
     // }
     initUserPermission();
-    if(mounted){
-      ref.read(myProfileProvider.notifier).refresh();
-    }
-    if(mounted){
+    ref.read(myProfileProvider.notifier).refresh();
+    if (mounted) {
       setState(() {
         _purchases.add(purchaseDetails);
         _purchasePending = false;
       });
     }
-
   }
   void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
     // handle invalid purchase here if  _verifyPurchase` failed.
@@ -650,14 +645,13 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       _purchasePending = true;
     });
   }
-  ///监听到的服务端配置的产品
+
+  /// 监听到的服务端配置的产品
   Future<void> _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) async {
-    ///遍历购买列表
+    // 遍历购买列表
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-
       if (purchaseDetails.status == PurchaseStatus.pending) {
-        //purchaseDetails.status=PurchaseStatus.canceled;
-
+        // purchaseDetails.status=PurchaseStatus.canceled;
         showPendingUI();
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
@@ -666,29 +660,38 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             ///恢复购买
             purchaseDetails.status == PurchaseStatus.restored) {
-          try{
-            final bool valid = await _verifyPurchase(purchaseDetails);
-            if (valid) {
+          try {
+            final resp = await _verifyPurchase(purchaseDetails);
+            if (resp.statusCode == 0) {
               unawaited(deliverProduct(purchaseDetails));
             } else {
-              ///处理无效的购买
-              _handleInvalidPurchase(purchaseDetails);
-              return;
+              if (resp.statusCode == 40030) {
+                // 已绑定在其他账号
+                Fluttertoast.showToast(msg: 'This purchase is already linked to another App account. Please use the original account to login the App.');
+              } else if (resp.statusCode == 40040) {
+                // 已绑定
+                Fluttertoast.showToast(msg: 'This purchase is already linked to your account.');
+              } else {
+                Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
+                // return;
+              }
             }
           } catch(e){
-            Fluttertoast.showToast(msg: 'Handle err');
+            Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
+          } finally {
             setState(() {
               _purchasePending = false;
             });
           }
-
         }
+
         if (purchaseDetails.pendingCompletePurchase) {
           await inAppPurchase.completePurchase(purchaseDetails);
         }
       }
     }
   }
+
   ///确认价格改变
   Future<void> confirmPriceChange(BuildContext context) async {
     // Price changes for Android are not handled by the application, but are
