@@ -203,19 +203,23 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
 
-                    child: RichText(text:TextSpan(text: _terms,
+                    child: RichText(
+                      text:TextSpan(
+                        text: _terms,
                         style: const TextStyle(
                             color: Color(0xffa9a9a9)
                         ),
                         children: [
-                          TextSpan(text: ' Terms',recognizer: TapGestureRecognizer()..onTap=(){
-                            Navigator.push(context, MaterialPageRoute(builder: (c){
-                              return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
-                            }));
-                          },
-                              style: const TextStyle(
-                                  color: Color(0xffEA01FF)
-                              )
+                          TextSpan(
+                            text: 'Terms',
+                            recognizer: TapGestureRecognizer()..onTap = () {
+                              Navigator.push(context, MaterialPageRoute(builder: (c){
+                                return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                              }));
+                            },
+                            style: const TextStyle(
+                                color: Color(0xffEA01FF)
+                            )
                           ),
                           TextSpan(text: '.'),
                         ]
@@ -255,8 +259,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                     ],
                   ),
                 ),
-
-
               ],
             ):Container(),
           ],
@@ -391,7 +393,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                       borderRadius: BorderRadius.circular(5),
                       color: _productDetails==productDetails?Color(0xffFF37A3):Color(0xffFFB3DC),
                     ),
-                    child: Text('${productDetails.currencySymbol}${productDetails.price}',style: TextStyle(
+                    child: Text('${productDetails.price}',style: TextStyle(
                       color: Colors.white
                     ),),
                   )
@@ -771,18 +773,18 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     String id=details.id;
     String p='';
     if(id==month){
-      p='${details.currencySymbol}${details.currencySymbol}${(details.rawPrice).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice).toStringAsFixed(2)}/mo';
       //return Container();
     }else if(id==quarter){
       // return Text('${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(1)}');
-      p='${details.currencySymbol}${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(2)}/mo';
     }
     else if(id==biannually){
       // return Text('${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(1)}');
-      p='${details.currencySymbol}${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}/mo';
     }
     else if(id==annually){
-      p='${details.currencySymbol}${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}/mo';
       // return Text();
     }
     return Text(p,style: TextStyle(
@@ -814,4 +816,4 @@ List<String> unlockFeatures=[
   'sona建议',
   'hook'
 ];
-String _terms='''By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via Play Store settings, and you agree to our ''';
+String _terms='''By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via ${Platform.isAndroid ? 'Play Store' : 'Apple ID'} settings, and you agree to our ''';
