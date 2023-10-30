@@ -377,7 +377,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               _completeRequiredInfo();
               return;
             }
-            Fluttertoast.showToast(msg: 'Welcome back, ${profile.name}');
             if (mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
           } else {
             Fluttertoast.showToast(msg: 'Failed to get profile, try again later');

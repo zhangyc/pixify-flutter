@@ -135,139 +135,148 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             Container()
           ],
         ),
-        body: Stack(
-          children: [
-            Stack(
-              children: [
-                _queryProductError==null?ListView(
-                  children: <Widget>[
-                    _buildConnectionCheckTile(),
-                    _buildProductList(),
-                    // _buildConsumableBox(),
-                    // _buildRestoreButton(),
-                  ],
-                ):Center(
-                  child: Text(_queryProductError!),
-                ),
-              ],
-            ),
-            Positioned(bottom: 0,
-              width: MediaQuery.of(context).size.width,child: Column(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Stack(
                 children: [
-                  ElevatedButton(onPressed: () async{
-                    late PurchaseParam purchaseParam;
-                    if(_productDetails==null){
-                      return;
-                    }
-                    if (Platform.isAndroid) {
-                      // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
-                      // verify the latest status of you your subscription by using server side receipt validation
-                      // and update the UI accordingly. The subscription purchase status shown
-                      // inside the app may not be accurate.
-                      final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
-                      purchaseParam = GooglePlayPurchaseParam(
-                          applicationUserName: ref.read(myProfileProvider)!.id.toString(),
-                          productDetails: _productDetails!,
-                          changeSubscriptionParam: (oldSubscription != null)
-                              ? ChangeSubscriptionParam(
-                            oldPurchaseDetails: oldSubscription,
-                            prorationMode: ProrationMode.immediateAndChargeFullPrice,
-                          ) : null);
-                    } else {
-                      //InAppPurchase.instance.restorePurchases();
-                      purchaseParam = AppStorePurchaseParam(
-                        applicationUserName: ref.read(myProfileProvider)!.id.toString(),
-                        productDetails: _productDetails!,
-                      );
-                    }
-                    try {
-                      await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
-                    } catch (e) {
-                      inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
-                    }
-                    //inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
-                    SonaAnalytics.log(PayEvent.pay_continue.name);
-                  },
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: Size(346, 50),
-                        padding: EdgeInsets.zero
-                    ),
-                    child: Container(decoration: const BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                          Color(0xffFF0099),
-                          Color(0xffF5326D),
-                        ])
-                    ),
-                      alignment: Alignment.center,child: const Text('Continue'),
-                    ),
+                  _queryProductError==null?ListView(
+                    children: <Widget>[
+                      _buildConnectionCheckTile(),
+                      _buildProductList(),
+                      // _buildConsumableBox(),
+                      // _buildRestoreButton(),
+                    ],
+                  ):Center(
+                    child: Text(_queryProductError!),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-
-                    child: RichText(
-                      text:TextSpan(
-                        text: _terms,
-                        style: const TextStyle(
-                            color: Color(0xffa9a9a9)
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Terms',
-                            recognizer: TapGestureRecognizer()..onTap = () {
-                              Navigator.push(context, MaterialPageRoute(builder: (c){
-                                return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
-                              }));
-                            },
-                            style: const TextStyle(
-                                color: Color(0xffEA01FF)
-                            )
-                          ),
-                          TextSpan(text: '.'),
-                        ]
-                    ),
-
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: (){
-                      bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                      if(isMember){
-                        Fluttertoast.showToast(msg: 'You are Super SONA');
-                      } else {
-                        inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
-                      }
-                    },
-                    child: Text(
-                      'Restore',
-                      style: const TextStyle(
-                      color: Color(0xffEA01FF)
-                      )
-                    )
-                  )
                 ],
               ),
-            ),
-            _purchasePending?const Stack(
-              children: <Widget>[
-                Opacity(
-                  opacity: 0.7,
-                  child: ModalBarrier(dismissible: false, color: Colors.black),
-                ),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(color: Color(0xffE33E79)),
-                      SizedBox(
-                        height: 16,
+              Positioned(bottom: 0,
+                width: MediaQuery.of(context).size.width,child: Column(
+                  children: [
+                    ElevatedButton(onPressed: () async{
+                      late PurchaseParam purchaseParam;
+                      if(_productDetails==null){
+                        return;
+                      }
+                      if (Platform.isAndroid) {
+                        // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
+                        // verify the latest status of you your subscription by using server side receipt validation
+                        // and update the UI accordingly. The subscription purchase status shown
+                        // inside the app may not be accurate.
+                        final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
+                        purchaseParam = GooglePlayPurchaseParam(
+                            applicationUserName: ref.read(myProfileProvider)!.id.toString(),
+                            productDetails: _productDetails!,
+                            changeSubscriptionParam: (oldSubscription != null)
+                                ? ChangeSubscriptionParam(
+                              oldPurchaseDetails: oldSubscription,
+                              prorationMode: ProrationMode.immediateAndChargeFullPrice,
+                            ) : null);
+                      } else {
+                        //InAppPurchase.instance.restorePurchases();
+                        purchaseParam = AppStorePurchaseParam(
+                          applicationUserName: ref.read(myProfileProvider)!.id.toString(),
+                          productDetails: _productDetails!,
+                        );
+                      }
+                      try {
+                        await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                      } catch (e) {
+                        inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
+                      }
+                      //inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+                      SonaAnalytics.log(PayEvent.pay_continue.name);
+                    },
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: Size(346, 50),
+                          padding: EdgeInsets.zero
                       ),
-                      Text("Payment processing. Don't exit to prevent errors.",style: TextStyle(color: Colors.white),)
-                    ],
-                  ),
+                      child: Container(decoration: const BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Color(0xffFF0099),
+                            Color(0xffF5326D),
+                          ])
+                      ),
+                        alignment: Alignment.center,child: const Text('Continue'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+
+                      child: RichText(
+                        text:TextSpan(
+                          text: _terms,
+                          style: const TextStyle(
+                              color: Color(0xffa9a9a9)
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Terms',
+                              recognizer: TapGestureRecognizer()..onTap = () {
+                                Navigator.push(context, MaterialPageRoute(builder: (c){
+                                  return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                                }));
+                              },
+                              style: const TextStyle(
+                                  color: Color(0xffEA01FF)
+                              )
+                            ),
+                            TextSpan(text: '.'),
+                          ]
+                      ),
+
+                      ),
+                    ),
+                    Visibility(
+                      visible: Platform.isIOS,
+                      child: TextButton(
+                        onPressed: (){
+                          bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                          if(isMember){
+                            Fluttertoast.showToast(msg: 'You are Super SONA');
+                          } else {
+                            if (hasPurchased == true) {
+                              inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
+                            } else {
+                              Fluttertoast.showToast(msg: 'Failed to restore, can\'t find records.');
+                            }
+                          }
+                        },
+                        child: Text(
+                          'Restore',
+                          style: const TextStyle(
+                          color: Color(0xffEA01FF)
+                          )
+                        )
+                      ),
+                    )
+                  ],
                 ),
-              ],
-            ):Container(),
-          ],
+              ),
+              _purchasePending?const Stack(
+                children: <Widget>[
+                  Opacity(
+                    opacity: 0.7,
+                    child: ModalBarrier(dismissible: false, color: Colors.black),
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(color: Color(0xffE33E79)),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text("Payment processing. Don't exit to prevent errors.",style: TextStyle(color: Colors.white),)
+                      ],
+                    ),
+                  ),
+                ],
+              ):Container(),
+            ],
+          ),
         ),
       ),
     );
@@ -634,8 +643,10 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         _purchases.add(purchaseDetails);
         _purchasePending = false;
       });
+      Fluttertoast.showToast(msg: 'You are Super SONA now!');
     }
   }
+
   void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
     // handle invalid purchase here if  _verifyPurchase` failed.
   }
@@ -646,8 +657,13 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     });
   }
 
+  bool? hasPurchased = false;
   /// 监听到的服务端配置的产品
   Future<void> _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) async {
+    final hp = purchaseDetailsList.any((p) => p.status == PurchaseStatus.purchased);
+    if (hp && hasPurchased != true) {
+      hasPurchased = true;
+    }
     // 遍历购买列表
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
       if (purchaseDetails.status == PurchaseStatus.pending) {
@@ -656,25 +672,26 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
           handleError(purchaseDetails.error!);
-          ///已购买
+          // 已购买
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
-            ///恢复购买
+            // 恢复购买
             purchaseDetails.status == PurchaseStatus.restored) {
           try {
             final resp = await _verifyPurchase(purchaseDetails);
             if (resp.statusCode == 0) {
               unawaited(deliverProduct(purchaseDetails));
             } else {
-              if (resp.statusCode == 40030) {
-                // 已绑定在其他账号
-                Fluttertoast.showToast(msg: 'This purchase is already linked to another App account. Please use the original account to login the App.');
-              } else if (resp.statusCode == 40040) {
-                // 已绑定
-                Fluttertoast.showToast(msg: 'This purchase is already linked to your account.');
-              } else {
-                Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
-                // return;
-              }
+              Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
+              // if (resp.statusCode == 40030) {
+              //   // 已绑定在其他账号
+              //   Fluttertoast.showToast(msg: 'This purchase is already linked to another App account. Please use the original account to login the App.');
+              // } else if (resp.statusCode == 40040) {
+              //   // 已绑定
+              //   Fluttertoast.showToast(msg: 'This purchase is already linked to your account.');
+              // } else {
+              //   Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
+              //   // return;
+              // }
             }
           } catch(e){
             Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
