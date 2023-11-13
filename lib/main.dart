@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +44,7 @@ void main() async {
     initFireBaseService(firebase);
   }
   await global.init();
+  unawaited(_initAttribution());
   runApp(
     ProviderScope(
       child: const SonaApp()
@@ -47,4 +52,15 @@ void main() async {
   );
 }
 
-
+Future<void> _initAttribution() async {
+  AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
+      afDevKey: 'pjgPTCev87vC2WK6dGhg3n',
+      appId: Platform.isIOS ? 'id6464375495' : 'com.planetwalk.sona',
+      showDebug: true,
+      timeToWaitForATTUserAuthorization: 50, // for iOS 14.5
+      disableAdvertisingIdentifier: false, // Optional field
+      disableCollectASA: false
+  ); // Optional field
+  AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
+  await appsflyerSdk.initSdk();
+}

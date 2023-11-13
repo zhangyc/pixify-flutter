@@ -48,6 +48,8 @@ dependencies:
   rxdart: ^0.27.7
   url_launcher: ^6.1.14
   package_info_plus: ^4.2.0
+  appsflyer_sdk: ^6.12.2
+
 dev_dependencies:
   custom_lint: ^0.4.0
   flutter_lints: ^2.0.0
