@@ -322,10 +322,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         return true;
       } else if (resp.statusCode == 10070) {
         Fluttertoast.showToast(msg: 'Code requests too frequent. Wait minutes before trying again.');
-        return false;
+        return true;
       } else {
         Fluttertoast.showToast(msg: 'Sending pin message failed');
-        return false;
+        return true;
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Sending pin message failed');

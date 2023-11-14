@@ -41,7 +41,11 @@ class MyProfile {
     final latitudeStr = json['latitude'];
     Position? pos;
     if (longitudeStr != null && latitudeStr != null) {
-      pos = Position.fromMap({'longitude': double.tryParse(longitudeStr), 'latitude': double.tryParse(latitudeStr)});
+      pos = Position.fromMap({
+        'longitude': double.tryParse(longitudeStr),
+        'latitude': double.tryParse(latitudeStr),
+        'timestamp': json['modifyDate'] ?? json['createDate'] ?? DateTime.now().millisecondsSinceEpoch
+      });
     }
     return MyProfile(
       id: json['id'],

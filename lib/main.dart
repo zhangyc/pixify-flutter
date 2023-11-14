@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -56,7 +57,7 @@ Future<void> _initAttribution() async {
   AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
       afDevKey: 'pjgPTCev87vC2WK6dGhg3n',
       appId: Platform.isIOS ? 'id6464375495' : 'com.planetwalk.sona',
-      showDebug: true,
+      showDebug: kDebugMode,
       timeToWaitForATTUserAuthorization: 50, // for iOS 14.5
       disableAdvertisingIdentifier: false, // Optional field
       disableCollectASA: false
