@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 
 class PowersWidget extends StatelessWidget {
   const PowersWidget({
@@ -32,11 +33,11 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: '100 Sona messages',style: TextStyle(
+                  TextSpan(text: S.current.powerSonaMessage,style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
-                  TextSpan(text: ' daily',style: TextStyle(
+                  TextSpan(text: ' ${S.current.daily}',style: TextStyle(
                       color: Colors.black
                   )),
                 ]
@@ -55,10 +56,10 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: 'Unlock to see',style: TextStyle(
+                  TextSpan(text: S.current.powerUnlock,style: TextStyle(
                       color: Colors.black
                   )),
-                  TextSpan(text: ' who liked me',style: TextStyle(
+                  TextSpan(text: ' ${S.current.powerWhoLike}',style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
@@ -78,11 +79,11 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: 'Unlimited',style: TextStyle(
+                  TextSpan(text: S.current.unlimited,style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
-                  TextSpan(text: ' Likes',style: TextStyle(
+                  TextSpan(text: ' ${S.current.likes}',style: TextStyle(
                       color: Colors.black
                   )),
                 ]
@@ -100,11 +101,11 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: 'Arrows -1 ',style: TextStyle(
+                  TextSpan(text: '${S.current.arrow} ',style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
-                  TextSpan(text: 'Message people you like directly',style: TextStyle(
+                  TextSpan(text: S.current.arrowInfo,style: TextStyle(
                       color: Colors.black
                   )),
                 ]
@@ -144,7 +145,7 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: 'Strategy - ',style: TextStyle(
+                  TextSpan(text: S.current.strategy,style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
@@ -166,11 +167,11 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: 'Chat Styles - ',style: TextStyle(
+                  TextSpan(text: S.current.chatStyle,style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
-                  TextSpan(text: 'Unlock 6 chat styles',style: TextStyle(
+                  TextSpan(text: S.current.chatStyleInfo ,style: TextStyle(
                       color: Colors.black
                   )),
                 ]

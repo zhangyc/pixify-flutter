@@ -21,6 +21,7 @@ import 'package:sona/utils/global/global.dart';
 import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../account/providers/profile.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/dialog/input.dart';
 import '../../../utils/location/location.dart';
 import '../../../utils/picker/interest.dart';
@@ -135,7 +136,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 ),
                 child: Image.asset(Assets.iconsMore,width: 24,height: 24,),
               ),onTap: () async {
-                var result=await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
+                var result=await showRadioFieldDialog(context: context, options: {S.current.report: 'report', S.current.block: 'block'});
                 if(result!=null){
                   if (result == 'report' && mounted){
                     SonaAnalytics.log(MatchEvent.match_report.name);

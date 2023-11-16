@@ -10,6 +10,7 @@ import 'package:sona/core/match/widgets/avatar_animation.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 import '../../chat/models/message.dart';
 import '../../chat/services/chat.dart';
 import '../util/event.dart';
@@ -34,7 +35,7 @@ void showFilter(BuildContext context,VoidCallback onSave) {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text('Gender',style: TextStyle(
+                  Text(S.current.gender,style: TextStyle(
                       fontSize: 24,
                       color: Color(0xfff9f9f9)
                   ),),
@@ -86,7 +87,7 @@ void showFilter(BuildContext context,VoidCallback onSave) {
                 const SizedBox(
                   height: 10,
                 ),
-                Text('Age',style: TextStyle(
+                Text(S.current.age,style: TextStyle(
                     fontSize: 24,
                     color: Color(0xfff9f9f9)
                 ),),
@@ -122,7 +123,7 @@ void showFilter(BuildContext context,VoidCallback onSave) {
                   borderRadius: BorderRadius.circular(40)
               ),
               alignment: Alignment.center,
-              child: Text('Save',style: TextStyle(
+              child: Text(S.current.save,style: TextStyle(
                   fontSize: 24,
                   color: Color(0xfff9f9f9)
               ),),

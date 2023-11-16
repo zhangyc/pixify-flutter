@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 
 class NoDataWidget extends StatelessWidget {
   const NoDataWidget({super.key});
@@ -10,7 +11,7 @@ class NoDataWidget extends StatelessWidget {
     return Container(color: Colors.black,child: Column(
       children: [
         SizedBox(height: 128,),
-        const Text('oOps, no data right now ',
+        Text(S.current.noDataTips,
           style: TextStyle(
               color: Colors.white
           ),
@@ -20,9 +21,9 @@ class NoDataWidget extends StatelessWidget {
           child: Image.asset(Assets.imagesError,width: 151,height: 148,fit: BoxFit.cover,),
         ),
         SizedBox(height: 10,),
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: 55 ),
-          child: Text('Please check your internet or Tap to Refresh and try again',
+          child: Text(S.current.checkInternet,
             style: TextStyle(
                 color: Colors.white
             ),

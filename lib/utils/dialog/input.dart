@@ -6,6 +6,7 @@ import 'package:sona/common/widgets/button/next.dart';
 import 'package:sona/common/widgets/button/option.dart';
 
 import '../../common/widgets/button/colored.dart';
+import '../../generated/l10n.dart';
 
 Future<bool?> showInfo({
   required BuildContext context,
@@ -470,7 +471,7 @@ Future<T?> showRadioFieldDialog<T>({
                   return OptionButton(
                     onTap: () => Navigator.pop(context, null),
                     color: Colors.transparent,
-                    text: 'Cancel',
+                    text: S.current.cancel,
                     fontColor: Theme.of(context).colorScheme.error,
                   );
                 }

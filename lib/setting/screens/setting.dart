@@ -10,6 +10,7 @@ import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../common/widgets/webview.dart';
+import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
 
 class SettingScreen extends StatefulHookConsumerWidget {
@@ -34,7 +35,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
           onPressed: Navigator.of(context).pop,
         ),
         centerTitle: true,
-        title: Text('Settings'),
+        title: Text(S.current.settings),
       ),
       body: CustomScrollView(
         slivers: [
@@ -48,7 +49,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   SizedBox(width: 20),
                   Icon(CupertinoIcons.bell),
                   SizedBox(width: 8),
-                  Text('Notification', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  Text(S.current.notification, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w500
                   )),
                   Expanded(child: Container()),
@@ -90,7 +91,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   SizedBox(width: 20),
                   Icon(CupertinoIcons.info),
                   SizedBox(width: 8),
-                  Text('About', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  Text(S.current.about, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500
                   )),
                   Expanded(child: Container()),
@@ -133,10 +134,10 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
           //           ],
           //         ),
           //       ],
-          //     ),
+          //      ),
           //   ),
           // ),
-          SliverToBoxAdapter(
+          SliverToBoxAdapter (
             child: SizedBox(
               height: 40,
             ),
@@ -147,7 +148,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                 width: 180,
                 child: ColoredButton(
                   onTap: _logout,
-                  text: 'Log out',
+                  text: S.current.logout,
                   color: Colors.black,
                   fontColor: Colors.white,
                 ),
@@ -163,7 +164,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                 children: [
                   TextButton(
                     onPressed: _delete,
-                    child: Text('Delete Account', style: TextStyle(color: Colors.grey))
+                    child: Text(S.current.deleteAccount, style: TextStyle(color: Colors.grey))
                   ),
                   SizedBox(height: 20),
                 ],

@@ -9,6 +9,8 @@ import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../../generated/l10n.dart';
+
 class PersonaScreen extends StatefulHookConsumerWidget {
   const PersonaScreen({super.key});
 
@@ -125,7 +127,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                 builder: (_) => const ProfileScreen()
                             )),
                             child: Text(
-                              'Edit Profile',
+                              S.current.editProfile,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                 color: Color(0xFF555555)
                               ),

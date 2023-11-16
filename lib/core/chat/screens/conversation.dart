@@ -13,6 +13,7 @@ import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../../generated/l10n.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../models/message.dart';
 import '../providers/liked_me.dart';
@@ -43,7 +44,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Chat', style: Theme.of(context).textTheme.headlineMedium),
+        title: Text(S.current.chat, style: Theme.of(context).textTheme.headlineMedium),
       ),
       body: CustomScrollView(
         slivers: [
@@ -68,7 +69,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
               padding: const EdgeInsets.only(left: 16, bottom: 20),
               child: Visibility(
                 visible: ref.watch(conversationStreamProvider).hasValue && ref.watch(conversationStreamProvider).value!.isNotEmpty,
-                child: Text('Messages', style: Theme.of(context).textTheme.titleMedium),
+                child: Text(S.current.messages, style: Theme.of(context).textTheme.titleMedium),
               ),
             ),
           ),

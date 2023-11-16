@@ -18,6 +18,7 @@ import 'package:sona/utils/picker/gender.dart';
 import 'package:sona/utils/picker/interest.dart';
 
 import '../../common/widgets/button/colored.dart';
+import '../../generated/l10n.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -40,7 +41,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     _profile = ref.watch(myProfileProvider)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: Text(S.current.editProfile),
         centerTitle: true,
       ),
       body: CustomScrollView(

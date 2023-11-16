@@ -9,7 +9,6 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
-import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/home_provider.dart';
 import 'package:sona/core/providers/notice.dart';
@@ -17,6 +16,7 @@ import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/location/location.dart';
 
 import '../common/permission/permission.dart';
+import '../generated/l10n.dart';
 import 'match/screens/match.dart';
 import 'match/widgets/filter_dialog.dart';
 
@@ -95,17 +95,17 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
                 BottomNavigationBarItem(
                     icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Color(0xff9f9f9f), activeProvider: bottomChatNoticeProvider),
                     activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
-                    label: 'Chat'
+                    label: S.current.chat
                 ),
                 BottomNavigationBarItem(
                     icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Color(0xff9f9f9f),),
                     activeIcon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.white,),
-                    label: 'Match'
+                    label: S.current.match
                 ),
                 BottomNavigationBarItem(
                     icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Color(0xff9f9f9f),),
                     activeIcon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.black,),
-                    label: 'Profile'
+                    label: S.current.profile
                 )
               ],
             ),

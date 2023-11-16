@@ -9,6 +9,8 @@ import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../../generated/l10n.dart';
+
 
 class LikedMeListView extends StatefulHookConsumerWidget {
   const LikedMeListView({
@@ -52,7 +54,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
               Padding(
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
-                  '${likedMeUsers.length} people liked you',
+                  '${likedMeUsers.length} ${S.current.homeWhoLikeMe}',
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -180,7 +182,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
-                        'Let\'s see who likes you',
+                        S.current.homeWhoLikeMe,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Colors.white
                         ),

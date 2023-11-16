@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/my_profile.dart';
@@ -9,8 +11,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sona/theme/theme.dart';
 import 'package:sona/utils/global/global.dart' as global;
 import 'package:sona/utils/global/global.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/home.dart';
+import 'generated/l10n.dart';
 
 class SonaApp extends HookConsumerWidget {
   const SonaApp({super.key});
@@ -24,7 +28,6 @@ class SonaApp extends HookConsumerWidget {
     }
     final navigatorKey = global.navigatorKey;
     final initialRoute = profile == null || !profile.completed ? 'login' : '/';
-
     return MaterialApp(
       key: ValueKey(token),
       navigatorKey: navigatorKey,
@@ -42,6 +45,18 @@ class SonaApp extends HookConsumerWidget {
       navigatorObservers: [routeObserver],
       // routes: _routes,
       onGenerateRoute: _onGenerateRoute,
+      supportedLocales: S.delegate.supportedLocales,
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: Locale(window.locale.languageCode),
+      // localeListResolutionCallback: (List<Locale>? locales, Iterable<Locale> supportedLocales) {
+      //
+      //   // 判断当前locale是否为英语系国家，如果是直接返回Locale('en', 'US')
+      // },
     );
   }
 }
