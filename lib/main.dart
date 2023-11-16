@@ -59,9 +59,9 @@ Future<void> _initAttribution() async {
       appId: Platform.isIOS ? 'id6464375495' : 'com.planetwalk.sona',
       showDebug: kDebugMode,
       timeToWaitForATTUserAuthorization: 50, // for iOS 14.5
-      disableAdvertisingIdentifier: false, // Optional field
-      disableCollectASA: false
-  ); // Optional field
+      disableAdvertisingIdentifier: Platform.isIOS,
+      disableCollectASA: Platform.isIOS
+  );
   AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
   await appsflyerSdk.initSdk();
 }
