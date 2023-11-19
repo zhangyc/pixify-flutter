@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/locale/locale.dart';
 
 import '../models/gender.dart';
 import '../models/my_profile.dart';
@@ -35,7 +36,9 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
     Set<String>? interests,
     String? avatar,
     String? bio,
-    Position? position
+    Position? position,
+    SonaLocale? locale,
+    String? country
   }) async {
     final resp = await updateMyProfile(
       name: name,
@@ -44,7 +47,9 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
       interests: interests,
       avatar: avatar,
       bio: bio,
-      position: position
+      position: position,
+      locale: locale,
+      country: country
     );
     if (resp.statusCode == 0) {
       await refresh();

@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,9 +13,11 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/core/match/widgets/filter_dialog.dart';
+import 'package:sona/utils/country/country.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/location/location.dart';
 import 'package:sona/utils/picker/interest.dart';
 
@@ -38,6 +42,8 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   Gender? _gender;
   DateTime? _birthday;
   String? _avatar;
+  String? _country;
+  late SonaLocale _locale;
   Set<String> _interests = <String>{};
 
   bool get _nameValidate =>
@@ -51,10 +57,11 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   @override
   void initState() {
     _initActions();
+    _locale = findMatchedSonaLocale(Platform.localeName);
     super.initState();
   }
 
-  void _initActions() {
+  void _initActions() async {
     _actions = [
       FieldAcquireAction(
           field: null,
@@ -86,13 +93,14 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
           highlights: [],
           action: _getAPhotoAndUpload
       ),
-      // FieldAcquireAction(
-      //     field: 'location',
-      //     textBuilder: () => '\n\nPlz authorize your location\nand reminders',
-      //     highlights: [],
-      //     action: _determineLocation
-      // ),
+      FieldAcquireAction(
+          field: 'locale',
+          textBuilder: () => '\n\nsth. more',
+          highlights: [],
+          action: _selectLocale
+      ),
     ];
+    countryMapList = jsonDecode(await rootBundle.loadString('assets/i18n/countries.json'));
   }
 
   @override
@@ -117,14 +125,16 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                             action.value ??= await action.action!();
                             if (action.value == null) return;
                           }
-                          if (action.field == 'avatar') {
+                          if (action.field == 'country') {
                             if (_validate && mounted) {
                               ref.read(myProfileProvider.notifier).updateField(
-                                  name: _name,
-                                  birthday: _birthday,
-                                  gender: _gender,
-                                  avatar: _avatar,
-                                  interests: _interests
+                                name: _name,
+                                birthday: _birthday,
+                                gender: _gender,
+                                avatar: _avatar,
+                                interests: _interests,
+                                country: _country,
+                                locale: _locale
                               );
                               SonaAnalytics.log('reg_confirm');
                               Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
@@ -251,6 +261,29 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
         ..done = true;
       _interests = value;
       return value;
+    }
+  }
+
+  Future<SonaLocale> _selectLocale() async {
+    final options = <String, String>{};
+    for (var l in supportedSonaLocales) {
+      options.addAll({l.displayName: l.locale.toLanguageTag()});
+    }
+    final value = await showRadioFieldDialog<String>(
+      context: context,
+      options: options,
+      initialValue: _locale.locale.toLanguageTag(),
+      dismissible: false
+    );
+    if (value == null) {
+      return _selectLocale();
+    } else {
+      SonaAnalytics.log('reg_locale');
+      _actions.firstWhere((action) => action.field == 'locale')
+        ..value = value
+        ..done = true;
+      _country = 'CN';
+      return findMatchedSonaLocale(value);
     }
   }
 }

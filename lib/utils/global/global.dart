@@ -13,6 +13,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
 import 'package:sona/utils/security/jwt_decoder.dart';
 
+import '../../account/models/my_profile.dart';
 import '../http/interceptors/base.dart';
 
 part './kv_store.dart';
@@ -21,6 +22,7 @@ part './navigator_key.dart';
 part './token.dart';
 part './analytics.dart';
 part './route_observer.dart';
+part './profile.dart';
 
 Future<void> init() async {
   kvStore = await SharedPreferences.getInstance();

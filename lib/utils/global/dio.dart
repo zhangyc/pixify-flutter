@@ -1,7 +1,5 @@
 part of './global.dart';
 
-final dio = _createDioInstance();
-
 Dio _createDioInstance() {
   final options = BaseOptions(
       connectTimeout: const Duration(milliseconds: 15000),
@@ -11,6 +9,7 @@ Dio _createDioInstance() {
       headers: {
         'device': Platform.operatingSystem,
         'version': 'v1.0.0',
+        'locale': profile?.locale
       }
   );
   final dio = Dio(options);
@@ -26,4 +25,11 @@ Dio _createDioInstance() {
   // dio.interceptors.add(TokenInterceptor(ref: ref));
 
   return dio;
+}
+
+Dio _dio = _createDioInstance();
+Dio get dio => _dio;
+
+void refreshDio() {
+  _dio = _createDioInstance();
 }

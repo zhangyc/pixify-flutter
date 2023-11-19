@@ -16,6 +16,7 @@ class MyProfile {
     this.impression,
     this.chatStyleId,
     this.photos = const <ProfilePhoto>[],
+    this.locale,
     required this.vipEndDate,
   });
 
@@ -31,6 +32,7 @@ class MyProfile {
   final List<ProfilePhoto> photos;
   final Position? position;
   final bool pushEnabled;
+  final String? locale;
   final int? vipEndDate;
 
   bool get completed => _validate();
@@ -60,7 +62,8 @@ class MyProfile {
       interests: json['interest'] != null ? (json['interest'] as String).trim().split(',') : [],
       photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
       position: pos,
-      pushEnabled: json['openPush'] ?? true
+      pushEnabled: json['openPush'] ?? true,
+      locale: json['locale']
     );
   }
 
@@ -79,6 +82,7 @@ class MyProfile {
       'longitude': position?.longitude.toString(),
       'latitude': position?.latitude.toString(),
       'openPush': pushEnabled,
+      'locale': locale,
       'vipEndDate':vipEndDate
     };
   }
