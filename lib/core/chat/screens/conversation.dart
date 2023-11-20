@@ -52,8 +52,8 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
             child: LikedMeListView(onTap: ([UserInfo? u]) {
               if (ref.read(myProfileProvider)!.isMember) {
                 if (u == null) {
-                  SonaAnalytics.log('chatlist_golikedme');
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
+                  // SonaAnalytics.log('chatlist_golikedme');
+                  // Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
                 } else {
                   SonaAnalytics.log('chatlist_member_card');
                   Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u, relation: Relation.likeMe)));

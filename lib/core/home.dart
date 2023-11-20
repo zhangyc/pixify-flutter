@@ -9,6 +9,7 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
+import 'package:sona/core/chat/screens/like_me.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/home_provider.dart';
 import 'package:sona/core/providers/notice.dart';
@@ -59,8 +60,9 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: _onPageChange,
         children: const [
-          ConversationScreen(),
           MatchScreen(),
+          LikeMeScreen(),
+          ConversationScreen(),
           PersonaScreen(),
         ],
       ),
@@ -89,18 +91,23 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
               iconSize: 48,
               currentIndex: _currentIndex,
               onTap: _onPageChange,
-              selectedItemColor: (bottomItem.index==0||bottomItem.index==2)?Colors.black:  Colors.white,
+              selectedItemColor: Colors.black,
               unselectedItemColor: Color(0xff9f9f9f),
               items: [
+                BottomNavigationBarItem(
+                    icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Color(0xff9f9f9f),),
+                    activeIcon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.black,),
+                    label: S.current.match
+                ),
+                BottomNavigationBarItem(
+                    icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Color(0xff9f9f9f), activeProvider: bottomChatNoticeProvider),
+                    activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
+                    label: 'Like me'
+                ),
                 BottomNavigationBarItem(
                     icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Color(0xff9f9f9f), activeProvider: bottomChatNoticeProvider),
                     activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
                     label: S.current.chat
-                ),
-                BottomNavigationBarItem(
-                    icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Color(0xff9f9f9f),),
-                    activeIcon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Colors.white,),
-                    label: S.current.match
                 ),
                 BottomNavigationBarItem(
                     icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Color(0xff9f9f9f),),

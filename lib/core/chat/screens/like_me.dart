@@ -1,47 +1,42 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/age.dart';
+import 'package:sona/core/chat/providers/liked_me.dart';
 
 import '../../../common/models/user.dart';
 
-class LikeMeScreen extends StatefulWidget {
-  const LikeMeScreen({super.key, required this.data});
-  final List<UserInfo> data;
+class LikeMeScreen extends StatefulHookConsumerWidget {
+  const LikeMeScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _LikeMeScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LikeMeScreenState();
 }
 
-class _LikeMeScreenState extends State<LikeMeScreen> {
+class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE74E27),
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: Navigator.of(context).pop,
-          icon: Icon(CupertinoIcons.back, color: Colors.white,),
-        ),
-        centerTitle: true,
-        title: Text('${widget.data.length} liked you', style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.white)),
-      ),
-      body: GridView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
-          childAspectRatio: 112/168
-        ),
-        itemBuilder: _itemBuilder,
-        itemCount: widget.data.length
+      body: ref.watch(asyncLikedMeProvider).when(
+          data: (data) => GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 112/168
+              ),
+              itemBuilder: (BuildContext context, int index) => _itemBuilder(data[index]),
+              itemCount: data.length
+          ),
+          error: (_, __) => Center(child: Text('error')),
+          loading: () => Center(child: CircularProgressIndicator())
       ),
     );
   }
 
-  Widget _itemBuilder(BuildContext context, int index) {
-    final u = widget.data[index];
+  Widget _itemBuilder(UserInfo u) {
     return Container(
       key: ValueKey(u.id),
       decoration: BoxDecoration(
