@@ -5,20 +5,17 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
-import 'package:sona/core/match/widgets/filter_dialog.dart';
 import 'package:sona/utils/country/country.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
-import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/global/global.dart' as global;
 import 'package:sona/utils/locale/locale.dart';
-import 'package:sona/utils/location/location.dart';
 import 'package:sona/utils/picker/interest.dart';
 
 import '../../core/persona/widgets/sona_message.dart';
@@ -62,6 +59,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   }
 
   void _initActions() async {
+    final profile = global.profile;
     _actions = [
       FieldAcquireAction(
           field: null,
@@ -69,31 +67,31 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
           highlights: ['SONA'],
           action: null
       ),
-      FieldAcquireAction(
+      if (profile?.name == null) FieldAcquireAction(
           field: 'name',
           textBuilder: () => '\n\nFirst, what\'s your name?',
           highlights: [],
           action: _getName
       ),
-      FieldAcquireAction(
+      if (profile?.birthday == null) FieldAcquireAction(
           field: 'birthday',
           textBuilder: () => '\n\nPlz choose your birthday.',
           highlights: [],
           action: _getBirthday
       ),
-      FieldAcquireAction(
+      if (profile?.gender == null) FieldAcquireAction(
           field: 'gender',
           textBuilder: () => '\n\nPlz choose your gender.',
           highlights: [],
           action: _getGender
       ),
-      FieldAcquireAction(
+      if (profile?.avatar == null) FieldAcquireAction(
           field: 'avatar',
           textBuilder: () => '\n\nPick a photo represents you',
           highlights: [],
           action: _getAPhotoAndUpload
       ),
-      FieldAcquireAction(
+      if (profile?.locale == null) FieldAcquireAction(
           field: 'locale',
           textBuilder: () => '\n\nsth. more',
           highlights: [],
@@ -125,7 +123,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                             action.value ??= await action.action!();
                             if (action.value == null) return;
                           }
-                          if (action.field == 'country') {
+                          if (action.field == 'locale') {
                             if (_validate && mounted) {
                               ref.read(myProfileProvider.notifier).updateField(
                                 name: _name,
@@ -136,7 +134,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                                 country: _country,
                                 locale: _locale
                               );
-                              SonaAnalytics.log('reg_confirm');
+                              global.SonaAnalytics.log('reg_confirm');
                               Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                             } else {
                               Fluttertoast.showToast(msg: 'Invalid info');
@@ -160,7 +158,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     if (value == null || value.isEmpty) {
       return _getName();
     } else {
-      SonaAnalytics.log('reg_name');
+      global.SonaAnalytics.log('reg_name');
       _actions.firstWhere((action) => action.field == 'name')
         ..value = value
         ..done = true;
@@ -182,7 +180,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
             'You entered an underage birthdate so you cannot complete registration.');
         exit(0);
       }
-      SonaAnalytics.log('reg_birthday');
+      global.SonaAnalytics.log('reg_birthday');
       _actions.firstWhere((action) => action.field == 'birthday')
         ..value = value
         ..done = true;
@@ -196,7 +194,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     if (value == null) {
       return _getGender();
     } else {
-      SonaAnalytics.log('reg_gender');
+      global.SonaAnalytics.log('reg_gender');
       _actions.firstWhere((action) => action.field == 'gender')
         ..value = value
         ..done = true;
@@ -232,7 +230,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
       if (value == null) {
         return _getAPhotoAndUpload();
       }
-      SonaAnalytics.log('reg_avatar_${source.name}');
+      global.SonaAnalytics.log('reg_avatar_${source.name}');
       _actions.firstWhere((action) => action.field == 'avatar')
         ..value = value
         ..done = true;
@@ -278,7 +276,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
     if (value == null) {
       return _selectLocale();
     } else {
-      SonaAnalytics.log('reg_locale');
+      global.SonaAnalytics.log('reg_locale');
       _actions.firstWhere((action) => action.field == 'locale')
         ..value = value
         ..done = true;

@@ -32,8 +32,8 @@ Future<Response> updateMyProfile({
         'description': bio,
         'longitude': position?.longitude,
         'latitude': position?.latitude,
-        'locale': locale?.locale.toLanguageTag(),
-        'country': country
+        'lang': locale?.locale.toLanguageTag(),
+        'nation': country
       }
   );
 }

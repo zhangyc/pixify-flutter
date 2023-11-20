@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/services/info.dart';
-import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/global/global.dart' as global;
 import 'package:sona/utils/locale/locale.dart';
 
 import '../models/gender.dart';
@@ -18,9 +18,10 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
 
   void update(MyProfile? profile) {
     if (profile == null) {
-      kvStore.remove(profileKey);
+      global.profile = profile;
+      global.kvStore.remove(profileKey);
     } else {
-      kvStore.setString(profileKey, jsonEncode(profile.toJson()));
+      global.kvStore.setString(profileKey, jsonEncode(profile.toJson()));
     }
     state = profile;
   }
@@ -74,7 +75,7 @@ final myProfileProvider = StateNotifierProvider<MyProfileNotifier, MyProfile?>(
   (ref) {
     MyProfile? profile;
     try {
-      final localCachedProfileString = kvStore.getString(profileKey);
+      final localCachedProfileString = global.kvStore.getString(profileKey);
       if (localCachedProfileString != null) {
         profile = MyProfile.fromJson(jsonDecode(localCachedProfileString));
       }

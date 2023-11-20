@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sona/theme/const.dart';
 
 class ColoredButton extends StatefulWidget {
   const ColoredButton({
@@ -8,10 +9,10 @@ class ColoredButton extends StatefulWidget {
     required this.onTap,
     this.loadingWhenAsyncAction = false,
     this.size = ColoredButtonSize.medium,
-    this.color = const Color(0xFFFFFFFF),
+    this.color = primaryColor,
     required this.text,
-    this.fontColor = const Color(0xFF000000),
-    this.borderColor = const Color(0x00000000),
+    this.fontColor = Colors.white,
+    this.borderColor = primaryColor,
     this.confirmDelay,
     this.disabled = false
   }) : super(key: key);
@@ -77,7 +78,7 @@ class _ColoredButtonState extends State<ColoredButton> {
       _timer != null && _timer!.isActive ? '${widget.confirmDelay!.inSeconds - _timer!.tick}s' : widget.text,
       textAlign: TextAlign.center,
       style: TextStyle(
-          color: _disabled ? Colors.white : widget.fontColor,
+          color: _disabled ? Colors.black26 : widget.fontColor,
           fontWeight: FontWeight.w500,
           fontSize: widget.size.fontSize
       )
@@ -134,19 +135,19 @@ enum ColoredButtonSize {
       height: 64,
       fontSize: 17,
       borderWidth: 2.5,
-      borderRadiusCircular: 10
+      borderRadiusCircular: 20
   ),
   medium(
       height: 44,
       fontSize: 15,
       borderWidth: 2.5,
-      borderRadiusCircular: 6
+      borderRadiusCircular: 12
   ),
   small(
       height: 30,
       fontSize: 12,
       borderWidth: 1,
-      borderRadiusCircular: 4
+      borderRadiusCircular: 6
   );
 
   const ColoredButtonSize({

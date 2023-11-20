@@ -9,7 +9,7 @@ class TokenInterceptor extends Interceptor{
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if(response?.statusCode ==401){
       Navigator.pushAndRemoveUntil(navigatorKey.currentContext!, MaterialPageRoute(builder: (c){
-        return LoginScreen();
+        return LoginPhoneNumberScreen();
       }), (route) => false);
       //ref.watch(navigatorKeyProvider).
     }

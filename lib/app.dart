@@ -63,7 +63,7 @@ class SonaApp extends HookConsumerWidget {
 
 final _routes = <String, WidgetBuilder>{
   '/': (_) => const SonaHome(),
-  'login': (_) => const LoginScreen(),
+  'login': (_) => const LoginPhoneNumberScreen(),
   'setting': (_) => const SettingScreen()
 };
 
