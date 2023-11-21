@@ -48,7 +48,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
   late final submittedPinTheme = defaultPinTheme.copyWith(
     textStyle: TextStyle(
         fontSize: 16,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w700,
     ),
     decoration: defaultPinTheme.decoration?.copyWith(
       border: Border.all(width: 2, color: Color(0xFFE8E6E6))

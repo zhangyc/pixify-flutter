@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -35,11 +36,15 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
+        elevation: 0,
       ),
+      extendBody: false,
+      extendBodyBehindAppBar: true,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(left: 16, right: 16, bottom: 160),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -164,7 +169,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -190,10 +195,10 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
         return true;
       } else if (resp.statusCode == 10070) {
         Fluttertoast.showToast(msg: 'Code requests too frequent. Wait minutes before trying again.');
-        return true;
+        return kDebugMode;
       } else {
         Fluttertoast.showToast(msg: 'Sending pin message failed');
-        return true;
+        return kDebugMode;
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Sending pin message failed');

@@ -85,7 +85,7 @@ class MyProfile {
       'longitude': position?.longitude.toString(),
       'latitude': position?.latitude.toString(),
       'openPush': pushEnabled,
-      'locale': locale,
+      'lang': locale,
       'nation': country,
       'vipEndDate':vipEndDate
     };

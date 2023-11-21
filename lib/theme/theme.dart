@@ -96,10 +96,20 @@ final themeData = ThemeData(
     height: 60,
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
   ),
-  filledButtonTheme: const FilledButtonThemeData(
+  filledButtonTheme: FilledButtonThemeData(
     style: ButtonStyle(
+      shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
+          borderRadius: BorderRadius.circular(20)
+      )),
       textStyle: MaterialStatePropertyAll(TextStyle(color: fontColour)),
       alignment: Alignment.center
+    )
+  ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
+      ))
     )
   ),
   bottomSheetTheme: BottomSheetThemeData(
