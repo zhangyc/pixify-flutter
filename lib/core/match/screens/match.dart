@@ -336,32 +336,54 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           //     Text('asd'),Text('asd'),Text('asd'),
           //   ],
           // );
-          return CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Stack(
-                    children: [
-                      Column(
+          return Column(
+            children: [
+              CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Row(
                         children: [
-                          HeardItem(userInfo: _info,),
-                          WishListItem(),
-                          BioItem(),
-                          GalleyItem(),
-                          InterestItem()
+                          Text("Sona"),
+                          Row(
+                            children: [
+                              Icon(Icons.notifications_active),
+                              Icon(Icons.filter)
+                            ],
+                          )
                         ],
                       ),
-                      Row(
+                    ),
+                    SliverToBoxAdapter(
+                      child: Stack(
                         children: [
-                          Icon(Icons.close),
-                          Icon(Icons.monitor_heart),
-                          Icon(Icons.star)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16
+                            ),
+                            child: Column(
+                              children: [
+                                HeardItem(userInfo: _info,),
+                                WishListItem(),
+                                BioItem(),
+                                GalleyItem(),
+                                InterestItem()
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.close),
+                              Icon(Icons.monitor_heart),
+                              Icon(Icons.star)
+                            ],
+                          )
                         ],
-                      )
-                    ],
-                  ),
-                ),
+                      ),
+                    ),
 
-              ],
+                  ],
+              ),
+            ],
           );
           return StackPageView(index: index,
               controller: pageController,
@@ -436,9 +458,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               if(users[value-1].arrowed||users[value-1].matched){
                 return;
               }else {
-                users[value-1].skipped=true;
-                ref.read(asyncMatchRecommendedProvider.notifier)
-                    .skip(users[value-1].id);
+                // users[value-1].skipped=true;
+                // ref.read(asyncMatchRecommendedProvider.notifier)
+                //     .skip(users[value-1].id);
               }
             }
           }        },

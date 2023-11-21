@@ -12,8 +12,9 @@ class HeardItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Stack(
+        alignment: Alignment.bottomLeft,
         children: [
-          userInfo.avatar==null?Container():CachedNetworkImage(imageUrl: userInfo.avatar!),
+          userInfo.avatar==null?Container():CachedNetworkImage(imageUrl: userInfo.avatar!,fit: BoxFit.cover,width: MediaQuery.of(context).size.width-16*2,),
           Column(
             children: [
               Text('Maeda Nozomi'),
