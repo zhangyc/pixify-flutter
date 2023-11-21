@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/common/screens/profile.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
@@ -15,6 +16,7 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/utils/country/country.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/toast/cooldown.dart';
@@ -46,18 +48,21 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.arrow_back_ios_outlined),
+          icon: SonaIcon(icon: SonaIcons.back),
         ),
         elevation: 4,
         titleSpacing: 0,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             UserAvatar(url: widget.otherSide.avatar!, size: 32),
-            SizedBox(width: 12),
+            SizedBox(width: 8),
             Text(widget.otherSide.name!),
+            SizedBox(width: 8),
+            Text(findFlagByCountryCode(widget.otherSide.country ?? ''))
           ],
         ),
-        centerTitle: false,
+        centerTitle: true,
         actions: [
           // IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
           IconButton(onPressed: _showInfo, icon: Icon(Icons.more_horiz_outlined))

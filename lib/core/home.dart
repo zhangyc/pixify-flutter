@@ -88,11 +88,16 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
             child: BottomNavigationBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
-              iconSize: 48,
+              iconSize: 24,
               currentIndex: _currentIndex,
               onTap: _onPageChange,
-              selectedItemColor: Colors.black,
-              unselectedItemColor: Color(0xff9f9f9f),
+              selectedFontSize: 10,
+              unselectedFontSize: 10,
+              selectedItemColor: Theme.of(context).primaryColor,
+              unselectedItemColor: Theme.of(context).primaryColor,
+              selectedLabelStyle: TextStyle(fontWeight: FontWeight.w700),
+              unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400),
+              showUnselectedLabels: true,
               items: [
                 BottomNavigationBarItem(
                     icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,color: Color(0xff9f9f9f),),
@@ -100,8 +105,8 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
                     label: S.current.match
                 ),
                 BottomNavigationBarItem(
-                    icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Color(0xff9f9f9f), activeProvider: bottomChatNoticeProvider),
-                    activeIcon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24,color: Colors.black,),
+                    icon: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24,color: Color(0xff9f9f9f), activeProvider: bottomChatNoticeProvider),
+                    activeIcon: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, color: Colors.black,),
                     label: 'Like me'
                 ),
                 BottomNavigationBarItem(

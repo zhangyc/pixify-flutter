@@ -106,6 +106,8 @@ class MyProfile {
       name: name,
       avatar: avatar,
       birthday: birthday,
+      country: country,
+      locale: locale,
       gender: gender,
       bio: bio,
       photos: photos.map((photo) => photo.url).toList()

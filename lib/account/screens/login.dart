@@ -36,22 +36,28 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        elevation: 0,
+        // forceMaterialTransparency: true,
       ),
       extendBody: false,
       extendBodyBehindAppBar: true,
       body: SafeArea(
+        top: false,
         child: SingleChildScrollView(
-          padding: EdgeInsets.only(left: 16, right: 16, bottom: 160),
+          reverse: true,
+          padding: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: MediaQuery.of(context).viewPadding.top + 64,
+              bottom: 160
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Align(
-                alignment: Alignment.centerLeft,
-                child: Image.asset('assets/images/tender_affection.png', height: 179,),
+                alignment: Alignment.center,
+                child: Image.asset('assets/images/tender_affection.png', height: 206),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 24),

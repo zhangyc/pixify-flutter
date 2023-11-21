@@ -14,7 +14,7 @@ final themeData = ThemeData(
   dividerColor: dividerColor,
   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
   hintColor: const Color(0xFFBABABA),
-  fontFamily: Platform.isAndroid ? 'Roboto' : null,
+  fontFamily: 'MPLUSRounded1c',
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     surfaceTintColor: Colors.transparent,
@@ -117,5 +117,5 @@ final themeData = ThemeData(
   ),
   dialogTheme: DialogTheme(
     elevation: 0
-  )
+  ),
 );

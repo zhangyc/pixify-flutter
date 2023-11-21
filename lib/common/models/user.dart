@@ -1,16 +1,20 @@
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
+import 'package:sona/utils/locale/locale.dart';
 
 class UserInfo {
   int index=0;
   bool arrowed=false;
   bool matched=false;
   bool skipped=false;
+
   UserInfo({
     required this.id,
     required this.name,
     required this.gender,
     required this.birthday,
+    this.country,
+    this.locale,
     required this.avatar,
     this.bio,
     this.chatStyleId,
@@ -25,6 +29,8 @@ class UserInfo {
   final String? name;
   final Gender? gender;
   final DateTime? birthday;
+  final String? country;
+  final String? locale;
   final String? avatar;
   final String? bio;
   final int? chatStyleId;
@@ -35,6 +41,7 @@ class UserInfo {
   final String? impression;
   int likeMe=0;  //1 喜欢了，0 无
   List<Interest> interest=[];
+
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     final images = json['images'];
     final _interestTag = json['interest'];
@@ -56,6 +63,8 @@ class UserInfo {
         name: json['nickname'],
         gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
         birthday: json['birthday'] != null ? DateTime.fromMillisecondsSinceEpoch(json['birthday']) : null,
+        locale: json['lang'],
+        country: json['country'],
         avatar: json['avatar'],
         bio: json['description'],
         chatStyleId: json['chatStyleId'],
@@ -67,6 +76,7 @@ class UserInfo {
     );
   }
 }
+
 class Interest {
   String? code;
   String? name;

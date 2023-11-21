@@ -57,7 +57,9 @@ class SonaIcon extends ConsumerWidget {
 }
 
 enum SonaIcons {
+  back,
   navicon_sona,
+  navicon_like_me,
   navicon_match,
   navicon_chat,
   sparkles,
