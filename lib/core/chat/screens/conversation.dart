@@ -6,7 +6,7 @@ import 'package:sona/common/screens/profile.dart';
 import 'package:sona/core/chat/models/conversation.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/chat.dart';
-import 'package:sona/core/chat/screens/like_me.dart';
+import 'package:sona/core/like_me/screens/like_me.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/conversation.dart';
 import 'package:sona/utils/dialog/input.dart';
@@ -18,7 +18,7 @@ import '../../subscribe/subscribe_page.dart';
 import '../models/message.dart';
 import '../providers/liked_me.dart';
 import '../widgets/inputbar/chat_style.dart';
-import '../widgets/liked_me.dart';
+import '../../like_me/widgets/liked_me.dart';
 
 class ConversationScreen extends StatefulHookConsumerWidget {
   const ConversationScreen({super.key});
@@ -44,7 +44,11 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(S.current.chat, style: Theme.of(context).textTheme.headlineMedium),
+        title: Text(S.current.chat, style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+            fontSize: 28,
+            fontWeight: FontWeight.w900
+        )),
+        centerTitle: false,
       ),
       body: CustomScrollView(
         slivers: [

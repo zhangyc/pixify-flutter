@@ -9,7 +9,7 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
-import 'package:sona/core/chat/screens/like_me.dart';
+import 'package:sona/core/like_me/screens/like_me.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/home_provider.dart';
 import 'package:sona/core/providers/notice.dart';
