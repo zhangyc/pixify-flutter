@@ -175,7 +175,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
