@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,13 @@ import 'package:rxdart/rxdart.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/core/match/providers/matched.dart';
+import 'package:sona/core/match/widgets/bio_item.dart';
+import 'package:sona/core/match/widgets/galley_item.dart';
+import 'package:sona/core/match/widgets/interest_item.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
+import 'package:sona/core/match/widgets/wishlist_item.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/dialog/report.dart';
 import 'package:sona/utils/global/global.dart';
@@ -32,6 +37,7 @@ import '../services/match.dart';
 import '../util/event.dart';
 import '../util/http_util.dart';
 import '../widgets/filter_dialog.dart';
+import '../widgets/heard_item.dart';
 import '../widgets/match_init_animation.dart';
 // import '../widgets/scroller.dart' as s;
 // final clickSubject = BehaviorSubject <void>();
@@ -97,8 +103,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   PageController pageController=PageController();
   @override
   Widget build(BuildContext context) {
+
     super.build(context);
     int iconIndex= ref.watch(matchIconProvider);
+
     return Stack(
       children: [
         Positioned.fill(
@@ -318,18 +326,45 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       return NoDataWidget();
 
     }
-    // else if(_state==PageState.noData){
-    //   return NoMoreWidget();
-    // }
     else if(_state==PageState.success){
       return PageView.builder(
         itemBuilder: (c,index) {
           UserInfo _info=users[index];
+          // return Column(
+          //   children: [
+          //     Text('asd'),
+          //     Text('asd'),Text('asd'),Text('asd'),
+          //   ],
+          // );
+          return CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Stack(
+                    children: [
+                      Column(
+                        children: [
+                          HeardItem(userInfo: _info,),
+                          WishListItem(),
+                          BioItem(),
+                          GalleyItem(),
+                          InterestItem()
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.close),
+                          Icon(Icons.monitor_heart),
+                          Icon(Icons.star)
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+
+              ],
+          );
           return StackPageView(index: index,
               controller: pageController,
-          //     if(index!=0&&index==users.length-1){
-          //   return NoMoreWidget();
-          // }
               child: (_info.id==-1)?NoMoreWidget(): MatchItem(index,
                 length: users.length,
                 userInfo: users[index],
@@ -366,7 +401,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               ));
         },
         itemCount: users.length,
-        scrollDirection: Axis.vertical,
+        scrollDirection: Axis.horizontal,
         controller: pageController,
         onPageChanged: (value) async {
 
