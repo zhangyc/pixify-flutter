@@ -48,7 +48,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
   late final submittedPinTheme = defaultPinTheme.copyWith(
     textStyle: TextStyle(
         fontSize: 16,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w700,
     ),
     decoration: defaultPinTheme.decoration?.copyWith(
       border: Border.all(width: 2, color: Color(0xFFE8E6E6))
@@ -60,52 +60,60 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
         ),
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset('assets/images/tender_affection.png', height: 179,),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24),
-                child: Text(
-                  'Enter Verification code\nwe‘ve just sent',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              SizedBox(height: 4),
-              Form(
-                key: _pinKey,
-                child: Pinput(
-                  length: 6,
-                  controller: _pinController,
-                  focusNode: _pinFocusNode,
-                  defaultPinTheme: defaultPinTheme,
-                  focusedPinTheme: focusedPinTheme,
-                  submittedPinTheme: submittedPinTheme,
-                  androidSmsAutofillMethod:  AndroidSmsAutofillMethod.smsUserConsentApi,
-                  validator: (s) {
-                    final regex = RegExp(r'^\d{6}$');
-                    return s != null && regex.hasMatch(s) ? null : 'invalid pin';
-                  },
-                  pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                  showCursor: true,
-                  onCompleted: (pin) {
-                    _complete();
-                  },
-                ),
-              ),
-            ],
+        extendBodyBehindAppBar: true,
+        body: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            top: MediaQuery.of(context).viewPadding.top + 64,
+            bottom: 120
           ),
-        )
+          reverse: true,
+          child: SafeArea(
+            top: false,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Image.asset('assets/images/tender_affection.png', height: 179,),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Text(
+                    'Enter Verification code\nwe‘ve just sent',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Form(
+                  key: _pinKey,
+                  child: Pinput(
+                    length: 6,
+                    controller: _pinController,
+                    focusNode: _pinFocusNode,
+                    defaultPinTheme: defaultPinTheme,
+                    focusedPinTheme: focusedPinTheme,
+                    submittedPinTheme: submittedPinTheme,
+                    androidSmsAutofillMethod:  AndroidSmsAutofillMethod.smsUserConsentApi,
+                    validator: (s) {
+                      final regex = RegExp(r'^\d{6}$');
+                      return s != null && regex.hasMatch(s) ? null : 'invalid pin';
+                    },
+                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                    showCursor: true,
+                    onCompleted: (pin) {
+                      _complete();
+                    },
+                  ),
+                ),
+              ],
+          )
+        ),
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

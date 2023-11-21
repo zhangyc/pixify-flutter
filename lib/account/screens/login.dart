@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -36,17 +37,27 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        // forceMaterialTransparency: true,
       ),
+      extendBody: false,
+      extendBodyBehindAppBar: true,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        top: false,
+        child: SingleChildScrollView(
+          reverse: true,
+          padding: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: MediaQuery.of(context).viewPadding.top + 64,
+              bottom: 160
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Align(
-                alignment: Alignment.centerLeft,
-                child: Image.asset('assets/images/tender_affection.png', height: 179,),
+                alignment: Alignment.center,
+                child: Image.asset('assets/images/tender_affection.png', height: 206),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 24),
@@ -164,7 +175,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -190,10 +201,10 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
         return true;
       } else if (resp.statusCode == 10070) {
         Fluttertoast.showToast(msg: 'Code requests too frequent. Wait minutes before trying again.');
-        return true;
+        return kDebugMode;
       } else {
         Fluttertoast.showToast(msg: 'Sending pin message failed');
-        return true;
+        return kDebugMode;
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Sending pin message failed');

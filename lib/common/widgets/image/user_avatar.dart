@@ -6,7 +6,7 @@ class UserAvatar extends ConsumerWidget {
   const UserAvatar({
     super.key,
     required this.url,
-    this.size = 42,
+    this.size = 64,
   });
 
   final String url;
@@ -18,8 +18,9 @@ class UserAvatar extends ConsumerWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: const Color(0xFFD9D9D9), width: 0.2)
+        // shape: BoxShape.circle,
+        border: Border.all(color: const Color(0xFFD9D9D9), width: 0.2),
+        borderRadius: BorderRadius.circular(24)
       ),
       alignment: Alignment.center,
       clipBehavior: Clip.antiAlias,

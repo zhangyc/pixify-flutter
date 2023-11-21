@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
@@ -6,9 +7,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:sona/firebase/sona_firebase.dart';
+import 'package:sona/utils/country/country.dart';
 
 import 'app.dart';
 import 'core/match/util/iap_helper.dart';
@@ -46,6 +49,10 @@ void main() async {
   }
   await global.init();
   unawaited(_initAttribution());
+  // 先放这，以后整理
+  countryMapList = (jsonDecode(await rootBundle.loadString('assets/i18n/countries.json')) as List)
+    .map((d) => d as Map<String, dynamic>)
+    .toList(growable: false);
   runApp(
     ProviderScope(
       child: const SonaApp()

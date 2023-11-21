@@ -80,7 +80,7 @@ final myProfileProvider = StateNotifierProvider<MyProfileNotifier, MyProfile?>(
         profile = MyProfile.fromJson(jsonDecode(localCachedProfileString));
       }
     } catch(e) {
-      if (kDebugMode) print(e);
+      if (kDebugMode) print('error occurred when reading profile from local: $e');
     }
     return MyProfileNotifier(profile);
   }

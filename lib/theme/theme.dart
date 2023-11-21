@@ -14,7 +14,7 @@ final themeData = ThemeData(
   dividerColor: dividerColor,
   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
   hintColor: const Color(0xFFBABABA),
-  fontFamily: Platform.isAndroid ? 'Roboto' : null,
+  fontFamily: 'MPLUSRounded1c',
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     surfaceTintColor: Colors.transparent,
@@ -96,10 +96,20 @@ final themeData = ThemeData(
     height: 60,
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
   ),
-  filledButtonTheme: const FilledButtonThemeData(
+  filledButtonTheme: FilledButtonThemeData(
     style: ButtonStyle(
+      shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
+          borderRadius: BorderRadius.circular(20)
+      )),
       textStyle: MaterialStatePropertyAll(TextStyle(color: fontColour)),
       alignment: Alignment.center
+    )
+  ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
+      ))
     )
   ),
   bottomSheetTheme: BottomSheetThemeData(
@@ -107,5 +117,5 @@ final themeData = ThemeData(
   ),
   dialogTheme: DialogTheme(
     elevation: 0
-  )
+  ),
 );

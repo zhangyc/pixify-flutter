@@ -11,7 +11,6 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
-import 'package:sona/utils/country/country.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart' as global;
@@ -98,7 +97,6 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
           action: _selectLocale
       ),
     ];
-    countryMapList = jsonDecode(await rootBundle.loadString('assets/i18n/countries.json'));
   }
 
   @override

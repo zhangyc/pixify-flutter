@@ -5,6 +5,7 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/profile.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/core/travel/screens/travel_wish_creator.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
@@ -138,6 +139,14 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                     ),
                   ),
                 ],
+              ),
+            ),
+            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: FilledButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator())),
+                child: Text('New Travel Wish')
               ),
             ),
             SizedBox(height: 40),
