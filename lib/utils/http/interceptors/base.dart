@@ -11,7 +11,10 @@ class BaseInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers.addAll({'token': token});
+    options.headers.addAll({
+      'token': token,
+      'locale': profile?.locale
+    });
     if (options.method.toUpperCase() == 'POST') {
       if (options.data is FormData) {
         options.headers.addAll({HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType});

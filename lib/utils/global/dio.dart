@@ -9,7 +9,6 @@ Dio _createDioInstance() {
       headers: {
         'device': Platform.operatingSystem,
         'version': 'v1.0.0',
-        'locale': profile?.locale
       }
   );
   final dio = Dio(options);
@@ -19,7 +18,7 @@ Dio _createDioInstance() {
         requestHeader: true,
         requestBody: true,
         responseBody: true,
-        logPrint: (i) => kDebugMode?log(i.toString()):{}));
+        logPrint: (i) => kDebugMode ? log(i.toString()) : null));
   }
   dio.interceptors.add(BaseInterceptor());
   // dio.interceptors.add(TokenInterceptor(ref: ref));
@@ -29,7 +28,3 @@ Dio _createDioInstance() {
 
 Dio _dio = _createDioInstance();
 Dio get dio => _dio;
-
-void refreshDio() {
-  _dio = _createDioInstance();
-}
