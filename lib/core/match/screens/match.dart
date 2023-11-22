@@ -370,67 +370,67 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       return PageView.builder(
         itemBuilder: (c,index) {
           UserInfo info=users[index];
-          return PageView(
-            children: ['A','B','C'].map((e) => Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text('Are you interested in her ideas',style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 28
-                ),),
-                SizedBox(
-                  height: 16,
-                ),
-                Container(
-                  width: 327,
-                  height: 470,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 2
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Container(
-                        width: 259,
-                        height: 166,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.black,
-                              width: 2
-                          ),
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned(child: Image.asset(Assets.imagesTest,width: 48,height: 48,)),
-                            Positioned(child: Row(
-                              children: [
-                                Text('data,china'),
-                                Text('flag')
-                              ],
-                            )),
-                          ],
-                        ),
-                      ),
-                      // Column(
-                      //   children: ['1'],
-                      // )
-
-                    ],
-                  ),
-                ),
-              ],
-            )).toList(),
-          );
+          // return PageView(
+          //   children: ['A','B','C'].map((e) => Column(
+          //     children: [
+          //       SizedBox(
+          //         height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
+          //       ),
+          //       SizedBox(
+          //         height: 8,
+          //       ),
+          //       Text('Are you interested in her ideas',style: TextStyle(
+          //         color: Colors.black,
+          //         fontSize: 28
+          //       ),),
+          //       SizedBox(
+          //         height: 16,
+          //       ),
+          //       Container(
+          //         width: 327,
+          //         height: 470,
+          //         decoration: BoxDecoration(
+          //           border: Border.all(
+          //             color: Colors.black,
+          //             width: 2
+          //           ),
+          //         ),
+          //         child: Column(
+          //           children: [
+          //             SizedBox(
+          //               height: 16,
+          //             ),
+          //             Container(
+          //               width: 259,
+          //               height: 166,
+          //               decoration: BoxDecoration(
+          //                 border: Border.all(
+          //                     color: Colors.black,
+          //                     width: 2
+          //                 ),
+          //               ),
+          //               child: Stack(
+          //                 children: [
+          //                   Positioned(child: Image.asset(Assets.imagesTest,width: 48,height: 48,)),
+          //                   Positioned(child: Row(
+          //                     children: [
+          //                       Text('data,china'),
+          //                       Text('flag')
+          //                     ],
+          //                   )),
+          //                 ],
+          //               ),
+          //             ),
+          //             // Column(
+          //             //   children: ['1'],
+          //             // )
+          //
+          //           ],
+          //         ),
+          //       ),
+          //     ],
+          //   )).toList(),
+          // );
           return Stack(
             children: [
               Column(
