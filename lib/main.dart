@@ -11,10 +11,10 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:sona/firebase/sona_firebase.dart';
-import 'package:sona/utils/country/country.dart';
 
 import 'app.dart';
 import 'core/match/util/iap_helper.dart';
+import 'core/travel/models/country.dart';
 import 'firebase_options.dart';
 import 'utils/global/global.dart' as global;
 import 'utils/local_notification/local_lotification_manager.dart';

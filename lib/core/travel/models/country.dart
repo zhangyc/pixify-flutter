@@ -37,7 +37,7 @@ class SonaCountry {
 }
 
 final supportedSonaCountries = countryMapList.map<SonaCountry>((cm) => SonaCountry.fromCode(cm['code']));
-final hotTravelCountries = List<SonaCountry>.from(supportedSonaCountries, growable: false);
+final hotTravelCountries = List<SonaCountry>.from(supportedSonaCountries)..retainWhere((country) => ['US', 'JP', 'CN', 'KR', 'TH', 'IT', 'FR'].contains(country.code));
 
 String findFlagByCountryCode(String code) {
   final country = supportedSonaCountries.firstWhere((c) => c.code == code, orElse: () => SonaCountry(code: code, displayName: 'Unknown', flag: '🌍'));
