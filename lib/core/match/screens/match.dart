@@ -14,6 +14,7 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/bio_item.dart';
+import 'package:sona/core/match/widgets/blz_action_item.dart';
 import 'package:sona/core/match/widgets/galley_item.dart';
 import 'package:sona/core/match/widgets/interest_item.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
@@ -336,53 +337,92 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           //     Text('asd'),Text('asd'),Text('asd'),
           //   ],
           // );
-          return Column(
+          return Stack(
             children: [
-              CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Row(
-                        children: [
-                          Text("Sona"),
-                          Row(
-                            children: [
-                              Icon(Icons.notifications_active),
-                              Icon(Icons.filter)
-                            ],
-                          )
-                        ],
-                      ),
+              Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16
                     ),
-                    SliverToBoxAdapter(
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Sona"),
+                        Row(
+                          children: [
+                            Icon(Icons.notifications_active),
+                            SizedBox(
+                              width: 10,
                             ),
-                            child: Column(
-                              children: [
-                                HeardItem(userInfo: _info,),
-                                WishListItem(),
-                                BioItem(),
-                                GalleyItem(),
-                                InterestItem()
-                              ],
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.close),
-                              Icon(Icons.monitor_heart),
-                              Icon(Icons.star)
-                            ],
-                          )
-                        ],
-                      ),
+                            Icon(Icons.filter)
+                          ],
+                        )
+                      ],
                     ),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Expanded(
+                    child: CustomScrollView(
+                      slivers: [
 
-                  ],
+                        SliverToBoxAdapter(
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16
+                                ),
+                                child: Column(
+                                  children: [
+                                    HeardItem(userInfo: _info,),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    WishListItem(),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    BioItem(),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    GalleyItem(),
+                                    InterestItem(),
+                                    BlzActionItem(),
+                                    SizedBox(
+                                      height: MediaQuery.of(context).padding.bottom+64,
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+
+                            ],
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ],
               ),
+              Positioned(child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(Icons.close),
+                  Icon(Icons.monitor_heart),
+                  Icon(Icons.star)
+                ],
+              ),
+                bottom: 8+MediaQuery.of(context).padding.bottom,
+                width: MediaQuery.of(context).size.width,
+              )
             ],
           );
           return StackPageView(index: index,

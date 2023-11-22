@@ -5,21 +5,36 @@ class InterestItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Interest'),
-        Wrap(
-          children: ["A","A","A","A","A","A","A","A",].map((e) => Container(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Icon(Icons.circle),
-                Text(e)
-              ],
-            ),
-          )).toList(),
-        )
-      ],
+    return SizedBox(
+      width: MediaQuery.of(context).size.width-16*2,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Interest'),
+          SizedBox(
+            height: 16,
+          ),
+          Wrap(
+            spacing: 5,
+            runSpacing: 5,
+            children: ["A","A","A","A","A","A","A","A",].map((e) => Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                )
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.circle),
+                  Text(e)
+                ],
+              ),
+            )).toList(),
+          )
+        ],
+      ),
     );
   }
 }

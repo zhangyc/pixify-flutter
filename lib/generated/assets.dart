@@ -2,7 +2,9 @@
 class Assets {
   Assets._();
 
+  static const String i18nCountries = 'assets/i18n/countries.json';
   static const String iconsArrow = 'assets/icons/arrow.png';
+  static const String iconsBack = 'assets/icons/back.png';
   static const String iconsClose = 'assets/icons/close.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsLike = 'assets/icons/like.png';
@@ -10,6 +12,8 @@ class Assets {
   static const String iconsMore = 'assets/icons/more.png';
   static const String iconsNaviconChat = 'assets/icons/navicon_chat.png';
   static const String iconsNaviconChatActive = 'assets/icons/navicon_chat_active.png';
+  static const String iconsNaviconLikeMe = 'assets/icons/navicon_like_me.png';
+  static const String iconsNaviconLikeMeActive = 'assets/icons/navicon_like_me_active.png';
   static const String iconsNaviconMatch = 'assets/icons/navicon_match.png';
   static const String iconsNaviconMatchActive = 'assets/icons/navicon_match_active.png';
   static const String iconsNaviconSona = 'assets/icons/navicon_sona.png';
@@ -28,16 +32,26 @@ class Assets {
   static const String imagesArrow = 'assets/images/arrow.png';
   static const String imagesError = 'assets/images/error.png';
   static const String imagesLikedMeNew = 'assets/images/liked_me_new.png';
+  static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
   static const String imagesMatched = 'assets/images/matched.png';
   static const String imagesNoChat = 'assets/images/no_chat.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
   static const String imagesRewardArrow = 'assets/images/reward_arrow.png';
   static const String imagesSuperSonaBg = 'assets/images/super_sona_bg.png';
+  static const String imagesTenderAffection = 'assets/images/tender_affection.png';
+  static const String imagesTest = 'assets/images/test.jpg';
   static const String lottieAnimation1 = 'assets/lottie/animation1.json';
   static const String lottieArrowAnimation = 'assets/lottie/arrow_animation.json';
   static const String lottieLike = 'assets/lottie/like.json';
   static const String lottieLoading = 'assets/lottie/loading.json';
   static const String lottieNewbieReward = 'assets/lottie/newbie_reward.json';
   static const String lottieSearch = 'assets/lottie/search.json';
+  static const String mPlusRounded1cMPLUSRounded1cBlack = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Black.ttf';
+  static const String mPlusRounded1cMPLUSRounded1cBold = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Bold.ttf';
+  static const String mPlusRounded1cMPLUSRounded1cExtraBold = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-ExtraBold.ttf';
+  static const String mPlusRounded1cMPLUSRounded1cLight = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Light.ttf';
+  static const String mPlusRounded1cMPLUSRounded1cMedium = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Medium.ttf';
+  static const String mPlusRounded1cMPLUSRounded1cRegular = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Regular.ttf';
+  static const String mPlusRounded1cMPLUSRounded1cThin = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Thin.ttf';
 
 }
