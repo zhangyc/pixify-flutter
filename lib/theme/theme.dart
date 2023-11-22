@@ -22,7 +22,7 @@ final themeData = ThemeData(
     titleTextStyle: TextStyle(
         color: fontColour,
         fontSize: 16,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w800,
         letterSpacing: 1
     ),
     elevation: 0,

@@ -106,6 +106,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
                     },
                     pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                     showCursor: true,
+                    autofocus: true,
                     onCompleted: (pin) {
                       _complete();
                     },
