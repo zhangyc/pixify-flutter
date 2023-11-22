@@ -110,14 +110,49 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
     return Stack(
       children: [
+
+        Positioned(
+          width: MediaQuery.of(context).size.width,
+          top: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: 16
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Sona"),
+                Row(
+                  children: [
+                    Image.asset(Assets.iconsNotice,width: 48,height: 48,),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
+                      onTap: (){
+                        showFilter(context,(){
+                          //_initData();
+                          _state=PageState.loading;
+                          _initData();
+                        });
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
         Positioned.fill(
           child: _buildMatch()
         ),
+        /**
         iconIndex==1?Container():Positioned(
           right: 20,
           top: 73,
           child: Column(
             children: [
+
               GestureDetector(child: Container(
                 decoration: BoxDecoration(
                     boxShadow: [
@@ -136,6 +171,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               const SizedBox(
                 height: 20,
               ),
+
               GestureDetector(child: Container(
                 decoration: BoxDecoration(
                     color: Colors.transparent,
@@ -164,10 +200,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     }
                   }
                 }
-              },)
+               },
+              )
+
             ],
           ),
         ),
+         */
         Positioned(
           top: 0,
           left: 0,
@@ -330,39 +369,74 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     else if(_state==PageState.success){
       return PageView.builder(
         itemBuilder: (c,index) {
-          UserInfo _info=users[index];
-          // return Column(
-          //   children: [
-          //     Text('asd'),
-          //     Text('asd'),Text('asd'),Text('asd'),
-          //   ],
-          // );
+          UserInfo info=users[index];
+          return PageView(
+            children: ['A','B','C'].map((e) => Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Text('Are you interested in her ideas',style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 28
+                ),),
+                SizedBox(
+                  height: 16,
+                ),
+                Container(
+                  width: 327,
+                  height: 470,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        width: 259,
+                        height: 166,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.black,
+                              width: 2
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned(child: Image.asset(Assets.imagesTest,width: 48,height: 48,)),
+                            Positioned(child: Row(
+                              children: [
+                                Text('data,china'),
+                                Text('flag')
+                              ],
+                            )),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: [''],
+                      )
+
+                    ],
+                  ),
+                ),
+              ],
+            )).toList(),
+          );
           return Stack(
             children: [
               Column(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Sona"),
-                        Row(
-                          children: [
-                            Icon(Icons.notifications_active),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(Icons.filter)
-                          ],
-                        )
-                      ],
-                    ),
+                    height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
                   ),
                   SizedBox(
                     height: 8,
@@ -380,7 +454,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                 ),
                                 child: Column(
                                   children: [
-                                    HeardItem(userInfo: _info,),
+                                    HeardItem(userInfo: info,),
                                     SizedBox(
                                       height: 16,
                                     ),
@@ -401,8 +475,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                   ],
                                 ),
                               ),
-
-
                             ],
                           ),
                         ),
@@ -412,22 +484,75 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                   ),
                 ],
               ),
-              Positioned(child: Row(
+              Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+                width: MediaQuery.of(context).size.width,child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icon(Icons.close),
-                  Icon(Icons.monitor_heart),
-                  Icon(Icons.star)
+                  GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
+                     onTap: (){
+                       ref.read(asyncMatchRecommendedProvider.notifier)
+                           .skip(info.id);
+                     },
+                  ),
+                  GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
+                     onTap: (){
+                       if(canLike){
+                         if(like>0){
+                           like=like-1;
+                         }
+                         users[index].matched=true;
+                         SonaAnalytics.log(MatchEvent.match_like.name);
+                         if(users[index].likeMe==1){
+                           showMatched(context, () {
+                             if (index < users.length - 1) {
+                               pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
+                                   curve: Curves.linearToEaseOut);
+                             }
+                           },target: users[index],);
+                         }else if(users[index].likeMe==0){
+                           if (index < users.length - 1) {
+                             pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
+                                 curve: Curves.linearToEaseOut);
+                           }
+                         }
+                       }else {
+                         SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                         Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                           return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                         }));
+                       }
+                       ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
+                     },
+                  ),
+                  GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
+                    onTap: (){
+                      if(canArrow){
+                        arrow=arrow-1;
+                        ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
+                        SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                        //arrowController.reset();
+                        //arrowController.forward() ;
+                        //widget.userInfo.arrowed=true;
+                      }else {
+                        bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                        if(isMember){
+                          Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                        }else{
+                          Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                            return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                          }));
+                        }
+                      }
+                    },
+                  ),
                 ],
               ),
-                bottom: 8+MediaQuery.of(context).padding.bottom,
-                width: MediaQuery.of(context).size.width,
               )
             ],
           );
           return StackPageView(index: index,
               controller: pageController,
-              child: (_info.id==-1)?NoMoreWidget(): MatchItem(index,
+              child: (info.id==-1)?NoMoreWidget(): MatchItem(index,
                 length: users.length,
                 userInfo: users[index],
                 controller: pageController,
@@ -465,45 +590,47 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         itemCount: users.length,
         scrollDirection: Axis.horizontal,
         controller: pageController,
-        onPageChanged: (value) async {
+        physics: NeverScrollableScrollPhysics(),
+        //onPageChanged: (value) async {
 
-          currentPage=value;
-          if(value!=0&&value%5==0&&ScrollDirection.reverse==direction){
-            current++;
-            _loadMore();
-          }
-          if(direction!=null){
-            if(ScrollDirection.forward==direction){
-              /// down
-              SonaAnalytics.log(MatchEvent.match_swipe_down.name);
-
-            }else if(ScrollDirection.reverse==direction){
-              if(value==0){
-                return;
-              }
-              if(value==1&&isShowArrowReward){
-                final values=ref.read(myProfileProvider)?.interests;
-                final result = await showInterestPicker(context: context,initialValue: values?.toSet());
-                if (result != null) {
-                  isShowArrowReward=false;
-                  ref.read(myProfileProvider.notifier).updateField(interests: result);
-                  Future.delayed(const Duration(milliseconds: 200),(){
-                    showArrowReward(context);
-                  });
-                }
-
-              }
-              ///up
-              SonaAnalytics.log(MatchEvent.match_swipe_up.name);
-              if(users[value-1].arrowed||users[value-1].matched){
-                return;
-              }else {
-                // users[value-1].skipped=true;
-                // ref.read(asyncMatchRecommendedProvider.notifier)
-                //     .skip(users[value-1].id);
-              }
-            }
-          }        },
+          //currentPage=value;
+          // if(value!=0&&value%5==0&&ScrollDirection.reverse==direction){
+          //   current++;
+          //   _loadMore();
+          // }
+          // if(direction!=null){
+          //   if(ScrollDirection.forward==direction){
+          //     /// down
+          //     SonaAnalytics.log(MatchEvent.match_swipe_down.name);
+          //
+          //   }else if(ScrollDirection.reverse==direction){
+          //     if(value==0){
+          //       return;
+          //     }
+          //     if(value==1&&isShowArrowReward){
+          //       final values=ref.read(myProfileProvider)?.interests;
+          //       final result = await showInterestPicker(context: context,initialValue: values?.toSet());
+          //       if (result != null) {
+          //         isShowArrowReward=false;
+          //         ref.read(myProfileProvider.notifier).updateField(interests: result);
+          //         Future.delayed(const Duration(milliseconds: 200),(){
+          //           showArrowReward(context);
+          //         });
+          //       }
+          //
+          //     }
+          //     ///up
+          //     SonaAnalytics.log(MatchEvent.match_swipe_up.name);
+          //     if(users[value-1].arrowed||users[value-1].matched){
+          //       return;
+          //     }else {
+          //       users[value-1].skipped=true;
+          //       ref.read(asyncMatchRecommendedProvider.notifier)
+          //           .skip(users[value-1].id);
+          //     }
+          //   }
+          //  }
+          //},
       );
     }else if(_state==PageState.noData){
       return const NoMoreWidget();

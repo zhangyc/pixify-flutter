@@ -18,7 +18,9 @@ class Assets {
   static const String iconsNaviconMatchActive = 'assets/icons/navicon_match_active.png';
   static const String iconsNaviconSona = 'assets/icons/navicon_sona.png';
   static const String iconsNaviconSonaActive = 'assets/icons/navicon_sona_active.png';
+  static const String iconsNotice = 'assets/icons/notice.png';
   static const String iconsSelected = 'assets/icons/selected.png';
+  static const String iconsSkip = 'assets/icons/skip.png';
   static const String iconsSonaMessage = 'assets/icons/sona_message.png';
   static const String iconsSparkles = 'assets/icons/sparkles.png';
   static const String iconsSub1 = 'assets/icons/sub1.png';
