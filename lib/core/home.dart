@@ -82,23 +82,23 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24,),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 24,color: Colors.black,),
+              icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 24),
               label: S.current.match
           ),
           BottomNavigationBarItem(
               icon: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, activeProvider: bottomChatNoticeProvider),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_like_me_active, size: 24, color: Colors.black,),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_like_me_active, size: 24),
               label: 'Like me'
           ),
           BottomNavigationBarItem(
               icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24, activeProvider: bottomChatNoticeProvider),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_chat_active, size: 24,color: Colors.black,),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_chat_active, size: 24),
               label: S.current.chat
           ),
           BottomNavigationBarItem(
-              icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,),
-              activeIcon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24,color: Colors.black,),
+              icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_sona_active, size: 24),
               label: S.current.profile
           )
         ],

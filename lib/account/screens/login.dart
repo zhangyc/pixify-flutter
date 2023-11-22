@@ -75,11 +75,19 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
-                        width: 4,
+                        width: 2,
                         color: Theme.of(context).primaryColor
                       ),
                       borderRadius: BorderRadius.circular(12),
                       gapPadding: 8
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 2,
+                            color: Theme.of(context).primaryColor
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                        gapPadding: 8
                     ),
                     hintText: 'Mobile Number',
                     // hintStyle: TextStyle(color: Color(0xFFE9C6EE))
@@ -90,6 +98,11 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                   style: TextStyle(
                     fontSize: 16,
                     letterSpacing: 3.6
+                  ),
+                  dropdownTextStyle: TextStyle(
+                    letterSpacing: 2.6,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500
                   ),
                   dropdownDecoration: BoxDecoration(
                     border: Border(
