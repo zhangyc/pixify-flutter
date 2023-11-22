@@ -68,15 +68,6 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
               }
             }),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16, bottom: 20),
-              child: Visibility(
-                visible: ref.watch(conversationStreamProvider).hasValue && ref.watch(conversationStreamProvider).value!.isNotEmpty,
-                child: Text(S.current.messages, style: Theme.of(context).textTheme.titleMedium),
-              ),
-            ),
-          ),
           ref.watch(conversationStreamProvider).when(
             data: (conversations) => conversations.isEmpty ? _noChats() : SliverList.separated(
               itemBuilder: (BuildContext context, int index) {
