@@ -421,9 +421,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           ],
                         ),
                       ),
-                      Column(
-                        children: [''],
-                      )
+                      // Column(
+                      //   children: ['1'],
+                      // )
 
                     ],
                   ),
