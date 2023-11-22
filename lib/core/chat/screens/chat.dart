@@ -1,11 +1,8 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
-import 'package:sona/common/permission/permission.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
@@ -16,13 +13,13 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
-import 'package:sona/utils/country/country.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/toast/cooldown.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/dialog/subsciption.dart';
+import '../../travel/models/country.dart';
 import '../models/message_type.dart';
 import '../widgets/inputbar/mode_provider.dart';
 import '../widgets/message/message.dart';

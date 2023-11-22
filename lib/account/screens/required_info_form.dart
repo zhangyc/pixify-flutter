@@ -11,6 +11,7 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
+import 'package:sona/core/travel/screens/travel_wish_creator.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart' as global;
@@ -116,7 +117,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                         highlights: action.highlights,
                         duration: const Duration(milliseconds: 40),
                         onDone: () async {
-                          if (action.action != null) {
+                          if (action.action != null && action.value == null) {
                             action.value = await action.action!();
                             action.value ??= await action.action!();
                             if (action.value == null) return;
@@ -133,7 +134,13 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                                 locale: _locale
                               );
                               global.SonaAnalytics.log('reg_confirm');
-                              Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                              final result = await Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator()));
+                              if (result == true) {
+                                Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                              } else {
+                                // todo
+                                Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                              }
                             } else {
                               Fluttertoast.showToast(msg: 'Invalid info');
                             }
