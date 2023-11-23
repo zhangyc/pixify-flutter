@@ -15,11 +15,12 @@ import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/toast/cooldown.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/dialog/subsciption.dart';
-import '../../travel/models/country.dart';
+import '../../travel_wish/models/country.dart';
 import '../models/message_type.dart';
 import '../widgets/inputbar/mode_provider.dart';
 import '../widgets/message/message.dart';
@@ -181,7 +182,43 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               ),
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 12),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Color(0xFFFFF1CE),
+              borderRadius: BorderRadius.circular(8)
+            ),
+            alignment: Alignment.center,
+            child: Text.rich(
+              textAlign: TextAlign.center,
+              TextSpan(
+                style: TextStyle(fontSize: 12, color: Color(0xFF777777)),
+                children: [
+                  TextSpan(
+                    text: 'Don\'t worry, just type in '
+                  ),
+                  TextSpan(
+                    text: findMatchedSonaLocale(ref.read(myProfileProvider)!.locale!).displayName,
+                    style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.w500),
+                  ),
+                  TextSpan(
+                      text: '!\n'
+                  ),
+                  TextSpan(
+                      text: 'Sona will translate it into lively localized '
+                  ),
+                  TextSpan(
+                    text: findMatchedSonaLocale(ref.watch(futureUserProvider(widget.otherSide.id)).value!.locale!).displayName,
+                    style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.w500),
+                  ),
+                  TextSpan(
+                      text: '!'
+                  )
+                ]
+              )
+            ),
+          )
         ],
       ),
     );
@@ -218,6 +255,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       content: text,
       sender: ref.read(myProfileProvider)!.toUser(),
       receiver: widget.otherSide,
+      origin: ref.read(myProfileProvider)!.locale,
       time: DateTime.now(),
       shortenTimes: 2
     );

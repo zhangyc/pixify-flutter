@@ -26,10 +26,18 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: Colors.white,
-          height: 1.5
-        )),
+        Container(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.82 - 20 - 16 * 2 - 20
+          ),
+          child: Text(
+            widget.message.origin ?? '',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Colors.white,
+              height: 1.5
+            ),
+          ),
+        ),
         SizedBox(width: 20),
         FutureBuilder<void>(
           key: ValueKey(widget.message.pending),
@@ -47,6 +55,7 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
                 child: const Icon(
                   Icons.refresh,
                   size: 20,
+                  color: Colors.white,
                 ),
               );
             }
