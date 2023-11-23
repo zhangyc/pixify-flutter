@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sona/common/models/user.dart';
 
-import '../../travel/models/country.dart';
+import '../../travel_wish/models/country.dart';
 class HeardItem extends StatelessWidget {
   const HeardItem({super.key, required this.userInfo});
   final UserInfo userInfo;

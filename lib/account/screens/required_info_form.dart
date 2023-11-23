@@ -11,7 +11,7 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/widgets/typwriter.dart';
 import 'package:sona/common/services/common.dart';
-import 'package:sona/core/travel/screens/travel_wish_creator.dart';
+import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart' as global;

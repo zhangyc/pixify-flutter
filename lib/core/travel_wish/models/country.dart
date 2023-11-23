@@ -43,3 +43,36 @@ String findFlagByCountryCode(String code) {
   final country = supportedSonaCountries.firstWhere((c) => c.code == code, orElse: () => SonaCountry(code: code, displayName: 'Unknown', flag: '🌍'));
   return country.flag;
 }
+
+
+class PopularTravelCountry {
+  PopularTravelCountry({
+    required this.id,
+    required this.code,
+    required this.displayName,
+    required this.cities
+  });
+  final int id;
+  final String code;
+  final String displayName;
+  final List<PopularTravelCity> cities;
+
+  factory PopularTravelCountry.fromJson(Map<String, dynamic> json) {
+    return PopularTravelCountry(
+        id: json['id'],
+        code: json['countryCode'],
+        displayName: json['title'],
+        cities: (json['children'] as List? ?? []).map<PopularTravelCity>((cityMap) => PopularTravelCity.fromJson(cityMap)).toList(growable: false)
+    );
+  }
+}
+
+class PopularTravelCity {
+  PopularTravelCity({required this.id, required this.displayName});
+  final int id;
+  final String displayName;
+
+  factory PopularTravelCity.fromJson(Map<String, dynamic> json) {
+    return PopularTravelCity(id: json['id'], displayName: json['title']);
+  }
+}

@@ -192,25 +192,25 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(_height/2 - 1),
                     ),
-                    suffixIcon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? GestureDetector(
-                      onTap: _toggleChatStyles,
-                      child: Container(
-                        width: 26,
-                        height: 26,
-                        margin: EdgeInsets.symmetric(horizontal: 3),
-                        decoration: BoxDecoration(
-                          image: currentChatStyle != null ? DecorationImage(
-                            image: CachedNetworkImageProvider(
-                              currentChatStyle.icon
-                            )
-                          ) : null,
-                          shape: BoxShape.circle
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        alignment: Alignment.center,
-                      )
-                    ) : null,
-                    suffixIconConstraints: BoxConstraints.tight(Size.square(32)),
+                    // suffixIcon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? GestureDetector(
+                    //   onTap: _toggleChatStyles,
+                    //   child: Container(
+                    //     width: 26,
+                    //     height: 26,
+                    //     margin: EdgeInsets.symmetric(horizontal: 3),
+                    //     decoration: BoxDecoration(
+                    //       image: currentChatStyle != null ? DecorationImage(
+                    //         image: CachedNetworkImageProvider(
+                    //           currentChatStyle.icon
+                    //         )
+                    //       ) : null,
+                    //       shape: BoxShape.circle
+                    //     ),
+                    //     clipBehavior: Clip.antiAlias,
+                    //     alignment: Alignment.center,
+                    //   )
+                    // ) : null,
+                    // suffixIconConstraints: BoxConstraints.tight(Size.square(32)),
                     contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                     isDense: true,
                     filled: true,
@@ -304,69 +304,69 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
             ),
           ],
         ),
-        Visibility(
-          visible: ref.watch(chatStylesVisibleProvider(widget.chatId)),
-          child: Container(
-            height: ref.watch(softKeyboardHeightProvider),
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-            alignment: Alignment.topCenter,
-            child: ref.watch(asyncChatStylesProvider).when(
-                data: (styles) => GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 5,
-                    crossAxisSpacing: 5,
-                    childAspectRatio: 3
-                  ),
-                  children: styles.map<Widget>((s) => GestureDetector(
-                    child: Container(
-                      color: currentChatStyle?.id == s.id ? Theme.of(context).colorScheme.secondaryContainer : Color(0x11CCCCCC),
-                      foregroundDecoration: s.memberOnly && !isMember ? BoxDecoration(
-                        color: Colors.black12
-                      ) : null,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 33,
-                            height: 33,
-                            margin: EdgeInsets.symmetric(horizontal: 2.5),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: CachedNetworkImageProvider(s.icon)
-                              ),
-                              shape: BoxShape.circle
-                            ),
-                            clipBehavior: Clip.antiAlias,
-                            alignment: Alignment.center,
-                          ),
-                          SizedBox(width: 12),
-                          Text(s.title, style: Theme.of(context).textTheme.bodySmall),
-                        ],
-                      )
-                    ),
-                    onTap: () {
-                      if (s.memberOnly && !isMember) {
-                        showSubscription(FromTag.pay_chat_style);
-                        SonaAnalytics.log('chat_style_gopay');
-                      } else {
-                        _setChatStyle(s.id);
-                      }
-                    },
-                  )).toList(),
-                ),
-                error: (_, __) => GestureDetector(
-                  child: Center(child: Text('Error, click to retry')),
-                ),
-                loading: () => const Center(
-                  child: SizedBox(
-                    width: 36,
-                    height: 36,
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-            ),
-          )
-        )
+        // Visibility(
+        //   visible: ref.watch(chatStylesVisibleProvider(widget.chatId)),
+        //   child: Container(
+        //     height: ref.watch(softKeyboardHeightProvider),
+        //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+        //     alignment: Alignment.topCenter,
+        //     child: ref.watch(asyncChatStylesProvider).when(
+        //         data: (styles) => GridView(
+        //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //             crossAxisCount: 2,
+        //             mainAxisSpacing: 5,
+        //             crossAxisSpacing: 5,
+        //             childAspectRatio: 3
+        //           ),
+        //           children: styles.map<Widget>((s) => GestureDetector(
+        //             child: Container(
+        //               color: currentChatStyle?.id == s.id ? Theme.of(context).colorScheme.secondaryContainer : Color(0x11CCCCCC),
+        //               foregroundDecoration: s.memberOnly && !isMember ? BoxDecoration(
+        //                 color: Colors.black12
+        //               ) : null,
+        //               child: Row(
+        //                 children: [
+        //                   Container(
+        //                     width: 33,
+        //                     height: 33,
+        //                     margin: EdgeInsets.symmetric(horizontal: 2.5),
+        //                     decoration: BoxDecoration(
+        //                       image: DecorationImage(
+        //                         image: CachedNetworkImageProvider(s.icon)
+        //                       ),
+        //                       shape: BoxShape.circle
+        //                     ),
+        //                     clipBehavior: Clip.antiAlias,
+        //                     alignment: Alignment.center,
+        //                   ),
+        //                   SizedBox(width: 12),
+        //                   Text(s.title, style: Theme.of(context).textTheme.bodySmall),
+        //                 ],
+        //               )
+        //             ),
+        //             onTap: () {
+        //               if (s.memberOnly && !isMember) {
+        //                 showSubscription(FromTag.pay_chat_style);
+        //                 SonaAnalytics.log('chat_style_gopay');
+        //               } else {
+        //                 _setChatStyle(s.id);
+        //               }
+        //             },
+        //           )).toList(),
+        //         ),
+        //         error: (_, __) => GestureDetector(
+        //           child: Center(child: Text('Error, click to retry')),
+        //         ),
+        //         loading: () => const Center(
+        //           child: SizedBox(
+        //             width: 36,
+        //             height: 36,
+        //             child: CircularProgressIndicator(),
+        //           ),
+        //         )
+        //     ),
+        //   )
+        // )
       ],
     );
   }

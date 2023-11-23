@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
 
+import '../../../common/models/user.dart';
 import '../models/conversation.dart';
 import '../models/message.dart';
 
@@ -55,3 +56,11 @@ final messageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>,
   },
   dependencies: [messagePaginationProvider]
 );
+
+final futureUserProvider = FutureProvider.family<UserInfo, int>((ref, arg) {
+  return FirebaseFirestore.instance
+      .collection('${env.firestorePrefix}_users')
+      .doc(arg.toString())
+      .get()
+      .then((snapshot) => UserInfo.fromJson(snapshot.data()!));
+});

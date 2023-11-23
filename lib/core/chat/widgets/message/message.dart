@@ -61,59 +61,91 @@ class MessageWidget extends StatelessWidget {
       ));
 
       // AI消息
-      if ([1, 2, 3, 4, 7].contains(message.type)) {
-        actions.addAll([
-          CupertinoContextMenuAction(
-            child: Row(
+      if ([1, 2, 3, 4, 7, 11].contains(message.type)) {
+        if (message.content.isNotEmpty) {
+          actions.add(CupertinoContextMenuAction(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  message.feedback == MessageFeedbackType.like
-                      ? CupertinoIcons.hand_thumbsup_fill
-                      : CupertinoIcons.hand_thumbsup,
-                  color: Theme.of(context).primaryColor,
-                  size: 16,
+                Text('Localization', style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: Color(0xFFA3A3A3)
+                )),
+                Text(message.content, style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Color(0xFFA3A3A3)
+                )),
+                SizedBox(height: 6),
+                RawMaterialButton(
+                  child: Row(
+                    children: [
+                      Icon(
+                        message.feedback == MessageFeedbackType.like
+                            ? CupertinoIcons.hand_thumbsup_fill
+                            : CupertinoIcons.hand_thumbsup,
+                        color: Theme.of(context).primaryColor,
+                        size: 16,
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(width: 12),
+                          Text('Good'),
+                        ],
+                      )
+                    ],
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    if (message.feedback == MessageFeedbackType.like) {
+                      feedback(messageId: message.id, type: MessageFeedbackType.none);
+                    } else {
+                      feedback(messageId: message.id, type: MessageFeedbackType.like);
+                    }
+                  },
                 ),
-                Row(
-                  children: [
-                    SizedBox(width: 12),
-                    Text('Smart Sona'),
-                  ],
+                RawMaterialButton(
+                  child: Row(
+                    children: [
+                      Icon(
+                        message.feedback == MessageFeedbackType.dislike
+                            ? CupertinoIcons.hand_thumbsdown_fill
+                            : CupertinoIcons.hand_thumbsdown,
+                        color: Theme.of(context).primaryColor,
+                        size: 16,
+                      ),
+                      SizedBox(width: 12),
+                      Text('Subpar')
+                    ],
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    if (message.feedback == MessageFeedbackType.dislike) {
+                      feedback(messageId: message.id, type: MessageFeedbackType.none);
+                    } else {
+                      feedback(messageId: message.id, type: MessageFeedbackType.dislike);
+                    }
+                  },
                 )
               ],
             ),
-            onPressed: () {
-              Navigator.pop(context);
-              if (message.feedback == MessageFeedbackType.like) {
-                feedback(messageId: message.id, type: MessageFeedbackType.none);
-              } else {
-                feedback(messageId: message.id, type: MessageFeedbackType.like);
-              }
-            },
-          ),
-          CupertinoContextMenuAction(
-            child: Row(
+          ));
+        }
+      }
+    } else {
+      if (message.origin != null && message.origin!.isNotEmpty) {
+        actions.add(CupertinoContextMenuAction(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  message.feedback == MessageFeedbackType.dislike
-                      ? CupertinoIcons.hand_thumbsdown_fill
-                      : CupertinoIcons.hand_thumbsdown,
-                  color: Theme.of(context).primaryColor,
-                  size: 16,
-                ),
-                SizedBox(width: 12),
-                Text('Stupid Sona')
+                Text('Original', style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: Color(0xFFA3A3A3)
+                )),
+                Text(message.origin!, style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Color(0xFFA3A3A3)
+                ))
               ],
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-              if (message.feedback == MessageFeedbackType.dislike) {
-                feedback(messageId: message.id, type: MessageFeedbackType.none);
-              } else {
-                feedback(messageId: message.id, type: MessageFeedbackType.dislike);
-              }
-            },
-          )
-        ]);
+            )
+        ));
       }
     }
 
@@ -146,28 +178,28 @@ class MessageWidget extends StatelessWidget {
             },
           ),
           SizedBox(height: 12),
-          Visibility(
-            visible: message.type == 4 && fromMe && message.shortenTimes < 2,
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: SIconButton(
-                size: 28,
-                onTap: () => onShorten(message),
-                loadingWhenAsyncAction: true,
-                child: Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF5F5F5),
-                    shape: BoxShape.circle
-                  ),
-                  alignment: Alignment.center,
-                  child: SonaIcon(icon: SonaIcons.sparkles, size: 16)
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 12)
+          // Visibility(
+          //   visible: message.type == 4 && fromMe && message.shortenTimes < 2,
+          //   child: Align(
+          //     alignment: Alignment.bottomRight,
+          //     child: SIconButton(
+          //       size: 28,
+          //       onTap: () => onShorten(message),
+          //       loadingWhenAsyncAction: true,
+          //       child: Container(
+          //         width: 28,
+          //         height: 28,
+          //         decoration: BoxDecoration(
+          //           color: Color(0xFFF5F5F5),
+          //           shape: BoxShape.circle
+          //         ),
+          //         alignment: Alignment.center,
+          //         child: SonaIcon(icon: SonaIcons.sparkles, size: 16)
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // SizedBox(height: 12)
         ],
       ),
     );

@@ -13,6 +13,15 @@ Future<Response> fetchAvailableInterests() async {
   );
 }
 
+Future<Response> fetchTravelTimeOptions() async {
+  return dio.post(
+      '/common/dict',
+      data: {
+        'type': 'TIMES'
+      }
+  );
+}
+
 /// * return url
 Future<String> uploadFile({
   required Uint8List bytes,

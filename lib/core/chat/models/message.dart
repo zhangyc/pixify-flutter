@@ -8,6 +8,7 @@ class ImMessage {
     required this.type,
     required this.sender,
     required this.receiver,
+    required this.origin,
     required this.content,
     required this.time,
     required this.shortenTimes,
@@ -16,6 +17,7 @@ class ImMessage {
 
   final int id;
   final int? type;
+  final String? origin;
   final String content;
   final UserInfo sender;
   final UserInfo receiver;
@@ -30,6 +32,7 @@ class ImMessage {
       id: json['id'],
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
+      origin: json['originalMessage'],
       content: json['message'],
       time: (json['createDate'] as Timestamp).toDate(),
       shortenTimes: json['simplifyNum'] ?? 0,
