@@ -23,7 +23,8 @@ class UserInfo {
     this.impression,
     this.interest=const [],
     this.likeMe=0,
-    this.countryFlag
+    this.countryFlag,
+    this.wishList=const [],
   });
 
   final int id;
@@ -43,11 +44,15 @@ class UserInfo {
   int likeMe=0;  //1 喜欢了，0 无
   List<Interest> interest=[];
   String? countryFlag;
+  List<WishBean> wishList=[];
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     final images = json['images'];
-    final _interestTag = json['interest'];
+    final interestTag = json['interest'];
+    final _travelWish = json['travelWish'];
+
     List<String> photos = [];
-    List<Interest> _interest = [];
+    List<Interest> interest = [];
+    List<WishBean> wishList = [];
 
     if (images is List && images.isNotEmpty) {
       if (images.first is String) {
@@ -56,8 +61,11 @@ class UserInfo {
         photos = images.map<String>((i) => i['attachmentUrl']).toList();
       }
     }
-    if(_interestTag is List && _interestTag.isNotEmpty){
-      _interest=_interestTag.map((e) => Interest.fromJson(e)).toList();
+    if(interestTag is List && interestTag.isNotEmpty){
+      interest=interestTag.map((e) => Interest.fromJson(e)).toList();
+    }
+    if(_travelWish is List && _travelWish.isNotEmpty){
+      wishList=_travelWish.map((e) => WishBean.fromJson(e)).toList();
     }
     return UserInfo(
         id: json['id'],
@@ -72,9 +80,10 @@ class UserInfo {
         photos: photos,
         allScore: json['allScore']?.toStringAsFixed(2),
         impression:json['impression'],
-        interest: _interest,
+        interest: interest,
         likeMe: json['likeMe']??0,
-        countryFlag:json['countryFlag']
+        countryFlag:json['countryFlag'],
+        wishList: wishList
     );
   }
 }
@@ -95,5 +104,85 @@ class Interest {
     data['code'] = this.code;
     data['name'] = this.name;
     return data;
+  }
+}
+class WishBean {
+  int? id;
+  int? createDate;
+  int? modifyDate;
+  int? userId;
+  String? title;
+  int? countryId;
+  String? countryName;
+  String? cityId;
+  String? cityName;
+  String? pic;
+  String? timeType;
+  int? endDate;
+  String? activityIds;
+  String? activityNames;
+  int? status;
+  String? countryFlag;
+
+  WishBean(
+      {this.id,
+        this.createDate,
+        this.modifyDate,
+        this.userId,
+        this.title,
+        this.countryId,
+        this.countryName,
+        this.cityId,
+        this.cityName,
+        this.pic,
+        this.timeType,
+        this.endDate,
+        this.activityIds,
+        this.activityNames,
+        this.status,
+        this.countryFlag
+      });
+
+  WishBean.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    createDate = json['createDate'];
+    modifyDate = json['modifyDate'];
+    userId = json['userId'];
+    title = json['title'];
+    countryId = json['countryId'];
+    countryName = json['countryName'];
+    cityId = json['cityId'];
+    cityName = json['cityName'];
+    pic = json['pic'];
+    timeType = json['timeType'];
+    endDate = json['endDate'];
+    activityIds = json['activityIds'];
+    activityNames = json['activityNames'];
+    status = json['status'];
+    countryFlag = json['countryFlag'];
+
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['createDate'] = this.createDate;
+    data['modifyDate'] = this.modifyDate;
+    data['userId'] = this.userId;
+    data['title'] = this.title;
+    data['countryId'] = this.countryId;
+    data['countryName'] = this.countryName;
+    data['cityId'] = this.cityId;
+    data['cityName'] = this.cityName;
+    data['pic'] = this.pic;
+    data['timeType'] = this.timeType;
+    data['endDate'] = this.endDate;
+    data['activityIds'] = this.activityIds;
+    data['activityNames'] = this.activityNames;
+    data['status'] = this.status;
+    data['countryFlag'] = this.countryFlag;
+
+    return data;
+
   }
 }

@@ -394,7 +394,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               Expanded(
                 child: PageView(
                   controller: _pageController,
-                  children: ['A','B','C'].map((e) => Container(
+                  children: info.wishList.map((e) => Container(
                     margin: EdgeInsets.symmetric(
                         horizontal: 8
                     ),
@@ -427,12 +427,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                         color: Colors.black,
                                         width: 2
                                     ),
-                                    image: DecorationImage(image: AssetImage(Assets.imagesTest),fit: BoxFit.cover)
+                                    image: e.pic==null?null:DecorationImage(image: CachedNetworkImageProvider(e.pic!),fit: BoxFit.cover)
                                 ),
                                 child: Stack(
                                   children: [
                                     Positioned(child: Image.asset(Assets.imagesTest,width: 48,height: 48,fit: BoxFit.cover,alignment: Alignment.topCenter,)),
-                                    const Positioned(
+                                    Positioned(
                                       width: 259,
                                       bottom: 0,
                                       child: Padding(
@@ -440,8 +440,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text('data,china',style: TextStyle(color: Colors.white),),
-                                            Text('flag')
+                                            Text('${e.activityNames},${e.countryName}',style: TextStyle(color: Colors.white),),
+                                            Text('${e.countryFlag}')
                                           ],
                                         ),
                                       ),
@@ -516,7 +516,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                       SizedBox(
                                         height: 16,
                                       ),
-                                      WishListItem(id: info.id.toString(),),
+                                      WishListItem(wishes: info.wishList,),
                                       SizedBox(
                                         height: 16,
                                       ),
@@ -565,6 +565,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         onTap: (){
                           ref.read(asyncMatchRecommendedProvider.notifier)
                               .skip(info.id);
+                          pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                         },
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
@@ -573,7 +574,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             if(like>0){
                               like=like-1;
                             }
-                            users[index].matched=true;
+                            if(users[index].wishList.isEmpty){
+                              pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                            }else {
+                              users[index].matched=true;
+                            }
                             currentPage=index;
 
                             setState(() {
@@ -660,13 +665,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         scrollDirection: Axis.horizontal,
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
-        //onPageChanged: (value) async {
-
+        onPageChanged: (value) async {
           //currentPage=value;
-          // if(value!=0&&value%5==0&&ScrollDirection.reverse==direction){
-          //   current++;
-          //   _loadMore();
-          // }
+          if (value != 0 && value % 5 == 0 &&
+              ScrollDirection.reverse == direction) {
+            current++;
+            _loadMore();
+          }
+        }
           // if(direction!=null){
           //   if(ScrollDirection.forward==direction){
           //     /// down
