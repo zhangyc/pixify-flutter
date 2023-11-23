@@ -34,11 +34,16 @@ class HeardItem extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text(userInfo.name??'',style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28
-                        ),),
-                        Text('${userInfo.age??''}',style: TextStyle(
+                        Container(
+                          child: Text(userInfo.name??'',style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                          ),
+                            maxLines: 1,
+                          ),
+                          width: 200,
+                        ),
+                        Text(',${userInfo.age??''}',style: TextStyle(
                             color: Colors.white,
                             fontSize: 28
                         ),),
@@ -50,7 +55,7 @@ class HeardItem extends StatelessWidget {
                 Row(
                   children: [
                     Icon(Icons.location_on,color: Colors.white,),
-                    Text('${userInfo.country}',style: TextStyle(
+                    Text('${userInfo.countryFlag}',style: TextStyle(
                         color: Colors.white,
                         fontSize: 14
                     ),)

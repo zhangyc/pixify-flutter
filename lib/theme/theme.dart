@@ -34,56 +34,56 @@ final themeData = ThemeData(
       statusBarIconBrightness: Brightness.dark
     )
   ),
-  textTheme: TextTheme(
-    titleLarge: const TextStyle(
+  textTheme: const TextTheme(
+    titleLarge: TextStyle(
         color: Colors.black,
         fontSize: 20,
         fontWeight: FontWeight.w700,
         letterSpacing: 1
     ),
-    titleMedium: const TextStyle(
+    titleMedium: TextStyle(
         color: Colors.black,
         fontSize: 16,
         fontWeight: FontWeight.w600,
         letterSpacing: 1
     ),
-    titleSmall: const TextStyle(
+    titleSmall: TextStyle(
         color: fontColour,
         fontSize: 14,
         fontWeight: FontWeight.w600,
         letterSpacing: 1
     ),
-    headlineLarge: const TextStyle(
+    headlineLarge: TextStyle(
       color: fontColour,
       fontSize: 32,
       fontWeight: FontWeight.w700,
       letterSpacing: 1
     ),
-    headlineMedium: const TextStyle(
+    headlineMedium: TextStyle(
       color: fontColour,
       fontSize: 20,
       fontWeight: FontWeight.w700,
       letterSpacing: 1
     ),
-    bodyLarge: const TextStyle(
+    bodyLarge: TextStyle(
         color: Colors.black,
         fontSize: 18,
         fontWeight: FontWeight.w500,
         letterSpacing: 1
     ),
-    bodyMedium: const TextStyle(
+    bodyMedium: TextStyle(
       color: fontColour,
       fontSize: 16,
       fontWeight: FontWeight.w400,
       letterSpacing: 1
     ),
-    bodySmall: const TextStyle(
+    bodySmall: TextStyle(
       color: fontColour,
       fontSize: 14,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.12,
     ),
-    labelSmall: const TextStyle(
+    labelSmall: TextStyle(
         color: Color(0xA8111111),
         fontSize: 12,
         fontWeight: FontWeight.w400,

@@ -29,6 +29,7 @@ class SonaApp extends HookConsumerWidget {
     final navigatorKey = global.navigatorKey;
     final initialRoute = profile == null || !profile.completed ? 'login' : '/';
     return MaterialApp(
+
       key: ValueKey(token),
       navigatorKey: navigatorKey,
       builder: EasyLoading.init(builder: (BuildContext context, Widget? child) {

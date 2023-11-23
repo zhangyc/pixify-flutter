@@ -14,7 +14,7 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/bio_item.dart';
-import 'package:sona/core/match/widgets/blz_action_item.dart';
+import 'package:sona/core/match/widgets/biz_action_item.dart';
 import 'package:sona/core/match/widgets/choice_bytton.dart';
 import 'package:sona/core/match/widgets/galley_item.dart';
 import 'package:sona/core/match/widgets/interest_item.dart';
@@ -112,6 +112,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     return Stack(
       children: [
 
+
+        Positioned.fill(
+          child: _buildMatch()
+        ),
         Positioned(
           width: MediaQuery.of(context).size.width,
           top: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top,
@@ -143,9 +147,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               ],
             ),
           ),
-        ),
-        Positioned.fill(
-          child: _buildMatch()
         ),
         /**
         iconIndex==1?Container():Positioned(
@@ -515,17 +516,32 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                       SizedBox(
                                         height: 16,
                                       ),
-                                      WishListItem(),
+                                      WishListItem(id: info.id.toString(),),
                                       SizedBox(
                                         height: 16,
                                       ),
-                                      BioItem(),
+                                      BioItem(bio: info.bio??'',),
                                       SizedBox(
                                         height: 16,
                                       ),
-                                      GalleyItem(),
-                                      InterestItem(),
-                                      BlzActionItem(),
+                                      GalleyItem(images: info.photos,),
+                                      InterestItem(interest: info.interest,),
+                                      BizActionItem(report: () async{
+                                        SonaAnalytics.log(MatchEvent.match_report.name);
+                                        final r =await showReport(context, users[currentPage].id);
+                                        if (r == true) {
+                                          users.removeAt(currentPage);
+                                          if (mounted) setState(() {});
+                                        }
+                                      }, block: () async{
+                                        final resp = await matchAction(userId: users[currentPage].id, action: MatchAction.block);
+                                        if (resp.statusCode == 0) {
+                                          users.removeAt(currentPage);
+                                          if (mounted) setState(() {});
+                                          Fluttertoast.showToast(msg: 'The user has been blocked');
+                                          SonaAnalytics.log('post_block');
+                                        }
+                                      },),
                                       SizedBox(
                                         height: MediaQuery.of(context).padding.bottom+64,
                                       ),

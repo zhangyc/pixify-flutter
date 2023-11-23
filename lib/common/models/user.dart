@@ -22,7 +22,8 @@ class UserInfo {
     this.allScore,
     this.impression,
     this.interest=const [],
-    this.likeMe=0
+    this.likeMe=0,
+    this.countryFlag
   });
 
   final int id;
@@ -41,7 +42,7 @@ class UserInfo {
   final String? impression;
   int likeMe=0;  //1 喜欢了，0 无
   List<Interest> interest=[];
-
+  String? countryFlag;
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     final images = json['images'];
     final _interestTag = json['interest'];
@@ -72,7 +73,8 @@ class UserInfo {
         allScore: json['allScore']?.toStringAsFixed(2),
         impression:json['impression'],
         interest: _interest,
-        likeMe: json['likeMe']??0
+        likeMe: json['likeMe']??0,
+        countryFlag:json['countryFlag']
     );
   }
 }

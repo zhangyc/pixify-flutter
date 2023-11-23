@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-class InterestItem extends StatelessWidget {
-  const InterestItem({super.key});
+import '../../../common/models/user.dart';
 
+class InterestItem extends StatelessWidget {
+  const InterestItem({super.key, required this.interest});
+  final List<Interest> interest;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return interest.isEmpty?Container():SizedBox(
       width: MediaQuery.of(context).size.width-16*2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,7 +19,7 @@ class InterestItem extends StatelessWidget {
           Wrap(
             spacing: 5,
             runSpacing: 5,
-            children: ["A","A","A","A","A","A","A","A",].map((e) => Container(
+            children: interest.map((e) => Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 border: Border.all(
@@ -28,7 +30,7 @@ class InterestItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.circle),
-                  Text(e)
+                  Text(e.name??'')
                 ],
               ),
             )).toList(),

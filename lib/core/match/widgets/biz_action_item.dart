@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-class BlzActionItem extends StatelessWidget {
-  const BlzActionItem({super.key});
-
+class BizActionItem extends StatelessWidget {
+  const BizActionItem({super.key, required this.report, required this.block});
+  final VoidCallback report;
+  final VoidCallback block;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -19,9 +20,7 @@ class BlzActionItem extends StatelessWidget {
             child: Text('Block',style: TextStyle(
               color: Colors.red
             ),),
-            onTap: (){
-
-            },
+            onTap: block,
           ),
           SizedBox(
             width: 16,
@@ -30,9 +29,7 @@ class BlzActionItem extends StatelessWidget {
             child: Text('Report',style: TextStyle(
               color: Colors.black
             ),),
-            onTap: (){
-
-            },
+            onTap: report,
           )
         ],
       ),
