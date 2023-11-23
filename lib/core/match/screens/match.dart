@@ -15,6 +15,7 @@ import 'package:sona/common/permission/permission.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/bio_item.dart';
 import 'package:sona/core/match/widgets/blz_action_item.dart';
+import 'package:sona/core/match/widgets/choice_bytton.dart';
 import 'package:sona/core/match/widgets/galley_item.dart';
 import 'package:sona/core/match/widgets/interest_item.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
@@ -358,7 +359,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }
   }
   late PageState _state= PageState.loading;
-
+  PageController _pageController=PageController(viewportFraction: 0.8);
   _buildMatch() {
     if(_state==PageState.loading){
      return  Container(child: Center(child: MatchInitAnimation()),color: Colors.black,);
@@ -370,186 +371,238 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       return PageView.builder(
         itemBuilder: (c,index) {
           UserInfo info=users[index];
-          // return PageView(
-          //   children: ['A','B','C'].map((e) => Column(
-          //     children: [
-          //       SizedBox(
-          //         height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
-          //       ),
-          //       SizedBox(
-          //         height: 8,
-          //       ),
-          //       Text('Are you interested in her ideas',style: TextStyle(
-          //         color: Colors.black,
-          //         fontSize: 28
-          //       ),),
-          //       SizedBox(
-          //         height: 16,
-          //       ),
-          //       Container(
-          //         width: 327,
-          //         height: 470,
-          //         decoration: BoxDecoration(
-          //           border: Border.all(
-          //             color: Colors.black,
-          //             width: 2
-          //           ),
-          //         ),
-          //         child: Column(
-          //           children: [
-          //             SizedBox(
-          //               height: 16,
-          //             ),
-          //             Container(
-          //               width: 259,
-          //               height: 166,
-          //               decoration: BoxDecoration(
-          //                 border: Border.all(
-          //                     color: Colors.black,
-          //                     width: 2
-          //                 ),
-          //               ),
-          //               child: Stack(
-          //                 children: [
-          //                   Positioned(child: Image.asset(Assets.imagesTest,width: 48,height: 48,)),
-          //                   Positioned(child: Row(
-          //                     children: [
-          //                       Text('data,china'),
-          //                       Text('flag')
-          //                     ],
-          //                   )),
-          //                 ],
-          //               ),
-          //             ),
-          //             // Column(
-          //             //   children: ['1'],
-          //             // )
-          //
-          //           ],
-          //         ),
-          //       ),
-          //     ],
-          //   )).toList(),
-          // );
-          return Stack(
+          if(info.id==-1){
+            return NoMoreWidget();
+          }
+          if(info.matched){
+            return Column(
             children: [
-              Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Expanded(
-                    child: CustomScrollView(
-                      slivers: [
-
-                        SliverToBoxAdapter(
-                          child: Stack(
+              SizedBox(
+                height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Text('Are you interested in her ideas',style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 28
+                ),),
+              ),
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  children: ['A','B','C'].map((e) => Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: 8
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Container(
+                          width: 327,
+                          height: 470,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(
+                                color: Colors.black,
+                                width: 2
+                            ),
+                          ),
+                          child: Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Container(
+                                width: 259,
+                                height: 166,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                        color: Colors.black,
+                                        width: 2
+                                    ),
+                                    image: DecorationImage(image: AssetImage(Assets.imagesTest),fit: BoxFit.cover)
                                 ),
-                                child: Column(
+                                child: Stack(
                                   children: [
-                                    HeardItem(userInfo: info,),
-                                    SizedBox(
-                                      height: 16,
-                                    ),
-                                    WishListItem(),
-                                    SizedBox(
-                                      height: 16,
-                                    ),
-                                    BioItem(),
-                                    SizedBox(
-                                      height: 16,
-                                    ),
-                                    GalleyItem(),
-                                    InterestItem(),
-                                    BlzActionItem(),
-                                    SizedBox(
-                                      height: MediaQuery.of(context).padding.bottom+64,
+                                    Positioned(child: Image.asset(Assets.imagesTest,width: 48,height: 48,fit: BoxFit.cover,alignment: Alignment.topCenter,)),
+                                    const Positioned(
+                                      width: 259,
+                                      bottom: 0,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(11.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('data,china',style: TextStyle(color: Colors.white),),
+                                            Text('flag')
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                child: Column(
+                                  children: List.generate(4, (index2) => Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: ChoiceButton(text: '$index', onTap: () {
+                                        ///点击切换，下一个用户
+                                      if(users[index].likeMe==1){
+                                        showMatched(context, () {
+                                          pageController.nextPage(duration: const Duration(milliseconds: 1000),
+                                              curve: Curves.linearToEaseOut);
+                                          // if (index < users.length - 1) {
+                                          //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
+                                          //       curve: Curves.linearToEaseOut);
+                                          // }
+                                        },target: users[index],);
+                                      }else if(users[index].likeMe==0){
+                                        pageController.nextPage(duration: const Duration(milliseconds: 1000),
+                                            curve: Curves.linearToEaseOut);
+                                        // if (index < users.length - 1) {
+                                        //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
+                                        //       curve: Curves.linearToEaseOut);
+                                        // }
+                                      }
+                                    },),
+                                  )),
+                                ),
+                              )
+
                             ],
                           ),
                         ),
-
                       ],
                     ),
-                  ),
-                ],
+                  )).toList(),
+                ),
               ),
-              Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
-                width: MediaQuery.of(context).size.width,child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
-                     onTap: (){
-                       ref.read(asyncMatchRecommendedProvider.notifier)
-                           .skip(info.id);
-                     },
-                  ),
-                  GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
-                     onTap: (){
-                       if(canLike){
-                         if(like>0){
-                           like=like-1;
-                         }
-                         users[index].matched=true;
-                         SonaAnalytics.log(MatchEvent.match_like.name);
-                         if(users[index].likeMe==1){
-                           showMatched(context, () {
-                             if (index < users.length - 1) {
-                               pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
-                                   curve: Curves.linearToEaseOut);
-                             }
-                           },target: users[index],);
-                         }else if(users[index].likeMe==0){
-                           if (index < users.length - 1) {
-                             pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
-                                 curve: Curves.linearToEaseOut);
-                           }
-                         }
-                       }else {
-                         SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                         Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                           return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
-                         }));
-                       }
-                       ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
-                     },
-                  ),
-                  GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
-                    onTap: (){
-                      if(canArrow){
-                        arrow=arrow-1;
-                        ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
-                        SonaAnalytics.log(MatchEvent.match_arrow_send.name);
-                        //arrowController.reset();
-                        //arrowController.forward() ;
-                        //widget.userInfo.arrowed=true;
-                      }else {
-                        bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                        if(isMember){
-                          Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                        }else{
-                          Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                            return SubscribePage(fromTag: FromTag.pay_match_arrow,);
-                          }));
-                        }
-                      }
-                    },
-                  ),
-                ],
-              ),
-              )
             ],
           );
+          }else {
+            return Stack(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Expanded(
+                      child: CustomScrollView(
+                        slivers: [
+
+                          SliverToBoxAdapter(
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      HeardItem(userInfo: info,),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      WishListItem(),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      BioItem(),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      GalleyItem(),
+                                      InterestItem(),
+                                      BlzActionItem(),
+                                      SizedBox(
+                                        height: MediaQuery.of(context).padding.bottom+64,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+                  width: MediaQuery.of(context).size.width,child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
+                        onTap: (){
+                          ref.read(asyncMatchRecommendedProvider.notifier)
+                              .skip(info.id);
+                        },
+                      ),
+                      GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
+                        onTap: (){
+                          if(canLike){
+                            if(like>0){
+                              like=like-1;
+                            }
+                            users[index].matched=true;
+                            currentPage=index;
+
+                            setState(() {
+
+                            });
+                            SonaAnalytics.log(MatchEvent.match_like.name);
+
+                          }else {
+                            SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                            Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                              return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                            }));
+                          }
+                          ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
+                        },
+                      ),
+                      GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
+                        onTap: (){
+                          if(canArrow){
+                            arrow=arrow-1;
+                            ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
+                            SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                            //arrowController.reset();
+                            //arrowController.forward() ;
+                            //widget.userInfo.arrowed=true;
+                          }else {
+                            bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                            if(isMember){
+                              Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                            }else{
+                              Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                                return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                              }));
+                            }
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            );
+          }
+
+
           return StackPageView(index: index,
               controller: pageController,
               child: (info.id==-1)?NoMoreWidget(): MatchItem(index,
