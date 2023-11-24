@@ -7,6 +7,8 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/core/travel_wish/providers/activity.dart';
+import 'package:sona/core/travel_wish/providers/region.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/locale/locale.dart';
 
@@ -111,7 +113,8 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
               onTap: () async {
                 var value = await showLocalePicker(context: context, initialValue: ref.read(myProfileProvider)!.locale);
                 if (value != null) {
-                  ref.read(myProfileProvider.notifier).updateField(locale: findMatchedSonaLocale(value));
+                  await ref.read(myProfileProvider.notifier).updateField(locale: findMatchedSonaLocale(value));
+                  ref.refresh(asyncPopularTravelDestinationsProvider);
                 }
               },
               child: Row(
