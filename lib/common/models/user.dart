@@ -123,7 +123,7 @@ class WishBean {
   String? activityNames;
   int? status;
   String? countryFlag;
-
+  List<Activity> activities=[];
   WishBean(
       {this.id,
         this.createDate,
@@ -140,7 +140,8 @@ class WishBean {
         this.activityIds,
         this.activityNames,
         this.status,
-        this.countryFlag
+        this.countryFlag,
+        this.activities=const []
       });
 
   WishBean.fromJson(Map<String, dynamic> json) {
@@ -160,7 +161,8 @@ class WishBean {
     activityNames = json['activityNames'];
     status = json['status'];
     countryFlag = json['countryFlag'];
-
+    List t=json['activity']??[];
+    activities=t.map((e) => Activity.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -181,8 +183,27 @@ class WishBean {
     data['activityNames'] = this.activityNames;
     data['status'] = this.status;
     data['countryFlag'] = this.countryFlag;
+    data['activity']=this.activities;
 
     return data;
 
+  }
+}
+class Activity {
+  int? id;
+  String? title;
+
+  Activity({this.id, this.title});
+
+  Activity.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    return data;
   }
 }

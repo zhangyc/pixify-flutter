@@ -53,10 +53,15 @@ class _AvatarAnimationState extends State<AvatarAnimation>  with SingleTickerPro
       children: [
         SlideTransition(
           position: animation,
-          child: ClipOval(
-            child: CachedNetworkImage(imageUrl:widget.avatar,width: 160,height: 160,
+          child: Container(
+            width: 171,
+            height: 128,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24)
+            ),
+            child: CachedNetworkImage(imageUrl:widget.avatar,width: 171,height: 128,
               fit: BoxFit.cover,placeholder: (_,__){
-                return Lottie.asset(Assets.lottieSearch,width: 160,height: 160);
+                return Lottie.asset(Assets.lottieSearch,width: 171,height: 128);
               },),
           ),
         ),

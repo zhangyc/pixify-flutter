@@ -32,6 +32,7 @@ class Assets {
   static const String iconsSub7 = 'assets/icons/sub7.png';
   static const String iconsSuper = 'assets/icons/super.png';
   static const String imagesArrow = 'assets/images/arrow.png';
+  static const String imagesDm = 'assets/images/dm.png';
   static const String imagesError = 'assets/images/error.png';
   static const String imagesLikedMeNew = 'assets/images/liked_me_new.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';

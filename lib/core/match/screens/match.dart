@@ -16,6 +16,7 @@ import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/widgets/bio_item.dart';
 import 'package:sona/core/match/widgets/biz_action_item.dart';
 import 'package:sona/core/match/widgets/choice_bytton.dart';
+import 'package:sona/core/match/widgets/dialogs.dart';
 import 'package:sona/core/match/widgets/galley_item.dart';
 import 'package:sona/core/match/widgets/interest_item.dart';
 import 'package:sona/core/match/widgets/match_item.dart';
@@ -431,7 +432,20 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                 ),
                                 child: Stack(
                                   children: [
-                                    Positioned(child: Image.asset(Assets.imagesTest,width: 48,height: 48,fit: BoxFit.cover,alignment: Alignment.topCenter,)),
+                                    Positioned(top: 16,
+                                      left: 16,child: Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(image: AssetImage(Assets.imagesTest),fit: BoxFit.cover),
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 2
+                                        ),
+                                        borderRadius: BorderRadius.circular(20)
+                                      ),
+                                      clipBehavior: Clip.antiAlias,
+                                      width: 48,height: 48,
+                                    ),
+                                    ),
                                     Positioned(
                                       width: 259,
                                       bottom: 0,
@@ -449,12 +463,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                   ],
                                 ),
                               ),
+                              SizedBox(
+                                height: 16,
+                              ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 16),
                                 child: Column(
-                                  children: List.generate(4, (index2) => Padding(
+
+                                  children: List.generate(e.activities.length, (index2) => Padding(
                                     padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: ChoiceButton(text: '$index', onTap: () {
+                                    child: ChoiceButton(text: e.activities[index2].title??'', onTap: () {
                                         ///点击切换，下一个用户
                                       if(users[index].likeMe==1){
                                         showMatched(context, () {
@@ -563,9 +581,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     children: [
                       GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
                         onTap: (){
-                          ref.read(asyncMatchRecommendedProvider.notifier)
-                              .skip(info.id);
                           pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                          ref.read(asyncMatchRecommendedProvider.notifier).skip(info.id);
                         },
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
@@ -597,23 +614,24 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
                         onTap: (){
-                          if(canArrow){
-                            arrow=arrow-1;
-                            ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
-                            SonaAnalytics.log(MatchEvent.match_arrow_send.name);
-                            //arrowController.reset();
-                            //arrowController.forward() ;
-                            //widget.userInfo.arrowed=true;
-                          }else {
-                            bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                            if(isMember){
-                              Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                            }else{
-                              Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                                return SubscribePage(fromTag: FromTag.pay_match_arrow,);
-                              }));
-                            }
-                          }
+                           showDm(context, info);
+                          // if(canArrow){
+                          //   arrow=arrow-1;
+                          //   ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
+                          //   SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                          //   //arrowController.reset();
+                          //   //arrowController.forward() ;
+                          //   //widget.userInfo.arrowed=true;
+                          // }else {
+                          //   bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                          //   if(isMember){
+                          //     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                          //   }else{
+                          //     Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                          //       return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                          //     }));
+                          //   }
+                          // }
                         },
                       ),
                     ],

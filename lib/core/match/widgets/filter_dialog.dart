@@ -182,6 +182,10 @@ void showMatched(BuildContext context,VoidCallback onSend,{required UserInfo tar
                     SizedBox(
                       height: 515,
                     ),
+                    Text('''
+                    ” I'd like to see exhibition at the Mori Art Museum with you.”
+                    '''),
+                    TextField(),
                     Align(
                       alignment: Alignment.center,
                       child: OutlinedButton(onPressed: (){
@@ -210,7 +214,7 @@ void showMatched(BuildContext context,VoidCallback onSend,{required UserInfo tar
                     sayHi=='Sent √'?Container():TextButton(onPressed: (){
                       onSend.call();
                       Navigator.pop(context);
-                      }, child: Text('Later',style: TextStyle(
+                      }, child: Text('X',style: TextStyle(
                         color: Colors.white.withOpacity(0.8),
                         fontSize: 16
                     ),))
