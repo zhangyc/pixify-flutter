@@ -58,12 +58,12 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                 child: Text(
                   '${likedMeUsers.length} ${S.current.homeWhoLikeMe}',
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               const SizedBox(height: 16),
               Container(
-                height: 100,
+                height: 106,
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.centerLeft,
                 child: ListView.separated(
@@ -100,67 +100,46 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                     return GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => widget.onTap(u),
-                      child: SizedBox(
-                        width: 88,
-                        height: 106,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25)
+                        ),
+                        foregroundDecoration: BoxDecoration(
+                          border: Border.all(width: 2, color: Theme.of(context).primaryColor),
+                          borderRadius: BorderRadius.circular(25)
+                        ),
+                        alignment: Alignment.center,
                         child: Stack(
-                          clipBehavior: Clip.none,
                           children: [
-                            Positioned.fill(
-                              child: Container(
-                                decoration: newLike ? BoxDecoration(
-                                  border: Border.all(width: 2),
-                                  borderRadius: BorderRadius.circular(25)
-                                ) : null,
-                                alignment: Alignment.center,
-                                child: Stack(
-                                  children: [
-                                    UserAvatar(
-                                      url: u.avatar!,
-                                      size: Size(84, 102),
+                            UserAvatar(
+                              url: u.avatar!,
+                              size: Size(84, 102),
+                            ),
+                            SizedBox(
+                              width: 84,
+                              height: 102,
+                              child: Visibility(
+                                visible: !ref.watch(myProfileProvider)!.isMember,
+                                child:  ClipOval(
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
+                                    child: Container(
+                                      color: Colors.white.withOpacity(0.5),
                                     ),
-                                    SizedBox(
-                                      width: 84,
-                                      height: 102,
-                                      child: Visibility(
-                                        visible: !ref.watch(myProfileProvider)!.isMember,
-                                        child:  ClipOval(
-                                          child: BackdropFilter(
-                                            filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
-                                            child: Container(
-                                              color: Colors.white.withOpacity(0.5),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
-                            // Positioned.fill(
-                            //   child: Visibility(
-                            //     visible: !ref.watch(myProfileProvider)!.isMember,
-                            //     child:  BackdropFilter(
-                            //       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            //       child: Container(
-                            //         color: Colors.white.withOpacity(0.5),
-                            //         width: 68,
-                            //         height: 68,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                             Positioned(
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              child: Visibility(
-                                visible: newLike,
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                    child: Image.asset('assets/images/liked_me_new.png', width: 30))
-                              )
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                child: Visibility(
+                                    visible: newLike,
+                                    child: Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Image.asset('assets/images/liked_me_new.png', width: 30))
+                                )
                             )
                           ],
                         ),
