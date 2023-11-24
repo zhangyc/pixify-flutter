@@ -18,9 +18,9 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
 
   void update(MyProfile? profile) {
     if (profile == null) {
-      global.profile = profile;
       global.kvStore.remove(profileKey);
     } else {
+      global.profile = profile;
       global.kvStore.setString(profileKey, jsonEncode(profile.toJson()));
     }
     state = profile;

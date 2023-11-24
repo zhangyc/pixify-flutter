@@ -8,6 +8,7 @@ import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/locale/locale.dart';
 
 import '../../common/widgets/webview.dart';
 import '../../generated/l10n.dart';
@@ -99,6 +100,32 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   Icon(CupertinoIcons.forward),
                   SizedBox(width: 20),
 
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(child: SizedBox(height: 24)),
+          SliverToBoxAdapter(
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () async {
+                var value = await showLocalePicker(context: context, initialValue: ref.read(myProfileProvider)!.locale);
+                if (value != null) {
+                  ref.read(myProfileProvider.notifier).updateField(locale: findMatchedSonaLocale(value));
+                }
+              },
+              child: Row(
+                children: [
+                  SizedBox(width: 20),
+                  Icon(CupertinoIcons.globe),
+                  SizedBox(width: 8),
+                  Text('Language', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500
+                  )),
+                  Expanded(child: Container()),
+                  Text(findMatchedSonaLocale(ref.watch(myProfileProvider)!.locale!).displayName),
+                  Icon(CupertinoIcons.forward),
+                  SizedBox(width: 20),
                 ],
               ),
             ),
