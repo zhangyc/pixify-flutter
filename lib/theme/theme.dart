@@ -38,7 +38,7 @@ final themeData = ThemeData(
     titleLarge: TextStyle(
         color: Colors.black,
         fontSize: 20,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w800,
         letterSpacing: 1
     ),
     titleMedium: TextStyle(
@@ -83,6 +83,12 @@ final themeData = ThemeData(
       fontWeight: FontWeight.w400,
       letterSpacing: 0.12,
     ),
+    labelMedium: TextStyle(
+        color: Color(0xFF727272),
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 1
+    ),
     labelSmall: TextStyle(
         color: Color(0xA8111111),
         fontSize: 12,
@@ -102,6 +108,7 @@ final themeData = ThemeData(
           borderRadius: BorderRadius.circular(20)
       )),
       textStyle: MaterialStatePropertyAll(TextStyle(color: fontColour)),
+      minimumSize: MaterialStatePropertyAll(Size.fromHeight(50)),
       alignment: Alignment.center
     )
   ),

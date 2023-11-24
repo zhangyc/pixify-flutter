@@ -6,17 +6,17 @@ class UserAvatar extends ConsumerWidget {
   const UserAvatar({
     super.key,
     required this.url,
-    this.size = 64,
+    this.size = const Size.square(50),
   });
 
   final String url;
-  final double size;
+  final Size size;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      width: size,
-      height: size,
+      width: size.width,
+      height: size.height,
       decoration: BoxDecoration(
         // shape: BoxShape.circle,
         border: Border.all(color: const Color(0xFFD9D9D9), width: 0.2),
@@ -25,7 +25,8 @@ class UserAvatar extends ConsumerWidget {
       alignment: Alignment.center,
       clipBehavior: Clip.antiAlias,
       child: CachedNetworkImage(
-        width: size,
+        width: size.width,
+        height: size.height,
         imageUrl: url,
         fit: BoxFit.cover,
         alignment: Alignment.center,

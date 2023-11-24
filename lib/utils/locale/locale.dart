@@ -17,18 +17,21 @@ class SonaLocale {
 }
 
 final supportedSonaLocales = [
-  SonaLocale.fromLanguageTag('en-US', 'English (United States)'),
-  SonaLocale.fromLanguageTag('en-GB', 'English (United Kingdom)'),
+  SonaLocale.fromLanguageTag('en-US', 'English (US)'),
+  SonaLocale.fromLanguageTag('en-GB', 'English (UK)'),
+  SonaLocale.fromLanguageTag('ja-JP', '日本語'),
   SonaLocale.fromLanguageTag('zh-CN', '简体中文'),
   SonaLocale.fromLanguageTag('zh-TW', '繁體中文'),
-  SonaLocale.fromLanguageTag('ja-JP', '日本語'),
-  SonaLocale.fromLanguageTag('ko-KR', '한국어(대한민국)'),
-  SonaLocale.fromLanguageTag('ar-ME', 'العربية (الشرق الأوسط)'),
+  SonaLocale.fromLanguageTag('ko-KR', '한국어'),
+  SonaLocale.fromLanguageTag('th-TH', 'ไทย'),
+  SonaLocale.fromLanguageTag('pt-PT', 'Português'),
   SonaLocale.fromLanguageTag('pt-BR', 'Português (Brasil)'),
-  SonaLocale.fromLanguageTag('es-LA', 'Español (Latinoamérica)'),
-  SonaLocale.fromLanguageTag('ru-RU', 'Русский (Россия)'),
-  SonaLocale.fromLanguageTag('fr-FR', 'Français (France)'),
-  SonaLocale.fromLanguageTag('th-TH', 'ภาษาไทย (ประเทศไทย)'),
+  SonaLocale.fromLanguageTag('es-ES', 'Español'),
+  SonaLocale.fromLanguageTag('fr-FR', 'Français'),
+  SonaLocale.fromLanguageTag('de-DE', 'Deutsch'),
+  SonaLocale.fromLanguageTag('it-IT', 'Italiano'),
+  SonaLocale.fromLanguageTag('ru-RU', 'Русский'),
+  SonaLocale.fromLanguageTag('yue', '粵語'),
 ];
 
 SonaLocale findMatchedSonaLocale(String languageTag) {

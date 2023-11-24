@@ -52,8 +52,9 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
           alignment: Alignment.center,
           fit: BoxFit.cover
         ),
-        borderRadius: BorderRadius.circular(4)
+        borderRadius: BorderRadius.circular(20)
       ),
+      clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
           Positioned(

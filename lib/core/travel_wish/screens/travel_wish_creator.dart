@@ -127,6 +127,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
           child: Center(
             child: Text('Error to get initial data\nclick to try again'),
           ),
+          onTap: () => ref.refresh(asyncPopularTravelDestinationsProvider),
         ),
         loading: () => Center(
           child: SizedBox(

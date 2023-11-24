@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/common/widgets/button/next.dart';
 import 'package:sona/common/widgets/button/option.dart';
+import 'package:sona/utils/locale/locale.dart';
 
 import '../../common/widgets/button/colored.dart';
 import '../../generated/l10n.dart';
@@ -445,52 +446,38 @@ Future<T?> showRadioFieldDialog<T>({
       topLeft: Radius.circular(16),
       topRight: Radius.circular(16),
     )),
+    useSafeArea: true,
     clipBehavior: Clip.antiAlias,
     isDismissible: dismissible,
     builder: (BuildContext context) {
-      final itemCount = dismissible ? options.length + 1 : options.length;
-
-      return Padding(
+      return Container(
         padding: MediaQuery.of(context).viewInsets,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Visibility(
-              visible: title != null && title.isNotEmpty,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 20),
-                child: Text(title ?? '',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18)),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Visibility(
+                visible: title != null && title.isNotEmpty,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  child: Text(title ?? '', style: Theme.of(context).textTheme.titleLarge),
+                ),
               ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == options.length) {
-                  return OptionButton(
-                    onTap: () => Navigator.pop(context, null),
-                    color: Colors.transparent,
-                    text: S.current.cancel,
-                    fontColor: Theme.of(context).colorScheme.error,
-                  );
-                }
-
-                final key = options.keys.toList(growable: false)[index];
-                final value = options[key];
-                return OptionButton(
-                    onTap: () => Navigator.pop(context, value),
-                    color: initialValue == value
-                        ? Theme.of(context).colorScheme.secondaryContainer
-                        : Colors.transparent,
-                    text: key);
-              },
-              // separatorBuilder: (BuildContext context, int index) {
-              //   return Divider(height: 1, indent: 0);
-              // },
-              itemCount: itemCount,
-            ),
-          ],
+              ...options.keys.map<Widget>((key) => OptionButton(
+                onTap: () => Navigator.pop(context, options[key]),
+                color: initialValue == options[key]
+                    ? Theme.of(context).colorScheme.secondaryContainer
+                    : Colors.transparent,
+                text: key
+              )),
+              if (dismissible) OptionButton(
+                onTap: () => Navigator.pop(context, null),
+                color: Colors.transparent,
+                text: S.current.cancel,
+                fontColor: Theme.of(context).colorScheme.error,
+              )
+            ],
+          ),
         ),
       );
     },
@@ -548,6 +535,24 @@ Future<DateTime?> showBirthdayPicker({
         ],
       ),
     ),
+  );
+}
+
+Future<String?> showLocalePicker({
+  required BuildContext context,
+  String? initialValue,
+  bool dismissible = true,
+}) {
+  final options = <String, String>{};
+  for (var l in supportedSonaLocales) {
+    options.addAll({l.displayName: l.locale.toLanguageTag()});
+  }
+  return showRadioFieldDialog<String>(
+      context: context,
+      options: options,
+      title: 'Choose a Language',
+      initialValue: initialValue,
+      dismissible: dismissible
   );
 }
 

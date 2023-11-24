@@ -21,8 +21,10 @@ class TravelWish {
   factory TravelWish.fromJson(Map<String, dynamic> json) {
     final cityIdsStr =  json['cityId'] as String?;
     final activityIdsStr = json['activityIds'] as String?;
+    final activityNamesStr = json['activityNames'] as String?;
     List<int> cityIds;
     List<int> activityIds;
+    List<String> activityNames;
     if (cityIdsStr != null && cityIdsStr.isNotEmpty) {
       cityIds = cityIdsStr.split('#').map(int.parse).toList();
     } else {
@@ -33,6 +35,11 @@ class TravelWish {
     } else {
       activityIds = <int>[];
     }
+    if (activityNamesStr != null && activityNamesStr.isNotEmpty) {
+      activityNames = activityNamesStr.split('#').toList();
+    } else {
+      activityNames = <String>[];
+    }
     return TravelWish(
       id: json['id'],
       userId: json['userId'],
@@ -41,7 +48,7 @@ class TravelWish {
       countryPhoto: json['pic'],
       cityIds: cityIds,
       activityIds: activityIds,
-      activityNames: json['activityNames'].split('#').toList()
+      activityNames: activityNames
     );
   }
 }

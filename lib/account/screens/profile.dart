@@ -9,6 +9,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/button/forward.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
@@ -41,74 +42,82 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     _profile = ref.watch(myProfileProvider)!;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: SonaIcon(icon: SonaIcons.back),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(S.current.editProfile),
         centerTitle: true,
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                        padding: EdgeInsets.only(left: 16, right: 8, top: 4, bottom: 4),
-                        child: Text('Sona Impression', style: Theme.of(context).textTheme.titleMedium)
-                    ),
-                    GestureDetector(
-                      onTap: _showImpressionDesc,
-                      child: Icon(Icons.info_outline_rounded, size: 12)
-                    )
-                  ],
-                ),
-                SizedBox(height: 4),
-                Visibility(
-                  visible: _profile.impression != null,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      _profile.impression ?? '',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).primaryColor
-                      ),
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: _profile.impression == null,
-                  child: GestureDetector(
-                    onTap: _showImpressionDesc,
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        '👀 How to get a Sona Impression...',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Color(0xFFE880F1)
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            )
-          ),
+          // SliverToBoxAdapter(
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //     children: [
+                // Row(
+                //   children: [
+                //     Container(
+                //         padding: EdgeInsets.only(left: 16, right: 8, top: 4, bottom: 4),
+                //         child: Text('Sona Impression', style: Theme.of(context).textTheme.titleMedium)
+                //     ),
+                //     GestureDetector(
+                //       onTap: _showImpressionDesc,
+                //       child: Icon(Icons.info_outline_rounded, size: 12)
+                //     )
+                //   ],
+                // ),
+                // SizedBox(height: 4),
+                // Visibility(
+                //   visible: _profile.impression != null,
+                //   child: Container(
+                //     margin: EdgeInsets.symmetric(horizontal: 16),
+                //     child: Text(
+                //       _profile.impression ?? '',
+                //       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                //         color: Theme.of(context).primaryColor
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Visibility(
+                //   visible: _profile.impression == null,
+                //   child: GestureDetector(
+                //     onTap: _showImpressionDesc,
+                //     child: Container(
+                //       margin: EdgeInsets.symmetric(horizontal: 16),
+                //       child: Text(
+                //         '👀 How to get a Sona Impression...',
+                //         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                //             color: Color(0xFFE880F1)
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // )
+          //     ],
+          //   )
+          // ),
           SliverToBoxAdapter(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
                   child: Row(
                     children: [
-                      Text('Photos', style: Theme.of(context).textTheme.titleMedium),
-                      SizedBox(width: 8),
-                      Text('(${_profile.photos.length}/9)', style: Theme.of(context).textTheme.bodySmall)
+                      Text('Photos', style: Theme.of(context).textTheme.titleLarge),
+                      // SizedBox(width: 8),
+                      // Text('(${_profile.photos.length}/9)', style: Theme.of(context).textTheme.bodySmall)
                     ],
                   )
                 ),
-                SizedBox(width: 6),
+                Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Text('More photos, higher exposure', style: Theme.of(context).textTheme.labelMedium),
+                ),
+                SizedBox(height: 16),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 144,
@@ -191,6 +200,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           child: Icon(Icons.add, size: 36)
         )
       );
+    } else if (index == 0) {
+      final photo = _profile.photos[index];
+      child = Stack(
+        children: [
+          CachedNetworkImage(imageUrl: photo.url, fit: BoxFit.cover, width: 96, height: 144, alignment: Alignment.center,),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              color: Theme.of(context).primaryColor,
+              padding: EdgeInsets.symmetric(vertical: 5),
+              alignment: Alignment.center,
+              child: Text('Avatar', style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Colors.white
+              )),
+            ),
+          )
+        ],
+      );
     } else {
       final photo = _profile.photos[index];
       child = CachedNetworkImage(imageUrl: photo.url, fit: BoxFit.cover, width: 96, height: 144, alignment: Alignment.center,);
@@ -208,10 +237,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       child: Container(
         foregroundDecoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
-          borderRadius: BorderRadius.circular(12)
+          borderRadius: BorderRadius.circular(20)
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12)
+          borderRadius: BorderRadius.circular(20)
         ),
         clipBehavior: Clip.antiAlias,
         child: child,

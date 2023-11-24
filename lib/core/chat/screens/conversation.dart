@@ -21,7 +21,11 @@ import '../widgets/inputbar/chat_style.dart';
 import '../../like_me/widgets/liked_me.dart';
 
 class ConversationScreen extends StatefulHookConsumerWidget {
-  const ConversationScreen({super.key});
+  const ConversationScreen({
+    super.key,
+    required this.onShowLikeMe
+  });
+  final void Function() onShowLikeMe;
   static const routeName="/conversations";
 
   @override
@@ -53,20 +57,23 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: LikedMeListView(onTap: ([UserInfo? u]) {
-              if (ref.read(myProfileProvider)!.isMember) {
-                if (u == null) {
-                  // SonaAnalytics.log('chatlist_golikedme');
-                  // Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
+            child: LikedMeListView(
+              onShowAll: widget.onShowLikeMe,
+              onTap: ([UserInfo? u]) {
+                if (ref.read(myProfileProvider)!.isMember) {
+                  if (u == null) {
+                    // SonaAnalytics.log('chatlist_golikedme');
+                    // Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
+                  } else {
+                    SonaAnalytics.log('chatlist_member_card');
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u, relation: Relation.likeMe)));
+                  }
                 } else {
-                  SonaAnalytics.log('chatlist_member_card');
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u, relation: Relation.likeMe)));
+                  SonaAnalytics.log('chatlist_tapblur');
+                  showSubscription(FromTag.pay_chatlist_blur);
                 }
-              } else {
-                SonaAnalytics.log('chatlist_tapblur');
-                showSubscription(FromTag.pay_chatlist_blur);
               }
-            }),
+              ),
           ),
           ref.watch(conversationStreamProvider).when(
             data: (conversations) => conversations.isEmpty ? _noChats() : SliverList.separated(

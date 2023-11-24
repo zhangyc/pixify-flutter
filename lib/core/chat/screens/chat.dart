@@ -53,7 +53,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            UserAvatar(url: widget.otherSide.avatar!, size: 32),
+            UserAvatar(url: widget.otherSide.avatar!, size: Size.square(32)),
             SizedBox(width: 8),
             Text(widget.otherSide.name!),
             SizedBox(width: 8),
@@ -160,11 +160,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               children: [
                 Positioned(
                   left: 45,
-                  child: UserAvatar(url: ref.read(myProfileProvider)!.avatar!, size: 50)
+                  child: UserAvatar(url: ref.read(myProfileProvider)!.avatar!, size: Size.square(50))
                 ),
                 Positioned(
                   left: 0,
-                  child: UserAvatar(url: widget.otherSide.avatar!, size: 50)
+                  child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(50))
                 )
               ],
             ),

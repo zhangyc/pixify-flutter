@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -28,7 +30,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('My', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+        title: Text('Me', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
             fontSize: 28,
             fontWeight: FontWeight.w900
         )),

@@ -268,16 +268,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
   }
 
   Future<SonaLocale> _selectLocale() async {
-    final options = <String, String>{};
-    for (var l in supportedSonaLocales) {
-      options.addAll({l.displayName: l.locale.toLanguageTag()});
-    }
-    final value = await showRadioFieldDialog<String>(
-      context: context,
-      options: options,
-      initialValue: _locale.locale.toLanguageTag(),
-      dismissible: false
-    );
+    final value = await showLocalePicker(context: context, dismissible: false);
     if (value == null) {
       return _selectLocale();
     } else {
