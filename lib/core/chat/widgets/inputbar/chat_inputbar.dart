@@ -151,7 +151,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
               child: Container(
                 key: _sonaKey,
                 width: 38,
-                height: 38,
+                height: 56,
                 padding: EdgeInsets.only(top: 3),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -160,17 +160,17 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                 alignment: Alignment.center,
                 child: SonaIcon(
                   icon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? SonaIcons.sona_message : SonaIcons.manual_message,
-                  size: 32,
+                  size: 24,
                 )
               )
             ),
             Container(
-              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 24,
+              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 20,
               decoration: BoxDecoration(
-                color: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Color(0xFFE880F1) : Color(0xFF8D8D8D),
-                borderRadius: BorderRadius.circular(_height/2)
+                // color: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Color(0xFFE880F1) : Color(0xFF8D8D8D),
+                borderRadius: BorderRadius.circular(_height/4)
               ),
-              padding: EdgeInsets.all(1.5),
+              padding: EdgeInsets.symmetric(vertical: 1.5),
               child: TextField(
                   controller: _controller,
                   focusNode: _focusNode,
@@ -189,8 +189,12 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   cursorWidth: 1.8,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(_height/2 - 1),
+                      borderSide: BorderSide(width: 1.6),
+                      borderRadius: BorderRadius.circular(_height/4),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1.6),
+                      borderRadius: BorderRadius.circular(_height/4),
                     ),
                     // suffixIcon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? GestureDetector(
                     //   onTap: _toggleChatStyles,
@@ -211,7 +215,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     //   )
                     // ) : null,
                     // suffixIconConstraints: BoxConstraints.tight(Size.square(32)),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                     isDense: true,
                     filled: true,
                     fillColor: Colors.white,
@@ -255,7 +259,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                       )
                   )
                 ),
-                SizedBox(height: 6),
+                SizedBox(height: 4),
                 Visibility(
                   visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
                   child: InkWell(
@@ -282,12 +286,12 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                         _suggIndicatorEntry = null;
                       },
                       loadingWhenAsyncAction: true,
-                      size: 34,
+                      size: 32,
                       indicatorColor: Colors.black54,
                       child: Container(
                           key: _suggKey,
-                          width: 27,
-                          height: 34,
+                          width: 32,
+                          height: 32,
                           margin: EdgeInsets.only(bottom: 2),
                           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
                           decoration: BoxDecoration(
@@ -300,6 +304,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                       )
                   ),
                 ),
+                SizedBox(height: 10)
               ],
             ),
           ],

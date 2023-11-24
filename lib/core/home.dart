@@ -59,10 +59,18 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: _onPageChange,
-        children: const [
+        children: [
           MatchScreen(),
           LikeMeScreen(),
-          ConversationScreen(),
+          ConversationScreen(
+            onShowLikeMe: () {
+              _pageController.animateToPage(
+                  1,
+                  duration: const Duration(milliseconds: 2),
+                  curve: Curves.ease
+              );
+            }
+          ),
           PersonaScreen(),
         ],
       ),

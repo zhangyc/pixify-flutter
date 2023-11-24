@@ -108,6 +108,7 @@ final themeData = ThemeData(
           borderRadius: BorderRadius.circular(20)
       )),
       textStyle: MaterialStatePropertyAll(TextStyle(color: fontColour)),
+      minimumSize: MaterialStatePropertyAll(Size.fromHeight(50)),
       alignment: Alignment.center
     )
   ),

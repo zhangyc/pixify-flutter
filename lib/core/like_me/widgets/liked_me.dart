@@ -15,9 +15,11 @@ import '../../../generated/l10n.dart';
 class LikedMeListView extends StatefulHookConsumerWidget {
   const LikedMeListView({
     super.key,
-    required this.onTap
+    required this.onTap,
+    required this.onShowAll
   });
   final void Function([UserInfo]) onTap;
+  final void Function() onShowAll;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LikedMeListViewState();
@@ -61,7 +63,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
               ),
               const SizedBox(height: 16),
               Container(
-                height: 68,
+                height: 100,
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.centerLeft,
                 child: ListView.separated(
@@ -74,11 +76,13 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                         behavior: HitTestBehavior.translucent,
                         onTap: () => widget.onTap(),
                         child: Container(
-                          width: 68,
-                          height: 68,
+                          width: 88,
+                          height: 106,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xFFE74E27)
+                            color: Color(0xFFE74E27),
+                            border: Border.all(width: 2),
+                            borderRadius: BorderRadius.circular(20)
                           ),
                           clipBehavior: Clip.antiAlias,
                           alignment: Alignment.center,
@@ -97,8 +101,8 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                       behavior: HitTestBehavior.translucent,
                       onTap: () => widget.onTap(u),
                       child: SizedBox(
-                        width: 68,
-                        height: 68,
+                        width: 88,
+                        height: 106,
                         child: Stack(
                           clipBehavior: Clip.none,
                           children: [
@@ -108,15 +112,16 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                                   shape: BoxShape.circle,
                                   border: Border.all(color: Color(0xFFE74E27), width: 2),
                                 ) : null,
+                                alignment: Alignment.center,
                                 child: Stack(
                                   children: [
                                     UserAvatar(
                                       url: u.avatar!,
-                                      size: 68,
+                                      size: Size(84, 102),
                                     ),
                                     SizedBox(
-                                      width: 68,
-                                      height: 68,
+                                      width: 84,
+                                      height: 102,
                                       child: Visibility(
                                         visible: !ref.watch(myProfileProvider)!.isMember,
                                         child:  ClipOval(
@@ -167,25 +172,23 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                 ),
               ),
               Visibility(
-                visible: !ref.read(myProfileProvider)!.isMember,
+                visible: true, //!ref.read(myProfileProvider)!.isMember,
                 child: Container(
-                  margin: EdgeInsets.only(top: 18),
+                  margin: EdgeInsets.only(top: 18, left: 16, right: 16),
                   alignment: Alignment.center,
-                  child: FilledButton(
+                  child: FilledButton.tonal(
                     onPressed: () {
                       SonaAnalytics.log('chatlist_gopay');
-                      widget.onTap();
+                      widget.onShowAll();
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Color(0xFF2969E9))
+                      backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3))
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
-                        S.current.homeWhoLikeMe,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.white
-                        ),
+                        'Who like you?',
+                        style: Theme.of(context).textTheme.titleSmall
                       ),
                     ),
                   )
