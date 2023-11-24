@@ -450,49 +450,34 @@ Future<T?> showRadioFieldDialog<T>({
     clipBehavior: Clip.antiAlias,
     isDismissible: dismissible,
     builder: (BuildContext context) {
-      final itemCount = dismissible ? options.length + 1 : options.length;
-
       return Container(
         padding: MediaQuery.of(context).viewInsets,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Visibility(
-              visible: title != null && title.isNotEmpty,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 20),
-                child: Text(title ?? '', style: Theme.of(context).textTheme.titleLarge),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Visibility(
+                visible: title != null && title.isNotEmpty,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  child: Text(title ?? '', style: Theme.of(context).textTheme.titleLarge),
+                ),
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == options.length) {
-                    return OptionButton(
-                      onTap: () => Navigator.pop(context, null),
-                      color: Colors.transparent,
-                      text: S.current.cancel,
-                      fontColor: Theme.of(context).colorScheme.error,
-                    );
-                  }
-
-                  final key = options.keys.toList(growable: false)[index];
-                  final value = options[key];
-                  return OptionButton(
-                      onTap: () => Navigator.pop(context, value),
-                      color: initialValue == value
-                          ? Theme.of(context).colorScheme.secondaryContainer
-                          : Colors.transparent,
-                      text: key);
-                },
-                // separatorBuilder: (BuildContext context, int index) {
-                //   return Divider(height: 1, indent: 0);
-                // },
-                itemCount: itemCount,
-              ),
-            ),
-          ],
+              ...options.keys.map<Widget>((key) => OptionButton(
+                onTap: () => Navigator.pop(context, options[key]),
+                color: initialValue == options[key]
+                    ? Theme.of(context).colorScheme.secondaryContainer
+                    : Colors.transparent,
+                text: key
+              )),
+              if (dismissible) OptionButton(
+                onTap: () => Navigator.pop(context, null),
+                color: Colors.transparent,
+                text: S.current.cancel,
+                fontColor: Theme.of(context).colorScheme.error,
+              )
+            ],
+          ),
         ),
       );
     },

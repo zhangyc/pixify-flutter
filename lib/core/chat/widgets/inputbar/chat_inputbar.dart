@@ -280,8 +280,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                 Visibility(
                   visible: ref.watch(currentInputEmptyProvider(widget.chatId)),
                   child: SIconButton(
-                      onTap: () {
-                        widget.onSuggestionTap();
+                      onTap: () async {
+                        await widget.onSuggestionTap();
                         _suggIndicatorEntry?.remove();
                         _suggIndicatorEntry = null;
                       },

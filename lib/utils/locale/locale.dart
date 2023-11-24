@@ -17,8 +17,8 @@ class SonaLocale {
 }
 
 final supportedSonaLocales = [
-  SonaLocale.fromLanguageTag('en-US', 'English (United States)'),
-  SonaLocale.fromLanguageTag('en-GB', 'English (United Kingdom)'),
+  SonaLocale.fromLanguageTag('en-US', 'English (US)'),
+  SonaLocale.fromLanguageTag('en-GB', 'English (UK)'),
   SonaLocale.fromLanguageTag('ja-JP', '日本語'),
   SonaLocale.fromLanguageTag('zh-CN', '简体中文'),
   SonaLocale.fromLanguageTag('zh-TW', '繁體中文'),

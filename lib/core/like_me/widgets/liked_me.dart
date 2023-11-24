@@ -109,8 +109,8 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                             Positioned.fill(
                               child: Container(
                                 decoration: newLike ? BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: Color(0xFFE74E27), width: 2),
+                                  border: Border.all(width: 2),
+                                  borderRadius: BorderRadius.circular(25)
                                 ) : null,
                                 alignment: Alignment.center,
                                 child: Stack(
