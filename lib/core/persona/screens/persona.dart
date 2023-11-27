@@ -5,7 +5,9 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
+import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
@@ -26,6 +28,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final myProfile = ref.watch(myProfileProvider)!;
     return Scaffold(
       appBar: AppBar(
         title: Text('Me', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -84,22 +87,44 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                             bottom: 8,
                             left: 16,
                             right: 16,
-                            child: Row(
-                              children: [
-                                Expanded(child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      wish.activityNames.join(','),
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(color: Colors.white),
-                                    )
-                                  ],
-                                )),
-                                Text(wish.countryFlag!, style: TextStyle(fontSize: 20),)
-                              ],
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.black26
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Expanded(child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          wish.countryName,
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        Text(
+                                          wish.when,
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        if (wish.cityNames.isNotEmpty) Text(
+                                          wish.cityNames.join(','),
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        if (wish.activityNames.isNotEmpty) Text(
+                                          wish.activityNames.join(','),
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Text(wish.countryFlag!, style: TextStyle(fontSize: 20),)
+                                ],
+                              ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     )),
@@ -137,12 +162,11 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
               ),
             ),
             Container(
-              height: 212,
               margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
                     offset: Offset(0, 2),
@@ -151,181 +175,91 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                   )
                 ]
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(
-                        builder: (_) => const ProfileScreen()
-                    )),
-                    child: Container(
-                      decoration: BoxDecoration(
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
                           // border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
-                          borderRadius: BorderRadius.circular(12)
+                            borderRadius: BorderRadius.circular(12)
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: UserAvatar(
+                          url: myProfile.avatar!,
+                          size: const Size.square(64),
+                        ),
                       ),
-                      clipBehavior: Clip.antiAlias,
-                      child: CachedNetworkImage(
-                          imageUrl: ref.watch(myProfileProvider)!.avatar!,
-                          width: 112,
-                          height: 168,
-                          alignment: Alignment.center,
-                          fit: BoxFit.cover,
-                      ),
+                      Positioned(
+                        bottom: -4,
+                        right: -4,
+                        child: Text(
+                          findFlagByCountryCode(myProfile.country),
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    '${myProfile.name}, ${myProfile.birthday!.toAge()}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Colors.white
                     ),
                   ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: Container(
-                      height: 168,
-                      alignment: Alignment.centerLeft,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Visibility(
-                            visible: ref.watch(myProfileProvider)!.impression != null,
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 4),
-                                padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFE880F1),
-                                  borderRadius: BorderRadius.circular(8)
-                                ),
-                                clipBehavior: Clip.antiAlias,
-                                child: Text(
-                                  ref.watch(myProfileProvider)!.impression ?? '',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  softWrap: true,
-                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                    color: Colors.white
-                                  ),
-                                ),
-                              ),
+                  SizedBox(height: 16),
+                  Row(
+                    children:  [
+                      Flexible(
+                        child: FilledButton(
+                          onPressed: () => Navigator.push(context, MaterialPageRoute(
+                              builder: (_) => const ProfileScreen()
+                          )),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(Color(0xFF454545))
+                          ),
+                          child: Text(
+                            S.current.editProfile,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: Colors.white
                             ),
-                          ),
-                          SizedBox(height: 3),
-                          Text(
-                            ref.watch(myProfileProvider)!.name ?? '',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: true,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          SizedBox(height: 3),
-                          Text(
-                            '${ref.watch(myProfileProvider)!.birthday!.toAge()} | ${ref.watch(myProfileProvider)!.gender!.name}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: true,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Expanded(child: Container()),
-                          ElevatedButton(
-                            onPressed: () => Navigator.push(context, MaterialPageRoute(
-                                builder: (_) => const ProfileScreen()
-                            )),
+                          )
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Flexible(
+                        child: FilledButton(
+                            onPressed: null,
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(Color(0xFF454545))
+                            ),
                             child: Text(
-                              S.current.editProfile,
+                              'Certify',
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                color: Color(0xFF555555)
+                                  color: Colors.white
                               ),
                             )
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 40),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                ref.read(myProfileProvider)!.isMember
-                    ? 'YOU’RE SUPER SONA'
-                    : 'BECOMING SUPER SONA',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: ref.read(myProfileProvider)!.isMember ? Colors.black : Color(0xFFE880F1),
-                  fontWeight: FontWeight.w500,
-                  fontStyle: FontStyle.italic
-                ),
-              ),
-            ),
-            SizedBox(height: 12),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 258,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/super_sona_bg.png'),
-                  fit: BoxFit.fill
-                )
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 12,
-                    left: 0,
-                    child: Text(
-                      '❤️ Unlimited Likes\n👀 See who liked you\n🤖 100 AI SONA messages / day\nand more…',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontStyle: FontStyle.italic,
-                        height: 2
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 60,
-                    right: 60,
-                    bottom: 0,
-                    child: Visibility(
-                      visible: !ref.watch(myProfileProvider)!.isMember,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          if (ref.read(myProfileProvider)!.isMember) {
-                            return;
-                          } else {
-                            showSubscription(FromTag.pay_profile);
-                            SonaAnalytics.log('profile_golock');
-                          }
-                        },
-                        child: Text(
-                          'UPGRADE',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontStyle: FontStyle.italic,
-                          ),
                         ),
                       ),
-                    ),
+                    ]
                   ),
-                  Positioned(
-                    left: 0,
-                    bottom: 0,
-                    child: Visibility(
-                      visible: ref.watch(myProfileProvider)!.isMember,
-                      child: TextButton(
-                        onPressed: () {
-                          showSubscription(FromTag.profile_myplan);
-                          SonaAnalytics.log('profile_myplan');
-                        },
-                        child: Text(
-                          'My Subscription Plan',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
+                  SizedBox(height: 16),
+                  FilledButton(
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE600))
                       ),
-                    ),
+                      child: Text('Super SONA', style: Theme.of(context).textTheme.titleMedium)
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
