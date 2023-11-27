@@ -24,8 +24,8 @@ Future<Response> fetchMyTravelWishes() {
   return dio.post('/travel-wish/find', data: {'page': 1, 'pageSize': 3});
 }
 
-Future<Response> fetchPopularTravelDestinations() async {
-  return dio.post('/region/find-hot');
+Future<Response> fetchPopularTravelDestinations(int? parentId) async {
+  return dio.post('/region/find-parent', data: {'parentId': parentId});
 }
 
 Future<Response> fetchPopularTravelActivities(int countryId, List<int> cityIds) async {

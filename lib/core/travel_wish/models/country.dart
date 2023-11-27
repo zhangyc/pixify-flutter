@@ -39,8 +39,8 @@ class SonaCountry {
 final supportedSonaCountries = countryMapList.map<SonaCountry>((cm) => SonaCountry.fromCode(cm['code']));
 final hotTravelCountries = List<SonaCountry>.from(supportedSonaCountries)..retainWhere((country) => ['US', 'JP', 'CN', 'KR', 'TH', 'IT', 'FR'].contains(country.code));
 
-String findFlagByCountryCode(String code) {
-  final country = supportedSonaCountries.firstWhere((c) => c.code == code, orElse: () => SonaCountry(code: code, displayName: 'Unknown', flag: '🌍'));
+String findFlagByCountryCode(String? code) {
+  final country = supportedSonaCountries.firstWhere((c) => c.code == code, orElse: () => SonaCountry(code: '', displayName: 'Unknown', flag: '🌍'));
   return country.flag;
 }
 
@@ -53,7 +53,7 @@ class PopularTravelCountry {
     required this.cities
   });
   final int id;
-  final String code;
+  final String? code;
   final String displayName;
   final List<PopularTravelCity> cities;
 
@@ -68,11 +68,20 @@ class PopularTravelCountry {
 }
 
 class PopularTravelCity {
-  PopularTravelCity({required this.id, required this.displayName});
+  PopularTravelCity({
+    required this.id,
+    required this.displayName,
+    required this.popular
+  });
   final int id;
   final String displayName;
+  final bool popular;
 
   factory PopularTravelCity.fromJson(Map<String, dynamic> json) {
-    return PopularTravelCity(id: json['id'], displayName: json['title']);
+    return PopularTravelCity(
+      id: json['id'],
+      displayName: json['title'],
+      popular: json['hot'] ?? false
+    );
   }
 }

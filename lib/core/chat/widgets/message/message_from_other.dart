@@ -13,6 +13,7 @@ class _MessageFromOtherState extends State<MessageFromOther> {
   @override
   Widget build(BuildContext context) {
     return Text(widget.message.content, style: Theme.of(context).textTheme.bodySmall?.copyWith(
+      fontWeight: FontWeight.normal,
       height: 1.5
     ));
   }

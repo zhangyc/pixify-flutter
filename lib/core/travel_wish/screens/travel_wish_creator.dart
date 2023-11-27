@@ -5,14 +5,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/travel_wish/providers/activity.dart';
+import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/my_wish.dart';
-import 'package:sona/core/travel_wish/providers/region.dart';
+import 'package:sona/core/travel_wish/providers/popular_city.dart';
 import 'package:sona/core/travel_wish/services/travel_wish.dart';
 
 import '../../../common/widgets/image/icon.dart';
 import '../models/activity.dart';
-import '../models/city.dart';
 import '../models/country.dart';
+import '../providers/popular_country.dart';
 
 class TravelWishCreator extends ConsumerStatefulWidget {
   const TravelWishCreator({super.key});
@@ -26,7 +27,6 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
   static const _pageTransitionDuration = Duration(milliseconds: 200);
   static const _pageTransitionCurve = Curves.ease;
 
-  PopularTravelCountry? _selectedCountry;
   Set<PopularTravelCity> _selectedCities = {};
   Set<PopularTravelActivity> _selectedActivities = {};
 
@@ -54,18 +54,16 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
         centerTitle: true,
         title: Text('New travel wish'),
       ),
-      body: WillPopScope(
-        onWillPop: () {
-          if (_pageController.page == null || _pageController.page?.round() == 0) {
-            return Future.value(true);
-          } else {
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (_) {
+          if (_pageController.page != null && _pageController.page!.round() > 0) {
             _pageController.previousPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
-            return Future.value(false);
           }
         },
         child: PageView.builder(
           controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (_, int index) => switch(index) {
             0 => _countrySelector(),
             1 => _citiesSelector(),
@@ -79,7 +77,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
 
   Widget _countrySelector() {
     return SafeArea(
-      child: ref.watch(asyncPopularTravelDestinationsProvider).when(
+      child: ref.watch(asyncPopularTravelCountriesProvider).when(
         data: (countries) => Padding(
           padding: const EdgeInsets.all(16),
           child: CustomScrollView(
@@ -127,7 +125,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
           child: Center(
             child: Text('Error to get initial data\nclick to try again'),
           ),
-          onTap: () => ref.refresh(asyncPopularTravelDestinationsProvider),
+          onTap: () => ref.refresh(asyncPopularTravelCountriesProvider),
         ),
         loading: () => Center(
           child: SizedBox(
@@ -141,62 +139,79 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
   }
 
   Widget _citiesSelector() {
-    final popularDestinations = ref.watch(asyncPopularTravelDestinationsProvider).value;
-    if (popularDestinations == null || popularDestinations.isEmpty) return Container();
-    final cities = popularDestinations.firstWhere((country) => country == _selectedCountry).cities;
-    if (cities.isEmpty) return Container();
     return SafeArea(
       child: Stack(
         children: [
           Positioned.fill(
             child: Padding(
-              padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 80),
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 32),
-                      child: Text(
-                          'Any specific city?',
-                          style: Theme.of(context).textTheme.headlineLarge
+                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 120),
+                  child: CustomScrollView(
+                    shrinkWrap: true,
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 32),
+                          child: Text(
+                              'Any specific city?',
+                              style: Theme.of(context).textTheme.headlineLarge
+                          ),
+                        ),
+                      ),
+                      ref.watch(asyncCurrentCitiesProvider).when(
+                        data: (cities) => SliverList(
+                          delegate: SliverChildListDelegate(
+                              cities.map((city) => Container(
+                                margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                                child: OutlinedButtonTheme(
+                                  data: OutlinedButtonThemeData(
+                                      style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
+                                          minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+                                          side: MaterialStatePropertyAll(BorderSide(width: 2)),
+                                          backgroundColor: _selectedCities.contains(city) ? MaterialStatePropertyAll(Colors.blue.withOpacity(0.33)) : null
+                                      )
+                                  ),
+                                  child: OutlinedButton(
+                                      key: ValueKey(city.displayName),
+                                      onPressed: () => _selectCity(city),
+                                      child: Row(
+                                        children: [
+                                          Text(city.displayName)
+                                        ],
+                                      )
+                                  ),
+                                ),
+                              )).toList()
+                          )
+                        ),
+                        error: (_, __) => SliverToBoxAdapter(
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            child: Center(
+                              child: Text('Error to get initial data\nclick to try again'),
+                            ),
+                            onTap: () => ref.refresh(asyncCurrentCitiesProvider),
+                          ),
+                        ),
+                        loading: () => SliverToBoxAdapter(
+                          child: Center(
+                              child: SizedBox(
+                                  width: 66,
+                                  height: 66,
+                                  child: CircularProgressIndicator()
+                              )
+                          ),
+                        )
+                    ),
+                    SliverToBoxAdapter(
+                      child: TextButton(
+                        child: Text('Skip, just ${ref.read(currentCountryProvider)!.displayName}'),
+                        onPressed: () {
+                          _pageController.nextPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
+                        },
                       ),
                     ),
-                  ),
-                  SliverList(
-                      delegate: SliverChildListDelegate(
-                          cities.map((city) => Container(
-                            margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-                            child: OutlinedButtonTheme(
-                              data: OutlinedButtonThemeData(
-                                  style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
-                                    minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
-                                    side: MaterialStatePropertyAll(BorderSide(width: 2)),
-                                    backgroundColor: _selectedCities.contains(city) ? MaterialStatePropertyAll(Colors.blue.withOpacity(0.33)) : null
-                                  )
-                              ),
-                              child: OutlinedButton(
-                                  key: ValueKey(city.displayName),
-                                  onPressed: () => _selectCity(city),
-                                  child: Row(
-                                    children: [
-                                      Text(city.displayName)
-                                    ],
-                                  )
-                              ),
-                            ),
-                          )).toList()
-                      )
-                  ),
-                  SliverToBoxAdapter(
-                    child: TextButton(
-                      child: Text('Skip, just ${_selectedCountry!.displayName}'),
-                      onPressed: () {
-                        _pageController.nextPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
-                      },
-                    ),
-                  )
-                ],
-              ),
+                  ]
+                ),
             ),
           ),
           Positioned(
@@ -212,20 +227,20 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
             ),
           )
         ],
-      )
+      ),
     );
   }
 
   Widget _activitiesSelector() {
-
     return SafeArea(
-      child: ref.watch(asyncPopularTravelActivitiesProvider(_selectedCountry?.id)).when(
+      child: ref.watch(asyncCurrentActivitiesProvider).when(
         data: (activities) => Stack(
           children: [
             Positioned.fill(
               child: Padding(
                 padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 80),
                 child: CustomScrollView(
+                  shrinkWrap: true,
                   slivers: [
                     SliverToBoxAdapter(
                       child: Container(
@@ -274,9 +289,8 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
                 text: 'Done',
                 loadingWhenAsyncAction: true,
                 onTap: () async {
-                  if (_selectedCountry == null) return;
                   try {
-                    final resp = await createTravelWish(country: _selectedCountry!, cities: _selectedCities, activities: _selectedActivities);
+                    final resp = await createTravelWish(country: ref.read(currentCountryProvider)!, cities: _selectedCities, activities: _selectedActivities);
                     if (resp.statusCode == 0) {
                       Fluttertoast.showToast(msg: 'Done');
                       Navigator.pop(context, true);
@@ -292,7 +306,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
         ),
         error: (_, __) => GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => ref.refresh(asyncPopularTravelActivitiesProvider(_selectedCountry!.id)),
+          onTap: () => ref.refresh(asyncCurrentActivitiesProvider),
           child: Center(
             child: Text('Error to get initial data\nclick to try again'),
           ),
@@ -309,7 +323,9 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
   }
 
   void _selectCountry(PopularTravelCountry country) {
-    _selectedCountry = country;
+    ref.read(currentCountryProvider.notifier).update((state) => country);
+    _selectedCities.clear();
+    _selectedActivities.clear();
     _pageController.nextPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
   }
 
@@ -330,8 +346,4 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
     }
     setState(() {});
   }
-  //
-  // List<SonaCity> cities = ['东京', '北海道', '稻香村', '稻妻'].map((e) => SonaCity(displayName: e)).toList();
-  //
-  // List<SonaActivity> activities = ['吃拉面', '拍照', '打团'].map((e) => SonaActivity(displayName: e)).toList();
 }

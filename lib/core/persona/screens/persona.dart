@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/profile.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
-import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
@@ -36,7 +34,19 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
         )),
         centerTitle: false,
         actions: [
-          IconButton(onPressed: _goSetting, icon: Icon(Icons.settings))
+          Container(
+            margin: EdgeInsets.only(right: 16),
+            child: IconButton(
+              onPressed: _goSetting,
+              padding: EdgeInsets.all(14),
+              iconSize: 48,
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
+                shape: MaterialStatePropertyAll(ContinuousRectangleBorder(borderRadius: BorderRadius.circular(32)))
+              ),
+              icon: SonaIcon(icon: SonaIcons.settings)
+            ),
+          )
         ],
         elevation: 0,
       ),
@@ -46,7 +56,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: 256,
+              height: 253,
               child: ref.watch(asyncMyTravelWishesProvider).when(
                 data: (wishes) => ListView(
                   shrinkWrap: true,
@@ -54,8 +64,8 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   children: [
                     ...wishes.map((wish) => Container(
-                      width: 278,
-                      height: 256,
+                      width: 295,
+                      height: 221,
                       margin: EdgeInsets.symmetric(horizontal: 4),
                       decoration: BoxDecoration(
                         image: wish.countryPhoto != null ? DecorationImage(
@@ -97,8 +107,8 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                       behavior: HitTestBehavior.translucent,
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator())),
                       child: Container(
-                        width: 278,
-                        height: 256,
+                        width: 295,
+                        height: 221,
                         margin: EdgeInsets.symmetric(horizontal: 4),
                         decoration: BoxDecoration(
                             border: Border.all(width: 2),

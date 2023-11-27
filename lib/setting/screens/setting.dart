@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/providers/token.dart';
-import 'package:sona/core/travel_wish/providers/activity.dart';
-import 'package:sona/core/travel_wish/providers/region.dart';
+import 'package:sona/core/travel_wish/providers/popular_country.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/locale/locale.dart';
 
@@ -114,7 +111,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                 var value = await showLocalePicker(context: context, initialValue: ref.read(myProfileProvider)!.locale);
                 if (value != null) {
                   await ref.read(myProfileProvider.notifier).updateField(locale: findMatchedSonaLocale(value));
-                  ref.refresh(asyncPopularTravelDestinationsProvider);
+                  ref.invalidate(asyncPopularTravelCountriesProvider);
                 }
               },
               child: Row(
