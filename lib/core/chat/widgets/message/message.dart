@@ -31,15 +31,20 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _message;
+    Widget? localPendingMessage;
+    String? upperMessage;
+    String? lowerMessage;
+
     if (fromMe) {
       if (message.pending != null) {
-        _message = LocalPendingMessageFromMe(message: message, onSucceed: () => onPendingMessageSucceed(message));
+        localPendingMessage = LocalPendingMessageFromMe(message: message, onSucceed: () => onPendingMessageSucceed(message));
       } else {
-        _message = MessageFromMe(message: message);
+        upperMessage = message.origin;
+        lowerMessage = message.content;
       }
     } else {
-      _message = MessageFromOther(message: message);
+      upperMessage = message.content;
+      lowerMessage = message.origin;
     }
 
     final actions = <Widget>[];
@@ -68,13 +73,6 @@ class MessageWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Localization', style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Color(0xFFA3A3A3)
-                )),
-                Text(message.content, style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Color(0xFFA3A3A3)
-                )),
-                SizedBox(height: 6),
                 RawMaterialButton(
                   child: Row(
                     children: [
@@ -130,23 +128,6 @@ class MessageWidget extends StatelessWidget {
           ));
         }
       }
-    } else {
-      if (message.origin != null && message.origin!.isNotEmpty) {
-        actions.add(CupertinoContextMenuAction(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Original', style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Color(0xFFA3A3A3)
-                )),
-                Text(message.origin!, style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Color(0xFFA3A3A3)
-                ))
-              ],
-            )
-        ));
-      }
     }
 
     return Container(
@@ -168,12 +149,54 @@ class MessageWidget extends StatelessWidget {
                 constraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width * 0.82
                 ),
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                decoration: BoxDecoration(
-                    color: fromMe ? Theme.of(context).primaryColor : Color(0xFFF9F9F9),
-                    borderRadius: BorderRadius.circular(24),
-                ),
-                child: _message
+                // padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                // decoration: BoxDecoration(
+                //     color: fromMe ? Theme.of(context).primaryColor : Color(0xFFF9F9F9),
+                //     borderRadius: BorderRadius.circular(24),
+                // ),
+                child: localPendingMessage == null ? Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24)
+                    ),
+                    foregroundDecoration: fromMe ? null : BoxDecoration(
+                        border: Border.all(width: 2),
+                        borderRadius: BorderRadius.circular(24)
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (upperMessage != null && upperMessage.isNotEmpty) Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                              color: fromMe ? Theme.of(context).primaryColor : Colors.transparent
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            upperMessage,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: fromMe ? Colors.white : Theme.of(context).primaryColor,
+                              height: 1.5
+                            ),
+                          ),
+                        ),
+                        if (lowerMessage != null && lowerMessage.isNotEmpty) Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                              color: fromMe ? Color(0xFF454545) : Color(0xFFF6F3F3)
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            lowerMessage,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Color(0xFFB7B7B7),
+                                height: 1.5
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                ) : localPendingMessage
               );
             },
           ),

@@ -165,7 +165,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
               )
             ),
             Container(
-              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 20,
+              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
               decoration: BoxDecoration(
                 // color: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Color(0xFFE880F1) : Color(0xFF8D8D8D),
                 borderRadius: BorderRadius.circular(_height/4)
@@ -215,7 +215,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     //   )
                     // ) : null,
                     // suffixIconConstraints: BoxConstraints.tight(Size.square(32)),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
                     isDense: true,
                     filled: true,
                     fillColor: Colors.white,
@@ -259,22 +259,29 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                       )
                   )
                 ),
-                SizedBox(height: 4),
+                // SizedBox(height: 4),
                 Visibility(
                   visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
-                  child: InkWell(
-                      onTap: () {
+                  child: Container(
+                    margin: EdgeInsets.all(1),
+                    child: IconButton(
+                      iconSize: 56,
+                      padding: EdgeInsets.all(14),
+                      onPressed: () {
                         onSubmit(_controller.text);
                       },
-                      child: Container(
-                        height: 32,
-                        width: 32,
-                        alignment: Alignment.center,
-                        child: Icon(
-                            Icons.send,
-                            size: 24,
-                            color: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Theme.of(context).primaryColor : Colors.grey),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                            Theme.of(context).primaryColor
+                        ),
+                        shape: MaterialStatePropertyAll(
+                          ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
+                        )
+                      ),
+                      icon: SonaIcon(
+                        icon: SonaIcons.send,
                       )
+                    ),
                   ),
                 ),
                 Visibility(
@@ -304,7 +311,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                       )
                   ),
                 ),
-                SizedBox(height: 10)
               ],
             ),
           ],
