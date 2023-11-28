@@ -32,7 +32,7 @@ class ColoredButton extends StatefulWidget {
 }
 
 class _ColoredButtonState extends State<ColoredButton> {
-  late bool _disabled = widget.disabled;
+  late bool _disabled;
   bool _loading = false;
   Timer? _timer;
 
@@ -55,6 +55,7 @@ class _ColoredButtonState extends State<ColoredButton> {
 
   @override
   void initState() {
+    _disabled = widget.disabled;
     if (widget.confirmDelay != null) {
       _disabled = true;
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -66,6 +67,14 @@ class _ColoredButtonState extends State<ColoredButton> {
       });
     }
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant ColoredButton oldWidget) {
+    if (widget.disabled && !oldWidget.disabled) {
+      _disabled = true;
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -114,7 +123,7 @@ class _ColoredButtonState extends State<ColoredButton> {
             decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(widget.size.borderRadiusCircular),
-                border: Border.all(color: widget.borderColor, width: widget.size.borderWidth)
+                border: _disabled ? null : Border.all(color: widget.borderColor, width: widget.size.borderWidth)
             ),
             padding: EdgeInsets.symmetric(horizontal: widget.size.height * 0.2),
             height: widget.size.height,

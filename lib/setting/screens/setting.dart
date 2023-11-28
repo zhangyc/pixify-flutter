@@ -255,7 +255,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
     return showConfirm(
       context: context,
       title: 'Delete Account',
-      confirmDelay: const Duration(seconds: 20),
+      confirmDelay: const Duration(seconds: 2),
       content: 'Deleting your account is permanent.\nAll your data will be deleted and can\'t be recovered.\nAre you sure you want to proceed?',
       confirmText: 'Delete',
     );

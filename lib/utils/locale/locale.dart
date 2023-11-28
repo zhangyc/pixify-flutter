@@ -23,7 +23,7 @@ final supportedSonaLocales = [
   SonaLocale.fromLanguageTag('zh-CN', '简体中文'),
   SonaLocale.fromLanguageTag('zh-TW', '繁體中文'),
   SonaLocale.fromLanguageTag('ko-KR', '한국어'),
-  SonaLocale.fromLanguageTag('th-TH', 'ไทย'),
+  SonaLocale.fromLanguageTag('th-TH', 'ภาษาไทย'),
   SonaLocale.fromLanguageTag('pt-PT', 'Português'),
   SonaLocale.fromLanguageTag('pt-BR', 'Português (Brasil)'),
   SonaLocale.fromLanguageTag('es-ES', 'Español'),

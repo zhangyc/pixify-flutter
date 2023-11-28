@@ -1,0 +1,212 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:sona/account/models/age.dart';
+import 'package:sona/account/models/gender.dart';
+import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/picker/gender.dart';
+
+import '../../common/widgets/button/colored.dart';
+import 'avatar.dart';
+
+class BaseInfoScreen extends StatefulWidget {
+  const BaseInfoScreen({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _BaseInfoScreenState();
+}
+
+class _BaseInfoScreenState extends State<BaseInfoScreen> {
+
+  final _formKey = GlobalKey<FormState>(debugLabel: 'base_info');
+  final _nameController = TextEditingController();
+  final _nameFocusNode = FocusNode();
+  DateTime? _birthday;
+  Gender? _gender;
+
+  bool get _disabled => _nameController.text.trim().isEmpty || _gender == null || _birthday == null;
+
+  @override
+  void initState() {
+    _nameController.addListener(_nameListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.removeListener(_nameListener);
+    super.dispose();
+  }
+
+  void _nameListener() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      extendBody: false,
+      extendBodyBehindAppBar: true,
+      body: SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+            reverse: true,
+            padding: EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: MediaQuery.of(context).viewPadding.top + 16,
+                bottom: 160
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      'Introduce yourself',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  TextFormField(
+                    controller: _nameController,
+                    focusNode: _nameFocusNode,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Theme.of(context).primaryColor
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          gapPadding: 8
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 2,
+                              color: Theme.of(context).primaryColor
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          gapPadding: 8
+                      ),
+                      hintText: 'Name'
+                      // hintStyle: TextStyle(color: Color(0xFFE9C6EE))
+                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                  ),
+                  SizedBox(height: 16,),
+                  GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () async {
+                      final value = await showBirthdayPicker(
+                        context: context,
+                        initialDate: DateTime(2000, 12, 31),
+                        dismissible: _birthday != null
+                      );
+                      if (value != null) {
+                        setState(() {
+                          _birthday = value;
+                        });
+                      }
+                    },
+                    child: Container(
+                      height: 64,
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 2,
+                              color: Theme.of(context).primaryColor
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                      ),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (_birthday != null) Text(
+                            _birthday!.toBirthdayString(),
+                            style: Theme.of(context).textTheme.bodyMedium
+                          ) else Text(
+                            'Birthday',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).hintColor
+                            ),
+                          ),
+                          Icon(Icons.date_range)
+                        ],
+                      )
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () async {
+                      final value = await showGenderPicker(
+                        context: context,
+                        dismissible: _gender != null
+                      );
+                      if (value != null) {
+                        setState(() {
+                          _gender = value;
+                        });
+                      }
+                    },
+                    child: Container(
+                        height: 64,
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 2,
+                              color: Theme.of(context).primaryColor
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (_gender != null) Text(
+                                _gender!.name,
+                                style: Theme.of(context).textTheme.bodyMedium
+                            ) else Text(
+                              'Gender',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Theme.of(context).hintColor
+                              ),
+                            ),
+                            Icon(Icons.arrow_drop_down)
+                          ],
+                        )
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: FilledButton(
+          child: Text('Next'),
+          onPressed: _disabled ? null : _next,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+
+  void _next() {
+    if (_disabled) return;
+    Navigator.push(context, MaterialPageRoute(
+        builder: (_) => AvatarScreen(
+          name: _nameController.text.trim(),
+          birthday: _birthday!,
+          gender: _gender!,
+        ))
+    );
+  }
+}

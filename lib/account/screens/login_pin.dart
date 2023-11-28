@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/account/screens/base_info.dart';
 import 'package:sona/account/screens/required_info_form.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/account/services/info.dart';
@@ -152,7 +153,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
 
   Future<bool> _sendPin() async {
     try {
-      final resp = await sendPin(countryCode: _pn!.countryCode.substring(1), phoneNumber: _pn!.number);
+      final resp = await sendPin(countryCode: _pn.countryCode.substring(1), phoneNumber: _pn.number);
       if (resp.statusCode == 0) {
         setState(() {});
         return true;
@@ -216,7 +217,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
   void _completeRequiredInfo() async {
     if (mounted) {
       await Navigator.push(context, MaterialPageRoute(
-          builder: (_) => RequiredInfoFormScreen()));
+          builder: (_) => BaseInfoScreen()));
     }
   }
 }

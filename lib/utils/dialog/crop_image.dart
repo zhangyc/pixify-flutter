@@ -37,7 +37,7 @@ class _CropImageScreenState extends State<_CropImageScreen> {
             EasyLoading.dismiss();
             Navigator.of(context).pop(image);
           },
-          aspectRatio: 1080 / 1920,
+          aspectRatio: 3 / 4,
           // initialSize: 0.5,
           // initialArea: Rect.fromLTWH(240, 212, 800, 600),
           // initialAreaBuilder: (rect) => Rect.fromLTRB(
