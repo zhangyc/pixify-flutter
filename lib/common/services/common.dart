@@ -13,7 +13,7 @@ Future<Response> fetchAvailableInterests() async {
   );
 }
 
-Future<Response> fetchTravelTimeOptions() async {
+Future<Response> fetchTravelTimeframeOptions() async {
   return dio.post(
       '/common/dict',
       data: {

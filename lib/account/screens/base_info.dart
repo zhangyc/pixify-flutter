@@ -2,14 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
+import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
 
-import '../../common/widgets/button/colored.dart';
 import 'avatar.dart';
 
 class BaseInfoScreen extends StatefulWidget {
-  const BaseInfoScreen({super.key});
+  const BaseInfoScreen({
+    super.key,
+    required this.country
+  });
+  final SonaCountry country;
 
   @override
   State<StatefulWidget> createState() => _BaseInfoScreenState();
@@ -206,6 +210,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
           name: _nameController.text.trim(),
           birthday: _birthday!,
           gender: _gender!,
+          country: widget.country
         ))
     );
   }

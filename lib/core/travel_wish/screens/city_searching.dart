@@ -2,11 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/travel_wish/models/country.dart';
 
-import '../providers/popular_city.dart';
 
 class CitySearching extends ConsumerStatefulWidget {
-  const CitySearching({super.key});
+  const CitySearching({
+    super.key,
+    required this.cities,
+    required this.selectedCities
+  });
+  final List<PopularTravelCity> cities;
+  final Set<PopularTravelCity> selectedCities;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CitySearchingState();
@@ -51,17 +57,16 @@ class _CitySearchingState extends ConsumerState<CitySearching> {
         ],
       ),
       body: ListView(
-          children: ref.read(asyncCurrentCitiesProvider).value!
-            .where((city) => city.displayName.contains(_searchController.text.trim()))
-            .map((city) =>  TextButton(
-              onPressed: () => Navigator.pop(context, city),
-              child: Text(
-                city.displayName,
-                textAlign: TextAlign.start,
-              )
+        children: widget.cities.where((city) => city.displayName.contains(_searchController.text.trim()))
+          .map((city) =>  TextButton(
+            onPressed: widget.selectedCities.contains(city) ? null : () => Navigator.pop(context, city),
+            child: Text(
+              city.displayName,
+              textAlign: TextAlign.start,
             )
           )
-          .toList()
+        )
+        .toList()
       ),
     );
   }

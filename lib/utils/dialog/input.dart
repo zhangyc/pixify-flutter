@@ -494,7 +494,7 @@ Future<DateTime?> showBirthdayPicker({
     context: context,
     barrierDismissible: dismissible,
     builder: (BuildContext context) => Container(
-      height: 308,
+      height: 338,
       padding: const EdgeInsets.only(top: 6.0),
       margin: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -527,11 +527,14 @@ Future<DateTime?> showBirthdayPicker({
                 itemExtent: 40),
           ),
           SizedBox(height: 20),
-          ColoredButton(
-              text: 'Confirm',
-              onTap: () {
-                Navigator.pop(context, _birthday);
-              })
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: FilledButton(
+                child: Text('Confirm'),
+                onPressed: () {
+                  Navigator.pop(context, _birthday);
+                }),
+          )
         ],
       ),
     ),
