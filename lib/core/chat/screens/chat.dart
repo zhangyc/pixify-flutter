@@ -76,66 +76,60 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
         },
-        child: Column(
-          children: [
-            Expanded(
-              child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
-                data: (messages) {
-                  final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
-                  final msgs = [...localPendingMessages, ...messages]..sort((m1, m2) => m2.time.compareTo(m1.time));
-                  if (msgs.isNotEmpty) {
-                    return Container(
-                      alignment: Alignment.topCenter,
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(horizontal: 2),
-                        reverse: true,
-                        itemBuilder: (BuildContext context, int index) => MessageWidget(
-                          prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
-                          message: msgs[index],
-                          fromMe: ref.read(myProfileProvider)!.id == msgs[index].sender.id,
-                          onPendingMessageSucceed: _onPendingMessageSucceed,
-                          onShorten: _shortenMessage,
-                          onDelete: _deleteMessage,
-                        ),
-                        itemCount: msgs.length,
-                        separatorBuilder: (_, __) => SizedBox(height: 5),
-                        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                      ),
-                    );
-                  } else {
-                    return _startupline();
-                  }
-                },
-                error: (error, __) => Container(child: Text(error.toString()),),
-                loading: () => Container(
-                  alignment: Alignment.center,
-                  child: const SizedBox(
-                    height: 32,
-                    width: 32,
-                    child: CircularProgressIndicator(),
+        child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
+          data: (messages) {
+            final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
+            final msgs = [...localPendingMessages, ...messages]..sort((m1, m2) => m2.time.compareTo(m1.time));
+            if (msgs.isNotEmpty) {
+              return Container(
+                alignment: Alignment.topCenter,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 64),
+                  reverse: true,
+                  itemBuilder: (BuildContext context, int index) => MessageWidget(
+                    prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
+                    message: msgs[index],
+                    fromMe: ref.read(myProfileProvider)!.id == msgs[index].sender.id,
+                    onPendingMessageSucceed: _onPendingMessageSucceed,
+                    onShorten: _shortenMessage,
+                    onDelete: _deleteMessage,
                   ),
-                )
-              )
+                  itemCount: msgs.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 5),
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                ),
+              );
+            } else {
+              return _startupline();
+            }
+          },
+          error: (error, __) => Container(child: Text(error.toString()),),
+          loading: () => Container(
+            alignment: Alignment.center,
+            child: const SizedBox(
+              height: 32,
+              width: 32,
+              child: CircularProgressIndicator(),
             ),
-            Container(
-              padding: const EdgeInsets.only(
-                left: 8,
-                top: 8,
-                right: 8,
-                bottom: 8
-              ),
-              child: ChatInstructionInput(
-                  chatId: widget.otherSide.id,
-                  onSubmit: _onSend,
-                  onSuggestionTap: _onSuggestionTap,
-                  onHookTap: _onHookTap,
-                  autofocus: false
-              ),
-            ),
-          ],
+          )
+        )
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(
+          left: 8,
+          top: 8,
+          right: 8,
+        ),
+        child: ChatInstructionInput(
+          chatId: widget.otherSide.id,
+          onSubmit: _onSend,
+          onSuggestionTap: _onSuggestionTap,
+          onHookTap: _onHookTap,
+          autofocus: false
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
