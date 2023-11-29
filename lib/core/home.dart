@@ -29,7 +29,7 @@ class SonaHome extends StatefulHookConsumerWidget {
 }
 
 class _SonaHomeState extends ConsumerState<SonaHome> {
-  int _currentIndex = 1;
+  int _currentIndex = 0;
   late final _pageController = PageController(initialPage: _currentIndex);
 
   @override
@@ -39,7 +39,6 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     _setUpFcmListener();
     initUserPermission();
     super.initState();
-
   }
 
   void _determinePosition() async {

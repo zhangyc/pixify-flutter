@@ -237,147 +237,32 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
               ),
             ),
             SizedBox(width: 4),
-            Column(
-              children: [
-                Visibility(
-                  visible: false && ref.watch(hookVisibilityProvider(widget.chatId)),
-                  child: SIconButton(
-                      onTap: widget.onHookTap,
-                      loadingWhenAsyncAction: true,
-                      size: 32,
-                      indicatorColor: Theme.of(context).primaryColor,
-                      child: Container(
-                          width: 32,
-                          height: 32,
-                          margin: EdgeInsets.symmetric(horizontal: 3),
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(4)
-                          ),
-                          alignment: Alignment.center,
-                          child: Icon(CupertinoIcons.heart_fill, color: Colors.white, size: 24,)
-                      )
+            Visibility(
+              visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
+              child: Container(
+                margin: EdgeInsets.all(1),
+                child: IconButton(
+                  iconSize: 56,
+                  padding: EdgeInsets.all(14),
+                  onPressed: () {
+                    onSubmit(_controller.text);
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                        Theme.of(context).primaryColor
+                    ),
+                    shape: MaterialStatePropertyAll(
+                      ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
+                    )
+                  ),
+                  icon: SonaIcon(
+                    icon: SonaIcons.send,
                   )
                 ),
-                // SizedBox(height: 4),
-                Visibility(
-                  visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
-                  child: Container(
-                    margin: EdgeInsets.all(1),
-                    child: IconButton(
-                      iconSize: 56,
-                      padding: EdgeInsets.all(14),
-                      onPressed: () {
-                        onSubmit(_controller.text);
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(
-                            Theme.of(context).primaryColor
-                        ),
-                        shape: MaterialStatePropertyAll(
-                          ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
-                        )
-                      ),
-                      icon: SonaIcon(
-                        icon: SonaIcons.send,
-                      )
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: ref.watch(currentInputEmptyProvider(widget.chatId)),
-                  child: SIconButton(
-                      onTap: () async {
-                        await widget.onSuggestionTap();
-                        _suggIndicatorEntry?.remove();
-                        _suggIndicatorEntry = null;
-                      },
-                      loadingWhenAsyncAction: true,
-                      size: 32,
-                      indicatorColor: Colors.black54,
-                      child: Container(
-                          key: _suggKey,
-                          width: 32,
-                          height: 32,
-                          margin: EdgeInsets.only(bottom: 2),
-                          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.black, width: 1.5),
-                              borderRadius: BorderRadius.circular(4)
-                          ),
-                          alignment: Alignment.center,
-                          child: Icon(CupertinoIcons.sparkles, size: 18, color: Colors.black,)
-                      )
-                  ),
-                ),
-              ],
+              ),
             ),
           ],
         ),
-        // Visibility(
-        //   visible: ref.watch(chatStylesVisibleProvider(widget.chatId)),
-        //   child: Container(
-        //     height: ref.watch(softKeyboardHeightProvider),
-        //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-        //     alignment: Alignment.topCenter,
-        //     child: ref.watch(asyncChatStylesProvider).when(
-        //         data: (styles) => GridView(
-        //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //             crossAxisCount: 2,
-        //             mainAxisSpacing: 5,
-        //             crossAxisSpacing: 5,
-        //             childAspectRatio: 3
-        //           ),
-        //           children: styles.map<Widget>((s) => GestureDetector(
-        //             child: Container(
-        //               color: currentChatStyle?.id == s.id ? Theme.of(context).colorScheme.secondaryContainer : Color(0x11CCCCCC),
-        //               foregroundDecoration: s.memberOnly && !isMember ? BoxDecoration(
-        //                 color: Colors.black12
-        //               ) : null,
-        //               child: Row(
-        //                 children: [
-        //                   Container(
-        //                     width: 33,
-        //                     height: 33,
-        //                     margin: EdgeInsets.symmetric(horizontal: 2.5),
-        //                     decoration: BoxDecoration(
-        //                       image: DecorationImage(
-        //                         image: CachedNetworkImageProvider(s.icon)
-        //                       ),
-        //                       shape: BoxShape.circle
-        //                     ),
-        //                     clipBehavior: Clip.antiAlias,
-        //                     alignment: Alignment.center,
-        //                   ),
-        //                   SizedBox(width: 12),
-        //                   Text(s.title, style: Theme.of(context).textTheme.bodySmall),
-        //                 ],
-        //               )
-        //             ),
-        //             onTap: () {
-        //               if (s.memberOnly && !isMember) {
-        //                 showSubscription(FromTag.pay_chat_style);
-        //                 SonaAnalytics.log('chat_style_gopay');
-        //               } else {
-        //                 _setChatStyle(s.id);
-        //               }
-        //             },
-        //           )).toList(),
-        //         ),
-        //         error: (_, __) => GestureDetector(
-        //           child: Center(child: Text('Error, click to retry')),
-        //         ),
-        //         loading: () => const Center(
-        //           child: SizedBox(
-        //             width: 36,
-        //             height: 36,
-        //             child: CircularProgressIndicator(),
-        //           ),
-        //         )
-        //     ),
-        //   )
-        // )
       ],
     );
   }

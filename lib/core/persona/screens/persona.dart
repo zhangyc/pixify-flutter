@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/profile.dart';
+import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
@@ -39,15 +40,9 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
         actions: [
           Container(
             margin: EdgeInsets.only(right: 16),
-            child: IconButton(
-              onPressed: _goSetting,
-              padding: EdgeInsets.all(14),
-              iconSize: 48,
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
-                shape: MaterialStatePropertyAll(ContinuousRectangleBorder(borderRadius: BorderRadius.circular(32)))
-              ),
-              icon: SonaIcon(icon: SonaIcons.settings)
+            child: SIconButton(
+              onTap: _goSetting,
+              icon: SonaIcons.settings
             ),
           )
         ],

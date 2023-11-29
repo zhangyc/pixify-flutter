@@ -141,10 +141,10 @@ class _ColoredButtonState extends State<ColoredButton> {
 
 enum ColoredButtonSize {
   large(
-      height: 64,
+      height: 56,
       fontSize: 17,
       borderWidth: 2.5,
-      borderRadiusCircular: 20
+      borderRadiusCircular: 16
   ),
   medium(
       height: 44,

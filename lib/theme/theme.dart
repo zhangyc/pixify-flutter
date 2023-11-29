@@ -119,7 +119,7 @@ final themeData = ThemeData(
         return primaryColor;
       }),
       shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(40)
+          borderRadius: BorderRadius.circular(24)
       )),
       textStyle: MaterialStatePropertyAll(
         TextStyle(
@@ -137,8 +137,16 @@ final themeData = ThemeData(
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.disabled)) {
+          return Color(0xFF7E7E7E);
+        } else if (states.contains(MaterialState.selected)) {
+          return primaryColor;
+        }
+        return Colors.transparent;
+      }),
       shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(24),
       )),
       side: MaterialStatePropertyAll(BorderSide(width: 2)),
       textStyle: MaterialStatePropertyAll(
@@ -156,23 +164,23 @@ final themeData = ThemeData(
     )
   ),
   textButtonTheme: TextButtonThemeData(
-      style: ButtonStyle(
-          shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(40)
-          )),
-          textStyle: MaterialStatePropertyAll(
-              TextStyle(
-                  color: primaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.6
-              )
-          ),
-          padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
-          minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
-          fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
-          alignment: Alignment.center
-      )
+    style: ButtonStyle(
+      shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(40)
+      )),
+      textStyle: MaterialStatePropertyAll(
+        TextStyle(
+          color: primaryColor,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 1.6
+        )
+      ),
+      padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
+      minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+      fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+      alignment: Alignment.center
+    )
   ),
   bottomSheetTheme: BottomSheetThemeData(
     elevation: 0

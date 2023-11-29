@@ -1,13 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/core/travel_wish/models/city.dart';
 import 'package:sona/core/travel_wish/providers/activity.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/my_wish.dart';
 import 'package:sona/core/travel_wish/providers/popular_city.dart';
+import 'package:sona/core/travel_wish/screens/city_searching.dart';
 import 'package:sona/core/travel_wish/services/travel_wish.dart';
 
 import '../../../common/widgets/image/icon.dart';
@@ -51,9 +54,11 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
           },
           icon: SonaIcon(icon: SonaIcons.back),
         ),
-        centerTitle: true,
-        title: Text('New travel wish'),
+        centerTitle: false,
+        titleSpacing: 0,
+        title: Text('Back'),
       ),
+      resizeToAvoidBottomInset: false,
       body: PopScope(
         canPop: false,
         onPopInvoked: (_) {
@@ -99,7 +104,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
                           data: OutlinedButtonThemeData(
                               style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
                                   minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
-                                  side: MaterialStatePropertyAll(BorderSide(width: 2))
+                                  side: MaterialStatePropertyAll(BorderSide(width: 2)),
                               )
                           ),
                           child: OutlinedButton(
@@ -144,84 +149,128 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
         children: [
           Positioned.fill(
             child: Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 120),
-                  child: CustomScrollView(
-                    shrinkWrap: true,
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 32),
-                          child: Text(
-                              'Any specific city?',
-                              style: Theme.of(context).textTheme.headlineLarge
-                          ),
+                padding: const EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 100),
+                child: CustomScrollView(
+                  shrinkWrap: true,
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 2),
+                        child: Text(
+                          'Where?',
+                          style: Theme.of(context).textTheme.headlineLarge
                         ),
                       ),
-                      ref.watch(asyncCurrentCitiesProvider).when(
-                        data: (cities) => SliverList(
-                          delegate: SliverChildListDelegate(
-                              cities.map((city) => Container(
-                                margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-                                child: OutlinedButtonTheme(
-                                  data: OutlinedButtonThemeData(
-                                      style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
-                                          minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
-                                          side: MaterialStatePropertyAll(BorderSide(width: 2)),
-                                          backgroundColor: _selectedCities.contains(city) ? MaterialStatePropertyAll(Colors.blue.withOpacity(0.33)) : null
-                                      )
-                                  ),
-                                  child: OutlinedButton(
-                                      key: ValueKey(city.displayName),
-                                      onPressed: () => _selectCity(city),
-                                      child: Row(
-                                        children: [
-                                          Text(city.displayName)
-                                        ],
-                                      )
-                                  ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 32),
+                        child: Text(
+                            'If you go there, Which cities do you want to visit?',
+                            style: Theme.of(context).textTheme.bodyMedium
+                        ),
+                      ),
+                    ),
+                    ref.watch(asyncCurrentCitiesProvider).when(
+                      data: (cities) => SliverList(
+                        delegate: SliverChildListDelegate(
+                            cities.map((city) => Container(
+                              margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                              child: OutlinedButtonTheme(
+                                data: OutlinedButtonThemeData(
+                                    style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
+                                        minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+                                        side: MaterialStatePropertyAll(BorderSide(width: 2)),
+                                        backgroundColor: _selectedCities.contains(city) ? MaterialStatePropertyAll(Theme.of(context).primaryColor) : null
+                                    )
                                 ),
-                              )).toList()
-                          )
-                        ),
-                        error: (_, __) => SliverToBoxAdapter(
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            child: Center(
-                              child: Text('Error to get initial data\nclick to try again'),
-                            ),
-                            onTap: () => ref.refresh(asyncCurrentCitiesProvider),
-                          ),
-                        ),
-                        loading: () => SliverToBoxAdapter(
+                                child: OutlinedButton(
+                                    key: ValueKey(city.displayName),
+                                    onPressed: () => _selectCity(city),
+                                    child: Row(
+                                      children: [
+                                        Text(city.displayName, style: TextStyle(color: _selectedCities.contains(city) ? Colors.white : Theme.of(context).primaryColor))
+                                      ],
+                                    )
+                                ),
+                              ),
+                            )).toList()
+                        )
+                      ),
+                      error: (_, __) => SliverToBoxAdapter(
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
                           child: Center(
-                              child: SizedBox(
-                                  width: 66,
-                                  height: 66,
-                                  child: CircularProgressIndicator()
-                              )
+                            child: Text('Error to get initial data\nclick to try again'),
+                          ),
+                          onTap: () => ref.refresh(asyncPopularTravelCitiesProvider(ref.watch(currentCountryProvider)!.id)),
+                        ),
+                      ),
+                      loading: () => SliverToBoxAdapter(
+                        child: Center(
+                            child: SizedBox(
+                                width: 66,
+                                height: 66,
+                                child: CircularProgressIndicator()
+                            )
+                        ),
+                      )
+                  ),
+                  SliverVisibility(
+                    visible: ref.watch(asyncCurrentCitiesProvider).value != null,
+                    sliver: SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: OutlinedButton(
+                            onPressed: () async {
+                              final city = await showCupertinoDialog<PopularTravelCity>(
+                                  context: context,
+                                  builder: (_) => ProviderScope(
+                                    parent: ProviderScope.containerOf(context),
+                                    child: CitySearching()
+                                  )
+                              );
+                              // if (city != null) {
+                              //   _selectedCities.iterator.
+                              // }
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Search'),
+                                Icon(Icons.search)
+                              ],
+                            ),
                           ),
                         )
                     ),
-                    SliverToBoxAdapter(
-                      child: TextButton(
-                        child: Text('Skip, just ${ref.read(currentCountryProvider)!.displayName}'),
-                        onPressed: () {
-                          _pageController.nextPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
-                        },
+                  ),
+                  SliverToBoxAdapter(
+                    child: TextButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Skip, just ${ref.read(currentCountryProvider)!.displayName}', style: TextStyle(color: Theme.of(context).primaryColor),),
+                          SizedBox(width: 12),
+                          Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor)
+                        ],
                       ),
+                      onPressed: () {
+                        _pageController.nextPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
+                      },
                     ),
-                  ]
-                ),
+                  ),
+                ]
+              ),
             ),
           ),
           Positioned(
             left: 16,
             right: 16,
             bottom: 16,
-            child: ColoredButton(
-              size: ColoredButtonSize.large,
-              text: 'Next',
-              onTap: () {
+            child: FilledButton(
+              child: Text('Next'),
+              onPressed: () {
                 _pageController.nextPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
               },
             ),
