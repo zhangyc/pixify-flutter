@@ -2,12 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:sona/common/widgets/button/icon.dart';
-import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
-import 'package:sona/core/chat/widgets/message/message_from_me.dart';
-import 'package:sona/core/chat/widgets/message/message_from_other.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
 
 import 'local_pending_message_from_me.dart';

@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
+import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/picker/country.dart';
@@ -205,12 +206,16 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
         locale: findMatchedSonaLocale(_language!),
         countryCode: _nation!.code
       );
+      EasyLoading.dismiss();
+      if (!mounted) return;
+      final result = await Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator()));
+      if (result == true && mounted) {
+        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+      }
     } catch (e) {
-
+      //
     } finally {
       EasyLoading.dismiss();
     }
-
-    Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   }
 }
