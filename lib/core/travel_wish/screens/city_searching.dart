@@ -44,27 +44,49 @@ class _CitySearchingState extends ConsumerState<CitySearching> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel', style: TextStyle(color: Theme.of(context).primaryColor),))
-        ],
-      ),
-      body: ListView(
-        children: [
-          SearchBar(
-            controller: _searchController,
-          ),
-          ...widget.cities.where((city) => city.displayName.contains(_searchController.text.trim()))
-            .map((city) =>  TextButton(
-              onPressed: widget.selectedCities.contains(city) ? null : () => Navigator.pop(context, city),
-              child: Text(
-                city.displayName,
-                textAlign: TextAlign.start,
-              )
-            ))
-            .toList()
-        ]
+      extendBodyBehindAppBar: true,
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
+                height: 64,
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                    children: [
+                      SizedBox(width: 16),
+                      Flexible(
+                        flex: 6,
+                        child: SearchBar(
+                          controller: _searchController,
+                          hintText: 'Search',
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Flexible(
+                        flex: 1,
+                        child: IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: Icon(Icons.clear)
+                        ),
+                      ),
+                      SizedBox(width: 16)
+                    ],
+                  ),
+              ),
+            ),
+            SliverList.list(
+              children: widget.cities.where((city) => city.displayName.contains(_searchController.text.trim()))
+                .map((city) =>  TextButton(
+                  onPressed: widget.selectedCities.contains(city) ? null : () => Navigator.pop(context, city),
+                  child: Text(
+                    city.displayName,
+                    textAlign: TextAlign.start,
+                  )
+                )).toList()
+            )
+          ]
+        ),
       ),
     );
   }
