@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -183,21 +184,29 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
     if (_nation == null || _language == null) return;
     String? url;
     try {
+      EasyLoading.show();
       url = await uploadImage(bytes: widget.avatar);
     } catch (e) {
       if (kDebugMode) print('upload avatar error: $e');
+      EasyLoading.dismiss();
       return;
     }
+    try {
+      await ref.read(myProfileProvider.notifier).updateField(
+        name: widget.name,
+        birthday: widget.birthday,
+        gender: widget.gender,
+        avatar: url,
+        position: widget.location,
+        locale: findMatchedSonaLocale(_language!),
+        country: _nation!
+      );
+    } catch (e) {
 
-    await ref.read(myProfileProvider.notifier).updateField(
-      name: widget.name,
-      birthday: widget.birthday,
-      gender: widget.gender,
-      avatar: url,
-      position: widget.location,
-      locale: findMatchedSonaLocale(_language!),
-      country: _nation!
-    );
+    } finally {
+      EasyLoading.dismiss();
+    }
+
     Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
   }
 }
