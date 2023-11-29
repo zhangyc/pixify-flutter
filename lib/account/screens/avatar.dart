@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/gender.dart';
+import 'package:sona/core/travel_wish/models/country.dart';
 
 import '../../utils/dialog/crop_image.dart';
 import 'location.dart';
@@ -13,11 +14,13 @@ class AvatarScreen extends StatefulWidget {
     super.key,
     required this.name,
     required this.birthday,
-    required this.gender
+    required this.gender,
+    required this.country
   });
   final String name;
   final DateTime birthday;
   final Gender gender;
+  final SonaCountry country;
 
   @override
   State<StatefulWidget> createState() => _AvatarScreenState();
@@ -146,6 +149,7 @@ class _AvatarScreenState extends State<AvatarScreen> {
       birthday: widget.birthday,
       gender: widget.gender,
       avatar: _avatar!,
+      country: widget.country
     )));
   }
 }

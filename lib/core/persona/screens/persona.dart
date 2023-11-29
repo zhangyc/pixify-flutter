@@ -192,7 +192,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         bottom: -4,
                         right: -4,
                         child: Text(
-                          findFlagByCountryCode(myProfile.country),
+                          findFlagByCountryCode(myProfile.countryCode),
                           style: TextStyle(fontSize: 16),
                         ),
                       )

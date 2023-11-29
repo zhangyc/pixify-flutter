@@ -49,7 +49,7 @@ class HeardItem extends StatelessWidget {
                         ),),
                       ],
                     ),
-                    userInfo.country!=null?Text(findFlagByCountryCode(userInfo.country!)):Container()
+                    userInfo.countryCode!=null?Text(findFlagByCountryCode(userInfo.countryCode!)):Container()
                   ],
                 ),
                 Row(

@@ -44,6 +44,9 @@ String findFlagByCountryCode(String? code) {
   return country.flag;
 }
 
+SonaCountry findCountryByCode(String? code) {
+  return supportedSonaCountries.firstWhere((c) => c.code == code, orElse: () => SonaCountry(code: '', displayName: 'Unknown', flag: '🌍'));
+}
 
 class PopularTravelCountry {
   PopularTravelCountry({

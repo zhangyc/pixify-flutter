@@ -9,8 +9,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/services/common.dart';
+import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/locale/locale.dart';
+import 'package:sona/utils/picker/country.dart';
 
 import '../models/gender.dart';
 
@@ -22,13 +24,15 @@ class NationAndLanguageScreen extends StatefulHookConsumerWidget {
     required this.birthday,
     required this.gender,
     required this.avatar,
-    required this.location
+    required this.location,
+    required this.country
   });
   final String name;
   final DateTime birthday;
   final Gender gender;
   final Uint8List avatar;
   final Position location;
+  final SonaCountry country;
 
   @override
   ConsumerState<StatefulHookConsumerWidget> createState() => _NationAndLanguageScreenState();
@@ -36,13 +40,13 @@ class NationAndLanguageScreen extends StatefulHookConsumerWidget {
 
 class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScreen> {
 
-  String? _nation;
+  SonaCountry? _nation;
   String? _language;
 
   @override
   void initState() {
     _language = findMatchedSonaLocale(Intl.canonicalizedLocale(Platform.localeName)).locale.toLanguageTag();
-    _nation = 'CN';
+    _nation = widget.country;
     super.initState();
   }
 
@@ -112,7 +116,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                                 color: Theme.of(context).hintColor
                             ),
                           ),
-                          Icon(Icons.date_range)
+                          Icon(Icons.arrow_drop_down)
                         ],
                       )
                   ),
@@ -121,16 +125,16 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () async {
-                    // final value = await showCountryOrRegionPicker(
-                    //     context: context,
-                    //     initialValue: _nation,
-                    //     dismissible: _nation != null
-                    // );
-                    // if (value != null) {
-                    //   setState(() {
-                    //     _nation = value;
-                    //   });
-                    // }
+                    final value = await showCountryPicker(
+                        context: context,
+                        initialValue: _nation,
+                        dismissible: _nation != null
+                    );
+                    if (value != null) {
+                      setState(() {
+                        _nation = value;
+                      });
+                    }
                   },
                   child: Container(
                       height: 64,
@@ -147,7 +151,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           if (_nation != null) Text(
-                              _nation!,
+                              '${_nation!.flag} ${_nation!.displayName}',
                               style: Theme.of(context).textTheme.bodyMedium
                           ) else Text(
                             'Nation',
@@ -199,7 +203,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
         avatar: url,
         position: widget.location,
         locale: findMatchedSonaLocale(_language!),
-        country: _nation!
+        countryCode: _nation!.code
       );
     } catch (e) {
 

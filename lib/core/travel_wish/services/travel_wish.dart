@@ -20,8 +20,8 @@ Future<Response> createTravelWish({
   );
 }
 
-Future<Response> fetchMyTravelWishes() {
-  return dio.post('/travel-wish/find', data: {'page': 1, 'pageSize': 3});
+Future<Response> fetchMyTravelWishes(int id) {
+  return dio.post('/travel-wish/find', data: {'userId': id, 'page': 1, 'pageSize': 3});
 }
 
 Future<Response> fetchPopularTravelDestinations(int? parentId) async {

@@ -8,6 +8,9 @@ class MyProfile {
     required this.name,
     required this.gender,
     required this.birthday,
+    required this.countryId,
+    this.countryCode,
+    this.countryFlag,
     required this.avatar,
     this.interests = const <String>[],
     required this.position,
@@ -17,7 +20,6 @@ class MyProfile {
     this.chatStyleId,
     this.photos = const <ProfilePhoto>[],
     this.locale,
-    this.country,
     required this.vipEndDate,
   });
 
@@ -25,6 +27,9 @@ class MyProfile {
   final String? name;
   final Gender? gender;
   final DateTime? birthday;
+  final int? countryId;
+  final String? countryCode;
+  final String? countryFlag;
   final String? avatar;
   final String? bio;
   final String? impression;
@@ -34,7 +39,6 @@ class MyProfile {
   final Position? position;
   final bool pushEnabled;
   final String? locale;
-  final String? country;
   final int? vipEndDate;
 
   bool get completed => _validate();
@@ -56,6 +60,9 @@ class MyProfile {
       name: json['nickname'],
       gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
       birthday: json['birthday'] != null ? DateTime.tryParse(json['birthday']) : null,
+      countryId: json['countryId'],
+      countryCode: json['countryCode'],
+      countryFlag: json['countryFlag'],
       avatar: json['avatar'],
       bio: json['description'],
       impression: json['impression'],
@@ -65,8 +72,7 @@ class MyProfile {
       photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
       position: pos,
       pushEnabled: json['openPush'] ?? true,
-      locale: json['lang'],
-      country: json['nation']
+      locale: json['lang']
     );
   }
 
@@ -76,6 +82,9 @@ class MyProfile {
       'nickname': name,
       'gender': gender?.index,
       'birthday': birthday?.toString(),
+      'countryId': countryId,
+      'countryCode': countryCode,
+      'countryFlag': countryFlag,
       'avatar': avatar,
       'description': bio,
       'impression': impression,
@@ -86,7 +95,6 @@ class MyProfile {
       'latitude': position?.latitude.toString(),
       'openPush': pushEnabled,
       'lang': locale,
-      'nation': country,
       'vipEndDate':vipEndDate
     };
   }
@@ -96,8 +104,8 @@ class MyProfile {
         && gender != null
         && birthday != null
         && (avatar != null && avatar!.isNotEmpty)
-        && locale != null
-        && country != null;
+        && locale != null;
+        // && countryId != null;
   }
 
   UserInfo toUser() {
@@ -106,7 +114,9 @@ class MyProfile {
       name: name,
       avatar: avatar,
       birthday: birthday,
-      country: country,
+      countryId: countryId,
+      countryCode: countryCode,
+      countryFlag: countryFlag,
       locale: locale,
       gender: gender,
       bio: bio,

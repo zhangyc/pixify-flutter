@@ -13,6 +13,7 @@ import 'package:sona/account/services/auth.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../models/my_profile.dart';
@@ -217,7 +218,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
   void _completeRequiredInfo() async {
     if (mounted) {
       await Navigator.push(context, MaterialPageRoute(
-          builder: (_) => BaseInfoScreen()));
+          builder: (_) => BaseInfoScreen(country: findCountryByCode(widget.phoneNumber.countryISOCode))));
     }
   }
 }

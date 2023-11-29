@@ -1,3 +1,7 @@
+import 'package:sona/core/travel_wish/models/activity.dart';
+import 'package:sona/core/travel_wish/models/country.dart';
+import 'package:sona/core/travel_wish/models/timeframe.dart';
+
 class TravelWish {
   TravelWish({
     required this.id,
@@ -61,6 +65,34 @@ class TravelWish {
       cityNames: cityNames,
       activityIds: activityIds,
       activityNames: activityNames
+    );
+  }
+}
+
+class TravelWishParams {
+  TravelWishParams({
+    this.country,
+    this.cities = const {},
+    this.activities = const {},
+    this.timeframe
+  });
+
+  final PopularTravelCountry? country;
+  final Set<PopularTravelCity> cities;
+  final Set<PopularTravelActivity> activities;
+  final TravelTimeframeOptions? timeframe;
+
+  TravelWishParams copyWith({
+    PopularTravelCountry? country,
+    Set<PopularTravelCity>? cities,
+    Set<PopularTravelActivity>? activities,
+    TravelTimeframeOptions? timeframe,
+  }) {
+    return TravelWishParams(
+      country: country ?? this.country,
+      cities: cities ?? this.cities,
+      activities: activities ?? this.activities,
+      timeframe: timeframe ?? this.timeframe
     );
   }
 }
