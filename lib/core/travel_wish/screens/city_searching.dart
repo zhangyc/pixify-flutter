@@ -76,12 +76,17 @@ class _CitySearchingState extends ConsumerState<CitySearching> {
               ),
             ),
             SliverList.list(
-              children: widget.cities.where((city) => city.displayName.contains(_searchController.text.trim()))
-                .map((city) =>  TextButton(
-                  onPressed: widget.selectedCities.contains(city) ? null : () => Navigator.pop(context, city),
-                  child: Text(
-                    city.displayName,
-                    textAlign: TextAlign.start,
+              children: widget.cities.where((city) => _searchController.text.trim().isNotEmpty && city.displayName.contains(_searchController.text.trim()))
+                .map((city) => GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: widget.selectedCities.contains(city) ? null : () => Navigator.pop(context, city),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    child: Text(
+                      city.displayName,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(color: widget.selectedCities.contains(city) ? Theme.of(context).disabledColor : Theme.of(context).primaryColor),
+                    ),
                   )
                 )).toList()
             )
