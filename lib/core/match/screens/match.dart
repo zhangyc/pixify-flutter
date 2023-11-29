@@ -614,24 +614,25 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
                         onTap: (){
-                           showDm(context, info);
-                          // if(canArrow){
-                          //   arrow=arrow-1;
-                          //   ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
-                          //   SonaAnalytics.log(MatchEvent.match_arrow_send.name);
-                          //   //arrowController.reset();
-                          //   //arrowController.forward() ;
-                          //   //widget.userInfo.arrowed=true;
-                          // }else {
-                          //   bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                          //   if(isMember){
-                          //     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                          //   }else{
-                          //     Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                          //       return SubscribePage(fromTag: FromTag.pay_match_arrow,);
-                          //     }));
-                          //   }
-                          // }
+                          if(canArrow){
+                            showDm(context, info);
+
+                            // arrow=arrow-1;
+                            // ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
+                            // SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                            //arrowController.reset();
+                            //arrowController.forward() ;
+                            //widget.userInfo.arrowed=true;
+                          }else {
+                            bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                            if(isMember){
+                              Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                            }else{
+                              Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                                return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                              }));
+                            }
+                          }
                         },
                       ),
                     ],

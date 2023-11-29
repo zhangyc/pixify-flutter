@@ -46,7 +46,33 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
   Future<HttpResult> arrow(int id) {
     return _action(id, MatchAction.arrow);
   }
-
+  Future<HttpResult> customSend(int id,String text) {
+    return post(
+        '/prompt/common',
+        data: {
+          // 请求类型,取值范围见下方说明
+          // x
+          "type":"INPUT",
+          "userId":id, // 对方用户的ID
+          // 当type=INPUT 时，该参数必填，内容为用户的输入内容
+          "chatStyleId":-1, // 风格ID
+          "input":text,
+        }
+    );
+  }
+  Future<HttpResult> sayHi(int id) {
+    return post(
+        '/prompt/common',
+        data: {
+          // 请求类型,取值范围见下方说明
+          // x
+          "type":"PROLOGUE",
+          "userId":id, // 对方用户的ID
+          // 当type=INPUT 时，该参数必填，内容为用户的输入内容
+          "chatStyleId":-1, // 风格ID
+        }
+    );
+  }
   Future<HttpResult> _action(int id, MatchAction action) async{
     final resp= await matchAction(
         userId: id,

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/match/util/http_util.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/models/user.dart';
@@ -14,6 +15,7 @@ import '../util/event.dart';
 
 showDm(BuildContext context,UserInfo info){
   showBottomSheet(context: context, builder: (c){
+    TextEditingController controller=TextEditingController();
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         return Container(
@@ -47,6 +49,7 @@ showDm(BuildContext context,UserInfo info){
               Row(
                 children: [
                   Flexible(child: TextField(
+                    controller: controller,
                     decoration: InputDecoration(
                       border:OutlineInputBorder(
 
@@ -65,9 +68,15 @@ showDm(BuildContext context,UserInfo info){
                   GestureDetector(
                     child: Icon(Icons.send),
                     onTap: (){
+                      if(controller.text.isEmpty){
+                        return ;
+                      }
+
                       if(canArrow){
                         arrow=arrow-1;
-                        ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
+                        ref.read(asyncMatchRecommendedProvider.notifier).customSend(info.id,controller.text);
+
+                        //ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
                         SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                         //arrowController.reset();
                         //arrowController.forward() ;
@@ -93,7 +102,7 @@ showDm(BuildContext context,UserInfo info){
                 onTap: (){
                   if(canArrow){
                     arrow=arrow-1;
-                    ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
+                    ref.read(asyncMatchRecommendedProvider.notifier).sayHi(info.id);
                     SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                     //arrowController.reset();
                     //arrowController.forward() ;
