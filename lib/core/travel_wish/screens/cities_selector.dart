@@ -28,6 +28,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
   Widget build(BuildContext context) {
     final lang = ref.read(myProfileProvider)!.locale ?? 'en';
     final params = ref.watch(travelWishParamsProvider);
+    print('country: -${params.country?.displayName}');
     final countryId = params.country?.id;
     if (countryId == null) return Container();
     final key = '${countryId}_$lang';

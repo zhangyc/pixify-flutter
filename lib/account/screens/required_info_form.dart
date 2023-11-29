@@ -130,7 +130,7 @@ class _InfoCompletingFlowState extends ConsumerState<RequiredInfoFormScreen> {
                                 gender: _gender,
                                 avatar: _avatar,
                                 interests: _interests,
-                                country: _country,
+                                countryCode: _country,
                                 locale: _locale
                               );
                               global.SonaAnalytics.log('reg_confirm');

@@ -6,7 +6,8 @@ import 'package:sona/core/travel_wish/providers/timeframe.dart';
 import '../providers/popular_country.dart';
 
 class TimeframeSelector extends ConsumerStatefulWidget {
-  const TimeframeSelector({super.key});
+  const TimeframeSelector({super.key, required this.onDone});
+  final void Function() onDone;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CountrySelectorState();
@@ -42,7 +43,10 @@ class _CountrySelectorState extends ConsumerState<TimeframeSelector> {
                           ),
                           child: OutlinedButton(
                               key: ValueKey(option.value),
-                              onPressed: () => ref.read(travelWishParamsProvider.notifier).setTimeframe(option),
+                              onPressed: () {
+                                ref.read(travelWishParamsProvider.notifier).setTimeframe(option);
+                                widget.onDone();
+                              },
                               child: Row(
                                 children: [
                                   Text(option.name)

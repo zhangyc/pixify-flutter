@@ -24,13 +24,6 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
   static const _pageTransitionCurve = Curves.ease;
 
   @override
-  void initState() {
-    // TODO: implemSonaCityent initState
-    fetchTravelTimeframeOptions();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -60,9 +53,9 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (_, int index) => switch(index) {
-            0 => const CountrySelector(),
-            1 => CitiesSelector(onSkip: _onSkipCities, onNext: _onSubmitCities),
-            2 => const TimeframeSelector(),
+            0 => CountrySelector(onDone: _onNextPage),
+            1 => CitiesSelector(onSkip: _onSkipCities, onNext: _onNextPage),
+            2 => TimeframeSelector(onDone: _onNextPage),
             3 => ActivitiesSelector(onDone: _onDone),
             _ => Container()
           }
@@ -76,7 +69,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
     ref.read(travelWishParamsProvider.notifier).clearCities();
   }
 
-  void _onSubmitCities() {
+  void _onNextPage() {
     _pageController.nextPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
   }
 

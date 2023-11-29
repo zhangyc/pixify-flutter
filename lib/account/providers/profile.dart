@@ -39,7 +39,7 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
     String? bio,
     Position? position,
     SonaLocale? locale,
-    String? country
+    String? countryCode
   }) async {
     final resp = await updateMyProfile(
       name: name,
@@ -50,7 +50,7 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
       bio: bio,
       position: position,
       locale: locale,
-      country: country
+      countryCode: countryCode
     );
     if (resp.statusCode == 0) {
       await refresh();
@@ -67,9 +67,8 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
       //
     }
   }
-
-
 }
+
 
 final myProfileProvider = StateNotifierProvider<MyProfileNotifier, MyProfile?>(
   (ref) {

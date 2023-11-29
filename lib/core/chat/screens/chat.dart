@@ -57,7 +57,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             SizedBox(width: 8),
             Text(widget.otherSide.name!),
             SizedBox(width: 8),
-            Text(findFlagByCountryCode(widget.otherSide.country ?? ''))
+            Text(findFlagByCountryCode(widget.otherSide.countryCode ?? ''))
           ],
         ),
         centerTitle: true,

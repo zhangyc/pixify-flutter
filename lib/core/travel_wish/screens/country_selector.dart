@@ -7,7 +7,8 @@ import '../models/country.dart';
 import '../providers/popular_country.dart';
 
 class CountrySelector extends ConsumerStatefulWidget {
-  const CountrySelector({super.key});
+  const CountrySelector({super.key, required this.onDone});
+  final void Function() onDone;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CountrySelector();
@@ -43,7 +44,10 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
                           ),
                           child: OutlinedButton(
                               key: ValueKey(country.id),
-                              onPressed: () => ref.read(travelWishParamsProvider.notifier).setCountry(country),
+                              onPressed: () {
+                                ref.read(travelWishParamsProvider.notifier).setCountry(country);
+                                widget.onDone();
+                              },
                               child: Row(
                                 children: [
                                   Text(findFlagByCountryCode(country.code)),

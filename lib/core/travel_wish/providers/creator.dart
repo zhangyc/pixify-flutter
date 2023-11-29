@@ -51,7 +51,7 @@ class TravelWishParamsNotifier extends StateNotifier<TravelWishParams> {
   }
 }
 
-final travelWishParamsProvider = AutoDisposeStateNotifierProvider<
+final travelWishParamsProvider = StateNotifierProvider<
     TravelWishParamsNotifier,
     TravelWishParams
 >((ref) => TravelWishParamsNotifier(TravelWishParams()));

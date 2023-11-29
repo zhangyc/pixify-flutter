@@ -19,7 +19,7 @@ Future<Response> updateMyProfile({
   String? bio,
   Position? position,
   SonaLocale? locale,
-  String? country
+  String? countryCode
 }) async {
   return dio.post(
       '/user/update',
@@ -33,7 +33,7 @@ Future<Response> updateMyProfile({
         'longitude': position?.longitude,
         'latitude': position?.latitude,
         'lang': locale?.locale.toLanguageTag(),
-        'nation': country
+        'countryCode': countryCode
       }
   );
 }

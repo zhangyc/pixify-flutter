@@ -13,7 +13,9 @@ class UserInfo {
     required this.name,
     required this.gender,
     required this.birthday,
-    this.country,
+    this.countryId,
+    this.countryCode,
+    this.countryFlag,
     this.locale,
     required this.avatar,
     this.bio,
@@ -23,7 +25,6 @@ class UserInfo {
     this.impression,
     this.interest=const [],
     this.likeMe=0,
-    this.countryFlag,
     this.wishList=const [],
   });
 
@@ -31,7 +32,9 @@ class UserInfo {
   final String? name;
   final Gender? gender;
   final DateTime? birthday;
-  final String? country;
+  final int? countryId;
+  final String? countryCode;
+  final String? countryFlag;
   final String? locale;
   final String? avatar;
   final String? bio;
@@ -43,7 +46,6 @@ class UserInfo {
   final String? impression;
   int likeMe=0;  //1 喜欢了，0 无
   List<Interest> interest=[];
-  String? countryFlag;
   List<WishBean> wishList=[];
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     final images = json['images'];
@@ -73,7 +75,9 @@ class UserInfo {
         gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
         birthday: json['birthday'] != null ? DateTime.fromMillisecondsSinceEpoch(json['birthday']) : null,
         locale: json['lang'],
-        country: json['country'],
+        countryId: json['countryId'],
+        countryCode: json['countryCode'],
+        countryFlag: json['countryFlag'],
         avatar: json['avatar'],
         bio: json['description'],
         chatStyleId: json['chatStyleId'],
@@ -82,7 +86,6 @@ class UserInfo {
         impression:json['impression'],
         interest: interest,
         likeMe: json['likeMe']??0,
-        countryFlag:json['countryFlag'],
         wishList: wishList
     );
   }

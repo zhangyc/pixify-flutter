@@ -12,6 +12,7 @@ import 'package:sona/common/services/common.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/locale/locale.dart';
+import 'package:sona/utils/picker/country.dart';
 
 import '../models/gender.dart';
 
@@ -115,7 +116,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                                 color: Theme.of(context).hintColor
                             ),
                           ),
-                          Icon(Icons.date_range)
+                          Icon(Icons.arrow_drop_down)
                         ],
                       )
                   ),
@@ -124,16 +125,16 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () async {
-                    // final value = await showCountryOrRegionPicker(
-                    //     context: context,
-                    //     initialValue: _nation,
-                    //     dismissible: _nation != null
-                    // );
-                    // if (value != null) {
-                    //   setState(() {
-                    //     _nation = value;
-                    //   });
-                    // }
+                    final value = await showCountryPicker(
+                        context: context,
+                        initialValue: _nation,
+                        dismissible: _nation != null
+                    );
+                    if (value != null) {
+                      setState(() {
+                        _nation = value;
+                      });
+                    }
                   },
                   child: Container(
                       height: 64,
@@ -150,7 +151,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           if (_nation != null) Text(
-                              _nation!.displayName,
+                              '${_nation!.flag} ${_nation!.displayName}',
                               style: Theme.of(context).textTheme.bodyMedium
                           ) else Text(
                             'Nation',
@@ -202,7 +203,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
         avatar: url,
         position: widget.location,
         locale: findMatchedSonaLocale(_language!),
-        country: _nation!.code
+        countryCode: _nation!.code
       );
     } catch (e) {
 
