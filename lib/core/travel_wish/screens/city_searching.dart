@@ -46,27 +46,25 @@ class _CitySearchingState extends ConsumerState<CitySearching> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Expanded(
-          child: SearchBar(
-            controller: _searchController,
-          ),
-        ),
-        centerTitle: false,
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel'))
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel', style: TextStyle(color: Theme.of(context).primaryColor),))
         ],
       ),
       body: ListView(
-        children: widget.cities.where((city) => city.displayName.contains(_searchController.text.trim()))
-          .map((city) =>  TextButton(
-            onPressed: widget.selectedCities.contains(city) ? null : () => Navigator.pop(context, city),
-            child: Text(
-              city.displayName,
-              textAlign: TextAlign.start,
-            )
-          )
-        )
-        .toList()
+        children: [
+          SearchBar(
+            controller: _searchController,
+          ),
+          ...widget.cities.where((city) => city.displayName.contains(_searchController.text.trim()))
+            .map((city) =>  TextButton(
+              onPressed: widget.selectedCities.contains(city) ? null : () => Navigator.pop(context, city),
+              child: Text(
+                city.displayName,
+                textAlign: TextAlign.start,
+              )
+            ))
+            .toList()
+        ]
       ),
     );
   }

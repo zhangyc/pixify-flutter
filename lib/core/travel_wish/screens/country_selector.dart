@@ -45,6 +45,11 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
                           child: OutlinedButton(
                               key: ValueKey(country.id),
                               onPressed: () {
+                                if (ref.read(travelWishParamsProvider).country?.id != country.id) {
+                                  ref.read(travelWishParamsProvider.notifier)
+                                    ..clearCities()
+                                    ..clearActivities();
+                                }
                                 ref.read(travelWishParamsProvider.notifier).setCountry(country);
                                 widget.onDone();
                               },

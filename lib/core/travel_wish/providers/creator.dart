@@ -49,6 +49,12 @@ class TravelWishParamsNotifier extends StateNotifier<TravelWishParams> {
       );
     }
   }
+
+  void clearActivities() {
+    state = state.copyWith(
+        activities: {}
+    );
+  }
 }
 
 final travelWishParamsProvider = StateNotifierProvider<
