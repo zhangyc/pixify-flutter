@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
@@ -37,6 +38,16 @@ class ChatScreen extends StatefulHookConsumerWidget {
 }
 
 class _ChatScreenState extends ConsumerState<ChatScreen> {
+  
+  late MyProfile myProfile;
+  late UserInfo mySide;
+  
+  @override
+  void didChangeDependencies() {
+    myProfile = ref.read(myProfileProvider)!;
+    mySide = myProfile.toUser();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,12 +96,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 alignment: Alignment.topCenter,
                 child: ListView.separated(
                   shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 64),
+                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 80),
                   reverse: true,
                   itemBuilder: (BuildContext context, int index) => MessageWidget(
                     prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
                     message: msgs[index],
-                    fromMe: ref.read(myProfileProvider)!.id == msgs[index].sender.id,
+                    fromMe: mySide.id == msgs[index].sender.id,
+                    mySide: mySide,
+                    otherSide: widget.otherSide,
                     onPendingMessageSucceed: _onPendingMessageSucceed,
                     onShorten: _shortenMessage,
                     onDelete: _deleteMessage,
@@ -154,7 +167,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               children: [
                 Positioned(
                   left: 45,
-                  child: UserAvatar(url: ref.read(myProfileProvider)!.avatar!, size: Size.square(50))
+                  child: UserAvatar(url: mySide.avatar!, size: Size.square(50))
                 ),
                 Positioned(
                   left: 0,
@@ -193,7 +206,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     text: 'Don\'t worry, just type in '
                   ),
                   TextSpan(
-                    text: findMatchedSonaLocale(ref.read(myProfileProvider)!.locale!).displayName,
+                    text: findMatchedSonaLocale(mySide.locale!).displayName,
                     style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.w500),
                   ),
                   TextSpan(
@@ -247,9 +260,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       id: _lastLocalId++,
       type: CallSonaType.INPUT.index + 1,
       content: text,
-      sender: ref.read(myProfileProvider)!.toUser(),
+      sender: mySide,
       receiver: widget.otherSide,
-      origin: ref.read(myProfileProvider)!.locale,
+      origin: mySide.locale,
       time: DateTime.now(),
       shortenTimes: 2
     );
@@ -260,7 +273,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
     pending.then((resp) {
       if (resp.statusCode == 10150) {
-        if (ref.read(myProfileProvider)!.isMember) {
+        if (myProfile.isMember) {
           coolDown();
         } else {
           showSubscription(FromTag.pay_chat_sonamsg);
@@ -314,7 +327,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
     SonaAnalytics.log('chat_starter');
     if (resp.statusCode == 10150) {
-      if (ref.read(myProfileProvider)!.isMember) {
+      if (myProfile.isMember) {
         coolDown();
       } else {
         showSubscription(FromTag.chat_starter);
@@ -332,7 +345,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       type: CallSonaType.HOOK
     );
     if (resp.statusCode == 10150) {
-      if (ref.read(myProfileProvider)!.isMember) {
+      if (myProfile.isMember) {
         coolDown();
       } else {
         showSubscription(FromTag.pay_chat_hook);
@@ -347,7 +360,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       type: CallSonaType.SUGGEST_V2
     );
     if (resp.statusCode == 10150) {
-      if (ref.read(myProfileProvider)!.isMember) {
+      if (myProfile.isMember) {
         coolDown();
       } else {
         showSubscription(FromTag.pay_chat_suggest);

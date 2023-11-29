@@ -27,17 +27,6 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.82 - 20 - 16 * 2 - 20
-          ),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24)
-          ),
-          foregroundDecoration: BoxDecoration(
-              border: Border.all(width: 2),
-              borderRadius: BorderRadius.circular(24)
-          ),
-          clipBehavior: Clip.antiAlias,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -55,18 +44,11 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
               //     ),
               //   ),
               // ),
-              if (widget.message.content.isNotEmpty) Container(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                    color: Color(0xFF454545)
-                ),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.message.content,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.white,
-                      height: 1.5
-                  ),
+              if (widget.message.content.isNotEmpty) Text(
+                widget.message.content,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.white,
+                    height: 1.5
                 ),
               )
             ],

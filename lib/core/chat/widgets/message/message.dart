@@ -2,13 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/common/models/user.dart';
+import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
 
 import 'local_pending_message_from_me.dart';
 
-class MessageWidget extends StatelessWidget {
+class MessageWidget extends StatefulWidget {
   const MessageWidget({
     super.key,
     required this.prevMessage,
@@ -16,14 +18,27 @@ class MessageWidget extends StatelessWidget {
     required this.fromMe,
     required this.onDelete,
     required this.onPendingMessageSucceed,
-    required this.onShorten
+    required this.onShorten,
+    required this.mySide,
+    required this.otherSide
   });
+
   final ImMessage? prevMessage;
   final ImMessage message;
   final bool fromMe;
+  final UserInfo mySide;
+  final UserInfo otherSide;
   final Future Function(ImMessage) onDelete;
   final void Function(ImMessage) onPendingMessageSucceed;
   final Future Function(ImMessage) onShorten;
+
+  @override
+  State<StatefulWidget> createState() => _MessageWidgetState();
+}
+
+class _MessageWidgetState extends State<MessageWidget> {
+
+  bool _clicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +46,20 @@ class MessageWidget extends StatelessWidget {
     String? upperMessage;
     String? lowerMessage;
 
-    if (fromMe) {
-      if (message.pending != null) {
-        localPendingMessage = LocalPendingMessageFromMe(message: message, onSucceed: () => onPendingMessageSucceed(message));
+    if (widget.fromMe) {
+      if (widget.message.pending != null) {
+        localPendingMessage = LocalPendingMessageFromMe(message: widget.message, onSucceed: () => widget.onPendingMessageSucceed(widget.message));
       } else {
-        upperMessage = message.origin;
-        lowerMessage = message.content;
+        upperMessage = widget.message.origin;
+        lowerMessage = widget.message.content;
       }
     } else {
-      upperMessage = message.content;
-      lowerMessage = message.origin;
+      upperMessage = widget.message.content;
+      lowerMessage = widget.message.origin;
+    }
+    if (upperMessage == null || upperMessage.isEmpty) {
+      upperMessage = lowerMessage;
+      lowerMessage = null;
     }
 
     final actions = <Widget>[];
@@ -48,22 +67,22 @@ class MessageWidget extends StatelessWidget {
       child: const Text('Copy'),
       onPressed: () {
         Navigator.pop(context);
-        Clipboard.setData(ClipboardData(text: message.content));
+        Clipboard.setData(ClipboardData(text: widget.message.content));
         Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
       },
     ));
-    if (fromMe) {
+    if (widget.fromMe) {
       actions.add(CupertinoContextMenuAction(
         child: const Text('Delete'),
         onPressed: () {
           Navigator.pop(context);
-          onDelete(message);
+          widget.onDelete(widget.message);
         },
       ));
 
       // AI消息
-      if ([1, 2, 3, 4, 7, 11].contains(message.type)) {
-        if (message.content.isNotEmpty) {
+      if ([1, 2, 3, 4, 7, 11].contains(widget.message.type)) {
+        if (widget.message.content.isNotEmpty) {
           actions.add(CupertinoContextMenuAction(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -73,7 +92,7 @@ class MessageWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(
-                        message.feedback == MessageFeedbackType.like
+                        widget.message.feedback == MessageFeedbackType.like
                             ? CupertinoIcons.hand_thumbsup_fill
                             : CupertinoIcons.hand_thumbsup,
                         color: Theme.of(context).primaryColor,
@@ -89,10 +108,10 @@ class MessageWidget extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    if (message.feedback == MessageFeedbackType.like) {
-                      feedback(messageId: message.id, type: MessageFeedbackType.none);
+                    if (widget.message.feedback == MessageFeedbackType.like) {
+                      feedback(messageId: widget.message.id, type: MessageFeedbackType.none);
                     } else {
-                      feedback(messageId: message.id, type: MessageFeedbackType.like);
+                      feedback(messageId: widget.message.id, type: MessageFeedbackType.like);
                     }
                   },
                 ),
@@ -100,7 +119,7 @@ class MessageWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(
-                        message.feedback == MessageFeedbackType.dislike
+                        widget.message.feedback == MessageFeedbackType.dislike
                             ? CupertinoIcons.hand_thumbsdown_fill
                             : CupertinoIcons.hand_thumbsdown,
                         color: Theme.of(context).primaryColor,
@@ -112,10 +131,10 @@ class MessageWidget extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    if (message.feedback == MessageFeedbackType.dislike) {
-                      feedback(messageId: message.id, type: MessageFeedbackType.none);
+                    if (widget.message.feedback == MessageFeedbackType.dislike) {
+                      feedback(messageId: widget.message.id, type: MessageFeedbackType.none);
                     } else {
-                      feedback(messageId: message.id, type: MessageFeedbackType.dislike);
+                      feedback(messageId: widget.message.id, type: MessageFeedbackType.dislike);
                     }
                   },
                 )
@@ -129,96 +148,77 @@ class MessageWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Visibility(
-            visible: prevMessage == null || prevMessage!.time.add(const Duration(minutes: 5)).isBefore(message.time),
-            child: MessageTime(time: message.time)
-          ),
-          CupertinoContextMenu.builder(
-            actions: actions,
-            builder:(BuildContext context, Animation<double> animation) {
-              return Container(
-                // decoration:
-                //   animation.value < CupertinoContextMenu.animationOpensAt ? boxDecorationAnimation.value : null,
-                constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.82
-                ),
-                // padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                // decoration: BoxDecoration(
-                //     color: fromMe ? Theme.of(context).primaryColor : Color(0xFFF9F9F9),
-                //     borderRadius: BorderRadius.circular(24),
-                // ),
-                child: localPendingMessage == null ? Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24)
+          if (widget.prevMessage == null || widget.prevMessage!.time.add(const Duration(minutes: 5)).isBefore(widget.message.time)) MessageTime(time: widget.message.time),
+          SizedBox(height: 12),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (!widget.fromMe) Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(40)),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: widget.fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.64,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24),
+                          color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
+                      ),
+                      foregroundDecoration: widget.fromMe ? null : BoxDecoration(
+                          border: Border.all(width: 2),
+                          borderRadius: BorderRadius.circular(24)
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      clipBehavior: Clip.antiAlias,
+                      child: localPendingMessage != null ? localPendingMessage : Text(
+                        upperMessage!,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
+                          height: 1.5
+                        )
+                      )
                     ),
-                    foregroundDecoration: fromMe ? null : BoxDecoration(
-                        border: Border.all(width: 2),
-                        borderRadius: BorderRadius.circular(24)
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (upperMessage != null && upperMessage.isNotEmpty) Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                              color: fromMe ? Theme.of(context).primaryColor : Colors.transparent
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            upperMessage,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: fromMe ? Colors.white : Theme.of(context).primaryColor,
+                    // SizedBox(height: 12),
+                    if (lowerMessage != null && lowerMessage.isNotEmpty) GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        setState(() {
+                          _clicked = !_clicked;
+                        });
+                      },
+                      child: Container(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.64,
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        alignment: widget.fromMe ? Alignment.centerRight : Alignment.centerLeft,
+                        child: Text(
+                          lowerMessage,
+                          maxLines: _clicked ? null : 1,
+                          overflow: _clicked ? TextOverflow.clip : TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Color(0xFFB7B7B7),
                               height: 1.5
-                            ),
                           ),
                         ),
-                        if (lowerMessage != null && lowerMessage.isNotEmpty) Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                              color: fromMe ? Color(0xFF454545) : Color(0xFFF6F3F3)
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            lowerMessage,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Color(0xFFB7B7B7),
-                                height: 1.5
-                            ),
-                          ),
-                        )
-                      ],
+                      ),
                     )
-                ) : localPendingMessage
-              );
-            },
+                  ],
+                ),
+              ),
+              if (widget.fromMe) Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: UserAvatar(url: widget.mySide.avatar!, size: Size.square(40)),
+              ),
+            ],
           ),
-          SizedBox(height: 12),
-          // Visibility(
-          //   visible: message.type == 4 && fromMe && message.shortenTimes < 2,
-          //   child: Align(
-          //     alignment: Alignment.bottomRight,
-          //     child: SIconButton(
-          //       size: 28,
-          //       onTap: () => onShorten(message),
-          //       loadingWhenAsyncAction: true,
-          //       child: Container(
-          //         width: 28,
-          //         height: 28,
-          //         decoration: BoxDecoration(
-          //           color: Color(0xFFF5F5F5),
-          //           shape: BoxShape.circle
-          //         ),
-          //         alignment: Alignment.center,
-          //         child: SonaIcon(icon: SonaIcons.sparkles, size: 16)
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // SizedBox(height: 12)
         ],
       ),
     );

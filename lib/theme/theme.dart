@@ -14,7 +14,7 @@ final themeData = ThemeData(
   dividerColor: dividerColor,
   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
   hintColor: const Color(0xFFBABABA),
-  fontFamily: 'Source Sans Pro',
+  fontFamily: 'MPLUSRounded1c',
   fontFamilyFallback: [
     if (Platform.isAndroid) 'Roboto',
     if (Platform.isAndroid) 'Source Sans Pro',
