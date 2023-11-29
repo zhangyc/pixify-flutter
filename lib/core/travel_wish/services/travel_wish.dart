@@ -36,3 +36,18 @@ Future<Response> fetchPopularTravelActivities(int countryId, List<int> cityIds) 
     'cityIds': cityIds
   });
 }
+
+Future<Response> createActivity({
+  required String description,
+  required int countryId,
+  Iterable<PopularTravelCity>? cities
+}) async {
+  return dio.post(
+      '/activity/save-update',
+      data: {
+        'countryId': countryId,
+        'cityIds': cities?.map((city) => city.id).join('#'),
+        'title': description
+      }
+  );
+}
