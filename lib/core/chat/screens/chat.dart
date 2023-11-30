@@ -372,64 +372,154 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       }
       return;
     }
-    final options = resp.data['optionV2'] as List;
-    if (options.isEmpty) return;
+    final data = resp.data['optionV2'] as Map;
+    final tips = data['tips'] as String?;
+    final options = data['suggestions'] as List;
+    if (tips == null || options.isEmpty) return;
 
     if (!mounted) return;
+    // final options = ['alsdjfsdkf,', 'skldlsa;fj ak fa;kldjf kadkjfk ak jkalsdj fkajsdkf d', '“Kakukicho” is an iconic place in Tokyo. There are many kabuki and drinking activities, but it is best to go with locals.'];
 
-    await showDialog(
+    await showModalBottomSheet(
       context: context,
       barrierColor: Colors.black54,
-      barrierDismissible: true,
+      isScrollControlled: true,
       builder: (_) {
         return SafeArea(
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text('✌️Got some ideas', style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Colors.white
-                  )),
-                  SizedBox(height: 12),
-                  GridView(
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 5,
-                      crossAxisSpacing: 5,
-                      childAspectRatio: 155 / 130
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
                     ),
-                    children: [
-                      ...options.map((opt) => GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () async {
-                          Navigator.pop(context);
-                          callSona(
-                            userId: widget.otherSide.id,
-                            type: CallSonaType.SUGGEST_FUNC,
-                            input: opt
-                          );
-                          SonaAnalytics.log('chat_sendsuggest');
-                        },
-                        child: Container(
-                            width: 130,
-                            height: 155,
-                            color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7),
-                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                            child: Text(opt ?? '', style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black
-                            ))
-                        )
-                      ))
-                    ],
                   ),
-                  SizedBox(height: 20),
-                ],
-            ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0xFF2C2C2C),
+                      blurRadius: 0,
+                      offset: Offset(0, -8),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'SONA Tips',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () => Navigator.pop(context),
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                              ),
+                              child: Icon(Icons.close)
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      tips,
+                      style: Theme.of(context).textTheme.bodyMedium
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ...options.map((opt) => Container(
+                            margin: EdgeInsets.symmetric(vertical: 4),
+                            child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  callSona(
+                                      userId: widget.otherSide.id,
+                                      type: CallSonaType.SUGGEST_FUNC,
+                                      input: opt
+                                  );
+                                  SonaAnalytics.log('chat_sendsuggest');
+                                },
+                                child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: ShapeDecoration(
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      shadows: [
+                                        BoxShadow(
+                                          color: Color(0xFF2C2C2C),
+                                          blurRadius: 0,
+                                          offset: Offset(0, 2),
+                                          spreadRadius: 0,
+                                        )
+                                      ],
+                                    ),
+                                    child: Text(opt)
+                                )
+                            ),
+                          ))
+                        ]
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      height: 29,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 257,
+                            top: 16,
+                            child: Transform(
+                              transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(3.14),
+                              child: Container(
+                                width: 139,
+                                height: 5,
+                                decoration: ShapeDecoration(
+                                  color: Color(0xFFE7E5E5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       }
@@ -457,7 +547,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _showActions() async {
-    var aiEnabledStatusDescription = ref.read(inputModeProvider(widget.otherSide.id).notifier) == InputMode.sona ? 'AI interpretation: on' : 'AI interpretation: off';
+    var aiEnabledStatusDescription = ref.read(inputModeProvider(widget.otherSide.id)) == InputMode.sona ? 'AI interpretation: on' : 'AI interpretation: off';
     if (widget.otherSide.locale == mySide.locale) {
       aiEnabledStatusDescription = 'AI interpretation: off (same language)';
     }

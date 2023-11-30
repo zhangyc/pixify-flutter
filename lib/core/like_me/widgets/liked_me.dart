@@ -7,6 +7,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../generated/l10n.dart';
@@ -48,17 +49,17 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
     return ref.watch(asyncLikedMeProvider).when<Widget>(
       data: (likedMeUsers) {
         return likedMeUsers.isEmpty ? Container() : Container(
-          margin: EdgeInsets.only(bottom: 38),
+          margin: EdgeInsets.only(top: 20, bottom: 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Padding(
+              if (likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).isNotEmpty) Padding(
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
-                  '${likedMeUsers.length} ${S.current.homeWhoLikeMe}',
+                  'New like (${likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).length})',
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               const SizedBox(height: 16),
@@ -120,7 +121,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                               height: 102,
                               child: Visibility(
                                 visible: !ref.watch(myProfileProvider)!.isMember,
-                                child:  ClipOval(
+                                child: ClipOval(
                                   child: BackdropFilter(
                                     filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
                                     child: Container(
@@ -150,28 +151,45 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   itemCount: likedMeUsers.length > 16 ? 17 : likedMeUsers.length,
                 ),
               ),
-              Visibility(
-                visible: true, //!ref.read(myProfileProvider)!.isMember,
-                child: Container(
+              if (ref.read(myProfileProvider)!.isMember) Container(
                   margin: EdgeInsets.only(top: 18, left: 16, right: 16),
                   alignment: Alignment.center,
                   child: FilledButton.tonal(
                     onPressed: () {
                       SonaAnalytics.log('chatlist_gopay');
-                      widget.onShowAll();
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.pay_chatlist_likedme)));
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3))
+                        backgroundColor: MaterialStatePropertyAll(Color(0xFF06FFE1))
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
-                        'Who like you?',
-                        style: Theme.of(context).textTheme.titleSmall
+                          'Become Super SONA',
+                          style: Theme.of(context).textTheme.titleSmall
                       ),
                     ),
                   )
-                ),
+              ),
+              if (!ref.read(myProfileProvider)!.isMember) Container(
+                margin: EdgeInsets.only(top: 18, left: 16, right: 16),
+                alignment: Alignment.center,
+                child: FilledButton.tonal(
+                  onPressed: () {
+                    SonaAnalytics.log('chatlist_gopay');
+                    widget.onShowAll();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3))
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Who like you?',
+                      style: Theme.of(context).textTheme.titleSmall
+                    ),
+                  ),
+                )
               )
             ],
           ),

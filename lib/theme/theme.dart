@@ -14,7 +14,7 @@ final themeData = ThemeData(
   dividerColor: dividerColor,
   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
   hintColor: const Color(0xFFBABABA),
-  fontFamily: 'MPLUSRounded1c',
+  fontFamily: 'M PLUS Rounded 1c',
   fontFamilyFallback: [
     if (Platform.isAndroid) 'Roboto',
     if (Platform.isAndroid) 'Source Sans Pro',
@@ -190,7 +190,8 @@ final themeData = ThemeData(
     side: MaterialStatePropertyAll(BorderSide(width: 2)),
   ),
   bottomSheetTheme: BottomSheetThemeData(
-    elevation: 0
+    elevation: 0,
+    modalBarrierColor: Colors.white.withOpacity(0.6)
   ),
   dialogTheme: DialogTheme(
     elevation: 0

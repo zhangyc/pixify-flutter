@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/common/widgets/button/next.dart';
 import 'package:sona/common/widgets/button/option.dart';
@@ -89,75 +90,97 @@ Future<bool?> showConfirm({
   String? title = 'Are you sure',
   String confirmText = 'Sure',
   String cancelText = 'No',
+  bool danger = false,
   Duration? confirmDelay,
   required String content
 }) {
-  return showModalBottomSheet<bool>(
+  return showDialog<bool>(
     context: context,
-    backgroundColor: Colors.white,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(30),
-        topRight: Radius.circular(30),
-      )
-    ),
+    // backgroundColor: Colors.white,
+    // shape: const RoundedRectangleBorder(
+    //   borderRadius: BorderRadius.only(
+    //     topLeft: Radius.circular(30),
+    //     topRight: Radius.circular(30),
+    //   )
+    // ),
     builder: (BuildContext context) {
       return SafeArea(
         top: false,
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 10),
             Container(
-              width: 30,
-              height: 3,
-              color: Colors.black26,
-            ),
-            SizedBox(height: 24),
-            Visibility(
-              visible: title != null,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: Text(title ?? '',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18)),
+              margin: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                shadows: [
+                  BoxShadow(
+                    color: Color(0xFF2C2C2C),
+                    blurRadius: 0,
+                    offset: Offset(0, -4),
+                    spreadRadius: 0,
+                  )
+                ],
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 40),
-              padding: EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    content,
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.bodySmall
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: ColoredButton(
-                            color: Colors.white,
-                            text: cancelText,
-                            onTap: () => Navigator.of(context).pop(false)),
-                      ),
-                      SizedBox(width: 5),
-                      Expanded(
-                        flex: 1,
-                        child: ColoredButton(
-                            color: Color(0xFFE2E2F6),
-                            text: confirmText,
-                            confirmDelay: confirmDelay,
-                            onTap: () => Navigator.of(context).pop(true)
-                        ),
+                  Visibility(
+                    visible: title != null,
+                    child: Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      child: Text(
+                        title ?? '',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleMedium,
                       )
-                    ],
-                  )
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          content,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.bodySmall
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: ColoredButton(
+                                  color: Colors.white,
+                                  fontColor: Theme.of(context).primaryColor,
+                                  text: cancelText,
+                                  onTap: () => Navigator.of(context).pop(false)),
+                            ),
+                            SizedBox(width: 5),
+                            Expanded(
+                              flex: 1,
+                              child: ColoredButton(
+                                  text: confirmText,
+                                  color: danger ? Color(0xFFEA4710) : Theme.of(context).primaryColor,
+                                  confirmDelay: confirmDelay,
+                                  onTap: () => Navigator.of(context).pop(true)
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -440,23 +463,21 @@ Future<T?> showRadioFieldDialog<T>({
 }) {
   return showModalBottomSheet<T>(
     context: context,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.transparent,
     isScrollControlled: true,
     elevation: 0,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(16),
-      topRight: Radius.circular(16),
-    )),
     useSafeArea: true,
     clipBehavior: Clip.antiAlias,
     isDismissible: dismissible,
     builder: (BuildContext context) {
       return Container(
-        padding: MediaQuery.of(context).viewInsets,
+        margin: EdgeInsets.all(16),
+        color: Colors.transparent,
+        padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Visibility(
                 visible: title != null && title.isNotEmpty,
@@ -465,18 +486,54 @@ Future<T?> showRadioFieldDialog<T>({
                   child: Text(title ?? '', style: Theme.of(context).textTheme.titleLarge),
                 ),
               ),
-              ...options.keys.map<Widget>((key) => OptionButton(
-                onTap: () => Navigator.pop(context, options[key]),
-                color: initialValue == options[key]
-                    ? Theme.of(context).colorScheme.secondaryContainer
-                    : Colors.transparent,
-                text: key
-              )),
-              if (dismissible) OptionButton(
-                onTap: () => Navigator.pop(context, null),
-                color: Colors.transparent,
-                text: S.current.cancel,
-                fontColor: Theme.of(context).colorScheme.error,
+              Container(
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 2,
+                      strokeAlign: BorderSide.strokeAlignOutside,
+                      color: Color(0xFF2C2C2C),
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0xFF2C2C2C),
+                      blurRadius: 0,
+                      offset: Offset(0, -4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ...options.keys.map<Widget>((key) => OptionButton(
+                        onTap: () => Navigator.pop(context, options[key]),
+                        color: initialValue == options[key]
+                            ? Theme.of(context).colorScheme.secondaryContainer
+                            : Colors.transparent,
+                        text: key
+                    )),
+                  ],
+                ),
+              ),
+              SizedBox(height: 12),
+              if (dismissible) Container(
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: OptionButton(
+                  onTap: () => Navigator.pop(context, null),
+                  color: Colors.transparent,
+                  text: S.current.cancel,
+                ),
               )
             ],
           ),

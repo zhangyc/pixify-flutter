@@ -40,7 +40,7 @@ enum MatchAction {
   arrow(3),
   block(5),
   check(6),
-  unmatch(7);
+  unmatch(8);
 
   const MatchAction(this.value);
   final int value;
