@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sona/generated/assets.dart';
 
 class GalleyItem extends StatelessWidget {
   const GalleyItem({super.key, required this.images});
   final List<String> images;
   @override
   Widget build(BuildContext context) {
+    if(images.isNotEmpty){
+      images.removeAt(0);
+    }
     return Column(
       children: images.map((e) => Container(
           margin: EdgeInsets.only(

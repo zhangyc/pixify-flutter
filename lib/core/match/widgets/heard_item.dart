@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sona/common/models/user.dart';
 
-import '../../travel_wish/models/country.dart';
 class HeardItem extends StatelessWidget {
   const HeardItem({super.key, required this.userInfo});
   final UserInfo userInfo;
@@ -43,19 +42,19 @@ class HeardItem extends StatelessWidget {
                           ),
                           width: 200,
                         ),
-                        Text(',${userInfo.age??''}',style: TextStyle(
+                        Text(',${userInfo.age}',style: TextStyle(
                             color: Colors.white,
                             fontSize: 28
                         ),),
                       ],
                     ),
-                    userInfo.countryCode!=null?Text(findFlagByCountryCode(userInfo.countryCode!)):Container()
+                    userInfo.countryFlag!=null?Text(userInfo.countryFlag??''):Container()
                   ],
                 ),
                 Row(
                   children: [
                     Icon(Icons.location_on,color: Colors.white,),
-                    Text('${userInfo.countryFlag}',style: TextStyle(
+                    Text('${userInfo.currentCity}',style: TextStyle(
                         color: Colors.white,
                         fontSize: 14
                     ),)

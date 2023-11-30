@@ -30,3 +30,7 @@ bool get showGuideAnimation => appCommonBox.get('showGuideAnimation',defaultValu
 set showGuideAnimation(value){
   appCommonBox.put('showGuideAnimation', value);
 }
+String get recommendMode => appCommonBox.get('recommendMode',defaultValue: "WISH");
+set recommendMode(value){
+  appCommonBox.put('recommendMode', value);
+}

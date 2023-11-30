@@ -7,6 +7,7 @@ class Assets {
   static const String iconsBack = 'assets/icons/back.png';
   static const String iconsClose = 'assets/icons/close.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
+  static const String iconsHandle = 'assets/icons/handle.png';
   static const String iconsLike = 'assets/icons/like.png';
   static const String iconsLogo = 'assets/icons/logo.png';
   static const String iconsManualMessage = 'assets/icons/manual_message.png';

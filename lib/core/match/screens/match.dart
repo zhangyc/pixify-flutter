@@ -25,7 +25,6 @@ import 'package:sona/utils/global/global.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../utils/location/location.dart';
-import '../../providers/home_provider.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../services/match.dart';
 import '../util/event.dart';
@@ -50,13 +49,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       determinePosition().then((value){
-        if(value!=null){
-          longitude=value.longitude;
-          latitude=value.latitude;
-          ref.read(myProfileProvider.notifier).updateField(position: value);
-          _initData();
-        }
-      }).catchError((e){
+        longitude=value.longitude;
+        latitude=value.latitude;
+        ref.read(myProfileProvider.notifier).updateField(position: value);
+        _initData();
+            }).catchError((e){
         Fluttertoast.showToast(msg: 'Failed to obtain permission.');
       });
     });
@@ -107,7 +104,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (c){
                           return FilterPage();
-                        }));
+                        })).then((value){
+                          _initData();
+                        });
                         // showFilter(context,(){
                         //   //_initData();
                         //   _state=PageState.loading;
@@ -156,7 +155,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         'longitude': longitude,
         'latitude': latitude,
         "page":current,    // 页码
-        "pageSize":5 // 每页数量
+        "pageSize":5, // 每页数量
+        "recommendMode":recommendMode
+
       });
       if(resp.isSuccess){
         List list= resp.data;
@@ -205,7 +206,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         'longitude': longitude,
         'latitude': latitude,
         "page":current,    // 页码
-        "pageSize":5 // 每页数量
+        "pageSize":5, // 每页数量,
+        "recommendMode":recommendMode
       });
       if(resp.isSuccess){
         List list= resp.data;

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
-import 'package:sona/utils/locale/locale.dart';
 
 class UserInfo {
   int index=0;
@@ -27,7 +26,8 @@ class UserInfo {
     this.interest=const [],
     this.likeMe=0,
     this.wishList=const [],
-    this.originNickname
+    this.originNickname,
+    this.currentCity
   });
 
   final int id;
@@ -44,6 +44,7 @@ class UserInfo {
   final int? chatStyleId;
   final List<String> photos;
   final String? allScore;
+  final String? currentCity;
   DateTime? likeDate;
   int get age => birthday!.toAge();
   final String? impression;
@@ -90,7 +91,9 @@ class UserInfo {
         interest: interest,
         likeMe: json['likeMe']??0,
         wishList: wishList,
-        originNickname:json['originNickname']
+        originNickname:json['originNickname'],
+        currentCity:json['currentCity']
+
     );
   }
 
