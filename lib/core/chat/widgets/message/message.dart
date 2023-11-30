@@ -173,7 +173,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                         ),
                         foregroundDecoration: widget.fromMe ? null : BoxDecoration(
                             border: Border.all(width: 2),
-                            borderRadius: BorderRadius.circular(24)
+                            borderRadius: BorderRadius.circular(20)
                         ),
                         padding: EdgeInsets.all(12),
                         clipBehavior: Clip.antiAlias,
