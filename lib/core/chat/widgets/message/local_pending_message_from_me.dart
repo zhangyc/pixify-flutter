@@ -54,7 +54,6 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
             ],
           ),
         ),
-        SizedBox(width: 20),
         FutureBuilder<void>(
           key: ValueKey(widget.message.pending),
           future: widget.message.pending,
@@ -68,18 +67,24 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
                   });
                   setState(() {});
                 },
-                child: const Icon(
-                  Icons.refresh,
-                  size: 20,
-                  color: Colors.white,
+                child: Container(
+                  margin: EdgeInsets.only(left: 12),
+                  child: const Icon(
+                    Icons.refresh,
+                    size: 20,
+                    color: Colors.white,
+                  ),
                 ),
               );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const SizedBox(
-                width: 16,
-                height: 16,
-                child: CircularProgressIndicator(strokeWidth: 1.5)
+              return Container(
+                margin: EdgeInsets.only(left: 12),
+                child: const SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(strokeWidth: 1.5)
+                ),
               );
             }
             return Container();

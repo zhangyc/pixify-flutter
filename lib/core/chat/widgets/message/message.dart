@@ -168,14 +168,14 @@ class _MessageWidgetState extends State<MessageWidget> {
                             maxWidth: MediaQuery.of(context).size.width * 0.64,
                         ),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
+                            borderRadius: BorderRadius.circular(20),
                             color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
                         ),
                         foregroundDecoration: widget.fromMe ? null : BoxDecoration(
                             border: Border.all(width: 2),
                             borderRadius: BorderRadius.circular(24)
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: EdgeInsets.all(12),
                         clipBehavior: Clip.antiAlias,
                         child: localPendingMessage != null ? localPendingMessage : Text(
                           upperMessage!,
@@ -209,7 +209,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                         constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.64,
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: EdgeInsets.all(12),
                         alignment: widget.fromMe ? Alignment.centerRight : Alignment.centerLeft,
                         child: Text(
                           lowerMessage,

@@ -60,7 +60,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   fonts:
-    - family: MPLUSRounded1c
+    - family: 'M PLUS Rounded 1c'
       fonts:
         - asset: assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Black.ttf
         - asset: assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-ExtraBold.ttf
