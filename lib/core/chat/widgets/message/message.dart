@@ -7,6 +7,7 @@ import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
+import 'package:sona/utils/dialog/input.dart';
 
 import 'local_pending_message_from_me.dart';
 
@@ -62,88 +63,69 @@ class _MessageWidgetState extends State<MessageWidget> {
       lowerMessage = null;
     }
 
-    final actions = <Widget>[];
-    actions.add(CupertinoContextMenuAction(
-      child: const Text('Copy'),
-      onPressed: () {
-        Navigator.pop(context);
-        Clipboard.setData(ClipboardData(text: widget.message.content));
-        Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-      },
-    ));
-    if (widget.fromMe) {
-      actions.add(CupertinoContextMenuAction(
-        child: const Text('Delete'),
-        onPressed: () {
-          Navigator.pop(context);
-          widget.onDelete(widget.message);
-        },
-      ));
-
       // AI消息
-      if ([1, 2, 3, 4, 7, 11].contains(widget.message.type)) {
-        if (widget.message.content.isNotEmpty) {
-          actions.add(CupertinoContextMenuAction(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RawMaterialButton(
-                  child: Row(
-                    children: [
-                      Icon(
-                        widget.message.feedback == MessageFeedbackType.like
-                            ? CupertinoIcons.hand_thumbsup_fill
-                            : CupertinoIcons.hand_thumbsup,
-                        color: Theme.of(context).primaryColor,
-                        size: 16,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: 12),
-                          Text('Good'),
-                        ],
-                      )
-                    ],
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    if (widget.message.feedback == MessageFeedbackType.like) {
-                      feedback(messageId: widget.message.id, type: MessageFeedbackType.none);
-                    } else {
-                      feedback(messageId: widget.message.id, type: MessageFeedbackType.like);
-                    }
-                  },
-                ),
-                RawMaterialButton(
-                  child: Row(
-                    children: [
-                      Icon(
-                        widget.message.feedback == MessageFeedbackType.dislike
-                            ? CupertinoIcons.hand_thumbsdown_fill
-                            : CupertinoIcons.hand_thumbsdown,
-                        color: Theme.of(context).primaryColor,
-                        size: 16,
-                      ),
-                      SizedBox(width: 12),
-                      Text('Subpar')
-                    ],
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    if (widget.message.feedback == MessageFeedbackType.dislike) {
-                      feedback(messageId: widget.message.id, type: MessageFeedbackType.none);
-                    } else {
-                      feedback(messageId: widget.message.id, type: MessageFeedbackType.dislike);
-                    }
-                  },
-                )
-              ],
-            ),
-          ));
-        }
-      }
-    }
+      // if ([1, 2, 3, 4, 7, 11].contains(widget.message.type)) {
+      //   if (widget.message.content.isNotEmpty) {
+      //     actions.add(CupertinoContextMenuAction(
+      //       child: Column(
+      //         mainAxisSize: MainAxisSize.min,
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           RawMaterialButton(
+      //             child: Row(
+      //               children: [
+      //                 Icon(
+      //                   widget.message.feedback == MessageFeedbackType.like
+      //                       ? CupertinoIcons.hand_thumbsup_fill
+      //                       : CupertinoIcons.hand_thumbsup,
+      //                   color: Theme.of(context).primaryColor,
+      //                   size: 16,
+      //                 ),
+      //                 Row(
+      //                   children: [
+      //                     SizedBox(width: 12),
+      //                     Text('Good'),
+      //                   ],
+      //                 )
+      //               ],
+      //             ),
+      //             onPressed: () {
+      //               Navigator.pop(context);
+      //               if (widget.message.feedback == MessageFeedbackType.like) {
+      //                 feedback(messageId: widget.message.id, type: MessageFeedbackType.none);
+      //               } else {
+      //                 feedback(messageId: widget.message.id, type: MessageFeedbackType.like);
+      //               }
+      //             },
+      //           ),
+      //           RawMaterialButton(
+      //             child: Row(
+      //               children: [
+      //                 Icon(
+      //                   widget.message.feedback == MessageFeedbackType.dislike
+      //                       ? CupertinoIcons.hand_thumbsdown_fill
+      //                       : CupertinoIcons.hand_thumbsdown,
+      //                   color: Theme.of(context).primaryColor,
+      //                   size: 16,
+      //                 ),
+      //                 SizedBox(width: 12),
+      //                 Text('Subpar')
+      //               ],
+      //             ),
+      //             onPressed: () {
+      //               Navigator.pop(context);
+      //               if (widget.message.feedback == MessageFeedbackType.dislike) {
+      //                 feedback(messageId: widget.message.id, type: MessageFeedbackType.none);
+      //               } else {
+      //                 feedback(messageId: widget.message.id, type: MessageFeedbackType.dislike);
+      //               }
+      //             },
+      //           )
+      //         ],
+      //       ),
+      //     ));
+      //   }
+      // }
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
@@ -163,27 +145,46 @@ class _MessageWidgetState extends State<MessageWidget> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: widget.fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.64,
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
-                      ),
-                      foregroundDecoration: widget.fromMe ? null : BoxDecoration(
-                          border: Border.all(width: 2),
-                          borderRadius: BorderRadius.circular(24)
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      clipBehavior: Clip.antiAlias,
-                      child: localPendingMessage != null ? localPendingMessage : Text(
-                        upperMessage!,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
-                          height: 1.5
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onLongPress: () async {
+                        if (localPendingMessage != null) return;
+                        final action = await showRadioFieldDialog(
+                            context: context,
+                            options: {
+                              'Copy': 'copy',
+                              'Delete': 'delete'
+                            }
+                        );
+                        if (action == 'copy') {
+                          Clipboard.setData(ClipboardData(text: widget.message.content));
+                          Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
+                        } else if (action == 'delete') {
+                          widget.onDelete(widget.message);
+                        }
+                      },
+                      child: Container(
+                        constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.64,
+                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
+                        ),
+                        foregroundDecoration: widget.fromMe ? null : BoxDecoration(
+                            border: Border.all(width: 2),
+                            borderRadius: BorderRadius.circular(24)
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        clipBehavior: Clip.antiAlias,
+                        child: localPendingMessage != null ? localPendingMessage : Text(
+                          upperMessage!,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
+                            height: 1.5
+                          )
                         )
-                      )
+                      ),
                     ),
                     // SizedBox(height: 12),
                     if (lowerMessage != null && lowerMessage.isNotEmpty) GestureDetector(
@@ -192,6 +193,17 @@ class _MessageWidgetState extends State<MessageWidget> {
                         setState(() {
                           _clicked = !_clicked;
                         });
+                      },
+                      onLongPress: () async {
+                        final action = await showRadioFieldDialog(
+                            context: context,
+                            options: {
+                              'Copy': 'copy',
+                            }
+                        );
+                        if (action == 'delete') {
+                          widget.onDelete(widget.message);
+                        }
                       },
                       child: Container(
                         constraints: BoxConstraints(
