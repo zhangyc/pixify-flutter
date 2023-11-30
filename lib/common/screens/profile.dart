@@ -3,13 +3,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/providers/profile.dart';
+import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/services/match.dart';
 import 'package:sona/core/match/widgets/user_card.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/report.dart';
 
 import '../../core/match/providers/matched.dart';
-import '../../core/match/widgets/filter_dialog.dart';
+import '../../core/match/widgets/dialogs.dart';
 import '../../core/match/widgets/like_animation.dart';
 import '../../core/subscribe/subscribe_page.dart';
 import '../../utils/global/global.dart';
@@ -144,12 +145,9 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         //       curve: Curves.linearToEaseOut);
         // }
       }else if(resp.data['resultType']==1 && mounted){
-        showMatched(context, () {
-          // if (index < users.length - 1) {
-          //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 200),
-          //       curve: Curves.linearToEaseOut);
-          // }
-        },target: widget.user);
+        showMatched(context,target: widget.user,next: (){
+          //ref.read(pageControllerProvider).nextPage(duration: Duration(milliseconds: 100), curve: Curves.linearToEaseOut);
+        });
       }
     }else if(resp.statusCode==10150){
       Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){

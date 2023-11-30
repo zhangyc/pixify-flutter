@@ -9,9 +9,11 @@ Dio _createDioInstance() {
       headers: {
         'device': Platform.operatingSystem,
         'version': 'v1.0.0',
+
       }
   );
   final dio = Dio(options);
+  dio.interceptors.add(BaseInterceptor());
 
   if (kDebugMode) {
     dio.interceptors.add(LogInterceptor(
@@ -20,7 +22,6 @@ Dio _createDioInstance() {
         responseBody: true,
         logPrint: (i) => kDebugMode ? log(i.toString()) : null));
   }
-  dio.interceptors.add(BaseInterceptor());
 
   return dio;
 }

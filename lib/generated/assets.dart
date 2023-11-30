@@ -8,6 +8,7 @@ class Assets {
   static const String iconsClose = 'assets/icons/close.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsLike = 'assets/icons/like.png';
+  static const String iconsLogo = 'assets/icons/logo.png';
   static const String iconsManualMessage = 'assets/icons/manual_message.png';
   static const String iconsMore = 'assets/icons/more.png';
   static const String iconsNaviconChat = 'assets/icons/navicon_chat.png';
@@ -19,7 +20,10 @@ class Assets {
   static const String iconsNaviconSona = 'assets/icons/navicon_sona.png';
   static const String iconsNaviconSonaActive = 'assets/icons/navicon_sona_active.png';
   static const String iconsNotice = 'assets/icons/notice.png';
+  static const String iconsRedHeart = 'assets/icons/red_heart.png';
   static const String iconsSelected = 'assets/icons/selected.png';
+  static const String iconsSend = 'assets/icons/send.png';
+  static const String iconsSettings = 'assets/icons/settings.png';
   static const String iconsSkip = 'assets/icons/skip.png';
   static const String iconsSonaMessage = 'assets/icons/sona_message.png';
   static const String iconsSparkles = 'assets/icons/sparkles.png';
@@ -35,6 +39,7 @@ class Assets {
   static const String imagesDm = 'assets/images/dm.png';
   static const String imagesError = 'assets/images/error.png';
   static const String imagesLikedMeNew = 'assets/images/liked_me_new.png';
+  static const String imagesLocationAuthorization = 'assets/images/location_authorization.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
   static const String imagesMatched = 'assets/images/matched.png';
   static const String imagesNoChat = 'assets/images/no_chat.png';

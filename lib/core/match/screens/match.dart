@@ -1,7 +1,5 @@
-import 'dart:ui';
 
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,41 +7,34 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/core/match/providers/matched.dart';
+import 'package:sona/core/match/screens/filter_page.dart';
 import 'package:sona/core/match/widgets/bio_item.dart';
 import 'package:sona/core/match/widgets/biz_action_item.dart';
-import 'package:sona/core/match/widgets/choice_bytton.dart';
 import 'package:sona/core/match/widgets/dialogs.dart';
 import 'package:sona/core/match/widgets/galley_item.dart';
 import 'package:sona/core/match/widgets/interest_item.dart';
-import 'package:sona/core/match/widgets/match_item.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/wishlist_item.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/dialog/report.dart';
 import 'package:sona/utils/global/global.dart';
-import 'package:stacked_page_view/stacked_page_view.dart';
 
 import '../../../account/providers/profile.dart';
-import '../../../generated/l10n.dart';
-import '../../../utils/dialog/input.dart';
 import '../../../utils/location/location.dart';
-import '../../../utils/picker/interest.dart';
 import '../../providers/home_provider.dart';
 import '../../subscribe/subscribe_page.dart';
-import '../providers/setting.dart';
 import '../services/match.dart';
 import '../util/event.dart';
 import '../util/http_util.dart';
-import '../widgets/filter_dialog.dart';
+import '../util/local_data.dart';
 import '../widgets/heard_item.dart';
 import '../widgets/match_init_animation.dart';
-// import '../widgets/scroller.dart' as s;
-// final clickSubject = BehaviorSubject <void>();
+import '../widgets/wish_card.dart';
+
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});
@@ -76,24 +67,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     //   // 处理点击逻辑
     // });
     super.initState();
-    pageController.addListener(() {
-      //页面正在向上滑动
-      if (pageController.position.userScrollDirection == ScrollDirection.reverse) {
-          direction=ScrollDirection.reverse;
-      }
-      //页面正在向下滑动
-      else if(pageController.position.userScrollDirection == ScrollDirection.forward){
-        direction=ScrollDirection.forward;
-      }
-    }
-    );
-    if(showGuideAnimation){
-      Future.delayed(Duration(seconds: 4),(){
-        showGuideAnimation=false;
-        pageController.animateTo(200, duration: Duration(seconds: 1), curve: Curves.linear,);
-      });
-    }
-
   }
   List<UserInfo> users =[];
 
@@ -108,12 +81,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   Widget build(BuildContext context) {
 
     super.build(context);
-    int iconIndex= ref.watch(matchIconProvider);
-
     return Stack(
       children: [
-
-
         Positioned.fill(
           child: _buildMatch()
         ),
@@ -136,11 +105,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     ),
                     GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
                       onTap: (){
-                        showFilter(context,(){
-                          //_initData();
-                          _state=PageState.loading;
-                          _initData();
-                        });
+                        Navigator.push(context, MaterialPageRoute(builder: (c){
+                          return FilterPage();
+                        }));
+                        // showFilter(context,(){
+                        //   //_initData();
+                        //   _state=PageState.loading;
+                        //   _initData();
+                        // });
                       },
                     ),
                   ],
@@ -149,67 +121,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             ),
           ),
         ),
-        /**
-        iconIndex==1?Container():Positioned(
-          right: 20,
-          top: 73,
-          child: Column(
-            children: [
-
-              GestureDetector(child: Container(
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
-                    ]
-                ),
-                child: Image.asset(Assets.iconsFliter,width: 24,height: 24,),
-              ),onTap: (){
-                showFilter(context,(){
-                  //_initData();
-                  _state=PageState.loading;
-                  _initData();
-                });
-                // clickSubject.add(null);
-              },),
-              const SizedBox(
-                height: 20,
-              ),
-
-              GestureDetector(child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    boxShadow: [
-                      BoxShadow(offset: Offset(0, 4),color: Colors.black.withOpacity(0.75),blurRadius:40 )
-                    ]
-                ),
-                child: Image.asset(Assets.iconsMore,width: 24,height: 24,),
-              ),onTap: () async {
-                var result=await showRadioFieldDialog(context: context, options: {S.current.report: 'report', S.current.block: 'block'});
-                if(result!=null){
-                  if (result == 'report' && mounted){
-                    SonaAnalytics.log(MatchEvent.match_report.name);
-                    final r = await showReport(context, users[currentPage].id);
-                    if (r == true) {
-                      users.removeAt(currentPage);
-                      if (mounted) setState(() {});
-                    }
-                  }else if(result=='block'&& mounted){
-                    final resp = await matchAction(userId: users[currentPage].id, action: MatchAction.block);
-                    if (resp.statusCode == 0) {
-                      users.removeAt(currentPage);
-                      if (mounted) setState(() {});
-                      Fluttertoast.showToast(msg: 'The user has been blocked');
-                      SonaAnalytics.log('post_block');
-                    }
-                  }
-                }
-               },
-              )
-
-            ],
-          ),
-        ),
-         */
         Positioned(
           top: 0,
           left: 0,
@@ -237,25 +148,15 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   int current=1;
   void _initData() async{
     current=1;
-    int? gender;
-    if(currentFilterGender==FilterGender.Male.index){
-      gender=1;
-
-    }else if(currentFilterGender==FilterGender.Female.index){
-      gender=2;
-
-    }else if(currentFilterGender==FilterGender.All.index){
-      gender=null;
-    }
     try{
       final resp=await post('/user/match-v2',data: {
-        'gender': gender,
+        'gender': currentFilterGender,
         'minAge': currentFilterMinAge,
         'maxAge': currentFilterMaxAge,
         'longitude': longitude,
         'latitude': latitude,
         "page":current,    // 页码
-        "pageSize":10 // 每页数量
+        "pageSize":5 // 每页数量
       });
       if(resp.isSuccess){
         List list= resp.data;
@@ -296,25 +197,15 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }
   }
   void _loadMore() async{
-    int? gender;
-    if(currentFilterGender==FilterGender.Male.index){
-      gender=1;
-
-    }else if(currentFilterGender==FilterGender.Female.index){
-      gender=2;
-
-    }else if(currentFilterGender==FilterGender.All.index){
-      gender=null;
-    }
     try{
       final resp=await post('/user/match-v2',data: {
-        'gender': gender,
+        'gender': currentFilterGender,
         'minAge': currentFilterMinAge,
         'maxAge': currentFilterMaxAge,
         'longitude': longitude,
         'latitude': latitude,
         "page":current,    // 页码
-        "pageSize":10 // 每页数量
+        "pageSize":5 // 每页数量
       });
       if(resp.isSuccess){
         List list= resp.data;
@@ -361,10 +252,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }
   }
   late PageState _state= PageState.loading;
-  PageController _pageController=PageController(viewportFraction: 0.8);
   _buildMatch() {
     if(_state==PageState.loading){
-     return  Container(child: Center(child: MatchInitAnimation()),color: Colors.black,);
+     return  Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){
       return NoDataWidget();
 
@@ -377,135 +267,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             return NoMoreWidget();
           }
           if(info.matched){
-            return Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: Text('Are you interested in her ideas',style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 28
-                ),),
-              ),
-              Expanded(
-                child: PageView(
-                  controller: _pageController,
-                  children: info.wishList.map((e) => Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: 8
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Container(
-                          width: 327,
-                          height: 470,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
-                            border: Border.all(
-                                color: Colors.black,
-                                width: 2
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 16,
-                              ),
-                              Container(
-                                width: 259,
-                                height: 166,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                        color: Colors.black,
-                                        width: 2
-                                    ),
-                                    image: e.pic==null?null:DecorationImage(image: CachedNetworkImageProvider(e.pic!),fit: BoxFit.cover)
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Positioned(top: 16,
-                                      left: 16,child: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(image: AssetImage(Assets.imagesTest),fit: BoxFit.cover),
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 2
-                                        ),
-                                        borderRadius: BorderRadius.circular(20)
-                                      ),
-                                      clipBehavior: Clip.antiAlias,
-                                      width: 48,height: 48,
-                                    ),
-                                    ),
-                                    Positioned(
-                                      width: 259,
-                                      bottom: 0,
-                                      child: Padding(
-                                        padding: EdgeInsets.all(11.0),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text('${e.activityNames},${e.countryName}',style: TextStyle(color: Colors.white),),
-                                            Text('${e.countryFlag}')
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-
-                                  children: List.generate(e.activities.length, (index2) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: ChoiceButton(text: e.activities[index2].title??'', onTap: () {
-                                        ///点击切换，下一个用户
-                                      if(users[index].likeMe==1){
-                                        showMatched(context, () {
-                                          pageController.nextPage(duration: const Duration(milliseconds: 1000),
-                                              curve: Curves.linearToEaseOut);
-                                          // if (index < users.length - 1) {
-                                          //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
-                                          //       curve: Curves.linearToEaseOut);
-                                          // }
-                                        },target: users[index],);
-                                      }else if(users[index].likeMe==0){
-                                        pageController.nextPage(duration: const Duration(milliseconds: 1000),
-                                            curve: Curves.linearToEaseOut);
-                                        // if (index < users.length - 1) {
-                                        //   pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
-                                        //       curve: Curves.linearToEaseOut);
-                                        // }
-                                      }
-                                    },),
-                                  )),
-                                ),
-                              )
-
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )).toList(),
-                ),
-              ),
-            ],
-          );
+            return WishCardWidget(context: context,
+                info: info,
+                next: (){
+                  pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                },
+            );
           }else {
             return Stack(
               children: [
@@ -587,16 +354,29 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
                         onTap: (){
+                                // showMatched(context,target: info,next: (){
+                                //   pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                                // });
+                         ///是否能like
                           if(canLike){
                             if(like>0){
                               like=like-1;
                             }
-                            if(users[index].wishList.isEmpty){
-                              pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                            }else {
-                              users[index].matched=true;
-                            }
                             currentPage=index;
+                            ///如果对方喜欢我。
+                            if(info.likeMe==1){
+                               ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                               showMatched(context,target: info,next: (){
+                                 pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                               });
+                            }else{
+                              ///
+                              if(users[index].wishList.isEmpty){
+                                pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                              }else {
+                                users[index].matched=true;
+                              }
+                            }
 
                             setState(() {
 
@@ -616,13 +396,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         onTap: (){
                           if(canArrow){
                             showDm(context, info);
-
-                            // arrow=arrow-1;
-                            // ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
-                            // SonaAnalytics.log(MatchEvent.match_arrow_send.name);
-                            //arrowController.reset();
-                            //arrowController.forward() ;
-                            //widget.userInfo.arrowed=true;
                           }else {
                             bool isMember=ref.read(myProfileProvider)?.isMember??false;
                             if(isMember){
@@ -641,44 +414,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               ],
             );
           }
-
-
-          return StackPageView(index: index,
-              controller: pageController,
-              child: (info.id==-1)?NoMoreWidget(): MatchItem(index,
-                length: users.length,
-                userInfo: users[index],
-                controller: pageController,
-                onLike: (){
-                  if(canLike){
-                    if(like>0){
-                      like=like-1;
-                    }
-                    users[index].matched=true;
-                    SonaAnalytics.log(MatchEvent.match_like.name);
-                    if(users[index].likeMe==1){
-                      showMatched(context, () {
-                        if (index < users.length - 1) {
-                          pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
-                              curve: Curves.linearToEaseOut);
-                        }
-                      },target: users[index],);
-                    }else if(users[index].likeMe==0){
-                      if (index < users.length - 1) {
-                        pageController.animateToPage(index + 1, duration: const Duration(milliseconds: 1000),
-                            curve: Curves.linearToEaseOut);
-                      }
-                    }
-                  }else {
-                    SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                    Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                      return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
-                    }));
-                  }
-                  ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
-                },
-
-              ));
         },
         itemCount: users.length,
         scrollDirection: Axis.horizontal,
@@ -692,54 +427,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             _loadMore();
           }
         }
-          // if(direction!=null){
-          //   if(ScrollDirection.forward==direction){
-          //     /// down
-          //     SonaAnalytics.log(MatchEvent.match_swipe_down.name);
-          //
-          //   }else if(ScrollDirection.reverse==direction){
-          //     if(value==0){
-          //       return;
-          //     }
-          //     if(value==1&&isShowArrowReward){
-          //       final values=ref.read(myProfileProvider)?.interests;
-          //       final result = await showInterestPicker(context: context,initialValue: values?.toSet());
-          //       if (result != null) {
-          //         isShowArrowReward=false;
-          //         ref.read(myProfileProvider.notifier).updateField(interests: result);
-          //         Future.delayed(const Duration(milliseconds: 200),(){
-          //           showArrowReward(context);
-          //         });
-          //       }
-          //
-          //     }
-          //     ///up
-          //     SonaAnalytics.log(MatchEvent.match_swipe_up.name);
-          //     if(users[value-1].arrowed||users[value-1].matched){
-          //       return;
-          //     }else {
-          //       users[value-1].skipped=true;
-          //       ref.read(asyncMatchRecommendedProvider.notifier)
-          //           .skip(users[value-1].id);
-          //     }
-          //   }
-          //  }
-          //},
       );
     }else if(_state==PageState.noData){
       return const NoMoreWidget();
     }
   }
 }
+
 enum PageState{
   loading,
   noData,
   success,
   fail
-}
-
-enum FilterGender{
-  Male,
-  Female,
-  All
 }

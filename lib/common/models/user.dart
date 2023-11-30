@@ -26,10 +26,12 @@ class UserInfo {
     this.interest=const [],
     this.likeMe=0,
     this.wishList=const [],
+    this.originNickname
   });
 
   final int id;
   final String? name;
+  final String? originNickname;
   final Gender? gender;
   final DateTime? birthday;
   final int? countryId;
@@ -86,7 +88,8 @@ class UserInfo {
         impression:json['impression'],
         interest: interest,
         likeMe: json['likeMe']??0,
-        wishList: wishList
+        wishList: wishList,
+        originNickname:json['originNickname']
     );
   }
 }

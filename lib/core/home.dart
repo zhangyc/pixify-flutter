@@ -19,7 +19,7 @@ import 'package:sona/utils/location/location.dart';
 import '../common/permission/permission.dart';
 import '../generated/l10n.dart';
 import 'match/screens/match.dart';
-import 'match/widgets/filter_dialog.dart';
+import 'match/util/local_data.dart';
 
 class SonaHome extends StatefulHookConsumerWidget {
   const SonaHome({super.key});

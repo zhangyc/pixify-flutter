@@ -35,7 +35,7 @@ class HeardItem extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          child: Text(userInfo.name??'',style: TextStyle(
+                          child: Text(userInfo.originNickname??'',style: TextStyle(
                               color: Colors.white,
                               fontSize: 28,
                           ),

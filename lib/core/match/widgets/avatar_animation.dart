@@ -54,28 +54,34 @@ class _AvatarAnimationState extends State<AvatarAnimation>  with SingleTickerPro
         SlideTransition(
           position: animation,
           child: Container(
-            width: 171,
-            height: 128,
+            width: 128,
+            height: 171,
+            clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24)
+              image: DecorationImage(image: CachedNetworkImageProvider(widget.avatar),fit: BoxFit.cover),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: Colors.black,
+                width: 2
+              )
             ),
-            child: CachedNetworkImage(imageUrl:widget.avatar,width: 171,height: 128,
-              fit: BoxFit.cover,placeholder: (_,__){
-                return Lottie.asset(Assets.lottieSearch,width: 171,height: 128);
-              },),
+            // child: CachedNetworkImage(imageUrl:widget.avatar,width: 171,height: 128,
+            //   fit: BoxFit.cover,placeholder: (_,__){
+            //     return Lottie.asset(Assets.lottieSearch,width: 171,height: 128);
+            //   },),
           ),
         ),
-        Container(
-          width: 115,alignment: Alignment.center,
-          child: Text(
-            showName ? widget.name : '',
-            maxLines: 2,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14
-            )
-          )
-        )
+        // Container(
+        //   width: 115,alignment: Alignment.center,
+        //   child: Text(
+        //     showName ? widget.name : '',
+        //     maxLines: 2,
+        //     style: const TextStyle(
+        //       color: Colors.white,
+        //       fontSize: 14
+        //     )
+        //   )
+        // )
       ],
     );
   }

@@ -1,8 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/core/match/util/http_util.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/models/user.dart';
@@ -12,7 +13,13 @@ import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
 import '../util/event.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:lottie/lottie.dart';
+import 'package:sona/core/match/screens/match.dart';
+import 'package:sona/core/match/widgets/avatar_animation.dart';
 
+import '../../../generated/l10n.dart';
+import '../util/local_data.dart';
 showDm(BuildContext context,UserInfo info){
   showBottomSheet(context: context, builder: (c){
     TextEditingController controller=TextEditingController();
@@ -121,7 +128,7 @@ showDm(BuildContext context,UserInfo info){
                 child: Container(
                   child: Row(
                     children: [
-                      Icon(Icons.ac_unit_outlined),
+                      Image.asset(Assets.iconsLogo,width: 20,height: 20,),
                       Text('Let SONA say hi for you '),
                       Icon(Icons.arrow_forward_outlined)
                     ],
@@ -137,4 +144,345 @@ showDm(BuildContext context,UserInfo info){
     );
   });
 
+}
+// void showFilter(BuildContext context,VoidCallback onSave) {
+//   showDialog(context: context, builder: (c){
+//     return Consumer(builder: (_,ref,__){
+//       return Column(
+//         children: [
+//           Container(
+//             width:335,
+//             height: 200,
+//             decoration: BoxDecoration(
+//                 color: Color(0xffffffff),
+//                 borderRadius: BorderRadius.circular(40)
+//             ),
+//             padding: const EdgeInsets.symmetric(
+//                 horizontal: 90
+//             ),
+//             child: Column(
+//                 children: [
+//                   const SizedBox(
+//                     height: 10,
+//                   ),
+//                   Text(S.current.gender,style: TextStyle(
+//                       fontSize: 24,
+//                       color: Color(0xfff9f9f9)
+//                   ),),
+//                   Expanded(child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.start,
+//                     children: [
+//                       ...FilterGender.values.map((e) => GestureDetector(
+//                         onTap: (){
+//                           currentFilterGender=e.index;
+//                         },
+//                         child: Padding(
+//                             padding: EdgeInsets.only(
+//                                 top: 10
+//                             ),
+//                             child:  ValueListenableBuilder(valueListenable: appCommonBox.listenable(), builder: (c,b,_){
+//                               return Row(
+//                                 mainAxisAlignment: MainAxisAlignment.start,
+//                                 crossAxisAlignment: CrossAxisAlignment.center,
+//                                 children: [
+//
+//                                   e.index==currentFilterGender?Image.asset(Assets.iconsSelected,width: 24,height: 24,):Container(),
+//                                   Text(e.name,style: TextStyle(
+//                                       fontSize: 24,
+//                                       color:e.index==currentFilterGender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
+//                                   ),)
+//                                 ],
+//                               );
+//                             })
+//                         ),
+//                       )).toList(),
+//                     ],
+//                   ))
+//
+//                 ]
+//             ),
+//           ),
+//           SizedBox(
+//             height: 20,
+//           ),
+//           Container(
+//             width:335,
+//             height: 138,
+//             decoration: BoxDecoration(
+//                 color: Color(0xff2969E9),
+//                 borderRadius: BorderRadius.circular(40)
+//             ),
+//             child: Column(
+//               children: [
+//                 const SizedBox(
+//                   height: 10,
+//                 ),
+//                 Text(S.current.age,style: TextStyle(
+//                     fontSize: 24,
+//                     color: Color(0xfff9f9f9)
+//                 ),),
+//                 SizedBox(height: 8),
+//                 SizedBox(width: 277,child: ValueListenableBuilder(valueListenable: appCommonBox.listenable(), builder: (c,b,_){
+//                   RangeValues rv=RangeValues(currentFilterMinAge.toDouble(), currentFilterMaxAge.toDouble());
+//                   return RangeSlider(
+//                       activeColor: Colors.white,
+//                       inactiveColor:Color(0xff54b7ed) ,
+//                       min: 18,
+//                       max: 80,
+//                       divisions: 10,
+//                       labels: RangeLabels(rv.start.toStringAsFixed(0), rv.end.toStringAsFixed(0)),
+//                       values: rv,
+//                       onChanged: (rv) {
+//                         currentFilterMinAge=rv.start.toInt();
+//                         currentFilterMaxAge=rv.end.toInt();
+//                       }
+//                   );
+//                 }),),
+//               ],
+//             ),
+//           ),
+//           SizedBox(
+//             height: 20,
+//           ),
+//           GestureDetector(
+//             child: Container(
+//               width:335,
+//               height: 70,
+//               decoration: BoxDecoration(
+//                   color: Color(0xff2969E9),
+//                   borderRadius: BorderRadius.circular(40)
+//               ),
+//               alignment: Alignment.center,
+//               child: Text(S.current.save,style: TextStyle(
+//                   fontSize: 24,
+//                   color: Color(0xfff9f9f9)
+//               ),),
+//             ),
+//             onTap: (){
+//               onSave.call();
+//               Navigator.pop(context);
+//             },
+//           )
+//
+//         ],
+//       );
+//     });
+//   });
+// }
+void showMatched(BuildContext context,{required UserInfo target,required VoidCallback next}) {
+  String sayHi='Let SONA Say Hi';
+  // showModalBottomSheet(context: context, builder: (c){});
+  showGeneralDialog(context: context,
+      pageBuilder: (_,__,___){
+    TextEditingController controller=TextEditingController();
+    var height = MediaQuery.of(context).viewInsets.bottom;
+
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Consumer(builder: (b,ref,_){
+          return StatefulBuilder(
+            builder: (BuildContext context, void Function(void Function()) setState) {
+              return BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5.0,sigmaY: 5.0),
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.white.withOpacity(0.8),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 164,
+                      ),
+                      Text('NEW MATCHED!',style: TextStyle(
+                          fontSize: 24
+                      ),),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      AvatarAnimation(
+                        avatar: target.avatar??'',
+                        name: target.name??'',
+                        direction: AnimationDirection.left,
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 48),
+                        child: Text('''
+                          I'd like to see exhibition at the Mori Art Museum with you.
+                          '''),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 36
+                        ),
+                        child: Row(
+                          children: [
+                            Flexible(child: Container(
+                              height: 54,
+
+                              child: TextField(
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                minLines: 2,
+                                controller: controller,
+                                decoration: InputDecoration(
+                                  border:OutlineInputBorder(
+
+                                      borderSide: BorderSide(
+                                          color: Colors.black,
+                                          width: 2
+                                      ),
+                                      borderRadius: BorderRadius.circular(24)
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ),
+                            SizedBox(
+                              width: 16,
+                            ),
+                            GestureDetector(
+                              child: Icon(Icons.send),
+                              onTap: (){
+                                if(controller.text.isEmpty){
+                                  return ;
+                                }
+                                next.call();
+                                ///匹配成功，发送消息
+                                ref.read(asyncMatchRecommendedProvider.notifier).customSend(target.id,controller.text);
+
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          ///发送一个快捷的sona打招呼
+                          next.call();
+                          ref.read(asyncMatchRecommendedProvider.notifier).sayHi(target.id);
+                        },
+                        child: Container(
+                          child: Row(
+                            children: [
+                              Image.asset(Assets.iconsLogo,width: 20,height: 20,),
+                              Text('Let SONA say hi for you '),
+                              Icon(Icons.arrow_forward_outlined)
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.center,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ),
+              );
+            },
+          );
+        }),
+      ),
+    );
+  });
+}
+void showArrowReward(BuildContext context){
+  showGeneralDialog(context: context,
+      pageBuilder: (_,__,___){
+        return StatefulBuilder(builder: (BuildContext context, void Function(void Function()) setState){
+          return GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Container(
+              height:MediaQuery.of(context).size.height,
+              color: Color(0xff232323),
+              child: Stack(
+                children: [
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).viewPadding.top,
+                      ),
+                      Row(
+                        children: [
+                          Spacer(),
+                          Container(
+                            // color: Colors.white,
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(onTap: (){
+                              Navigator.pop(context);
+                            }, child: Image.asset(Assets.iconsClose,
+                              width: 41,
+                              height: 41,
+                              color: Colors.white,)),
+                          ),
+                          SizedBox(
+                            width:  MediaQuery.of(context).viewPadding.top,
+                          )
+                        ],
+                      ),
+                      Image.asset(Assets.imagesRewardArrow,width: 165,height: 162,),
+
+                      Text('You got 1 ninja star!',style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30
+                      ),),
+                      SizedBox(
+                        height: 64,
+                      ),
+                      Image.asset(Assets.iconsArrow,width: 96,height: 97,),
+                      SizedBox(
+                        height: 64,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20
+                        ),
+                        child: Text('Use a star to directly start a chat with someone you like!',style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16
+                        ),),
+                      )
+                    ],
+                  ),
+                  Lottie.asset(Assets.lottieArrowAnimation,repeat: false,),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).viewPadding.top,
+                      ),
+                      Row(
+                        children: [
+                          Spacer(),
+                          Container(
+                            // color: Colors.white,
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(onTap: (){
+                              Navigator.pop(context);
+                            }, child: Image.asset(Assets.iconsClose,
+                              width: 41,
+                              height: 41,
+                              color: Colors.white,)),
+                          ),
+                          SizedBox(
+                            width:  MediaQuery.of(context).viewPadding.top,
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+      });
 }
