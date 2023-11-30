@@ -75,6 +75,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
               }
               ),
           ),
+          SliverToBoxAdapter(child: SizedBox(height: 16)),
           ref.watch(conversationStreamProvider).when(
             data: (conversations) => conversations.isEmpty ? _noChats() : SliverList.separated(
               itemBuilder: (BuildContext context, int index) {
