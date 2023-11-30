@@ -39,7 +39,8 @@ enum MatchAction {
   like(2),
   arrow(3),
   block(5),
-  check(6);
+  check(6),
+  unmatch(7);
 
   const MatchAction(this.value);
   final int value;

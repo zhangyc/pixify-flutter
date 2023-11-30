@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/providers/profile.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
@@ -13,6 +15,7 @@ import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
@@ -41,7 +44,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   
   late MyProfile myProfile;
   late UserInfo mySide;
-  
+
   @override
   void didChangeDependencies() {
     myProfile = ref.read(myProfileProvider)!;
@@ -68,13 +71,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             SizedBox(width: 8),
             Text(widget.otherSide.name!),
             SizedBox(width: 8),
-            Text(findFlagByCountryCode(widget.otherSide.countryCode ?? ''))
+            Text(ref.watch(asyncAdditionalUserInfoProvider(widget.otherSide.id)).when(
+                data: (user) => user.countryFlag ?? '', error: (_, __) => '', loading: () => ''
+            ))
           ],
         ),
         centerTitle: true,
         actions: [
           // IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
-          IconButton(onPressed: _showInfo, icon: Icon(Icons.more_horiz_outlined))
+          IconButton(onPressed: _showActions, icon: Icon(Icons.more_horiz_outlined))
         ],
         // systemOverlayStyle: const SystemUiOverlayStyle(
         //     statusBarBrightness: Brightness.light,
@@ -430,6 +435,51 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       }
     );
     SonaAnalytics.log('chat_suggest');
+  }
+
+  void _showUnmatchConfirm() async {
+    final result = await showConfirm(
+        context: context,
+        title: 'Unmatch',
+        content: 'After unmatch, all mutual content between you will be cleared. '
+    );
+    if (result == true) {
+      ref.read(asyncMatchRecommendedProvider.notifier).unmatch(widget.otherSide.id);
+    }
+  }
+
+  void _toggleAIEnabled() {
+    if (widget.otherSide.locale == mySide.locale) {
+      Fluttertoast.showToast(msg: 'Same language - no interpretation');
+      return;
+    }
+    ref.read(inputModeProvider(widget.otherSide.id).notifier).update((state) => state == InputMode.sona ? InputMode.manual : InputMode.sona);
+  }
+
+  void _showActions() async {
+    var aiEnabledStatusDescription = ref.read(inputModeProvider(widget.otherSide.id).notifier) == InputMode.sona ? 'AI interpretation: on' : 'AI interpretation: off';
+    if (widget.otherSide.locale == mySide.locale) {
+      aiEnabledStatusDescription = 'AI interpretation: off (same language)';
+    }
+    final action = await showRadioFieldDialog(
+        context: context,
+        options: {
+          'See profile': 'see_profile',
+          'Unmatch': 'unmatch',
+          aiEnabledStatusDescription: 'toggle_aienabled'
+        }
+    );
+    switch(action) {
+      case 'see_profile':
+        _showInfo();
+        return;
+      case 'unmatch':
+        _showUnmatchConfirm();
+        return;
+      case 'toggle_aienabled':
+        _toggleAIEnabled();
+        return;
+    }
   }
 }
 

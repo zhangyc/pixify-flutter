@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/utils/locale/locale.dart';
@@ -87,6 +88,21 @@ class UserInfo {
         interest: interest,
         likeMe: json['likeMe']??0,
         wishList: wishList
+    );
+  }
+
+  factory UserInfo.fromFirestore(Map<String, dynamic> json) {
+    return UserInfo(
+        id: json['id'],
+        name: json['originalNickname'],
+        gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
+        birthday: json['birthday'] != null ? (json['birthday'] as Timestamp).toDate() : null,
+        locale: json['lang'],
+        countryId: json['countryId'],
+        countryCode: json['countryCode'],
+        countryFlag: json['countryFlag'] ?? '🇺🇸',
+        avatar: json['avatar'],
+        bio: json['description']
     );
   }
 }

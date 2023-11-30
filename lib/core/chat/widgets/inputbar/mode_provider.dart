@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/env.dart';
 import 'package:sona/core/chat/providers/chat.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../../account/providers/profile.dart';
 
@@ -9,21 +10,10 @@ final softKeyboardHeightProvider = StateProvider<double>((ref) => 300);
 
 final inputModeProvider = StateProvider.family<InputMode, int>((ref, arg) {
   ref.listenSelf((previous, next) {
-    FirebaseFirestore.instance.collection('${env.firestorePrefix}_users')
-      .doc(ref.read(myProfileProvider)!.id.toString())
-      .collection('rooms').doc(arg.toString())
-      .set({'inputMode': next.index}, SetOptions(merge: true))
-      .catchError((_) {});
+    kvStore.setBool(arg.toString(), next == InputMode.sona);
   });
-  try {
-    final current = ref.watch(conversationStreamProvider).value!.firstWhere((convo) => convo.convoId == arg);
-    if (current.inputMode != null) {
-      return current.inputMode!;
-    }
-  } catch (_) {
-    //
-  }
-  return InputMode.sona;
+  final enabled = kvStore.getBool(arg.toString()) ?? true;
+  return enabled ? InputMode.sona : InputMode.manual;
 }, dependencies: [conversationStreamProvider]);
 
 final chatStylesVisibleProvider = StateProvider.family.autoDispose<bool, int>((ref, arg) {
