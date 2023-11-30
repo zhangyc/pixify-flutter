@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/providers/profile.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
@@ -12,6 +15,7 @@ import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
@@ -37,6 +41,16 @@ class ChatScreen extends StatefulHookConsumerWidget {
 }
 
 class _ChatScreenState extends ConsumerState<ChatScreen> {
+  
+  late MyProfile myProfile;
+  late UserInfo mySide;
+
+  @override
+  void didChangeDependencies() {
+    myProfile = ref.read(myProfileProvider)!;
+    mySide = myProfile.toUser();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,13 +71,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             SizedBox(width: 8),
             Text(widget.otherSide.name!),
             SizedBox(width: 8),
-            Text(findFlagByCountryCode(widget.otherSide.countryCode ?? ''))
+            Text(ref.watch(asyncAdditionalUserInfoProvider(widget.otherSide.id)).when(
+                data: (user) => user.countryFlag ?? '', error: (_, __) => '', loading: () => ''
+            ))
           ],
         ),
         centerTitle: true,
         actions: [
           // IconButton(onPressed: _deleteAllMessages, icon: Icon(Icons.cleaning_services_outlined)),
-          IconButton(onPressed: _showInfo, icon: Icon(Icons.more_horiz_outlined))
+          IconButton(onPressed: _showActions, icon: Icon(Icons.more_horiz_outlined))
         ],
         // systemOverlayStyle: const SystemUiOverlayStyle(
         //     statusBarBrightness: Brightness.light,
@@ -76,66 +92,62 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
         },
-        child: Column(
-          children: [
-            Expanded(
-              child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
-                data: (messages) {
-                  final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
-                  final msgs = [...localPendingMessages, ...messages]..sort((m1, m2) => m2.time.compareTo(m1.time));
-                  if (msgs.isNotEmpty) {
-                    return Container(
-                      alignment: Alignment.topCenter,
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(horizontal: 2),
-                        reverse: true,
-                        itemBuilder: (BuildContext context, int index) => MessageWidget(
-                          prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
-                          message: msgs[index],
-                          fromMe: ref.read(myProfileProvider)!.id == msgs[index].sender.id,
-                          onPendingMessageSucceed: _onPendingMessageSucceed,
-                          onShorten: _shortenMessage,
-                          onDelete: _deleteMessage,
-                        ),
-                        itemCount: msgs.length,
-                        separatorBuilder: (_, __) => SizedBox(height: 5),
-                        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                      ),
-                    );
-                  } else {
-                    return _startupline();
-                  }
-                },
-                error: (error, __) => Container(child: Text(error.toString()),),
-                loading: () => Container(
-                  alignment: Alignment.center,
-                  child: const SizedBox(
-                    height: 32,
-                    width: 32,
-                    child: CircularProgressIndicator(),
+        child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
+          data: (messages) {
+            final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
+            final msgs = [...localPendingMessages, ...messages]..sort((m1, m2) => m2.time.compareTo(m1.time));
+            if (msgs.isNotEmpty) {
+              return Container(
+                alignment: Alignment.topCenter,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 80),
+                  reverse: true,
+                  itemBuilder: (BuildContext context, int index) => MessageWidget(
+                    prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
+                    message: msgs[index],
+                    fromMe: mySide.id == msgs[index].sender.id,
+                    mySide: mySide,
+                    otherSide: widget.otherSide,
+                    onPendingMessageSucceed: _onPendingMessageSucceed,
+                    onShorten: _shortenMessage,
+                    onDelete: _deleteMessage,
                   ),
-                )
-              )
+                  itemCount: msgs.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 5),
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                ),
+              );
+            } else {
+              return _startupline();
+            }
+          },
+          error: (error, __) => Container(child: Text(error.toString()),),
+          loading: () => Container(
+            alignment: Alignment.center,
+            child: const SizedBox(
+              height: 32,
+              width: 32,
+              child: CircularProgressIndicator(),
             ),
-            Container(
-              padding: const EdgeInsets.only(
-                left: 8,
-                top: 8,
-                right: 8,
-                bottom: 8
-              ),
-              child: ChatInstructionInput(
-                  chatId: widget.otherSide.id,
-                  onSubmit: _onSend,
-                  onSuggestionTap: _onSuggestionTap,
-                  onHookTap: _onHookTap,
-                  autofocus: false
-              ),
-            ),
-          ],
+          )
+        )
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(
+          left: 8,
+          top: 8,
+          right: 8,
+        ),
+        child: ChatInstructionInput(
+          chatId: widget.otherSide.id,
+          onSubmit: _onSend,
+          onSuggestionTap: _onSuggestionTap,
+          onHookTap: _onHookTap,
+          autofocus: false
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -160,7 +172,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               children: [
                 Positioned(
                   left: 45,
-                  child: UserAvatar(url: ref.read(myProfileProvider)!.avatar!, size: Size.square(50))
+                  child: UserAvatar(url: mySide.avatar!, size: Size.square(50))
                 ),
                 Positioned(
                   left: 0,
@@ -199,7 +211,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     text: 'Don\'t worry, just type in '
                   ),
                   TextSpan(
-                    text: findMatchedSonaLocale(ref.read(myProfileProvider)!.locale!).displayName,
+                    text: findMatchedSonaLocale(mySide.locale!).displayName,
                     style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.w500),
                   ),
                   TextSpan(
@@ -253,9 +265,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       id: _lastLocalId++,
       type: CallSonaType.INPUT.index + 1,
       content: text,
-      sender: ref.read(myProfileProvider)!.toUser(),
+      sender: mySide,
       receiver: widget.otherSide,
-      origin: ref.read(myProfileProvider)!.locale,
+      origin: mySide.locale,
       time: DateTime.now(),
       shortenTimes: 2
     );
@@ -266,7 +278,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
     pending.then((resp) {
       if (resp.statusCode == 10150) {
-        if (ref.read(myProfileProvider)!.isMember) {
+        if (myProfile.isMember) {
           coolDown();
         } else {
           showSubscription(FromTag.pay_chat_sonamsg);
@@ -320,7 +332,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
     SonaAnalytics.log('chat_starter');
     if (resp.statusCode == 10150) {
-      if (ref.read(myProfileProvider)!.isMember) {
+      if (myProfile.isMember) {
         coolDown();
       } else {
         showSubscription(FromTag.chat_starter);
@@ -338,7 +350,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       type: CallSonaType.HOOK
     );
     if (resp.statusCode == 10150) {
-      if (ref.read(myProfileProvider)!.isMember) {
+      if (myProfile.isMember) {
         coolDown();
       } else {
         showSubscription(FromTag.pay_chat_hook);
@@ -353,7 +365,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       type: CallSonaType.SUGGEST_V2
     );
     if (resp.statusCode == 10150) {
-      if (ref.read(myProfileProvider)!.isMember) {
+      if (myProfile.isMember) {
         coolDown();
       } else {
         showSubscription(FromTag.pay_chat_suggest);
@@ -423,6 +435,51 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       }
     );
     SonaAnalytics.log('chat_suggest');
+  }
+
+  void _showUnmatchConfirm() async {
+    final result = await showConfirm(
+        context: context,
+        title: 'Unmatch',
+        content: 'After unmatch, all mutual content between you will be cleared. '
+    );
+    if (result == true) {
+      ref.read(asyncMatchRecommendedProvider.notifier).unmatch(widget.otherSide.id);
+    }
+  }
+
+  void _toggleAIEnabled() {
+    if (widget.otherSide.locale == mySide.locale) {
+      Fluttertoast.showToast(msg: 'Same language - no interpretation');
+      return;
+    }
+    ref.read(inputModeProvider(widget.otherSide.id).notifier).update((state) => state == InputMode.sona ? InputMode.manual : InputMode.sona);
+  }
+
+  void _showActions() async {
+    var aiEnabledStatusDescription = ref.read(inputModeProvider(widget.otherSide.id).notifier) == InputMode.sona ? 'AI interpretation: on' : 'AI interpretation: off';
+    if (widget.otherSide.locale == mySide.locale) {
+      aiEnabledStatusDescription = 'AI interpretation: off (same language)';
+    }
+    final action = await showRadioFieldDialog(
+        context: context,
+        options: {
+          'See profile': 'see_profile',
+          'Unmatch': 'unmatch',
+          aiEnabledStatusDescription: 'toggle_aienabled'
+        }
+    );
+    switch(action) {
+      case 'see_profile':
+        _showInfo();
+        return;
+      case 'unmatch':
+        _showUnmatchConfirm();
+        return;
+      case 'toggle_aienabled':
+        _toggleAIEnabled();
+        return;
+    }
   }
 }
 

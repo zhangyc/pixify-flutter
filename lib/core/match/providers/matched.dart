@@ -43,6 +43,10 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     _action(id, MatchAction.skip);
   }
 
+  Future unmatch(int id) {
+    return _action(id, MatchAction.unmatch);
+  }
+
   Future<HttpResult> arrow(int id) {
     return _action(id, MatchAction.arrow);
   }

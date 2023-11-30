@@ -76,7 +76,12 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
   Future _onDone() async {
     try {
       final params = ref.read(travelWishParamsProvider);
-      final resp = await createTravelWish(country: params.country!, cities: params.cities, activities: params.activities);
+      final resp = await createTravelWish(
+        country: params.country!,
+        cities: params.cities,
+        activities: params.activities,
+        timeframe: params.timeframe!
+      );
       if (resp.statusCode == 0) {
         Navigator.pop(context, true);
         ref.invalidate(asyncMyTravelWishesProvider);

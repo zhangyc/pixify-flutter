@@ -14,7 +14,7 @@ final themeData = ThemeData(
   dividerColor: dividerColor,
   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
   hintColor: const Color(0xFFBABABA),
-  fontFamily: 'Source Sans Pro',
+  fontFamily: 'MPLUSRounded1c',
   fontFamilyFallback: [
     if (Platform.isAndroid) 'Roboto',
     if (Platform.isAndroid) 'Source Sans Pro',
@@ -166,7 +166,7 @@ final themeData = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(40)
+        borderRadius: BorderRadius.circular(24)
       )),
       textStyle: MaterialStatePropertyAll(
         TextStyle(
@@ -181,6 +181,13 @@ final themeData = ThemeData(
       fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
       alignment: Alignment.center
     )
+  ),
+  searchBarTheme: SearchBarThemeData(
+    elevation: MaterialStatePropertyAll(0),
+    shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(24)
+    )),
+    side: MaterialStatePropertyAll(BorderSide(width: 2)),
   ),
   bottomSheetTheme: BottomSheetThemeData(
     elevation: 0

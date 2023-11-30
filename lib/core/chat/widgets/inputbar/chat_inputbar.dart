@@ -143,125 +143,108 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            GestureDetector(
-              onTap: _toggleMode,
-              child: Container(
-                key: _sonaKey,
-                width: 38,
-                height: 56,
-                padding: EdgeInsets.only(top: 3),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                clipBehavior: Clip.antiAlias,
-                alignment: Alignment.center,
-                child: SonaIcon(
-                  icon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? SonaIcons.sona_message : SonaIcons.manual_message,
-                  size: 24,
-                )
-              )
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
-              decoration: BoxDecoration(
-                // color: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? Color(0xFFE880F1) : Color(0xFF8D8D8D),
-                borderRadius: BorderRadius.circular(_height/4)
-              ),
-              padding: EdgeInsets.symmetric(vertical: 1.5),
-              child: TextField(
-                  controller: _controller,
-                  focusNode: _focusNode,
-                  textAlign: TextAlign.left,
-                  textAlignVertical: TextAlignVertical.center,
-                  maxLines: 5,
-                  minLines: 1,
-                  keyboardAppearance: Brightness.dark,
-                  keyboardType: widget.keyboardType,
-                  textInputAction: TextInputAction.send,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: widget.onSuggestionTap,
+                child: Container(
+                  key: _sonaKey,
+                  width: 38,
+                  height: 56,
+                  padding: EdgeInsets.only(top: 3),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
                   ),
-                  autocorrect: true,
-                  cursorWidth: 1.8,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1.6),
-                      borderRadius: BorderRadius.circular(_height/4),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1.6),
-                      borderRadius: BorderRadius.circular(_height/4),
-                    ),
-                    // suffixIcon: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? GestureDetector(
-                    //   onTap: _toggleChatStyles,
-                    //   child: Container(
-                    //     width: 26,
-                    //     height: 26,
-                    //     margin: EdgeInsets.symmetric(horizontal: 3),
-                    //     decoration: BoxDecoration(
-                    //       image: currentChatStyle != null ? DecorationImage(
-                    //         image: CachedNetworkImageProvider(
-                    //           currentChatStyle.icon
-                    //         )
-                    //       ) : null,
-                    //       shape: BoxShape.circle
-                    //     ),
-                    //     clipBehavior: Clip.antiAlias,
-                    //     alignment: Alignment.center,
-                    //   )
-                    // ) : null,
-                    // suffixIconConstraints: BoxConstraints.tight(Size.square(32)),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
-                    isDense: true,
-                    filled: true,
-                    fillColor: Colors.white,
-                    focusColor: Color(0xFF6D91F4),
-                    hintText: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Tell Sona your intention...' : 'Write sth...',
-                    hintStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
-                      color: Theme.of(context).hintColor,
-                      fontWeight: FontWeight.w500
-                    )
-                  ),
-                  onChanged: (text) {
-                    if (widget.onInputChange != null) widget.onInputChange!(text);
-                  },
-                  onSubmitted: (String text) {
-                    onSubmit(text);
-                    _controller.text = '';
-                  },
-                  autofocus: widget.autofocus,
-              ),
-            ),
-            SizedBox(width: 4),
-            Visibility(
-              visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
-              child: Container(
-                margin: EdgeInsets.all(1),
-                child: IconButton(
-                  iconSize: 56,
-                  padding: EdgeInsets.all(14),
-                  onPressed: () {
-                    onSubmit(_controller.text);
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        Theme.of(context).primaryColor
-                    ),
-                    shape: MaterialStatePropertyAll(
-                      ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
-                    )
-                  ),
-                  icon: SonaIcon(
-                    icon: SonaIcons.send,
+                  clipBehavior: Clip.antiAlias,
+                  alignment: Alignment.center,
+                  child: SonaIcon(
+                    icon: SonaIcons.sona_message,
+                    size: 24,
                   )
+                )
+              ),
+              Expanded(
+                child: Container(
+                  // width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(_height/4)
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 1.5),
+                  child: TextField(
+                    controller: _controller,
+                    focusNode: _focusNode,
+                    textAlign: TextAlign.left,
+                    textAlignVertical: TextAlignVertical.center,
+                    maxLines: 5,
+                    minLines: 1,
+                    keyboardAppearance: Brightness.dark,
+                    keyboardType: widget.keyboardType,
+                    textInputAction: TextInputAction.send,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500
+                    ),
+                    autocorrect: true,
+                    cursorWidth: 1.8,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1.6),
+                        borderRadius: BorderRadius.circular(_height/4),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1.6),
+                        borderRadius: BorderRadius.circular(_height/4),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+                      isDense: true,
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusColor: Color(0xFF6D91F4),
+                      hintText: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Tell Sona your intention...' : 'Write sth...',
+                      hintStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+                        color: Theme.of(context).hintColor,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                    onChanged: (text) {
+                      if (widget.onInputChange != null) widget.onInputChange!(text);
+                    },
+                    onSubmitted: (String text) {
+                      onSubmit(text);
+                      _controller.text = '';
+                    },
+                    autofocus: widget.autofocus,
+                  ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(width: 4),
+              Visibility(
+                visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
+                child: Container(
+                  margin: EdgeInsets.all(1),
+                  child: IconButton(
+                    iconSize: 56,
+                    padding: EdgeInsets.all(14),
+                    onPressed: () {
+                      onSubmit(_controller.text);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                          Theme.of(context).primaryColor
+                      ),
+                      shape: MaterialStatePropertyAll(
+                        ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
+                      )
+                    ),
+                    icon: SonaIcon(icon: SonaIcons.send)
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

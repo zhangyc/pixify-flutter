@@ -230,22 +230,24 @@ Future<String?> showNameTextField({
   );
 }
 
-Future<String?> showSingleLineTextField(
-    {required BuildContext context,
-    required String? title,
-    String? tip,
-    String? hintText,
-    keyboardType = TextInputType.text,
-    int maxLength = 64}) {
+Future<String?> showSingleLineTextField({
+  required BuildContext context,
+  required String? title,
+  String? tip,
+  String? hintText,
+  keyboardType = TextInputType.text,
+  int maxLength = 64
+}) {
   final controller = TextEditingController();
   return showModalBottomSheet<String>(
     context: context,
     backgroundColor: Colors.white,
+    barrierColor: Colors.white.withOpacity(0.9),
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(30),
-      topRight: Radius.circular(30),
+      borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(20),
+      topRight: Radius.circular(20),
     )),
     builder: (BuildContext context) {
       return Padding(
