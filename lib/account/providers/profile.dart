@@ -77,6 +77,7 @@ final myProfileProvider = StateNotifierProvider<MyProfileNotifier, MyProfile?>(
       final localCachedProfileString = global.kvStore.getString(profileKey);
       if (localCachedProfileString != null) {
         profile = MyProfile.fromJson(jsonDecode(localCachedProfileString));
+        global.profile = profile;
       }
     } catch(e) {
       if (kDebugMode) print('error occurred when reading profile from local: $e');
