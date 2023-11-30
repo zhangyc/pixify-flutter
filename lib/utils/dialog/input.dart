@@ -463,23 +463,21 @@ Future<T?> showRadioFieldDialog<T>({
 }) {
   return showModalBottomSheet<T>(
     context: context,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.transparent,
     isScrollControlled: true,
     elevation: 0,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(16),
-      topRight: Radius.circular(16),
-    )),
     useSafeArea: true,
     clipBehavior: Clip.antiAlias,
     isDismissible: dismissible,
     builder: (BuildContext context) {
       return Container(
-        padding: MediaQuery.of(context).viewInsets,
+        margin: EdgeInsets.all(16),
+        color: Colors.transparent,
+        padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Visibility(
                 visible: title != null && title.isNotEmpty,
@@ -488,18 +486,54 @@ Future<T?> showRadioFieldDialog<T>({
                   child: Text(title ?? '', style: Theme.of(context).textTheme.titleLarge),
                 ),
               ),
-              ...options.keys.map<Widget>((key) => OptionButton(
-                onTap: () => Navigator.pop(context, options[key]),
-                color: initialValue == options[key]
-                    ? Theme.of(context).colorScheme.secondaryContainer
-                    : Colors.transparent,
-                text: key
-              )),
-              if (dismissible) OptionButton(
-                onTap: () => Navigator.pop(context, null),
-                color: Colors.transparent,
-                text: S.current.cancel,
-                fontColor: Theme.of(context).colorScheme.error,
+              Container(
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 2,
+                      strokeAlign: BorderSide.strokeAlignOutside,
+                      color: Color(0xFF2C2C2C),
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0xFF2C2C2C),
+                      blurRadius: 0,
+                      offset: Offset(0, -4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ...options.keys.map<Widget>((key) => OptionButton(
+                        onTap: () => Navigator.pop(context, options[key]),
+                        color: initialValue == options[key]
+                            ? Theme.of(context).colorScheme.secondaryContainer
+                            : Colors.transparent,
+                        text: key
+                    )),
+                  ],
+                ),
+              ),
+              SizedBox(height: 12),
+              if (dismissible) Container(
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: OptionButton(
+                  onTap: () => Navigator.pop(context, null),
+                  color: Colors.transparent,
+                  text: S.current.cancel,
+                ),
               )
             ],
           ),
