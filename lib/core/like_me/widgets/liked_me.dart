@@ -7,6 +7,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../generated/l10n.dart';
@@ -156,7 +157,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   child: FilledButton.tonal(
                     onPressed: () {
                       SonaAnalytics.log('chatlist_gopay');
-                      widget.onShowAll();
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.pay_chatlist_likedme)));
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Color(0xFF06FFE1))
