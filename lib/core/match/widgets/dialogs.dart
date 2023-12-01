@@ -13,14 +13,10 @@ import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
 import '../util/event.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
-import 'package:sona/core/match/screens/match.dart';
 import 'package:sona/core/match/widgets/avatar_animation.dart';
 
-import '../../../generated/l10n.dart';
-import '../util/local_data.dart';
-showDm(BuildContext context,UserInfo info){
+showDm(BuildContext context,UserInfo info,VoidCallback next){
   showBottomSheet(context: context, builder: (c){
     TextEditingController controller=TextEditingController();
     return Consumer(
@@ -85,6 +81,8 @@ showDm(BuildContext context,UserInfo info){
 
                         //ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
                         SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                        next.call();
+                        Navigator.pop(context);
                         //arrowController.reset();
                         //arrowController.forward() ;
                         //widget.userInfo.arrowed=true;
@@ -111,6 +109,8 @@ showDm(BuildContext context,UserInfo info){
                     arrow=arrow-1;
                     ref.read(asyncMatchRecommendedProvider.notifier).sayHi(info.id);
                     SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                    next.call();
+                    Navigator.pop(context);
                     //arrowController.reset();
                     //arrowController.forward() ;
                     //widget.userInfo.arrowed=true;
@@ -145,130 +145,6 @@ showDm(BuildContext context,UserInfo info){
   });
 
 }
-// void showFilter(BuildContext context,VoidCallback onSave) {
-//   showDialog(context: context, builder: (c){
-//     return Consumer(builder: (_,ref,__){
-//       return Column(
-//         children: [
-//           Container(
-//             width:335,
-//             height: 200,
-//             decoration: BoxDecoration(
-//                 color: Color(0xffffffff),
-//                 borderRadius: BorderRadius.circular(40)
-//             ),
-//             padding: const EdgeInsets.symmetric(
-//                 horizontal: 90
-//             ),
-//             child: Column(
-//                 children: [
-//                   const SizedBox(
-//                     height: 10,
-//                   ),
-//                   Text(S.current.gender,style: TextStyle(
-//                       fontSize: 24,
-//                       color: Color(0xfff9f9f9)
-//                   ),),
-//                   Expanded(child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.start,
-//                     children: [
-//                       ...FilterGender.values.map((e) => GestureDetector(
-//                         onTap: (){
-//                           currentFilterGender=e.index;
-//                         },
-//                         child: Padding(
-//                             padding: EdgeInsets.only(
-//                                 top: 10
-//                             ),
-//                             child:  ValueListenableBuilder(valueListenable: appCommonBox.listenable(), builder: (c,b,_){
-//                               return Row(
-//                                 mainAxisAlignment: MainAxisAlignment.start,
-//                                 crossAxisAlignment: CrossAxisAlignment.center,
-//                                 children: [
-//
-//                                   e.index==currentFilterGender?Image.asset(Assets.iconsSelected,width: 24,height: 24,):Container(),
-//                                   Text(e.name,style: TextStyle(
-//                                       fontSize: 24,
-//                                       color:e.index==currentFilterGender?Color(0xfff9f9f9):Colors.white.withOpacity(0.2)
-//                                   ),)
-//                                 ],
-//                               );
-//                             })
-//                         ),
-//                       )).toList(),
-//                     ],
-//                   ))
-//
-//                 ]
-//             ),
-//           ),
-//           SizedBox(
-//             height: 20,
-//           ),
-//           Container(
-//             width:335,
-//             height: 138,
-//             decoration: BoxDecoration(
-//                 color: Color(0xff2969E9),
-//                 borderRadius: BorderRadius.circular(40)
-//             ),
-//             child: Column(
-//               children: [
-//                 const SizedBox(
-//                   height: 10,
-//                 ),
-//                 Text(S.current.age,style: TextStyle(
-//                     fontSize: 24,
-//                     color: Color(0xfff9f9f9)
-//                 ),),
-//                 SizedBox(height: 8),
-//                 SizedBox(width: 277,child: ValueListenableBuilder(valueListenable: appCommonBox.listenable(), builder: (c,b,_){
-//                   RangeValues rv=RangeValues(currentFilterMinAge.toDouble(), currentFilterMaxAge.toDouble());
-//                   return RangeSlider(
-//                       activeColor: Colors.white,
-//                       inactiveColor:Color(0xff54b7ed) ,
-//                       min: 18,
-//                       max: 80,
-//                       divisions: 10,
-//                       labels: RangeLabels(rv.start.toStringAsFixed(0), rv.end.toStringAsFixed(0)),
-//                       values: rv,
-//                       onChanged: (rv) {
-//                         currentFilterMinAge=rv.start.toInt();
-//                         currentFilterMaxAge=rv.end.toInt();
-//                       }
-//                   );
-//                 }),),
-//               ],
-//             ),
-//           ),
-//           SizedBox(
-//             height: 20,
-//           ),
-//           GestureDetector(
-//             child: Container(
-//               width:335,
-//               height: 70,
-//               decoration: BoxDecoration(
-//                   color: Color(0xff2969E9),
-//                   borderRadius: BorderRadius.circular(40)
-//               ),
-//               alignment: Alignment.center,
-//               child: Text(S.current.save,style: TextStyle(
-//                   fontSize: 24,
-//                   color: Color(0xfff9f9f9)
-//               ),),
-//             ),
-//             onTap: (){
-//               onSave.call();
-//               Navigator.pop(context);
-//             },
-//           )
-//
-//         ],
-//       );
-//     });
-//   });
-// }
 void showMatched(BuildContext context,{required UserInfo target,required VoidCallback next}) {
   String sayHi='Let SONA Say Hi';
   // showModalBottomSheet(context: context, builder: (c){});

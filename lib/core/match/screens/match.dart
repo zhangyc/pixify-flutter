@@ -397,7 +397,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
                         onTap: (){
                           if(canArrow){
-                            showDm(context, info);
+                            showDm(context, info,(){
+                              pageController.nextPage(duration: Duration(milliseconds: 1000), curve:  Curves.linearToEaseOut);
+                            });
                           }else {
                             bool isMember=ref.read(myProfileProvider)?.isMember??false;
                             if(isMember){
