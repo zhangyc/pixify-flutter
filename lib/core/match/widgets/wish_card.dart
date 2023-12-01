@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../common/models/user.dart';
 import '../../../generated/assets.dart';
+import '../providers/match_provider.dart';
+import '../providers/matched.dart';
 import 'choice_bytton.dart';
-class WishCardWidget extends StatelessWidget {
+
+class WishCardWidget extends ConsumerStatefulWidget {
   WishCardWidget({
     super.key,
     required this.context,
@@ -14,9 +18,28 @@ class WishCardWidget extends StatelessWidget {
 
   final BuildContext context;
   final UserInfo info;
-  PageController pageController=PageController();
   final VoidCallback next;
 
+  @override
+  ConsumerState<WishCardWidget> createState() => _WishCardWidgetState();
+}
+
+class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
+  PageController pageController=PageController();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(backgroundImageProvider.notifier).updateBg(widget.info.wishList.first.pic!);
+
+    });
+
+    super.initState();
+  }
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,6 +50,18 @@ class WishCardWidget extends StatelessWidget {
         SizedBox(
           height: 8,
         ),
+        Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(image: AssetImage(Assets.imagesTest),fit: BoxFit.cover),
+              border: Border.all(
+                  color: Colors.black,
+                  width: 2
+              ),
+              borderRadius: BorderRadius.circular(20)
+          ),
+          clipBehavior: Clip.antiAlias,
+          width: 95,height: 118,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text('Are you interested in her ideas',style: TextStyle(
@@ -36,8 +71,11 @@ class WishCardWidget extends StatelessWidget {
         ),
         Expanded(
           child: PageView(
+            onPageChanged: (value){
+              ref.read(backgroundImageProvider.notifier).updateBg(widget.info.wishList[value].pic!);
+              },
             controller: pageController,
-            children: info.wishList.map((e) => Container(
+            children: widget.info.wishList.map((wish) => Container(
               margin: EdgeInsets.symmetric(
                   horizontal: 8
               ),
@@ -48,7 +86,7 @@ class WishCardWidget extends StatelessWidget {
                   ),
                   Container(
                     width: 327,
-                    height: 470,
+                    height: 262,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24),
                       border: Border.all(
@@ -61,69 +99,91 @@ class WishCardWidget extends StatelessWidget {
                         SizedBox(
                           height: 16,
                         ),
-                        Container(
-                          width: 259,
-                          height: 166,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: Colors.black,
-                                  width: 2
-                              ),
-                              image: e.pic==null?null:DecorationImage(image: CachedNetworkImageProvider(e.pic!),fit: BoxFit.cover)
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(top: 16,
-                                left: 16,child: Container(
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(image: AssetImage(Assets.imagesTest),fit: BoxFit.cover),
-                                      border: Border.all(
-                                          color: Colors.black,
-                                          width: 2
-                                      ),
-                                      borderRadius: BorderRadius.circular(20)
-                                  ),
-                                  clipBehavior: Clip.antiAlias,
-                                  width: 48,height: 48,
-                                ),
-                              ),
-                              Positioned(
-                                width: 259,
-                                bottom: 0,
-                                child: Padding(
-                                  padding: EdgeInsets.all(11.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('${e.activityNames},${e.countryName}',style: TextStyle(color: Colors.white),),
-                                      Text('${e.countryFlag}')
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        Row(
+                          children: [
+                            Text('${wish.countryName}',style: TextStyle(color: Colors.black),),
+                            Text('${wish.countryFlag}')
+                          ],
                         ),
+                        // Container(
+                        //   width: 259,
+                        //   height: 166,
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(20),
+                        //       border: Border.all(
+                        //           color: Colors.black,
+                        //           width: 2
+                        //       ),
+                        //       image: e.pic==null?null:DecorationImage(image: CachedNetworkImageProvider(e.pic!),fit: BoxFit.cover)
+                        //   ),
+                        //   child: Stack(
+                        //     children: [
+                        //       Positioned(top: 16,
+                        //         left: 16,child: Container(
+                        //           decoration: BoxDecoration(
+                        //               image: DecorationImage(image: AssetImage(Assets.imagesTest),fit: BoxFit.cover),
+                        //               border: Border.all(
+                        //                   color: Colors.black,
+                        //                   width: 2
+                        //               ),
+                        //               borderRadius: BorderRadius.circular(20)
+                        //           ),
+                        //           clipBehavior: Clip.antiAlias,
+                        //           width: 48,height: 48,
+                        //         ),
+                        //       ),
+                        //       Positioned(
+                        //         width: 259,
+                        //         bottom: 0,
+                        //         child: Padding(
+                        //           padding: EdgeInsets.all(11.0),
+                        //           child: Row(
+                        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //             children: [
+                        //               Text('${e.activityNames},${e.countryName}',style: TextStyle(color: Colors.white),),
+                        //               Text('${e.countryFlag}')
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 16,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Column(
-                            children: List.generate(e.activities.length, (index2) => Padding(
+                            children: List.generate(wish.activities.length, (index2) => Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
-                              child: ChoiceButton(text: e.activities[index2].title??'', onTap: () {
-                                ///点击切换，下一个用户.冰球调用like接口
-                                next.call();
+                              child: ChoiceButton(text: wish.activities[index2].title??'', onTap: () {
+                                ///点击切换，下一个用户.并且调用like接口
+                                ref.read(asyncMatchRecommendedProvider.notifier).like(widget.info.id,
+                                    activityId: wish.activities[index2].id,
+                                    travelWishId: wish.id
+                                );
+
+                                widget.next.call();
                               },),
                             )),
                           ),
-                        )
+                        ),
+
 
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  TextButton(onPressed: (){
+                    widget.next.call();
+                    ref.read(asyncMatchRecommendedProvider.notifier).like(widget.info.id,
+                        travelWishId: wish.id
+                    );
+                  }, child: Text('Just like ->'))
+
                 ],
               ),
             )).toList(),

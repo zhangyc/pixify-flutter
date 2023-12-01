@@ -34,9 +34,18 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
   Future<List<UserInfo>> build() async {
     return _fetchMatched();
   }
-
-  Future<HttpResult> like(int id) {
-   return _action(id, MatchAction.like);
+  // "travelWishId":1, // 喜欢时传入的心愿单ID
+  //     "activityId":1 // 喜欢时传入的活动ID，可以为空
+  Future<HttpResult> like(int id,{int? travelWishId,int? activityId}) {
+    return post(
+        '/user/update-relation',
+        data: {
+          'userId': id,
+          'relationType': MatchAction.like.value,
+          'travelWishId':travelWishId,
+          'activityId':activityId,
+        }..removeWhere((key, value) => value==null)
+    );
   }
 
   void skip(int id) {

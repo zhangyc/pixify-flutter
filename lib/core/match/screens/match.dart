@@ -1,5 +1,6 @@
 
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/permission/permission.dart';
+import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
 import 'package:sona/core/match/widgets/bio_item.dart';
@@ -76,10 +78,27 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   PageController pageController=PageController();
   @override
   Widget build(BuildContext context) {
-
+    String? bgImage=ref.watch(backgroundImageProvider);
     super.build(context);
     return Stack(
       children: [
+        bgImage==null?Container():Positioned(child: Container(
+          foregroundDecoration: const BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Colors.transparent,
+              Colors.white
+            ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter
+            )
+          ),
+          child: CachedNetworkImage(imageUrl: bgImage,
+            fit: BoxFit.cover,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width,
+
+          ),
+        )),
         Positioned.fill(
           child: _buildMatch()
         ),
@@ -106,6 +125,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           return FilterPage();
                         })).then((value){
                           _initData();
+
                         });
                         // showFilter(context,(){
                         //   //_initData();
@@ -259,7 +279,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
      return  Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){
       return NoDataWidget();
-
     }
     else if(_state==PageState.success){
       return PageView.builder(
@@ -391,7 +410,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                               return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
                             }));
                           }
-                          ref.read(asyncMatchRecommendedProvider.notifier).like(users[index].id);
                         },
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
