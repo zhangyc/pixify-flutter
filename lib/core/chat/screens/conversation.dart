@@ -36,9 +36,9 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(asyncChatStylesProvider);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   ref.read(asyncChatStylesProvider);
+    // });
     super.initState();
   }
 

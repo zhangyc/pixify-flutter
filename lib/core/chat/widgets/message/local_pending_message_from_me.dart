@@ -3,8 +3,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/models/message.dart';
 
 class LocalPendingMessageFromMe extends ConsumerStatefulWidget {
-  const LocalPendingMessageFromMe({super.key, required this.message, required this.onSucceed});
+  const LocalPendingMessageFromMe({
+    super.key,
+    required this.message,
+    required this.myLocale,
+    required this.onSucceed
+  });
   final ImMessage message;
+  final Locale? myLocale;
   final Function() onSucceed;
 
   @override
@@ -48,7 +54,8 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
                 widget.message.content,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Colors.white,
-                    height: 1.5
+                    height: 1.5,
+                  locale: widget.myLocale
                 ),
               )
             ],

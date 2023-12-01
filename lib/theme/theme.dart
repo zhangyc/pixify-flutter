@@ -12,7 +12,6 @@ final themeData = ThemeData(
   disabledColor: disabledColor,
   scaffoldBackgroundColor: scaffoldBackgroundColor,
   dividerColor: dividerColor,
-  colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
   hintColor: const Color(0xFFBABABA),
   fontFamily: 'M PLUS Rounded 1c',
   fontFamilyFallback: [
