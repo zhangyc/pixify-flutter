@@ -8,6 +8,7 @@ import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
 import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/locale/locale.dart';
 
 import 'local_pending_message_from_me.dart';
 
@@ -21,7 +22,9 @@ class MessageWidget extends StatefulWidget {
     required this.onPendingMessageSucceed,
     required this.onShorten,
     required this.mySide,
-    required this.otherSide
+    required this.otherSide,
+    required this.myLocale,
+    required this.otherLocale
   });
 
   final ImMessage? prevMessage;
@@ -29,6 +32,8 @@ class MessageWidget extends StatefulWidget {
   final bool fromMe;
   final UserInfo mySide;
   final UserInfo otherSide;
+  final Locale? myLocale;
+  final Locale? otherLocale;
   final Future Function(ImMessage) onDelete;
   final void Function(ImMessage) onPendingMessageSucceed;
   final Future Function(ImMessage) onShorten;
@@ -49,7 +54,11 @@ class _MessageWidgetState extends State<MessageWidget> {
 
     if (widget.fromMe) {
       if (widget.message.pending != null) {
-        localPendingMessage = LocalPendingMessageFromMe(message: widget.message, onSucceed: () => widget.onPendingMessageSucceed(widget.message));
+        localPendingMessage = LocalPendingMessageFromMe(
+            message: widget.message,
+            myLocale: widget.myLocale,
+            onSucceed: () => widget.onPendingMessageSucceed(widget.message)
+        );
       } else {
         upperMessage = widget.message.origin;
         lowerMessage = widget.message.content;
@@ -181,7 +190,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                           upperMessage!,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
-                            height: 1.5
+                            height: 1.5,
+                            locale: widget.myLocale
                           )
                         )
                       ),
@@ -216,8 +226,9 @@ class _MessageWidgetState extends State<MessageWidget> {
                           maxLines: _clicked ? null : 1,
                           overflow: _clicked ? TextOverflow.clip : TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Color(0xFFB7B7B7),
-                              height: 1.5
+                            color: Color(0xFFB7B7B7),
+                            height: 1.5,
+                            locale: widget.otherLocale
                           ),
                         ),
                       ),

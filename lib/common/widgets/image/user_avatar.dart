@@ -20,8 +20,10 @@ class UserAvatar extends ConsumerWidget {
       width: size.width,
       height: size.height,
       decoration: BoxDecoration(
-        // shape: BoxShape.circle,
-        border: Border.all(color: const Color(0xFFD9D9D9), width: 0.2),
+        borderRadius: BorderRadius.circular(24)
+      ),
+      foregroundDecoration: BoxDecoration(
+        border: Border.all(color: const Color(0xFFE8E6E6), width: 1),
         borderRadius: BorderRadius.circular(24)
       ),
       alignment: Alignment.center,

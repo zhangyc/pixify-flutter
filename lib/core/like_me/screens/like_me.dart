@@ -32,7 +32,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
-                  childAspectRatio: 166/260
+                  childAspectRatio: 165.5/288
               ),
               itemBuilder: (BuildContext context, int index) => _itemBuilder(data[index]),
               itemCount: data.length
@@ -44,6 +44,8 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
   }
 
   Widget _itemBuilder(UserInfo u) {
+    final newLike = u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2;
+
     return Container(
       key: ValueKey(u.id),
       decoration: BoxDecoration(
@@ -93,6 +95,37 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
                 )
               ],
             ),
+          ),
+          Positioned(
+              top: 8,
+              right: 8,
+              child: Visibility(
+                  visible: newLike,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xFF888888)
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    child: Text(
+                      'New',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600
+                      ),
+                    ),
+                  )
+              )
+          ),
+          Positioned(
+              bottom: 8,
+              right: 8,
+              child: Visibility(
+                  visible: newLike,
+                  child: Text(u.countryFlag ?? '')
+              )
           )
         ],
       ),

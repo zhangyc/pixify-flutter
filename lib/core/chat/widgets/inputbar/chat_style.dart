@@ -62,28 +62,28 @@ class AsyncChatStylesNotifier extends AsyncNotifier<List<ChatStyle>> {
   }
 }
 
-final asyncChatStylesProvider = AsyncNotifierProvider<AsyncChatStylesNotifier, List<ChatStyle>>(
-    () => AsyncChatStylesNotifier()
-);
+// final asyncChatStylesProvider = AsyncNotifierProvider<AsyncChatStylesNotifier, List<ChatStyle>>(
+//     () => AsyncChatStylesNotifier()
+// );
 
 
-final currentChatStyleProvider = StateProvider.family<ChatStyle?, int>(
-  (ref, arg) {
-    ref.listenSelf((previous, next) {
-      FirebaseFirestore.instance.collection('${env.firestorePrefix}_users')
-          .doc(ref.read(myProfileProvider)!.id.toString())
-          .collection('rooms').doc(arg.toString())
-          .set({'chatStyleId': next?.id}, SetOptions(merge: true))
-          .catchError((_) {});
-    });
-    try {
-      final convo = ref.watch(conversationStreamProvider).value!.firstWhere((convo) => convo.convoId == arg);
-      final styles = ref.watch(asyncChatStylesProvider).value!;
-      return styles.firstWhere((style) => style.id == convo.chatStyleId, orElse: () => styles.firstWhere((style) => style.isDefault, orElse: () => styles.first));
-    } catch (_) {
-      //
-    }
-    return null;
-  },
-  dependencies: [conversationStreamProvider, asyncChatStylesProvider]
-);
+// final currentChatStyleProvider = StateProvider.family<ChatStyle?, int>(
+//   (ref, arg) {
+//     ref.listenSelf((previous, next) {
+//       FirebaseFirestore.instance.collection('${env.firestorePrefix}_users')
+//           .doc(ref.read(myProfileProvider)!.id.toString())
+//           .collection('rooms').doc(arg.toString())
+//           .set({'chatStyleId': next?.id}, SetOptions(merge: true))
+//           .catchError((_) {});
+//     });
+//     try {
+//       final convo = ref.watch(conversationStreamProvider).value!.firstWhere((convo) => convo.convoId == arg);
+//       final styles = ref.watch(asyncChatStylesProvider).value!;
+//       return styles.firstWhere((style) => style.id == convo.chatStyleId, orElse: () => styles.firstWhere((style) => style.isDefault, orElse: () => styles.first));
+//     } catch (_) {
+//       //
+//     }
+//     return null;
+//   },
+//   dependencies: [conversationStreamProvider, asyncChatStylesProvider]
+// );

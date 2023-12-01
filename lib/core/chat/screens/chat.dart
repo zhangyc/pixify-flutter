@@ -44,11 +44,21 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   
   late MyProfile myProfile;
   late UserInfo mySide;
+  Locale? myLocale;
+  Locale? otherLocale;
 
   @override
   void didChangeDependencies() {
     myProfile = ref.read(myProfileProvider)!;
     mySide = myProfile.toUser();
+    if (mySide.locale != null) {
+      final myL = findMatchedSonaLocale(mySide.locale!).locale;
+      myLocale = Locale.fromSubtags(languageCode: myL.languageCode, scriptCode: myL.scriptCode, countryCode: myL.countryCode);
+    }
+    if (widget.otherSide.locale != null) {
+      final otherL = findMatchedSonaLocale(widget.otherSide.locale!).locale;
+      otherLocale = Locale.fromSubtags(languageCode: otherL.languageCode, scriptCode: otherL.scriptCode, countryCode: otherL.countryCode);
+    }
     super.didChangeDependencies();
   }
 
@@ -109,6 +119,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     fromMe: mySide.id == msgs[index].sender.id,
                     mySide: mySide,
                     otherSide: widget.otherSide,
+                    myLocale: myLocale,
+                    otherLocale: otherLocale,
                     onPendingMessageSucceed: _onPendingMessageSucceed,
                     onShorten: _shortenMessage,
                     onDelete: _deleteMessage,
@@ -259,7 +271,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         userId: widget.otherSide.id,
         input: text,
         type: CallSonaType.INPUT,
-        chatStyleId: ref.read(currentChatStyleProvider(widget.otherSide.id))?.id
+        // chatStyleId: ref.read(currentChatStyleProvider(widget.otherSide.id))?.id
     );
     final message = ImMessage(
       id: _lastLocalId++,

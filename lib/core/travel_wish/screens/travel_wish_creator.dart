@@ -47,6 +47,8 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
         onPopInvoked: (_) {
           if (_pageController.page != null && _pageController.page!.round() > 0) {
             _pageController.previousPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
+          } else {
+            Navigator.pop(context);
           }
         },
         child: PageView.builder(

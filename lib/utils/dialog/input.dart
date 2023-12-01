@@ -267,31 +267,43 @@ Future<String?> showSingleLineTextField({
     backgroundColor: Colors.white,
     barrierColor: Colors.white.withOpacity(0.9),
     isScrollControlled: true,
+    useSafeArea: true,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
       topLeft: Radius.circular(20),
       topRight: Radius.circular(20),
     )),
     builder: (BuildContext context) {
-      return Padding(
-        padding: MediaQuery.of(context).viewInsets,
+      return Container(
+        margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.all(16),
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            // side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
+            borderRadius: BorderRadius.circular(24),
+          ),
+          shadows: [
+            BoxShadow(
+              color: Color(0xFF2C2C2C),
+              blurRadius: 0,
+              offset: Offset(0, -4),
+              spreadRadius: 0,
+            )
+          ],
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 10),
-            Container(
-              width: 30,
-              height: 3,
-              color: Color(0xFF888888),
-            ),
-            SizedBox(height: 25),
             Visibility(
               visible: title != null && title.isNotEmpty,
               child: Container(
                 margin: EdgeInsets.only(bottom: 20),
-                child: Text(title ?? '',
+                child: Text(
+                    title ?? '',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18)),
+                    style: Theme.of(context).textTheme.titleMedium
+                )
               ),
             ),
             Container(
@@ -314,6 +326,7 @@ Future<String?> showSingleLineTextField({
                     textAlign: TextAlign.center,
                     keyboardType: keyboardType,
                     autofocus: true,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   SizedBox(height: 30),
                   Row(
@@ -323,6 +336,7 @@ Future<String?> showSingleLineTextField({
                         flex: 1,
                         child: ColoredButton(
                             color: Colors.white,
+                            fontColor: Theme.of(context).primaryColor,
                             text: 'Cancel',
                             onTap: () => Navigator.pop(context)),
                       ),
@@ -340,7 +354,6 @@ Future<String?> showSingleLineTextField({
                 ],
               ),
             ),
-            SizedBox(height: 40)
           ],
         ),
       );
@@ -470,73 +483,73 @@ Future<T?> showRadioFieldDialog<T>({
     clipBehavior: Clip.antiAlias,
     isDismissible: dismissible,
     builder: (BuildContext context) {
+      final keys = options.keys.toList(growable: false);
       return Container(
         margin: EdgeInsets.all(16),
         color: Colors.transparent,
         padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Visibility(
-                visible: title != null && title.isNotEmpty,
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 20),
-                  child: Text(title ?? '', style: Theme.of(context).textTheme.titleLarge),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Visibility(
+              visible: title != null && title.isNotEmpty,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                child: Text(title ?? '', style: Theme.of(context).textTheme.titleLarge),
+              ),
+            ),
+            Container(
+              constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.7
+              ),
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    width: 2,
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                    color: Color(0xFF2C2C2C),
+                  ),
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                shadows: [
+                  BoxShadow(
+                    color: Color(0xFF2C2C2C),
+                    blurRadius: 0,
+                    offset: Offset(0, -4),
+                    spreadRadius: 0,
+                  )
+                ],
+              ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) => OptionButton(
+                    onTap: () => Navigator.pop(context, options[keys[index]]),
+                    color: initialValue == options[keys[index]]
+                        ? Theme.of(context).colorScheme.secondaryContainer
+                        : Colors.transparent,
+                    text: keys[index]
+                ),
+                itemCount: keys.length,
+              ),
+            ),
+            SizedBox(height: 12),
+            if (dismissible) Container(
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              Container(
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      width: 2,
-                      strokeAlign: BorderSide.strokeAlignOutside,
-                      color: Color(0xFF2C2C2C),
-                    ),
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0xFF2C2C2C),
-                      blurRadius: 0,
-                      offset: Offset(0, -4),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ...options.keys.map<Widget>((key) => OptionButton(
-                        onTap: () => Navigator.pop(context, options[key]),
-                        color: initialValue == options[key]
-                            ? Theme.of(context).colorScheme.secondaryContainer
-                            : Colors.transparent,
-                        text: key
-                    )),
-                  ],
-                ),
+              child: OptionButton(
+                onTap: () => Navigator.pop(context, null),
+                color: Colors.transparent,
+                text: S.current.cancel,
               ),
-              SizedBox(height: 12),
-              if (dismissible) Container(
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: OptionButton(
-                  onTap: () => Navigator.pop(context, null),
-                  color: Colors.transparent,
-                  text: S.current.cancel,
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       );
     },

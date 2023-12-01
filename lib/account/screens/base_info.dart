@@ -101,6 +101,9 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                     ),
                     style: Theme.of(context).textTheme.bodyMedium,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    onTapOutside: (_) {
+                      _nameFocusNode.unfocus();
+                    }
                   ),
                   SizedBox(height: 16,),
                   GestureDetector(

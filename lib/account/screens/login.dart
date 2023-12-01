@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -12,6 +13,7 @@ import 'package:sona/account/screens/login_pin.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/utils/global/global.dart';
+import 'package:sona/utils/locale/locale.dart';
 
 import '../../common/widgets/webview.dart';
 
@@ -24,12 +26,19 @@ class LoginPhoneNumberScreen extends StatefulHookConsumerWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
+  late final String? _initialCountryCode;
   final _phoneController = TextEditingController();
   PhoneNumber? _pn;
   final _phoneFocusNode = FocusNode();
   final _phoneKey = GlobalKey<FormState>(debugLabel: 'phone_number');
 
   bool _validate = true;
+
+  @override
+  void initState() {
+    _initialCountryCode = findMatchedSonaLocale(Platform.localeName).locale.countryCode;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +79,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
               Form(
                 key: _phoneKey,
                 child: IntlPhoneField(
+                  initialCountryCode: _initialCountryCode,
                   controller: _phoneController,
                   focusNode: _phoneFocusNode,
                   decoration: InputDecoration(

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
@@ -12,6 +13,7 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../../../utils/locale/locale.dart';
 import 'mode_provider.dart';
 
 class ChatInstructionInput extends ConsumerStatefulWidget {
@@ -136,9 +138,14 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
 
   @override
   Widget build(BuildContext context) {
-    final currentChatStyle = ref.watch(currentChatStyleProvider(widget.chatId));
-    final isMember = ref.watch(myProfileProvider)!.isMember;
-
+    // final currentChatStyle = ref.watch(currentChatStyleProvider(widget.chatId));
+    // final isMember = ref.watch(myProfileProvider)!.isMember;
+    Locale? myLocale;
+    if (ref.read(myProfileProvider)!.locale != null) {
+      final myL = findMatchedSonaLocale(ref.read(myProfileProvider)!.locale!).locale;
+      myLocale = Locale.fromSubtags(languageCode: myL.languageCode, scriptCode: myL.scriptCode, countryCode: myL.countryCode);
+    }
+    if (kDebugMode) print('my locale in input_bar: ${myLocale?.toLanguageTag()}');
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -185,7 +192,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     textInputAction: TextInputAction.send,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       fontSize: 12,
-                      fontWeight: FontWeight.w500
+                      fontWeight: FontWeight.w500,
+                      locale: myLocale
                     ),
                     autocorrect: true,
                     cursorWidth: 1.8,
@@ -330,11 +338,11 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
   }
 
   void _setChatStyle(int id) {
-    ref.read(currentChatStyleProvider(widget.chatId).notifier)
-        .update((state) => ref.read(asyncChatStylesProvider)
-        .value!
-        .firstWhere((style) => style.id == id));
-    _toggleChatStyles();
+    // ref.read(currentChatStyleProvider(widget.chatId).notifier)
+    //     .update((state) => ref.read(asyncChatStylesProvider)
+    //     .value!
+    //     .firstWhere((style) => style.id == id));
+    // _toggleChatStyles();
   }
 
   void onSubmit(String text) async {
