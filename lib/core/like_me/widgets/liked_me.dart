@@ -54,7 +54,8 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).isNotEmpty) Padding(
+              if (likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).isNotEmpty) Container(
+                margin: EdgeInsets.only(bottom: 16),
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
                   'New like (${likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).length})',
@@ -62,7 +63,6 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              const SizedBox(height: 16),
               Container(
                 height: 106,
                 width: MediaQuery.of(context).size.width,
