@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
@@ -9,6 +10,7 @@ import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
 
 class LikedMeListView extends StatefulHookConsumerWidget {
@@ -62,7 +64,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                 ),
               ),
               Container(
-                height: 106,
+                height: 117,
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.centerLeft,
                 child: ListView.separated(
@@ -76,9 +78,8 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                         onTap: () => widget.onTap(),
                         child: Container(
                           width: 88,
-                          height: 106,
+                          height: 117,
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
                             color: Color(0xFFE74E27),
                             border: Border.all(width: 2),
                             borderRadius: BorderRadius.circular(20)
@@ -111,14 +112,14 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            if (!ref.watch(myProfileProvider)!.isMember) UserAvatar(
+                            if (ref.watch(myProfileProvider)!.isMember) UserAvatar(
                               url: u.avatar!,
-                              size: Size(84, 102),
+                              size: Size(84, 113),
                             ),
-                            if (ref.watch(myProfileProvider)!.isMember) Container(
+                            if (!ref.watch(myProfileProvider)!.isMember) Container(
                               //I blured the parent container to blur background image, you can get rid of this part
                               width: 84,
-                              height: 102,
+                              height: 113,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: UserAvatarImageProvider(u.avatar!),
@@ -131,22 +132,42 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                                 filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
                                 child: Container(
                                   width: 84,
-                                  height: 102,
+                                  height: 113,
                                   //you can change opacity with color here(I used black) for background.
                                   decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
                                 ),
                               ),
                             ),
                             Positioned(
-                                top: 0,
-                                left: 0,
-                                right: 0,
+                                top: 8,
+                                right: 8,
                                 child: Visibility(
                                     visible: newLike,
-                                    child: Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Image.asset('assets/images/liked_me_new.png', width: 30))
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Color(0xFF888888)
+                                      ),
+                                      clipBehavior: Clip.antiAlias,
+                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                      child: Text(
+                                        'New',
+                                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600
+                                        ),
+                                      ),
+                                    )
                                 )
+                            ),
+                            Positioned(
+                              bottom: 8,
+                              right: 8,
+                              child: Visibility(
+                                visible: newLike,
+                                child: Text(u.countryFlag ?? '')
+                              )
                             )
                           ],
                         ),
@@ -157,7 +178,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   itemCount: likedMeUsers.length > 16 ? 17 : likedMeUsers.length,
                 ),
               ),
-              if (ref.read(myProfileProvider)!.isMember) Container(
+              if (!ref.read(myProfileProvider)!.isMember) Container(
                   margin: EdgeInsets.only(top: 18, left: 16, right: 16),
                   alignment: Alignment.center,
                   child: FilledButton.tonal(
@@ -180,7 +201,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                     ),
                   )
               ),
-              if (!ref.read(myProfileProvider)!.isMember) Container(
+              if (ref.read(myProfileProvider)!.isMember) Container(
                 margin: EdgeInsets.only(top: 18, left: 16, right: 16),
                 alignment: Alignment.center,
                 child: FilledButton.tonal(
