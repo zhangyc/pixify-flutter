@@ -57,6 +57,7 @@ class SonaIcon extends ConsumerWidget {
 }
 
 enum SonaIcons {
+  forward,
   back,
   navicon_sona,
   navicon_sona_active,
