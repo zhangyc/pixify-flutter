@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/global/global.dart';
-
-import '../../../generated/l10n.dart';
-
 
 class LikedMeListView extends StatefulHookConsumerWidget {
   const LikedMeListView({
@@ -54,7 +52,8 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).isNotEmpty) Padding(
+              if (likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).isNotEmpty) Container(
+                margin: EdgeInsets.only(bottom: 16),
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
                   'New like (${likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).length})',
@@ -62,7 +61,6 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              const SizedBox(height: 16),
               Container(
                 height: 106,
                 width: MediaQuery.of(context).size.width,
@@ -111,23 +109,31 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                         ),
                         alignment: Alignment.center,
                         child: Stack(
+                          alignment: Alignment.center,
                           children: [
-                            UserAvatar(
+                            if (!ref.watch(myProfileProvider)!.isMember) UserAvatar(
                               url: u.avatar!,
                               size: Size(84, 102),
                             ),
-                            SizedBox(
+                            if (ref.watch(myProfileProvider)!.isMember) Container(
+                              //I blured the parent container to blur background image, you can get rid of this part
                               width: 84,
                               height: 102,
-                              child: Visibility(
-                                visible: !ref.watch(myProfileProvider)!.isMember,
-                                child: ClipOval(
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
-                                    child: Container(
-                                      color: Colors.white.withOpacity(0.5),
-                                    ),
-                                  ),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: UserAvatarImageProvider(u.avatar!),
+                                  fit: BoxFit.cover
+                                ),
+                                borderRadius: BorderRadius.circular(25)
+                              ),
+                              clipBehavior: Clip.antiAlias,
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
+                                child: Container(
+                                  width: 84,
+                                  height: 102,
+                                  //you can change opacity with color here(I used black) for background.
+                                  decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
                                 ),
                               ),
                             ),
@@ -162,12 +168,15 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                     style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Color(0xFF06FFE1))
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                          'Become Super SONA',
-                          style: Theme.of(context).textTheme.titleSmall
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                            'Become Super SONA',
+                            style: Theme.of(context).textTheme.titleSmall
+                        ),
+                        SonaIcon(icon: SonaIcons.forward)
+                      ],
                     ),
                   )
               ),
@@ -182,12 +191,15 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3))
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      'Who like you?',
-                      style: Theme.of(context).textTheme.titleSmall
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                          'Who like you?',
+                          style: Theme.of(context).textTheme.titleSmall
+                      ),
+                      SonaIcon(icon: SonaIcons.forward)
+                    ],
                   ),
                 )
               )

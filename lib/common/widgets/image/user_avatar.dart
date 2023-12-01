@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -33,4 +35,13 @@ class UserAvatar extends ConsumerWidget {
       ),
     );
   }
+}
+
+class UserAvatarImageProvider extends CachedNetworkImageProvider {
+  const UserAvatarImageProvider(
+    super.url,
+    // Map<String, String>? headers
+  ) : super(
+    // headers: headers
+  );
 }
