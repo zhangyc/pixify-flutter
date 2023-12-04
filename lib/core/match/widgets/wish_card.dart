@@ -101,54 +101,13 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                         ),
                         Row(
                           children: [
+                            SizedBox(
+                              height: 16,
+                            ),
                             Text('${wish.countryName}',style: TextStyle(color: Colors.black),),
                             Text('${wish.countryFlag}')
                           ],
                         ),
-                        // Container(
-                        //   width: 259,
-                        //   height: 166,
-                        //   decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(20),
-                        //       border: Border.all(
-                        //           color: Colors.black,
-                        //           width: 2
-                        //       ),
-                        //       image: e.pic==null?null:DecorationImage(image: CachedNetworkImageProvider(e.pic!),fit: BoxFit.cover)
-                        //   ),
-                        //   child: Stack(
-                        //     children: [
-                        //       Positioned(top: 16,
-                        //         left: 16,child: Container(
-                        //           decoration: BoxDecoration(
-                        //               image: DecorationImage(image: AssetImage(Assets.imagesTest),fit: BoxFit.cover),
-                        //               border: Border.all(
-                        //                   color: Colors.black,
-                        //                   width: 2
-                        //               ),
-                        //               borderRadius: BorderRadius.circular(20)
-                        //           ),
-                        //           clipBehavior: Clip.antiAlias,
-                        //           width: 48,height: 48,
-                        //         ),
-                        //       ),
-                        //       Positioned(
-                        //         width: 259,
-                        //         bottom: 0,
-                        //         child: Padding(
-                        //           padding: EdgeInsets.all(11.0),
-                        //           child: Row(
-                        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //             children: [
-                        //               Text('${e.activityNames},${e.countryName}',style: TextStyle(color: Colors.white),),
-                        //               Text('${e.countryFlag}')
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                         SizedBox(
                           height: 16,
                         ),
@@ -169,7 +128,6 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                             )),
                           ),
                         ),
-
 
                       ],
                     ),
