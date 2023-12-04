@@ -375,41 +375,41 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
                         onTap: (){
-                                showMatched(context,target: info,next: (){
-                                  pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                                });
+                                // showMatched(context,target: info,next: (){
+                                //   pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                                // });
                          ///是否能like
-                         //  if(canLike){
-                         //    if(like>0){
-                         //      like=like-1;
-                         //    }
-                         //    currentPage=index;
-                         //    ///如果对方喜欢我。
-                         //    if(info.likeMe==1){
-                         //       ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
-                         //       showMatched(context,target: info,next: (){
-                         //         pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                         //       });
-                         //    }else{
-                         //      ///
-                         //      if(users[index].wishList.isEmpty){
-                         //        pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                         //      }else {
-                         //        users[index].matched=true;
-                         //      }
-                         //    }
-                         //
-                         //    setState(() {
-                         //
-                         //    });
-                         //    SonaAnalytics.log(MatchEvent.match_like.name);
-                         //
-                         //  }else {
-                         //    SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                         //    Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                         //      return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
-                         //    }));
-                         //  }
+                          if(canLike){
+                            if(like>0){
+                              like=like-1;
+                            }
+                            currentPage=index;
+                            ///如果对方喜欢我。
+                            if(info.likeMe==1){
+                               ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                               showMatched(context,target: info,next: (){
+                                 pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                               });
+                            }else{
+                              ///
+                              if(users[index].wishList.isEmpty){
+                                pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                              }else {
+                                users[index].matched=true;
+                              }
+                            }
+
+                            setState(() {
+
+                            });
+                            SonaAnalytics.log(MatchEvent.match_like.name);
+
+                          }else {
+                            SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                            Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                              return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                            }));
+                          }
                         },
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
