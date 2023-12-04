@@ -87,7 +87,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
                     clipBehavior: Clip.antiAlias,
                     child: isMember ? GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u.toUserInfo()))),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: u.id))),
                       child: UserAvatar(
                         url: u.avatar!,
                         size: Size(itemWidth, itemHeight),
