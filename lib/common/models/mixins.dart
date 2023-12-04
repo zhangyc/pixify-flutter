@@ -11,10 +11,10 @@ mixin UserPhotos on BaseUser {
 }
 
 mixin UserNationality on BaseUser {
-  late final int countryId;
+  late final int? countryId;
   late final String? countryCode;
-  late final String countryName;
-  late final String countryFlag;
+  late final String? countryName;
+  late final String? countryFlag;
 }
 
 mixin UserPosition on BaseUser {

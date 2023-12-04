@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/providers/chat.dart';
-import 'package:sona/core/chat/providers/liked_me.dart';
+import 'package:sona/core/like_me/providers/liked_me.dart';
 
 final chatNoticeProvider = StateProvider<bool>((ref) {
   final convos = ref.watch(conversationStreamProvider).value;

@@ -16,7 +16,7 @@ import 'package:sona/utils/global/global.dart';
 import '../../../generated/l10n.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../models/message.dart';
-import '../providers/liked_me.dart';
+import '../../like_me/providers/liked_me.dart';
 import '../widgets/inputbar/chat_style.dart';
 import '../../like_me/widgets/liked_me.dart';
 

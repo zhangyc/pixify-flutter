@@ -3,10 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
-import 'package:sona/core/chat/providers/liked_me.dart';
+import 'package:sona/common/screens/profile.dart';
+import 'package:sona/core/like_me/providers/liked_me.dart';
 
-import '../../../common/models/user.dart';
 import '../../../common/widgets/image/user_avatar.dart';
+import '../models/social_user.dart';
 
 class LikeMeScreen extends StatefulHookConsumerWidget {
   const LikeMeScreen({super.key});
@@ -18,6 +19,15 @@ class LikeMeScreen extends StatefulHookConsumerWidget {
 class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
 
   late bool isMember;
+  late double itemWidth;
+  late double itemHeight;
+
+  @override
+  void didChangeDependencies() {
+    itemHeight = (MediaQuery.of(context).size.width - 16 * 3) / 2 * 220 / 165;
+    itemWidth =  itemHeight * 165 / 220;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +58,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
     );
   }
 
-  Widget _itemBuilder(UserInfo u) {
-    final newLike = u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2;
-
+  Widget _itemBuilder(SocialUser u) {
     return Container(
       key: ValueKey(u.id),
       decoration: BoxDecoration(
@@ -59,14 +67,15 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
       clipBehavior: Clip.antiAlias,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: 220,
+            height: itemHeight,
             child: Stack(
               children: [
                 Positioned.fill(
                   child: Container(
-                    height: 220,
+                    height: itemHeight,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25)
                     ),
@@ -76,53 +85,63 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
                     ),
                     alignment: Alignment.center,
                     clipBehavior: Clip.antiAlias,
-                    child: isMember ? UserAvatar(
-                      url: u.avatar!,
-                      size: Size(165, 220),
+                    child: isMember ? GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u.toUserInfo()))),
+                      child: UserAvatar(
+                        url: u.avatar!,
+                        size: Size(itemWidth, itemHeight),
+                      ),
                     ) : ImageFiltered(
                       imageFilter: ImageFilter.blur(sigmaY: 9, sigmaX: 9),
                       child: UserAvatar(
                         url: u.avatar!,
-                        size: Size(165, 220),
+                        size: Size(itemWidth, itemHeight),
                       ),
                     ),
                   )
                 ),
-                Positioned(
-                    bottom: 12,
-                    left: 12,
-                    child: Visibility(
-                        visible: newLike,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Color(0xFF888888)
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          child: Text(
-                            'New',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600
-                            ),
-                          ),
-                        )
+                if (u.displayTag != null) Positioned(
+                  bottom: 12,
+                  left: 12,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Color(0xFF888888)
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    child: Text(
+                      u.displayTag!,
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600
+                      ),
                     )
+                  )
                 ),
                 Positioned(
-                    bottom: 12,
-                    right: 12,
-                    child: Visibility(
-                        visible: newLike,
-                        child: Text(u.countryFlag ?? '')
-                    )
+                  bottom: 12,
+                  right: 12,
+                  child: Text(u.countryFlag ?? '')
                 )
               ],
             ),
           ),
-
+          SizedBox(height: 4),
+          Text(
+            u.hang,
+            style: Theme.of(context).textTheme.titleSmall,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            u.name!,
+            style: Theme.of(context).textTheme.labelSmall,
+            maxLines: 1,
+            overflow: TextOverflow.clip,
+          )
         ],
       ),
     );
