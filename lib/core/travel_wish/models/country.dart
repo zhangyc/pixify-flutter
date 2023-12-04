@@ -40,12 +40,15 @@ final supportedSonaCountries = countryMapList.map<SonaCountry>((cm) => SonaCount
 final hotTravelCountries = List<SonaCountry>.from(supportedSonaCountries)..retainWhere((country) => ['US', 'JP', 'CN', 'KR', 'TH', 'IT', 'FR'].contains(country.code));
 
 String findFlagByCountryCode(String? code) {
-  final country = supportedSonaCountries.firstWhere((c) => c.code == code, orElse: () => SonaCountry(code: '', displayName: 'Unknown', flag: '🌍'));
+  final country = supportedSonaCountries.firstWhere((c) => c.code == code, orElse: () => SonaCountry(code: '1', displayName: 'US', flag: '🌍'));
   return country.flag;
 }
 
 SonaCountry findCountryByCode(String? code) {
-  return supportedSonaCountries.firstWhere((c) => c.code == code, orElse: () => SonaCountry(code: '', displayName: 'Unknown', flag: '🌍'));
+  return supportedSonaCountries.firstWhere(
+      (c) => c.code == code,
+      orElse: () => supportedSonaCountries.firstWhere((c) => c.code == 'US')
+  );
 }
 
 class PopularTravelCountry {
