@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/common/models/user.dart';
-import 'package:sona/common/providers/profile.dart';
-import 'package:sona/core/match/providers/match_provider.dart';
+import 'package:sona/common/providers/other_info_provider.dart';
 import 'package:sona/core/match/services/match.dart';
-import 'package:sona/core/match/widgets/user_card.dart';
+import 'package:sona/core/match/widgets/profile.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/report.dart';
 
 import '../../core/match/providers/matched.dart';
-import '../../core/match/widgets/dialogs.dart';
-import '../../core/match/widgets/like_animation.dart';
 import '../../core/subscribe/subscribe_page.dart';
 import '../../utils/global/global.dart';
 
@@ -20,10 +16,10 @@ class UserProfileScreen extends ConsumerStatefulWidget {
 
   const UserProfileScreen({
     super.key,
-    required this.user,
+    required this.userId,
     this.relation = Relation.normal
   });
-  final UserInfo user;
+  final int userId;
   final Relation relation;
 
   @override
@@ -35,65 +31,18 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+   // final userinfo = ref.watch(getProfileByIdProvider(widget.userId));
+
+    //return Profile(info: info, next: next);
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: ref.watch(asyncOthersProfileProvider(widget.user.id)).when(
-        data: (user) => UserCard(
-            user: user,
-            actions: [
-              Positioned(
-                top: MediaQuery.of(context).padding.top + 8,
-                left: 12,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios_new_outlined,
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 5.0,
-                        color: Color.fromARGB(120, 0, 0, 0),
-                      ),
-                    ],
-                  ),
-                  onPressed: _onBack,
-                ),
-              ),
-              Positioned(
-                top: MediaQuery.of(context).padding.top + 8,
-                right: 20,
-                child: Visibility(
-                  visible: widget.relation != Relation.self,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.more_horiz_outlined,
-                      color: Colors.white,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 5.0,
-                          color: Color.fromARGB(120, 0, 0, 0),
-                        ),
-                      ],
-                    ),
-                    onPressed: _showActions,
-                  ),
-                ),
-              ),
-              Positioned(
-                  right: 20,
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 120,
-                  child: Visibility(
-                    visible: widget.relation == Relation.normal || widget.relation == Relation.likeMe,
-                    child: LikeAnimation(
-                      onLike: _onLike,
-                      userInfo: widget.user
-                    ),
-                  )
-              )
-            ]
-        ),
+      body: ref.watch(getProfileByIdProvider(widget.userId)).when(
+        data: (user) => Profile(info: user.data, next: (){
+
+        },onMatch: (v){},),
         error: (err, stack) => GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => ref.refresh(asyncOthersProfileProvider(widget.user.id)),
+          onTap: () => ref.refresh(getProfileByIdProvider(widget.userId)),
           child: Container(
             color: Colors.white,
             alignment: Alignment.center,
@@ -120,10 +69,10 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   void _showActions() async {
     final action = await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
     if (action == 'report' && mounted) {
-      showReport(context, widget.user.id);
+      showReport(context, widget.userId);
     } else if (action == 'block' && mounted) {
       await showRadioFieldDialog(context: context, options: {'Block': 'block', 'Unblock': 'unblock'});
-      final resp = await matchAction(userId: widget.user.id, action: MatchAction.block);
+      final resp = await matchAction(userId: widget.userId, action: MatchAction.block);
       if (resp.statusCode == 0) {
         Fluttertoast.showToast(msg: 'the user has been blocked');
         SonaAnalytics.log('chat_block');
@@ -136,7 +85,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   }
 
   Future _onLike() async {
-    final resp=await ref.read(asyncMatchRecommendedProvider.notifier).like(widget.user.id);
+    final resp=await ref.read(asyncMatchRecommendedProvider.notifier).like(widget.userId);
     if(resp.isSuccess){
       SonaAnalytics.log('chatlist_member_like');
       if(resp.data['resultType']==2){
@@ -145,16 +94,16 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         //       curve: Curves.linearToEaseOut);
         // }
       }else if(resp.data['resultType']==1 && mounted){
-        showMatched(context,target: widget.user,next: (){
+       // showMatched(context,target: widget.userId,next: (){
           //ref.read(pageControllerProvider).nextPage(duration: Duration(milliseconds: 100), curve: Curves.linearToEaseOut);
-        });
+       // });
       }
     }else if(resp.statusCode==10150){
       Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
         return const SubscribePage(fromTag: FromTag.pay_profile,);
       }));
     }
-    return ref.read(asyncMatchRecommendedProvider.notifier).like(widget.user.id).then((resp){
+    return ref.read(asyncMatchRecommendedProvider.notifier).like(widget.userId).then((resp){
 
       if (mounted && resp.isSuccess) {
         setState(() {

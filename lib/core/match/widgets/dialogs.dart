@@ -53,16 +53,19 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
               Row(
                 children: [
                   Flexible(child: TextField(
+                    maxLength: 160,
                     controller: controller,
                     decoration: InputDecoration(
                       border:OutlineInputBorder(
-
                           borderSide: BorderSide(
                               color: Colors.black,
                               width: 2
                           ),
                           borderRadius: BorderRadius.circular(24)
                       ),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16
+                      )
                     ),
                   ),
                   ),
@@ -70,7 +73,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                     width: 16,
                   ),
                   GestureDetector(
-                    child: Icon(Icons.send),
+                    child:Image.asset(Assets.iconsSend,width: 56,height: 56,),
                     onTap: (){
                       if(controller.text.isEmpty){
                         return ;
@@ -104,8 +107,8 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
               SizedBox(
                 height: 24,
               ),
-              GestureDetector(
-                onTap: (){
+              TextButton(
+                onPressed: (){
                   if(canArrow){
                     arrow=arrow-1;
                     ref.read(asyncMatchRecommendedProvider.notifier).sayHi(info.id);
@@ -130,7 +133,9 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                   child: Row(
                     children: [
                       Image.asset(Assets.iconsLogo,width: 20,height: 20,),
-                      Text('Let SONA say hi for you '),
+                      Text('Let SONA say hi for you ',style: TextStyle(
+                        color: Colors.black
+                      ),),
                       Icon(Icons.arrow_forward_outlined)
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -146,7 +151,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
   });
 
 }
-void showMatched(BuildContext context,{required dynamic target,required VoidCallback next}) {
+void showMatched(BuildContext context,{required MatchUserInfo target,required VoidCallback next}) {
   String sayHi='Let SONA Say Hi';
   // showModalBottomSheet(context: context, builder: (c){});
   showGeneralDialog(context: context,
@@ -169,7 +174,22 @@ void showMatched(BuildContext context,{required dynamic target,required VoidCall
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 164,
+                        height: 64,
+                      ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        margin: EdgeInsets.only(
+                          right: 16
+                        ),
+                        child: GestureDetector(
+                          onTap: (){
+                             Navigator.pop(context);
+                          },
+                          child: Image.asset(Assets.iconsSkip,width: 40,height: 40,),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 60,
                       ),
                       Text('NEW MATCHED!',style: TextStyle(
                           fontSize: 24
@@ -187,9 +207,9 @@ void showMatched(BuildContext context,{required dynamic target,required VoidCall
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 48),
-                        child: Text('''
-                          I'd like to see exhibition at the Mori Art Museum with you.
-                          '''),
+                        child: Text(
+                          '${target.likeActivityName??''}'
+                         ),
                       ),
                       SizedBox(
                         height: 16,
@@ -199,28 +219,26 @@ void showMatched(BuildContext context,{required dynamic target,required VoidCall
                             horizontal: 36
                         ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Flexible(child: Container(
-                              height: 54,
+                            Flexible(child: TextField(
+                              // keyboardType: TextInputType.multiline,
+                              // maxLines: null,
+                              // minLines: 1,
+                              controller: controller,
+                              maxLength: 160,
 
-                              child: TextField(
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null,
-                                minLines: 1,
-                                controller: controller,
-                                textAlign: TextAlign.center,
-
-                                decoration: InputDecoration(
-                                  isDense: true,
-
-                                  contentPadding: EdgeInsets.zero,
-                                  border:OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.black,
-                                          width: 2
-                                      ),
-                                      borderRadius: BorderRadius.circular(24)
-                                  ),
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 16
+                                ),
+                                border:OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black,
+                                        width: 2
+                                    ),
+                                    borderRadius: BorderRadius.circular(24)
                                 ),
                               ),
                             ),
@@ -229,7 +247,7 @@ void showMatched(BuildContext context,{required dynamic target,required VoidCall
                               width: 16,
                             ),
                             GestureDetector(
-                              child: Icon(Icons.send),
+                              child: Image.asset(Assets.iconsSend,width: 56,height: 56,),
                               onTap: (){
                                 if(controller.text.isEmpty){
                                   return ;
@@ -246,8 +264,8 @@ void showMatched(BuildContext context,{required dynamic target,required VoidCall
                       SizedBox(
                         height: 24,
                       ),
-                      GestureDetector(
-                        onTap: (){
+                      TextButton(
+                        onPressed: (){
                           ///发送一个快捷的sona打招呼
                           next.call();
                           ref.read(asyncMatchRecommendedProvider.notifier).sayHi(target.id);
@@ -258,7 +276,9 @@ void showMatched(BuildContext context,{required dynamic target,required VoidCall
                           child: Row(
                             children: [
                               Image.asset(Assets.iconsLogo,width: 20,height: 20,),
-                              Text('Let SONA say hi for you '),
+                              Text('Let SONA say hi for you ',style: TextStyle(
+                                color: Colors.black
+                              ),),
                               Icon(Icons.arrow_forward_outlined)
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,

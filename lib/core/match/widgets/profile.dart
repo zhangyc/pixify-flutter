@@ -21,13 +21,14 @@ import 'interest_item.dart';
 import 'wishlist_item.dart';
 
 class Profile extends ConsumerStatefulWidget {
-  const Profile({super.key,
+  const Profile( {super.key,
     required this.info,
     required this.next,
+    required this.onMatch,
   });
   final MatchUserInfo info;
   final VoidCallback next;
-
+  final Function(bool matched) onMatch;
   @override
   ConsumerState createState() => _ProfileState();
 }
@@ -119,7 +120,7 @@ class _ProfileState extends ConsumerState<Profile> {
               GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
                 onTap: (){
                   // showMatched(context,target: info,next: (){
-                  //   pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                  //   //pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                   // });
                   ///是否能like
                   if(canLike){
@@ -138,6 +139,7 @@ class _ProfileState extends ConsumerState<Profile> {
                       if(info.wishList.isEmpty){
                         widget.next.call();
                       }else {
+                        widget.onMatch.call(true);
                       }
                     }
 

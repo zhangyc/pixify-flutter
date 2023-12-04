@@ -277,11 +277,20 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 next: (){
                   pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                 },
+
             );
           }else {
             return Profile(info:info,next:(){
               pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-            });
+
+            },
+              onMatch: (v){
+                 info.matched=v;
+                 setState(() {
+
+                 });
+              },
+            );
           }
         },
         itemCount: users.length,

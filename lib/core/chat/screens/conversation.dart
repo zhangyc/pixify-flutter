@@ -6,7 +6,6 @@ import 'package:sona/common/screens/profile.dart';
 import 'package:sona/core/chat/models/conversation.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/chat.dart';
-import 'package:sona/core/like_me/screens/like_me.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/conversation.dart';
 import 'package:sona/utils/dialog/input.dart';
@@ -16,8 +15,6 @@ import 'package:sona/utils/global/global.dart';
 import '../../../generated/l10n.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../models/message.dart';
-import '../providers/liked_me.dart';
-import '../widgets/inputbar/chat_style.dart';
 import '../../like_me/widgets/liked_me.dart';
 
 class ConversationScreen extends StatefulHookConsumerWidget {
@@ -66,7 +63,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
                     // Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
                   } else {
                     SonaAnalytics.log('chatlist_member_card');
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(user: u, relation: Relation.likeMe)));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: u.id, relation: Relation.likeMe)));
                   }
                 } else {
                   SonaAnalytics.log('chatlist_tapblur');

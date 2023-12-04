@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:sona/core/match/util/local_data.dart';
 import '../../../utils/global/global.dart';
@@ -15,8 +14,13 @@ class FilterPage extends StatefulWidget {
 
 class _FilterPageState extends State<FilterPage> {
 
-  _P? p;
-  _Gender? gender;
+  String? p=recommendMode;
+  int? gender=currentFilterGender;
+  @override
+  void initState() {
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,97 +29,101 @@ class _FilterPageState extends State<FilterPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-             Container(child: Text('Preference'),
-              alignment: Alignment.centerLeft,
-             ),
-             SizedBox(
-               height: 12,
-             ),
-             ...ps.map((e) => GestureDetector(
-               child: p==e?SelectedButton(
-                 p: e,
-               ):UnselectedButton(p: e),
-               onTap: (){
-                 recommendMode=e.value;
-                 if(p!=e){
-                   p=e;
-                   //e.selected=true;
-                 }
-                 // e.selected=!e.selected;
-                 setState(() {
+        child: ValueListenableBuilder(
+          valueListenable: appCommonBox.listenable(),
+          builder: (_,b,__){
+            RangeValues rv=RangeValues(currentFilterMinAge.toDouble(), currentFilterMaxAge.toDouble());
 
-                 });
-               },
-             )),
-            SizedBox(
-              height: 24,
-            ),
-             Align(child: Text('Gender'),alignment: Alignment.centerLeft,),
-             SizedBox(
-              height: 12,
-             ),
-             Row(
-               children: genders.map((e) => GestureDetector(
-                 child: e==gender?GenderButton(gender: e):UnSelectedGenderButton(gender: e),
-                 onTap: (){
-                   currentFilterGender=e.value;
-                   if(gender!=e){
-                     gender=e;
-                   }
-                   // e.selected=!e.selected;
-                   setState(() {
+            return Column(
+              children: [
+                Container(child: Text('Preference'),
+                  alignment: Alignment.centerLeft,
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                ...ps.map((e) => GestureDetector(
+                  child: p==e.value?SelectedButton(
+                    p: e,
+                  ):UnselectedButton(p: e),
+                  onTap: (){
+                    recommendMode=e.value;
+                    if(p!=e.value){
+                      p=e.value;
+                      //e.selected=true;
+                    }
+                    // e.selected=!e.selected;
+                    setState(() {
 
-                   });
-                 },
-               )).toList(),
-             ),
-            SizedBox(
-              height: 24,
-            ),
-            ValueListenableBuilder(valueListenable: appCommonBox.listenable(), builder: (c,b,_){
-              RangeValues rv=RangeValues(currentFilterMinAge.toDouble(), currentFilterMaxAge.toDouble());
-              return Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Age'),
-                      Text('$currentFilterMinAge-$currentFilterMaxAge')
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  SliderTheme(
-                    data: SliderThemeData(
-                      rangeThumbShape: CustomThumbShape2(
-                          thumbRadius:20,
-                          minTrackHeight:10
+                    });
+                  },
+                )),
+                SizedBox(
+                  height: 24,
+                ),
+                Align(child: Text('Gender'),alignment: Alignment.centerLeft,),
+                SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: genders.map((e) => GestureDetector(
+                    child: e.value==gender?GenderButton(gender: e):UnSelectedGenderButton(gender: e),
+                    onTap: (){
+                      currentFilterGender=e.value;
+                      if(gender!=e.value){
+                        gender=e.value;
+                      }
+                      // e.selected=!e.selected;
+                      setState(() {
+
+                      });
+                    },
+                  )).toList(),
+                ),
+                SizedBox(
+                  height: 24,
+                ),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Age'),
+                        Text('$currentFilterMinAge-$currentFilterMaxAge')
+                      ],
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    SliderTheme(
+                      data: SliderThemeData(
+                        rangeThumbShape: CustomThumbShape2(
+                            thumbRadius:20,
+                            minTrackHeight:10
+                        ),
+
+                        // thumbColor: Colors.black,
+                        // thumbShape: SliderThumbImage(customImage!),
                       ),
-
-                      // thumbColor: Colors.black,
-                      // thumbShape: SliderThumbImage(customImage!),
+                      child: RangeSlider(
+                          activeColor: Colors.black,
+                          inactiveColor:Color(0xffE8E6E6),
+                          min: 18,
+                          max: 80,
+                          // divisions: 10,
+                          labels: RangeLabels(rv.start.toStringAsFixed(0), rv.end.toStringAsFixed(0)),
+                          values: rv,
+                          onChanged: (rv) {
+                            currentFilterMinAge=rv.start.toInt();
+                            currentFilterMaxAge=rv.end.toInt();
+                          }
+                      ),
                     ),
-                    child: RangeSlider(
-                        activeColor: Colors.black,
-                        inactiveColor:Color(0xffE8E6E6),
-                        min: 18,
-                        max: 80,
-                        // divisions: 10,
-                        labels: RangeLabels(rv.start.toStringAsFixed(0), rv.end.toStringAsFixed(0)),
-                        values: rv,
-                        onChanged: (rv) {
-                          currentFilterMinAge=rv.start.toInt();
-                          currentFilterMaxAge=rv.end.toInt();
-                        }
-                    ),
-                  ),
-                ],
-              );
-            }),
-          ],
+                  ],
+                )
+              ],
+            );
+          },
         ),
       ),
     );

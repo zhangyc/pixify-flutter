@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
 
-class MatchUserInfo {
+import '../../../common/models/user.dart';
+
+class MatchUserInfo extends UserInfo{
   int index=0;
   bool arrowed=false;
   bool matched=false;
@@ -27,30 +29,66 @@ class MatchUserInfo {
     this.likeMe=0,
     this.wishList=const [],
     this.originNickname,
-    this.currentCity
-  });
+    this.currentCity,
+    this.likeActivityName
+  }) : super(id: id,
+    name: name,
+    originNickname: originNickname,
+    gender: gender,
+    birthday: birthday,
+    countryId: countryId,
+    countryCode: countryCode,
+    countryFlag: countryFlag,
+    locale: locale,
+    avatar: avatar,
+    bio: bio,
+    chatStyleId: chatStyleId,
+    photos: photos,
+    allScore: allScore,
+    currentCity: currentCity,
+    impression: impression,
+  );
 
+  @override
   final int id;
+  @override
   final String? name;
+  @override
   final String? originNickname;
+  @override
   final Gender? gender;
+  @override
   final DateTime? birthday;
+  @override
   final int? countryId;
+  @override
   final String? countryCode;
+  @override
   final String? countryFlag;
+  @override
   final String? locale;
+  @override
   final String? avatar;
+  @override
   final String? bio;
+  @override
   final int? chatStyleId;
+  @override
   final List<String> photos;
+  @override
   final String? allScore;
+  @override
   final String? currentCity;
+  @override
   DateTime? likeDate;
+  @override
   int get age => birthday!.toAge();
+  @override
   final String? impression;
   int likeMe=0;  //1 喜欢了，0 无
   List<Interest> interest=[];
   List<WishBean> wishList=[];
+  String? likeActivityName; // 喜欢的原因，点击喜欢时选中的活动名称
   factory MatchUserInfo.fromJson(Map<String, dynamic> json) {
     final images = json['images'];
     final interestTag = json['interest'];
@@ -92,8 +130,8 @@ class MatchUserInfo {
         likeMe: json['likeMe']??0,
         wishList: wishList,
         originNickname:json['originNickname'],
-        currentCity:json['currentCity']
-
+        currentCity:json['currentCity'],
+        likeActivityName:json['likeActivityName']
     );
   }
 

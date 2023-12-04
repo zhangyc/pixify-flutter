@@ -52,7 +52,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
         ),
         Container(
           decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage(Assets.imagesTest),fit: BoxFit.cover),
+              image: widget.info.avatar==null?null:DecorationImage(image: CachedNetworkImageProvider(widget.info.avatar!),fit: BoxFit.cover),
               border: Border.all(
                   color: Colors.black,
                   width: 2
@@ -62,6 +62,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
           clipBehavior: Clip.antiAlias,
           width: 95,height: 118,
         ),
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text('Are you interested in her ideas',style: TextStyle(
@@ -69,9 +70,12 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
               fontSize: 28
           ),),
         ),
+        _buildPageIndicator(),
         Expanded(
           child: PageView(
             onPageChanged: (value){
+              _currentPage = value;
+
               ref.read(backgroundImageProvider.notifier).updateBg(widget.info.wishList[value].pic!);
               },
             controller: pageController,
@@ -102,7 +106,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                         Row(
                           children: [
                             SizedBox(
-                              height: 16,
+                              width: 16,
                             ),
                             Text('${wish.countryName}',style: TextStyle(color: Colors.black),),
                             Text('${wish.countryFlag}')
@@ -148,6 +152,32 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
           ),
         ),
       ],
+    );
+  }
+  int _currentPage = 0;
+
+  Widget _buildPageIndicator() {
+    return Container(
+      height: 56,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          widget.info.wishList.length, // Replace with the total number of pages
+              (index) => _buildIndicator(index),
+        ),
+      ),
+    );
+  }
+  Widget _buildIndicator(int index) {
+    return Container(
+
+      width: _currentPage == index ?16:8,
+      height: 8,
+      margin: EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _currentPage == index ? Color(0xff2C2C2C) : Color(0xffE8E6E6),
+      ),
     );
   }
 }

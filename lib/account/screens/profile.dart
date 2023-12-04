@@ -251,7 +251,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   void _seeMyProfile() {
     Navigator.push(context, MaterialPageRoute(
         builder: (_) => UserProfileScreen(
-          user: ref.read(myProfileProvider)!.toUser(),
+          userId: ref.read(myProfileProvider)!.toUser().id,
           relation: Relation.self,
         )
     ));
