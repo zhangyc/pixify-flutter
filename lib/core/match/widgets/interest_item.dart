@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/models/user.dart';
+import '../bean/match_user.dart';
+
 
 class InterestItem extends StatelessWidget {
   const InterestItem({super.key, required this.interest});

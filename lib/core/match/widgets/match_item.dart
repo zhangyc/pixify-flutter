@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sona/common/permission/permission.dart';
-import 'package:sona/core/match/providers/match_provider.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/models/user.dart';
@@ -62,10 +61,10 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        UserCard(
-          key: ValueKey(widget.userInfo.id),
-          user: widget.userInfo,
-        ),
+        // UserCard(
+        //   key: ValueKey(widget.userInfo.id),
+        //   user: widget.userInfo,
+        // ),
         Arrow(animationController: arrowController),
         Positioned(
           right: 20,
@@ -87,7 +86,6 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
                   SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                   arrowController.reset();
                   arrowController.forward() ;
-                  widget.userInfo.arrowed=true;
                 }else {
                   bool isMember=ref.read(myProfileProvider)?.isMember??false;
                   if(isMember){

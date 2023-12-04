@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sona/common/models/user.dart';
+
+import '../bean/match_user.dart';
 
 class HeardItem extends StatelessWidget {
   const HeardItem({super.key, required this.userInfo});
-  final UserInfo userInfo;
+  final MatchUserInfo userInfo;
   @override
   Widget build(BuildContext context) {
     return Container(

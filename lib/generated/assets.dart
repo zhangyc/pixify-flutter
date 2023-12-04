@@ -7,6 +7,7 @@ class Assets {
   static const String iconsBack = 'assets/icons/back.png';
   static const String iconsClose = 'assets/icons/close.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
+  static const String iconsForward = 'assets/icons/forward.png';
   static const String iconsHandle = 'assets/icons/handle.png';
   static const String iconsLike = 'assets/icons/like.png';
   static const String iconsLogo = 'assets/icons/logo.png';
@@ -39,7 +40,6 @@ class Assets {
   static const String imagesArrow = 'assets/images/arrow.png';
   static const String imagesDm = 'assets/images/dm.png';
   static const String imagesError = 'assets/images/error.png';
-  static const String imagesLikedMeNew = 'assets/images/liked_me_new.png';
   static const String imagesLocationAuthorization = 'assets/images/location_authorization.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
   static const String imagesMatched = 'assets/images/matched.png';

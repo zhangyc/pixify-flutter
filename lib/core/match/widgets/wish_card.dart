@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../common/models/user.dart';
 import '../../../generated/assets.dart';
+import '../bean/match_user.dart';
 import '../providers/match_provider.dart';
 import '../providers/matched.dart';
 import 'choice_bytton.dart';
@@ -17,7 +17,7 @@ class WishCardWidget extends ConsumerStatefulWidget {
   });
 
   final BuildContext context;
-  final UserInfo info;
+  final MatchUserInfo info;
   final VoidCallback next;
 
   @override

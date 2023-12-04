@@ -11,12 +11,13 @@ import '../../../common/permission/permission.dart';
 import '../../../generated/assets.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
+import '../bean/match_user.dart';
 import '../providers/matched.dart';
 import '../util/event.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sona/core/match/widgets/avatar_animation.dart';
 
-showDm(BuildContext context,UserInfo info,VoidCallback next){
+showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
   showBottomSheet(context: context, builder: (c){
     TextEditingController controller=TextEditingController();
     return Consumer(
@@ -145,7 +146,7 @@ showDm(BuildContext context,UserInfo info,VoidCallback next){
   });
 
 }
-void showMatched(BuildContext context,{required UserInfo target,required VoidCallback next}) {
+void showMatched(BuildContext context,{required dynamic target,required VoidCallback next}) {
   String sayHi='Let SONA Say Hi';
   // showModalBottomSheet(context: context, builder: (c){});
   showGeneralDialog(context: context,
@@ -205,11 +206,15 @@ void showMatched(BuildContext context,{required UserInfo target,required VoidCal
                               child: TextField(
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
-                                minLines: 2,
+                                minLines: 1,
                                 controller: controller,
-                                decoration: InputDecoration(
-                                  border:OutlineInputBorder(
+                                textAlign: TextAlign.center,
 
+                                decoration: InputDecoration(
+                                  isDense: true,
+
+                                  contentPadding: EdgeInsets.zero,
+                                  border:OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Colors.black,
                                           width: 2
@@ -232,7 +237,7 @@ void showMatched(BuildContext context,{required UserInfo target,required VoidCal
                                 next.call();
                                 ///匹配成功，发送消息
                                 ref.read(asyncMatchRecommendedProvider.notifier).customSend(target.id,controller.text);
-
+                                Navigator.pop(context);
                               },
                             ),
                           ],
@@ -246,6 +251,8 @@ void showMatched(BuildContext context,{required UserInfo target,required VoidCal
                           ///发送一个快捷的sona打招呼
                           next.call();
                           ref.read(asyncMatchRecommendedProvider.notifier).sayHi(target.id);
+                          Navigator.pop(context);
+
                         },
                         child: Container(
                           child: Row(

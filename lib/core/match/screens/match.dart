@@ -8,7 +8,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/common/models/user.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/providers/matched.dart';
@@ -28,6 +27,7 @@ import 'package:sona/utils/global/global.dart';
 import '../../../account/providers/profile.dart';
 import '../../../utils/location/location.dart';
 import '../../subscribe/subscribe_page.dart';
+import '../bean/match_user.dart';
 import '../services/match.dart';
 import '../util/event.dart';
 import '../util/http_util.dart';
@@ -67,7 +67,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     // });
     super.initState();
   }
-  List<UserInfo> users =[];
+  List<MatchUserInfo> users =[];
 
   @override
   void dispose() {
@@ -187,10 +187,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           _state=PageState.success;
         }
 
-        List<UserInfo> users1=list.map((e) => UserInfo.fromJson(e)).toList();
+        List<MatchUserInfo> users1=list.map((e) => MatchUserInfo.fromJson(e)).toList();
         users=users1;
         if(users.every((element) => element.id!=-1)&&users.length<10){
-          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+          users.add(MatchUserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
         }
         for (var element in users1) {
           if(element.avatar!=null){
@@ -237,16 +237,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         // }else {
         //   _state=PageState.success;
         // }
-        List<UserInfo> users1=list.map((e) => UserInfo.fromJson(e)).toList();
+        List<MatchUserInfo> users1=list.map((e) => MatchUserInfo.fromJson(e)).toList();
         // users=[...users,...users1,...[UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null)]];
 
 
         users.addAll(users1);
         if(users.every((element) => element.id!=-1)){
-          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+          users.add(MatchUserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
         }else {
           users.removeWhere((element) => element.id==-1);
-          users.add(UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+          users.add(MatchUserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
         }
         for (var element in users1) {
           if(element.avatar!=null){
@@ -283,7 +283,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     else if(_state==PageState.success){
       return PageView.builder(
         itemBuilder: (c,index) {
-          UserInfo info=users[index];
+          MatchUserInfo info=users[index];
           if(info.id==-1){
             return NoMoreWidget();
           }
@@ -375,41 +375,41 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
                         onTap: (){
-                                // showMatched(context,target: info,next: (){
-                                //   pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                                // });
+                                showMatched(context,target: info,next: (){
+                                  pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                                });
                          ///是否能like
-                          if(canLike){
-                            if(like>0){
-                              like=like-1;
-                            }
-                            currentPage=index;
-                            ///如果对方喜欢我。
-                            if(info.likeMe==1){
-                               ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
-                               showMatched(context,target: info,next: (){
-                                 pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                               });
-                            }else{
-                              ///
-                              if(users[index].wishList.isEmpty){
-                                pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                              }else {
-                                users[index].matched=true;
-                              }
-                            }
-
-                            setState(() {
-
-                            });
-                            SonaAnalytics.log(MatchEvent.match_like.name);
-
-                          }else {
-                            SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                            Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                              return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
-                            }));
-                          }
+                         //  if(canLike){
+                         //    if(like>0){
+                         //      like=like-1;
+                         //    }
+                         //    currentPage=index;
+                         //    ///如果对方喜欢我。
+                         //    if(info.likeMe==1){
+                         //       ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                         //       showMatched(context,target: info,next: (){
+                         //         pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                         //       });
+                         //    }else{
+                         //      ///
+                         //      if(users[index].wishList.isEmpty){
+                         //        pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                         //      }else {
+                         //        users[index].matched=true;
+                         //      }
+                         //    }
+                         //
+                         //    setState(() {
+                         //
+                         //    });
+                         //    SonaAnalytics.log(MatchEvent.match_like.name);
+                         //
+                         //  }else {
+                         //    SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                         //    Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                         //      return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                         //    }));
+                         //  }
                         },
                       ),
                       GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),

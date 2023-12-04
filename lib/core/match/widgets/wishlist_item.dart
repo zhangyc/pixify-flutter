@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sona/core/match/util/http_util.dart';
 
-import '../../../common/models/user.dart';
+import '../bean/match_user.dart';
+
 
 class WishListItem extends StatefulWidget {
   const WishListItem({super.key, required this.wishes});

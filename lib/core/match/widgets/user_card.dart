@@ -224,24 +224,24 @@ class _ConsumerUserCardState extends ConsumerState<UserCard> with SingleTickerPr
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Wrap(
-              spacing: 4,
-              runSpacing: 4,
-              children: widget.user.interest.map((e) => Container(
-                decoration: BoxDecoration(
-                  color: Color(0xffFBC8FF),
-                  borderRadius: BorderRadius.circular(100)
-                ),
-                child: Text('${e.name}',style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14
-                ),),
-                padding: EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 16
-                ),
-              )).toList(),
-            ),
+            // Wrap(
+            //   spacing: 4,
+            //   runSpacing: 4,
+            //   children: widget.user.interest.map((e) => Container(
+            //     decoration: BoxDecoration(
+            //       color: Color(0xffFBC8FF),
+            //       borderRadius: BorderRadius.circular(100)
+            //     ),
+            //     child: Text('${e.name}',style: TextStyle(
+            //       color: Colors.black,
+            //       fontSize: 14
+            //     ),),
+            //     padding: EdgeInsets.symmetric(
+            //       vertical: 8,
+            //       horizontal: 16
+            //     ),
+            //   )).toList(),
+            // ),
             SizedBox(
               height: 42,
             ),
