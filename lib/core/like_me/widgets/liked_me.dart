@@ -101,6 +101,8 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                       behavior: HitTestBehavior.translucent,
                       onTap: () => widget.onTap(u),
                       child: Container(
+                        width: 84,
+                        height: 113,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25)
                         ),
@@ -109,65 +111,49 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                           borderRadius: BorderRadius.circular(25)
                         ),
                         alignment: Alignment.center,
+                        clipBehavior: Clip.antiAlias,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            if (ref.watch(myProfileProvider)!.isMember) UserAvatar(
-                              url: u.avatar!,
-                              size: Size(84, 113),
-                            ),
-                            if (!ref.watch(myProfileProvider)!.isMember) Container(
-                              //I blured the parent container to blur background image, you can get rid of this part
-                              width: 84,
-                              height: 113,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: UserAvatarImageProvider(u.avatar!),
-                                  fit: BoxFit.cover
-                                ),
-                                borderRadius: BorderRadius.circular(25)
-                              ),
-                              clipBehavior: Clip.antiAlias,
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
-                                child: Container(
-                                  width: 84,
-                                  height: 113,
-                                  //you can change opacity with color here(I used black) for background.
-                                  decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                                top: 8,
-                                right: 8,
-                                child: Visibility(
-                                    visible: newLike,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Color(0xFF888888)
-                                      ),
-                                      clipBehavior: Clip.antiAlias,
-                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                      child: Text(
-                                        'New',
-                                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                          color: Colors.white,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w600
-                                        ),
-                                      ),
-                                    )
+                            if (!ref.watch(myProfileProvider)!.isMember) Positioned.fill(
+                              child: ImageFiltered(
+                                imageFilter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
+                                child: UserAvatar(
+                                  url: u.avatar!,
+                                  size: Size(84, 113),
                                 )
+                              ),
+                            ),
+                            if (ref.watch(myProfileProvider)!.isMember) Positioned.fill(
+                              child: UserAvatar(
+                                url: u.avatar!,
+                                size: Size(84, 113),
+                              ),
+                            ),
+                            if (newLike) Positioned(
+                              top: 8,
+                              right: 8,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Color(0xFF888888)
+                                ),
+                                clipBehavior: Clip.antiAlias,
+                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                child: Text(
+                                  'New',
+                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600
+                                  ),
+                                ),
+                              )
                             ),
                             Positioned(
                               bottom: 8,
                               right: 8,
-                              child: Visibility(
-                                visible: newLike,
-                                child: Text(u.countryFlag ?? '')
-                              )
+                              child: Text(u.countryFlag ?? '')
                             )
                           ],
                         ),
