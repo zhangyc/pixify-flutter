@@ -96,6 +96,7 @@ Future<bool?> showConfirm({
 }) {
   return showDialog<bool>(
     context: context,
+    barrierColor: Colors.white.withOpacity(0.6),
     // backgroundColor: Colors.white,
     // shape: const RoundedRectangleBorder(
     //   borderRadius: BorderRadius.only(

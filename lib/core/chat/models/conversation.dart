@@ -12,8 +12,8 @@ class ImConversation {
     required this.lastMessageType,
     required this.lastMessageContent,
     required this.lastMessageSenderId,
-    required this.inputMode,
-    required this.chatStyleId
+    // required this.inputMode,
+    // required this.chatStyleId
   });
 
   final int convoId;
@@ -23,8 +23,8 @@ class ImConversation {
   final int? lastMessageType;
   final String? lastMessageContent;
   final int? lastMessageSenderId;
-  final InputMode? inputMode;
-  final int? chatStyleId;
+  // final InputMode? inputMode;
+  // final int? chatStyleId;
 
   DateTime? _checkTime;
   DateTime? get checkTime {
@@ -53,11 +53,11 @@ class ImConversation {
       }),
       dateTime: (json['createDate'] as Timestamp).toDate(),
       lastMessageId: json['id'],
-      lastMessageType: json['type'],
+      lastMessageType: json['messageType'],
       lastMessageContent: json['message'],
       lastMessageSenderId: json['sendUserId'],
-      inputMode: InputMode.values[json['inputMode'] ?? 0],
-      chatStyleId: json['chatStyleId']
+      // inputMode: InputMode.values[json['inputMode'] ?? 0],
+      // chatStyleId: json['chatStyleId']
     );
   }
 
