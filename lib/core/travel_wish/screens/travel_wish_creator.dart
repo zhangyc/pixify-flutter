@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/common/services/common.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/my_wish.dart';
 import 'package:sona/core/travel_wish/screens/activities_selector.dart';
@@ -44,7 +43,9 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
       resizeToAvoidBottomInset: false,
       body: PopScope(
         canPop: false,
-        onPopInvoked: (_) {
+        onPopInvoked: (bool didPop) {
+          if (didPop) return;
+
           if (_pageController.page != null && _pageController.page!.round() > 0) {
             _pageController.previousPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
           } else {

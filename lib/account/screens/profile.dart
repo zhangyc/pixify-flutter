@@ -51,53 +51,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       ),
       body: CustomScrollView(
         slivers: [
-          // SliverToBoxAdapter(
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.stretch,
-          //     children: [
-                // Row(
-                //   children: [
-                //     Container(
-                //         padding: EdgeInsets.only(left: 16, right: 8, top: 4, bottom: 4),
-                //         child: Text('Sona Impression', style: Theme.of(context).textTheme.titleMedium)
-                //     ),
-                //     GestureDetector(
-                //       onTap: _showImpressionDesc,
-                //       child: Icon(Icons.info_outline_rounded, size: 12)
-                //     )
-                //   ],
-                // ),
-                // SizedBox(height: 4),
-                // Visibility(
-                //   visible: _profile.impression != null,
-                //   child: Container(
-                //     margin: EdgeInsets.symmetric(horizontal: 16),
-                //     child: Text(
-                //       _profile.impression ?? '',
-                //       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                //         color: Theme.of(context).primaryColor
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // Visibility(
-                //   visible: _profile.impression == null,
-                //   child: GestureDetector(
-                //     onTap: _showImpressionDesc,
-                //     child: Container(
-                //       margin: EdgeInsets.symmetric(horizontal: 16),
-                //       child: Text(
-                //         '👀 How to get a Sona Impression...',
-                //         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                //             color: Color(0xFFE880F1)
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // )
-          //     ],
-          //   )
-          // ),
           SliverToBoxAdapter(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
