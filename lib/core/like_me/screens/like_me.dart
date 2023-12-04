@@ -1,11 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/models/age.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/chat/providers/liked_me.dart';
 
 import '../../../common/models/user.dart';
+import '../../../common/widgets/image/user_avatar.dart';
 
 class LikeMeScreen extends StatefulHookConsumerWidget {
   const LikeMeScreen({super.key});
@@ -15,8 +16,12 @@ class LikeMeScreen extends StatefulHookConsumerWidget {
 }
 
 class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
+
+  late bool isMember;
+
   @override
   Widget build(BuildContext context) {
+    isMember = ref.watch(myProfileProvider)!.isMember;
     return Scaffold(
       appBar: AppBar(
         title: Text('Who liked you', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -49,84 +54,75 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
     return Container(
       key: ValueKey(u.id),
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(u.avatar!),
-          alignment: Alignment.center,
-          fit: BoxFit.cover
-        ),
         borderRadius: BorderRadius.circular(20)
       ),
       clipBehavior: Clip.antiAlias,
-      child: Stack(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Positioned(
-            left: 4,
-            bottom: 8,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Container(
+            height: 220,
+            child: Stack(
               children: [
-                Text(
-                  u.name!,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.white,
-                      shadows: [
-                        BoxShadow(
-                          blurRadius: 3.0,
-                          color: Color.fromARGB(120, 0, 0, 0),
-                        )
-                      ]
-                  ),
+                Positioned.fill(
+                  child: Container(
+                    height: 220,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25)
+                    ),
+                    foregroundDecoration: BoxDecoration(
+                        border: Border.all(width: 2, color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(25)
+                    ),
+                    alignment: Alignment.center,
+                    clipBehavior: Clip.antiAlias,
+                    child: isMember ? UserAvatar(
+                      url: u.avatar!,
+                      size: Size(165, 220),
+                    ) : ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaY: 9, sigmaX: 9),
+                      child: UserAvatar(
+                        url: u.avatar!,
+                        size: Size(165, 220),
+                      ),
+                    ),
+                  )
                 ),
-                SizedBox(height: 4),
-                Text(
-                  u.birthday!.toAge().toString(),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.white,
-                    shadows: [
-                      BoxShadow(
-                        blurRadius: 2.0,
-                        color: Color.fromARGB(120, 0, 0, 0),
-                      )
-                    ]
-                  ),
+                Positioned(
+                    bottom: 12,
+                    left: 12,
+                    child: Visibility(
+                        visible: newLike,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Color(0xFF888888)
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          child: Text(
+                            'New',
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600
+                            ),
+                          ),
+                        )
+                    )
+                ),
+                Positioned(
+                    bottom: 12,
+                    right: 12,
+                    child: Visibility(
+                        visible: newLike,
+                        child: Text(u.countryFlag ?? '')
+                    )
                 )
               ],
             ),
           ),
-          Positioned(
-              top: 8,
-              right: 8,
-              child: Visibility(
-                  visible: newLike,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Color(0xFF888888)
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    child: Text(
-                      'New',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600
-                      ),
-                    ),
-                  )
-              )
-          ),
-          Positioned(
-              bottom: 8,
-              right: 8,
-              child: Visibility(
-                  visible: newLike,
-                  child: Text(u.countryFlag ?? '')
-              )
-          )
+
         ],
       ),
     );
