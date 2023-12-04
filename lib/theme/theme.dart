@@ -117,8 +117,8 @@ final themeData = ThemeData(
         }
         return primaryColor;
       }),
-      shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(24)
+      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20)
       )),
       textStyle: MaterialStatePropertyAll(
         TextStyle(
@@ -144,8 +144,8 @@ final themeData = ThemeData(
         }
         return Colors.transparent;
       }),
-      shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
+      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
       )),
       side: MaterialStatePropertyAll(BorderSide(width: 2)),
       textStyle: MaterialStatePropertyAll(
@@ -164,8 +164,8 @@ final themeData = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
-      shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(24)
+      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
       )),
       textStyle: MaterialStatePropertyAll(
         TextStyle(
@@ -183,8 +183,8 @@ final themeData = ThemeData(
   ),
   searchBarTheme: SearchBarThemeData(
     elevation: MaterialStatePropertyAll(0),
-    shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(24)
+    shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
     )),
     side: MaterialStatePropertyAll(BorderSide(width: 2)),
   ),

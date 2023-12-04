@@ -8,7 +8,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
-import 'package:sona/core/chat/providers/liked_me.dart';
+import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
@@ -54,11 +54,11 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).isNotEmpty) Container(
+              if (likedMeUsers.where((u) => u.isNew).isNotEmpty) Container(
                 margin: EdgeInsets.only(bottom: 16),
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
-                  'New like (${likedMeUsers.where((u) => u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2).length})',
+                  'New like (${likedMeUsers.where((u) => u.isNew).length})',
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -96,10 +96,9 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                       );
                     }
                     final u = likedMeUsers[index];
-                    final newLike = u.likeDate != null && DateTime.now().difference(u.likeDate!).inHours < 2;
                     return GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () => widget.onTap(u),
+                      onTap: () => widget.onTap(u.toUserInfo()),
                       child: Container(
                         width: 84,
                         height: 113,
@@ -130,7 +129,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                                 size: Size(84, 113),
                               ),
                             ),
-                            if (newLike) Positioned(
+                            if (u.isNew) Positioned(
                               top: 8,
                               right: 8,
                               child: Container(

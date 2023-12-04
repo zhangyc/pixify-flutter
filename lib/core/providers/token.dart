@@ -7,7 +7,7 @@ import 'package:sona/core/persona/providers/persona.dart';
 import 'package:sona/core/travel_wish/providers/my_wish.dart';
 import 'package:sona/utils/global/global.dart' as global;
 
-import '../chat/providers/liked_me.dart';
+import '../like_me/providers/liked_me.dart';
 
 final tokenProvider = StateProvider<String?>(
   (ref) {

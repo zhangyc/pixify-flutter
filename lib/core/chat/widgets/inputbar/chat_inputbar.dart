@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -6,11 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
-import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/image/icon.dart';
-import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
-import 'package:sona/core/subscribe/subscribe_page.dart';
-import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../../utils/locale/locale.dart';
@@ -26,7 +21,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
     this.keyboardType = TextInputType.multiline,
     this.onInputChange,
     this.onSubmit,
-    this.maxLength = 256,
+    this.maxLength = 160,
     this.focusNode,
     this.autofocus = false,
     required this.onSuggestionTap,
@@ -187,6 +182,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     textAlignVertical: TextAlignVertical.center,
                     maxLines: 5,
                     minLines: 1,
+                    maxLength: widget.maxLength,
+                    buildCounter: (BuildContext, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
                     keyboardAppearance: Brightness.dark,
                     keyboardType: widget.keyboardType,
                     textInputAction: TextInputAction.send,

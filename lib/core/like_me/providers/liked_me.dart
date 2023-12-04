@@ -1,32 +1,26 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/chat/services/like.dart';
+import 'package:sona/core/like_me/models/social_user.dart';
 
 
-class LikedMe {
-  LikedMe({
-    required this.count,
-    required this.avatar
-  });
-  int count;
-  String avatar;
-}
-
-class AsyncLikedMeUsersNotifier extends AsyncNotifier<List<UserInfo>> {
-
-  Future<List<UserInfo>> _fetchLikedMeData() {
+class AsyncLikedMeUsersNotifier extends AsyncNotifier<List<SocialUser>> {
+  Future<List<SocialUser>> _fetchLikedMeData() {
     return fetchLikedMeList().then(
-      (resp) => (resp.data as List).map<UserInfo>(
-        (m) => UserInfo.fromJson(m)
-          ..likeDate = DateTime.fromMillisecondsSinceEpoch(m['likeDate'])
+      (resp) => (resp.data as List).map<SocialUser>(
+        (m) => SocialUser.fromJson(m)
       ).toList()
-    );
+    ).catchError((e) {
+      if (kDebugMode) print('async like-me data error: $e');
+      throw e;
+    });
   }
 
   @override
-  FutureOr<List<UserInfo>> build() {
+  FutureOr<List<SocialUser>> build() {
     return _fetchLikedMeData();
   }
 
@@ -41,7 +35,7 @@ class AsyncLikedMeUsersNotifier extends AsyncNotifier<List<UserInfo>> {
   }
 }
 
-final asyncLikedMeProvider = AsyncNotifierProvider<AsyncLikedMeUsersNotifier, List<UserInfo>>(
+final asyncLikedMeProvider = AsyncNotifierProvider<AsyncLikedMeUsersNotifier, List<SocialUser>>(
   () => AsyncLikedMeUsersNotifier()
 );
 

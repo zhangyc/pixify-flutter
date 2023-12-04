@@ -11,8 +11,6 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
 import 'package:sona/setting/screens/setting.dart';
-import 'package:sona/utils/dialog/subsciption.dart';
-import 'package:sona/utils/global/global.dart';
 
 import '../../../generated/l10n.dart';
 import '../../travel_wish/providers/my_wish.dart';
@@ -53,13 +51,21 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (ref.watch(asyncMyTravelWishesProvider).value?.isNotEmpty == true) Container(
+              margin: EdgeInsets.only(top: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                'Wish List',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
             Container(
               height: 253,
               child: ref.watch(asyncMyTravelWishesProvider).when(
                 data: (wishes) => ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   children: [
                     ...wishes.map((wish) => Container(
                       width: 295,
@@ -157,98 +163,71 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              margin: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: Color(0xFFF6F3F3),
                 borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 2),
-                    color: Colors.black.withOpacity(0.15),
-                    blurRadius: 20,
-                  )
-                ]
+                // boxShadow: [
+                //   BoxShadow(
+                //     offset: Offset(0, 2),
+                //     color: Colors.black.withOpacity(0.15),
+                //     blurRadius: 20,
+                //   )
+                // ]
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          // border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 1),
-                            borderRadius: BorderRadius.circular(12)
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        child: UserAvatar(
-                          url: myProfile.avatar!,
-                          size: const Size.square(64),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: -4,
-                        right: -4,
-                        child: Text(
-                          findFlagByCountryCode(myProfile.countryCode),
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    '${myProfile.name}, ${myProfile.birthday!.toAge()}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Colors.white
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    children:  [
-                      Flexible(
-                        child: FilledButton(
-                          onPressed: () => Navigator.push(context, MaterialPageRoute(
-                              builder: (_) => const ProfileScreen()
-                          )),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(Color(0xFF454545))
-                          ),
-                          child: Text(
-                            S.current.editProfile,
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Colors.white
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            UserAvatar(
+                              url: myProfile.avatar!,
+                              size: const Size.square(64),
                             ),
-                          )
+                            SizedBox(width: 16),
+                            Text(
+                              '${myProfile.name}, ${myProfile.birthday!.toAge()}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                              style: Theme.of(context).textTheme.titleMedium
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(width: 16),
-                      Flexible(
-                        child: FilledButton(
-                            onPressed: null,
+                        SizedBox(height: 16),
+                        FilledButton(
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(
+                                builder: (_) => const ProfileScreen()
+                            )),
                             style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(Color(0xFF454545))
+                              backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
                             ),
                             child: Text(
-                              'Certify',
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: Colors.white
-                              ),
+                              S.current.editProfile,
+                              style: Theme.of(context).textTheme.titleSmall
                             )
                         ),
-                      ),
-                    ]
+                      ],
+                    ),
                   ),
                   SizedBox(height: 16),
                   FilledButton(
                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE600))
+                        backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE600)),
+                        side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),
                       child: Text('Super SONA', style: Theme.of(context).textTheme.titleMedium)
                   )
