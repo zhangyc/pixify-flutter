@@ -212,11 +212,11 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                 builder: (_) => const ProfileScreen()
                             )),
                             style: ButtonStyle(
-                                backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3))
+                              backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
                             ),
                             child: Text(
                               S.current.editProfile,
-                              style: Theme.of(context).textTheme.titleMedium
+                              style: Theme.of(context).textTheme.titleSmall
                             )
                         ),
                       ],
