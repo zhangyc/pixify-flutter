@@ -2,12 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
-import 'package:sona/account/services/info.dart';
-import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/providers/token.dart';
-import 'package:sona/core/travel_wish/providers/popular_country.dart';
+import 'package:sona/setting/screens/account.dart';
 import 'package:sona/utils/global/global.dart';
-import 'package:sona/utils/locale/locale.dart';
 
 import '../../common/widgets/webview.dart';
 import '../../generated/l10n.dart';
@@ -29,7 +27,9 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF6F3F3),
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(CupertinoIcons.back),
           onPressed: Navigator.of(context).pop,
@@ -39,165 +39,37 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(child: SizedBox(height: 16)),
           SliverToBoxAdapter(
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: _showNotificationSetting,
-              child: Row(
-                children: [
-                  SizedBox(width: 20),
-                  Icon(CupertinoIcons.bell),
-                  SizedBox(width: 8),
-                  Text(S.current.notification, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500
-                  )),
-                  Expanded(child: Container()),
-                  // Text(openNotification ? 'on': 'off'),
-                  Icon(CupertinoIcons.forward),
-                  SizedBox(width: 20),
-                ],
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white
               ),
-            ),
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: 24)),
-          SliverToBoxAdapter(
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () async {
-                var result=await showRadioFieldDialog(context: context, options:
-                {'Privacy Policy': '1',
-                  'Disclaimer': '2',
-                  'Terms and Conditions':'3'
-                });
-                if (result != null && mounted){
-                  if(result=='1'){
-                    Navigator.push(context, MaterialPageRoute(builder: (c){
-                      return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
-                    }));
-                  }else if(result=='2'){
-                    Navigator.push(context, MaterialPageRoute(builder: (c){
-                      return WebView(url: 'https://h5.sona.pinpon.fun/disclaimer.html', title: 'Disclaimer');
-                    }));
-                  }else if(result=='3'){
-                    Navigator.push(context, MaterialPageRoute(builder: (c){
-                      return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
-                    }));
-                  }
-                }
-              },
-              child: Row(
-                children: [
-                  SizedBox(width: 20),
-                  Icon(CupertinoIcons.info),
-                  SizedBox(width: 8),
-                  Text(S.current.about, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w500
-                  )),
-                  Expanded(child: Container()),
-                  // Text(openNotification ? 'on': 'off'),
-                  Icon(CupertinoIcons.forward),
-                  SizedBox(width: 20),
-
-                ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: 24)),
-          SliverToBoxAdapter(
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () async {
-                var value = await showLocalePicker(context: context, initialValue: ref.read(myProfileProvider)!.locale);
-                if (value != null) {
-                  await ref.read(myProfileProvider.notifier).updateField(locale: findMatchedSonaLocale(value));
-                  ref.invalidate(asyncPopularTravelCountriesProvider);
-                }
-              },
-              child: Row(
-                children: [
-                  SizedBox(width: 20),
-                  Icon(CupertinoIcons.globe),
-                  SizedBox(width: 8),
-                  Text('Language', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500
-                  )),
-                  Expanded(child: Container()),
-                  Text(findMatchedSonaLocale(ref.watch(myProfileProvider)!.locale!).displayName),
-                  Icon(CupertinoIcons.forward),
-                  SizedBox(width: 20),
-                ],
-              ),
-            ),
-          ),
-          // kDebugMode?SliverToBoxAdapter(
-          //   child: GestureDetector(
-          //     behavior: HitTestBehavior.translucent,
-          //     onTap: () async {
-          //       PackageInfo packageInfo = await PackageInfo.fromPlatform();
-          //       if(mounted){
-          //         var result=await showRadioFieldDialog(context: context, options:
-          //         {'appVersion:${ packageInfo.version}': packageInfo.version,
-          //           'appCode:${ packageInfo.buildNumber}': packageInfo.buildNumber,
-          //         });
-          //       }
-          //     },
-          //     child: Column(
-          //       children: [
-          //         SizedBox(height: 24),
-          //         Row(
-          //           children: [
-          //             SizedBox(width: 20),
-          //             Icon(CupertinoIcons.app_badge),
-          //             SizedBox(width: 8),
-          //             Text('App info', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          //                 fontWeight: FontWeight.w500
-          //             )),
-          //             Expanded(child: Container()),
-          //             // Text(openNotification ? 'on': 'off'),
-          //             Icon(CupertinoIcons.forward),
-          //             SizedBox(width: 20),
-          //
-          //           ],
-          //         ),
-          //       ],
-          //      ),
-          //   ),
-          // ),
-          SliverToBoxAdapter (
-            child: SizedBox(
-              height: 40,
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: UnconstrainedBox(
-              child: SizedBox(
-                width: 180,
-                child: ColoredButton(
-                  onTap: _logout,
-                  text: S.current.logout,
-                  color: Colors.black,
-                  fontColor: Colors.white,
-                ),
-              ),
-            ),
-          ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Align(
-              alignment: Alignment.bottomCenter,
+              clipBehavior: Clip.antiAlias,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextButton(
-                    onPressed: _delete,
-                    child: Text(S.current.deleteAccount, style: TextStyle(color: Colors.grey))
+                  ForwardButton(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AccountSettingScreen())),
+                    text: 'Account Setting',
                   ),
-                  SizedBox(height: 20),
+                  ForwardButton(
+                    onTap: _showNotificationSetting,
+                    text: 'Edit',
+                  ),
+                  ForwardButton(
+                    onTap: _showAbout,
+                    text: 'Privacy',
+                  ),
+                  ForwardButton(
+                    onTap: _logout,
+                    text: 'Sign out',
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       )
     );
@@ -229,45 +101,27 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
     ref.read(tokenProvider.notifier).state = null;
   }
 
-  Future _delete() async {
-    final warningConfirm = await _showWarningConfirm();
-    bool? finalConfirm;
-    if (warningConfirm == true) {
-      if (ref.read(myProfileProvider)!.isMember) {
-        finalConfirm = await _showFinalConfirm();
-      } else {
-        finalConfirm = true;
-      }
-      if (finalConfirm == true) {
-        final resp = await deleteAccount();
-        await appCommonBox.clear();
-        if (resp.statusCode == 0) {
-          if (mounted) {
-            Navigator.popUntil(context, (route) => route.isFirst);
-          }
-          ref.read(tokenProvider.notifier).state = null;
-        }
+  Future _showAbout() async {
+    var result = await showRadioFieldDialog(context: context, options: {
+      'Privacy Policy': '1',
+      'Disclaimer': '2',
+      'Terms and Conditions':'3'
+    });
+    if (result != null && mounted){
+      if(result=='1'){
+        Navigator.push(context, MaterialPageRoute(builder: (c){
+          return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
+        }));
+      }else if(result=='2'){
+        Navigator.push(context, MaterialPageRoute(builder: (c){
+          return WebView(url: 'https://h5.sona.pinpon.fun/disclaimer.html', title: 'Disclaimer');
+        }));
+      }else if(result=='3'){
+        Navigator.push(context, MaterialPageRoute(builder: (c){
+          return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+        }));
       }
     }
   }
 
-  Future<bool?> _showWarningConfirm() {
-    return showConfirm(
-      context: context,
-      title: 'Delete Account',
-      confirmDelay: const Duration(seconds: 2),
-      content: 'Deleting your account is permanent.\nAll your data will be deleted and can\'t be recovered.\nAre you sure you want to proceed?',
-      confirmText: 'Delete',
-    );
-  }
-
-  Future<bool?> _showFinalConfirm() {
-    return showConfirm(
-      context: context,
-      title: 'Delete Account',
-      content: 'Your account will be automatically deleted in 14 days.\n\nPlease remember to go to the store to cancel your current subscription to avoid additional charges.',
-      confirmText: 'Got it',
-      cancelText: 'Keep Account'
-    );
-  }
 }
