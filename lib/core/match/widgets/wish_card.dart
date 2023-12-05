@@ -25,7 +25,7 @@ class WishCardWidget extends ConsumerStatefulWidget {
 }
 
 class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
-  PageController pageController=PageController();
+  PageController pageController=PageController(viewportFraction: 0.8);
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -158,7 +158,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
 
   Widget _buildPageIndicator() {
     return Container(
-      height: 56,
+      width: 56,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(

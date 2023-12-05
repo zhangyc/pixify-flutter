@@ -30,7 +30,6 @@ class MatchScreen extends StatefulHookConsumerWidget {
 
 class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin {
-  ScrollDirection? direction;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -109,6 +108,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           return FilterPage();
                         })).then((value){
                           _initData();
+                          _state=PageState.loading;
 
                         });
                         // showFilter(context,(){
@@ -299,8 +299,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (value) async {
           //currentPage=value;
-          if (value != 0 && value % 5 == 0 &&
-              ScrollDirection.reverse == direction) {
+          if (value != 0 && value % 3 == 0 ) {
             current++;
             _loadMore();
           }
