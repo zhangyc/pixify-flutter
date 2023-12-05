@@ -74,61 +74,74 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                       height: 221,
                       margin: EdgeInsets.symmetric(horizontal: 4),
                       decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [Colors.black.withOpacity(0), Colors.black.withOpacity(0.75)],
+                        ),
                         image: wish.countryPhoto != null ? DecorationImage(
                           image: CachedNetworkImageProvider(
                             wish.countryPhoto!
                           ),
-                          fit: BoxFit.cover
+                          fit: BoxFit.cover,
                         ) : null,
                         border: Border.all(width: 2),
-                        borderRadius: BorderRadius.circular(20)
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       clipBehavior: Clip.antiAlias,
-                      child: Stack(
-                        children: [
-                          if (wish.countryFlag != null) Positioned(
-                            bottom: 8,
-                            left: 16,
-                            right: 16,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.black26
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment(0.01, -1.00),
+                            end: Alignment(-0.01, 1),
+                            colors: [Colors.black.withOpacity(0), Colors.black.withOpacity(0.75)],
+                          ),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Expanded(child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          wish.countryName,
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        Text(
-                                          wish.when,
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        if (wish.cityNames.isNotEmpty) Text(
-                                          wish.cityNames.join(','),
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        if (wish.activityNames.isNotEmpty) Text(
-                                          wish.activityNames.join(','),
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(color: Colors.white),
-                                        )
-                                      ],
+                                  Text(
+                                    wish.countryName,
+                                    textAlign: TextAlign.start,
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Colors.white
                                     ),
                                   ),
-                                  Text(wish.countryFlag!, style: TextStyle(fontSize: 20),)
+                                  if (wish.cityNames.isNotEmpty) Text(
+                                    wish.cityNames.join(','),
+                                    textAlign: TextAlign.start,
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                        color: Colors.white
+                                    ),
+                                  ),
+                                  if (wish.activityNames.isNotEmpty) Text(
+                                    wish.activityNames.join(','),
+                                    textAlign: TextAlign.start,
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                        color: Colors.white
+                                    ),
+                                  ),
+                                  Text(
+                                    wish.when,
+                                    textAlign: TextAlign.start,
+                                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                        color: Color(0xFFCCCCCC)
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                          )
-                        ],
+                            Text(wish.countryFlag ?? '', style: TextStyle(fontSize: 20),)
+                          ],
+                        ),
                       ),
                     )),
                     GestureDetector(

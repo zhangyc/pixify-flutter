@@ -186,7 +186,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     buildCounter: (BuildContext, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
                     keyboardAppearance: Brightness.dark,
                     keyboardType: widget.keyboardType,
-                    textInputAction: TextInputAction.send,
+                    textInputAction: TextInputAction.newline,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
@@ -244,7 +244,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                         ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
                       )
                     ),
-                    icon: SonaIcon(icon: SonaIcons.send)
+                    icon: SonaIcon(icon: SonaIcons.chat_send)
                   ),
                 ),
               ),
