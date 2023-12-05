@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -43,7 +44,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Direct Message'),
-                      GestureDetector(child: const Icon(Icons.close),onTap: (){
+                      GestureDetector(child: Image.asset(Assets.iconsSkip,width: 40,height: 40,),onTap: (){
                         Navigator.pop(context);
                       },
                       )
@@ -59,9 +60,12 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                   Row(
                     children: [
                       Flexible(child: TextField(
-                        maxLength: 160,
                         controller: controller,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(160), // Maximum length of 10 characters
+                        ],
                         decoration: InputDecoration(
+                            hintText: 'Enter text here',
                             border:OutlineInputBorder(
                                 borderSide: const BorderSide(
                                     color: Colors.black,
@@ -171,6 +175,11 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
         child: Consumer(builder: (b,ref,_){
           return StatefulBuilder(
             builder: (BuildContext context, void Function(void Function()) setState) {
+              controller.addListener(() {
+                setState((){
+
+                });
+              });
               return BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 5.0,sigmaY: 5.0),
                 child: Container(
@@ -232,9 +241,11 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                               // maxLines: null,
                               // minLines: 1,
                               controller: controller,
-                              maxLength: 160,
-
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(160), // Maximum length of 10 characters
+                              ],
                               decoration: InputDecoration(
+                                hintText: 'Enter text here',
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16
                                 ),
@@ -251,7 +262,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                             const SizedBox(
                               width: 16,
                             ),
-                            GestureDetector(
+                            controller.text.isNotEmpty?GestureDetector(
                               child: Image.asset(Assets.iconsSend,width: 56,height: 56,),
                               onTap: (){
                                 if(controller.text.isEmpty){
@@ -262,7 +273,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                                 ref.read(asyncMatchRecommendedProvider.notifier).customSend(target.id,controller.text);
                                 Navigator.pop(context);
                               },
-                            ),
+                            ):Container(),
                           ],
                         ),
                       ),
