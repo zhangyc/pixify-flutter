@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/common/widgets/tag/hobby.dart';
+
+import '../models/hobby.dart';
 
 class Interests extends ConsumerStatefulWidget {
   const Interests({
@@ -9,7 +11,7 @@ class Interests extends ConsumerStatefulWidget {
     required this.initialValue,
     required this.onChange
   });
-  final List<String> availableValue;
+  final List<UserHobby> availableValue;
   final Set<String>? initialValue;
   final void Function(Set<String>) onChange;
 
@@ -19,6 +21,7 @@ class Interests extends ConsumerStatefulWidget {
 
 class _InterestsState extends ConsumerState<Interests> {
 
+  static const maxCount = 10;
   late Set<String> _selected = widget.initialValue ?? {};
 
   @override
@@ -28,13 +31,18 @@ class _InterestsState extends ConsumerState<Interests> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Text(
-                    'Choose Hobbies\nFor\nBetter Matches',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.white
+              Text.rich(
+                TextSpan(
+                  text: 'Choose hobbies ${_selected.length}',
+                  style: Theme.of(context).textTheme.titleMedium,
+                  children: [
+                    TextSpan(
+                      text: '/$maxCount',
+                      style: Theme.of(context).textTheme.bodySmall
                     )
+                  ]
                 ),
               ),
               Column(
@@ -52,42 +60,28 @@ class _InterestsState extends ConsumerState<Interests> {
                     )
                   ),
                   SizedBox(height: 8),
-                  Text(
-                      '${_selected.length}/10',
-                    style: TextStyle(color: Colors.white),
-                  )
                 ],
               )
             ],
           ),
-          SizedBox(height: 16),
-          Wrap(
-            spacing: 16,
-            runSpacing: 16,
-            children: [
-              for (final interest in widget.availableValue)
-                FittedBox(
-                  child: GestureDetector(
-                    onTap: () => _toggleInterest(interest),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 13),
-                      decoration: BoxDecoration(
-                        color: _selected.contains(interest) ? Theme.of(context).primaryColor : Colors.white,
-                        border: Border.all(color: Colors.black12),
-                        borderRadius: BorderRadius.circular(6)
-                      ),
-                      child: Text(
-                        interest,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: _selected.contains(interest) ? Colors.white : Colors.black
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-            ],
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 6,
+                children: [
+                  for (final hobby in widget.availableValue)
+                    HobbyTag<String>(
+                        displayName: hobby.displayName,
+                        value: hobby.code,
+                        selected: _selected.contains(hobby.code),
+                        onSelect: (hb) => _toggleInterest(hb)
+                    )
+                ],
+              ),
+            ),
           ),
-          SizedBox(height: 20,)
         ],
     );
   }

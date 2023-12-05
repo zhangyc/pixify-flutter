@@ -387,7 +387,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final data = resp.data['optionV2'] as Map;
     final tips = data['tips'] as String?;
     final options = data['suggestions'] as List;
-    if (tips == null || options.isEmpty) return;
+    if (options.isEmpty) return;
 
     if (!mounted) return;
     // final options = ['alsdjfsdkf,', 'skldlsa;fj ak fa;kldjf kadkjfk ak jkalsdj fkajsdkf d', '“Kakukicho” is an iconic place in Tokyo. There are many kabuki and drinking activities, but it is best to go with locals.'];
@@ -455,10 +455,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      tips,
-                      style: Theme.of(context).textTheme.bodyMedium
+                    if (tips != null) Container(
+                      margin: EdgeInsets.only(top: 16),
+                      child: Text(
+                        tips,
+                        style: Theme.of(context).textTheme.bodyMedium
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Container(

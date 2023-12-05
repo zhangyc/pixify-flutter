@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 
 import '../../../common/widgets/image/user_avatar.dart';
 import '../models/social_user.dart';
@@ -42,7 +43,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
       ),
       body: ref.watch(asyncLikedMeProvider).when(
           data: (data) => data.isNotEmpty ? GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 132),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 8,
@@ -55,6 +56,17 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
           error: (_, __) => Center(child: Text('error')),
           loading: () => Center(child: CircularProgressIndicator())
       ),
+      floatingActionButton: !ref.read(myProfileProvider)!.isMember ? Padding(
+        padding: EdgeInsets.only(left: 16, right: 16, bottom: 50),
+        child: OutlinedButton(
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.pay_chatlist_likedme))),
+          style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
+            backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806)),
+          ),
+          child: Text('Become Super SoNA', style: Theme.of(context).textTheme.titleMedium),
+        ),
+      ) : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
