@@ -7,6 +7,8 @@ import 'package:sona/account/screens/profile.dart';
 import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
+import 'package:sona/core/persona/providers/profile_progress.dart';
+import 'package:sona/core/persona/widgets/profile_progress_indicator.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
@@ -191,18 +193,31 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             UserAvatar(
                               url: myProfile.avatar!,
                               size: const Size.square(64),
                             ),
                             SizedBox(width: 16),
-                            Text(
-                              '${myProfile.name}, ${myProfile.birthday!.toAge()}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: true,
-                              style: Theme.of(context).textTheme.titleMedium
+                            Expanded(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    '${myProfile.name}, ${myProfile.birthday!.toAge()}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: true,
+                                    style: Theme.of(context).textTheme.titleMedium
+                                  ),
+                                  if (ref.watch(profileProgressProvider) < 1) Container(
+                                    margin: EdgeInsets.only(top: 12),
+                                    child: ProfileProgressIndicator()
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
