@@ -9,7 +9,7 @@ import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
-import 'package:sona/core/match/widgets/profile.dart';
+import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
 
 import '../../../account/providers/profile.dart';
@@ -95,27 +95,29 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Sona"),
+                Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
+
+                //Text("Sona"),
                 Row(
                   children: [
-                    Image.asset(Assets.iconsNotice,width: 48,height: 48,),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    // Image.asset(Assets.iconsNotice,width: 48,height: 48,),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
                     GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (c){
                           return FilterPage();
                         })).then((value){
                           _initData();
-                          _state=PageState.loading;
+                          if(mounted){
+                            _state=PageState.loading;
+                            setState(() {
+
+                            });
+                          }
 
                         });
-                        // showFilter(context,(){
-                        //   //_initData();
-                        //   _state=PageState.loading;
-                        //   _initData();
-                        // });
                       },
                     ),
                   ],
@@ -280,7 +282,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
             );
           }else {
-            return Profile(info:info,next:(){
+            return ProfileWidget(
+              profileType: ProfileType.match,
+              info:info,next:(){
               pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
 
             },

@@ -1,12 +1,10 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../account/providers/profile.dart';
-import '../../../common/models/user.dart';
 import '../../../common/permission/permission.dart';
 import '../../../generated/assets.dart';
 import '../../../utils/global/global.dart';
@@ -20,70 +18,106 @@ import 'package:sona/core/match/widgets/avatar_animation.dart';
 showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
   showBottomSheet(context: context, builder: (c){
     TextEditingController controller=TextEditingController();
+
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        return Container(
-          height: 400,
-          padding: EdgeInsets.symmetric(
-              horizontal: 24
-          ),
-          child: Column(
+        return StatefulBuilder(
+          builder: (BuildContext context, void Function(void Function()) setState) {
+            controller.addListener(() {
+              setState((){
 
-            children: [
-              SizedBox(
-                height: 16,
+              });
+            });
+            return Container(
+              height: 400,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 24
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+
                 children: [
-                  Text('Direct Message'),
-                  GestureDetector(child: Icon(Icons.close),onTap: (){
-                     Navigator.pop(context);
-                   },
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              Image.asset(Assets.imagesDm,width: 216,height: 155,),
-              SizedBox(
-                height: 24,
-              ),
-              Row(
-                children: [
-                  Flexible(child: TextField(
-                    maxLength: 160,
-                    controller: controller,
-                    decoration: InputDecoration(
-                      border:OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.black,
-                              width: 2
-                          ),
-                          borderRadius: BorderRadius.circular(24)
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 16
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Direct Message'),
+                      GestureDetector(child: const Icon(Icons.close),onTap: (){
+                        Navigator.pop(context);
+                      },
                       )
-                    ),
+                    ],
                   ),
+                  const SizedBox(
+                    height: 24,
                   ),
-                  SizedBox(
-                    width: 16,
+                  Image.asset(Assets.imagesDm,width: 216,height: 155,),
+                  const SizedBox(
+                    height: 24,
                   ),
-                  GestureDetector(
-                    child:Image.asset(Assets.iconsSend,width: 56,height: 56,),
-                    onTap: (){
-                      if(controller.text.isEmpty){
-                        return ;
-                      }
+                  Row(
+                    children: [
+                      Flexible(child: TextField(
+                        maxLength: 160,
+                        controller: controller,
+                        decoration: InputDecoration(
+                            border:OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.black,
+                                    width: 2
+                                ),
+                                borderRadius: BorderRadius.circular(24)
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16
+                            )
+                        ),
+                      ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      controller.text.isNotEmpty?GestureDetector(
+                        child:Image.asset(Assets.iconsSend,width: 56,height: 56,),
+                        onTap: (){
+                          if(controller.text.isEmpty){
+                            return ;
+                          }
 
+                          if(canArrow){
+                            arrow=arrow-1;
+                            ref.read(asyncMatchRecommendedProvider.notifier).customSend(info.id,controller.text);
+
+                            //ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
+                            SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                            next.call();
+                            Navigator.pop(context);
+                            //arrowController.reset();
+                            //arrowController.forward() ;
+                            //widget.userInfo.arrowed=true;
+                          }else {
+                            bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                            if(isMember){
+                              Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                            }else{
+                              Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                                return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                              }));
+                            }
+                          }
+                        },
+                      ):Container(),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  TextButton(
+                    onPressed: (){
                       if(canArrow){
                         arrow=arrow-1;
-                        ref.read(asyncMatchRecommendedProvider.notifier).customSend(info.id,controller.text);
-
-                        //ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
+                        ref.read(asyncMatchRecommendedProvider.notifier).sayHi(info.id);
                         SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                         next.call();
                         Navigator.pop(context);
@@ -96,55 +130,28 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                           Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                         }else{
                           Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                            return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                            return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
                           }));
                         }
                       }
                     },
-                  ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(Assets.iconsLogo,width: 20,height: 20,),
+                        const Text('Let SONA say hi for you ',style: TextStyle(
+                            color: Colors.black
+                        ),),
+                        const Icon(Icons.arrow_forward_outlined)
+                      ],
+                    ),
+                  )
+
                 ],
               ),
-              SizedBox(
-                height: 24,
-              ),
-              TextButton(
-                onPressed: (){
-                  if(canArrow){
-                    arrow=arrow-1;
-                    ref.read(asyncMatchRecommendedProvider.notifier).sayHi(info.id);
-                    SonaAnalytics.log(MatchEvent.match_arrow_send.name);
-                    next.call();
-                    Navigator.pop(context);
-                    //arrowController.reset();
-                    //arrowController.forward() ;
-                    //widget.userInfo.arrowed=true;
-                  }else {
-                    bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                    if(isMember){
-                      Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                    }else{
-                      Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                        return SubscribePage(fromTag: FromTag.pay_match_arrow,);
-                      }));
-                    }
-                  }
-                },
-                child: Container(
-                  child: Row(
-                    children: [
-                      Image.asset(Assets.iconsLogo,width: 20,height: 20,),
-                      Text('Let SONA say hi for you ',style: TextStyle(
-                        color: Colors.black
-                      ),),
-                      Icon(Icons.arrow_forward_outlined)
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                ),
-              )
+            );
+          },
 
-            ],
-          ),
         );
       },
     );
@@ -152,12 +159,10 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
 
 }
 void showMatched(BuildContext context,{required MatchUserInfo target,required VoidCallback next}) {
-  String sayHi='Let SONA Say Hi';
   // showModalBottomSheet(context: context, builder: (c){});
   showGeneralDialog(context: context,
       pageBuilder: (_,__,___){
     TextEditingController controller=TextEditingController();
-    var height = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -173,12 +178,12 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                   color: Colors.white.withOpacity(0.8),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 64,
                       ),
                       Container(
                         alignment: Alignment.centerRight,
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                           right: 16
                         ),
                         child: GestureDetector(
@@ -188,13 +193,13 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                           child: Image.asset(Assets.iconsSkip,width: 40,height: 40,),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
-                      Text('NEW MATCHED!',style: TextStyle(
+                      const Text('NEW MATCHED!',style: TextStyle(
                           fontSize: 24
                       ),),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       AvatarAnimation(
@@ -202,7 +207,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                         name: target.name??'',
                         direction: AnimationDirection.left,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Padding(
@@ -211,11 +216,11 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                           '${target.likeActivityName??''}'
                          ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             horizontal: 36
                         ),
                         child: Row(
@@ -230,11 +235,11 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                               maxLength: 160,
 
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16
                                 ),
                                 border:OutlineInputBorder(
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         color: Colors.black,
                                         width: 2
                                     ),
@@ -243,7 +248,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                               ),
                             ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 16,
                             ),
                             GestureDetector(
@@ -261,7 +266,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 24,
                       ),
                       TextButton(
@@ -272,17 +277,15 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                           Navigator.pop(context);
 
                         },
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Image.asset(Assets.iconsLogo,width: 20,height: 20,),
-                              Text('Let SONA say hi for you ',style: TextStyle(
-                                color: Colors.black
-                              ),),
-                              Icon(Icons.arrow_forward_outlined)
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.center,
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(Assets.iconsLogo,width: 20,height: 20,),
+                            const Text('Let SONA say hi for you ',style: TextStyle(
+                              color: Colors.black
+                            ),),
+                            const Icon(Icons.arrow_forward_outlined)
+                          ],
                         ),
                       )
                     ],
@@ -306,7 +309,7 @@ void showArrowReward(BuildContext context){
             },
             child: Container(
               height:MediaQuery.of(context).size.height,
-              color: Color(0xff232323),
+              color: const Color(0xff232323),
               child: Stack(
                 children: [
                   Column(
@@ -316,7 +319,7 @@ void showArrowReward(BuildContext context){
                       ),
                       Row(
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           Container(
                             // color: Colors.white,
                             alignment: Alignment.centerRight,
@@ -334,18 +337,18 @@ void showArrowReward(BuildContext context){
                       ),
                       Image.asset(Assets.imagesRewardArrow,width: 165,height: 162,),
 
-                      Text('You got 1 ninja star!',style: TextStyle(
+                      const Text('You got 1 ninja star!',style: TextStyle(
                           color: Colors.white,
                           fontSize: 30
                       ),),
-                      SizedBox(
+                      const SizedBox(
                         height: 64,
                       ),
                       Image.asset(Assets.iconsArrow,width: 96,height: 97,),
-                      SizedBox(
+                      const SizedBox(
                         height: 64,
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20
                         ),
@@ -364,7 +367,7 @@ void showArrowReward(BuildContext context){
                       ),
                       Row(
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           Container(
                             // color: Colors.white,
                             alignment: Alignment.centerRight,

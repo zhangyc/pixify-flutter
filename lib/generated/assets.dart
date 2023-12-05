@@ -27,6 +27,7 @@ class Assets {
   static const String iconsSend = 'assets/icons/send.png';
   static const String iconsSettings = 'assets/icons/settings.png';
   static const String iconsSkip = 'assets/icons/skip.png';
+  static const String iconsSona = 'assets/icons/sona.png';
   static const String iconsSonaMessage = 'assets/icons/sona_message.png';
   static const String iconsSparkles = 'assets/icons/sparkles.png';
   static const String iconsSub1 = 'assets/icons/sub1.png';

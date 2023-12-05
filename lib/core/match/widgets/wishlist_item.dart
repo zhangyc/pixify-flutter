@@ -55,7 +55,7 @@ class _WishListItemState extends State<WishListItem> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${e.activityNames}',style: TextStyle(
+              Text('${e.activityNames??''}',style: TextStyle(
                 color: Colors.white
               ),),
               Text('${e.cityName}、${e.countryName}',style: TextStyle(

@@ -9,6 +9,7 @@ import '../../../generated/assets.dart';
 import '../../../utils/dialog/report.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
+import '../providers/match_provider.dart';
 import '../providers/matched.dart';
 import '../services/match.dart';
 import '../util/event.dart';
@@ -19,21 +20,27 @@ import 'galley_item.dart';
 import 'heard_item.dart';
 import 'interest_item.dart';
 import 'wishlist_item.dart';
-
-class Profile extends ConsumerStatefulWidget {
-  const Profile( {super.key,
+enum ProfileType{
+  own,  ///自己查看自己   。单纯展示，没有任何功能按钮
+  other, ///查看已经和自己匹配的  。 unmatch，block，report
+  match  ///match列表  block，report
+}
+class ProfileWidget extends ConsumerStatefulWidget {
+  const ProfileWidget( {super.key,
     required this.info,
     required this.next,
     required this.onMatch,
+    required this.profileType,
   });
   final MatchUserInfo info;
   final VoidCallback next;
   final Function(bool matched) onMatch;
+  final ProfileType profileType;
   @override
   ConsumerState createState() => _ProfileState();
 }
 
-class _ProfileState extends ConsumerState<Profile> {
+class _ProfileState extends ConsumerState<ProfileWidget> {
   late MatchUserInfo info=widget.info;
   @override
   Widget build(BuildContext context) {
@@ -41,10 +48,18 @@ class _ProfileState extends ConsumerState<Profile> {
       children: [
         Column(
           children: [
+            (widget.profileType==ProfileType.other||widget.profileType==ProfileType.own)?SizedBox(
+              height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top,
+            ):
             SizedBox(
               height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
             ),
-            SizedBox(
+            Container(alignment: Alignment.centerLeft,child: (widget.profileType==ProfileType.other||widget.profileType==ProfileType.own)?IconButton(onPressed: (){
+                 Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back_ios_new)):Container(),
+            ),
+            const SizedBox(
               height: 8,
             ),
             Expanded(
@@ -90,8 +105,10 @@ class _ProfileState extends ConsumerState<Profile> {
                                   if (mounted) setState(() {});
                                   Fluttertoast.showToast(msg: 'The user has been blocked');
                                   SonaAnalytics.log('post_block');
-                                }
-                              },),
+                                } 
+                              },
+                                profileType: widget.profileType,
+                              ),
                               SizedBox(
                                 height: MediaQuery.of(context).padding.bottom+64,
                               ),
@@ -107,7 +124,7 @@ class _ProfileState extends ConsumerState<Profile> {
             ),
           ],
         ),
-        Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+        widget.profileType==ProfileType.match?Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
           width: MediaQuery.of(context).size.width,child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -137,6 +154,7 @@ class _ProfileState extends ConsumerState<Profile> {
                     }else{
                       ///
                       if(info.wishList.isEmpty){
+                        ref.read(backgroundImageProvider.notifier).updateBg(null);
                         widget.next.call();
                       }else {
                         widget.onMatch.call(true);
@@ -177,7 +195,7 @@ class _ProfileState extends ConsumerState<Profile> {
               ),
             ],
           ),
-        )
+        ):Container()
       ],
     );
   }

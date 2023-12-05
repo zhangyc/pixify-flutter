@@ -10,7 +10,7 @@ final backgroundImageProvider = StateNotifierProvider<BackgroundColorController,
 class BackgroundColorController extends StateNotifier<String?> {
   BackgroundColorController() : super(null);
 
-  void updateBg(String color) {
+  void updateBg(String? color) {
     state = color;
   }
 }

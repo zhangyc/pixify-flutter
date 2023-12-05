@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/providers/other_info_provider.dart';
 import 'package:sona/core/match/services/match.dart';
-import 'package:sona/core/match/widgets/profile.dart';
+import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/report.dart';
 
@@ -37,7 +37,9 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: ref.watch(getProfileByIdProvider(widget.userId)).when(
-        data: (user) => Profile(info: user.data, next: (){
+        data: (user) => ProfileWidget(
+          profileType: ProfileType.other,
+          info: user.data, next: (){
 
         },onMatch: (v){},),
         error: (err, stack) => GestureDetector(
