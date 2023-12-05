@@ -10,6 +10,7 @@ import 'package:sona/account/services/info.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/common/widgets/image/icon.dart';
+import 'package:sona/common/widgets/tag/hobby.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
@@ -59,7 +60,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 SizedBox(height: 20),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-                  child: Text('Photos', style: Theme.of(context).textTheme.titleLarge),
+                  child: Text('Photos', style: Theme.of(context).textTheme.titleMedium),
                 ),
                 Container(
                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -91,9 +92,25 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('Bio', style: Theme.of(context).textTheme.titleMedium),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Bio', style: Theme.of(context).textTheme.titleMedium),
+                      GestureDetector(
+                        onTap: onBioEdit,
+                        child: Text('Edit', style: Theme.of(context).textTheme.titleSmall)
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 8),
-                  ForwardButton(onTap: onBioEdit, text: _profile.bio, placeholder: 'Write sth and let Sona spruce it up')
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF6F3F3),
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: Text(_profile.bio ?? ''),
+                  )
                 ],
               ),
             ),
@@ -105,12 +122,27 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('Hobbies', style: Theme.of(context).textTheme.titleMedium),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Hobbies', style: Theme.of(context).textTheme.titleMedium),
+                      GestureDetector(
+                        onTap: _onEditInterests,
+                        child: Text('Edit', style: Theme.of(context).textTheme.titleSmall)
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 8),
-                  ForwardButton(
-                    onTap: _onEditInterests,
-                    text: _profile.interests.isNotEmpty ? _profile.interests.join(' , ') : null,
-                    placeholder: 'Add your hobbies',
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 6,
+                    children: [
+                      ..._profile.interests.map((h) => HobbyTag(
+                        value: h.code,
+                        displayName: h.displayName,
+                        selected: true,
+                      ))
+                    ]
                   )
                 ],
               ),

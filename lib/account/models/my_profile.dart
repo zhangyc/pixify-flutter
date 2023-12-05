@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/gender.dart';
+import 'package:sona/account/models/hobby.dart';
 import 'package:sona/common/models/user.dart';
 
 class MyProfile {
@@ -12,7 +13,7 @@ class MyProfile {
     this.countryCode,
     this.countryFlag,
     required this.avatar,
-    this.interests = const <String>[],
+    this.interests = const <UserHobby>[],
     required this.position,
     this.pushEnabled = true,
     this.bio,
@@ -34,7 +35,7 @@ class MyProfile {
   final String? bio;
   final String? impression;
   final int? chatStyleId;
-  final List<String> interests;
+  final List<UserHobby> interests;
   final List<ProfilePhoto> photos;
   final Position? position;
   final bool pushEnabled;
@@ -68,7 +69,7 @@ class MyProfile {
       impression: json['impression'],
       chatStyleId: json['chatStyleId'],
       vipEndDate: json['vipEndDate'],
-      interests: json['interest'] != null ? (json['interest'] as String).trim().split(',') : [],
+      interests: json['interestList'] != null ? (json['interestList'] as List).map<UserHobby>((json) => UserHobby.fromJson(json)).toList() : [],
       photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
       position: pos,
       pushEnabled: json['openPush'] ?? true,
@@ -89,7 +90,7 @@ class MyProfile {
       'description': bio,
       'impression': impression,
       'chatStyleId': chatStyleId,
-      'interest': interests.join(','),
+      'interestList': interests.map((hb) => hb.toJson()).toList(),
       'images': photos.map<Map<String, dynamic>>((photo) => photo.toJson()).toList(),
       'longitude': position?.longitude.toString(),
       'latitude': position?.latitude.toString(),
