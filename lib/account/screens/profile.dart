@@ -49,6 +49,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         ),
         title: Text(S.current.editProfile),
         centerTitle: true,
+        actions: [
+          UnconstrainedBox(
+              child: FittedBox(
+                child: TextButton(
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: _profile.id))),
+                    style: ButtonStyle(
+                      minimumSize: MaterialStatePropertyAll(Size.zero)
+                    ),
+                    child: Text('Preview', style: Theme.of(context).textTheme.titleSmall)
+                ),
+              ),
+          )
+        ],
       ),
       body: CustomScrollView(
         slivers: [
