@@ -24,10 +24,11 @@ class _CropImageScreenState extends State<_CropImageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: () {
+      body: PopScope(
+        canPop: true,
+        onPopInvoked: (bool didPop) {
+          if (didPop) return;
           EasyLoading.dismiss();
-          return Future.value(true);
         },
         child: Crop(
           image: widget.data,
