@@ -523,6 +523,7 @@ Future<T?> showRadioFieldDialog<T>({
                   )
                 ],
               ),
+              clipBehavior: Clip.antiAlias,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) => OptionButton(

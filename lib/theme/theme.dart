@@ -167,15 +167,16 @@ final themeData = ThemeData(
       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20)
       )),
-      textStyle: MaterialStatePropertyAll(
-        TextStyle(
+      foregroundColor: MaterialStatePropertyAll(Colors.black),
+      textStyle: MaterialStateProperty.resolveWith((Set<MaterialState> state) {
+        return TextStyle(
           color: primaryColor,
           fontSize: 16,
           fontWeight: FontWeight.w600,
           letterSpacing: 1.6
-        )
-      ),
-      padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
+        );
+      }),
+      padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 24)),
       minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
       fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
       alignment: Alignment.center
