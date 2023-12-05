@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/utils/local_notification/local_lotification_manager.dart';
 
 import '../utils/providers/app_lifecycle.dart';
@@ -63,7 +64,16 @@ Future<void> initFireBaseService(FirebaseApp firebase) async {
   );
   messagesService.getToken().then((value){
     deviceToken=value;
+    if(value!=null){
+      post(
+          '/user/update',
+          data: {
+            'deviceToken': value,
+          }
+      );
+    }
   });
+  
 
   ///应用在前台时，
   FirebaseMessaging.onMessage.listen(foreground);
