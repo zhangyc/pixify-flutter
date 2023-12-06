@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sona/account/models/age.dart';
@@ -100,6 +102,16 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                       // hintStyle: TextStyle(color: Color(0xFFE9C6EE))
                     ),
                     style: Theme.of(context).textTheme.bodyMedium,
+                    validator: (String? text) {
+                      if (text == null || text.isEmpty) return 'Name can not be empty';
+                      final len = utf8.encode(text).length;
+                      if (len < 3) {
+                        return 'At least 3 characters';
+                      } else if (len > 32) {
+                        return 'Can not over 32 characters';
+                      }
+                      return null;
+                    },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     onTapOutside: (_) {
                       _nameFocusNode.unfocus();

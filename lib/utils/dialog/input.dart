@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:sona/account/models/age.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/common/widgets/button/next.dart';
 import 'package:sona/common/widgets/button/option.dart';
@@ -592,13 +593,15 @@ Future<DateTime?> showBirthdayPicker({
           SizedBox(
             height: 188,
             child: CupertinoDatePicker(
-                initialDateTime: initialDate,
-                mode: CupertinoDatePickerMode.date,
-                showDayOfWeek: true,
-                onDateTimeChanged: (DateTime newDate) {
-                  _birthday = newDate;
-                },
-                itemExtent: 40),
+              initialDateTime: initialDate,
+              mode: CupertinoDatePickerMode.date,
+              showDayOfWeek: true,
+              maximumDate: DateTime.now().yearsAgo(18),
+              onDateTimeChanged: (DateTime newDate) {
+                _birthday = newDate;
+              },
+              itemExtent: 40
+            ),
           ),
           SizedBox(height: 20),
           Padding(

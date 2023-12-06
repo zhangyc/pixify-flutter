@@ -7,12 +7,27 @@ class ProfileProgressIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return LinearProgressIndicator(
-      value: ref.watch(profileProgressProvider),
-      color: Theme.of(context).primaryColor,
-      backgroundColor: Color(0xFFE8E6E6),
-      minHeight: 8,
-      borderRadius: BorderRadius.circular(4),
+    return SizedBox(
+      height: 24,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: LinearProgressIndicator(
+              value: ref.watch(profileProgressProvider),
+              color: Theme.of(context).primaryColor,
+              backgroundColor: Color(0xFFE8E6E6),
+              minHeight: 8,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          SizedBox(width: 12),
+          Text(
+              '${(ref.watch(profileProgressProvider) * 100).toInt()}%',
+            style: Theme.of(context).textTheme.titleSmall,
+          )
+        ],
+      ),
     );
   }
 }

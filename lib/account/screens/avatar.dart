@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
@@ -54,24 +55,89 @@ class _AvatarScreenState extends State<AvatarScreen> {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  'Your portrait',
+                  'Upload\nYour portrait',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),
               SizedBox(height: 24),
               if (_avatar == null) Container(
-                width: 150,
-                height: 200,
-                padding: const EdgeInsets.all(10),
-                decoration: ShapeDecoration(
-                  color: Color(0xFFF6F3F3),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Color(0xFFB6B6B6)),
-                    borderRadius: BorderRadius.circular(24),
-                  ),
+                width: 316,
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 150,
+                          height: 200,
+                          padding: const EdgeInsets.all(10),
+                          decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(width: 2),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              image: DecorationImage(
+                                  image: AssetImage('assets/images/human_portrait.png'),
+                                  fit: BoxFit.cover
+                              )
+                          ),
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            foregroundDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(color: Theme.of(context).primaryColor, width: 2)
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color(0xFF0DF892),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Icon(Icons.check, size: 16),
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        Container(
+                          width: 150,
+                          height: 200,
+                          padding: const EdgeInsets.all(10),
+                          decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(width: 2),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              image: DecorationImage(
+                                  image: AssetImage('assets/images/pet_portrait.png'),
+                                  fit: BoxFit.cover
+                              )
+                          ),
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                            padding: EdgeInsets.all(8),
+                            foregroundDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(color: Theme.of(context).primaryColor, width: 2)
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFEA4710),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Icon(Icons.close, size: 16),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'A good portrait really helps you get more matches, please use a real portrait image',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    )
+                  ],
                 ),
-                child: Icon(Icons.add)
               ) else Container(
                   width: 150,
                   height: 200,
