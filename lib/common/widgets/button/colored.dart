@@ -87,7 +87,7 @@ class _ColoredButtonState extends State<ColoredButton> {
       _timer != null && _timer!.isActive ? '${widget.confirmDelay!.inSeconds - _timer!.tick}s' : widget.text,
       textAlign: TextAlign.center,
       style: TextStyle(
-          color: _disabled ? Colors.black26 : widget.fontColor,
+          color: _disabled ? Color(0xFF828282) : widget.fontColor,
           fontWeight: FontWeight.w500,
           fontSize: widget.size.fontSize
       )
@@ -102,11 +102,12 @@ class _ColoredButtonState extends State<ColoredButton> {
   );
 
   Color get backgroundColor {
+    if (widget.color.alpha == 0) return widget.color;
     if (_timer?.isActive == true) {
       return widget.color.withOpacity(0.7);
     }
     if (_disabled) {
-      return Color(0xFF888888);
+      return Color(0xFF0E0E0E0);
     }
     return widget.color;
   }

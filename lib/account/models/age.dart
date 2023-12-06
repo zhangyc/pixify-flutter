@@ -14,6 +14,16 @@ extension DateTimeExt on DateTime {
     return age;
   }
 
+  DateTime yearsAgo(int years) {
+    if (month == 2 && day == 29) {
+      if ((year - years) % 4 == 0) {
+        return DateTime(year - years, month, day);
+      }
+      return DateTime(year - years, month, day - 1);
+    }
+    return DateTime(year - years, month, day);
+  }
+
   String toBirthdayString() {
     return '$year-$month-$day';
   }

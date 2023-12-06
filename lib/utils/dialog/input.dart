@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:sona/account/models/age.dart';
 import 'package:sona/common/widgets/button/forward.dart';
+import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/button/next.dart';
 import 'package:sona/common/widgets/button/option.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/utils/locale/locale.dart';
 
 import '../../common/widgets/button/colored.dart';
@@ -367,98 +370,87 @@ Future<String?> showTextFieldDialog({
   required TextEditingController controller,
   String? title,
   String? hintText,
-  Widget? hint,
   int? maxLength,
   String saveText = 'Save',
-  String cancelText = 'Cancel',
-  int saveFlex = 1,
-  int cancelFlex = 1
 }) {
   final children = <Widget>[];
-  children.addAll([
-    const SizedBox(height: 10),
-    Container(
-      width: 30,
-      height: 3,
-      color: Colors.black12,
-    ),
-    const SizedBox(height: 24)
-  ]);
-  if (title != null) {
-    children.add(Text(
-        title,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 18)
-    ));
-  }
+  children.add(Row(
+    children: [
+      if (title != null) Expanded(child: Text(title, style: Theme.of(context).textTheme.titleLarge)),
+      SIconButton(
+          icon: SonaIcons.close,
+          backgroundColor: Colors.transparent,
+          borderSide: BorderSide(width: 2, color: Theme.of(context).primaryColor),
+          onTap: () => Navigator.pop(context)
+      )
+    ],
+  ));
   children.add(Container(
-    margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-    padding: const EdgeInsets.all(10),
+    margin: EdgeInsets.only(top: 16),
     decoration: BoxDecoration(
-        color: const Color(0xFFF1F1F1),
-        borderRadius: BorderRadius.circular(4)
+      border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+      borderRadius: BorderRadius.circular(20)
     ),
     child: TextField(
       controller: controller,
       style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
-          hintText: hintText,
-          fillColor: Color(0xFFF1F1F1),
-          alignLabelWithHint: true,
-          border: const OutlineInputBorder(
-              borderSide: BorderSide.none
-          ),
-          contentPadding: EdgeInsets.zero
+        hintText: hintText,
+        fillColor: Color(0xFFF1F1F1),
+        alignLabelWithHint: true,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none
+        ),
+        focusColor: Theme.of(context).primaryColor,
+        contentPadding: EdgeInsets.all(16)
       ),
       keyboardType: TextInputType.multiline,
-      maxLines: 7,
-      minLines: 7,
+      maxLines: 5,
+      minLines: 5,
       maxLength: maxLength,
       autofocus: true,
     ),
   ));
-  if (hint != null) children.add(hint);
   children.add(const SizedBox(height: 10));
-  children.add(Row(
-    children: [
-      const SizedBox(width: 40),
-      Expanded(
-        flex: cancelFlex,
-        child: ColoredButton(
-            color: Colors.white,
-            text: cancelText,
-            onTap: () {
-              Navigator.pop(context);
-            }),
-      ),
-      const SizedBox(width: 10),
-      Expanded(
-        flex: saveFlex,
-        child: ColoredButton(
-            text: saveText,
-            onTap: () {
-              if (controller.text.isNotEmpty) {
-                Navigator.pop(context, controller.text);
-              }
-            }),
-      ),
-      const SizedBox(width: 40)
-    ],
+  children.add(ColoredButton(
+    size: ColoredButtonSize.large,
+    text: saveText,
+    onTap: () {
+      if (controller.text.isNotEmpty) {
+        Navigator.pop(context, controller.text);
+      }
+    },
   ));
-  children.add(const SizedBox(height: 20));
 
   return showModalBottomSheet<String>(
     context: context,
     backgroundColor: Colors.white,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(30),
-      topRight: Radius.circular(30),
-    )),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      )
+    ),
     builder: (BuildContext context) {
-      return Padding(
-        padding: MediaQuery.of(context).viewInsets,
+      return Container(
+        margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.all(16),
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            // side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
+            borderRadius: BorderRadius.circular(24),
+          ),
+          shadows: [
+            BoxShadow(
+              color: Color(0xFF2C2C2C),
+              blurRadius: 0,
+              offset: Offset(0, -4),
+              spreadRadius: 0,
+            )
+          ],
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: children
@@ -592,13 +584,15 @@ Future<DateTime?> showBirthdayPicker({
           SizedBox(
             height: 188,
             child: CupertinoDatePicker(
-                initialDateTime: initialDate,
-                mode: CupertinoDatePickerMode.date,
-                showDayOfWeek: true,
-                onDateTimeChanged: (DateTime newDate) {
-                  _birthday = newDate;
-                },
-                itemExtent: 40),
+              initialDateTime: initialDate,
+              mode: CupertinoDatePickerMode.date,
+              showDayOfWeek: true,
+              maximumDate: DateTime.now().yearsAgo(18),
+              onDateTimeChanged: (DateTime newDate) {
+                _birthday = newDate;
+              },
+              itemExtent: 40
+            ),
           ),
           SizedBox(height: 20),
           Padding(

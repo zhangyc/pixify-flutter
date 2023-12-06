@@ -133,10 +133,12 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
               right: 16,
               bottom: 16,
               child: ColoredButton(
+                key: ValueKey(selectedActivities.length),
                 size: ColoredButtonSize.large,
                 text: 'Done',
                 loadingWhenAsyncAction: true,
                 onTap: widget.onDone,
+                disabled: selectedActivities.isEmpty,
               ),
             )
           ],

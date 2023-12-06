@@ -31,6 +31,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
   final _pinController = TextEditingController();
   final _pinFocusNode = FocusNode();
   final _pinKey = GlobalKey<FormState>(debugLabel: 'pin_number');
+  var _buttonKey = UniqueKey();
 
   final defaultPinTheme = PinTheme(
     width: 56,
@@ -124,23 +125,21 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
           children: [
             Flexible(
               child: ColoredButton(
-                key: UniqueKey(),
+                key: _buttonKey,
                 size: ColoredButtonSize.large,
-                color: Color(0xFFF6F3F3),
+                color: Colors.transparent,
                 fontColor: Theme.of(context).primaryColor,
                 borderColor: Colors.transparent,
                 text: 'Resend',
-                onTap: _sendPin,
+                onTap: () async {
+                  final result = await _sendPin();
+                  if (result) {
+                    setState(() {
+                      _buttonKey = UniqueKey();
+                    });
+                  }
+                },
                 confirmDelay: Duration(seconds: 60),
-                loadingWhenAsyncAction: true,
-              ),
-            ),
-            SizedBox(width: 16),
-            Flexible(
-              child: ColoredButton(
-                size: ColoredButtonSize.large,
-                text: 'OK',
-                onTap: _complete,
                 loadingWhenAsyncAction: true,
               ),
             ),

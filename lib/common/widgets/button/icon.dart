@@ -7,11 +7,13 @@ class SIconButton extends StatefulWidget {
     Key? key,
     required this.icon,
     this.backgroundColor = const Color(0xFFF6F3F3),
+    this.borderSide = BorderSide.none,
     required this.onTap,
   }) : super(key: key);
 
   final SonaIcons icon;
   final Color backgroundColor;
+  final BorderSide borderSide;
   final dynamic Function()? onTap;
 
   @override
@@ -30,8 +32,9 @@ class _SIconButtonState extends State<SIconButton> {
             }
             return widget.backgroundColor;
           }),
-          shape: MaterialStatePropertyAll(ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(32)
+          shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: widget.borderSide
           )),
           alignment: Alignment.center
         )
