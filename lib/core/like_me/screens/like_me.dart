@@ -8,6 +8,7 @@ import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 
 import '../../../common/widgets/image/user_avatar.dart';
+import '../../match/widgets/profile_widget.dart';
 import '../models/social_user.dart';
 
 class LikeMeScreen extends StatefulHookConsumerWidget {
@@ -99,7 +100,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
                     clipBehavior: Clip.antiAlias,
                     child: isMember ? GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: u.id))),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: u.id,relation: Relation.likeMe,))),
                       child: UserAvatar(
                         url: u.avatar!,
                         size: Size(itemWidth, itemHeight),

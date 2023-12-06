@@ -17,11 +17,10 @@ class UserProfileScreen extends ConsumerStatefulWidget {
   const UserProfileScreen({
     super.key,
     required this.userId,
-    this.relation = Relation.normal
+    this.relation = Relation.normal,
   });
   final int userId;
   final Relation relation;
-
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _UserProfileScreenState();
 }
@@ -37,8 +36,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: ref.watch(getProfileByIdProvider(widget.userId)).when(
-        data: (user) => ProfileWidget(
-          profileType: ProfileType.other,
+        data: (user) => user==null?Container():ProfileWidget(
+          relation: widget.relation,
           info: user.data, next: (){
 
         },onMatch: (v){},),
@@ -122,9 +121,9 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 }
 
 enum Relation {
-  normal,
-  likeOther,
-  likeMe,
-  matched,
-  self
+  normal,   ///互相没like
+  likeOther, ///你喜欢的人
+  likeMe,  ///喜欢我的
+  matched, ///相互like
+  self  ///查看自己
 }

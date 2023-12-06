@@ -65,7 +65,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Text('Are you interested in her ideas',style: TextStyle(
+          child: Text('Are you interested in her ideas？',style: TextStyle(
               color: Colors.black,
               fontSize: 28
           ),),
@@ -126,6 +126,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                                     activityId: wish.activities[index2].id,
                                     travelWishId: wish.id
                                 );
+                                ref.read(backgroundImageProvider.notifier).updateBg(null);
 
                                 widget.next.call();
                               },),

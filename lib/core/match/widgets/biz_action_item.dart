@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sona/common/screens/profile.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 
 class BizActionItem extends StatelessWidget {
-  const BizActionItem({super.key, required this.report, required this.block, required this.profileType});
+  const BizActionItem({super.key, required this.report, required this.block, required this.relation});
   final VoidCallback report;
   final VoidCallback block;
-  final ProfileType profileType;
+  final Relation relation;
   @override
   Widget build(BuildContext context) {
-    if(profileType==ProfileType.own){
+    if(relation==Relation.self){
       return Container();
     }
     return SizedBox(
@@ -21,10 +22,10 @@ class BizActionItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          profileType==ProfileType.other?Row(
+          relation==Relation.matched?Row(
             children: [
               GestureDetector(
-                child: Text('Unmatch ',style: TextStyle(
+                child: Text('Unmatch',style: TextStyle(
                     color: Colors.black
                 ),),
                 onTap: report,

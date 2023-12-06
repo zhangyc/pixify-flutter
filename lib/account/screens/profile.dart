@@ -13,6 +13,7 @@ import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/tag/hobby.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
+import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
@@ -53,7 +54,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           UnconstrainedBox(
               child: FittedBox(
                 child: TextButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: _profile.id))),
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: _profile.id,relation: Relation.self,))),
                     style: ButtonStyle(
                       minimumSize: MaterialStatePropertyAll(Size.zero)
                     ),

@@ -13,6 +13,7 @@ import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
 
 import '../../../account/providers/profile.dart';
+import '../../../common/screens/profile.dart';
 import '../../../utils/location/location.dart';
 import '../bean/match_user.dart';
 import '../util/http_util.dart';
@@ -283,7 +284,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             );
           }else {
             return ProfileWidget(
-              profileType: ProfileType.match,
+              relation: Relation.normal,
               info:info,next:(){
               pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
 

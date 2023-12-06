@@ -8,6 +8,7 @@ import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/conversation.dart';
+import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
@@ -65,7 +66,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
                     // Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
                   } else {
                     SonaAnalytics.log('chatlist_member_card');
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: u.id, relation: Relation.likeMe)));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: u.id, relation: Relation.likeMe,)));
                   }
                 } else {
                   SonaAnalytics.log('chatlist_tapblur');

@@ -7,7 +7,7 @@ Future<HttpResult> getProfileById(GetProfileByIdRef ref,int userId) async {
   HttpResult result=await post('/user/find-detail',data: {
     "id":userId
   });
-  if(result.isSuccess){
+  if(result.isSuccess&&result.data!=null){
      MatchUserInfo userInfo=MatchUserInfo.fromJson(result.data);
      result.data=userInfo;
   }

@@ -24,22 +24,22 @@ class _WishListItemState extends State<WishListItem> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text('Her wishes',style: TextStyle(
+        const Text('Her wishes',style: TextStyle(
             color: Colors.black
         ),),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         ...widget.wishes.map((e) => Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           height: 257,
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
             bottom: 16
           ),
           foregroundDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
 
-            gradient: LinearGradient(colors: [
+            gradient: const LinearGradient(colors: [
               Colors.transparent,
               Colors.black26
             ],
@@ -55,16 +55,16 @@ class _WishListItemState extends State<WishListItem> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${e.activityNames??''}',style: TextStyle(
+              Text('${e.activityNames??''}',style: const TextStyle(
                 color: Colors.white
               ),),
-              Text('${e.cityName}、${e.countryName}',style: TextStyle(
+              Text('${e.cityName}、${e.countryName}',style: const TextStyle(
                   color: Colors.white
               ),),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${e.timeType}',style: TextStyle(
+                  Text('${e.timeType}',style: const TextStyle(
                       color: Colors.white
                   ),),
                   Text('${e.countryFlag}')
@@ -77,22 +77,6 @@ class _WishListItemState extends State<WishListItem> {
       ],
     );
   }
-  // List<WishBean> ws=[];
-  // void getData() async{
-  //   HttpResult result=await post('/travel-wish/find',data: {
-  //   "page":"1",
-  //   "pageSize":3,
-  //   "userId":widget.id // 查询用户ID
-  //   });
-  //   if(result.isSuccess){
-  //     List l=result.data['list'];
-  //     ws=l.map((e) => WishBean.fromJson(e)).toList();
-  //     setState(() {
-  //
-  //     });
-  //   }
-  //   print(result);
-  // }
 }
 
 

@@ -24,6 +24,7 @@ import 'package:sona/utils/toast/cooldown.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/dialog/subsciption.dart';
+import '../../match/widgets/profile_widget.dart';
 import '../../travel_wish/models/country.dart';
 import '../models/message_type.dart';
 import '../widgets/inputbar/mode_provider.dart';
@@ -334,7 +335,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   void _showInfo() {
     SonaAnalytics.log('chat_card');
-    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: widget.otherSide.id, relation: Relation.matched)));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: widget.otherSide.id, relation: Relation.matched,)));
   }
 
   Future _startUpLine() async {

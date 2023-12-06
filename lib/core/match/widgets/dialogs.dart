@@ -198,6 +198,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                         child: GestureDetector(
                           onTap: (){
                              Navigator.pop(context);
+                             next.call();
                           },
                           child: Image.asset(Assets.iconsSkip,width: 40,height: 40,),
                         ),

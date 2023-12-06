@@ -23,7 +23,7 @@ class HeardItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(userInfo.name??'',style: TextStyle(
+                Text(userInfo.originNickname??'',style: TextStyle(
                   color: Colors.white,
                   fontSize: 18
                  ),
@@ -32,22 +32,14 @@ class HeardItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          child: Text(userInfo.originNickname??'',style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                          ),
-                            maxLines: 1,
-                          ),
-                          width: 200,
-                        ),
-                        Text(',${userInfo.age}',style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28
-                        ),),
-                      ],
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width-16*2-16*2-21,
+                      child: Text('${userInfo.name??''}, ${userInfo.age}',style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                      ),
+                        maxLines: 2,
+                      ),
                     ),
                     userInfo.countryFlag!=null?Text(userInfo.countryFlag??''):Container()
                   ],
