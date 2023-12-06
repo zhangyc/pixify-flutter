@@ -232,41 +232,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final controller = TextEditingController(text: ref.read(myProfileProvider)!.bio ?? '');
     final text = await showTextFieldDialog(
       context: context,
+      title: 'Edit bio',
       controller: controller,
-      hint: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          ColoredButton(
-            size: ColoredButtonSize.small,
-            color: Colors.transparent,
-            onTap: () async {
-              final resp = await callSona(
-                type: CallSonaType.BIO,
-                input: controller.text
-              );
-              if (resp.statusCode == 0 && mounted) {
-                Navigator.pop(context);
-                final result = await showConfirm(
-                  context: context,
-                  title: 'Apply?',
-                  content: resp.data['txt']
-                );
-                if (result == true) {
-                  ref.read(myProfileProvider.notifier).updateField(bio: resp.data['txt']);
-                  SonaAnalytics.log('profile_sona_bio');
-                }
-              }
-            },
-            loadingWhenAsyncAction: true,
-            text: 'Ask Sona to Optimize',
-            fontColor: Theme.of(context).primaryColor
-          ),
-          SizedBox(width: 40),
-        ],
-      ),
       maxLength: 360,
-      saveFlex: 3,
-      cancelFlex: 2
     );
     if (text != null && text.trim().isNotEmpty) {
       ref.read(myProfileProvider.notifier).updateField(bio: text);
