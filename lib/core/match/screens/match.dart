@@ -260,16 +260,43 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       }
     }
   }
+
   late PageState _state= PageState.loading;
+  double _c=0.0;
   _buildMatch() {
+    return PageView.builder(
+
+         pageSnapping: false,
+        itemBuilder: (c,index) {
+      double pageOffset = index - _c;
+      double angle = pageOffset * 0.5; // 调整旋转角度
+       return Transform.rotate(
+        angle: (index - _c) * 3.14 / 10,
+        child: Container(
+          color: Colors.deepOrange,
+          child: Text('$index'),
+          alignment: Alignment.center,
+        ),
+      );
+    });
     if(_state==PageState.loading){
      return  Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){
       return NoDataWidget();
     }
     else if(_state==PageState.success){
+
       return PageView.builder(
         itemBuilder: (c,index) {
+          double pageOffset = index - _c;
+          double angle = -pageOffset * 0.5; // 调整旋转角度
+          return Transform(
+            alignment: Alignment.bottomCenter,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001) // Perspective
+              ..rotateX(angle),
+            child: Text('dat$index'),
+          );
           MatchUserInfo info=users[index];
           if(info.id==-1){
             return NoMoreWidget();
@@ -303,6 +330,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (value) async {
+          _c=pageController.page??0.0;
           //currentPage=value;
           if (value != 0 && value % 3 == 0 ) {
             current++;

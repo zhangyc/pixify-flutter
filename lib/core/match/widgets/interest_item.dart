@@ -25,15 +25,10 @@ class InterestItem extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                )
+                ),
+                borderRadius: BorderRadius.circular(14)
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.circle),
-                  Text(e.name??'')
-                ],
-              ),
+              child: Text(e.name??'',)
             )).toList(),
           )
         ],

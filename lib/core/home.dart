@@ -42,7 +42,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   }
 
   void _determinePosition() async {
-    Permission.locationWhenInUse.request();
+    await Permission.locationWhenInUse.request();
     final position = await determinePosition();
     longitude=position.longitude;
     latitude=position.latitude;

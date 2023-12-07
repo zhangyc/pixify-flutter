@@ -39,9 +39,9 @@ class _WishListItemState extends State<WishListItem> {
           foregroundDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
 
-            gradient: const LinearGradient(colors: [
+            gradient: LinearGradient(colors: [
               Colors.transparent,
-              Colors.black26
+              Color(0xff000000).withOpacity(0.75)
             ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter

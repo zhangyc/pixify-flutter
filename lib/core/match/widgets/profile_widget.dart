@@ -62,7 +62,6 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
             Expanded(
               child: CustomScrollView(
                 slivers: [
-
                   SliverToBoxAdapter(
                     child: Stack(
                       children: [
@@ -104,6 +103,16 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                   SonaAnalytics.log('post_block');
                                 } 
                               },
+                                unMatch: () async{
+                                  final resp = await matchAction(userId: info.id, action: MatchAction.unmatch);
+                                  if (resp.statusCode == 0) {
+                                    ///users.removeAt(currentPage);
+                                    widget.next.call();
+                                    if (mounted) setState(() {});
+                                    Fluttertoast.showToast(msg: 'Unmatch Success');
+                                    SonaAnalytics.log('post_block');
+                                  }
+                                },
                                 relation: widget.relation,
                               ),
                               SizedBox(

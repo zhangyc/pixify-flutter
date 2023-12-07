@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -117,7 +119,8 @@ class _SettingScreen extends ConsumerState<AccountSettingScreen> {
   }
 
   Future _switchLanguage() async {
-    var value = await showLocalePicker(context: context, initialValue: ref.read(myProfileProvider)!.locale);
+    String? local=ref.read(myProfileProvider)!.locale;
+    var value = await showLocalePicker(context: context, initialValue: local);
     if (value != null) {
       await ref.read(myProfileProvider.notifier).updateField(locale: findMatchedSonaLocale(value));
       ref.invalidate(asyncPopularTravelCountriesProvider);
