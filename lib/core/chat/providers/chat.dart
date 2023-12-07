@@ -11,7 +11,7 @@ final conversationStreamProvider = StreamProvider<List<ImConversation>>((ref) as
   final userId = ref.read(myProfileProvider)!.id;
   final stream = FirebaseFirestore.instance
       .collection('${env.firestorePrefix}_users').doc('$userId')
-      .collection('rooms').orderBy('id', descending: true).limit(100)
+      .collection('rooms').orderBy('createDate', descending: true).limit(100)
       .snapshots();
   await for (var snapshot in stream) {
     var conversations = snapshot.docs.map<ImConversation>((doc) => ImConversation.fromJson(doc.data())).toList();
@@ -62,5 +62,5 @@ final futureUserProvider = FutureProvider.family<UserInfo, int>((ref, arg) {
       .collection('${env.firestorePrefix}_users')
       .doc(arg.toString())
       .get()
-      .then((snapshot) => UserInfo.fromJson(snapshot.data()!));
+      .then((snapshot) => UserInfo.fromFirestore(snapshot.data()!));
 });

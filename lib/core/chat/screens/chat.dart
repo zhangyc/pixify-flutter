@@ -234,7 +234,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       text: 'Sona will translate it into lively localized '
                   ),
                   TextSpan(
-                    text: findMatchedSonaLocale(ref.watch(futureUserProvider(widget.otherSide.id)).value!.locale!).displayName,
+                    text: findMatchedSonaLocale(ref.watch(futureUserProvider(widget.otherSide.id)).value?.locale ?? '').displayName,
                     style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.w500),
                   ),
                   TextSpan(
