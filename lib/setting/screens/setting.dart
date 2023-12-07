@@ -90,13 +90,15 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Push notifications', style: Theme.of(context).textTheme.titleMedium),
-              Switch(
-                  value: ref.watch(myProfileProvider)!.pushEnabled,
+              Consumer(
+                builder: (_, _ref, __) => Switch(
+                  value: _ref.watch(myProfileProvider)!.pushEnabled,
                   activeColor: Colors.white,
                   activeTrackColor: Theme.of(context).primaryColor,
                   onChanged: (value) {
                     toggleNotification(value);
                   }
+                )
               )
             ],
           )
@@ -128,15 +130,14 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Display my city', style: Theme.of(context).textTheme.titleMedium),
-            ProviderScope(
-              parent: ProviderScope.containerOf(context),
-              child: Switch(
-                value: ref.watch(myProfileProvider)!.cityVisibility,
-                activeColor: Colors.white,
-                activeTrackColor: Theme.of(context).primaryColor,
-                onChanged: (value) {
-                  toggleCityVisibility(value);
-                }
+            Consumer(
+              builder: (_, _ref, __) => Switch(
+                  value: _ref.watch(myProfileProvider)!.cityVisibility,
+                  activeColor: Colors.white,
+                  activeTrackColor: Theme.of(context).primaryColor,
+                  onChanged: (value) {
+                    toggleCityVisibility(value);
+                  }
               ),
             )
           ],
