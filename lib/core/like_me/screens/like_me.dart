@@ -18,7 +18,7 @@ class LikeMeScreen extends StatefulHookConsumerWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _LikeMeScreenState();
 }
 
-class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
+class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepAliveClientMixin {
 
   late bool isMember;
   late double itemWidth;
@@ -159,4 +159,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

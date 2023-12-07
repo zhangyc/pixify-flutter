@@ -251,13 +251,20 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                     ),
                   ),
                   SizedBox(height: 16),
-                  FilledButton(
+                  if (!ref.watch(myProfileProvider)!.isMember) FilledButton(
                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE600)),
                         side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),
                       child: Text('Super SONA', style: Theme.of(context).textTheme.titleMedium)
+                  ),
+                  if (ref.watch(myProfileProvider)!.isMember) OutlinedButton(
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
+                      style: ButtonStyle(
+                          side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
+                      ),
+                      child: Text('You\'re Super SONA', style: Theme.of(context).textTheme.titleMedium)
                   )
                 ],
               ),

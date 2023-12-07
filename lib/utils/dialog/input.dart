@@ -494,7 +494,7 @@ Future<T?> showRadioFieldDialog<T>({
             ),
             Container(
               constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.7
+                maxHeight: MediaQuery.of(context).size.height * 0.7
               ),
               decoration: ShapeDecoration(
                 color: Colors.white,
