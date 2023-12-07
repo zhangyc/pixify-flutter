@@ -69,6 +69,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   ForwardButton(
                     onTap: _logout,
                     text: 'Sign out',
+                    color: Color(0xFFEA4710),
                   ),
                 ],
               ),
