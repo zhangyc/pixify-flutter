@@ -5,6 +5,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/setting/screens/account.dart';
+import 'package:sona/utils/dialog/common.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../common/widgets/webview.dart';
@@ -81,15 +82,24 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
   }
 
   void _showNotificationSetting() async {
-    final value = await showRadioFieldDialog(
-      context: context,
-      initialValue: ref.read(myProfileProvider)!.pushEnabled,
-      options: {
-        'On': true,
-        'Off': false
-      },
+    await showCommonBottomSheet(
+        context: context,
+        title: 'Notifications',
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Push notifications', style: Theme.of(context).textTheme.titleMedium),
+              Switch(
+                  value: ref.watch(myProfileProvider)!.pushEnabled,
+                  onChanged: (value) {
+                    toggleNotification(value);
+                  }
+              )
+            ],
+          )
+        ]
     );
-    if (value != null) toggleNotification(value);
   }
 
   Future toggleNotification(bool value) {
@@ -107,7 +117,35 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
   }
 
   Future _showPrivacy() async {
+    await showCommonBottomSheet(
+      context: context,
+      title: 'Privacy',
+      description: 'When turned off, your city will not be displayed, which may prevent you from being found by other people',
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Display my city', style: Theme.of(context).textTheme.titleMedium),
+            Switch(
+              value: ref.watch(myProfileProvider)!.cityVisibility,
+              onChanged: (value) {
+                toggleCityVisibility(value);
+              }
+            )
+          ],
+        )
+      ]
+    );
+  }
 
+  Future toggleCityVisibility(bool value) {
+    return dio.post('/user/update',data: {
+      'showCity': value
+    }).then((resp){
+      if (resp.statusCode  == 0) {
+        ref.read(myProfileProvider.notifier).updateCityVisibility(value);
+      }
+    });
   }
 
   Future _showAbout() async {
