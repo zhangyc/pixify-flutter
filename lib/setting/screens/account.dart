@@ -5,6 +5,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/core/travel_wish/providers/my_wish.dart';
 import 'package:sona/core/travel_wish/providers/popular_country.dart';
 import 'package:sona/core/travel_wish/providers/timeframe.dart';
 import 'package:sona/utils/global/global.dart';
@@ -18,15 +19,11 @@ class AccountSettingScreen extends StatefulHookConsumerWidget {
   const AccountSettingScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SettingScreen();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AccountSettingScreenState();
 }
 
-class _SettingScreen extends ConsumerState<AccountSettingScreen> {
-  bool openNotification=true;
-  @override
-  void initState() {
-    super.initState();
-  }
+class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,6 +119,7 @@ class _SettingScreen extends ConsumerState<AccountSettingScreen> {
       await ref.read(myProfileProvider.notifier).updateField(locale: findMatchedSonaLocale(value));
       ref.invalidate(asyncPopularTravelCountriesProvider);
       ref.invalidate(asyncTimeframeOptionsProvider);
+      ref.invalidate(asyncMyTravelWishesProvider);
     }
   }
 

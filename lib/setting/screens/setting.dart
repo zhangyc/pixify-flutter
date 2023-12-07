@@ -56,11 +56,15 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                   ),
                   ForwardButton(
                     onTap: _showNotificationSetting,
-                    text: 'Edit',
+                    text: 'Notification',
+                  ),
+                  ForwardButton(
+                    onTap: _showPrivacy,
+                    text: 'Privacy',
                   ),
                   ForwardButton(
                     onTap: _showAbout,
-                    text: 'Privacy',
+                    text: 'About',
                   ),
                   ForwardButton(
                     onTap: _logout,
@@ -99,6 +103,10 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
 
   void _logout() {
     ref.read(tokenProvider.notifier).state = null;
+  }
+
+  Future _showPrivacy() async {
+
   }
 
   Future _showAbout() async {
