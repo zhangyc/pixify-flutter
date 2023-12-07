@@ -8,7 +8,6 @@ import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/conversation.dart';
-import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
@@ -16,8 +15,6 @@ import 'package:sona/utils/global/global.dart';
 import '../../../generated/l10n.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../models/message.dart';
-import '../../like_me/providers/liked_me.dart';
-import '../widgets/inputbar/chat_style.dart';
 import '../../like_me/widgets/liked_me.dart';
 
 class ConversationScreen extends StatefulHookConsumerWidget {
