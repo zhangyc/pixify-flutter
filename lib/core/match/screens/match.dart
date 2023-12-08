@@ -133,7 +133,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             ),
           ),
         ),
-        Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+        (users.isNotEmpty&&users[currentPage].matched)?Container():Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
           width: MediaQuery.of(context).size.width,child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

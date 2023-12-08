@@ -142,6 +142,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                   ),
                   TextButton(onPressed: (){
                     widget.next.call();
+                    ref.read(backgroundImageProvider.notifier).updateBg(null);
                     ref.read(asyncMatchRecommendedProvider.notifier).like(widget.info.id,
                         travelWishId: wish.id
                     );
