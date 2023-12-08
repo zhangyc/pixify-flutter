@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/utils/global/global.dart' as global;
 import 'package:sona/common/models/user.dart';
-import 'package:sona/core/chat/widgets/inputbar/mode_provider.dart';
 
 class ImConversation {
   ImConversation._({
@@ -10,10 +10,9 @@ class ImConversation {
     required this.dateTime,
     required this.lastMessageId,
     required this.lastMessageType,
-    required this.lastMessageContent,
+    required this.lastMessageOriginalContent,
+    required this.lastMessageTranslatedContent,
     required this.lastMessageSenderId,
-    // required this.inputMode,
-    // required this.chatStyleId
   });
 
   final int convoId;
@@ -21,10 +20,9 @@ class ImConversation {
   final DateTime dateTime;
   final int? lastMessageId;
   final int? lastMessageType;
-  final String? lastMessageContent;
+  final String? lastMessageOriginalContent;
+  final String? lastMessageTranslatedContent;
   final int? lastMessageSenderId;
-  // final InputMode? inputMode;
-  // final int? chatStyleId;
 
   DateTime? _checkTime;
   DateTime? get checkTime {
@@ -54,7 +52,8 @@ class ImConversation {
       dateTime: (json['createDate'] as Timestamp).toDate(),
       lastMessageId: json['id'],
       lastMessageType: json['messageType'],
-      lastMessageContent: json['message'],
+      lastMessageOriginalContent: json['originalContent'],
+      lastMessageTranslatedContent: json['translatedContent'],
       lastMessageSenderId: json['sendUserId'],
       // inputMode: InputMode.values[json['inputMode'] ?? 0],
       // chatStyleId: json['chatStyleId']
@@ -62,7 +61,7 @@ class ImConversation {
   }
 
   bool get hasUnreadMessage =>
-      lastMessageContent != null
+      lastMessageOriginalContent != null
         && convoId == lastMessageSenderId
         && (checkTime == null || checkTime!.isBefore(dateTime));
 }

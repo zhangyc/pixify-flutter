@@ -1,88 +1,117 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/interests.dart';
+import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/tag/hobby.dart';
 
+import '../../common/widgets/image/icon.dart';
 import '../models/hobby.dart';
 
-class Interests extends ConsumerStatefulWidget {
-  const Interests({
-    super.key,
-    required this.availableValue,
-    required this.initialValue,
-    required this.onChange
-  });
-  final List<UserHobby> availableValue;
-  final Set<String>? initialValue;
-  final void Function(Set<String>) onChange;
+class HobbiesSelector extends ConsumerStatefulWidget {
+  const HobbiesSelector({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _InterestsState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HobbiesSelectorState();
 }
 
-class _InterestsState extends ConsumerState<Interests> {
-
+class _HobbiesSelectorState extends ConsumerState<HobbiesSelector> {
   static const maxCount = 10;
-  late Set<String> _selected = widget.initialValue ?? {};
+  late Set<String> _selected;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _selected = ref.read(myProfileProvider)!.interests.map((hobby) => hobby.code).toSet();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text.rich(
-                TextSpan(
-                  text: 'Choose hobbies ${_selected.length}',
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: SonaIcon(icon: SonaIcons.back),
+        ),
+        title: Text('Choose Hobbies'),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: Text.rich(
+              TextSpan(
+                  text: '${_selected.length}',
                   style: Theme.of(context).textTheme.titleMedium,
                   children: [
                     TextSpan(
-                      text: '/$maxCount',
-                      style: Theme.of(context).textTheme.bodySmall
+                        text: '/$maxCount',
+                        style: Theme.of(context).textTheme.bodySmall
                     )
                   ]
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white
-                      ),
-                      padding: EdgeInsets.all(6),
-                      child: Icon(Icons.close, size: 28)
-                    )
-                  ),
-                  SizedBox(height: 8),
-                ],
-              )
-            ],
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Wrap(
-                spacing: 8,
-                runSpacing: 6,
-                children: [
-                  for (final hobby in widget.availableValue)
-                    HobbyTag<String>(
-                        displayName: hobby.displayName,
-                        value: hobby.code,
-                        selected: _selected.contains(hobby.code),
-                        onSelect: (hb) => _toggleInterest(hb)
-                    )
-                ],
               ),
             ),
-          ),
+          )
         ],
+      ),
+      body: ref.watch(asyncInterestsProvider).when(
+        data: (data) => SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 6,
+              children: [
+                for (final hobby in data)
+                  HobbyTag<String>(
+                      displayName: hobby.displayName,
+                      value: hobby.code,
+                      selected: _selected.contains(hobby.code),
+                      onSelect: (hb) => _toggleInterest(hb)
+                  )
+              ],
+            ),
+          ),
+        ),
+        loading: () => Container(
+          color: Colors.white54,
+          alignment: Alignment.center,
+          child: const SizedBox(
+            width: 16,
+            height: 16,
+            child: CircularProgressIndicator()
+          ),
+        ),
+        error: (err, stack) => GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => ref.refresh(asyncInterestsProvider.notifier),
+          child: Container(
+            color: Colors.white,
+            alignment: Alignment.center,
+            child: const Text(
+                'Cannot connect to server, tap to retry',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 16,
+                    decoration: TextDecoration.none
+                )
+            ),
+          ),
+        )
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: ColoredButton(
+          size: ColoredButtonSize.large,
+          text: 'Save',
+          loadingWhenAsyncAction: true,
+          onTap: () => ref.read(myProfileProvider.notifier).updateField(interests: _selected).then((_) => Navigator.pop(context)),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -95,7 +124,6 @@ class _InterestsState extends ConsumerState<Interests> {
       }
       _selected.add(i);
     }
-    widget.onChange(_selected);
     setState(() {});
   }
 }

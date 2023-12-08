@@ -223,7 +223,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   Future _onEditInterests() async {
     SonaAnalytics.log('profile_interests');
-    final result = await showInterestPicker(context: context);
+    final result = await showHobbiesSelector(context: context);
     if (result != null) {
       ref.read(myProfileProvider.notifier).updateField(interests: result);
     }

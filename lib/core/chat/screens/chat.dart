@@ -137,7 +137,22 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               return _startupline();
             }
           },
-          error: (error, __) => Container(child: Text(error.toString()),),
+          error: (error, __) => GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => ref.refresh(messageStreamProvider(widget.otherSide.id)),
+            child: Container(
+              color: Colors.white,
+              alignment: Alignment.center,
+              child: const Text(
+                  'Cannot connect to server, tap to retry',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 16,
+                      decoration: TextDecoration.none
+                  )
+              ),
+            ),
+          ),
           loading: () => Container(
             alignment: Alignment.center,
             child: const SizedBox(
@@ -281,12 +296,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final message = ImMessage(
       id: _lastLocalId++,
       type: CallSonaType.INPUT.index + 1,
-      content: text,
+      originalContent: text,
+      translatedContent: null,
       sender: mySide,
       receiver: widget.otherSide,
-      origin: mySide.locale,
       time: DateTime.now(),
-      shortenTimes: 2
     );
     final pending = func();
     message
@@ -333,7 +347,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   Future _deleteMessage(ImMessage message) {
     return deleteMessage(
-      messageId: message.id
+      messageId: message.id!
     );
   }
 

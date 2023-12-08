@@ -13,10 +13,14 @@ final chatNoticeProvider = StateProvider<bool>((ref) {
 }, dependencies: [conversationStreamProvider]);
 
 final bottomChatNoticeProvider = StateProvider<ChatNoticeMode>((ref) {
-  final hasNewMsg = ref.watch(chatNoticeProvider);
-  final hasNewLikeMe = ref.watch(likeMeNoticeNotifier);
-  if (hasNewMsg) return ChatNoticeMode.message;
-  if (hasNewLikeMe) return ChatNoticeMode.like;
+  try {
+    final hasNewMsg = ref.watch(chatNoticeProvider);
+    final hasNewLikeMe = ref.watch(likeMeNoticeNotifier);
+    if (hasNewMsg) return ChatNoticeMode.message;
+    if (hasNewLikeMe) return ChatNoticeMode.like;
+  } catch (e) {
+    //
+  }
   return ChatNoticeMode.none;
 }, dependencies: [chatNoticeProvider, likeMeNoticeNotifier]);
 
