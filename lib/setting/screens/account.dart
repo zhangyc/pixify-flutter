@@ -63,6 +63,7 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
                     ForwardButton(
                       onTap: _deleteAccount,
                       text: 'Delete Account',
+                      color: Theme.of(context).disabledColor,
                     ),
                   ],
                 ),

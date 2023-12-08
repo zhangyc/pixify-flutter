@@ -60,81 +60,17 @@ class _MessageWidgetState extends State<MessageWidget> {
             onSucceed: () => widget.onPendingMessageSucceed(widget.message)
         );
       } else {
-        upperMessage = widget.message.origin;
-        lowerMessage = widget.message.content;
+        upperMessage = widget.message.originalContent;
+        lowerMessage = widget.message.translatedContent;
       }
     } else {
-      upperMessage = widget.message.content;
-      lowerMessage = widget.message.origin;
+      upperMessage = widget.message.translatedContent;
+      lowerMessage = widget.message.originalContent;
     }
     if (upperMessage == null || upperMessage.isEmpty) {
       upperMessage = lowerMessage;
       lowerMessage = null;
     }
-
-      // AI消息
-      // if ([1, 2, 3, 4, 7, 11].contains(widget.message.type)) {
-      //   if (widget.message.content.isNotEmpty) {
-      //     actions.add(CupertinoContextMenuAction(
-      //       child: Column(
-      //         mainAxisSize: MainAxisSize.min,
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: [
-      //           RawMaterialButton(
-      //             child: Row(
-      //               children: [
-      //                 Icon(
-      //                   widget.message.feedback == MessageFeedbackType.like
-      //                       ? CupertinoIcons.hand_thumbsup_fill
-      //                       : CupertinoIcons.hand_thumbsup,
-      //                   color: Theme.of(context).primaryColor,
-      //                   size: 16,
-      //                 ),
-      //                 Row(
-      //                   children: [
-      //                     SizedBox(width: 12),
-      //                     Text('Good'),
-      //                   ],
-      //                 )
-      //               ],
-      //             ),
-      //             onPressed: () {
-      //               Navigator.pop(context);
-      //               if (widget.message.feedback == MessageFeedbackType.like) {
-      //                 feedback(messageId: widget.message.id, type: MessageFeedbackType.none);
-      //               } else {
-      //                 feedback(messageId: widget.message.id, type: MessageFeedbackType.like);
-      //               }
-      //             },
-      //           ),
-      //           RawMaterialButton(
-      //             child: Row(
-      //               children: [
-      //                 Icon(
-      //                   widget.message.feedback == MessageFeedbackType.dislike
-      //                       ? CupertinoIcons.hand_thumbsdown_fill
-      //                       : CupertinoIcons.hand_thumbsdown,
-      //                   color: Theme.of(context).primaryColor,
-      //                   size: 16,
-      //                 ),
-      //                 SizedBox(width: 12),
-      //                 Text('Subpar')
-      //               ],
-      //             ),
-      //             onPressed: () {
-      //               Navigator.pop(context);
-      //               if (widget.message.feedback == MessageFeedbackType.dislike) {
-      //                 feedback(messageId: widget.message.id, type: MessageFeedbackType.none);
-      //               } else {
-      //                 feedback(messageId: widget.message.id, type: MessageFeedbackType.dislike);
-      //               }
-      //             },
-      //           )
-      //         ],
-      //       ),
-      //     ));
-      //   }
-      // }
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
@@ -162,11 +98,11 @@ class _MessageWidgetState extends State<MessageWidget> {
                             context: context,
                             options: {
                               'Copy': 'copy',
-                              'Delete': 'delete'
+                              if (widget.fromMe) 'Delete': 'delete'
                             }
                         );
                         if (action == 'copy') {
-                          Clipboard.setData(ClipboardData(text: widget.message.content));
+                          Clipboard.setData(ClipboardData(text: upperMessage!));
                           Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
                         } else if (action == 'delete') {
                           widget.onDelete(widget.message);
@@ -211,8 +147,9 @@ class _MessageWidgetState extends State<MessageWidget> {
                               'Copy': 'copy',
                             }
                         );
-                        if (action == 'delete') {
-                          widget.onDelete(widget.message);
+                        if (action == 'copy') {
+                          Clipboard.setData(ClipboardData(text: lowerMessage!));
+                          Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
                         }
                       },
                       child: Container(

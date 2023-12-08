@@ -32,33 +32,12 @@ class _LocalPendingMessageFromMeState extends ConsumerState<LocalPendingMessageF
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // if (widget.message.origin != null && widget.message.origin!.isNotEmpty) Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              //   decoration: BoxDecoration(
-              //       color: Theme.of(context).primaryColor
-              //   ),
-              //   alignment: Alignment.centerLeft,
-              //   child: Text(
-              //     widget.message.origin!,
-              //     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              //         color: Colors.white,
-              //         height: 1.5
-              //     ),
-              //   ),
-              // ),
-              if (widget.message.content.isNotEmpty) Text(
-                widget.message.content,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.white,
-                    height: 1.5,
-                  locale: widget.myLocale
-                ),
-              )
-            ],
+        if (widget.message.originalContent!.isNotEmpty) Text(
+          widget.message.originalContent!,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Colors.white,
+              height: 1.5,
+            locale: widget.myLocale
           ),
         ),
         FutureBuilder<void>(

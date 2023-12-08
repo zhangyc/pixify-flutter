@@ -196,4 +196,7 @@ final themeData = ThemeData(
   dialogTheme: DialogTheme(
     elevation: 0
   ),
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+    color: primaryColor
+  )
 );
