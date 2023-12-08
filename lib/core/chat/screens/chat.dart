@@ -146,12 +146,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           )
         )
       ),
-      floatingActionButton: Padding(
+      floatingActionButton: Container(
         padding: const EdgeInsets.only(
           left: 8,
           top: 8,
           right: 8,
+          bottom: 8
         ),
+        color: Colors.white,
         child: ChatInstructionInput(
           chatId: widget.otherSide.id,
           onSubmit: _onSend,
@@ -160,7 +162,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           autofocus: false
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
