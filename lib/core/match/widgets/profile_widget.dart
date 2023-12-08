@@ -130,7 +130,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
             ),
           ],
         ),
-        (widget.relation==Relation.normal||widget.relation==Relation.likeMe)?Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+        (widget.relation==Relation.likeMe)?Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
           width: MediaQuery.of(context).size.width,child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

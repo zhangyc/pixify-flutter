@@ -1,3 +1,4 @@
+import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +14,17 @@ import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
 
 import '../../../account/providers/profile.dart';
+import '../../../common/permission/permission.dart';
 import '../../../common/screens/profile.dart';
+import '../../../utils/global/global.dart';
 import '../../../utils/location/location.dart';
+import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
+import '../providers/matched.dart';
+import '../util/event.dart';
 import '../util/http_util.dart';
 import '../util/local_data.dart';
+import '../widgets/dialogs.dart';
 import '../widgets/match_init_animation.dart';
 import '../widgets/wish_card.dart';
 
@@ -97,7 +104,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
-
                 //Text("Sona"),
                 Row(
                   children: [
@@ -125,6 +131,84 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 )
               ],
             ),
+          ),
+        ),
+        Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+          width: MediaQuery.of(context).size.width,child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
+                onTap: (){
+                  pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                  ref.read(asyncMatchRecommendedProvider.notifier).skip(users[currentPage].id);
+                },
+              ),
+              GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
+                onTap: (){
+                  // showMatched(context,target: info,next: (){
+                  //   //pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                  // });
+                  ///是否能like
+                  if(canLike){
+
+                    if(like>0){
+                      like=like-1;
+                    }
+                    //currentPage=index;
+                    ///如果对方喜欢我。
+                    if(users[currentPage].likeMe==1){
+                      ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
+                      ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                      showMatched(context,target: users[currentPage],next: (){
+                        pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                      });
+                    }else{
+                      ///
+                      if(users[currentPage].wishList.isEmpty){
+                        ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
+                        ref.read(backgroundImageProvider.notifier).updateBg(null);
+                        pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                      }else {
+                        users[currentPage].matched=true;
+                        setState(() {
+
+                        });
+                      }
+                    }
+
+                    setState(() {
+
+                    });
+                    SonaAnalytics.log(MatchEvent.match_like.name);
+
+                  }else {
+                    SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                    Navigator.push(context, MaterialPageRoute(builder:(c){
+                      return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                    }));
+                  }
+                },
+              ),
+              GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
+                onTap: (){
+                  if(canArrow){
+                    showDm(context, users[currentPage],(){
+                      pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                      //pageController.nextPage(duration: Duration(milliseconds: 1000), curve:  Curves.linearToEaseOut);
+                    });
+                  }else {
+                    bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                    if(isMember){
+                      Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                    }else{
+                      Navigator.push(context, MaterialPageRoute(builder:(c){
+                        return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                      }));
+                    }
+                  }
+                },
+              ),
+            ],
           ),
         ),
         Positioned(
@@ -262,41 +346,17 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
 
   late PageState _state= PageState.loading;
+  AppinioSwiperController appinioSwiperController=AppinioSwiperController();
   double _c=0.0;
   _buildMatch() {
-    return PageView.builder(
-
-         pageSnapping: false,
-        itemBuilder: (c,index) {
-      double pageOffset = index - _c;
-      double angle = pageOffset * 0.5; // 调整旋转角度
-       return Transform.rotate(
-        angle: (index - _c) * 3.14 / 10,
-        child: Container(
-          color: Colors.deepOrange,
-          child: Text('$index'),
-          alignment: Alignment.center,
-        ),
-      );
-    });
     if(_state==PageState.loading){
      return  Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){
       return NoDataWidget();
     }
     else if(_state==PageState.success){
-
       return PageView.builder(
         itemBuilder: (c,index) {
-          double pageOffset = index - _c;
-          double angle = -pageOffset * 0.5; // 调整旋转角度
-          return Transform(
-            alignment: Alignment.bottomCenter,
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001) // Perspective
-              ..rotateX(angle),
-            child: Text('dat$index'),
-          );
           MatchUserInfo info=users[index];
           if(info.id==-1){
             return NoMoreWidget();
@@ -330,8 +390,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (value) async {
-          _c=pageController.page??0.0;
-          //currentPage=value;
+          currentPage=value;
           if (value != 0 && value % 3 == 0 ) {
             current++;
             _loadMore();
