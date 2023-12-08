@@ -9,6 +9,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
 import 'package:sona/core/match/widgets/button_animations.dart';
+import 'package:sona/core/match/widgets/custom_pageview/src/index_controller.dart';
+import 'package:sona/core/match/widgets/custom_pageview/src/skip_transformer.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
@@ -25,6 +27,7 @@ import '../providers/matched.dart';
 import '../util/event.dart';
 import '../util/http_util.dart';
 import '../util/local_data.dart';
+import '../widgets/custom_pageview/src/transformer_page_view.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/match_init_animation.dart';
 import '../widgets/wish_card.dart';
@@ -41,16 +44,18 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      determinePosition().then((value){
-        longitude=value.longitude;
-        latitude=value.latitude;
-        ref.read(myProfileProvider.notifier).updateField(position: value);
-        _initData();
-            }).catchError((e){
-        Fluttertoast.showToast(msg: 'Failed to obtain permission.');
-      });
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   determinePosition().then((value){
+    //     longitude=value.longitude;
+    //     latitude=value.latitude;
+    //     ref.read(myProfileProvider.notifier).updateField(position: value);
+    //     _initData();
+    //   }).catchError((e){
+    //     Fluttertoast.showToast(msg: 'Failed to obtain permission.');
+    //   });
+    // });
+    _initData();
+
     // clickSubject
     //     .debounceTime(Duration(seconds: 1))
     //     .listen((_) {
@@ -64,10 +69,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   void dispose() {
     pageController.dispose();
+    // indexController.dispose();
     super.dispose();
   }
   int currentPage=0;
-  PageController pageController=PageController();
+  TransformerPageController pageController=TransformerPageController();
+  // IndexController indexController=IndexController();
+
   @override
   Widget build(BuildContext context) {
     String? bgImage=ref.watch(backgroundImageProvider);
@@ -140,6 +148,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ScaleAnimation(onTap: (){
+
                   pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                   ref.read(asyncMatchRecommendedProvider.notifier).skip(users[currentPage].id);
                 },
@@ -157,6 +166,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
                         ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
                         showMatched(context,target: users[currentPage],next: (){
+
                           pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                         });
                       }else{
@@ -164,7 +174,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         if(users[currentPage].wishList.isEmpty){
                           ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
                           ref.read(backgroundImageProvider.notifier).updateBg(null);
-                          pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                         pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                         }else {
                           users[currentPage].matched=true;
                           setState(() {
@@ -190,6 +200,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                            if(canArrow){
 
                       showDm(context, users[currentPage],(){
+
                         pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                         //pageController.nextPage(duration: Duration(milliseconds: 1000), curve:  Curves.linearToEaseOut);
                       });
@@ -345,7 +356,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
 
   late PageState _state= PageState.loading;
-  AppinioSwiperController appinioSwiperController=AppinioSwiperController();
+  TransformerPageController transformerPageController=TransformerPageController();
   double _c=0.0;
   _buildMatch() {
     if(_state==PageState.loading){
@@ -354,7 +365,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       return NoDataWidget();
     }
     else if(_state==PageState.success){
-      return PageView.builder(
+      return TransformerPageView(
         itemBuilder: (c,index) {
           MatchUserInfo info=users[index];
           if(info.id==-1){
@@ -364,6 +375,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             return WishCardWidget(context: context,
                 info: info,
                 next: (){
+
                   pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                 },
 
@@ -372,6 +384,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             return ProfileWidget(
               relation: Relation.normal,
               info:info,next:(){
+
               pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
 
             },
@@ -384,12 +397,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             );
           }
         },
-        itemCount: users.length,
-        scrollDirection: Axis.horizontal,
-        controller: pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: (value) async {
-          currentPage=value;
+          index: currentPage,
+          itemCount: users.length,
+          loop: false,
+        //scrollDirection: Axis.horizontal,
+        pageController: pageController,
+          transformer: RotateDepthPageTransformer(),
+          duration: Duration(milliseconds: 1000),
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: (value) async {
+          currentPage=value!;
           if (value != 0 && value % 3 == 0 ) {
             current++;
             _loadMore();
