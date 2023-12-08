@@ -162,11 +162,11 @@ class _MessageWidgetState extends State<MessageWidget> {
                             context: context,
                             options: {
                               'Copy': 'copy',
-                              'Delete': 'delete'
+                              if (widget.fromMe) 'Delete': 'delete'
                             }
                         );
                         if (action == 'copy') {
-                          Clipboard.setData(ClipboardData(text: widget.message.content));
+                          Clipboard.setData(ClipboardData(text: upperMessage!));
                           Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
                         } else if (action == 'delete') {
                           widget.onDelete(widget.message);
