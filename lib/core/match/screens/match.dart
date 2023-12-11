@@ -44,17 +44,17 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   determinePosition().then((value){
-    //     longitude=value.longitude;
-    //     latitude=value.latitude;
-    //     ref.read(myProfileProvider.notifier).updateField(position: value);
-    //     _initData();
-    //   }).catchError((e){
-    //     Fluttertoast.showToast(msg: 'Failed to obtain permission.');
-    //   });
-    // });
-    _initData();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      determinePosition().then((value){
+        longitude=value.longitude;
+        latitude=value.latitude;
+        ref.read(myProfileProvider.notifier).updateField(position: value);
+        _initData();
+      }).catchError((e){
+        Fluttertoast.showToast(msg: 'Failed to obtain permission.');
+      });
+    });
+    // _initData();
 
     // clickSubject
     //     .debounceTime(Duration(seconds: 1))
@@ -68,14 +68,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   void dispose() {
-    pageController.dispose();
+
+    controller.dispose();
     // indexController.dispose();
     super.dispose();
   }
   int currentPage=0;
-  TransformerPageController pageController=TransformerPageController();
+  TransformerPageController controller=TransformerPageController();
   // IndexController indexController=IndexController();
-
   @override
   Widget build(BuildContext context) {
     String? bgImage=ref.watch(backgroundImageProvider);
@@ -83,29 +83,35 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     return Scaffold(
       body: Stack(
         children: [
-          bgImage==null?Container():Positioned(child: Container(
-            foregroundDecoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Colors.transparent,
-                Colors.white
-              ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter
-              )
-            ),
-            child: CachedNetworkImage(imageUrl: bgImage,
-              fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
+          Positioned.fill(child: bgImage==null?Container():Container(
+            height: MediaQuery.of(context).size.height,
+            alignment: Alignment.topCenter,
+            color: Colors.white,
+             child: ShaderMask(
+               shaderCallback: (Rect bounds) {
+                 return const LinearGradient(
+                   begin:Alignment.bottomCenter,
+                   end:Alignment.topCenter  ,
+                   colors: [Colors.transparent, Colors.black],
+                   stops: [0.0, 0.8], // 调整渐变的范围
+                 ).createShader(bounds);
+               },
+               blendMode: BlendMode.dstIn,
+               child: CachedNetworkImage(imageUrl: bgImage,
+                 fit: BoxFit.cover,
+                 width: MediaQuery.of(context).size.width,
+                 height: MediaQuery.of(context).size.width,
 
-            ),
-          )),
+               ),
+             ),
+          ),),
           Positioned.fill(
             child: _buildMatch()
           ),
           Positioned(
+            height: 118,
             width: MediaQuery.of(context).size.width,
-            top: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top,
+            // top: MediaQuery.of(context).padding.top,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: 16
@@ -127,6 +133,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             return FilterPage();
                           })).then((value){
                             _initData();
+                            currentPage=0;
                             if(mounted){
                               _state=PageState.loading;
                               setState(() {
@@ -143,101 +150,91 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               ),
             ),
           ),
-          (users.isNotEmpty&&users[currentPage].matched)?Container():Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
-            width: MediaQuery.of(context).size.width,child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ScaleAnimation(onTap: (){
+          (users.isNotEmpty&&users[currentPage].id==-1)?Container():Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+            width: MediaQuery.of(context).size.width,child: Padding(
+              padding:EdgeInsets.symmetric(
+                horizontal: 68
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ScaleAnimation(onTap: (){
+                    currentStatus=TransformStatus.leftRotate;
+                    // status=PageAnimStatus.dislike;
+                    controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                    ref.read(asyncMatchRecommendedProvider.notifier).skip(users[currentPage].id);
+                  },
+                      child: Image.asset(Assets.iconsSkip,width: 56,height: 56,)
+                  ),
+                  ScaleAnimation(child: Image.asset(Assets.iconsLike,width: 64,height: 64,), onTap: (){
+                      currentStatus=TransformStatus.rightRotate;
+                      if(canLike){
 
-                  pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                  ref.read(asyncMatchRecommendedProvider.notifier).skip(users[currentPage].id);
-                },
-                    child: Image.asset(Assets.iconsSkip,width: 56,height: 56,)
-                ),
-                ScaleAnimation(child: Image.asset(Assets.iconsLike,width: 64,height: 64,), onTap: (){
-                    if(canLike){
-
-                      if(like>0){
-                        like=like-1;
-                      }
-                      //currentPage=index;
-                      ///如果对方喜欢我。
-                      if(users[currentPage].likeMe==1){
-                        ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
-                        ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
-                        showMatched(context,target: users[currentPage],next: (){
-
-                          pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                        });
-                      }else{
-                        ///
-                        if(users[currentPage].wishList.isEmpty){
-                          ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
-                          ref.read(backgroundImageProvider.notifier).updateBg(null);
-                         pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                        }else {
-                          users[currentPage].matched=true;
-                          setState(() {
-
-                          });
+                        if(like>0){
+                          like=like-1;
                         }
-                      }
+                        //currentPage=index;
+                        ///如果对方喜欢我。
+                        if(users[currentPage].likeMe==1){
+                          ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
+                          ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                          showMatched(context,target: users[currentPage],next: (){
 
-                      setState(() {
+                            controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                          });
+                        }else{
+                          ///
+                          if(users[currentPage].wishList.isEmpty){
+                            ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
+                            ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+                            controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                          }else {
+                            users[currentPage].matched=true;
+                            setState(() {
 
-                      });
-                      SonaAnalytics.log(MatchEvent.match_like.name);
+                            });
+                          }
+                        }
 
-                    }else {
-                      SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                      Navigator.push(context, MaterialPageRoute(builder:(c){
-                        return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
-                      }));
-                    }
-                }),
-                ScaleAnimation(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,), onTap: (){
-                        Future.delayed(Duration(milliseconds: 200),(){
-                           if(canArrow){
+                        setState(() {
 
-                      showDm(context, users[currentPage],(){
+                        });
+                        SonaAnalytics.log(MatchEvent.match_like.name);
 
-                        pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                        //pageController.nextPage(duration: Duration(milliseconds: 1000), curve:  Curves.linearToEaseOut);
-                      });
-                    }else {
-                      bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                      if(isMember){
-                        Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                      }else{
+                      }else {
+                        SonaAnalytics.log(MatchEvent.match_like_limit.name);
                         Navigator.push(context, MaterialPageRoute(builder:(c){
-                          return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                          return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
                         }));
                       }
-                    }
-                    });
+                  }),
+                  ScaleAnimation(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,), onTap: (){
+                          Future.delayed(Duration(milliseconds: 200),(){
+                            currentStatus=TransformStatus.rightRotate;
+                             if(canArrow){
 
-                })
-              ],
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: MediaQuery.of(context).padding.top,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.2),
-                      Colors.black.withOpacity(0.0),
-                    ]
-                ),
+                        showDm(context, users[currentPage],(){
+
+                          controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                          //pageController.nextPage(duration: Duration(milliseconds: 1000), curve:  Curves.linearToEaseOut);
+                        });
+                      }else {
+                        bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                        if(isMember){
+                          Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                        }else{
+                          Navigator.push(context, MaterialPageRoute(builder:(c){
+                            return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                          }));
+                        }
+                      }
+                      });
+
+                  })
+                ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -356,65 +353,68 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
 
   late PageState _state= PageState.loading;
-  TransformerPageController transformerPageController=TransformerPageController();
-  double _c=0.0;
+  //TransformerPageController transformerPageController=TransformerPageController();
+  // PageController controller=PageController();
+  ///todo skip
   _buildMatch() {
     if(_state==PageState.loading){
      return  Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){
-      return NoDataWidget();
-    }
-    else if(_state==PageState.success){
+      return const NoDataWidget();
+    } else if(_state==PageState.success){
       return TransformerPageView(
-        itemBuilder: (c,index) {
-          MatchUserInfo info=users[index];
-          if(info.id==-1){
-            return NoMoreWidget();
-          }
-          if(info.matched){
-            return WishCardWidget(context: context,
+          itemBuilder: (c,index) {
+            MatchUserInfo info=users[index];
+            if(info.id==-1){
+              return NoMoreWidget(onTap: (){
+                _initData();
+                currentPage=1;
+              },);
+            }
+            if(info.matched){
+              return WishCardWidget(context: context,
                 info: info,
                 next: (){
 
-                  pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                  controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                 },
 
-            );
-          }else {
-            return ProfileWidget(
-              relation: Relation.normal,
-              info:info,next:(){
+              );
+            }else {
+              return ProfileWidget(
+                relation: Relation.normal,
+                info:info,next:(){
 
-              pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
 
-            },
-              onMatch: (v){
-                 info.matched=v;
-                 setState(() {
-
-                 });
               },
-            );
-          }
-        },
+                onMatch: (v){},
+              );
+            }
+          },
+          pageController: controller,
           index: currentPage,
           itemCount: users.length,
-          loop: false,
-        //scrollDirection: Axis.horizontal,
-        pageController: pageController,
-          transformer: RotateDepthPageTransformer(),
-          duration: Duration(milliseconds: 1000),
+          //loop: false,
+          scrollDirection: Axis.horizontal,
+          //pageController: pageController,
+          transformer: RotatePageTransformer(),
+          duration: const Duration(milliseconds: 1000),
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
-          currentPage=value!;
-          if (value != 0 && value % 3 == 0 ) {
-            current++;
-            _loadMore();
+            currentPage=value!;
+            if (value != 0 && value % 3 == 0 ) {
+              current++;
+              _loadMore();
+            }
           }
-        }
       );
+
     }else if(_state==PageState.noData){
-      return const NoMoreWidget();
+      return NoMoreWidget(onTap: (){
+        _initData();
+        currentPage=0;
+      },);
     }
   }
 }
@@ -424,4 +424,9 @@ enum PageState{
   noData,
   success,
   fail
+}
+enum PageAnimStatus {
+  dislike,
+  like,
+  dm
 }
