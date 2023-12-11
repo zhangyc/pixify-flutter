@@ -13,7 +13,7 @@ import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/locale/locale.dart';
-import 'package:sona/utils/picker/country.dart';
+import 'package:sona/utils/picker/country/country.dart';
 
 import '../models/gender.dart';
 

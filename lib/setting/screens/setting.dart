@@ -157,7 +157,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
   }
 
   Future _showAbout() async {
-    var result = await showRadioFieldDialog(context: context, options: {
+    var result = await showActionButtons(context: context, options: {
       'Privacy Policy': '1',
       'Disclaimer': '2',
       'Terms and Conditions':'3'

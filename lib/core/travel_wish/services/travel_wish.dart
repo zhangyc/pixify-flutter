@@ -1,25 +1,26 @@
 import 'package:dio/dio.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
-import 'package:sona/core/travel_wish/models/timeframe.dart';
 import 'package:sona/utils/global/global.dart';
 
-import '../models/activity.dart';
-
 Future<Response> createTravelWish({
-  required PopularTravelCountry country,
-  required Set<PopularTravelCity> cities,
-  required Set<PopularTravelActivity> activities,
-  required TravelTimeframeOptions timeframe
+  required int countryId,
+  required Set<int> cityIds,
+  required Set<int> activityIds,
+  required String timeframe
 }) async {
   return dio.post(
     '/travel-wish/save-update',
     data: {
-      'countryId': country.id,
-      'cityId': cities.map((city) => city.id).join('#'),
-      'activityIds': activities.map((act) => act.id).join('#'),
-      'timeType': timeframe.value
+      'countryId': countryId,
+      'cityId': cityIds.join('#'),
+      'activityIds': activityIds.join('#'),
+      'timeType': timeframe
     }
   );
+}
+
+Future<Response> deleteMyWishe(int id) {
+  return dio.post('/travel-wish/delete', data: {'id': id});
 }
 
 Future<Response> fetchMyTravelWishes(int id) {
@@ -40,13 +41,13 @@ Future<Response> fetchPopularTravelActivities(int countryId, List<int> cityIds) 
 Future<Response> createActivity({
   required String description,
   required int countryId,
-  Iterable<PopularTravelCity>? cities
+  Iterable<int>? cityIds
 }) async {
   return dio.post(
       '/activity/save-update',
       data: {
         'countryId': countryId,
-        'cityIds': cities?.map((city) => city.id).join('#'),
+        'cityIds': cityIds?.join('#'),
         'title': description
       }
   );

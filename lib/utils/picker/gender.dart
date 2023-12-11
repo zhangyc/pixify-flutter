@@ -10,10 +10,12 @@ Future<Gender?> showGenderPicker({
   bool dismissible = true
 }) {
   final options = Map.fromEntries(Gender.allTypes.map((g) => MapEntry(g.name, g)));
-  return showRadioFieldDialog<Gender?>(
+  return showRadioFields<Gender?>(
     context: context,
     initialValue: initialValue,
     options: options,
+    title: 'Gender',
+    content: 'Your gender will not be shown public, it only be used to help for match',
     dismissible: dismissible
   );
 }

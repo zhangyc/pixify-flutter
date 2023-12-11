@@ -107,7 +107,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
   }
 
   Future _showConversationActions(ImConversation conversation) async {
-    final choice = await showRadioFieldDialog<String>(context: context, options: {'Delete': 'delete'});
+    final choice = await showActionButtons<String>(context: context, options: {'Delete': 'delete'});
     if (choice == 'delete') {
       deleteChat(id: conversation.otherSide.id);
     }

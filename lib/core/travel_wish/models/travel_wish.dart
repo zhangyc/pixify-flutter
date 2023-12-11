@@ -6,7 +6,8 @@ class TravelWish {
   TravelWish({
     required this.id,
     required this.userId,
-    required this.when,
+    required this.timeframe,
+    required this.timeframeName,
     required this.countryId,
     required this.countryName,
     this.countryFlag,
@@ -18,7 +19,8 @@ class TravelWish {
   });
   final int id;
   final int userId;
-  final String when;
+  final String timeframe;
+  final String timeframeName;
   final int countryId;
   final String countryName;
   final String? countryFlag;
@@ -56,7 +58,8 @@ class TravelWish {
     return TravelWish(
       id: json['id'],
       userId: json['userId'],
-      when: json['timeTypeName'],
+      timeframe: json['timeType'],
+      timeframeName: json['timeTypeName'],
       countryId: json['countryId'],
       countryName: json['countryName'],
       countryFlag: json['countryFlag'],
@@ -71,27 +74,36 @@ class TravelWish {
 
 class TravelWishParams {
   TravelWishParams({
-    this.country,
-    this.cities = const {},
-    this.activities = const {},
+    this.countryId,
+    this.cityIds = const {},
+    this.activityIds = const {},
     this.timeframe
   });
 
-  final PopularTravelCountry? country;
-  final Set<PopularTravelCity> cities;
-  final Set<PopularTravelActivity> activities;
-  final TravelTimeframeOptions? timeframe;
+  final int? countryId;
+  final Set<int> cityIds;
+  final Set<int> activityIds;
+  final String? timeframe;
+
+  factory TravelWishParams.fromTravelWish(TravelWish wish) {
+    return TravelWishParams(
+      countryId: wish.countryId,
+      cityIds: wish.cityIds.toSet(),
+      activityIds: wish.activityIds.toSet(),
+      timeframe: wish.timeframe
+    );
+  }
 
   TravelWishParams copyWith({
-    PopularTravelCountry? country,
-    Set<PopularTravelCity>? cities,
-    Set<PopularTravelActivity>? activities,
-    TravelTimeframeOptions? timeframe,
+    int? countryId,
+    Set<int>? cityIds,
+    Set<int>? activityIds,
+    String? timeframe,
   }) {
     return TravelWishParams(
-      country: country ?? this.country,
-      cities: cities ?? this.cities,
-      activities: activities ?? this.activities,
+      countryId: countryId ?? this.countryId,
+      cityIds: cityIds ?? this.cityIds,
+      activityIds: activityIds ?? this.activityIds,
       timeframe: timeframe ?? this.timeframe
     );
   }

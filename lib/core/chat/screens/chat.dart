@@ -425,7 +425,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     if (widget.otherSide.locale == mySide.locale) {
       aiEnabledStatusDescription = 'AI interpretation: off (same language)';
     }
-    final action = await showRadioFieldDialog(
+    final action = await showActionButtons(
         context: context,
         options: {
           'See profile': 'see_profile',

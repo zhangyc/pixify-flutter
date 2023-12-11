@@ -34,9 +34,23 @@ class _CountrySelectorState extends ConsumerState<TimeframeSelector> {
                   delegate: SliverChildListDelegate(
                       options.map((option) => Container(
                         margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xFF2C2C2C),
+                                blurRadius: 0,
+                                offset: Offset(0, 2),
+                                spreadRadius: 0,
+                              )
+                            ]
+                        ),
                         child: OutlinedButtonTheme(
                           data: OutlinedButtonThemeData(
                               style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
+                                backgroundColor: MaterialStatePropertyAll(ref.watch(travelWishParamsProvider).timeframe == option.value ? Color(0xFFFFE806) : null),
+                                foregroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor),
                                 minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
                                 side: MaterialStatePropertyAll(BorderSide(width: 2)),
                               )
@@ -44,7 +58,7 @@ class _CountrySelectorState extends ConsumerState<TimeframeSelector> {
                           child: OutlinedButton(
                               key: ValueKey(option.value),
                               onPressed: () {
-                                ref.read(travelWishParamsProvider.notifier).setTimeframe(option);
+                                ref.read(travelWishParamsProvider.notifier).setTimeframe(option.value);
                                 widget.onDone();
                               },
                               child: Row(

@@ -7,10 +7,12 @@ late final List<Map<String, dynamic>> countryMapList;
 class SonaCountry {
   SonaCountry({
     required this.code,
+    required this.dialCode,
     required this.displayName,
     required this.flag
   });
   final String code;
+  final String dialCode;
   final String displayName;
   final String flag;
 
@@ -30,6 +32,7 @@ class SonaCountry {
     }
     return SonaCountry(
       code: countryMap['code'],
+      dialCode: countryMap['dialCode'],
       displayName: nameTranslations[lang]!,
       flag: countryMap['flag']
     );
@@ -40,14 +43,19 @@ final supportedSonaCountries = countryMapList.map<SonaCountry>((cm) => SonaCount
 final hotTravelCountries = List<SonaCountry>.from(supportedSonaCountries)..retainWhere((country) => ['US', 'JP', 'CN', 'KR', 'TH', 'IT', 'FR'].contains(country.code));
 
 String findFlagByCountryCode(String? code) {
-  final country = supportedSonaCountries.firstWhere((c) => c.code == code, orElse: () => SonaCountry(code: '1', displayName: 'US', flag: '🌍'));
+  SonaCountry? country;
+  try {
+    country = supportedSonaCountries.firstWhere((c) => c.code == code);
+  } catch(e) {
+    return '🌍';
+  }
   return country.flag;
 }
 
-SonaCountry findCountryByCode(String? code) {
+SonaCountry findCountryByCode(String? code, [String defaultCountryCode = 'US']) {
   return supportedSonaCountries.firstWhere(
       (c) => c.code == code,
-      orElse: () => supportedSonaCountries.firstWhere((c) => c.code == 'US')
+      orElse: () => supportedSonaCountries.firstWhere((c) => c.code == defaultCountryCode)
   );
 }
 

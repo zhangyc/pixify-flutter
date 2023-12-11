@@ -1,58 +1,59 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/core/travel_wish/models/activity.dart';
-import 'package:sona/core/travel_wish/models/country.dart';
-import 'package:sona/core/travel_wish/models/timeframe.dart';
 import 'package:sona/core/travel_wish/models/travel_wish.dart';
 
 
 class TravelWishParamsNotifier extends StateNotifier<TravelWishParams> {
   TravelWishParamsNotifier(super.state);
 
-  void setCountry(PopularTravelCountry country) {
+  void setState(TravelWishParams params) {
+    state = params;
+  }
+
+  void setCountryId(int countryId) {
     state = state.copyWith(
-      country: country
+      countryId: countryId
     );
   }
 
-  void setTimeframe(TravelTimeframeOptions timeframe) {
+  void setTimeframe(String timeframe) {
     state = state.copyWith(
       timeframe: timeframe
     );
   }
 
-  void toggleCity(PopularTravelCity city) {
-    if (state.cities.contains(city)) {
+  void toggleCity(int cityId) {
+    if (state.cityIds.contains(cityId)) {
       state = state.copyWith(
-        cities: state.cities..remove(city)
+        cityIds: state.cityIds..remove(cityId)
       );
     } else {
       state = state.copyWith(
-        cities: state.cities..add(city)
+        cityIds: state.cityIds..add(cityId)
       );
     }
   }
 
   void clearCities() {
     state = state.copyWith(
-      cities: {}
+      cityIds: {}
     );
   }
 
-  void toggleActivity(PopularTravelActivity activity) {
-    if (state.activities.contains(activity)) {
+  void toggleActivity(int activityId) {
+    if (state.activityIds.contains(activityId)) {
       state = state.copyWith(
-          activities: state.activities..remove(activity)
+          activityIds: state.activityIds..remove(activityId)
       );
     } else {
       state = state.copyWith(
-          activities: state.activities..add(activity)
+          activityIds: state.activityIds..add(activityId)
       );
     }
   }
 
   void clearActivities() {
     state = state.copyWith(
-        activities: {}
+        activityIds: {}
     );
   }
 }

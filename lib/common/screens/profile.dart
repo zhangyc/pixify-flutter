@@ -68,11 +68,11 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   }
 
   void _showActions() async {
-    final action = await showRadioFieldDialog(context: context, options: {'Report': 'report', 'Block': 'block'});
+    final action = await showActionButtons(context: context, options: {'Report': 'report', 'Block': 'block'});
     if (action == 'report' && mounted) {
       showReport(context, widget.userId);
     } else if (action == 'block' && mounted) {
-      await showRadioFieldDialog(context: context, options: {'Block': 'block', 'Unblock': 'unblock'});
+      await showActionButtons(context: context, options: {'Block': 'block', 'Unblock': 'unblock'});
       final resp = await matchAction(userId: widget.userId, action: MatchAction.block);
       if (resp.statusCode == 0) {
         Fluttertoast.showToast(msg: 'the user has been blocked');
