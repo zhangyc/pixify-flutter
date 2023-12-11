@@ -59,6 +59,7 @@ class SonaIcon extends ConsumerWidget {
 enum SonaIcons {
   back,
   chat_send,
+  check,
   close,
   edit,
   forward,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -260,7 +262,7 @@ Future<String?> showNameTextField({
 Future<String?> showSingleLineTextField({
   required BuildContext context,
   required String? title,
-  String? tip,
+  String? content,
   String? hintText,
   keyboardType = TextInputType.text,
   int maxLength = 64
@@ -268,24 +270,24 @@ Future<String?> showSingleLineTextField({
   final controller = TextEditingController();
   return showModalBottomSheet<String>(
     context: context,
-    backgroundColor: Colors.white,
-    barrierColor: Colors.white.withOpacity(0.9),
+    backgroundColor: Colors.transparent,
     isScrollControlled: true,
+    elevation: 0,
     useSafeArea: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(20),
-      topRight: Radius.circular(20),
-    )),
+    clipBehavior: Clip.antiAlias,
     builder: (BuildContext context) {
       return Container(
-        margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        padding: EdgeInsets.all(16),
+        margin: EdgeInsets.only(top: 16),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).viewInsets.bottom + 16),
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            // side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
-            borderRadius: BorderRadius.circular(24),
+            side: BorderSide(
+              width: 2,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: Color(0xFF2C2C2C),
+            ),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           shadows: [
             BoxShadow(
@@ -296,67 +298,75 @@ Future<String?> showSingleLineTextField({
             )
           ],
         ),
+        clipBehavior: Clip.antiAlias,
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Visibility(
-              visible: title != null && title.isNotEmpty,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: Text(
-                    title ?? '',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleMedium
-                )
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Visibility(
-                    visible: tip != null && tip.isNotEmpty,
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          left: 12, right: 12, top: 0, bottom: 12),
-                      child: Text(tip ?? '',
-                          style: Theme.of(context).textTheme.bodySmall),
-                    ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (title != null) Container(
+                        margin: EdgeInsets.symmetric(vertical: 8),
+                        child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+                      ),
+                      if (content != null) Container(
+                        margin: EdgeInsets.symmetric(vertical: 8),
+                        child: Text(content, style: Theme.of(context).textTheme.labelMedium),
+                      )
+                    ],
                   ),
-                  TextField(
+                ),
+                SIconButton.outlined(icon: SonaIcons.close, onTap: () => Navigator.pop(context))
+              ],
+            ),
+            SizedBox(height: 12),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: TextFormField(
                     controller: controller,
                     textAlign: TextAlign.center,
                     keyboardType: keyboardType,
-                    autofocus: true,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: ColoredButton(
-                            color: Colors.white,
-                            fontColor: Theme.of(context).primaryColor,
-                            text: 'Cancel',
-                            onTap: () => Navigator.pop(context)),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2),
+                        borderRadius: BorderRadius.circular(20)
                       ),
-                      SizedBox(width: 5),
-                      Expanded(
-                        flex: 1,
-                        child: ColoredButton(
-                            text: 'Confirm',
-                            onTap: () {
-                              Navigator.pop(context, controller.text.trim());
-                            }),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2),
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                    ),
+                    validator: (String? text) {
+                      if (text == null || text.isEmpty) return 'Activity can not be empty';
+                      final len = utf8.encode(text).length;
+                      if (len > 30) {
+                        return 'Can not over 30 characters';
+                      }
+                      return null;
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    autofocus: true,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                SizedBox(width: 12),
+                Container(
+                  padding: EdgeInsets.only(top: 4),
+                  child: SIconButton(
+                      icon: SonaIcons.check,
+                      backgroundColor: Theme.of(context).primaryColor,
+                      onTap: () => Navigator.pop(context, controller.text.trim())
+                  ),
+                )
+              ],
             ),
           ],
         ),
