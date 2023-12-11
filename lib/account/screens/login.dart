@@ -216,7 +216,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
 
   Future<bool> _sendPin() async {
     try {
-      final resp = await sendPin(countryCode: _country.dialCode.substring(1), phoneNumber: _phoneController.text);
+      final resp = await sendPin(countryCode: _country.dialCode, phoneNumber: _phoneController.text);
       if (resp.statusCode == 0) {
         return true;
       } else if (resp.statusCode == 10070) {
