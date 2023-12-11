@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/my_wish.dart';
 import 'package:sona/core/travel_wish/screens/activities_selector.dart';
@@ -7,6 +8,7 @@ import 'package:sona/core/travel_wish/screens/cities_selector.dart';
 import 'package:sona/core/travel_wish/screens/country_selector.dart';
 import 'package:sona/core/travel_wish/screens/timeframe_selector.dart';
 import 'package:sona/core/travel_wish/services/travel_wish.dart';
+import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../../../common/widgets/image/icon.dart';
 
@@ -88,6 +90,8 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
       if (resp.statusCode == 0) {
         Navigator.pop(context, true);
         ref.invalidate(asyncMyTravelWishesProvider);
+      } else if (resp.statusCode == 10150) {
+        showSubscription(FromTag.travel_wish);
       }
     } catch(e) {
       // Navigator.pop(context, true);
