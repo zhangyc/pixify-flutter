@@ -59,6 +59,18 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                         children: [
                           ...activities.map((activity) => Container(
                             margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0xFF2C2C2C),
+                                    blurRadius: 0,
+                                    offset: Offset(0, 2),
+                                    spreadRadius: 0,
+                                  )
+                                ]
+                            ),
                             child: OutlinedButton(
                               key: ValueKey(activity.displayName),
                               onPressed: () => ref.read(travelWishParamsProvider.notifier).toggleActivity(activity),
@@ -75,6 +87,18 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                               .where((act) => !activities.contains(act))
                               .map((activity) => Container(
                             margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0xFF2C2C2C),
+                                    blurRadius: 0,
+                                    offset: Offset(0, 2),
+                                    spreadRadius: 0,
+                                  )
+                                ]
+                            ),
                             child: OutlinedButton(
                                 key: ValueKey(activity.displayName),
                                 onPressed: () => ref.read(travelWishParamsProvider.notifier).toggleActivity(activity),
@@ -89,6 +113,18 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                           )),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0xFF2C2C2C),
+                                    blurRadius: 0,
+                                    offset: Offset(0, 2),
+                                    spreadRadius: 0,
+                                  )
+                                ]
+                            ),
                             child: OutlinedButton(
                               onPressed: () async {
                                 final input = await showSingleLineTextField(context: context, title: 'Add your thought', maxLength: 30);

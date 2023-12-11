@@ -64,6 +64,18 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                           delegate: SliverChildListDelegate(
                               cities.where((city) => city.popular).map((city) => Container(
                                 margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Color(0xFF2C2C2C),
+                                        blurRadius: 0,
+                                        offset: Offset(0, 2),
+                                        spreadRadius: 0,
+                                      )
+                                    ]
+                                ),
                                 child: OutlinedButtonTheme(
                                   data: OutlinedButtonThemeData(
                                       style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
@@ -109,6 +121,18 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                     .map<Widget>((city) => SliverToBoxAdapter(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xFF2C2C2C),
+                                blurRadius: 0,
+                                offset: Offset(0, 2),
+                                spreadRadius: 0,
+                              )
+                            ]
+                        ),
                         child: OutlinedButtonTheme(
                           data: OutlinedButtonThemeData(
                               style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
