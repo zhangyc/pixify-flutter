@@ -167,8 +167,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       child: Image.asset(Assets.iconsSkip,width: 56,height: 56,)
                   ),
                   ScaleAnimation(child: Image.asset(Assets.iconsLike,width: 64,height: 64,), onTap: (){
-                      currentStatus=TransformStatus.rightRotate;
+                    if(currentPage==users.length-1){
+                              return;
+                            }
                       if(canLike){
+                        currentStatus=TransformStatus.rightRotate;
 
                         if(like>0){
                           like=like-1;
@@ -187,6 +190,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           if(users[currentPage].wishList.isEmpty){
                             ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
                             ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+
                             controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                           }else {
                             users[currentPage].matched=true;

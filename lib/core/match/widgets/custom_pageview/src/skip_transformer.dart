@@ -47,7 +47,7 @@ class RotatePageTransformer extends PageTransformer {
         double angle = -position * pi / 2;
 
         return Transform(
-          alignment: AlignmentDirectional(1, 0),
+          alignment: AlignmentDirectional(0, 2),
           transform: Matrix4.identity()
             // ..translate(0.0, 0.0)
             ..rotateZ(angle),
