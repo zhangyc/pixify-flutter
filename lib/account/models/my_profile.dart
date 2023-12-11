@@ -21,6 +21,7 @@ class MyProfile {
     this.chatStyleId,
     this.photos = const <ProfilePhoto>[],
     this.locale,
+    this.cityVisibility = true,
     required this.vipEndDate,
   });
 
@@ -40,6 +41,7 @@ class MyProfile {
   final Position? position;
   final bool pushEnabled;
   final String? locale;
+  final bool cityVisibility;
   final int? vipEndDate;
 
   bool get completed => _validate();
@@ -73,7 +75,8 @@ class MyProfile {
       photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
       position: pos,
       pushEnabled: json['openPush'] ?? true,
-      locale: json['lang']
+      locale: json['lang'],
+      cityVisibility: json['showCity'] ?? true
     );
   }
 
@@ -96,6 +99,7 @@ class MyProfile {
       'latitude': position?.latitude.toString(),
       'openPush': pushEnabled,
       'lang': locale,
+      'showCity': cityVisibility,
       'vipEndDate':vipEndDate
     };
   }
@@ -126,11 +130,14 @@ class MyProfile {
   }
 
   MyProfile copyWith({
-    bool? pushEnabled
+    bool? pushEnabled,
+    bool? cityVisibility
   }) {
     final json = toJson();
     return MyProfile.fromJson(
-      json..['openPush'] = pushEnabled ?? json['openPush']
+      json
+        ..['openPush'] = pushEnabled ?? json['openPush']
+        ..['showCity'] = cityVisibility ?? json['showCity']
     );
   }
 }

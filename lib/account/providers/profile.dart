@@ -30,6 +30,10 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
     state = state?.copyWith(pushEnabled: value);
   }
 
+  void updateCityVisibility(bool value) {
+    state = state?.copyWith(cityVisibility: value);
+  }
+
   Future<void> updateField({
     String? name,
     Gender? gender,

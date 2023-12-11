@@ -166,6 +166,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                     onTap: () async {
                       final value = await showGenderPicker(
                         context: context,
+                        initialValue: _gender,
                         dismissible: _gender != null
                       );
                       if (value != null) {

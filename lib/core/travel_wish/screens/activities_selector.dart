@@ -29,11 +29,11 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
   Widget build(BuildContext context) {
     final lang = ref.read(myProfileProvider)!.locale ?? 'en';
     final params = ref.watch(travelWishParamsProvider);
-    final countryId = params.country?.id;
+    final countryId = params.countryId;
     if (countryId == null) return Container();
     final key = '${countryId}_$lang';
     final asyncActivities = ref.watch(asyncPopularTravelActivitiesProvider(key));
-    final selectedActivities = params.activities;
+    final selectedActivityIds = params.activityIds;
     return asyncActivities.when(
         data: (activities) => Stack(
           children: [
@@ -59,36 +59,45 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                         children: [
                           ...activities.map((activity) => Container(
                             margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0xFF2C2C2C),
+                                    blurRadius: 0,
+                                    offset: Offset(0, 2),
+                                    spreadRadius: 0,
+                                  )
+                                ]
+                            ),
                             child: OutlinedButton(
                               key: ValueKey(activity.displayName),
-                              onPressed: () => ref.read(travelWishParamsProvider.notifier).toggleActivity(activity),
+                              onPressed: () => ref.read(travelWishParamsProvider.notifier).toggleActivity(activity.id),
                               style: ButtonStyle(
                                   minimumSize: MaterialStatePropertyAll(Size.zero),
                                   side: MaterialStatePropertyAll(BorderSide(width: 2)),
                                   padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 12, vertical: 4)),
-                                  backgroundColor: selectedActivities.contains(activity) ? MaterialStatePropertyAll(Theme.of(context).primaryColor) : null
+                                  backgroundColor: selectedActivityIds.contains(activity.id) ? MaterialStatePropertyAll(Color(0xFFFFE806)) : null,
+                                foregroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor)
                               ),
-                              child: Text(activity.displayName, style: TextStyle(color: selectedActivities.contains(activity) ? Colors.white : Theme.of(context).primaryColor),)
+                              child: Text(activity.displayName)
                             ),
                           )).toList(),
-                          ...selectedActivities
-                              .where((act) => !activities.contains(act))
-                              .map((activity) => Container(
-                            margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-                            child: OutlinedButton(
-                                key: ValueKey(activity.displayName),
-                                onPressed: () => ref.read(travelWishParamsProvider.notifier).toggleActivity(activity),
-                                style: ButtonStyle(
-                                    minimumSize: MaterialStatePropertyAll(Size.zero),
-                                    side: MaterialStatePropertyAll(BorderSide(width: 2)),
-                                    padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 12, vertical: 4)),
-                                    backgroundColor: selectedActivities.contains(activity) ? MaterialStatePropertyAll(Theme.of(context).primaryColor) : null
-                                ),
-                                child: Text(activity.displayName, style: TextStyle(color: selectedActivities.contains(activity) ? Colors.white : Theme.of(context).primaryColor),)
-                            ),
-                          )),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0xFF2C2C2C),
+                                    blurRadius: 0,
+                                    offset: Offset(0, 2),
+                                    spreadRadius: 0,
+                                  )
+                                ]
+                            ),
                             child: OutlinedButton(
                               onPressed: () async {
                                 final input = await showSingleLineTextField(context: context, title: 'Add your thought', maxLength: 30);
@@ -97,14 +106,12 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                                     EasyLoading.show();
                                     final result = await createActivity(
                                         description: input.trim(),
-                                        countryId: ref.read(travelWishParamsProvider).country!.id,
-                                        cities: ref.read(travelWishParamsProvider).cities
+                                        countryId: ref.read(travelWishParamsProvider).countryId!,
+                                        cityIds: ref.read(travelWishParamsProvider).cityIds
                                     );
+                                    asyncActivities.value!.add(PopularTravelActivity(id: result.data, displayName: input.trim()));
                                     if (result.statusCode == 0) {
-                                      ref.read(travelWishParamsProvider.notifier).toggleActivity(PopularTravelActivity(
-                                          id: result.data,
-                                          displayName: input
-                                      ));
+                                      ref.read(travelWishParamsProvider.notifier).toggleActivity(result.data);
                                     }
                                   } catch (e) {
                                     //
@@ -133,12 +140,12 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
               right: 16,
               bottom: 16,
               child: ColoredButton(
-                key: ValueKey(selectedActivities.length),
+                key: ValueKey(selectedActivityIds.length),
                 size: ColoredButtonSize.large,
                 text: 'Done',
                 loadingWhenAsyncAction: true,
                 onTap: widget.onDone,
-                disabled: selectedActivities.isEmpty,
+                disabled: selectedActivityIds.isEmpty,
               ),
             )
           ],

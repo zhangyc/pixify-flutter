@@ -166,13 +166,13 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
               if (!ref.read(myProfileProvider)!.isMember) Container(
                   margin: EdgeInsets.only(top: 18, left: 16, right: 16),
                   alignment: Alignment.center,
-                  child: FilledButton.tonal(
+                  child: OutlinedButton(
                     onPressed: () {
                       SonaAnalytics.log('chatlist_gopay');
                       Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.pay_chatlist_likedme)));
                     },
                     style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Color(0xFF06FFE1))
+                        backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806))
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

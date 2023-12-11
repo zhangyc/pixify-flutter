@@ -8,36 +8,30 @@ class ImMessage {
     required this.type,
     required this.sender,
     required this.receiver,
-    required this.origin,
-    required this.content,
+    required this.originalContent,
+    required this.translatedContent,
     required this.time,
-    required this.shortenTimes,
-    this.feedback = MessageFeedbackType.none
   });
 
-  final int id;
+  final int? id;
   final int? type;
-  final String? origin;
-  final String content;
+  final String? originalContent;
+  final String? translatedContent;
   final UserInfo sender;
   final UserInfo receiver;
   final DateTime time;
-  final int shortenTimes;
-  final MessageFeedbackType feedback;
   Future? pending;
   Future Function()? func;
 
   factory ImMessage.fromJson(Map<String, dynamic> json) {
     return ImMessage(
       id: json['id'],
+      type: json['messageType'],
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
-      origin: json['originalMessage'],
-      content: json['message'],
+      originalContent: json['originalContent'],
+      translatedContent: json['translatedContent'],
       time: (json['createDate'] as Timestamp).toDate(),
-      shortenTimes: json['simplifyNum'] ?? 0,
-      type: json['messageType'],
-      feedback: MessageFeedbackType.fromStatus(json['feedbackStatus'] ?? 0)
     );
   }
 }

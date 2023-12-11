@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
@@ -12,7 +13,10 @@ import 'package:sona/core/persona/widgets/profile_progress_indicator.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
+import 'package:sona/core/travel_wish/services/travel_wish.dart';
 import 'package:sona/setting/screens/setting.dart';
+import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../../../generated/l10n.dart';
 import '../../travel_wish/providers/my_wish.dart';
@@ -30,6 +34,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
   Widget build(BuildContext context) {
     super.build(context);
     final myProfile = ref.watch(myProfileProvider)!;
+    final asyncMyTravelWishes = ref.watch(asyncMyTravelWishesProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('Me', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -53,7 +58,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (ref.watch(asyncMyTravelWishesProvider).value?.isNotEmpty == true) Container(
+            Container(
               margin: EdgeInsets.only(top: 18),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
@@ -63,90 +68,132 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
             ),
             Container(
               height: 253,
-              child: ref.watch(asyncMyTravelWishesProvider).when(
+              child: asyncMyTravelWishes.when(
                 data: (wishes) => ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   children: [
-                    ...wishes.map((wish) => Container(
-                      width: 295,
-                      height: 221,
-                      margin: EdgeInsets.symmetric(horizontal: 4),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [Colors.black.withOpacity(0), Colors.black.withOpacity(0.75)],
-                        ),
-                        image: wish.countryPhoto != null ? DecorationImage(
-                          image: CachedNetworkImageProvider(
-                            wish.countryPhoto!
-                          ),
-                          fit: BoxFit.cover,
-                        ) : null,
-                        border: Border.all(width: 2),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      alignment: Alignment.bottomCenter,
+                    ...wishes.map((wish) => GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () async {
+                        final action = await showActionButtons(
+                            context: context,
+                            options: {'Edit': 'edit', 'Delete': 'delete'}
+                        );
+                        if (action == 'delete') {
+                          final resp = await deleteMyWishe(wish.id);
+                          if (resp.statusCode == 0) {
+                            ref.refresh(asyncMyTravelWishesProvider.notifier);
+                          } else {
+                            Fluttertoast.showToast(msg: 'Failed to delete, please try again later.');
+                          }
+                        } else if (action == 'edit') {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator(wish: wish)));
+                        }
+                      },
                       child: Container(
-                        padding: EdgeInsets.all(12),
+                        width: 295,
+                        height: 221,
+                        margin: EdgeInsets.symmetric(horizontal: 4),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            begin: Alignment(0.01, -1.00),
-                            end: Alignment(-0.01, 1),
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
                             colors: [Colors.black.withOpacity(0), Colors.black.withOpacity(0.75)],
                           ),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    wish.countryName,
-                                    textAlign: TextAlign.start,
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: Colors.white
-                                    ),
-                                  ),
-                                  if (wish.cityNames.isNotEmpty) Text(
-                                    wish.cityNames.join(','),
-                                    textAlign: TextAlign.start,
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: Colors.white
-                                    ),
-                                  ),
-                                  if (wish.activityNames.isNotEmpty) Text(
-                                    wish.activityNames.join(','),
-                                    textAlign: TextAlign.start,
-                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: Colors.white
-                                    ),
-                                  ),
-                                  Text(
-                                    wish.when,
-                                    textAlign: TextAlign.start,
-                                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                        color: Color(0xFFCCCCCC)
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          image: wish.countryPhoto != null ? DecorationImage(
+                            image: CachedNetworkImageProvider(
+                              wish.countryPhoto!
                             ),
-                            Text(wish.countryFlag ?? '', style: TextStyle(fontSize: 20),)
-                          ],
+                            fit: BoxFit.cover,
+                          ) : null,
+                          border: Border.all(width: 2),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          padding: EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment(0.01, -1.00),
+                              end: Alignment(-0.01, 1),
+                              colors: [Colors.black.withOpacity(0), Colors.black.withOpacity(0.75)],
+                            ),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      wish.countryName,
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                        color: Colors.white
+                                      ),
+                                    ),
+                                    if (wish.cityNames.isNotEmpty) Text(
+                                      wish.cityNames.join(','),
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                          color: Colors.white
+                                      ),
+                                    ),
+                                    if (wish.activityNames.isNotEmpty) Text(
+                                      wish.activityNames.join(','),
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                          color: Colors.white
+                                      ),
+                                    ),
+                                    Text(
+                                      wish.timeframeName,
+                                      textAlign: TextAlign.start,
+                                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                          color: Color(0xFFCCCCCC)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.26),
+                                      border: Border.all(color: Colors.white.withOpacity(0.26), width: 1),
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: SonaIcon(icon: SonaIcons.edit)
+                                  ),
+                                  Text(wish.countryFlag ?? '', style: TextStyle(fontSize: 20),),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     )),
-                    GestureDetector(
+                    if (asyncMyTravelWishes.value != null && asyncMyTravelWishes.value!.length < 3) GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator())),
+                      onTap: () {
+                        if (myProfile.isMember) {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator()));
+                        } else {
+                          showSubscription(FromTag.travel_wish);
+                        }
+                      },
                       child: Container(
                         width: 295,
                         height: 221,

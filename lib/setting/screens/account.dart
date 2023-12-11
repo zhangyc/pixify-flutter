@@ -63,6 +63,7 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
                     ForwardButton(
                       onTap: _deleteAccount,
                       text: 'Delete Account',
+                      color: Theme.of(context).disabledColor,
                     ),
                   ],
                 ),
@@ -84,8 +85,8 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
       }
       if (finalConfirm == true) {
         final resp = await deleteAccount();
-        await appCommonBox.clear();
         if (resp.statusCode == 0) {
+          await appCommonBox.clear();
           if (mounted) {
             Navigator.popUntil(context, (route) => route.isFirst);
           }

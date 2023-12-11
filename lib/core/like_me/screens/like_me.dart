@@ -6,6 +6,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../../../common/widgets/image/user_avatar.dart';
 import '../../match/widgets/profile_widget.dart';
@@ -105,11 +106,15 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                         url: u.avatar!,
                         size: Size(itemWidth, itemHeight),
                       ),
-                    ) : ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaY: 9, sigmaX: 9),
-                      child: UserAvatar(
-                        url: u.avatar!,
-                        size: Size(itemWidth, itemHeight),
+                    ) : GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => showSubscription(FromTag.pay_chatlist_likedme),
+                      child: ImageFiltered(
+                        imageFilter: ImageFilter.blur(sigmaY: 9, sigmaX: 9),
+                        child: UserAvatar(
+                          url: u.avatar!,
+                          size: Size(itemWidth, itemHeight),
+                        ),
                       ),
                     ),
                   )

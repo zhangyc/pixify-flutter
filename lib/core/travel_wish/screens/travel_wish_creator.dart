@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/core/travel_wish/models/travel_wish.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/my_wish.dart';
 import 'package:sona/core/travel_wish/screens/activities_selector.dart';
@@ -7,11 +9,13 @@ import 'package:sona/core/travel_wish/screens/cities_selector.dart';
 import 'package:sona/core/travel_wish/screens/country_selector.dart';
 import 'package:sona/core/travel_wish/screens/timeframe_selector.dart';
 import 'package:sona/core/travel_wish/services/travel_wish.dart';
+import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../../../common/widgets/image/icon.dart';
 
 class TravelWishCreator extends ConsumerStatefulWidget {
-  const TravelWishCreator({super.key});
+  const TravelWishCreator({super.key, this.wish});
+  final TravelWish? wish;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _TravelWishCreatorState();
@@ -21,6 +25,15 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
   final _pageController = PageController();
   static const _pageTransitionDuration = Duration(milliseconds: 200);
   static const _pageTransitionCurve = Curves.ease;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.wish != null)
+        ref.read(travelWishParamsProvider.notifier).setState(TravelWishParams.fromTravelWish(widget.wish!));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +93,16 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
     try {
       final params = ref.read(travelWishParamsProvider);
       final resp = await createTravelWish(
-        country: params.country!,
-        cities: params.cities,
-        activities: params.activities,
+        countryId: params.countryId!,
+        cityIds: params.cityIds,
+        activityIds: params.activityIds,
         timeframe: params.timeframe!
       );
       if (resp.statusCode == 0) {
         Navigator.pop(context, true);
         ref.invalidate(asyncMyTravelWishesProvider);
+      } else if (resp.statusCode == 10150) {
+        showSubscription(FromTag.travel_wish);
       }
     } catch(e) {
       // Navigator.pop(context, true);

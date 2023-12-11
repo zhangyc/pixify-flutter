@@ -6,14 +6,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:sona/account/screens/login_pin.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/locale/locale.dart';
+import 'package:sona/utils/picker/country/country.dart';
 
 import '../../common/widgets/webview.dart';
 
@@ -26,9 +26,8 @@ class LoginPhoneNumberScreen extends StatefulHookConsumerWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
-  late final String? _initialCountryCode;
+  late SonaCountry _country;
   final _phoneController = TextEditingController();
-  PhoneNumber? _pn;
   final _phoneFocusNode = FocusNode();
   final _phoneKey = GlobalKey<FormState>(debugLabel: 'phone_number');
 
@@ -36,7 +35,8 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
 
   @override
   void initState() {
-    _initialCountryCode = findMatchedSonaLocale(Platform.localeName).locale.countryCode;
+    final initialCountryCode = findMatchedSonaLocale(Platform.localeName).locale.countryCode;
+    _country = findCountryByCode(initialCountryCode);
     super.initState();
   }
 
@@ -78,8 +78,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
               ),
               Form(
                 key: _phoneKey,
-                child: IntlPhoneField(
-                  initialCountryCode: _initialCountryCode,
+                child: TextFormField(
                   controller: _phoneController,
                   focusNode: _phoneFocusNode,
                   decoration: InputDecoration(
@@ -92,50 +91,48 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                       gapPadding: 8
                     ),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 2,
-                            color: Theme.of(context).primaryColor
+                      borderSide: BorderSide(
+                        width: 2,
+                        color: Theme.of(context).primaryColor
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                      gapPadding: 8
+                    ),
+                    prefixIcon: GestureDetector(
+                      onTap: () async {
+                        final c = await showCountryPicker(context: context, initialValue: _country);
+                        if (c != null) {
+                          setState(() {
+                            _country = c;
+                          });
+                        }
+                      },
+                      child: FittedBox(
+                        child: Container(
+                          key: ValueKey(_country.code),
+                          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            border: Border(right: BorderSide(width: 1, color: Color(0xFFE8E6E6)))
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            '${_country.flag} +${_country.dialCode}',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontSize: 16,
+                              letterSpacing: 1.6
+                            )
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(12),
-                        gapPadding: 8
+                      )
                     ),
                     hintText: 'Mobile Number',
                     // hintStyle: TextStyle(color: Color(0xFFE9C6EE))
                   ),
-                  flagsButtonMargin: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                  flagsButtonPadding: EdgeInsets.symmetric(horizontal: 4),
-                  showDropdownIcon: false,
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: 18,
                     letterSpacing: 3.6
                   ),
-                  dropdownTextStyle: TextStyle(
-                    letterSpacing: 2.6,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500
-                  ),
-                  dropdownDecoration: BoxDecoration(
-                    border: Border(
-                      right: BorderSide(
-                        width: 1.2,
-                        color: Theme.of(context).primaryColor.withOpacity(0.2)
-                      )
-                    )
-                  ),
-                  disableLengthCheck: _validate,
-                  initialValue: _pn?.completeNumber,
-                  invalidNumberMessage: _validate ? '' : 'Invalid Mobile Number',
-                  onChanged: (PhoneNumber? pn) {
-                    _pn = pn;
-                    if (pn == null) return;
-                    final country = countries.firstWhere((c) => c.code == pn.countryISOCode);
-                    if (pn.number.length > country.maxLength) {
-                      _validate = false;
-                    } else {
-                      _validate = true;
-                    }
-                    setState(() {});
-                  },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
               ),
@@ -203,12 +200,12 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
   }
 
   Future _next() async {
-    if (_pn == null) return;
-    if (_pn!.isValidNumber()) {
+    final pn = PhoneNumber(countryISOCode: _country.code, countryCode: _country.dialCode, number: _phoneController.text);
+    if (pn.isValidNumber()) {
       final result = await _sendPin();
       if (!result) return;
       if (mounted) setState(() {});
-      Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPinScreen(phoneNumber: _pn!)));
+      Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPinScreen(phoneNumber: pn)));
       SonaAnalytics.log('reg_phone');
     } else {
       setState(() {
@@ -219,7 +216,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
 
   Future<bool> _sendPin() async {
     try {
-      final resp = await sendPin(countryCode: _pn!.countryCode.substring(1), phoneNumber: _pn!.number);
+      final resp = await sendPin(countryCode: _country.dialCode, phoneNumber: _phoneController.text);
       if (resp.statusCode == 0) {
         return true;
       } else if (resp.statusCode == 10070) {

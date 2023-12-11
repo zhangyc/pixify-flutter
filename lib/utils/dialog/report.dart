@@ -16,7 +16,7 @@ Future<bool?> showReport(BuildContext context, int userId) async {
 }
 
 Future<int?> _showReportReason(BuildContext context) async {
-  return showRadioFieldDialog<int>(
+  return showActionButtons<int>(
       context: context,
       options: {
         'Gore': 1,

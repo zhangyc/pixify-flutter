@@ -18,6 +18,7 @@ class HobbyTag<T> extends StatelessWidget {
     return FittedBox(
       child: InkWell(
         onTap: onSelect != null ? () => onSelect!(value) : null,
+        radius: 20,
         borderRadius: BorderRadius.circular(20),
         customBorder: RoundedRectangleBorder(
           side: BorderSide(color: Theme.of(context).primaryColor, width: 2)

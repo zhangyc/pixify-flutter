@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/chat/models/conversation.dart';
 import 'package:sona/utils/global/global.dart';
 
@@ -27,6 +28,12 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
 
   @override
   Widget build(BuildContext context) {
+    String? displayMessage;
+    if (widget.conversation.lastMessageSenderId == ref.read(myProfileProvider)!.id) {
+      displayMessage = widget.conversation.lastMessageOriginalContent;
+    } else {
+      displayMessage = widget.conversation.lastMessageTranslatedContent;
+    }
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -62,8 +69,7 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                       ),
                       SizedBox(height: 2),
                       Text(
-                        widget.conversation.lastMessageContent != null && widget.conversation.lastMessageContent!.isNotEmpty
-                            ? widget.conversation.lastMessageContent! : 'New matched',
+                        displayMessage != null && displayMessage.isNotEmpty ? displayMessage : 'New matched',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
@@ -75,20 +81,14 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                 )
               ),
               SizedBox(width: 8),
-              widget.conversation.hasUnreadMessage
-                  ? widget.conversation.lastMessageType == 7
-                  ? InkWell(
-                    onTap: widget.onHookTap,
-                    child: Image.asset('assets/images/quick_reply.png', width: 40),
-                  )
-                  : Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(4)
-                    ),
-                  ) : Container()
+              if (widget.conversation.hasUnreadMessage) Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(4)
+                ),
+              )
             ],
           )
       )

@@ -191,9 +191,12 @@ final themeData = ThemeData(
   ),
   bottomSheetTheme: BottomSheetThemeData(
     elevation: 0,
-    modalBarrierColor: Colors.white.withOpacity(0.6)
+    modalBarrierColor: Colors.white.withOpacity(0.7)
   ),
   dialogTheme: DialogTheme(
     elevation: 0
   ),
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+    color: primaryColor
+  )
 );

@@ -107,7 +107,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
   }
 
   Future _showConversationActions(ImConversation conversation) async {
-    final choice = await showRadioFieldDialog<String>(context: context, options: {'Delete': 'delete'});
+    final choice = await showActionButtons<String>(context: context, options: {'Delete': 'delete'});
     if (choice == 'delete') {
       deleteChat(id: conversation.otherSide.id);
     }
@@ -132,14 +132,8 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 40),
-            Image.asset('assets/images/no_chat.png', width: 135),
+            Image.asset('assets/images/no_content.png', width: 272),
             const SizedBox(height: 20),
-            Text(
-              'No chats yet\nMatch with someone to start talking',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall,
-            )
           ],
         ),
       ),

@@ -152,7 +152,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
 
   Future<bool> _sendPin() async {
     try {
-      final resp = await sendPin(countryCode: _pn.countryCode.substring(1), phoneNumber: _pn.number);
+      final resp = await sendPin(countryCode: _pn.countryCode, phoneNumber: _pn.number);
       if (resp.statusCode == 0) {
         setState(() {});
         return true;
@@ -174,7 +174,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
       try {
         EasyLoading.show();
         final resp = await login(
-            countryCode: _pn.countryCode.substring(1),
+            countryCode: _pn.countryCode,
             phoneNumber: _pn.number,
             pinCode: _pinController.text
         );

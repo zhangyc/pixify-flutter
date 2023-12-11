@@ -36,18 +36,24 @@ final messageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>,
         .collection('rooms').doc('$roomId')
         .collection('msgs').orderBy('id', descending: true)
         .snapshots();
-    ref.listen(messagePaginationProvider(roomId), (previous, next) async {
-      if (next != null) {
-        final historyMessages = await FirebaseFirestore.instance
-            .collection('${env.firestorePrefix}_users').doc('$userId')
-            .collection('rooms').doc('$roomId')
-            .collection('msgs').orderBy('id', descending: true).startAfterDocument(next)
-            .get()
-            .then<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((snapshot) => snapshot.docs)
-            .then<Iterable<ImMessage>>((docs) => docs.map<ImMessage>((doc) => ImMessage.fromJson(doc.data())));
-        messages = [...messages, ...historyMessages];
+    ref.listen(
+      messagePaginationProvider(roomId),
+      (previous, next) async {
+        if (next != null) {
+          final historyMessages = await FirebaseFirestore.instance
+              .collection('${env.firestorePrefix}_users').doc('$userId')
+              .collection('rooms').doc('$roomId')
+              .collection('msgs').orderBy('id', descending: true).startAfterDocument(next)
+              .get()
+              .then<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((snapshot) => snapshot.docs)
+              .then<Iterable<ImMessage>>((docs) => docs.map<ImMessage>((doc) => ImMessage.fromJson(doc.data())));
+          messages = [...messages, ...historyMessages];
+        }
+      },
+      onError: (_, __) {
+        //
       }
-    });
+    );
     await for (var snapshot in stream) {
       // snapshot.docChanges.
       messages = snapshot.docs.map<ImMessage>((doc) => ImMessage.fromJson(doc.data())).toList();
