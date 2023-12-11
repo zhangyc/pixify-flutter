@@ -624,7 +624,7 @@ Future<T?> showRadioFields<T>({
                     ],
                   ),
                 ),
-                SIconButton(icon: SonaIcons.close, onTap: () => Navigator.pop(context))
+                SIconButton.outlined(icon: SonaIcons.close, onTap: () => Navigator.pop(context))
               ],
             ),
             Container(
