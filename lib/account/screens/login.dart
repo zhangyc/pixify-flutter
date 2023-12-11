@@ -119,6 +119,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                           child: Text(
                             '${_country.flag} +${_country.dialCode}',
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontSize: 16,
                               letterSpacing: 1.6
                             )
                           ),
