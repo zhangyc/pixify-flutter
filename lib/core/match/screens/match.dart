@@ -133,7 +133,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             return FilterPage();
                           })).then((value){
                             _initData();
-                            currentPage=0;
                             if(mounted){
                               _state=PageState.loading;
                               setState(() {
@@ -159,6 +158,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ScaleAnimation(onTap: (){
+                    if(currentPage==users.length-1){
+                      return;
+                    }
                     currentStatus=TransformStatus.leftRotate;
                     // status=PageAnimStatus.dislike;
                     controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
@@ -213,6 +215,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       }
                   }),
                   ScaleAnimation(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,), onTap: (){
+                    if(currentPage==users.length-1){
+                              return;
+                            }
                           Future.delayed(Duration(milliseconds: 200),(){
                             currentStatus=TransformStatus.rightRotate;
                              if(canArrow){
@@ -372,7 +377,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             if(info.id==-1){
               return NoMoreWidget(onTap: (){
                 _initData();
-                currentPage=1;
               },);
             }
             if(info.matched){
@@ -417,7 +421,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }else if(_state==PageState.noData){
       return NoMoreWidget(onTap: (){
         _initData();
-        currentPage=0;
       },);
     }
   }
