@@ -69,6 +69,7 @@ enum SonaIcons {
   navicon_match_active,
   navicon_chat,
   navicon_chat_active,
+  search,
   send,
   settings,
   sparkles,

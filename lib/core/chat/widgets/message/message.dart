@@ -94,7 +94,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                       behavior: HitTestBehavior.translucent,
                       onLongPress: () async {
                         if (localPendingMessage != null) return;
-                        final action = await showRadioFieldDialog(
+                        final action = await showActionButtons(
                             context: context,
                             options: {
                               'Copy': 'copy',
@@ -141,7 +141,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                         });
                       },
                       onLongPress: () async {
-                        final action = await showRadioFieldDialog(
+                        final action = await showActionButtons(
                             context: context,
                             options: {
                               'Copy': 'copy',

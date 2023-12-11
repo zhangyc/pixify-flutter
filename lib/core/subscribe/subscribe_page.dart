@@ -112,7 +112,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           actions: [
             ref.read(myProfileProvider)!.isMember?
             TextButton(onPressed: () async {
-              var result=await showRadioFieldDialog(
+              var result=await showActionButtons(
                   context: context,
                   title: 'Manage Payments',
                   options: {

@@ -460,7 +460,7 @@ Future<String?> showTextFieldDialog({
   );
 }
 
-Future<T?> showRadioFieldDialog<T>({
+Future<T?> showActionButtons<T>({
   required BuildContext context,
   T? initialValue,
   required Map<String, T> options,
@@ -550,6 +550,98 @@ Future<T?> showRadioFieldDialog<T>({
   );
 }
 
+Future<T?> showRadioFields<T>({
+  required BuildContext context,
+  T? initialValue,
+  required Map<String, T> options,
+  String? title,
+  String? content,
+  bool dismissible = true
+}) {
+  return showModalBottomSheet<T>(
+    context: context,
+    backgroundColor: Colors.transparent,
+    isScrollControlled: true,
+    elevation: 0,
+    useSafeArea: true,
+    clipBehavior: Clip.antiAlias,
+    isDismissible: dismissible,
+    builder: (BuildContext context) {
+      final keys = options.keys.toList(growable: false);
+      return Container(
+        margin: EdgeInsets.only(top: 16),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).viewInsets.bottom + 16),
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: 2,
+              strokeAlign: BorderSide.strokeAlignOutside,
+              color: Color(0xFF2C2C2C),
+            ),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          shadows: [
+            BoxShadow(
+              color: Color(0xFF2C2C2C),
+              blurRadius: 0,
+              offset: Offset(0, -4),
+              spreadRadius: 0,
+            )
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (title != null) Container(
+                        margin: EdgeInsets.symmetric(vertical: 8),
+                        child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+                      ),
+                      if (content != null) Container(
+                        margin: EdgeInsets.symmetric(vertical: 8),
+                        child: Text(content, style: Theme.of(context).textTheme.labelMedium),
+                      )
+                    ],
+                  ),
+                ),
+                SIconButton(icon: SonaIcons.close, onTap: () => Navigator.pop(context))
+              ],
+            ),
+            Container(
+              constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.7
+              ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) => RadioListTile(
+                  value: options[keys[index]],
+                  groupValue: initialValue,
+                  controlAffinity: ListTileControlAffinity.trailing,
+                  onChanged: (value) => Navigator.pop(context, value),
+                  selectedTileColor: Color(0xFFF6F3F3),
+                  title: Text(keys[index])
+                ),
+                itemCount: keys.length,
+              ),
+            ),
+            SizedBox(height: 12),
+          ],
+        ),
+      );
+    },
+  );
+}
+
 Future<DateTime?> showBirthdayPicker({
   required BuildContext context,
   required DateTime initialDate,
@@ -618,10 +710,10 @@ Future<String?> showLocalePicker({
   for (var l in supportedSonaLocales) {
     options.addAll({l.displayName: l.locale.toLanguageTag()});
   }
-  return showRadioFieldDialog<String>(
+  return showRadioFields<String>(
       context: context,
       options: options,
-      title: 'Choose a Language',
+      title: 'Common Language',
       initialValue: initialValue,
       dismissible: dismissible
   );

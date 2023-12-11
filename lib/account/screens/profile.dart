@@ -257,7 +257,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   void _showPhotoActions(int index, Map<String, String> actions) async {
     if (actions.isEmpty) return;
     final photo = _profile.photos[index];
-    final action = await showRadioFieldDialog(context: context, options: actions);
+    final action = await showActionButtons(context: context, options: actions);
     if (action == 'delete') {
       _onRemovePhoto(photo.id);
     } else if (action == 'set_default') {
@@ -270,7 +270,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Future _onAddPhoto() async {
-    final source = await showRadioFieldDialog(context: context, options: {
+    final source = await showActionButtons(context: context, options: {
       'Choose a photo': ImageSource.gallery,
       'Take a photo': ImageSource.camera
     });
