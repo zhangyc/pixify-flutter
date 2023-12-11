@@ -60,6 +60,7 @@ enum SonaIcons {
   back,
   chat_send,
   close,
+  edit,
   forward,
   navicon_sona,
   navicon_sona_active,
