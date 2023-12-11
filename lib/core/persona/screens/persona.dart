@@ -13,6 +13,7 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
 import 'package:sona/setting/screens/setting.dart';
+import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../../../generated/l10n.dart';
 import '../../travel_wish/providers/my_wish.dart';
@@ -30,6 +31,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
   Widget build(BuildContext context) {
     super.build(context);
     final myProfile = ref.watch(myProfileProvider)!;
+    final asyncMyTravelWishes = ref.watch(asyncMyTravelWishesProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('Me', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -53,7 +55,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (ref.watch(asyncMyTravelWishesProvider).value?.isNotEmpty == true) Container(
+            Container(
               margin: EdgeInsets.only(top: 18),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
@@ -63,7 +65,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
             ),
             Container(
               height: 253,
-              child: ref.watch(asyncMyTravelWishesProvider).when(
+              child: asyncMyTravelWishes.when(
                 data: (wishes) => ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
@@ -144,9 +146,15 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         ),
                       ),
                     )),
-                    GestureDetector(
+                    if (asyncMyTravelWishes.value != null && asyncMyTravelWishes.value!.length < 3) GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator())),
+                      onTap: () {
+                        if (myProfile.isMember) {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator()));
+                        } else {
+                          showSubscription(FromTag.travel_wish);
+                        }
+                      },
                       child: Container(
                         width: 295,
                         height: 221,

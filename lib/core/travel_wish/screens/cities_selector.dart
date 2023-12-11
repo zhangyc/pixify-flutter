@@ -159,24 +159,26 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                       ),
                     )
                   ),
-                  SliverToBoxAdapter(
-                    child: TextButton(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Skip, just ${params.country!.displayName}', style: TextStyle(color: Theme.of(context).primaryColor),),
-                          SizedBox(width: 12),
-                          Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor)
-                        ],
-                      ),
-                      onPressed: widget.onSkip,
-                    ),
-                  ),
                 ]
             ),
           ),
         ),
-        Positioned(
+        if (params.cities.isEmpty) Positioned(
+          left: 16,
+          right: 16,
+          bottom: 16,
+          child: TextButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Skip, just ${params.country!.displayName}', style: TextStyle(color: Theme.of(context).primaryColor),),
+                SizedBox(width: 12),
+                Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor)
+              ],
+            ),
+            onPressed: widget.onSkip,
+          ),
+        ) else Positioned(
           left: 16,
           right: 16,
           bottom: 16,
@@ -184,7 +186,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
             child: Text('Next'),
             onPressed: widget.onNext
           ),
-        )
+        ),
       ],
     );
   }

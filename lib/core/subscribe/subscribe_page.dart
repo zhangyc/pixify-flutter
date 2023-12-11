@@ -824,7 +824,8 @@ enum FromTag{
   pay_match_arrow,
   pay_match_likelimit,
   chat_starter,
-  profile_myplan
+  profile_myplan,
+  travel_wish
 }
 
 List<String> unlockFeatures=[
