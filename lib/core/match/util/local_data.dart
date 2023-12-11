@@ -14,11 +14,11 @@ set currentFilterMaxAge(value){
   appCommonBox.put('currentFilterMaxAge', value);
 }
 
-double get longitude => appCommonBox.get('longitude',defaultValue: null);
+double? get longitude => appCommonBox.get('longitude',defaultValue: null);
 set longitude(value){
   appCommonBox.put('longitude', value);
 }
-double get latitude => appCommonBox.get('latitude',defaultValue: null);
+double? get latitude => appCommonBox.get('latitude',defaultValue: null);
 set latitude(value){
   appCommonBox.put('latitude', value);
 }

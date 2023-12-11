@@ -5,6 +5,7 @@ class Assets {
   static const String i18nCountries = 'assets/i18n/countries.json';
   static const String iconsArrow = 'assets/icons/arrow.png';
   static const String iconsBack = 'assets/icons/back.png';
+  static const String iconsChatSend = 'assets/icons/chat_send.png';
   static const String iconsClose = 'assets/icons/close.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsForward = 'assets/icons/forward.png';
@@ -41,10 +42,13 @@ class Assets {
   static const String imagesArrow = 'assets/images/arrow.png';
   static const String imagesDm = 'assets/images/dm.png';
   static const String imagesError = 'assets/images/error.png';
+  static const String imagesHumanPortrait = 'assets/images/human_portrait.png';
   static const String imagesLocationAuthorization = 'assets/images/location_authorization.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
   static const String imagesMatched = 'assets/images/matched.png';
   static const String imagesNoChat = 'assets/images/no_chat.png';
+  static const String imagesNoContent = 'assets/images/no_content.png';
+  static const String imagesPetPortrait = 'assets/images/pet_portrait.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
   static const String imagesRewardArrow = 'assets/images/reward_arrow.png';
   static const String imagesSuperSonaBg = 'assets/images/super_sona_bg.png';

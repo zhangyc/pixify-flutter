@@ -3,7 +3,7 @@ library another_transformer_page_view;
 import 'package:flutter/widgets.dart';
 
 import 'index_controller.dart';
-
+import 'skip_transformer.dart';
 ///
 /// NOTICE::
 ///
@@ -20,6 +20,7 @@ const int kMiddleValue = 1000000000;
 const int kDefaultTransactionDuration = 300;
 
 class TransformInfo {
+
   /// The `width` of the `TransformerPageView`
   final double? width;
 
@@ -101,7 +102,6 @@ class TransformerPageController extends PageController {
   final bool loop;
   final int? itemCount;
   final bool reverse;
-
   TransformerPageController({
     int? initialPage = 0,
     super.keepPage,

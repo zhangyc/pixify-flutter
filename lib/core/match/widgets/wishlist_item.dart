@@ -25,7 +25,8 @@ class _WishListItemState extends State<WishListItem> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         const Text('Her wishes',style: TextStyle(
-            color: Colors.black
+            color: Color(0xff2c2c2c),
+            fontWeight: FontWeight.w800
         ),),
         const SizedBox(
           height: 16,

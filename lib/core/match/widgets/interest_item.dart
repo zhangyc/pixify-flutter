@@ -25,10 +25,13 @@ class InterestItem extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
+                  color: Color(0xff2c2c2c)
                 ),
                 borderRadius: BorderRadius.circular(14)
               ),
-              child: Text(e.name??'',)
+              child: Text(e.name??'',style: TextStyle(
+                color: Color(0xff2c2c2c)
+              ),)
             )).toList(),
           )
         ],

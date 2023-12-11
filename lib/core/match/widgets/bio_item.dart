@@ -9,12 +9,12 @@ class BioItem extends StatelessWidget {
       padding: EdgeInsets.all(12),
       width: MediaQuery.of(context).size.width-16*2,
       decoration: BoxDecoration(
-        color: Color(0xff2c2c2c),
+        color: Color(0xffF6F3F3),
         borderRadius: BorderRadius.circular(24),
       ),
       child: Text(bio,
        style: TextStyle(
-         color: Colors.white
+         color: Color(0xff2c2c2c)
        ),
       ),
     );

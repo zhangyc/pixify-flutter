@@ -48,7 +48,6 @@ class MatchUserInfo extends UserInfo{
     currentCity: currentCity,
     impression: impression,
   );
-
   @override
   final int id;
   @override
