@@ -22,6 +22,10 @@ Future<Response> createTravelWish({
   );
 }
 
+Future<Response> deleteMyWishe(int id) {
+  return dio.post('/travel-wish/delete', data: {'id': id});
+}
+
 Future<Response> fetchMyTravelWishes(int id) {
   return dio.post('/travel-wish/find', data: {'userId': id, 'page': 1, 'pageSize': 3});
 }
