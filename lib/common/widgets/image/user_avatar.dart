@@ -9,10 +9,14 @@ class UserAvatar extends ConsumerWidget {
     super.key,
     required this.url,
     this.size = const Size.square(50),
+    this.borderRadius = const BorderRadius.all(Radius.circular(24)),
+    this.borderSide = const BorderSide(color: Color(0xFFE8E6E6), width: 1)
   });
 
   final String url;
   final Size size;
+  final BorderSide borderSide;
+  final BorderRadius borderRadius;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,11 +24,11 @@ class UserAvatar extends ConsumerWidget {
       width: size.width,
       height: size.height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24)
+        borderRadius: borderRadius
       ),
       foregroundDecoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFE8E6E6), width: 1),
-        borderRadius: BorderRadius.circular(24)
+        border: Border.fromBorderSide(borderSide),
+        borderRadius: borderRadius
       ),
       alignment: Alignment.center,
       clipBehavior: Clip.antiAlias,

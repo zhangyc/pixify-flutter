@@ -195,25 +195,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('New Matched!', style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
-          SizedBox(height: 20),
-          Container(
-            width: 95,
-            height: 50,
-            child: Stack(
-              children: [
-                Positioned(
-                  left: 45,
-                  child: UserAvatar(url: mySide.avatar!, size: Size.square(50))
-                ),
-                Positioned(
-                  left: 0,
-                  child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(50))
-                )
-              ],
-            ),
+          UserAvatar(
+            url: widget.otherSide.avatar!,
+            size: const Size(150, 200),
+            borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
           ),
-          SizedBox(height: 28),
+          SizedBox(height: 16),
+          Text(),
           Center(
             child: SizedBox(
               width: 248,
@@ -226,43 +214,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               ),
             ),
           ),
-          SizedBox(height: 12),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: Color(0xFFFFF1CE),
-              borderRadius: BorderRadius.circular(8)
-            ),
-            alignment: Alignment.center,
-            child: Text.rich(
-              textAlign: TextAlign.center,
-              TextSpan(
-                style: TextStyle(fontSize: 12, color: Color(0xFF777777)),
-                children: [
-                  TextSpan(
-                    text: 'Don\'t worry, just type in '
-                  ),
-                  TextSpan(
-                    text: findMatchedSonaLocale(mySide.locale!).displayName,
-                    style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.w500),
-                  ),
-                  TextSpan(
-                      text: '!\n'
-                  ),
-                  TextSpan(
-                      text: 'Sona will translate it into lively localized '
-                  ),
-                  TextSpan(
-                    text: ref.watch(futureUserProvider(widget.otherSide.id)).when(data: (data) => findMatchedSonaLocale(data.locale!).displayName, error: (_, __) => '', loading: () => ''),
-                    style: TextStyle(color: Color(0xFF000000), fontWeight: FontWeight.w500),
-                  ),
-                  TextSpan(
-                      text: '!'
-                  )
-                ]
-              )
-            ),
-          )
         ],
       ),
     );
