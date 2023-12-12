@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -158,6 +159,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     }
     if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
       String ext= initialMessage.data['ext'];
+      if (kDebugMode) print('push_data: $ext');
       UserInfo info =UserInfo.fromJson(jsonDecode(ext));
       if (mounted) {
         Navigator.push(context, MaterialPageRoute(builder: (c){
@@ -169,6 +171,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
         String ext= initialMessage.data['ext'];
+        if (kDebugMode) print('push_data: $ext');
         UserInfo info =UserInfo.fromJson(jsonDecode(ext));
         Navigator.push(context, MaterialPageRoute(builder: (c){
           return ChatScreen(entry: ChatEntry.push, otherSide: info);

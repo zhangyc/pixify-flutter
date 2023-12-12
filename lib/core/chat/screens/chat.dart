@@ -114,7 +114,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 alignment: Alignment.topCenter,
                 child: ListView.separated(
                   shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 80),
+                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
                   reverse: true,
                   itemBuilder: (BuildContext context, int index) => MessageWidget(
                     prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
