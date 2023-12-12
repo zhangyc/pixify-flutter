@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
 
 Future<Response> createTravelWish({
+  int? id,
   required int countryId,
   required Set<int> cityIds,
   required Set<int> activityIds,
@@ -11,6 +11,7 @@ Future<Response> createTravelWish({
   return dio.post(
     '/travel-wish/save-update',
     data: {
+      'id': id,
       'countryId': countryId,
       'cityId': cityIds.join('#'),
       'activityIds': activityIds.join('#'),

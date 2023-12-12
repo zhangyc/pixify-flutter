@@ -10,6 +10,7 @@ import 'package:sona/core/travel_wish/providers/popular_activity.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../../common/widgets/button/colored.dart';
+import '../providers/popular_country.dart';
 import '../services/travel_wish.dart';
 
 class ActivitiesSelector extends ConsumerStatefulWidget {
@@ -24,6 +25,8 @@ class ActivitiesSelector extends ConsumerStatefulWidget {
 }
 
 class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
+
+  static const maxCount = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +48,42 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                   slivers: [
                     SliverToBoxAdapter(
                       child: Container(
+                        margin: EdgeInsets.only(bottom: 2),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                                '${ref.read(asyncPopularTravelCountriesProvider).value?.firstWhere((country) => country.id == countryId).displayName}',
+                                style: Theme.of(context).textTheme.headlineLarge
+                            ),
+                            Text.rich(
+                                TextSpan(
+                                    children: [
+                                      TextSpan(
+                                          text: '${selectedActivityIds.length}'
+                                      ),
+                                      TextSpan(
+                                          text: '/$maxCount',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400
+                                          )
+                                      )
+                                    ]
+                                ),
+                                style: Theme.of(context).textTheme.titleMedium
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
                         margin: EdgeInsets.only(bottom: 32),
                         child: Text(
-                            'Any interested activity?',
-                            style: Theme.of(context).textTheme.headlineLarge
+                            'If you go there, Which activities do you want to visit?',
+                            style: Theme.of(context).textTheme.bodyMedium
                         ),
                       ),
                     ),

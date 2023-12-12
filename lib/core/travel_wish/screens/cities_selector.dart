@@ -25,6 +25,8 @@ class CitiesSelector extends ConsumerStatefulWidget {
 
 class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
 
+  static const maxCount = 3;
+
   @override
   Widget build(BuildContext context) {
     final lang = ref.read(myProfileProvider)!.locale ?? 'en';
@@ -45,9 +47,32 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                   SliverToBoxAdapter(
                     child: Container(
                       margin: EdgeInsets.only(bottom: 2),
-                      child: Text(
-                          'Where?',
-                          style: Theme.of(context).textTheme.headlineLarge
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                              '${ref.read(asyncPopularTravelCountriesProvider).value?.firstWhere((country) => country.id == countryId).displayName}',
+                              style: Theme.of(context).textTheme.headlineLarge
+                          ),
+                          Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: '${selectedCityIds.length}'
+                                  ),
+                                  TextSpan(
+                                    text: '/$maxCount',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400
+                                    )
+                                  )
+                                ]
+                              ),
+                              style: Theme.of(context).textTheme.titleMedium
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -118,7 +143,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                         ),
                       )
                   ),
-                  if (asyncCities.value != null) ...asyncCities.value!.where((city) => city.popular && selectedCityIds.contains(city.id))
+                  if (asyncCities.value != null) ...asyncCities.value!.where((city) => !city.popular && selectedCityIds.contains(city.id))
                     .map<Widget>((city) => SliverToBoxAdapter(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),

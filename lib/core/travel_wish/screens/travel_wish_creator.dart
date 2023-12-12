@@ -93,6 +93,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
     try {
       final params = ref.read(travelWishParamsProvider);
       final resp = await createTravelWish(
+        id: widget.wish?.id,
         countryId: params.countryId!,
         cityIds: params.cityIds,
         activityIds: params.activityIds,
