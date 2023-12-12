@@ -6,7 +6,9 @@ class Assets {
   static const String iconsArrow = 'assets/icons/arrow.png';
   static const String iconsBack = 'assets/icons/back.png';
   static const String iconsChatSend = 'assets/icons/chat_send.png';
+  static const String iconsCheck = 'assets/icons/check.png';
   static const String iconsClose = 'assets/icons/close.png';
+  static const String iconsEdit = 'assets/icons/edit.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsForward = 'assets/icons/forward.png';
   static const String iconsHandle = 'assets/icons/handle.png';
@@ -24,6 +26,7 @@ class Assets {
   static const String iconsNaviconSonaActive = 'assets/icons/navicon_sona_active.png';
   static const String iconsNotice = 'assets/icons/notice.png';
   static const String iconsRedHeart = 'assets/icons/red_heart.png';
+  static const String iconsSearch = 'assets/icons/search.png';
   static const String iconsSelected = 'assets/icons/selected.png';
   static const String iconsSend = 'assets/icons/send.png';
   static const String iconsSettings = 'assets/icons/settings.png';
@@ -58,6 +61,7 @@ class Assets {
   static const String lottieArrowAnimation = 'assets/lottie/arrow_animation.json';
   static const String lottieLike = 'assets/lottie/like.json';
   static const String lottieLoading = 'assets/lottie/loading.json';
+  static const String lottieMatchLoading = 'assets/lottie/match_loading.lottie';
   static const String lottieNewbieReward = 'assets/lottie/newbie_reward.json';
   static const String lottieSearch = 'assets/lottie/search.json';
   static const String mPlusRounded1cMPLUSRounded1cBlack = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Black.ttf';

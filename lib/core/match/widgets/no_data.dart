@@ -4,7 +4,8 @@ import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 
 class NoDataWidget extends StatelessWidget {
-  const NoDataWidget({super.key});
+  const NoDataWidget({super.key, required this.onTap});
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {

@@ -28,7 +28,7 @@ class BizActionItem extends StatelessWidget {
           relation==Relation.matched?Row(
             children: [
               GestureDetector(
-                onTap: report,
+                onTap: unMatch,
                 child: Text('Unmatch',style: TextStyle(
                     color: Colors.black
                 ),),

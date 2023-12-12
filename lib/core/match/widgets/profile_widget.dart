@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/bean/match_user.dart';
+import 'package:sona/utils/dialog/input.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
@@ -94,6 +95,15 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                   if (mounted) setState(() {});
                                 }
                               }, block: () async{
+                                bool? result=await showConfirm(context: context,
+                                    title:'Block',
+                                    content: 'Do you wanna dissolve relationship with',
+                                    confirmText: 'Block',
+                                    danger: true
+                                );
+                                if(result!=true){
+                                  return;
+                                }
                                 final resp = await matchAction(userId: info.id, action: MatchAction.block);
                                 if (resp.statusCode == 0) {
                                   ///users.removeAt(currentPage);
@@ -104,6 +114,14 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                 } 
                               },
                                 unMatch: () async{
+                                  bool? result=await showConfirm(context: context,
+                                      title:'Unmatch',
+                                      content: 'Do you wanna dissolve relationship with',
+                                      confirmText: 'Dissolve'
+                                  );
+                                  if(result!=true){
+                                    return;
+                                  }
                                   final resp = await matchAction(userId: info.id, action: MatchAction.unmatch);
                                   if (resp.statusCode == 0) {
                                     ///users.removeAt(currentPage);

@@ -371,15 +371,15 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     if(_state==PageState.loading){
      return  Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){
-      return const NoDataWidget();
+      return NoDataWidget(onTap: (){
+        _initData();
+      },);
     } else if(_state==PageState.success){
       return TransformerPageView(
           itemBuilder: (c,index) {
             MatchUserInfo info=users[index];
             if(info.id==-1){
-              return NoMoreWidget(onTap: (){
-                _initData();
-              },);
+              return NoMoreWidget();
             }
             if(info.matched){
               return WishCardWidget(context: context,
@@ -421,9 +421,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       );
 
     }else if(_state==PageState.noData){
-      return NoMoreWidget(onTap: (){
-        _initData();
-      },);
+      return const NoMoreWidget();
     }
   }
 }

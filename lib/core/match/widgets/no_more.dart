@@ -3,16 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../generated/assets.dart';
 
 class NoMoreWidget extends StatelessWidget {
-  const NoMoreWidget({super.key, required this.onTap});
-  final Function onTap;
+  const NoMoreWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        onTap.call();
-      },
-      child: Container(color: Colors.black,
-        width: MediaQuery.of(context).size.width,child: Column(
+    return Container(color: Colors.black,
+      width: MediaQuery.of(context).size.width,child: Column(
         children: [
           SizedBox(height: 128,),
           ClipOval(
@@ -32,7 +27,6 @@ class NoMoreWidget extends StatelessWidget {
         ],
       ),
 
-      ),
     );
   }
 }
