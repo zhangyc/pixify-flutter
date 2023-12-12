@@ -201,7 +201,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
           ),
           SizedBox(height: 16),
-          Text(),
+          Text(''),
           Center(
             child: SizedBox(
               width: 248,
