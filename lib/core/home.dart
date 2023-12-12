@@ -89,22 +89,34 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         // showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
-            icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SonaIcon(icon: SonaIcons.navicon_match, size: 24),
+            ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 24),
             label: ''
           ),
           BottomNavigationBarItem(
-            icon: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, activeProvider: bottomChatNoticeProvider),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, activeProvider: bottomChatNoticeProvider),
+            ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_like_me_active, size: 24),
             label: ''
           ),
           BottomNavigationBarItem(
-            icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24, activeProvider: bottomChatNoticeProvider),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SonaIcon(icon: SonaIcons.navicon_chat, size: 24, activeProvider: bottomChatNoticeProvider),
+            ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_chat_active, size: 24),
             label: ''
           ),
           BottomNavigationBarItem(
-            icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SonaIcon(icon: SonaIcons.navicon_sona, size: 24),
+            ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_sona_active, size: 24),
             label: ''
           )
