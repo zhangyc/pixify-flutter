@@ -37,7 +37,7 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
             onPressed: Navigator.of(context).pop,
           ),
           centerTitle: true,
-          title: Text(S.current.settings),
+          title: Text('Settings'),
         ),
         body: CustomScrollView(
           slivers: [

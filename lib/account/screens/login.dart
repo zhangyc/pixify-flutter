@@ -6,6 +6,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/helpers.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:sona/account/screens/login_pin.dart';
 import 'package:sona/account/services/auth.dart';
@@ -119,7 +121,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                           child: Text(
                             '${_country.flag} +${_country.dialCode}',
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontSize: 16,
+                              fontSize: 14,
                               letterSpacing: 1.6
                             )
                           ),
@@ -127,13 +129,18 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                       )
                     ),
                     hintText: 'Mobile Number',
-                    // hintStyle: TextStyle(color: Color(0xFFE9C6EE))
                   ),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontSize: 18,
                     letterSpacing: 3.6
                   ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  onChanged: (_) {
+                    setState(() {
+                      _validate = true;
+                    });
+                  },
+                  validator: _validator,
+                  autovalidateMode: _validate ? AutovalidateMode.disabled : AutovalidateMode.always,
                 ),
               ),
             ],
@@ -199,15 +206,30 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
     );
   }
 
+  String? _validator(String? value) {
+    var validatorMessage = 'Invalid Phone Number';
+    if (value == null || !isNumeric(value)) return validatorMessage;
+    final selectedCountry = countries.firstWhere((c) => c.code == _country.code);
+    return value.length >= selectedCountry.minLength && value.length <= selectedCountry.maxLength
+        ? null
+        : validatorMessage;
+  }
+
   Future _next() async {
-    final pn = PhoneNumber(countryISOCode: _country.code, countryCode: _country.dialCode, number: _phoneController.text);
-    if (pn.isValidNumber()) {
-      final result = await _sendPin();
-      if (!result) return;
-      if (mounted) setState(() {});
-      Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPinScreen(phoneNumber: pn)));
-      SonaAnalytics.log('reg_phone');
-    } else {
+    try {
+      final pn = PhoneNumber(countryISOCode: _country.code, countryCode: _country.dialCode, number: _phoneController.text);
+      if (pn.isValidNumber()) {
+        final result = await _sendPin();
+        if (!result) return;
+        if (mounted) setState(() {});
+        Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPinScreen(phoneNumber: pn)));
+        SonaAnalytics.log('reg_phone');
+      } else {
+        setState(() {
+          _validate = false;
+        });
+      }
+    } catch(e) {
       setState(() {
         _validate = false;
       });

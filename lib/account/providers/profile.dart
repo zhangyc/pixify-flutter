@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -89,3 +91,14 @@ final myProfileProvider = StateNotifierProvider<MyProfileNotifier, MyProfile?>(
     return MyProfileNotifier(profile);
   }
 );
+
+final localeProvider = StateProvider<Locale>((ref) {
+  final profile = ref.watch(myProfileProvider);
+  if (profile != null) {
+    final l = findMatchedSonaLocale(profile.locale ?? Platform.localeName);
+    return l.toUILocale();
+  } else {
+    final l = findMatchedSonaLocale(Platform.localeName);
+    return l.toUILocale();
+  }
+}, dependencies: [myProfileProvider]);

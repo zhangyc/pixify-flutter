@@ -17,14 +17,12 @@ import 'core/match/util/iap_helper.dart';
 import 'core/travel_wish/models/country.dart';
 import 'firebase_options.dart';
 import 'utils/global/global.dart' as global;
-import 'utils/local_notification/local_lotification_manager.dart';
 import 'utils/providers/app_lifecycle.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler); ///后台消息处理
-  initNotificationPlugin();
   initHelper();
   var appStateObserver = AppStateObserver();
   WidgetsBinding.instance.addObserver(appStateObserver);  ///判断app当前在前台还是后台

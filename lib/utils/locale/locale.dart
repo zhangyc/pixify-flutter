@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:intl/locale.dart';
 
 class SonaLocale {
@@ -13,6 +15,10 @@ class SonaLocale {
       locale: Locale.parse(languageTag),
       displayName: displayName
     );
+  }
+
+  ui.Locale toUILocale() {
+    return ui.Locale(locale.languageCode, locale.countryCode);
   }
 }
 
