@@ -6,6 +6,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/helpers.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:sona/account/screens/login_pin.dart';
 import 'package:sona/account/services/auth.dart';
@@ -119,7 +121,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                           child: Text(
                             '${_country.flag} +${_country.dialCode}',
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontSize: 16,
+                              fontSize: 14,
                               letterSpacing: 1.6
                             )
                           ),
@@ -127,12 +129,19 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                       )
                     ),
                     hintText: 'Mobile Number',
-                    // hintStyle: TextStyle(color: Color(0xFFE9C6EE))
                   ),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontSize: 18,
                     letterSpacing: 3.6
                   ),
+                  validator: (value) {
+                    var validatorMessage = 'Invalid Phone Number';
+                    if (value == null || !isNumeric(value)) return validatorMessage;
+                    final selectedCountry = countries.firstWhere((c) => c.code == _country.code);
+                    return value.length >= selectedCountry.minLength && value.length <= selectedCountry.maxLength
+                        ? null
+                        : validatorMessage;
+                  },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
               ),

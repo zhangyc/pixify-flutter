@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 
@@ -79,12 +80,12 @@ class _CountryPickerState extends ConsumerState<CountryPicker> {
                 padding: const EdgeInsets.only(left: 16),
                 child: Text('Select Country', style: Theme.of(context).textTheme.titleLarge),
               ),
-              TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text('Cancel'),
-                    style: ButtonStyle(
-                      minimumSize: MaterialStatePropertyAll(Size.zero)
-                    ),
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: SIconButton.outlined(
+                  icon: SonaIcons.close,
+                  onTap: () => Navigator.pop(context),
+                ),
               )
             ],
           ),
