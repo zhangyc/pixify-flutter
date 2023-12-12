@@ -80,19 +80,19 @@ class _HobbiesSelectorState extends ConsumerState<HobbiesSelector> {
           color: Colors.white54,
           alignment: Alignment.center,
           child: const SizedBox(
-            width: 16,
-            height: 16,
+            width: 32,
+            height: 32,
             child: CircularProgressIndicator()
           ),
         ),
         error: (err, stack) => GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => ref.refresh(asyncInterestsProvider.notifier),
+          onTap: () => ref.read(asyncInterestsProvider.notifier).refresh(),
           child: Container(
             color: Colors.white,
             alignment: Alignment.center,
             child: const Text(
-                'Cannot connect to server, tap to retry',
+                'Cannot connect to server\ntap to retry',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 16,

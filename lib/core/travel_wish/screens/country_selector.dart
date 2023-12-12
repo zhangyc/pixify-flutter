@@ -87,7 +87,7 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
           child: Center(
             child: Text('Error to get initial data\nclick to try again'),
           ),
-          onTap: () => ref.refresh(asyncPopularTravelCountriesProvider),
+          onTap: () => ref.read(asyncPopularTravelCountriesProvider.notifier).refresh(),
         ),
         loading: () => Center(
             child: SizedBox(

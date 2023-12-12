@@ -23,6 +23,11 @@ class AsyncMyTravelWishesNotifier extends AsyncNotifier<List<TravelWish>> {
   Future<List<TravelWish>> build() async {
     return _fetchMyTravelWishes();
   }
+
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => _fetchMyTravelWishes());
+  }
 }
 
 final asyncMyTravelWishesProvider = AsyncNotifierProvider<

@@ -152,7 +152,7 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
         ),
         error: (_, __) => GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => ref.refresh(asyncPopularTravelActivitiesProvider(key)),
+          onTap: () => ref.read(asyncPopularTravelActivitiesProvider(key).notifier).refresh(),
           child: Center(
             child: Text('Error to get initial data\nclick to try again'),
           ),

@@ -105,7 +105,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                           child: Center(
                             child: Text('Error to get initial data\nclick to try again'),
                           ),
-                          onTap: () => ref.refresh(asyncPopularTravelCitiesProvider(key)),
+                          onTap: () => ref.read(asyncPopularTravelCitiesProvider(key).notifier).refresh(),
                         ),
                       ),
                       loading: () => SliverToBoxAdapter(

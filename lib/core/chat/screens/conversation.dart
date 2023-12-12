@@ -131,6 +131,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/no_content.png', width: 272),
             const SizedBox(height: 20),

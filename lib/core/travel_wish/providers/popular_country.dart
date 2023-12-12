@@ -21,6 +21,11 @@ class AsyncPopularTravelCountriesNotifier extends AsyncNotifier<List<PopularTrav
   Future<List<PopularTravelCountry>> build() async {
     return _fetchCountries();
   }
+
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => _fetchCountries());
+  }
 }
 
 final asyncPopularTravelCountriesProvider = AsyncNotifierProvider<
