@@ -83,7 +83,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         if (action == 'delete') {
                           final resp = await deleteMyWishe(wish.id);
                           if (resp.statusCode == 0) {
-                            ref.refresh(asyncMyTravelWishesProvider.notifier);
+                            ref.read(asyncMyTravelWishesProvider.notifier).refresh();
                           } else {
                             Fluttertoast.showToast(msg: 'Failed to delete, please try again later.');
                           }
@@ -211,14 +211,15 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                 ),
                 error: (_, __) => GestureDetector(
                   behavior: HitTestBehavior.translucent,
+                  onTap: () => ref.read(asyncMyTravelWishesProvider.notifier).refresh(),
                   child: const Center(
                     child: Text('Error to fetch travel-wish\nclick to try again'),
                   ),
                 ),
                 loading: () => const Center(
                   child: SizedBox(
-                    width: 66,
-                    height: 66,
+                    width: 32,
+                    height: 32,
                     child: CircularProgressIndicator()
                   )
                 )

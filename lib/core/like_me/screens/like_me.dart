@@ -9,7 +9,6 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../../../common/widgets/image/user_avatar.dart';
-import '../../match/widgets/profile_widget.dart';
 import '../models/social_user.dart';
 
 class LikeMeScreen extends StatefulHookConsumerWidget {
@@ -34,6 +33,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     isMember = ref.watch(myProfileProvider)!.isMember;
     return Scaffold(
       appBar: AppBar(
@@ -44,19 +44,23 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
         centerTitle: false,
       ),
       body: ref.watch(asyncLikedMeProvider).when(
-          data: (data) => data.isNotEmpty ? GridView.builder(
-              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 132),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 165.5/288
-              ),
-              itemBuilder: (BuildContext context, int index) => _itemBuilder(data[index]),
-              itemCount: data.length
-          ) : Center(child: Text('No data')),
-          error: (_, __) => Center(child: Text('error')),
-          loading: () => Center(child: CircularProgressIndicator())
+        data: (data) => data.isNotEmpty ? GridView.builder(
+          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 132),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              childAspectRatio: 165.5/288
+          ),
+          itemBuilder: (BuildContext context, int index) => _itemBuilder(data[index]),
+          itemCount: data.length
+        ) : Center(child: Text('No data')),
+        error: (_, __) => GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => ref.read(asyncLikedMeProvider.notifier).refresh(false),
+          child: Center(child: Text('Failed to fetch data\nClick to retry'))
+        ),
+        loading: () => Center(child: SizedBox(width: 32, height: 32, child: CircularProgressIndicator()))
       ),
       floatingActionButton: !ref.read(myProfileProvider)!.isMember ? Padding(
         padding: EdgeInsets.only(left: 16, right: 16, bottom: 50),

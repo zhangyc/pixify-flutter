@@ -26,7 +26,7 @@ class TravelWishParamsNotifier extends StateNotifier<TravelWishParams> {
       state = state.copyWith(
         cityIds: state.cityIds..remove(cityId)
       );
-    } else {
+    } else if (state.cityIds.length < 3) {
       state = state.copyWith(
         cityIds: state.cityIds..add(cityId)
       );
@@ -42,11 +42,11 @@ class TravelWishParamsNotifier extends StateNotifier<TravelWishParams> {
   void toggleActivity(int activityId) {
     if (state.activityIds.contains(activityId)) {
       state = state.copyWith(
-          activityIds: state.activityIds..remove(activityId)
+        activityIds: state.activityIds..remove(activityId)
       );
-    } else {
+    } else if (state.activityIds.length < 3) {
       state = state.copyWith(
-          activityIds: state.activityIds..add(activityId)
+        activityIds: state.activityIds..add(activityId)
       );
     }
   }

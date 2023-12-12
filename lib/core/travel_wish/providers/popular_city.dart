@@ -23,6 +23,11 @@ class AsyncPopularTravelCitiesNotifier extends FamilyAsyncNotifier<List<PopularT
   Future<List<PopularTravelCity>> build(String arg) async {
     return _fetchCities();
   }
+
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => _fetchCities());
+  }
 }
 
 final asyncPopularTravelCitiesProvider = AsyncNotifierProviderFamily<

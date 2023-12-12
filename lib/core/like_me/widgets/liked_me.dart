@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
@@ -10,7 +9,6 @@ import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
-import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
 
 class LikedMeListView extends StatefulHookConsumerWidget {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -89,22 +90,34 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         // showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
-            icon: SonaIcon(icon: SonaIcons.navicon_match, size: 24),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SonaIcon(icon: SonaIcons.navicon_match, size: 24),
+            ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 24),
             label: ''
           ),
           BottomNavigationBarItem(
-            icon: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, activeProvider: bottomChatNoticeProvider),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, activeProvider: bottomChatNoticeProvider),
+            ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_like_me_active, size: 24),
             label: ''
           ),
           BottomNavigationBarItem(
-            icon: SonaIcon(icon: SonaIcons.navicon_chat, size: 24, activeProvider: bottomChatNoticeProvider),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SonaIcon(icon: SonaIcons.navicon_chat, size: 24, activeProvider: bottomChatNoticeProvider),
+            ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_chat_active, size: 24),
             label: ''
           ),
           BottomNavigationBarItem(
-            icon: SonaIcon(icon: SonaIcons.navicon_sona, size: 24),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SonaIcon(icon: SonaIcons.navicon_sona, size: 24),
+            ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_sona_active, size: 24),
             label: ''
           )
@@ -146,6 +159,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     }
     if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
       String ext= initialMessage.data['ext'];
+      if (kDebugMode) print('push_data: $ext');
       UserInfo info =UserInfo.fromJson(jsonDecode(ext));
       if (mounted) {
         Navigator.push(context, MaterialPageRoute(builder: (c){
@@ -157,6 +171,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
         String ext= initialMessage.data['ext'];
+        if (kDebugMode) print('push_data: $ext');
         UserInfo info =UserInfo.fromJson(jsonDecode(ext));
         Navigator.push(context, MaterialPageRoute(builder: (c){
           return ChatScreen(entry: ChatEntry.push, otherSide: info);
