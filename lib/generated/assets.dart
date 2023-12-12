@@ -61,7 +61,6 @@ class Assets {
   static const String lottieArrowAnimation = 'assets/lottie/arrow_animation.json';
   static const String lottieLike = 'assets/lottie/like.json';
   static const String lottieLoading = 'assets/lottie/loading.json';
-  static const String lottieMatchLoading = 'assets/lottie/match_loading.lottie';
   static const String lottieNewbieReward = 'assets/lottie/newbie_reward.json';
   static const String lottieSearch = 'assets/lottie/search.json';
   static const String mPlusRounded1cMPLUSRounded1cBlack = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Black.ttf';

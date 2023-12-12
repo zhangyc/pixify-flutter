@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/bean/match_user.dart';
+import 'package:sona/core/match/widgets/body_up_animation.dart';
+import 'package:sona/core/match/widgets/heard_init_animation.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../../account/providers/profile.dart';
@@ -72,70 +74,76 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                           ),
                           child: Column(
                             children: [
-                              HeardItem(userInfo: info,),
+                              HeardInitAnimation(child: HeardItem(userInfo: info,),),
                               SizedBox(
                                 height: 16,
                               ),
-                              WishListItem(wishes: info.wishList,),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              BioItem(bio: info.bio??'',),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              GalleyItem(images: info.photos,),
-                              InterestItem(interest: info.interest,),
-                              BizActionItem(report: () async{
-                                SonaAnalytics.log(MatchEvent.match_report.name);
-                                final r =await showReport(context, info.id);
-                                if (r == true) {
-                                  ///users.removeAt(currentPage);
-                                  widget.next.call();
-                                  if (mounted) setState(() {});
-                                }
-                              }, block: () async{
-                                bool? result=await showConfirm(context: context,
-                                    title:'Block',
-                                    content: 'Do you wanna dissolve relationship with',
-                                    confirmText: 'Block',
-                                    danger: true
-                                );
-                                if(result!=true){
-                                  return;
-                                }
-                                final resp = await matchAction(userId: info.id, action: MatchAction.block);
-                                if (resp.statusCode == 0) {
-                                  ///users.removeAt(currentPage);
-                                  widget.next.call();
-                                  if (mounted) setState(() {});
-                                  Fluttertoast.showToast(msg: 'The user has been blocked');
-                                  SonaAnalytics.log('post_block');
-                                } 
-                              },
-                                unMatch: () async{
-                                  bool? result=await showConfirm(context: context,
-                                      title:'Unmatch',
-                                      content: 'Do you wanna dissolve relationship with',
-                                      confirmText: 'Dissolve'
-                                  );
-                                  if(result!=true){
-                                    return;
-                                  }
-                                  final resp = await matchAction(userId: info.id, action: MatchAction.unmatch);
-                                  if (resp.statusCode == 0) {
-                                    ///users.removeAt(currentPage);
-                                    widget.next.call();
-                                    if (mounted) setState(() {});
-                                    Fluttertoast.showToast(msg: 'Unmatch Success');
-                                    SonaAnalytics.log('post_block');
-                                  }
-                                },
-                                relation: widget.relation,
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).padding.bottom+64,
-                              ),
+                              BodyUpAnimation(child: Column(
+                                children: [
+                                  WishListItem(wishes: info.wishList,),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  BioItem(bio: info.bio??'',),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  GalleyItem(images: info.photos,),
+                                  InterestItem(interest: info.interest,),
+                                  BizActionItem(report: () async{
+                                    SonaAnalytics.log(MatchEvent.match_report.name);
+                                    final r =await showReport(context, info.id);
+                                    if (r == true) {
+                                      ///users.removeAt(currentPage);
+                                      widget.next.call();
+                                      if (mounted) setState(() {});
+                                    }
+                                  }, block: () async{
+                                    bool? result=await showConfirm(context: context,
+                                        title:'Block',
+                                        content: 'Do you wanna dissolve relationship with',
+                                        confirmText: 'Block',
+                                        danger: true
+                                    );
+                                    if(result!=true){
+                                      return;
+                                    }
+                                    final resp = await matchAction(userId: info.id, action: MatchAction.block);
+                                    if (resp.statusCode == 0) {
+                                      ///users.removeAt(currentPage);
+                                      widget.next.call();
+                                      if (mounted) setState(() {});
+                                      Fluttertoast.showToast(msg: 'The user has been blocked');
+                                      SonaAnalytics.log('post_block');
+                                    }
+                                  },
+                                    unMatch: () async{
+                                      bool? result=await showConfirm(context: context,
+                                          title:'Unmatch',
+                                          content: 'Do you wanna dissolve relationship with',
+                                          confirmText: 'Dissolve'
+                                      );
+                                      if(result!=true){
+                                        return;
+                                      }
+                                      final resp = await matchAction(userId: info.id, action: MatchAction.unmatch);
+                                      if (resp.statusCode == 0) {
+                                        ///users.removeAt(currentPage);
+                                        widget.next.call();
+                                        if (mounted) setState(() {});
+                                        Fluttertoast.showToast(msg: 'Unmatch Success');
+                                        SonaAnalytics.log('post_block');
+                                      }
+                                    },
+                                    relation: widget.relation,
+                                  ),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).padding.bottom+64,
+                                  ),
+                                ],
+                              )),
+
+
                             ],
                           ),
                         ),
