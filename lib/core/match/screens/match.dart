@@ -252,8 +252,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   bool get wantKeepAlive => true;
   int current=1;
+
   void _initData() async{
     current=1;
+    currentPage=0;
     try{
       final resp=await post('/user/match-v2',data: {
         'gender': currentFilterGender,
