@@ -11,7 +11,6 @@ import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/persona/providers/profile_progress.dart';
 import 'package:sona/core/persona/widgets/profile_progress_indicator.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
-import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
 import 'package:sona/core/travel_wish/services/travel_wish.dart';
 import 'package:sona/setting/screens/setting.dart';
@@ -199,12 +198,13 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         height: 221,
                         margin: EdgeInsets.symmetric(horizontal: 4),
                         decoration: BoxDecoration(
-                            border: Border.all(width: 2),
-                            borderRadius: BorderRadius.circular(20)
+                          border: Border.all(width: 2, color: Color(0xFFB7B7B7)),
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xFFF6F3F3)
                         ),
                         clipBehavior: Clip.antiAlias,
                         alignment: Alignment.center,
-                        child: Icon(Icons.add),
+                        child: Icon(Icons.add, size: 32, color: Color(0xFFB7B7B7)),
                       ),
                     )
                   ]

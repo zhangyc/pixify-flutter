@@ -110,7 +110,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                       behavior: HitTestBehavior.translucent,
                       onTap: () => showSubscription(FromTag.pay_chatlist_likedme),
                       child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(sigmaY: 9, sigmaX: 9),
+                        imageFilter: ImageFilter.blur(sigmaY: 18, sigmaX: 18),
                         child: UserAvatar(
                           url: u.avatar!,
                           size: Size(itemWidth, itemHeight),

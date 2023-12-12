@@ -177,7 +177,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         child: Container(
           // width: 96,
           // height: 144,
-          child: Icon(Icons.add, size: 36)
+          decoration: BoxDecoration(
+            border: Border.all(width: 1, color: Color(0xFFB7B7B7)),
+            borderRadius: BorderRadius.circular(20),
+            color: Color(0xFFF6F3F3)
+          ),
+          child: Icon(Icons.add, size: 32, color: Color(0xFFB7B7B7))
         )
       );
     } else {
@@ -241,17 +246,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         )
       )
     );
-  }
-
-  Future _showGenderEditor() async {
-    var gender = await showGenderPicker(
-        context: context,
-        initialValue: ref.read(myProfileProvider)!.gender,
-    );
-    if (gender != null && gender != _profile.gender) {
-      ref.read(myProfileProvider.notifier).updateField(gender: gender);
-      SonaAnalytics.log('profile_gender');
-    }
   }
 
   void _showPhotoActions(int index, Map<String, String> actions) async {

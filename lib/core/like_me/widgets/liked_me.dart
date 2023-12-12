@@ -116,7 +116,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                           children: [
                             if (!ref.watch(myProfileProvider)!.isMember) Positioned.fill(
                               child: ImageFiltered(
-                                imageFilter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
+                                imageFilter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
                                 child: UserAvatar(
                                   url: u.avatar!,
                                   size: Size(84, 113),
