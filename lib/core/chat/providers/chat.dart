@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
@@ -68,5 +69,9 @@ final futureUserProvider = FutureProvider.family<UserInfo, int>((ref, arg) {
       .collection('${env.firestorePrefix}_users')
       .doc(arg.toString())
       .get()
-      .then((snapshot) => UserInfo.fromFirestore(snapshot.data()!));
+      .then((snapshot) => UserInfo.fromFirestore(snapshot.data()!))
+      .catchError((e) {
+        if (kDebugMode) print('fetch firestore user data error: $e');
+        throw(e);
+      });
 });
