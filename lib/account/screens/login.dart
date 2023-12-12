@@ -134,15 +134,13 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                     fontSize: 18,
                     letterSpacing: 3.6
                   ),
-                  validator: (value) {
-                    var validatorMessage = 'Invalid Phone Number';
-                    if (value == null || !isNumeric(value)) return validatorMessage;
-                    final selectedCountry = countries.firstWhere((c) => c.code == _country.code);
-                    return value.length >= selectedCountry.minLength && value.length <= selectedCountry.maxLength
-                        ? null
-                        : validatorMessage;
+                  onChanged: (_) {
+                    setState(() {
+                      _validate = true;
+                    });
                   },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: _validator,
+                  autovalidateMode: _validate ? AutovalidateMode.disabled : AutovalidateMode.always,
                 ),
               ),
             ],
@@ -208,15 +206,30 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
     );
   }
 
+  String? _validator(String? value) {
+    var validatorMessage = 'Invalid Phone Number';
+    if (value == null || !isNumeric(value)) return validatorMessage;
+    final selectedCountry = countries.firstWhere((c) => c.code == _country.code);
+    return value.length >= selectedCountry.minLength && value.length <= selectedCountry.maxLength
+        ? null
+        : validatorMessage;
+  }
+
   Future _next() async {
-    final pn = PhoneNumber(countryISOCode: _country.code, countryCode: _country.dialCode, number: _phoneController.text);
-    if (pn.isValidNumber()) {
-      final result = await _sendPin();
-      if (!result) return;
-      if (mounted) setState(() {});
-      Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPinScreen(phoneNumber: pn)));
-      SonaAnalytics.log('reg_phone');
-    } else {
+    try {
+      final pn = PhoneNumber(countryISOCode: _country.code, countryCode: _country.dialCode, number: _phoneController.text);
+      if (pn.isValidNumber()) {
+        final result = await _sendPin();
+        if (!result) return;
+        if (mounted) setState(() {});
+        Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPinScreen(phoneNumber: pn)));
+        SonaAnalytics.log('reg_phone');
+      } else {
+        setState(() {
+          _validate = false;
+        });
+      }
+    } catch(e) {
       setState(() {
         _validate = false;
       });

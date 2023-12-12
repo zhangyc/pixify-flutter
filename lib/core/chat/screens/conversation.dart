@@ -99,7 +99,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
             ))
           ),
           SliverToBoxAdapter(
-            child: SizedBox(height: kBottomNavigationBarHeight),
+            child: SizedBox(height: kBottomNavigationBarHeight + MediaQuery.of(context).viewPadding.bottom),
           )
         ],
       )

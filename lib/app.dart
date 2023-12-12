@@ -12,6 +12,7 @@ import 'package:sona/theme/theme.dart';
 import 'package:sona/utils/global/global.dart' as global;
 import 'package:sona/utils/global/global.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sona/utils/locale/locale.dart';
 
 import 'core/home.dart';
 import 'generated/l10n.dart';
@@ -23,13 +24,16 @@ class SonaApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final token = ref.read(tokenProvider);
     MyProfile? profile;
+    Locale locale;
     if (token != null) {
       profile = ref.read(myProfileProvider);
+      if (profile != null) {
+
+      }
     }
     final navigatorKey = global.navigatorKey;
     final initialRoute = profile == null || !profile.completed ? 'login' : '/';
     return MaterialApp(
-
       key: ValueKey(token),
       navigatorKey: navigatorKey,
       builder: EasyLoading.init(builder: (BuildContext context, Widget? child) {
@@ -46,14 +50,14 @@ class SonaApp extends HookConsumerWidget {
       navigatorObservers: [routeObserver],
       // routes: _routes,
       onGenerateRoute: _onGenerateRoute,
-      supportedLocales: S.delegate.supportedLocales,
+      supportedLocales: supportedSonaLocales.map<Locale>((sl) => sl.toUILocale()),
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      locale: Locale(window.locale.languageCode),
+      locale: ref.watch(localeProvider),
       // localeListResolutionCallback: (List<Locale>? locales, Iterable<Locale> supportedLocales) {
       //
       //   // 判断当前locale是否为英语系国家，如果是直接返回Locale('en', 'US')

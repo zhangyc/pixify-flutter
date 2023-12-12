@@ -79,7 +79,7 @@ class _AvatarScreenState extends State<AvatarScreen> {
                                 borderRadius: BorderRadius.circular(24),
                               ),
                               image: DecorationImage(
-                                  image: AssetImage('assets/images/human_portrait.png'),
+                                  image: AssetImage(widget.gender == Gender.male ? 'assets/images/human_portrait.png' : 'assets/images/girl_portrait.jpeg'),
                                   fit: BoxFit.cover
                               )
                           ),
@@ -109,7 +109,7 @@ class _AvatarScreenState extends State<AvatarScreen> {
                                 borderRadius: BorderRadius.circular(24),
                               ),
                               image: DecorationImage(
-                                  image: AssetImage('assets/images/pet_portrait.png'),
+                                  image: AssetImage(widget.gender == Gender.male ? 'assets/images/pet_portrait.png' : 'assets/images/cat_portrait.jpeg'),
                                   fit: BoxFit.cover
                               )
                           ),
