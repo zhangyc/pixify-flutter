@@ -136,14 +136,14 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                       loading: () => SliverToBoxAdapter(
                         child: Center(
                             child: SizedBox(
-                                width: 66,
-                                height: 66,
+                                width: 32,
+                                height: 32,
                                 child: CircularProgressIndicator()
                             )
                         ),
                       )
                   ),
-                  if (asyncCities.value != null) ...asyncCities.value!.where((city) => !city.popular && selectedCityIds.contains(city.id))
+                  if (asyncCities.hasValue) ...asyncCities.value!.where((city) => !city.popular && selectedCityIds.contains(city.id))
                     .map<Widget>((city) => SliverToBoxAdapter(
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
@@ -181,7 +181,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                       )
                     )
                   ),
-                  if (asyncCities.value != null) SliverToBoxAdapter(
+                  if (asyncCities.hasValue) SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: OutlinedButton(

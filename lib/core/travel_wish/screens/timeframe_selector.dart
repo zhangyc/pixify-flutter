@@ -83,8 +83,8 @@ class _CountrySelectorState extends ConsumerState<TimeframeSelector> {
         ),
         loading: () => Center(
             child: SizedBox(
-                width: 66,
-                height: 66,
+                width: 32,
+                height: 32,
                 child: CircularProgressIndicator()
             )
         )

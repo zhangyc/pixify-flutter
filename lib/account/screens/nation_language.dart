@@ -208,10 +208,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
       );
       EasyLoading.dismiss();
       if (!mounted) return;
-      final result = await Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator()));
-      if (result == true && mounted) {
-        Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
-      }
+      await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => TravelWishCreator()), (_) => false);
     } catch (e) {
       //
     } finally {

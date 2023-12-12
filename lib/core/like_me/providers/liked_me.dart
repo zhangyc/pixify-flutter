@@ -29,7 +29,7 @@ class AsyncLikedMeUsersNotifier extends AsyncNotifier<List<SocialUser>> {
       state = const AsyncValue.loading();
     }
     final data = await _fetchLikedMeData();
-    if (state.value != null && state.value!.isNotEmpty && data.isNotEmpty) {
+    if (state.hasValue && state.value!.isNotEmpty && data.isNotEmpty) {
       if (state.value!.first.id != data.first.id) {
         ref.read(likeMeNoticeNotifier.notifier).update((state) => true);
       }

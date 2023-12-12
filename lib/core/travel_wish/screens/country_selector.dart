@@ -91,8 +91,8 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
         ),
         loading: () => Center(
             child: SizedBox(
-                width: 66,
-                height: 66,
+                width: 32,
+                height: 32,
                 child: CircularProgressIndicator()
             )
         )

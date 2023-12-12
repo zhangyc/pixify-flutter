@@ -41,7 +41,7 @@ final hookVisibilityProvider = StateProvider.autoDispose.family<bool, int>((ref,
     final lastOtherSideMessage = messages.value![lastOtherSideMessageIndex];
     return DateTime.now().difference(lastOtherSideMessage.time).inMinutes >= 30;
   } else {
-    if (messages.value != null && messages.value!.isNotEmpty && messages.value!.first.type != 7) {
+    if (messages.hasValue && messages.value!.isNotEmpty && messages.value!.first.type != 7) {
       return true;
     }
   }
