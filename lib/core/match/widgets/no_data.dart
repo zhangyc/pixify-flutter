@@ -11,7 +11,7 @@ class NoDataWidget extends StatelessWidget {
     return Container(color: Colors.black,child: Column(
       children: [
         SizedBox(height: 128,),
-        Text(S.current.noDataTips,
+        Text('No Data',
           style: TextStyle(
               color: Colors.white
           ),
@@ -23,7 +23,7 @@ class NoDataWidget extends StatelessWidget {
         SizedBox(height: 10,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 55 ),
-          child: Text(S.current.checkInternet,
+          child: Text('Check internet',
             style: TextStyle(
                 color: Colors.white
             ),

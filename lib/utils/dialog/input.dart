@@ -550,7 +550,7 @@ Future<T?> showActionButtons<T>({
               child: OptionButton(
                 onTap: () => Navigator.pop(context, null),
                 color: Colors.transparent,
-                text: S.current.cancel,
+                text: 'Cancel',
               ),
             )
           ],

@@ -33,11 +33,11 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: S.current.powerSonaMessage,style: TextStyle(
+                  TextSpan(text: 'W...',style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
-                  TextSpan(text: ' ${S.current.daily}',style: TextStyle(
+                  TextSpan(text: ' daily',style: TextStyle(
                       color: Colors.black
                   )),
                 ]
@@ -56,10 +56,10 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: S.current.powerUnlock,style: TextStyle(
+                  TextSpan(text: 'Unlock',style: TextStyle(
                       color: Colors.black
                   )),
-                  TextSpan(text: ' ${S.current.powerWhoLike}',style: TextStyle(
+                  TextSpan(text: ' Who like',style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
@@ -79,11 +79,11 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: S.current.unlimited,style: TextStyle(
+                  TextSpan(text: 'unlimited',style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
-                  TextSpan(text: ' ${S.current.likes}',style: TextStyle(
+                  TextSpan(text: ' likes',style: TextStyle(
                       color: Colors.black
                   )),
                 ]
@@ -101,11 +101,11 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: '${S.current.arrow} ',style: TextStyle(
+                  TextSpan(text: 'DM ',style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
-                  TextSpan(text: S.current.arrowInfo,style: TextStyle(
+                  TextSpan(text: 'DM',style: TextStyle(
                       color: Colors.black
                   )),
                 ]
@@ -145,7 +145,7 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: S.current.strategy,style: TextStyle(
+                  TextSpan(text: 'strategy',style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
@@ -167,11 +167,11 @@ class PowersWidget extends StatelessWidget {
             ),
             RichText(text: TextSpan(
                 children: [
-                  TextSpan(text: S.current.chatStyle,style: TextStyle(
+                  TextSpan(text: 'Chat Style',style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   )),
-                  TextSpan(text: S.current.chatStyleInfo ,style: TextStyle(
+                  TextSpan(text: 'Chat Style' ,style: TextStyle(
                       color: Colors.black
                   )),
                 ]

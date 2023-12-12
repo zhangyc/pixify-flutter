@@ -45,7 +45,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(S.current.chat, style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+        title: Text('Chat', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
             fontSize: 28,
             fontWeight: FontWeight.w900
         )),

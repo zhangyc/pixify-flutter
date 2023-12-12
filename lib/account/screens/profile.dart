@@ -44,7 +44,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           icon: SonaIcon(icon: SonaIcons.back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(S.current.editProfile),
+        title: Text('Edit Profile'),
         centerTitle: true,
         actions: [
           UnconstrainedBox(
