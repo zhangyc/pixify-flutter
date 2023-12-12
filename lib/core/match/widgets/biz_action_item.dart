@@ -3,9 +3,12 @@ import 'package:sona/common/screens/profile.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 
 class BizActionItem extends StatelessWidget {
-  const BizActionItem({super.key, required this.report, required this.block, required this.relation});
+  const BizActionItem({super.key, required this.report, required this.block, required this.relation, required this.unMatch});
   final VoidCallback report;
   final VoidCallback block;
+  final VoidCallback unMatch;
+
+
   final Relation relation;
   @override
   Widget build(BuildContext context) {
@@ -25,10 +28,10 @@ class BizActionItem extends StatelessWidget {
           relation==Relation.matched?Row(
             children: [
               GestureDetector(
+                onTap: report,
                 child: Text('Unmatch',style: TextStyle(
                     color: Colors.black
                 ),),
-                onTap: report,
               ),
               SizedBox(
                 width: 16,

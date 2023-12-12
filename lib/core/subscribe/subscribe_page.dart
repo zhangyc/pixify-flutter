@@ -14,13 +14,13 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:intl/intl.dart';
 import 'package:sona/common/permission/permission.dart';
+import 'package:sona/core/subscribe/utils/pay_util.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../account/providers/profile.dart';
 import '../../common/widgets/webview.dart';
-import '../../test_pay/_MyApp.dart';
 import '../../utils/dialog/input.dart';
 import '../match/util/event.dart';
 import '../match/util/iap_helper.dart';
@@ -540,7 +540,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       inAppPurchase
           .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
       ///设置代理
-      await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
+      await iosPlatformAddition.setDelegate(IOSPaymentQueueDelegate());
     }
     ///产品详情响应
     final ProductDetailsResponse productDetailResponse = await inAppPurchase.queryProductDetails(_kProductIds.toSet());

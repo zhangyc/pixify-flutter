@@ -25,7 +25,8 @@ class _WishListItemState extends State<WishListItem> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         const Text('Her wishes',style: TextStyle(
-            color: Colors.black
+            color: Color(0xff2c2c2c),
+            fontWeight: FontWeight.w800
         ),),
         const SizedBox(
           height: 16,
@@ -39,9 +40,9 @@ class _WishListItemState extends State<WishListItem> {
           foregroundDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
 
-            gradient: const LinearGradient(colors: [
+            gradient: LinearGradient(colors: [
               Colors.transparent,
-              Colors.black26
+              Color(0xff000000).withOpacity(0.75)
             ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter

@@ -1,3 +1,4 @@
+import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,17 +8,27 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
+import 'package:sona/core/match/widgets/button_animations.dart';
+import 'package:sona/core/match/widgets/custom_pageview/src/index_controller.dart';
+import 'package:sona/core/match/widgets/custom_pageview/src/skip_transformer.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
 
 import '../../../account/providers/profile.dart';
+import '../../../common/permission/permission.dart';
 import '../../../common/screens/profile.dart';
+import '../../../utils/global/global.dart';
 import '../../../utils/location/location.dart';
+import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
+import '../providers/matched.dart';
+import '../util/event.dart';
 import '../util/http_util.dart';
 import '../util/local_data.dart';
+import '../widgets/custom_pageview/src/transformer_page_view.dart';
+import '../widgets/dialogs.dart';
 import '../widgets/match_init_animation.dart';
 import '../widgets/wish_card.dart';
 
@@ -39,10 +50,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         latitude=value.latitude;
         ref.read(myProfileProvider.notifier).updateField(position: value);
         _initData();
-            }).catchError((e){
+      }).catchError((e){
         Fluttertoast.showToast(msg: 'Failed to obtain permission.');
       });
     });
+    // _initData();
+
     // clickSubject
     //     .debounceTime(Duration(seconds: 1))
     //     .listen((_) {
@@ -55,105 +68,194 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   void dispose() {
-    pageController.dispose();
+
+    controller.dispose();
+    // indexController.dispose();
     super.dispose();
   }
   int currentPage=0;
-  PageController pageController=PageController();
+  TransformerPageController controller=TransformerPageController();
+  // IndexController indexController=IndexController();
   @override
   Widget build(BuildContext context) {
     String? bgImage=ref.watch(backgroundImageProvider);
     super.build(context);
-    return Stack(
-      children: [
-        bgImage==null?Container():Positioned(child: Container(
-          foregroundDecoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Colors.transparent,
-              Colors.white
-            ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter
-            )
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned.fill(child: bgImage==null?Container():Container(
+            height: MediaQuery.of(context).size.height,
+            alignment: Alignment.topCenter,
+            color: Colors.white,
+             child: ShaderMask(
+               shaderCallback: (Rect bounds) {
+                 return const LinearGradient(
+                   begin:Alignment.bottomCenter,
+                   end:Alignment.topCenter  ,
+                   colors: [Colors.transparent, Colors.black],
+                   stops: [0.0, 0.8], // 调整渐变的范围
+                 ).createShader(bounds);
+               },
+               blendMode: BlendMode.dstIn,
+               child: CachedNetworkImage(imageUrl: bgImage,
+                 fit: BoxFit.cover,
+                 width: MediaQuery.of(context).size.width,
+                 height: MediaQuery.of(context).size.width,
+
+               ),
+             ),
+          ),),
+          Positioned.fill(
+            child: _buildMatch()
           ),
-          child: CachedNetworkImage(imageUrl: bgImage,
-            fit: BoxFit.cover,
+          Positioned(
+            height: 118,
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
+            // top: MediaQuery.of(context).padding.top,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 16
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
+                  //Text("Sona"),
+                  Row(
+                    children: [
+                      // Image.asset(Assets.iconsNotice,width: 48,height: 48,),
+                      // SizedBox(
+                      //   width: 10,
+                      // ),
+                      GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (c){
+                            return FilterPage();
+                          })).then((value){
+                            _initData();
+                            if(mounted){
+                              _state=PageState.loading;
+                              setState(() {
 
-          ),
-        )),
-        Positioned.fill(
-          child: _buildMatch()
-        ),
-        Positioned(
-          width: MediaQuery.of(context).size.width,
-          top: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 16
+                              });
+                            }
+
+                          });
+                        },
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
+          ),
+          (users.isNotEmpty&&users[currentPage].id==-1)?Container():Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+            width: MediaQuery.of(context).size.width,child: Padding(
+              padding:EdgeInsets.symmetric(
+                horizontal: 68
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ScaleAnimation(onTap: (){
+                    if(currentPage==users.length-1){
+                      return;
+                    }
+                    currentStatus=TransformStatus.leftRotate;
+                    // status=PageAnimStatus.dislike;
+                    controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                    ref.read(asyncMatchRecommendedProvider.notifier).skip(users[currentPage].id);
+                  },
+                      child: Image.asset(Assets.iconsSkip,width: 56,height: 56,)
+                  ),
+                  ScaleAnimation(child: Image.asset(Assets.iconsLike,width: 64,height: 64,), onTap: (){
+                    if(currentPage==users.length-1){
+                              return;
+                            }
+                      if(canLike){
+                        currentStatus=TransformStatus.rightRotate;
 
-                //Text("Sona"),
-                Row(
-                  children: [
-                    // Image.asset(Assets.iconsNotice,width: 48,height: 48,),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
-                    GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (c){
-                          return FilterPage();
-                        })).then((value){
-                          _initData();
-                          if(mounted){
-                            _state=PageState.loading;
+                        if(like>0){
+                          like=like-1;
+                        }
+                        //currentPage=index;
+                        ///如果对方喜欢我。
+                        if(users[currentPage].likeMe==1){
+                          ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
+                          ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                          showMatched(context,target: users[currentPage],next: (){
+
+                            controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                          });
+                        }else{
+                          ///
+                          if(users[currentPage].wishList.isEmpty){
+                            ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
+                            ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+
+                            controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                          }else {
+                            users[currentPage].matched=true;
                             setState(() {
 
                             });
                           }
+                        }
+
+                        setState(() {
 
                         });
-                      },
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          height: MediaQuery.of(context).padding.top,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.2),
-                    Colors.black.withOpacity(0.0),
-                  ]
+                        SonaAnalytics.log(MatchEvent.match_like.name);
+
+                      }else {
+                        SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                        Navigator.push(context, MaterialPageRoute(builder:(c){
+                          return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                        }));
+                      }
+                  }),
+                  ScaleAnimation(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,), onTap: (){
+                    if(currentPage==users.length-1){
+                              return;
+                            }
+                          Future.delayed(Duration(milliseconds: 200),(){
+                            currentStatus=TransformStatus.rightRotate;
+                             if(canArrow){
+
+                        showDm(context, users[currentPage],(){
+
+                          controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                          //pageController.nextPage(duration: Duration(milliseconds: 1000), curve:  Curves.linearToEaseOut);
+                        });
+                      }else {
+                        bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                        if(isMember){
+                          Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                        }else{
+                          Navigator.push(context, MaterialPageRoute(builder:(c){
+                            return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                          }));
+                        }
+                      }
+                      });
+
+                  })
+                ],
               ),
             ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 
   @override
   bool get wantKeepAlive => true;
   int current=1;
+
   void _initData() async{
     current=1;
+    currentPage=0;
     try{
       final resp=await post('/user/match-v2',data: {
         'gender': currentFilterGender,
@@ -260,58 +362,68 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       }
     }
   }
+
   late PageState _state= PageState.loading;
+  //TransformerPageController transformerPageController=TransformerPageController();
+  // PageController controller=PageController();
+  ///todo skip
   _buildMatch() {
     if(_state==PageState.loading){
      return  Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){
-      return NoDataWidget();
-    }
-    else if(_state==PageState.success){
-      return PageView.builder(
-        itemBuilder: (c,index) {
-          MatchUserInfo info=users[index];
-          if(info.id==-1){
-            return NoMoreWidget();
-          }
-          if(info.matched){
-            return WishCardWidget(context: context,
+      return const NoDataWidget();
+    } else if(_state==PageState.success){
+      return TransformerPageView(
+          itemBuilder: (c,index) {
+            MatchUserInfo info=users[index];
+            if(info.id==-1){
+              return NoMoreWidget(onTap: (){
+                _initData();
+              },);
+            }
+            if(info.matched){
+              return WishCardWidget(context: context,
                 info: info,
                 next: (){
-                  pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+
+                  controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
                 },
 
-            );
-          }else {
-            return ProfileWidget(
-              relation: Relation.normal,
-              info:info,next:(){
-              pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+              );
+            }else {
+              return ProfileWidget(
+                relation: Relation.normal,
+                info:info,next:(){
 
-            },
-              onMatch: (v){
-                 info.matched=v;
-                 setState(() {
+                controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
 
-                 });
               },
-            );
+                onMatch: (v){},
+              );
+            }
+          },
+          pageController: controller,
+          index: currentPage,
+          itemCount: users.length,
+          //loop: false,
+          scrollDirection: Axis.horizontal,
+          //pageController: pageController,
+          transformer: RotatePageTransformer(),
+          duration: const Duration(milliseconds: 1000),
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: (value) async {
+            currentPage=value!;
+            if (value != 0 && value % 3 == 0 ) {
+              current++;
+              _loadMore();
+            }
           }
-        },
-        itemCount: users.length,
-        scrollDirection: Axis.horizontal,
-        controller: pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: (value) async {
-          //currentPage=value;
-          if (value != 0 && value % 3 == 0 ) {
-            current++;
-            _loadMore();
-          }
-        }
       );
+
     }else if(_state==PageState.noData){
-      return const NoMoreWidget();
+      return NoMoreWidget(onTap: (){
+        _initData();
+      },);
     }
   }
 }
@@ -321,4 +433,9 @@ enum PageState{
   noData,
   success,
   fail
+}
+enum PageAnimStatus {
+  dislike,
+  like,
+  dm
 }

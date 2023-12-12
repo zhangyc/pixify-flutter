@@ -17,7 +17,20 @@ class HeardItem extends StatelessWidget {
       child: Stack(
         alignment: Alignment.bottomLeft,
         children: [
-          userInfo.avatar==null?Container():CachedNetworkImage(imageUrl: userInfo.avatar!,fit: BoxFit.cover,width: MediaQuery.of(context).size.width-16*2,height: 457,),
+          userInfo.avatar==null?Container():
+          Container(child: CachedNetworkImage(imageUrl: userInfo.avatar!,fit: BoxFit.cover,width: MediaQuery.of(context).size.width-16*2,height: 457,),
+            foregroundDecoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [
+                      Colors.transparent,
+                      Color(0xff000000).withOpacity(0.5)
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter
+                  ),
+
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -25,7 +38,8 @@ class HeardItem extends StatelessWidget {
               children: [
                 Text(userInfo.originNickname??'',style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800
                  ),
                   maxLines: 1,
                 ),
@@ -37,6 +51,7 @@ class HeardItem extends StatelessWidget {
                       child: Text('${userInfo.name??''}, ${userInfo.age}',style: TextStyle(
                         color: Colors.white,
                         fontSize: 28,
+                        fontWeight: FontWeight.w800
                       ),
                         maxLines: 2,
                       ),
@@ -49,7 +64,8 @@ class HeardItem extends StatelessWidget {
                     Icon(Icons.location_on,color: Colors.white,),
                     Text('${userInfo.currentCity}',style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14
+                        fontSize: 14,
+                        fontWeight: FontWeight.w900
                     ),)
                   ],
                 )

@@ -46,10 +46,10 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
         Column(
           children: [
             (widget.relation!=Relation.normal)?SizedBox(
-              height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top,
+              height: MediaQuery.of(context).viewPadding.top,
             ):
             SizedBox(
-              height: MediaQuery.of(context).padding.top+MediaQuery.of(context).viewPadding.top+58,
+              height: MediaQuery.of(context).viewPadding.top+58,
             ),
             Container(alignment: Alignment.centerLeft,child: (widget.relation!=Relation.normal)?IconButton(onPressed: (){
                  Navigator.pop(context);
@@ -62,7 +62,6 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
             Expanded(
               child: CustomScrollView(
                 slivers: [
-
                   SliverToBoxAdapter(
                     child: Stack(
                       children: [
@@ -104,6 +103,16 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                   SonaAnalytics.log('post_block');
                                 } 
                               },
+                                unMatch: () async{
+                                  final resp = await matchAction(userId: info.id, action: MatchAction.unmatch);
+                                  if (resp.statusCode == 0) {
+                                    ///users.removeAt(currentPage);
+                                    widget.next.call();
+                                    if (mounted) setState(() {});
+                                    Fluttertoast.showToast(msg: 'Unmatch Success');
+                                    SonaAnalytics.log('post_block');
+                                  }
+                                },
                                 relation: widget.relation,
                               ),
                               SizedBox(
@@ -121,79 +130,82 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
             ),
           ],
         ),
-        (widget.relation==Relation.normal||widget.relation==Relation.likeMe)?Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
-          width: MediaQuery.of(context).size.width,child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
-                onTap: (){
-                  widget.next.call();
-                  ref.read(asyncMatchRecommendedProvider.notifier).skip(info.id);
-                },
-              ),
-              GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
-                onTap: (){
-                  // showMatched(context,target: info,next: (){
-                  //   //pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                  // });
-                  ///是否能like
-                  if(canLike){
+        (widget.relation==Relation.likeMe)?Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+          width: MediaQuery.of(context).size.width,child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 68),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
+                  onTap: (){
+                    widget.next.call();
+                    ref.read(asyncMatchRecommendedProvider.notifier).skip(info.id);
+                  },
+                ),
+                GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
+                  onTap: (){
+                    // showMatched(context,target: info,next: (){
+                    //   //pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                    // });
+                    ///是否能like
+                    if(canLike){
 
-                    if(like>0){
-                      like=like-1;
-                    }
-                    //currentPage=index;
-                    ///如果对方喜欢我。
-                    if(info.likeMe==1){
-                      ref.read(asyncMatchRecommendedProvider.notifier).like(info.id);
-                      ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
-                      showMatched(context,target: info,next: (){
-                        widget.next.call();
-                      });
-                    }else{
-                      ///
-                      if(info.wishList.isEmpty){
-                        ref.read(asyncMatchRecommendedProvider.notifier).like(info.id);
-                        ref.read(backgroundImageProvider.notifier).updateBg(null);
-                        widget.next.call();
-                      }else {
-                        widget.onMatch.call(true);
+                      if(like>0){
+                        like=like-1;
                       }
-                    }
+                      //currentPage=index;
+                      ///如果对方喜欢我。
+                      if(info.likeMe==1){
+                        ref.read(asyncMatchRecommendedProvider.notifier).like(info.id);
+                        ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                        showMatched(context,target: info,next: (){
+                          widget.next.call();
+                        });
+                      }else{
+                        ///
+                        if(info.wishList.isEmpty){
+                          ref.read(asyncMatchRecommendedProvider.notifier).like(info.id);
+                          ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+                          widget.next.call();
+                        }else {
+                          widget.onMatch.call(true);
+                        }
+                      }
 
-                    setState(() {
+                      setState(() {
 
-                    });
-                    SonaAnalytics.log(MatchEvent.match_like.name);
+                      });
+                      SonaAnalytics.log(MatchEvent.match_like.name);
 
-                  }else {
-                    SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                    Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                      return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
-                    }));
-                  }
-                },
-              ),
-              GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
-                onTap: (){
-                  if(canArrow){
-                    showDm(context, info,(){
-                      widget.next.call();
-                      //pageController.nextPage(duration: Duration(milliseconds: 1000), curve:  Curves.linearToEaseOut);
-                    });
-                  }else {
-                    bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                    if(isMember){
-                      Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                    }else{
+                    }else {
+                      SonaAnalytics.log(MatchEvent.match_like_limit.name);
                       Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                        return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                        return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
                       }));
                     }
-                  }
-                },
-              ),
-            ],
+                  },
+                ),
+                GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
+                  onTap: (){
+                    if(canArrow){
+                      showDm(context, info,(){
+                        widget.next.call();
+                        //pageController.nextPage(duration: Duration(milliseconds: 1000), curve:  Curves.linearToEaseOut);
+                      });
+                    }else {
+                      bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                      if(isMember){
+                        Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                      }else{
+                        Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                          return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                        }));
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ):Container()
       ],

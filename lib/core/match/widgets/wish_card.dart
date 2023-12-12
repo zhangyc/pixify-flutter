@@ -29,8 +29,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(backgroundImageProvider.notifier).updateBg(widget.info.wishList.first.pic!);
-
+      ref.read(backgroundImageProvider.notifier).updateBgImage(widget.info.wishList.first.pic!);
     });
 
     super.initState();
@@ -70,14 +69,14 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
               fontSize: 28
           ),),
         ),
-        _buildPageIndicator(),
+        // _buildPageIndicator(),
         Expanded(
           child: PageView(
             onPageChanged: (value){
               _currentPage = value;
 
-              ref.read(backgroundImageProvider.notifier).updateBg(widget.info.wishList[value].pic!);
-              },
+              ref.read(backgroundImageProvider.notifier).updateBgImage(widget.info.wishList[value].pic!);
+            },
             controller: pageController,
             children: widget.info.wishList.map((wish) => Container(
               margin: EdgeInsets.symmetric(
@@ -126,7 +125,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                                     activityId: wish.activities[index2].id,
                                     travelWishId: wish.id
                                 );
-                                ref.read(backgroundImageProvider.notifier).updateBg(null);
+                                ref.read(backgroundImageProvider.notifier).updateBgImage(null);
 
                                 widget.next.call();
                               },),
@@ -142,6 +141,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                   ),
                   TextButton(onPressed: (){
                     widget.next.call();
+                    ref.read(backgroundImageProvider.notifier).updateBgImage(null);
                     ref.read(asyncMatchRecommendedProvider.notifier).like(widget.info.id,
                         travelWishId: wish.id
                     );
@@ -151,15 +151,16 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
               ),
             )).toList(),
           ),
-        ),
+        )
       ],
     );
   }
   int _currentPage = 0;
 
   Widget _buildPageIndicator() {
-    return Container(
+    return SizedBox(
       width: 56,
+      height: 56,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
