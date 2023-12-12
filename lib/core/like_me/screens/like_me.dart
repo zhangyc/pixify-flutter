@@ -88,18 +88,18 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: itemHeight,
+            height: itemHeight + 4,
             child: Stack(
               children: [
                 Positioned.fill(
                   child: Container(
-                    height: itemHeight,
+                    height: itemHeight + 4,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25)
+                        borderRadius: BorderRadius.circular(26)
                     ),
                     foregroundDecoration: BoxDecoration(
                         border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-                        borderRadius: BorderRadius.circular(25)
+                        borderRadius: BorderRadius.circular(26)
                     ),
                     alignment: Alignment.center,
                     clipBehavior: Clip.antiAlias,
@@ -109,6 +109,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                       child: UserAvatar(
                         url: u.avatar!,
                         size: Size(itemWidth, itemHeight),
+                        borderSide: BorderSide.none,
                       ),
                     ) : GestureDetector(
                       behavior: HitTestBehavior.translucent,

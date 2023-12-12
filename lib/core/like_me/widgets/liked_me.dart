@@ -125,6 +125,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                               child: UserAvatar(
                                 url: u.avatar!,
                                 size: Size(84, 113),
+                                borderSide: BorderSide.none,
                               ),
                             ),
                             if (u.isNew) Positioned(
