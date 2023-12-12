@@ -85,8 +85,16 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24),
-                  child: Text(
-                    'Enter Verification code\nwe‘ve just sent',
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'Enter Verification code\nwe‘ve just sent to\n\n',
+                      children: [
+                        TextSpan(
+                          text: '+${widget.phoneNumber.countryCode} ${widget.phoneNumber.number}',
+                          style: Theme.of(context).textTheme.titleMedium
+                        )
+                      ]
+                    ),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
