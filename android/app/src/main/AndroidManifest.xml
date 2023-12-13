@@ -41,7 +41,19 @@
             android:name="flutterEmbedding"
             android:value="2" />
         <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="high_importance_channel" />
+            android:name="sona_match"
+            android:value="sona_match" />
+        <meta-data
+            android:name="sona_message"
+            android:value="sona_message" />
+        <meta-data
+            android:name="sona_marketing_information"
+            android:value="sona_marketing_information" />
+        <meta-data
+            android:name="sona_common"
+            android:value="sona_common" />
+        <meta-data
+            android:name="sona"
+            android:value="sona" />
     </application>
 </manifest>

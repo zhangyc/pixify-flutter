@@ -1,9 +1,17 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:sona/core/match/util/http_util.dart';
+import 'package:sona/utils/global/global.dart';
+
+import '../core/chat/screens/chat.dart';
+import 'package:sona/common/models/user.dart' as user;
+
 
 ///firebase实例
 late final FirebaseApp sonaFireBase;
@@ -45,7 +53,7 @@ Future<void> initFireBaseService(FirebaseApp firebase) async {
   ///终止应用程序后，您需要以Main.dart的主要方法获取消息，
   ///如果您尝试将其获取其他任何地方，则会失败。
   ///我将此消息传递到第一页，然后在Initstate中采取了适当的诉讼。
-  final RemoteMessage? _message = await messagesService.getInitialMessage();  ///这个方法
+  //final RemoteMessage? _message = await messagesService.getInitialMessage();  ///这个方法
 
   NotificationSettings settings = await messagesService.requestPermission(
     alert: true,
@@ -71,9 +79,37 @@ Future<void> initFireBaseService(FirebaseApp firebase) async {
       );
     }
   });
-  
+
+  _setUpFcmListener();
 
   ///应用在前台时，
   FirebaseMessaging.onMessage.listen(foreground);
   storeService=FirebaseFirestore.instance;
+}
+void _setUpFcmListener() async{
+  await Future.delayed(Duration(seconds: 1));
+  ///kill
+  RemoteMessage? initialMessage = await messagesService.getInitialMessage();
+  if(initialMessage==null){
+    return;
+  }
+  if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
+    String ext= initialMessage.data['ext'];
+    if (kDebugMode) print('push_data: $ext');
+    user.UserInfo info1 =user.UserInfo.fromJson(jsonDecode(ext));
+    Navigator.push(navigatorKey.currentState!.context, MaterialPageRoute(builder: (c){
+      return ChatScreen(entry: ChatEntry.push, otherSide: info1);
+    }));
+  }
+  ///background start
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
+      String ext= initialMessage.data['ext'];
+      if (kDebugMode) print('push_data: $ext');
+      user.UserInfo info =user.UserInfo.fromJson(jsonDecode(ext));
+      Navigator.push(navigatorKey.currentState!.context, MaterialPageRoute(builder: (c){
+        return ChatScreen(entry: ChatEntry.push, otherSide: info);
+      }));
+    }
+  });
 }

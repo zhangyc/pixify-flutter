@@ -18,6 +18,7 @@ import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/location/location.dart';
 
 import '../common/permission/permission.dart';
+import '../firebase/sona_firebase.dart';
 import '../generated/l10n.dart';
 import 'match/screens/match.dart';
 import 'match/util/local_data.dart';
@@ -37,7 +38,6 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   void initState() {
     SonaAnalytics.init();
     _determinePosition();
-    _setUpFcmListener();
     initUserPermission();
     super.initState();
   }
@@ -151,32 +151,5 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     }
   }
 
-  void _setUpFcmListener() async{
-    ///kill
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-    if(initialMessage==null){
-      return;
-    }
-    if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
-      String ext= initialMessage.data['ext'];
-      if (kDebugMode) print('push_data: $ext');
-      UserInfo info =UserInfo.fromJson(jsonDecode(ext));
-      if (mounted) {
-        Navigator.push(context, MaterialPageRoute(builder: (c){
-          return ChatScreen(entry: ChatEntry.push, otherSide: info);
-        }));
-      }
-    }
-    ///background start
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
-        String ext= initialMessage.data['ext'];
-        if (kDebugMode) print('push_data: $ext');
-        UserInfo info =UserInfo.fromJson(jsonDecode(ext));
-        Navigator.push(context, MaterialPageRoute(builder: (c){
-          return ChatScreen(entry: ChatEntry.push, otherSide: info);
-        }));
-      }
-    });
-  }
+
 }
