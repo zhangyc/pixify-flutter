@@ -8,8 +8,9 @@ Future<HttpResult> getProfileById(GetProfileByIdRef ref,int userId) async {
     "id":userId
   });
   if(result.isSuccess&&result.data!=null){
-     MatchUserInfo userInfo=MatchUserInfo.fromJson(result.data);
-     result.data=userInfo;
+    MatchUserInfo userInfo=MatchUserInfo.fromJson(result.data);
+    result.data=userInfo;
   }
+  
   return result;
 }

@@ -30,7 +30,7 @@ Future<HttpResult> post(String path,{Object? data, Map<String, dynamic>? queryPa
     return Future.value(HttpResult(resp));
   } catch(e){
     log(e.toString());
-    return HttpResult.error(e);
+    return Future.value(HttpResult.error(e));
 
   }
 }///start

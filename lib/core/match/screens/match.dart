@@ -109,7 +109,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           Positioned(
             height: 118,
             width: MediaQuery.of(context).size.width,
-            // top: MediaQuery.of(context).padding.top,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: 16
@@ -118,13 +117,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
-                  //Text("Sona"),
                   Row(
                     children: [
-                      // Image.asset(Assets.iconsNotice,width: 48,height: 48,),
-                      // SizedBox(
-                      //   width: 10,
-                      // ),
                       GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (c){
@@ -147,7 +141,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               ),
             ),
           ),
-          (users.isNotEmpty&&users[currentPage].id==-1)?Container():Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+          (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading?Container():Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
             width: MediaQuery.of(context).size.width,child: Padding(
               padding:EdgeInsets.symmetric(
                 horizontal: 68
@@ -161,7 +155,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     }
                     currentStatus=TransformStatus.leftRotate;
                     // status=PageAnimStatus.dislike;
-                    controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                    controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                     ref.read(asyncMatchRecommendedProvider.notifier).skip(users[currentPage].id);
                   },
                       child: Image.asset(Assets.iconsSkip,width: 56,height: 56,)
@@ -183,7 +177,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
                           showMatched(context,target: users[currentPage],next: (){
 
-                            controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                            controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                           });
                         }else{
                           ///
@@ -191,7 +185,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
                             ref.read(backgroundImageProvider.notifier).updateBgImage(null);
 
-                            controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                            controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                           }else {
                             users[currentPage].matched=true;
                             setState(() {
@@ -222,8 +216,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
                         showDm(context, users[currentPage],(){
 
-                          controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
-                          //pageController.nextPage(duration: Duration(milliseconds: 1000), curve:  Curves.linearToEaseOut);
+                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                          //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
                         });
                       }else {
                         bool isMember=ref.read(myProfileProvider)?.isMember??false;
@@ -319,11 +313,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       if(resp.isSuccess){
         List list= resp.data;
 
-        // if(list.isEmpty){
-        //   _state=PageState.noData;
-        // }else {
-        //   _state=PageState.success;
-        // }
+        if(list.isEmpty){
+          _state=PageState.noData;
+        }else {
+          _state=PageState.success;
+        }
         List<MatchUserInfo> users1=list.map((e) => MatchUserInfo.fromJson(e)).toList();
         // users=[...users,...users1,...[UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null)]];
 
@@ -388,7 +382,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 info: info,
                 next: (){
 
-                  controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                  controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                 },
 
               );
@@ -397,7 +391,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 relation: Relation.normal,
                 info:info,next:(){
 
-                controller.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
 
               },
                 onMatch: (v){},
@@ -411,7 +405,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           scrollDirection: Axis.horizontal,
           //pageController: pageController,
           transformer: RotatePageTransformer(),
-          duration: const Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: 2000),
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
             currentPage=value!;
