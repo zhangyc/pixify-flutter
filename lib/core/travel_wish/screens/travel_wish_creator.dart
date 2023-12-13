@@ -51,7 +51,6 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
         ),
         centerTitle: false,
         titleSpacing: 0,
-        title: Text('Back'),
       ),
       resizeToAvoidBottomInset: false,
       body: PopScope(
