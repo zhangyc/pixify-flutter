@@ -13,10 +13,7 @@ class AsyncPopularTravelCitiesNotifier extends FamilyAsyncNotifier<List<PopularT
       .then<List<PopularTravelCity>>(
         (data) => data.map<PopularTravelCity>((c) => PopularTravelCity.fromJson(c)
       ).toList()
-    ).catchError((e) {
-      if (kDebugMode) print('fetch popular cities-$countryId error: $e');
-      throw e;
-    });
+    );
   }
 
   @override

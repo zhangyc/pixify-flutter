@@ -42,7 +42,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
         leading: IconButton(
           onPressed: () {
             if (_pageController.page == null || _pageController.page?.round() == 0) {
-              Navigator.pop(context);
+              if (Navigator.canPop(context)) Navigator.pop(context);
             } else {
               _pageController.previousPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
             }
@@ -62,7 +62,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
           if (_pageController.page != null && _pageController.page!.round() > 0) {
             _pageController.previousPage(duration: _pageTransitionDuration, curve: _pageTransitionCurve);
           } else {
-            Navigator.pop(context);
+            if (Navigator.canPop(context)) Navigator.pop(context);
           }
         },
         child: PageView.builder(
@@ -100,8 +100,13 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
         timeframe: params.timeframe!
       );
       if (resp.statusCode == 0) {
-        Navigator.pop(context, true);
         ref.invalidate(asyncMyTravelWishesProvider);
+        if (!mounted) return;
+        if (Navigator.of(context).canPop()) {
+          Navigator.pop(context, true);
+        } else {
+          await Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        }
       } else if (resp.statusCode == 10150) {
         showSubscription(FromTag.travel_wish);
       }

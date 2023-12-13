@@ -184,7 +184,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         ),
                       ),
                     )),
-                    if (asyncMyTravelWishes.value != null && asyncMyTravelWishes.value!.length < 3) GestureDetector(
+                    if (asyncMyTravelWishes.hasValue && asyncMyTravelWishes.value!.length < 3) GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
                         if (myProfile.isMember) {
