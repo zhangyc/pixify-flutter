@@ -45,7 +45,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
       ),
       body: ref.watch(asyncLikedMeProvider).when(
         data: (data) => data.isNotEmpty ? GridView.builder(
-          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 132),
+          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 80),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 8,

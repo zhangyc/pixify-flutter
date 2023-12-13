@@ -24,12 +24,8 @@ class SonaApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final token = ref.read(tokenProvider);
     MyProfile? profile;
-    Locale locale;
     if (token != null) {
       profile = ref.read(myProfileProvider);
-      if (profile != null) {
-
-      }
     }
     final navigatorKey = global.navigatorKey;
     final initialRoute = profile == null || !profile.completed ? 'login' : '/';

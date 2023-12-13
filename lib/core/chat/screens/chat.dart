@@ -77,16 +77,30 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         ),
         elevation: 4,
         titleSpacing: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        title: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            UserAvatar(url: widget.otherSide.avatar!, size: Size.square(32)),
-            SizedBox(width: 8),
-            Text(widget.otherSide.name!),
-            SizedBox(width: 8),
-            Text(ref.watch(asyncAdditionalUserInfoProvider(widget.otherSide.id)).when(
-                data: (user) => user.countryFlag ?? '', error: (_, __) => '', loading: () => ''
-            ))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                UserAvatar(url: widget.otherSide.avatar!, size: Size.square(32)),
+                SizedBox(width: 8),
+                Text(widget.otherSide.name!),
+                SizedBox(width: 8),
+                Text(ref.watch(asyncAdditionalUserInfoProvider(widget.otherSide.id)).when(
+                    data: (user) => user.countryFlag ?? '', error: (_, __) => '', loading: () => ''
+                ))
+              ],
+            ),
+            Text(
+              ref.watch(asyncAdditionalUserInfoProvider(widget.otherSide.id)).when(
+                data: (user) => user.locale != null ? findMatchedSonaLocale(user.locale!).displayName : '',
+                error: (_, __) => '',
+                loading: () => ''
+              ),
+              style: Theme.of(context).textTheme.labelSmall,
+            )
           ],
         ),
         centerTitle: true,
