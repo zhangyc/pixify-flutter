@@ -17,7 +17,6 @@ import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 
-import '../../../generated/l10n.dart';
 import '../../travel_wish/providers/my_wish.dart';
 
 class PersonaScreen extends StatefulHookConsumerWidget {
@@ -190,7 +189,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         if (myProfile.isMember) {
                           Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator()));
                         } else {
-                          showSubscription(FromTag.travel_wish);
+                          showSubscription(SubscribeShowType.unLockThreeWish(),FromTag.travel_wish);
                         }
                       },
                       child: Container(
@@ -300,7 +299,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                   ),
                   SizedBox(height: 16),
                   if (!ref.watch(myProfileProvider)!.isMember) FilledButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unLockSona(),fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE600)),
                         side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
@@ -308,7 +307,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                       child: Text('Super SONA', style: Theme.of(context).textTheme.titleMedium)
                   ),
                   if (ref.watch(myProfileProvider)!.isMember) OutlinedButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unLockSona(),fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
                           side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),

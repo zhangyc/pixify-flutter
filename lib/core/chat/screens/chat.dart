@@ -11,7 +11,6 @@ import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
-import 'package:sona/core/chat/widgets/inputbar/chat_style.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
@@ -26,8 +25,6 @@ import 'package:sona/utils/toast/cooldown.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/dialog/subsciption.dart';
-import '../../match/widgets/profile_widget.dart';
-import '../../travel_wish/models/country.dart';
 import '../models/message_type.dart';
 import '../widgets/inputbar/mode_provider.dart';
 import '../widgets/message/message.dart';
@@ -263,7 +260,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         if (myProfile.isMember) {
           coolDown();
         } else {
-          showSubscription(FromTag.pay_chat_sonamsg);
+          showSubscription(SubscribeShowType.unLockSona(),FromTag.pay_chat_sonamsg);
         }
       } else if (resp.statusCode == 0) {
         _onPendingMessageSucceed(message);
@@ -317,13 +314,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       if (myProfile.isMember) {
         coolDown();
       } else {
-        showSubscription(FromTag.chat_starter);
+        showSubscription(SubscribeShowType.unLockSona(),FromTag.chat_starter);
       }
     }
-  }
-
-  void _onSonaTap() {
-    // ref.read(chatModeProvider.notifier).state = ChatMode.input;
   }
 
   Future _onHookTap() async {
@@ -335,7 +328,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       if (myProfile.isMember) {
         coolDown();
       } else {
-        showSubscription(FromTag.pay_chat_hook);
+        showSubscription(SubscribeShowType.unLockSona(),FromTag.pay_chat_hook);
       }
     }
     SonaAnalytics.log('chat_hook');

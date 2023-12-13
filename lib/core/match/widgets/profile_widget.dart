@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/bean/match_user.dart';
-import 'package:sona/core/match/widgets/body_up_animation.dart';
-import 'package:sona/core/match/widgets/heard_init_animation.dart';
 import 'package:sona/utils/dialog/input.dart';
-
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
 import '../../../common/screens/profile.dart';
@@ -203,7 +200,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                     }else {
                       SonaAnalytics.log(MatchEvent.match_like_limit.name);
                       Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                        return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                        return SubscribePage(SubscribeShowType.unLimitedLikes(),fromTag: FromTag.pay_match_likelimit,);
                       }));
                     }
                   },
@@ -221,7 +218,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                         Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                       }else{
                         Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                          return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                          return SubscribePage(SubscribeShowType.unLockDM(),fromTag: FromTag.pay_match_arrow,);
                         }));
                       }
                     }

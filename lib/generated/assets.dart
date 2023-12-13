@@ -50,6 +50,12 @@ class Assets {
   static const String imagesGirlPortrait = 'assets/images/girl_portrait.jpeg';
   static const String imagesHumanPortrait = 'assets/images/human_portrait.png';
   static const String imagesLocationAuthorization = 'assets/images/location_authorization.png';
+  static const String imagesM1 = 'assets/images/m1.png';
+  static const String imagesM2 = 'assets/images/m2.png';
+  static const String imagesM3 = 'assets/images/m3.png';
+  static const String imagesM4 = 'assets/images/m4.png';
+  static const String imagesM5 = 'assets/images/m5.png';
+  static const String imagesM6 = 'assets/images/m6.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
   static const String imagesMatched = 'assets/images/matched.png';
   static const String imagesNoChat = 'assets/images/no_chat.png';
@@ -57,6 +63,7 @@ class Assets {
   static const String imagesPetPortrait = 'assets/images/pet_portrait.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
   static const String imagesRewardArrow = 'assets/images/reward_arrow.png';
+  static const String imagesSubBg = 'assets/images/sub_bg.png';
   static const String imagesSuperSonaBg = 'assets/images/super_sona_bg.png';
   static const String imagesTenderAffection = 'assets/images/tender_affection.png';
   static const String imagesTest = 'assets/images/test.jpg';

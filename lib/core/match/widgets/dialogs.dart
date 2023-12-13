@@ -112,7 +112,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                                 Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                               }else{
                                 Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                                  return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                                  return SubscribePage(SubscribeShowType.unLockDM(),fromTag: FromTag.pay_match_arrow,);
                                 }));
                               }
                             }
@@ -140,7 +140,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                             Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                           }else{
                             Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                              return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                              return SubscribePage(SubscribeShowType.unLockDM(),fromTag: FromTag.pay_match_arrow,);
                             }));
                           }
                         }

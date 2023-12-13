@@ -13,7 +13,6 @@ import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
 import '../util/event.dart';
 import 'like_animation.dart';
-import 'user_card.dart';
 
 class MatchItem extends ConsumerStatefulWidget {
   const MatchItem(this.index, {super.key,
@@ -92,7 +91,7 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
                     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                   }else{
                     Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                      return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                      return SubscribePage(SubscribeShowType.unLockDM(),fromTag: FromTag.pay_match_arrow,);
                     }));
                   }
                 }

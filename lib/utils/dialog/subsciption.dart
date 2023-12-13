@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../core/subscribe/subscribe_page.dart';
 import '../global/global.dart';
 
-Future showSubscription(FromTag fromTag) {
+Future showSubscription(SubscribeShowType type,FromTag fromTag) {
   return navigatorKey.currentState!.push(MaterialPageRoute(builder:(c){
-    return SubscribePage(fromTag: fromTag,);
+    return SubscribePage(type,fromTag: fromTag,);
   }));
 }

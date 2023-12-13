@@ -1,4 +1,3 @@
-import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
 import 'package:sona/core/match/widgets/button_animations.dart';
-import 'package:sona/core/match/widgets/custom_pageview/src/index_controller.dart';
 import 'package:sona/core/match/widgets/custom_pageview/src/skip_transformer.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
@@ -210,7 +208,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                       }else {
                         SonaAnalytics.log(MatchEvent.match_like_limit.name);
                         Navigator.push(context, MaterialPageRoute(builder:(c){
-                          return const SubscribePage(fromTag: FromTag.pay_match_likelimit,);
+                          return SubscribePage(SubscribeShowType.unLimitedLikes(),fromTag: FromTag.pay_match_likelimit,);
                         }));
                       }
                   }),
@@ -233,7 +231,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                         }else{
                           Navigator.push(context, MaterialPageRoute(builder:(c){
-                            return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                            return SubscribePage(SubscribeShowType.unLockDM(),fromTag: FromTag.pay_match_arrow,);
                           }));
                         }
                       }

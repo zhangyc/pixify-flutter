@@ -16,7 +16,8 @@ Future<HttpResult> fetchMatchPeople({
       'minAge': range?.start.toInt(),
       'maxAge': range?.end.toInt(),
       'longitude': position.longitude,
-      'latitude': position.latitude
+      'latitude': position.latitude,
+      "pageSize":5, // 每页数量,
     }
   );
 }
