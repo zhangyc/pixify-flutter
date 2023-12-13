@@ -27,6 +27,8 @@ import '../match/util/iap_helper.dart';
 import 'widgets/powers_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
+
 Uuid uuid=const Uuid();
 class SubscribePage extends ConsumerStatefulWidget {
   const SubscribePage( {super.key,required this.fromTag,});
@@ -87,6 +89,28 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Get Sona Plus'),
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Row(
+              children: [
+                Text(''),
+                Text(''),
+              ],
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: PowersWidget(),
+          ),
+
+        ],
+      ),
+
+    );
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Color(0xffeaeaea),
@@ -452,66 +476,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         ]);
   }
 
-  // Card _buildConsumableBox() {
-  //   if (_loading) {
-  //     return const Card(
-  //         child: ListTile(
-  //             leading: CircularProgressIndicator(),
-  //             title: Text('Fetching consumables...')));
-  //   }
-  //   if (!_isAvailable || _notFoundIds.contains(_kConsumableId)) {
-  //     return const Card();
-  //   }
-  //   const ListTile consumableHeader =
-  //   ListTile(title: Text('Purchased consumables'));
-  //   final List<Widget> tokens = _consumables.map((String id) {
-  //     return GridTile(
-  //       child: IconButton(
-  //         icon: const Icon(
-  //           Icons.stars,
-  //           size: 42.0,
-  //           color: Colors.orange,
-  //         ),
-  //         splashColor: Colors.yellowAccent,
-  //         onPressed: () => consume(id),
-  //       ),
-  //     );
-  //   }).toList();
-  //   return Card(
-  //       child: Column(children: <Widget>[
-  //         consumableHeader,
-  //         const Divider(),
-  //         GridView.count(
-  //           crossAxisCount: 5,
-  //           shrinkWrap: true,
-  //           padding: const EdgeInsets.all(16.0),
-  //           children: tokens,
-  //         )
-  //       ]));
-  // }
-
-  // Widget _buildRestoreButton() {
-  //   if (_loading) {
-  //     return Container();
-  //   }
-  //
-  //   return Padding(
-  //     padding: const EdgeInsets.all(4.0),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.end,
-  //       children: <Widget>[
-  //         TextButton(
-  //           style: TextButton.styleFrom(
-  //             backgroundColor: Theme.of(context).primaryColor,
-  //             foregroundColor: Colors.white,
-  //           ),
-  //           onPressed: () => _inAppPurchase.restorePurchases(),
-  //           child: const Text('Restore purchases'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
   ///初始化店铺信息
   Future<void> initStoreInfo() async {
     ///可用

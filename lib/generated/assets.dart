@@ -8,6 +8,7 @@ class Assets {
   static const String iconsChatSend = 'assets/icons/chat_send.png';
   static const String iconsCheck = 'assets/icons/check.png';
   static const String iconsClose = 'assets/icons/close.png';
+  static const String iconsCorrect = 'assets/icons/correct.png';
   static const String iconsEdit = 'assets/icons/edit.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsForward = 'assets/icons/forward.png';
@@ -43,8 +44,10 @@ class Assets {
   static const String iconsSub7 = 'assets/icons/sub7.png';
   static const String iconsSuper = 'assets/icons/super.png';
   static const String imagesArrow = 'assets/images/arrow.png';
+  static const String imagesCatPortrait = 'assets/images/cat_portrait.jpeg';
   static const String imagesDm = 'assets/images/dm.png';
   static const String imagesError = 'assets/images/error.png';
+  static const String imagesGirlPortrait = 'assets/images/girl_portrait.jpeg';
   static const String imagesHumanPortrait = 'assets/images/human_portrait.png';
   static const String imagesLocationAuthorization = 'assets/images/location_authorization.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';

@@ -10,10 +10,9 @@ class PowersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.symmetric(
-          horizontal: 8
-      ),
+    return Column(
+      // mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: 9,
@@ -27,7 +26,7 @@ class PowersWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Image.asset(Assets.iconsSub1,width: 36,height: 34,),
+            Image.asset(Assets.iconsCorrect,width: 14,height: 14,),
             SizedBox(
               width: 8,
             ),
@@ -50,7 +49,7 @@ class PowersWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Image.asset(Assets.iconsSub2,width: 36,height: 34,),
+            Image.asset(Assets.iconsCorrect,width: 14,height: 14,),
             SizedBox(
               width: 8,
             ),
@@ -73,7 +72,7 @@ class PowersWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Image.asset(Assets.iconsSub3,width: 36,height: 34,),
+            Image.asset(Assets.iconsCorrect,width: 14,height: 14,),
             SizedBox(
               width: 8,
             ),
@@ -95,7 +94,7 @@ class PowersWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Image.asset(Assets.iconsSub4,width: 36,height: 34,),
+            Image.asset(Assets.iconsCorrect,width: 14,height: 14,),
             SizedBox(
               width: 8,
             ),
@@ -139,7 +138,7 @@ class PowersWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Image.asset(Assets.iconsSub6,width: 36,height: 34,),
+            Image.asset(Assets.iconsCorrect,width: 14,height: 14,),
             SizedBox(
               width: 8,
             ),
@@ -161,7 +160,7 @@ class PowersWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Image.asset(Assets.iconsSub7,width: 36,height: 34,),
+            Image.asset(Assets.iconsCorrect,width: 14,height: 14,),
             SizedBox(
               width: 8,
             ),

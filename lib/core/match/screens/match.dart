@@ -373,6 +373,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }else if(_state==PageState.fail){
       return NoDataWidget(onTap: (){
         _initData();
+        _state=PageState.loading;
+        setState(() {
+
+        });
       },);
     } else if(_state==PageState.success){
       return TransformerPageView(
