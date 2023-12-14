@@ -1,28 +1,112 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sona/core/match/bean/match_user.dart';
 
 class MyImageAnimation extends StatefulWidget {
-  const MyImageAnimation({super.key, required this.url});
+  const MyImageAnimation({super.key, required this.info});
+  final MatchUserInfo info;
   @override
   _MyImageAnimationState createState() => _MyImageAnimationState();
-  final String url;
 }
 
 class _MyImageAnimationState extends State<MyImageAnimation> {
   double _containerWidth = 343; // 初始宽度
-  double _containerHeight =457; // 初始高度
+  double _containerHeight = 457; // 初始高度
   @override
   void initState() {
     _startAnimation();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(seconds: 1), // 动画持续时间
-      width: _containerWidth,
-      height: _containerHeight,
-      child: CachedNetworkImage(imageUrl: widget.url),
+    return Center(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.linearToEaseOut,
+        width: widget.info.matched ? 95 : 343,
+        height: widget.info.matched ? 118 : 457,
+        child: widget.info.matched
+            ? Container(
+          decoration: BoxDecoration(
+              image: widget.info.avatar==null?null:DecorationImage(image: CachedNetworkImageProvider(widget.info.avatar!),fit: BoxFit.cover),
+              border: Border.all(
+                  color: Colors.black,
+                  width: 2
+              ),
+              borderRadius: BorderRadius.circular(20)
+          ),
+          clipBehavior: Clip.antiAlias,
+        ) :
+        Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Stack(
+            alignment: Alignment.bottomLeft,
+            children: [
+              widget.info.avatar==null?Container():CachedNetworkImage(imageUrl: widget.info.avatar!,fit: BoxFit.cover,width: 343,height: 457,),
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    Colors.transparent,
+                    Colors.black.withOpacity(0.5)
+                  ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter
+                  )
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(widget.info.originNickname??'',style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800
+                    ),
+                      maxLines: 1,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text('${widget.info.name??''}, ${widget.info.age}',style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w800
+                          ),
+                            maxLines: 2,
+                          ),
+                        ),
+                        widget.info.countryFlag!=null?Text(widget.info.countryFlag??''):Container()
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on,color: Colors.white,),
+                        Text('${widget.info.currentCity}',style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w900
+                        ),)
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        onEnd: () {
+          // 在动画结束时切换widget
+          setState(() {
+            //widget.matched = !widget.matched;
+          });
+        },
+      ),
     );
   }
 
