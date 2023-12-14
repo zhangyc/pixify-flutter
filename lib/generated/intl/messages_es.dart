@@ -20,12 +20,18 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
+  static String m0(country) => "Saltar, Solo ${country}";
+
+  static String m1(country) => "¿Tienes planes de ir a ${country}?";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Elegir"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Idiomas comúnmente usados"),
         "doneButton": MessageLookupByLibrary.simpleMessage("Hecho"),
+        "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
+            "SONA está buscando algunos amigos potenciales..."),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage(
                 "Encontrar extranjeros en la misma ciudad"),
@@ -84,6 +90,30 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPageTitle": MessageLookupByLibrary.simpleMessage(
             "Introduzca el número de teléfono"),
         "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage(
-            "Introduzca el código de verificación")
+            "Introduzca el código de verificación"),
+        "wishActivityAddTitle":
+            MessageLookupByLibrary.simpleMessage("Añade tu pensamiento"),
+        "wishActivityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Ayudarte a encontrar compañeros"),
+        "wishActivityPickerTitle":
+            MessageLookupByLibrary.simpleMessage("¿Quieres hacer algo?"),
+        "wishCityPickerSkipButton": m0,
+        "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
+            "si vas allí, ¿Qué ciudades quieres visitar?"),
+        "wishCountryPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("país sientes más conexión?"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("Qué"),
+        "wishCreationComplete":
+            MessageLookupByLibrary.simpleMessage("Tu deseo ha sido recibido"),
+        "wishDateOptionHere":
+            MessageLookupByLibrary.simpleMessage("Ya estoy aquí"),
+        "wishDateOptionNotSure":
+            MessageLookupByLibrary.simpleMessage("Todavía no estoy seguro"),
+        "wishDateOptionRecent":
+            MessageLookupByLibrary.simpleMessage("Recientemente, supongo"),
+        "wishDateOptionYear":
+            MessageLookupByLibrary.simpleMessage("Dentro de un año"),
+        "wishDatePickerSubtitle": m1,
+        "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("Cuándo")
       };
 }

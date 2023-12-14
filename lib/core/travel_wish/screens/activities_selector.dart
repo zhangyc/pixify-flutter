@@ -10,6 +10,7 @@ import 'package:sona/core/travel_wish/providers/popular_activity.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../../common/widgets/button/colored.dart';
+import '../../../generated/l10n.dart';
 import '../providers/popular_country.dart';
 import '../services/travel_wish.dart';
 
@@ -54,7 +55,7 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                           // crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                                '${ref.read(asyncPopularTravelCountriesProvider).value?.firstWhere((country) => country.id == countryId).displayName}',
+                                S.of(context).wishActivityPickerTitle,
                                 style: Theme.of(context).textTheme.headlineLarge
                             ),
                             Text.rich(
@@ -82,7 +83,7 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                       child: Container(
                         margin: EdgeInsets.only(bottom: 32),
                         child: Text(
-                            'If you go there, Which activities do you want to visit?',
+                            S.of(context).wishActivityPickerSubtitle,
                             style: Theme.of(context).textTheme.bodyMedium
                         ),
                       ),
@@ -177,7 +178,7 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
               child: ColoredButton(
                 key: ValueKey(selectedActivityIds.length),
                 size: ColoredButtonSize.large,
-                text: 'Done',
+                text: S.of(context).doneButton,
                 loadingWhenAsyncAction: true,
                 onTap: widget.onDone,
                 disabled: selectedActivityIds.isEmpty,

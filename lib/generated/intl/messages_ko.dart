@@ -20,12 +20,18 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ko';
 
+  static String m0(country) => "건너뛰기, 그냥country}";
+
+  static String m1(country) => "${country}에 가려고 하세요?";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("선택"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("자주 사용되는 언어"),
         "doneButton": MessageLookupByLibrary.simpleMessage("완료"),
+        "firstLandingLoadingTitle":
+            MessageLookupByLibrary.simpleMessage("SONA가 잠재적인 친구를 찾고 있습니다..."),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage("같은 도시의 외국인 찾기"),
         "locationPermissionRequestTitle":
@@ -77,6 +83,28 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPageTitle":
             MessageLookupByLibrary.simpleMessage("전화번호를 입력하세요"),
         "verifyCodePageTitle":
-            MessageLookupByLibrary.simpleMessage("인증 코드를 입력하세요")
+            MessageLookupByLibrary.simpleMessage("인증 코드를 입력하세요"),
+        "wishActivityAddTitle":
+            MessageLookupByLibrary.simpleMessage("생각을 추가하세요"),
+        "wishActivityPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("동반자 찾기를 도와드립니다"),
+        "wishActivityPickerTitle":
+            MessageLookupByLibrary.simpleMessage("뭔가 하고 싶어?"),
+        "wishCityPickerSkipButton": m0,
+        "wishCityPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("거기에 간다면, 어떤 도시를 방문하고 싶습니까?"),
+        "wishCountryPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("나라 사람들과 잘 맞습니까?"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("어느"),
+        "wishCreationComplete":
+            MessageLookupByLibrary.simpleMessage("당신의 소원을 받았습니다"),
+        "wishDateOptionHere": MessageLookupByLibrary.simpleMessage("이미 여기 있어요"),
+        "wishDateOptionNotSure":
+            MessageLookupByLibrary.simpleMessage("아직 확실하지 않아"),
+        "wishDateOptionRecent":
+            MessageLookupByLibrary.simpleMessage("최근이라고 생각해요"),
+        "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("1년 이내"),
+        "wishDatePickerSubtitle": m1,
+        "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("언제")
       };
 }

@@ -20,12 +20,18 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'th';
 
+  static String m0(country) => "ข้าม, แค่${country}";
+
+  static String m1(country) => "คุณวางแผนจะไป${country}ไหม";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("เลือก"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("ภาษาที่ใช้บ่อย"),
         "doneButton": MessageLookupByLibrary.simpleMessage("เสร็จสิ้น"),
+        "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
+            "SONAกำลังหาเพื่อนที่มีศักยภาพ..."),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage(
                 "ค้นหาชาวต่างชาติในเมืองเดียวกัน"),
@@ -82,6 +88,30 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPageTitle":
             MessageLookupByLibrary.simpleMessage("กรุณากรอกหมายเลขโทรศัพท์"),
         "verifyCodePageTitle":
-            MessageLookupByLibrary.simpleMessage("ป้อนรหัสยืนยัน")
+            MessageLookupByLibrary.simpleMessage("ป้อนรหัสยืนยัน"),
+        "wishActivityAddTitle":
+            MessageLookupByLibrary.simpleMessage("เพิ่มความคิดของคุณ"),
+        "wishActivityPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("ช่วยคุณหาเพื่อน"),
+        "wishActivityPickerTitle":
+            MessageLookupByLibrary.simpleMessage("อยากทำอะไรบ้าง?"),
+        "wishCityPickerSkipButton": m0,
+        "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
+            "ถ้าคุณไปที่นั่น คุณอยากเยี่ยมชมเมืองไหนบ้าง?"),
+        "wishCountryPickerSubtitle": MessageLookupByLibrary.simpleMessage(
+            "มีความรู้สึกที่ดีกับคนจากประเทศใด?"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("คุณ"),
+        "wishCreationComplete":
+            MessageLookupByLibrary.simpleMessage("ได้รับความปรารถนาของคุณแล้ว"),
+        "wishDateOptionHere":
+            MessageLookupByLibrary.simpleMessage("อยู่ที่นี่แล้ว"),
+        "wishDateOptionNotSure":
+            MessageLookupByLibrary.simpleMessage("ยังไม่แน่ใจ"),
+        "wishDateOptionRecent":
+            MessageLookupByLibrary.simpleMessage("บางทีในไม่ช้านี้"),
+        "wishDateOptionYear":
+            MessageLookupByLibrary.simpleMessage("ภายในหนึ่งปี"),
+        "wishDatePickerSubtitle": m1,
+        "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("เมื่อ")
       };
 }

@@ -20,11 +20,17 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh_TW';
 
+  static String m0(country) => "跳過，就${country}";
+
+  static String m1(country) => "有計劃要去${country}嗎";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("選擇"),
         "commonLanguageTitle": MessageLookupByLibrary.simpleMessage("常用語言"),
         "doneButton": MessageLookupByLibrary.simpleMessage("完成"),
+        "firstLandingLoadingTitle":
+            MessageLookupByLibrary.simpleMessage("SONA正在尋找一些潜在的朋友..."),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage("同城外國人尋找"),
         "locationPermissionRequestTitle":
@@ -73,6 +79,25 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("服務條款"),
         "userPhoneNumberPageTitle":
             MessageLookupByLibrary.simpleMessage("請輸入電話號碼"),
-        "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage("輸入驗證碼")
+        "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage("輸入驗證碼"),
+        "wishActivityAddTitle": MessageLookupByLibrary.simpleMessage("加入你的想法"),
+        "wishActivityPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("幫你找到小夥伴"),
+        "wishActivityPickerTitle":
+            MessageLookupByLibrary.simpleMessage("有什麼特別想做的事嗎？"),
+        "wishCityPickerSkipButton": m0,
+        "wishCityPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("如果你去那裡，你想去哪些城市？"),
+        "wishCountryPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("國家的人更有共鳴?"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("哪個"),
+        "wishCreationComplete":
+            MessageLookupByLibrary.simpleMessage("已收到你的心願!"),
+        "wishDateOptionHere": MessageLookupByLibrary.simpleMessage("已經在這了"),
+        "wishDateOptionNotSure": MessageLookupByLibrary.simpleMessage("還不確定喲"),
+        "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("近期吧，大概"),
+        "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("一年內"),
+        "wishDatePickerSubtitle": m1,
+        "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("何時")
       };
 }
