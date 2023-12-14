@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
-import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/utils/timer/debounce.dart';
 
 import '../../../account/models/gender.dart';
@@ -62,7 +61,6 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
     state = state.copyWith(
       ageRange: ageRange
     );
-    debounce.run(() => ref.refresh(asyncMatchRecommendedProvider));
     kvStore.setString(ageRangeKey, [ageRange.start.toInt(), ageRange.end.toInt()].join(':'));
   }
 
@@ -71,7 +69,6 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
     state = state.copyWith(
       gender: gender
     );
-    debounce.run(() => ref.refresh(asyncMatchRecommendedProvider));
     if (gender != null) {
       kvStore.setInt(genderKey, gender.index);
     } else {

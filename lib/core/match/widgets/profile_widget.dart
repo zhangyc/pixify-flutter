@@ -159,7 +159,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                 GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
                   onTap: (){
                     widget.next.call();
-                    ref.read(asyncMatchRecommendedProvider.notifier).skip(info.id);
+                    MatchApi.skip(info.id);
                   },
                 ),
                 GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
@@ -176,7 +176,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                       //currentPage=index;
                       ///如果对方喜欢我。
                       if(info.likeMe==1){
-                        ref.read(asyncMatchRecommendedProvider.notifier).like(info.id);
+                        MatchApi.like(info.id);
                         ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
                         showMatched(context,target: info,next: (){
                           widget.next.call();
@@ -184,7 +184,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                       }else{
                         ///
                         if(info.wishList.isEmpty){
-                          ref.read(asyncMatchRecommendedProvider.notifier).like(info.id);
+                          MatchApi.like(info.id);
                           ref.read(backgroundImageProvider.notifier).updateBgImage(null);
                           widget.next.call();
                         }else {

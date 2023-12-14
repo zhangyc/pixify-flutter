@@ -81,7 +81,7 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
               onTap: (){
                 if(canArrow){
                   arrow=arrow-1;
-                  ref.read(asyncMatchRecommendedProvider.notifier).arrow(widget.userInfo.id);
+                  MatchApi.arrow(widget.userInfo.id);
                   SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                   arrowController.reset();
                   arrowController.forward() ;

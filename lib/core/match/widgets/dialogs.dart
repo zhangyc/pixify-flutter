@@ -97,9 +97,9 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
 
                             if(canArrow){
                               arrow=arrow-1;
-                              ref.read(asyncMatchRecommendedProvider.notifier).customSend(info.id,controller.text);
+                              MatchApi.customSend(info.id,controller.text);
 
-                              //ref.read(asyncMatchRecommendedProvider.notifier).arrow(info.id);
+                              //MatchApi.arrow(info.id);
                               SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                               next.call();
                               Navigator.pop(context);
@@ -127,7 +127,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                       onPressed: (){
                         if(canArrow){
                           arrow=arrow-1;
-                          ref.read(asyncMatchRecommendedProvider.notifier).sayHi(info.id);
+                          MatchApi.sayHi(info.id);
                           SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                           next.call();
                           Navigator.pop(context);
@@ -278,7 +278,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                                 }
                                 next.call();
                                 ///匹配成功，发送消息
-                                ref.read(asyncMatchRecommendedProvider.notifier).customSend(target.id,controller.text);
+                                MatchApi.customSend(target.id,controller.text);
                                 Navigator.pop(context);
                               },
                             ):Container(),
@@ -292,7 +292,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                         onPressed: (){
                           ///发送一个快捷的sona打招呼
                           next.call();
-                          ref.read(asyncMatchRecommendedProvider.notifier).sayHi(target.id);
+                          MatchApi.sayHi(target.id);
                           Navigator.pop(context);
 
                         },

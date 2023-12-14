@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../generated/assets.dart';
 import '../bean/match_user.dart';
 import '../providers/match_provider.dart';
 import '../providers/matched.dart';
@@ -69,7 +68,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
               fontSize: 28
           ),),
         ),
-        // _buildPageIndicator(),
+        _buildPageIndicator(),
         Expanded(
           child: PageView(
             onPageChanged: (value){
@@ -121,7 +120,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: ChoiceButton(text: wish.activities[index2].title??'', onTap: () {
                                 ///点击切换，下一个用户.并且调用like接口
-                                ref.read(asyncMatchRecommendedProvider.notifier).like(widget.info.id,
+                                MatchApi.like(widget.info.id,
                                     activityId: wish.activities[index2].id,
                                     travelWishId: wish.id
                                 );
@@ -142,7 +141,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                   TextButton(onPressed: (){
                     widget.next.call();
                     ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-                    ref.read(asyncMatchRecommendedProvider.notifier).like(widget.info.id,
+                    MatchApi.like(widget.info.id,
                         travelWishId: wish.id
                     );
                   }, child: Text('Just like ->'))

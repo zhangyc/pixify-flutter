@@ -43,15 +43,19 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+
       determinePosition().then((value){
         longitude=value.longitude;
         latitude=value.latitude;
         ref.read(myProfileProvider.notifier).updateField(position: value);
         _initData();
+
       }).catchError((e){
         Fluttertoast.showToast(msg: 'Failed to obtain permission.');
       });
     });
+    _initData();
+
     // _initData();
 
     // clickSubject
@@ -156,7 +160,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     currentStatus=TransformStatus.leftRotate;
                     // status=PageAnimStatus.dislike;
                     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                    ref.read(asyncMatchRecommendedProvider.notifier).skip(users[currentPage].id);
+                    MatchApi.skip(users[currentPage].id);
                   },
                       child: Image.asset(Assets.iconsSkip,width: 56,height: 56,)
                   ),
@@ -173,7 +177,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         //currentPage=index;
                         ///如果对方喜欢我。
                         if(users[currentPage].likeMe==1){
-                          ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
+                          MatchApi.like(users[currentPage].id);
                           ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
                           showMatched(context,target: users[currentPage],next: (){
 
@@ -182,7 +186,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         }else{
                           ///
                           if(users[currentPage].wishList.isEmpty){
-                            ref.read(asyncMatchRecommendedProvider.notifier).like(users[currentPage].id);
+                            MatchApi.like(users[currentPage].id);
                             ref.read(backgroundImageProvider.notifier).updateBgImage(null);
 
                             controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
@@ -242,7 +246,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
   int current=1;
 
   void _initData() async{
@@ -355,7 +359,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }
   }
 
-  late PageState _state= PageState.loading;
+  PageState _state= PageState.loading;
   //TransformerPageController transformerPageController=TransformerPageController();
   // PageController controller=PageController();
   ///todo skip
@@ -381,7 +385,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               return WishCardWidget(context: context,
                 info: info,
                 next: (){
-
                   controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                 },
 
@@ -390,7 +393,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               return ProfileWidget(
                 relation: Relation.normal,
                 info:info,next:(){
-
                 controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
 
               },

@@ -1,42 +1,18 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sona/common/models/user.dart';
-import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/services/match.dart';
 
 import '../util/http_util.dart';
 
 
 /// 可能需要把分页数据也封装进来，no more data 等
-@immutable
-class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
-  Future<List<UserInfo>> _fetchMatched() async {
-    final position = ref.read(positionProvider);
-    final setting = ref.read(matchSettingProvider);
+class MatchApi{
 
-    return fetchMatchPeople(
-      position: position!,
-      gender: setting.gender,
-      range: setting.ageRange
-    )
-    .then<List>((resp) => resp.data as List)
-    .then<List<UserInfo>>(
-        (data) => data.map<UserInfo>((m) => UserInfo.fromJson(m)).toList()
-    );
-  }
-
-  @override
-  Future<List<UserInfo>> build() async {
-    return _fetchMatched();
-  }
   // "travelWishId":1, // 喜欢时传入的心愿单ID
   //     "activityId":1 // 喜欢时传入的活动ID，可以为空
-  Future<HttpResult> like(int id,{int? travelWishId,int? activityId}) {
+ static Future<HttpResult> like(int id,{int? travelWishId,int? activityId}) {
     return post(
         '/user/update-relation',
         data: {
@@ -48,18 +24,18 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
     );
   }
 
-  void skip(int id) {
+ static void skip(int id) {
     _action(id, MatchAction.skip);
   }
 
-  Future unmatch(int id) {
+ static Future unmatch(int id) {
     return _action(id, MatchAction.unmatch);
   }
 
-  Future<HttpResult> arrow(int id) {
+ static Future<HttpResult> arrow(int id) {
     return _action(id, MatchAction.arrow);
   }
-  Future<HttpResult> customSend(int id,String text) {
+ static  Future<HttpResult> customSend(int id,String text) {
     return post(
         '/prompt/common',
         data: {
@@ -73,7 +49,7 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
         }
     );
   }
-  Future<HttpResult> sayHi(int id) {
+ static  Future<HttpResult> sayHi(int id) {
     return post(
         '/prompt/common',
         data: {
@@ -86,7 +62,7 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
         }
     );
   }
-  Future<HttpResult> _action(int id, MatchAction action) async{
+ static Future<HttpResult> _action(int id, MatchAction action) async{
     final resp= await matchAction(
         userId: id,
         action: action);
@@ -94,14 +70,6 @@ class AsyncMatchRecommendedNotifier extends AsyncNotifier<List<UserInfo>> {
   }
 }
 
-final asyncMatchRecommendedProvider = AsyncNotifierProvider<AsyncMatchRecommendedNotifier, List<UserInfo>>(
-  () => AsyncMatchRecommendedNotifier(),
-);
-
-///过滤条件
-final filterProvider = StateNotifierProvider<FilterNotifier, Filter>((ref) {
-  return FilterNotifier()..loadFilter();
-});
 
 class Filter {
   int? minAge;

@@ -366,7 +366,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         content: 'After unmatch, all mutual content between you will be cleared. '
     );
     if (result == true) {
-      ref.read(asyncMatchRecommendedProvider.notifier).unmatch(widget.otherSide.id);
+      MatchApi.unmatch(widget.otherSide.id);
     }
   }
 
