@@ -10,7 +10,7 @@ Future<Gender?> showGenderPicker({
   String? title,
   bool dismissible = true
 }) {
-  final options = Map.fromEntries(Gender.allTypes.map((g) => MapEntry(g.name, g)));
+  final options = Map.fromEntries(Gender.allTypes.map((g) => MapEntry(g.displayName, g)));
   return showRadioFields<Gender?>(
     context: context,
     initialValue: initialValue,

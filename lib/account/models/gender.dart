@@ -9,13 +9,21 @@ class Gender {
   final int index;
   final String name;
 
-  static final male = Gender._(index: _male, name: S.current.userGenderOptionMale);
-  static final female = Gender._(index: _female, name: S.current.userGenderOptionFemale);
-  static final nonBinary = Gender._(index: _nonBinary, name: S.current.userGenderOptionNonBinary);
+  String get displayName => switch(index) {
+    _male => S.current.userGenderOptionMale,
+    _female => S.current.userGenderOptionFemale,
+    _nonBinary => S.current.userGenderOptionNonBinary,
+    _ => throw('Invalid gender index: $index')
+  };
 
-  static final allTypes = [male, female, nonBinary];
+  static const male = Gender._(index: _male, name: 'Male');
+  static const female = Gender._(index: _female, name: 'Female');
+  static const nonBinary = Gender._(index: _nonBinary, name: 'Non-binary');
+
+  static const allTypes = [male, female, nonBinary];
 
   factory Gender.fromIndex(int index) {
+
     return switch(index) {
       _male => male,
       _female => female,
