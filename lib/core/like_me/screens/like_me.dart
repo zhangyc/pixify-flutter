@@ -26,8 +26,8 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
 
   @override
   void didChangeDependencies() {
-    itemHeight = (MediaQuery.of(context).size.width - 16 * 3) / 2 * 220 / 165;
-    itemWidth =  itemHeight * 165 / 220;
+    itemWidth = (MediaQuery.of(context).size.width - 16 * 6 - 8) / 2;
+    itemHeight =  itemWidth * 4 / 3;
     super.didChangeDependencies();
   }
 
@@ -79,7 +79,9 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
   Widget _itemBuilder(SocialUser u) {
     return Container(
       key: ValueKey(u.id),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
+        color: Color(0xFFF6F3F3),
         borderRadius: BorderRadius.circular(20)
       ),
       clipBehavior: Clip.antiAlias,
@@ -95,12 +97,12 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                   child: Container(
                     height: itemHeight + 4,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(26)
+                        borderRadius: BorderRadius.circular(20)
                     ),
-                    foregroundDecoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-                        borderRadius: BorderRadius.circular(26)
-                    ),
+                    // foregroundDecoration: BoxDecoration(
+                    //     border: Border.all(width: 2, color: Theme.of(context).primaryColor),
+                    //     borderRadius: BorderRadius.circular(20)
+                    // ),
                     alignment: Alignment.center,
                     clipBehavior: Clip.antiAlias,
                     child: isMember ? GestureDetector(
@@ -125,12 +127,12 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                   )
                 ),
                 if (u.displayTag != null) Positioned(
-                  bottom: 12,
-                  left: 12,
+                  top: 12,
+                  right: 12,
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Color(0xFF888888)
+                      color: Colors.black.withOpacity(0.45)
                     ),
                     clipBehavior: Clip.antiAlias,
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -152,19 +154,20 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
               ],
             ),
           ),
-          SizedBox(height: 4),
+          SizedBox(height: 8),
+          Text(
+            u.name!,
+            style: Theme.of(context).textTheme.labelSmall,
+            maxLines: 1,
+            overflow: TextOverflow.clip,
+          ),
+          SizedBox(height: 8),
           Text(
             u.hang,
             style: Theme.of(context).textTheme.titleSmall,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          Text(
-            u.name!,
-            style: Theme.of(context).textTheme.labelSmall,
-            maxLines: 1,
-            overflow: TextOverflow.clip,
-          )
         ],
       ),
     );
