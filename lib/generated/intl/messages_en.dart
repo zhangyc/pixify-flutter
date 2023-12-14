@@ -21,54 +21,5 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "about": MessageLookupByLibrary.simpleMessage("About"),
-        "age": MessageLookupByLibrary.simpleMessage("Age"),
-        "all": MessageLookupByLibrary.simpleMessage("All"),
-        "arrow": MessageLookupByLibrary.simpleMessage("Arrows -1 "),
-        "arrowInfo": MessageLookupByLibrary.simpleMessage(
-            "Message people you like directly"),
-        "block": MessageLookupByLibrary.simpleMessage("Block"),
-        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "chat": MessageLookupByLibrary.simpleMessage("Chat"),
-        "chatStyle": MessageLookupByLibrary.simpleMessage("Chat Styles - "),
-        "chatStyleInfo":
-            MessageLookupByLibrary.simpleMessage("Unlock 6 chat styles"),
-        "checkInternet": MessageLookupByLibrary.simpleMessage(
-            "Please check your internet or Tap to Refresh and try again"),
-        "daily": MessageLookupByLibrary.simpleMessage("daily"),
-        "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
-        "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
-        "female": MessageLookupByLibrary.simpleMessage("Female"),
-        "gender": MessageLookupByLibrary.simpleMessage("Gender"),
-        "homeGoToWhoLike":
-            MessageLookupByLibrary.simpleMessage("Let\\\'s see who likes you"),
-        "homeWhoLikeMe":
-            MessageLookupByLibrary.simpleMessage("people liked you"),
-        "likes": MessageLookupByLibrary.simpleMessage("Likes"),
-        "logout": MessageLookupByLibrary.simpleMessage("Log out"),
-        "male": MessageLookupByLibrary.simpleMessage("Male"),
-        "match": MessageLookupByLibrary.simpleMessage("Match"),
-        "messages": MessageLookupByLibrary.simpleMessage("Messages"),
-        "noDataTips":
-            MessageLookupByLibrary.simpleMessage("oOps, no data right now "),
-        "notification": MessageLookupByLibrary.simpleMessage("Notification"),
-        "powerSonaMessage":
-            MessageLookupByLibrary.simpleMessage("100 Sona messages"),
-        "powerUnlock": MessageLookupByLibrary.simpleMessage("Unlock to see"),
-        "powerWhoLike": MessageLookupByLibrary.simpleMessage("who liked me"),
-        "profile": MessageLookupByLibrary.simpleMessage("Profile"),
-        "report": MessageLookupByLibrary.simpleMessage("Report"),
-        "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
-        "sonaTitle":
-            MessageLookupByLibrary.simpleMessage("BECOMING SUPER SONA"),
-        "strategy": MessageLookupByLibrary.simpleMessage("Strategy - "),
-        "strategyInfo": MessageLookupByLibrary.simpleMessage(
-            "Get advice from Sona anytime"),
-        "superSonaTitle":
-            MessageLookupByLibrary.simpleMessage("YOU’RE SUPER SONA"),
-        "unlimited": MessageLookupByLibrary.simpleMessage("Unlimited"),
-        "upgrade": MessageLookupByLibrary.simpleMessage("UPGRADE")
-      };
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
 }

@@ -21,47 +21,5 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ja';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "about": MessageLookupByLibrary.simpleMessage("アプリについて"),
-        "age": MessageLookupByLibrary.simpleMessage("年齢"),
-        "all": MessageLookupByLibrary.simpleMessage("全て"),
-        "arrow": MessageLookupByLibrary.simpleMessage("矢印-1"),
-        "arrowInfo": MessageLookupByLibrary.simpleMessage("気になる人に直接メッセージを送れる"),
-        "block": MessageLookupByLibrary.simpleMessage("ブロックする"),
-        "cancel": MessageLookupByLibrary.simpleMessage("キャンセルする"),
-        "chat": MessageLookupByLibrary.simpleMessage("チャット"),
-        "chatStyle": MessageLookupByLibrary.simpleMessage("チャットスタイル - "),
-        "chatStyleInfo":
-            MessageLookupByLibrary.simpleMessage("6つのチャットスタイルをアンロック"),
-        "checkInternet":
-            MessageLookupByLibrary.simpleMessage("インターネット接続を確認してください"),
-        "daily": MessageLookupByLibrary.simpleMessage("毎日"),
-        "deleteAccount": MessageLookupByLibrary.simpleMessage("アカウントの削除"),
-        "editProfile": MessageLookupByLibrary.simpleMessage("プロフィール編集"),
-        "female": MessageLookupByLibrary.simpleMessage("女性"),
-        "gender": MessageLookupByLibrary.simpleMessage("性別"),
-        "homeGoToWhoLike":
-            MessageLookupByLibrary.simpleMessage("誰があなたを好きか見てみましょう"),
-        "homeWhoLikeMe": MessageLookupByLibrary.simpleMessage("人々はあなたを好きでした"),
-        "likes": MessageLookupByLibrary.simpleMessage("いいね"),
-        "logout": MessageLookupByLibrary.simpleMessage("ログアウト"),
-        "male": MessageLookupByLibrary.simpleMessage("男性"),
-        "match": MessageLookupByLibrary.simpleMessage("マッチ"),
-        "messages": MessageLookupByLibrary.simpleMessage("メッセージ"),
-        "noDataTips": MessageLookupByLibrary.simpleMessage("データがありません"),
-        "notification": MessageLookupByLibrary.simpleMessage("通知"),
-        "powerSonaMessage": MessageLookupByLibrary.simpleMessage("ソナメッセージ100件"),
-        "powerUnlock": MessageLookupByLibrary.simpleMessage("ロックを解除して見る"),
-        "powerWhoLike": MessageLookupByLibrary.simpleMessage("私のことが好きな人"),
-        "profile": MessageLookupByLibrary.simpleMessage("プロフィール"),
-        "report": MessageLookupByLibrary.simpleMessage("報告する"),
-        "save": MessageLookupByLibrary.simpleMessage("保存する"),
-        "settings": MessageLookupByLibrary.simpleMessage("設定"),
-        "sonaTitle": MessageLookupByLibrary.simpleMessage("スーパーソナになろう"),
-        "strategy": MessageLookupByLibrary.simpleMessage("ストラテジー - "),
-        "strategyInfo": MessageLookupByLibrary.simpleMessage("ソナからアドバイスがもらえる"),
-        "superSonaTitle": MessageLookupByLibrary.simpleMessage("スーパーソナだ!"),
-        "unlimited": MessageLookupByLibrary.simpleMessage("無制限"),
-        "upgrade": MessageLookupByLibrary.simpleMessage("アップグレード")
-      };
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
 }

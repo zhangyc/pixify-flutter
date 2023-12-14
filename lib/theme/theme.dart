@@ -129,7 +129,7 @@ final themeData = ThemeData(
         )
       ),
       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
-      minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+        minimumSize: MaterialStatePropertyAll(Size.zero),
       fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
       alignment: Alignment.center
     )
@@ -157,7 +157,7 @@ final themeData = ThemeData(
           )
       ),
       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
-      minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+        minimumSize: MaterialStatePropertyAll(Size.zero),
       fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
       alignment: Alignment.center
     )
@@ -177,7 +177,7 @@ final themeData = ThemeData(
         );
       }),
       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 24)),
-      minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+      minimumSize: MaterialStatePropertyAll(Size.zero),
       fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
       alignment: Alignment.center
     )
