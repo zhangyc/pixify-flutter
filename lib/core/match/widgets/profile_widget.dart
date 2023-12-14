@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,6 +17,7 @@ import '../services/match.dart';
 import '../util/event.dart';
 import 'bio_item.dart';
 import 'biz_action_item.dart';
+import 'choice_bytton.dart';
 import 'dialogs.dart';
 import 'galley_item.dart';
 import 'heard_item.dart';
@@ -38,6 +40,8 @@ class ProfileWidget extends ConsumerStatefulWidget {
 }
 
 class _ProfileState extends ConsumerState<ProfileWidget> {
+  PageController pageController=PageController(viewportFraction: 0.8);
+
   late MatchUserInfo info=widget.info;
   @override
   Widget build(BuildContext context) {
@@ -71,72 +75,245 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                           ),
                           child: Column(
                             children: [
-                              HeardItem(userInfo: info,),
+                              //HeardItem(userInfo: info,),
                               //HeardInitAnimation(child: ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              WishListItem(wishes: info.wishList,),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              BioItem(bio: info.bio??'',),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              GalleyItem(images: info.photos,),
-                              InterestItem(interest: info.interest,),
-                              BizActionItem(report: () async{
-                                SonaAnalytics.log(MatchEvent.match_report.name);
-                                final r =await showReport(context, info.id);
-                                if (r == true) {
-                                  ///users.removeAt(currentPage);
-                                  widget.next.call();
-                                  if (mounted) setState(() {});
-                                }
-                              }, block: () async{
-                                bool? result=await showConfirm(context: context,
-                                    title:'Block',
-                                    content: 'Do you wanna dissolve relationship with',
-                                    confirmText: 'Block',
-                                    danger: true
-                                );
-                                if(result!=true){
-                                  return;
-                                }
-                                final resp = await matchAction(userId: info.id, action: MatchAction.block);
-                                if (resp.statusCode == 0) {
-                                  ///users.removeAt(currentPage);
-                                  widget.next.call();
-                                  if (mounted) setState(() {});
-                                  Fluttertoast.showToast(msg: 'The user has been blocked');
-                                  SonaAnalytics.log('post_block');
-                                }
-                              },
-                                unMatch: () async{
-                                  bool? result=await showConfirm(context: context,
-                                      title:'Unmatch',
-                                      content: 'Do you wanna dissolve relationship with',
-                                      confirmText: 'Dissolve'
-                                  );
-                                  if(result!=true){
-                                    return;
-                                  }
-                                  final resp = await matchAction(userId: info.id, action: MatchAction.unmatch);
-                                  if (resp.statusCode == 0) {
-                                    ///users.removeAt(currentPage);
-                                    widget.next.call();
-                                    if (mounted) setState(() {});
-                                    Fluttertoast.showToast(msg: 'Unmatch Success');
-                                    SonaAnalytics.log('post_block');
-                                  }
-                                },
-                                relation: widget.relation,
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).padding.bottom+64,
-                              ),
+                              ///头像，动画。
 
+                              AnimatedSwitcher(
+                                transitionBuilder: (Widget child, Animation<double> animation) {
+                                  //执行缩放动画
+                                  return ScaleTransition(child: child, scale: animation);
+                                },
+                                duration: Duration(seconds: 10),
+                                child: widget.info.matched
+                                    ? CachedNetworkImage(imageUrl: info.avatar!,fit: BoxFit.cover,width: 95,height: 118,)
+                                    : Container(
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Stack(
+                                    alignment: Alignment.bottomLeft,
+                                    children: [
+                                      info.avatar==null?Container():CachedNetworkImage(imageUrl: info.avatar!,fit: BoxFit.cover,width: MediaQuery.of(context).size.width-16*2,height: 457,),
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Text(info.originNickname??'',style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w800
+                                            ),
+                                              maxLines: 1,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context).size.width-16*2-16*2-21,
+                                                  child: Text('${info.name??''}, ${info.age}',style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 28,
+                                                      fontWeight: FontWeight.w800
+                                                  ),
+                                                    maxLines: 2,
+                                                  ),
+                                                ),
+                                                info.countryFlag!=null?Text(info.countryFlag??''):Container()
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(Icons.location_on,color: Colors.white,),
+                                                Text('${info.currentCity}',style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w900
+                                                ),)
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              AnimatedSwitcher(
+                                transitionBuilder: (Widget child, Animation<double> animation) {
+                                  //执行缩放动画
+                                  return ScaleTransition(child: child, scale: animation);
+                                },
+                                duration: Duration(seconds: 10),
+                                child: widget.info.matched ? Column(
+                                  children: [
+                                    // Padding(
+                                    //   padding: const EdgeInsets.symmetric(horizontal: 32),
+                                    //   child: Text('Are you interested in her ideas？',style: TextStyle(
+                                    //       color: Colors.black,
+                                    //       fontSize: 28
+                                    //   ),),
+                                    // ),
+                                    //  _buildPageIndicator(),
+
+                                    Expanded(
+                                      child: SizedBox(
+                                        height: 328+22,
+                                        width: 500,
+                                        child: PageView(
+                                          onPageChanged: (value){
+                                            _currentPage = value;
+
+                                            ref.read(backgroundImageProvider.notifier).updateBgImage(widget.info.wishList[value].pic!);
+                                          },
+                                          controller: pageController,
+                                          children: widget.info.wishList.map((wish) => Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 8
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 16,
+                                                ),
+                                                Container(
+                                                  width: 327,
+                                                  height: 262,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(24),
+                                                    border: Border.all(
+                                                        color: Colors.black,
+                                                        width: 2
+                                                    ),
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            width: 16,
+                                                          ),
+                                                          Text('${wish.countryName}',style: TextStyle(color: Colors.black),),
+                                                          Text('${wish.countryFlag}')
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                        child: Column(
+                                                          children: List.generate(wish.activities.length, (index2) => Padding(
+                                                            padding: const EdgeInsets.only(bottom: 8.0),
+                                                            child: ChoiceButton(text: wish.activities[index2].title??'', onTap: () {
+                                                              ///点击切换，下一个用户.并且调用like接口
+                                                              MatchApi.like(widget.info.id,
+                                                                  activityId: wish.activities[index2].id,
+                                                                  travelWishId: wish.id
+                                                              );
+                                                              ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+
+                                                              widget.next.call();
+                                                            },),
+                                                          )),
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 16,
+                                                ),
+                                                TextButton(onPressed: (){
+                                                  widget.next.call();
+                                                  ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+                                                  MatchApi.like(widget.info.id,
+                                                      travelWishId: wish.id
+                                                  );
+                                                }, child: Text('Just like ->'))
+
+                                              ],
+                                            ),
+                                          )).toList(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ) : Column(
+                                  children: [
+                                    WishListItem(wishes: info.wishList,),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    BioItem(bio: info.bio??'',),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    GalleyItem(images: info.photos,),
+                                    InterestItem(interest: info.interest,),
+                                    BizActionItem(report: () async{
+                                      SonaAnalytics.log(MatchEvent.match_report.name);
+                                      final r =await showReport(context, info.id);
+                                      if (r == true) {
+                                        ///users.removeAt(currentPage);
+                                        widget.next.call();
+                                        if (mounted) setState(() {});
+                                      }
+                                    }, block: () async{
+                                      bool? result=await showConfirm(context: context,
+                                          title:'Block',
+                                          content: 'Do you wanna dissolve relationship with',
+                                          confirmText: 'Block',
+                                          danger: true
+                                      );
+                                      if(result!=true){
+                                        return;
+                                      }
+                                      final resp = await matchAction(userId: info.id, action: MatchAction.block);
+                                      if (resp.statusCode == 0) {
+                                        ///users.removeAt(currentPage);
+                                        widget.next.call();
+                                        if (mounted) setState(() {});
+                                        Fluttertoast.showToast(msg: 'The user has been blocked');
+                                        SonaAnalytics.log('post_block');
+                                      }
+                                    },
+                                      unMatch: () async{
+                                        bool? result=await showConfirm(context: context,
+                                            title:'Unmatch',
+                                            content: 'Do you wanna dissolve relationship with',
+                                            confirmText: 'Dissolve'
+                                        );
+                                        if(result!=true){
+                                          return;
+                                        }
+                                        final resp = await matchAction(userId: info.id, action: MatchAction.unmatch);
+                                        if (resp.statusCode == 0) {
+                                          ///users.removeAt(currentPage);
+                                          widget.next.call();
+                                          if (mounted) setState(() {});
+                                          Fluttertoast.showToast(msg: 'Unmatch Success');
+                                          SonaAnalytics.log('post_block');
+                                        }
+                                      },
+                                      relation: widget.relation,
+                                    ),
+                                    SizedBox(
+                                      height: MediaQuery.of(context).padding.bottom+64,
+                                    ),
+                                  ],
+                                ),
+                              ),
 
                             ],
                           ),
@@ -160,6 +337,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                   onTap: (){
                     widget.next.call();
                     MatchApi.skip(info.id);
+
                   },
                 ),
                 GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
@@ -205,7 +383,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                     }
                   },
                 ),
-                GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
+                (widget.relation==Relation.likeMe)?Container():GestureDetector(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,),
                   onTap: (){
                     if(canArrow){
                       showDm(context, info,(){
@@ -229,6 +407,33 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
           ),
         ):Container()
       ],
+    );
+  }
+  int _currentPage = 0;
+
+  Widget _buildPageIndicator() {
+    return SizedBox(
+      width: 56,
+      height: 56,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          widget.info.wishList.length, // Replace with the total number of pages
+              (index) => _buildIndicator(index),
+        ),
+      ),
+    );
+  }
+  Widget _buildIndicator(int index) {
+    return Container(
+
+      width: _currentPage == index ?16:8,
+      height: 8,
+      margin: EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _currentPage == index ? Color(0xff2C2C2C) : Color(0xffE8E6E6),
+      ),
     );
   }
 }

@@ -9,36 +9,44 @@ class NoDataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return GestureDetector(
-      onTap: (){
-        onTap.call();
-      },
-      child: Container(color: Colors.black,child: Column(
-        children: [
-          SizedBox(height: 128,),
-          Text('No Data',
-            style: TextStyle(
-                color: Colors.white
-            ),
-          ),
-          SizedBox(height: 10,),
-          ClipOval(
-            child: Image.asset(Assets.imagesError,width: 151,height: 148,fit: BoxFit.cover,),
-          ),
-          SizedBox(height: 10,),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 55 ),
-            child: Text('Check internet',
-              style: TextStyle(
-                  color: Colors.white
-              ),
-            ),
-          )
-        ],
-      ),
-        width: MediaQuery.of(context).size.width,
+   return Container(color: Colors.white,child: Column(
+     children: [
+       SizedBox(height: 128,),
+       Image.asset(Assets.imagesError,width: 132,height: 166,fit: BoxFit.cover,),
+       SizedBox(height: 32,),
+       Text('Oops, no data right now ',
+         style: TextStyle(
+             color: Color(0xff2c2c2c),
+             fontSize: 16,
+             fontWeight: FontWeight.w900
+         ),
+       ),
+       SizedBox(height: 4,),
 
-      ),
-    );
+       Text('Please check your internet or Tap to Refresh and try again',
+         style: TextStyle(
+             color: Color(0xff2c2c2c),
+             fontSize: 14
+
+         ),
+       ),
+       SizedBox(height: 12,),
+       ElevatedButton(onPressed: (){
+         onTap.call();
+       }, child: Center(child: Text('Refresh',style: TextStyle(
+         color: Colors.white
+       ),)),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xff2c2c2c)
+        ),
+       ),
+     ],
+   ),
+     width: MediaQuery.of(context).size.width,
+     padding: EdgeInsets.symmetric(
+         horizontal: 33
+     ),
+
+   );
   }
 }

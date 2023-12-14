@@ -166,120 +166,120 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Stack(
-        children: [
-          CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Row(
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Stack(
+              children: [
+                Positioned(child: Image.asset(widget.showType.path,width: 150,height: 150,),right: 0,),
+                Row(
                   children: [
                     SizedBox(
                       width: 16,
                     ),
                     Text(widget.showType.label,style: TextStyle(
-                      color: Color(0xff2c2c2c),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900
+                        color: Color(0xff2c2c2c),
+                        fontSize: 24,
+                        fontWeight: FontWeight.w900
                     ),),
                     Text(''),
                   ],
                 ),
+              ],
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: PowersWidget(),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 500,
+              decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage(Assets.imagesSubBg),fit: BoxFit.fitHeight),
               ),
-              SliverToBoxAdapter(
-                child: PowersWidget(),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 10,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                   width: MediaQuery.of(context).size.width,
-                   height: 500,
-                   decoration: BoxDecoration(
-                     image: DecorationImage(image: AssetImage(Assets.imagesSubBg),fit: BoxFit.fitHeight),
-                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 55,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text('SONA Plus'),
-                      ),
-                      _buildProductList(),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 55,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text('SONA Plus'),
+                  ),
+                  _buildProductList(),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
 
-                        child: RichText(
-                          text:TextSpan(
-                              text: _terms,
-                              style: const TextStyle(
-                                  color: Color(0xffa9a9a9)
-                              ),
-                              children: [
-                                TextSpan(
-                                    text: 'Terms',
-                                    recognizer: TapGestureRecognizer()..onTap = () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (c){
-                                        return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
-                                      }));
-                                    },
-                                    style: const TextStyle(
-                                        color: Color(0xffEA01FF)
-                                    )
-                                ),
-                                TextSpan(text: '.'),
-                              ]
+                    child: RichText(
+                      text:TextSpan(
+                          text: _terms,
+                          style: const TextStyle(
+                              color: Color(0xffa9a9a9)
                           ),
-
-                        ),
-                      ),
-                      Visibility(
-                        visible: Platform.isIOS,
-                        child: TextButton(
-                            onPressed: (){
-                              bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                              if(isMember){
-                                Fluttertoast.showToast(msg: 'You are Super SONA');
-                              } else {
-                                if (hasPurchased == true) {
-                                  inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
-                                } else {
-                                  Fluttertoast.showToast(msg: 'Failed to restore, can\'t find records.');
-                                }
-                              }
-                            },
-                            child: Text(
-                                'Restore',
+                          children: [
+                            TextSpan(
+                                text: 'Terms',
+                                recognizer: TapGestureRecognizer()..onTap = () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (c){
+                                    return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                                  }));
+                                },
                                 style: const TextStyle(
                                     color: Color(0xffEA01FF)
                                 )
-                            )
-                        ),
-                      )
+                            ),
+                            TextSpan(text: '.'),
+                          ]
+                      ),
 
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  color: Color(0xffFFE806),
-                  height: 100,
-                ),
-              )
+                  Visibility(
+                    visible: Platform.isIOS,
+                    child: TextButton(
+                        onPressed: (){
+                          bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                          if(isMember){
+                            Fluttertoast.showToast(msg: 'You are Super SONA');
+                          } else {
+                            if (hasPurchased == true) {
+                              inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
+                            } else {
+                              Fluttertoast.showToast(msg: 'Failed to restore, can\'t find records.');
+                            }
+                          }
+                        },
+                        child: Text(
+                            'Restore',
+                            style: const TextStyle(
+                                color: Color(0xffEA01FF)
+                            )
+                        )
+                    ),
+                  )
 
-            ],
+                ],
+              ),
+            ),
           ),
-          Positioned(child: Image.asset(widget.showType.path,width: 150,height: 150,),right: 0,)
+          SliverToBoxAdapter(
+            child: Container(
+              color: Color(0xffFFE806),
+              height: 100,
+            ),
+          )
+
         ],
       ),
 

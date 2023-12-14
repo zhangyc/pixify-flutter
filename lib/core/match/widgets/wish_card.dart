@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/match/widgets/image_scale_animation.dart';
 import '../bean/match_user.dart';
 import '../providers/match_provider.dart';
 import '../providers/matched.dart';
@@ -48,6 +49,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
         SizedBox(
           height: 8,
         ),
+        // MyImageAnimation(url: widget.info.avatar!),
         Container(
           decoration: BoxDecoration(
               image: widget.info.avatar==null?null:DecorationImage(image: CachedNetworkImageProvider(widget.info.avatar!),fit: BoxFit.cover),

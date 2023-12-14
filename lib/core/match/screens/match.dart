@@ -177,7 +177,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         //currentPage=index;
                         ///如果对方喜欢我。
                         if(users[currentPage].likeMe==1){
-                          MatchApi.like(users[currentPage].id);
+                          //MatchApi.like(users[currentPage].id);
                           ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
                           showMatched(context,target: users[currentPage],next: (){
 
@@ -186,7 +186,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         }else{
                           ///
                           if(users[currentPage].wishList.isEmpty){
-                            MatchApi.like(users[currentPage].id);
+                            //MatchApi.like(users[currentPage].id);
                             ref.read(backgroundImageProvider.notifier).updateBgImage(null);
 
                             controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
@@ -381,24 +381,32 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             if(info.id==-1){
               return NoMoreWidget();
             }
-            if(info.matched){
-              return WishCardWidget(context: context,
-                info: info,
-                next: (){
+            return ProfileWidget(
+              relation: Relation.normal,
+              info:info,next:(){
                   controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                 },
-
-              );
-            }else {
-              return ProfileWidget(
-                relation: Relation.normal,
-                info:info,next:(){
-                controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-
-              },
-                onMatch: (v){},
-              );
-            }
+              onMatch: (v){},
+            );
+            // if(info.matched){
+            //
+            //   return WishCardWidget(context: context,
+            //     info: info,
+            //     next: (){
+            //       controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+            //     },
+            //
+            //   );
+            // }else {
+            //   return ProfileWidget(
+            //     relation: Relation.normal,
+            //     info:info,next:(){
+            //     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+            //
+            //   },
+            //     onMatch: (v){},
+            //   );
+            // }
           },
           pageController: controller,
           index: currentPage,

@@ -14,6 +14,7 @@ class Assets {
   static const String iconsForward = 'assets/icons/forward.png';
   static const String iconsHandle = 'assets/icons/handle.png';
   static const String iconsLike = 'assets/icons/like.png';
+  static const String iconsLiked = 'assets/icons/liked.png';
   static const String iconsLogo = 'assets/icons/logo.png';
   static const String iconsManualMessage = 'assets/icons/manual_message.png';
   static const String iconsMore = 'assets/icons/more.png';
@@ -35,14 +36,6 @@ class Assets {
   static const String iconsSona = 'assets/icons/sona.png';
   static const String iconsSonaMessage = 'assets/icons/sona_message.png';
   static const String iconsSparkles = 'assets/icons/sparkles.png';
-  static const String iconsSub1 = 'assets/icons/sub1.png';
-  static const String iconsSub2 = 'assets/icons/sub2.png';
-  static const String iconsSub3 = 'assets/icons/sub3.png';
-  static const String iconsSub4 = 'assets/icons/sub4.png';
-  static const String iconsSub5 = 'assets/icons/sub5.png';
-  static const String iconsSub6 = 'assets/icons/sub6.png';
-  static const String iconsSub7 = 'assets/icons/sub7.png';
-  static const String iconsSuper = 'assets/icons/super.png';
   static const String imagesArrow = 'assets/images/arrow.png';
   static const String imagesCatPortrait = 'assets/images/cat_portrait.jpeg';
   static const String imagesDm = 'assets/images/dm.png';
