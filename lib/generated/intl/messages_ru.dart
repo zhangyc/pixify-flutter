@@ -20,12 +20,18 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
+  static String m0(country) => "Пропустить, Только ${country}";
+
+  static String m1(country) => "Вы планируете поехать в ${country}?";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Выбрать"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Обычно используемые языки"),
         "doneButton": MessageLookupByLibrary.simpleMessage("Готово"),
+        "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
+            "SONA ищет потенциальных друзей..."),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage(
                 "Найти иностранцев в том же городе"),
@@ -83,6 +89,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPageTitle":
             MessageLookupByLibrary.simpleMessage("Введи номер телефона"),
         "verifyCodePageTitle":
-            MessageLookupByLibrary.simpleMessage("Введите код подтверждения")
+            MessageLookupByLibrary.simpleMessage("Введите код подтверждения"),
+        "wishActivityAddTitle":
+            MessageLookupByLibrary.simpleMessage("Добавьте вашу мысль"),
+        "wishActivityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Помочь вам найти компаньонов"),
+        "wishActivityPickerTitle":
+            MessageLookupByLibrary.simpleMessage("Хочешь сделать что-нибудь?"),
+        "wishCityPickerSkipButton": m0,
+        "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
+            "если вы туда поедете, Какие города вы хотите посетить?"),
+        "wishCountryPickerSubtitle": MessageLookupByLibrary.simpleMessage(
+            "страны у вас лучше всего складываются отношения?"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("Какой"),
+        "wishCreationComplete":
+            MessageLookupByLibrary.simpleMessage("Ваше желание получено"),
+        "wishDateOptionHere": MessageLookupByLibrary.simpleMessage("Уже здесь"),
+        "wishDateOptionNotSure":
+            MessageLookupByLibrary.simpleMessage("Ещё не уверен"),
+        "wishDateOptionRecent":
+            MessageLookupByLibrary.simpleMessage("Недавно, наверное"),
+        "wishDateOptionYear":
+            MessageLookupByLibrary.simpleMessage("В течение года"),
+        "wishDatePickerSubtitle": m1,
+        "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("Когда")
       };
 }

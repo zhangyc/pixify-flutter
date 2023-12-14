@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 
+import '../../../generated/l10n.dart';
 import '../models/country.dart';
 import '../providers/popular_country.dart';
 
@@ -24,10 +25,19 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
             slivers: [
               SliverToBoxAdapter(
                 child: Container(
+                  margin: EdgeInsets.only(bottom: 8),
+                  child: Text(
+                      S.of(context).wishCountryPickerTitle,
+                      style: Theme.of(context).textTheme.headlineLarge
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Container(
                   margin: EdgeInsets.only(bottom: 32),
                   child: Text(
-                      'Where would you want to go?',
-                      style: Theme.of(context).textTheme.headlineLarge
+                      S.of(context).wishCountryPickerSubtitle,
+                      style: Theme.of(context).textTheme.bodyMedium
                   ),
                 ),
               ),

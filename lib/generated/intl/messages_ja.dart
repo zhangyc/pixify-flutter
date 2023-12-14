@@ -20,12 +20,18 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ja';
 
+  static String m0(country) => "スキップ、ただ${country}";
+
+  static String m1(country) => "${country}に行く予定ですか";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("選択"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("一般的に使用される言語"),
         "doneButton": MessageLookupByLibrary.simpleMessage("済みました"),
+        "firstLandingLoadingTitle":
+            MessageLookupByLibrary.simpleMessage("SONAは潜在的な友人を探しています..."),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage("同じ市の外国人を見つける"),
         "locationPermissionRequestTitle":
@@ -76,6 +82,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPageTitle":
             MessageLookupByLibrary.simpleMessage("携帯電話番号を入力"),
         "verifyCodePageTitle":
-            MessageLookupByLibrary.simpleMessage("認証コードを入力してください")
+            MessageLookupByLibrary.simpleMessage("認証コードを入力してください"),
+        "wishActivityAddTitle":
+            MessageLookupByLibrary.simpleMessage("あなたの考えを加えてみてね"),
+        "wishActivityPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("パートナーを見つけてあげるよ"),
+        "wishActivityPickerTitle":
+            MessageLookupByLibrary.simpleMessage("特別にしたいことあるかな?"),
+        "wishCityPickerSkipButton": m0,
+        "wishCityPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("そこに行くなら、どの都市を訪れたいですか？"),
+        "wishCountryPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("国の人たちと波長が合いますか?"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("どの"),
+        "wishCreationComplete":
+            MessageLookupByLibrary.simpleMessage("あなたの願い、受け取ったよ!"),
+        "wishDateOptionHere": MessageLookupByLibrary.simpleMessage("既にここにいます"),
+        "wishDateOptionNotSure":
+            MessageLookupByLibrary.simpleMessage("まだ確かじゃないよ"),
+        "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("最近ね、たぶん"),
+        "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("1年以内"),
+        "wishDatePickerSubtitle": m1,
+        "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("いつ")
       };
 }

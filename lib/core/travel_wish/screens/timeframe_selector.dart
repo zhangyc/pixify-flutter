@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/timeframe.dart';
 
+import '../../../generated/l10n.dart';
 import '../providers/popular_country.dart';
 
 class TimeframeSelector extends ConsumerStatefulWidget {
@@ -14,8 +15,11 @@ class TimeframeSelector extends ConsumerStatefulWidget {
 }
 
 class _CountrySelectorState extends ConsumerState<TimeframeSelector> {
+
   @override
   Widget build(BuildContext context) {
+    final params = ref.watch(travelWishParamsProvider);
+    final countryId = params.countryId;
     return ref.watch(asyncTimeframeOptionsProvider).when(
         data: (options) => Padding(
           padding: const EdgeInsets.all(16),
@@ -23,10 +27,19 @@ class _CountrySelectorState extends ConsumerState<TimeframeSelector> {
             slivers: [
               SliverToBoxAdapter(
                 child: Container(
+                  margin: EdgeInsets.only(bottom: 8),
+                  child: Text(
+                      S.of(context).wishDatePickerTitle,
+                      style: Theme.of(context).textTheme.headlineLarge
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Container(
                   margin: EdgeInsets.only(bottom: 32),
                   child: Text(
-                      'When?',
-                      style: Theme.of(context).textTheme.headlineLarge
+                      S.of(context).wishDatePickerSubtitle(ref.read(asyncPopularTravelCountriesProvider).value!.firstWhere((country) => country.id == countryId).displayName),
+                      style: Theme.of(context).textTheme.bodyMedium
                   ),
                 ),
               ),

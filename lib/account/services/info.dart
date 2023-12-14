@@ -34,7 +34,7 @@ Future<Response> updateMyProfile({
         'latitude': position?.latitude,
         'lang': locale?.locale.toLanguageTag(),
         'countryCode': countryCode
-      }
+      }..removeWhere((key, value) => value == null)
   );
 }
 

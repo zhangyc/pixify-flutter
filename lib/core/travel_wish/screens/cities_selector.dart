@@ -7,6 +7,7 @@ import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/popular_city.dart';
 import 'package:sona/core/travel_wish/providers/popular_country.dart';
 
+import '../../../generated/l10n.dart';
 import '../models/country.dart';
 import 'city_searching.dart';
 
@@ -80,7 +81,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                     child: Container(
                       margin: EdgeInsets.only(bottom: 32),
                       child: Text(
-                          'If you go there, Which cities do you want to visit?',
+                          S.of(context).wishCityPickerSubtitle,
                           style: Theme.of(context).textTheme.bodyMedium
                       ),
                     ),
@@ -222,7 +223,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Skip, just ${ref.read(asyncPopularTravelCountriesProvider).value!.firstWhere((country) => country.id == params.countryId).displayName}', style: TextStyle(color: Theme.of(context).primaryColor),),
+                Text(S.of(context).wishCityPickerSkipButton(ref.read(asyncPopularTravelCountriesProvider).value!.firstWhere((country) => country.id == params.countryId).displayName), style: TextStyle(color: Theme.of(context).primaryColor),),
                 SizedBox(width: 12),
                 Icon(Icons.arrow_forward, color: Theme.of(context).primaryColor)
               ],
@@ -234,7 +235,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
           right: 16,
           bottom: 16,
           child: FilledButton(
-            child: Text('Next'),
+            child: Text(S.of(context).nextButton),
             onPressed: widget.onNext
           ),
         ),

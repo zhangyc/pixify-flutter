@@ -389,6 +389,156 @@ class S {
       args: [],
     );
   }
+
+  /// `Which`
+  String get wishCountryPickerTitle {
+    return Intl.message(
+      'Which',
+      name: 'wishCountryPickerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Country's peeps you vibin' with?`
+  String get wishCountryPickerSubtitle {
+    return Intl.message(
+      'Country\'s peeps you vibin\' with?',
+      name: 'wishCountryPickerSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `if you go there, Which cities do you want to visit?`
+  String get wishCityPickerSubtitle {
+    return Intl.message(
+      'if you go there, Which cities do you want to visit?',
+      name: 'wishCityPickerSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Skip, Just {country}`
+  String wishCityPickerSkipButton(Object country) {
+    return Intl.message(
+      'Skip, Just $country',
+      name: 'wishCityPickerSkipButton',
+      desc: '',
+      args: [country],
+    );
+  }
+
+  /// `When`
+  String get wishDatePickerTitle {
+    return Intl.message(
+      'When',
+      name: 'wishDatePickerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you planning to go to {country}`
+  String wishDatePickerSubtitle(Object country) {
+    return Intl.message(
+      'are you planning to go to $country',
+      name: 'wishDatePickerSubtitle',
+      desc: '',
+      args: [country],
+    );
+  }
+
+  /// `Already here`
+  String get wishDateOptionHere {
+    return Intl.message(
+      'Already here',
+      name: 'wishDateOptionHere',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recently, I guess`
+  String get wishDateOptionRecent {
+    return Intl.message(
+      'Recently, I guess',
+      name: 'wishDateOptionRecent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Within a year`
+  String get wishDateOptionYear {
+    return Intl.message(
+      'Within a year',
+      name: 'wishDateOptionYear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not sure yet`
+  String get wishDateOptionNotSure {
+    return Intl.message(
+      'Not sure yet',
+      name: 'wishDateOptionNotSure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wanna do something?`
+  String get wishActivityPickerTitle {
+    return Intl.message(
+      'Wanna do something?',
+      name: 'wishActivityPickerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Help you find companions`
+  String get wishActivityPickerSubtitle {
+    return Intl.message(
+      'Help you find companions',
+      name: 'wishActivityPickerSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add your thought`
+  String get wishActivityAddTitle {
+    return Intl.message(
+      'Add your thought',
+      name: 'wishActivityAddTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your wish has been received!`
+  String get wishCreationComplete {
+    return Intl.message(
+      'Your wish has been received!',
+      name: 'wishCreationComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SONA is finding some potential friend...`
+  String get firstLandingLoadingTitle {
+    return Intl.message(
+      'SONA is finding some potential friend...',
+      name: 'firstLandingLoadingTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
