@@ -22,46 +22,60 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "about": MessageLookupByLibrary.simpleMessage("アプリについて"),
-        "age": MessageLookupByLibrary.simpleMessage("年齢"),
-        "all": MessageLookupByLibrary.simpleMessage("全て"),
-        "arrow": MessageLookupByLibrary.simpleMessage("矢印-1"),
-        "arrowInfo": MessageLookupByLibrary.simpleMessage("気になる人に直接メッセージを送れる"),
-        "block": MessageLookupByLibrary.simpleMessage("ブロックする"),
-        "cancel": MessageLookupByLibrary.simpleMessage("キャンセルする"),
-        "chat": MessageLookupByLibrary.simpleMessage("チャット"),
-        "chatStyle": MessageLookupByLibrary.simpleMessage("チャットスタイル - "),
-        "chatStyleInfo":
-            MessageLookupByLibrary.simpleMessage("6つのチャットスタイルをアンロック"),
-        "checkInternet":
-            MessageLookupByLibrary.simpleMessage("インターネット接続を確認してください"),
-        "daily": MessageLookupByLibrary.simpleMessage("毎日"),
-        "deleteAccount": MessageLookupByLibrary.simpleMessage("アカウントの削除"),
-        "editProfile": MessageLookupByLibrary.simpleMessage("プロフィール編集"),
-        "female": MessageLookupByLibrary.simpleMessage("女性"),
-        "gender": MessageLookupByLibrary.simpleMessage("性別"),
-        "homeGoToWhoLike":
-            MessageLookupByLibrary.simpleMessage("誰があなたを好きか見てみましょう"),
-        "homeWhoLikeMe": MessageLookupByLibrary.simpleMessage("人々はあなたを好きでした"),
-        "likes": MessageLookupByLibrary.simpleMessage("いいね"),
-        "logout": MessageLookupByLibrary.simpleMessage("ログアウト"),
-        "male": MessageLookupByLibrary.simpleMessage("男性"),
-        "match": MessageLookupByLibrary.simpleMessage("マッチ"),
-        "messages": MessageLookupByLibrary.simpleMessage("メッセージ"),
-        "noDataTips": MessageLookupByLibrary.simpleMessage("データがありません"),
-        "notification": MessageLookupByLibrary.simpleMessage("通知"),
-        "powerSonaMessage": MessageLookupByLibrary.simpleMessage("ソナメッセージ100件"),
-        "powerUnlock": MessageLookupByLibrary.simpleMessage("ロックを解除して見る"),
-        "powerWhoLike": MessageLookupByLibrary.simpleMessage("私のことが好きな人"),
-        "profile": MessageLookupByLibrary.simpleMessage("プロフィール"),
-        "report": MessageLookupByLibrary.simpleMessage("報告する"),
-        "save": MessageLookupByLibrary.simpleMessage("保存する"),
-        "settings": MessageLookupByLibrary.simpleMessage("設定"),
-        "sonaTitle": MessageLookupByLibrary.simpleMessage("スーパーソナになろう"),
-        "strategy": MessageLookupByLibrary.simpleMessage("ストラテジー - "),
-        "strategyInfo": MessageLookupByLibrary.simpleMessage("ソナからアドバイスがもらえる"),
-        "superSonaTitle": MessageLookupByLibrary.simpleMessage("スーパーソナだ!"),
-        "unlimited": MessageLookupByLibrary.simpleMessage("無制限"),
-        "upgrade": MessageLookupByLibrary.simpleMessage("アップグレード")
+        "choosePlaceholder": MessageLookupByLibrary.simpleMessage("選択"),
+        "commonLanguageTitle":
+            MessageLookupByLibrary.simpleMessage("一般的に使用される言語"),
+        "doneButton": MessageLookupByLibrary.simpleMessage("済みました"),
+        "locationPermissionRequestSubtitle":
+            MessageLookupByLibrary.simpleMessage("同じ市の外国人を見つける"),
+        "locationPermissionRequestTitle":
+            MessageLookupByLibrary.simpleMessage("位置を許可する"),
+        "nextButton": MessageLookupByLibrary.simpleMessage("次のステップ"),
+        "resendButton": MessageLookupByLibrary.simpleMessage("再送信"),
+        "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("国を選択"),
+        "signUpLastStepPageTitle":
+            MessageLookupByLibrary.simpleMessage("最後のステップ"),
+        "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("写真を撮る"),
+        "userAvatarOptionGallery":
+            MessageLookupByLibrary.simpleMessage("ギャラリーから選択"),
+        "userAvatarPageChangeButton":
+            MessageLookupByLibrary.simpleMessage("変更"),
+        "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
+            "良いポートレートはもっとマッチをもたらします。本物の写真を使ってください。"),
+        "userAvatarPageTitle": MessageLookupByLibrary.simpleMessage("写真を追加する"),
+        "userAvatarUploadedLabel":
+            MessageLookupByLibrary.simpleMessage("アップロード完了！"),
+        "userBirthdayInputLabel": MessageLookupByLibrary.simpleMessage("生年月日"),
+        "userCitizenshipPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("確認されたら、国籍は変更できません"),
+        "userCitizenshipPickerTitle":
+            MessageLookupByLibrary.simpleMessage("国籍"),
+        "userGenderInputLabel": MessageLookupByLibrary.simpleMessage("性別"),
+        "userGenderOptionFemale": MessageLookupByLibrary.simpleMessage("女性"),
+        "userGenderOptionMale": MessageLookupByLibrary.simpleMessage("男性"),
+        "userGenderOptionNonBinary":
+            MessageLookupByLibrary.simpleMessage("ノンバイナリー"),
+        "userGenderPickerSubtitle":
+            MessageLookupByLibrary.simpleMessage("公開されることなく、マッチングのためだけに使用されます"),
+        "userInfoPageNamePlaceholder":
+            MessageLookupByLibrary.simpleMessage("入力"),
+        "userInfoPageTitle": MessageLookupByLibrary.simpleMessage("個人情報"),
+        "userNameInputLabel": MessageLookupByLibrary.simpleMessage("お名前"),
+        "userPhoneNumberPagePlaceholder":
+            MessageLookupByLibrary.simpleMessage("電話番号"),
+        "userPhoneNumberPagePrivacySuffix":
+            MessageLookupByLibrary.simpleMessage("に同意したことになります"),
+        "userPhoneNumberPagePrivacyText":
+            MessageLookupByLibrary.simpleMessage("プライバシーポリシー"),
+        "userPhoneNumberPageTermsAnd":
+            MessageLookupByLibrary.simpleMessage("および"),
+        "userPhoneNumberPageTermsPrefix":
+            MessageLookupByLibrary.simpleMessage("「次のステップ」をタップすることで、"),
+        "userPhoneNumberPageTermsText":
+            MessageLookupByLibrary.simpleMessage("利用規約"),
+        "userPhoneNumberPageTitle":
+            MessageLookupByLibrary.simpleMessage("携帯電話番号を入力"),
+        "verifyCodePageTitle":
+            MessageLookupByLibrary.simpleMessage("認証コードを入力してください")
       };
 }

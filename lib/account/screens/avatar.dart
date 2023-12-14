@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 
+import '../../generated/l10n.dart';
 import '../../utils/dialog/crop_image.dart';
 import 'location.dart';
 
@@ -55,7 +56,7 @@ class _AvatarScreenState extends State<AvatarScreen> {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  'Upload\nYour portrait',
+                  S.current.userAvatarPageTitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
@@ -132,7 +133,7 @@ class _AvatarScreenState extends State<AvatarScreen> {
                     ),
                     SizedBox(height: 16),
                     Text(
-                      'A good portrait really helps you get more matches, please use a real portrait image',
+                      S.current.userAvatarPageSubtitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.labelSmall,
                     )
@@ -156,18 +157,18 @@ class _AvatarScreenState extends State<AvatarScreen> {
               SizedBox(height: 24),
               if (_avatar == null) FilledButton(
                   onPressed: () => _getPhotoAndUpload(ImageSource.gallery),
-                  child: Text('From library')
+                  child: Text(S.current.userAvatarOptionGallery)
               ) else FilledButton(
                   onPressed: _next,
-                  child: Text('Next')
+                  child: Text(S.current.nextButton)
               ),
               SizedBox(height: 16),
               if (_avatar == null) OutlinedButton(
                   onPressed: () => _getPhotoAndUpload(ImageSource.camera),
-                  child: Text('Take a Photo')
+                  child: Text(S.current.userAvatarOptionCamera)
               ) else TextButton(
                   onPressed: _change,
-                  child: Text('Change')
+                  child: Text(S.current.userAvatarPageChangeButton)
               ),
               // Spacer()
             ],

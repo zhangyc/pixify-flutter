@@ -186,7 +186,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                     if (asyncMyTravelWishes.hasValue && asyncMyTravelWishes.value!.length < 3) GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
-                        if (myProfile.isMember) {
+                        if (asyncMyTravelWishes.value!.isEmpty || myProfile.isMember) {
                           Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator()));
                         } else {
                           showSubscription(SubscribeShowType.unLockThreeWish(),FromTag.travel_wish);

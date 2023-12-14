@@ -18,6 +18,7 @@ import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/picker/country/country.dart';
 
 import '../../common/widgets/webview.dart';
+import '../../generated/l10n.dart';
 
 
 class LoginPhoneNumberScreen extends StatefulHookConsumerWidget {
@@ -73,7 +74,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 24),
                 child: Text(
-                  'What\'s your phone number?',
+                  S.of(context).userPhoneNumberPageTitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
@@ -128,7 +129,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                         ),
                       )
                     ),
-                    hintText: 'Mobile Number',
+                    hintText: S.current.userPhoneNumberPagePlaceholder,
                   ),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontSize: 18,
@@ -156,10 +157,10 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'By tapping “Continue”, you agree to our '
+                    text: S.current.userPhoneNumberPageTermsPrefix
                   ),
                   TextSpan(
-                    text: 'Privacy Policy',
+                    text: S.current.userPhoneNumberPageTermsText,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       decoration: TextDecoration.underline
@@ -170,10 +171,10 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                       }))
                   ),
                   TextSpan(
-                    text: ' and '
+                    text: S.current.userPhoneNumberPageTermsAnd
                   ),
                   TextSpan(
-                    text: 'Terms of Service',
+                    text: S.current.userPhoneNumberPagePrivacyText,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       decoration: TextDecoration.underline
@@ -182,6 +183,9 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                       ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
                         return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
                       }))
+                  ),
+                  TextSpan(
+                      text: S.current.userPhoneNumberPagePrivacySuffix
                   ),
                 ]
               ),
@@ -195,7 +199,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
               size: ColoredButtonSize.large,
               // color: Color(0xFFDD70E0),
               fontColor: Colors.white,
-              text: 'Continue',
+              text: S.current.nextButton,
               onTap: _next,
               loadingWhenAsyncAction: true,
             ),

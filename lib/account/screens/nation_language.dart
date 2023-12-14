@@ -15,6 +15,7 @@ import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/picker/country/country.dart';
 
+import '../../generated/l10n.dart';
 import '../models/gender.dart';
 
 
@@ -74,7 +75,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    'Language',
+                    S.current.signUpLastStepPageTitle,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
@@ -112,7 +113,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                               findMatchedSonaLocale(_language!).displayName,
                               style: Theme.of(context).textTheme.bodyMedium
                           ) else Text(
-                            'Language',
+                            S.current.commonLanguageTitle,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Theme.of(context).hintColor
                             ),
@@ -155,7 +156,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                               '${_nation!.flag} ${_nation!.displayName}',
                               style: Theme.of(context).textTheme.bodyMedium
                           ) else Text(
-                            'Nation',
+                            S.current.userCitizenshipPickerTitle,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Theme.of(context).hintColor
                             ),
@@ -171,14 +172,21 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: FilledButton(
-          child: Text('Next'),
-          style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(
-                  Theme.of(context).primaryColor
-              )
-          ),
-          onPressed: _next,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(S.current.userCitizenshipPickerSubtitle, style: Theme.of(context).textTheme.labelSmall),
+            SizedBox(height: 16),
+            FilledButton(
+              child: Text(S.current.nextButton),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(
+                      Theme.of(context).primaryColor
+                  )
+              ),
+              onPressed: _next,
+            ),
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

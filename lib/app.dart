@@ -32,15 +32,7 @@ class SonaApp extends HookConsumerWidget {
     return MaterialApp(
       key: ValueKey(token),
       navigatorKey: navigatorKey,
-      builder: EasyLoading.init(builder: (BuildContext context, Widget? child) {
-        return GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
-          child: child
-        );
-      }),
+      builder: EasyLoading.init(),
       theme: themeData,
       initialRoute: initialRoute,
       navigatorObservers: [routeObserver],

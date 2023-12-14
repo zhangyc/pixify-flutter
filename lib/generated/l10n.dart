@@ -50,381 +50,341 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Chat`
-  String get chat {
+  /// `What’s your number?`
+  String get userPhoneNumberPageTitle {
     return Intl.message(
-      'Chat',
-      name: 'chat',
+      'What’s your number?',
+      name: 'userPhoneNumberPageTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Match`
-  String get match {
+  /// `Phone Number`
+  String get userPhoneNumberPagePlaceholder {
     return Intl.message(
-      'Match',
-      name: 'match',
+      'Phone Number',
+      name: 'userPhoneNumberPagePlaceholder',
       desc: '',
       args: [],
     );
   }
 
-  /// `Profile`
-  String get profile {
+  /// `Next`
+  String get nextButton {
     return Intl.message(
-      'Profile',
-      name: 'profile',
+      'Next',
+      name: 'nextButton',
       desc: '',
       args: [],
     );
   }
 
-  /// `Edit Profile`
-  String get editProfile {
+  /// `By tapping "Next Step", you agree to our `
+  String get userPhoneNumberPageTermsPrefix {
     return Intl.message(
-      'Edit Profile',
-      name: 'editProfile',
+      'By tapping "Next Step", you agree to our ',
+      name: 'userPhoneNumberPageTermsPrefix',
       desc: '',
       args: [],
     );
   }
 
-  /// `oOps, no data right now `
-  String get noDataTips {
+  /// `terms of service`
+  String get userPhoneNumberPageTermsText {
     return Intl.message(
-      'oOps, no data right now ',
-      name: 'noDataTips',
+      'terms of service',
+      name: 'userPhoneNumberPageTermsText',
       desc: '',
       args: [],
     );
   }
 
-  /// `Please check your internet or Tap to Refresh and try again`
-  String get checkInternet {
+  /// ` and `
+  String get userPhoneNumberPageTermsAnd {
     return Intl.message(
-      'Please check your internet or Tap to Refresh and try again',
-      name: 'checkInternet',
+      ' and ',
+      name: 'userPhoneNumberPageTermsAnd',
       desc: '',
       args: [],
     );
   }
 
-  /// `BECOMING SUPER SONA`
-  String get sonaTitle {
+  /// `privacy policy`
+  String get userPhoneNumberPagePrivacyText {
     return Intl.message(
-      'BECOMING SUPER SONA',
-      name: 'sonaTitle',
+      'privacy policy',
+      name: 'userPhoneNumberPagePrivacyText',
       desc: '',
       args: [],
     );
   }
 
-  /// `YOU’RE SUPER SONA`
-  String get superSonaTitle {
+  /// ``
+  String get userPhoneNumberPagePrivacySuffix {
     return Intl.message(
-      'YOU’RE SUPER SONA',
-      name: 'superSonaTitle',
+      '',
+      name: 'userPhoneNumberPagePrivacySuffix',
       desc: '',
       args: [],
     );
   }
 
-  /// `UPGRADE`
-  String get upgrade {
+  /// `Select Country`
+  String get selectCountryPageTitle {
     return Intl.message(
-      'UPGRADE',
-      name: 'upgrade',
+      'Select Country',
+      name: 'selectCountryPageTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `100 Sona messages`
-  String get powerSonaMessage {
+  /// `Enter verification code we‘ve just sent`
+  String get verifyCodePageTitle {
     return Intl.message(
-      '100 Sona messages',
-      name: 'powerSonaMessage',
+      'Enter verification code we‘ve just sent',
+      name: 'verifyCodePageTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `daily`
-  String get daily {
+  /// `Resend`
+  String get resendButton {
     return Intl.message(
-      'daily',
-      name: 'daily',
+      'Resend',
+      name: 'resendButton',
       desc: '',
       args: [],
     );
   }
 
-  /// `Unlock to see`
-  String get powerUnlock {
+  /// `Introduce yourself`
+  String get userInfoPageTitle {
     return Intl.message(
-      'Unlock to see',
-      name: 'powerUnlock',
+      'Introduce yourself',
+      name: 'userInfoPageTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `who liked me`
-  String get powerWhoLike {
+  /// `Name`
+  String get userNameInputLabel {
     return Intl.message(
-      'who liked me',
-      name: 'powerWhoLike',
+      'Name',
+      name: 'userNameInputLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Unlimited`
-  String get unlimited {
+  /// `Day of birth`
+  String get userBirthdayInputLabel {
     return Intl.message(
-      'Unlimited',
-      name: 'unlimited',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Likes`
-  String get likes {
-    return Intl.message(
-      'Likes',
-      name: 'likes',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Arrows -1 `
-  String get arrow {
-    return Intl.message(
-      'Arrows -1 ',
-      name: 'arrow',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Message people you like directly`
-  String get arrowInfo {
-    return Intl.message(
-      'Message people you like directly',
-      name: 'arrowInfo',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Strategy - `
-  String get strategy {
-    return Intl.message(
-      'Strategy - ',
-      name: 'strategy',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Get advice from Sona anytime`
-  String get strategyInfo {
-    return Intl.message(
-      'Get advice from Sona anytime',
-      name: 'strategyInfo',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Chat Styles - `
-  String get chatStyle {
-    return Intl.message(
-      'Chat Styles - ',
-      name: 'chatStyle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Unlock 6 chat styles`
-  String get chatStyleInfo {
-    return Intl.message(
-      'Unlock 6 chat styles',
-      name: 'chatStyleInfo',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `people liked you`
-  String get homeWhoLikeMe {
-    return Intl.message(
-      'people liked you',
-      name: 'homeWhoLikeMe',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Messages`
-  String get messages {
-    return Intl.message(
-      'Messages',
-      name: 'messages',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Let\'s see who likes you`
-  String get homeGoToWhoLike {
-    return Intl.message(
-      'Let\\\'s see who likes you',
-      name: 'homeGoToWhoLike',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Report`
-  String get report {
-    return Intl.message(
-      'Report',
-      name: 'report',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Block`
-  String get block {
-    return Intl.message(
-      'Block',
-      name: 'block',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Cancel`
-  String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
+      'Day of birth',
+      name: 'userBirthdayInputLabel',
       desc: '',
       args: [],
     );
   }
 
   /// `Gender`
-  String get gender {
+  String get userGenderInputLabel {
     return Intl.message(
       'Gender',
-      name: 'gender',
+      name: 'userGenderInputLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter`
+  String get userInfoPageNamePlaceholder {
+    return Intl.message(
+      'Enter',
+      name: 'userInfoPageNamePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose`
+  String get choosePlaceholder {
+    return Intl.message(
+      'Choose',
+      name: 'choosePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your gender will not be shown public, it only be used to help for match`
+  String get userGenderPickerSubtitle {
+    return Intl.message(
+      'Your gender will not be shown public, it only be used to help for match',
+      name: 'userGenderPickerSubtitle',
       desc: '',
       args: [],
     );
   }
 
   /// `Male`
-  String get male {
+  String get userGenderOptionMale {
     return Intl.message(
       'Male',
-      name: 'male',
+      name: 'userGenderOptionMale',
       desc: '',
       args: [],
     );
   }
 
   /// `Female`
-  String get female {
+  String get userGenderOptionFemale {
     return Intl.message(
       'Female',
-      name: 'female',
+      name: 'userGenderOptionFemale',
       desc: '',
       args: [],
     );
   }
 
-  /// `All`
-  String get all {
+  /// `Non-binary`
+  String get userGenderOptionNonBinary {
     return Intl.message(
-      'All',
-      name: 'all',
+      'Non-binary',
+      name: 'userGenderOptionNonBinary',
       desc: '',
       args: [],
     );
   }
 
-  /// `Age`
-  String get age {
+  /// `Show Yourself`
+  String get userAvatarPageTitle {
     return Intl.message(
-      'Age',
-      name: 'age',
+      'Show Yourself',
+      name: 'userAvatarPageTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Save`
-  String get save {
+  /// `A good portrait gets you more matches. Keep it real and use a legit pic of yourself.`
+  String get userAvatarPageSubtitle {
     return Intl.message(
-      'Save',
-      name: 'save',
+      'A good portrait gets you more matches. Keep it real and use a legit pic of yourself.',
+      name: 'userAvatarPageSubtitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Settings`
-  String get settings {
+  /// `From gallery`
+  String get userAvatarOptionGallery {
     return Intl.message(
-      'Settings',
-      name: 'settings',
+      'From gallery',
+      name: 'userAvatarOptionGallery',
       desc: '',
       args: [],
     );
   }
 
-  /// `Notification`
-  String get notification {
+  /// `Take a photo`
+  String get userAvatarOptionCamera {
     return Intl.message(
-      'Notification',
-      name: 'notification',
+      'Take a photo',
+      name: 'userAvatarOptionCamera',
       desc: '',
       args: [],
     );
   }
 
-  /// `About`
-  String get about {
+  /// `Upload done!`
+  String get userAvatarUploadedLabel {
     return Intl.message(
-      'About',
-      name: 'about',
+      'Upload done!',
+      name: 'userAvatarUploadedLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Log out`
-  String get logout {
+  /// `Change`
+  String get userAvatarPageChangeButton {
     return Intl.message(
-      'Log out',
-      name: 'logout',
+      'Change',
+      name: 'userAvatarPageChangeButton',
       desc: '',
       args: [],
     );
   }
 
-  /// `Delete Account`
-  String get deleteAccount {
+  /// `Authorize location`
+  String get locationPermissionRequestTitle {
     return Intl.message(
-      'Delete Account',
-      name: 'deleteAccount',
+      'Authorize location',
+      name: 'locationPermissionRequestTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Find foreigners in the same city`
+  String get locationPermissionRequestSubtitle {
+    return Intl.message(
+      'Find foreigners in the same city',
+      name: 'locationPermissionRequestSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last step`
+  String get signUpLastStepPageTitle {
+    return Intl.message(
+      'Last step',
+      name: 'signUpLastStepPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Common language`
+  String get commonLanguageTitle {
+    return Intl.message(
+      'Common language',
+      name: 'commonLanguageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Citizen of`
+  String get userCitizenshipPickerTitle {
+    return Intl.message(
+      'Citizen of',
+      name: 'userCitizenshipPickerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Once confirmed, citizenship cannot be changed`
+  String get userCitizenshipPickerSubtitle {
+    return Intl.message(
+      'Once confirmed, citizenship cannot be changed',
+      name: 'userCitizenshipPickerSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Done`
+  String get doneButton {
+    return Intl.message(
+      'Done',
+      name: 'doneButton',
       desc: '',
       args: [],
     );
@@ -437,7 +397,19 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'de'),
+      Locale.fromSubtags(languageCode: 'en', countryCode: 'GB'),
+      Locale.fromSubtags(languageCode: 'es'),
+      Locale.fromSubtags(languageCode: 'fr'),
+      Locale.fromSubtags(languageCode: 'it'),
       Locale.fromSubtags(languageCode: 'ja'),
+      Locale.fromSubtags(languageCode: 'ko'),
+      Locale.fromSubtags(languageCode: 'pt', countryCode: 'BR'),
+      Locale.fromSubtags(languageCode: 'pt', countryCode: 'PT'),
+      Locale.fromSubtags(languageCode: 'ru'),
+      Locale.fromSubtags(languageCode: 'th'),
+      Locale.fromSubtags(languageCode: 'zh', countryCode: 'CN'),
+      Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'),
     ];
   }
 

@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.12.2"
+  arb_generator:
+    dependency: "direct dev"
+    description:
+      name: arb_generator
+      sha256: "7db57c24a68af05332d4e94757320ea60badbe33040c09c87dd12007717d71d8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   archive:
     dependency: transitive
     description:
@@ -281,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  csv:
+    dependency: transitive
+    description:
+      name: csv
+      sha256: "63ed2871dd6471193dffc52c0e6c76fb86269c00244d244297abbb355c84a86e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -337,6 +353,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.3.3"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
+  excel:
+    dependency: transitive
+    description:
+      name: excel
+      sha256: f6a76fff6ac14f48fd44a6528e72705965e02cbc593e00427ab1d9a9f5d3bffa
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -537,6 +569,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flappy_translator:
+    dependency: transitive
+    description:
+      name: flappy_translator
+      sha256: e249fe4b9a2f61c50ab28113b1f1e949c224c1e42cb40666bb8b0f2ba4b15bf5
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -668,7 +708,7 @@ packages:
     source: hosted
     version: "5.2.0"
   flutter_staggered_grid_view:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_staggered_grid_view
       sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
