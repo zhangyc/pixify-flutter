@@ -52,12 +52,15 @@ dependencies:
   package_info_plus: ^4.2.0
   appsflyer_sdk: ^6.12.2
   riverpod_annotation: ^2.3.3
+
 dev_dependencies:
   custom_lint: ^0.5.7
   flutter_lints: ^2.0.0
   riverpod_generator: ^2.3.9
   riverpod_lint: ^2.3.7
   build_runner:
+  arb_generator: ^0.0.3
+
 flutter:
   uses-material-design: true
   fonts:
@@ -77,5 +80,12 @@ flutter:
     - assets/icons/
     - assets/lottie/
     - assets/images/
+
+# dart run arb_generator
+arb_generator:
+  input_filepath: "assets_dev/i18n.csv"
+  output_directory: "lib/l10n"
+  filename_prepend: "intl_"
+
 flutter_intl:
   enabled: true

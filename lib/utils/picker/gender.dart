@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../account/models/gender.dart';
+import '../../generated/l10n.dart';
 
 Future<Gender?> showGenderPicker({
   required BuildContext context,
@@ -14,8 +15,8 @@ Future<Gender?> showGenderPicker({
     context: context,
     initialValue: initialValue,
     options: options,
-    title: 'Gender',
-    content: 'Your gender will not be shown public, it only be used to help for match',
+    title: S.current.userGenderInputLabel,
+    content: S.current.userGenderPickerSubtitle,
     dismissible: dismissible
   );
 }

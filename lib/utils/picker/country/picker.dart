@@ -4,6 +4,8 @@ import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 
+import '../../../generated/l10n.dart';
+
 class CountryPicker extends ConsumerStatefulWidget {
   const CountryPicker({
     super.key,
@@ -78,7 +80,7 @@ class _CountryPickerState extends ConsumerState<CountryPicker> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 16),
-                child: Text('Select Country', style: Theme.of(context).textTheme.titleLarge),
+                child: Text(S.of(context).selectCountryPageTitle, style: Theme.of(context).textTheme.titleLarge),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 16),

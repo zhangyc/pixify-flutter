@@ -15,6 +15,7 @@ import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../generated/l10n.dart';
 import '../models/my_profile.dart';
 
 
@@ -87,7 +88,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 24),
                   child: Text.rich(
                     TextSpan(
-                      text: 'Enter Verification code\nwe‘ve just sent to\n\n',
+                      text: '${S.of(context).verifyCodePageTitle}\n\n',
                       children: [
                         TextSpan(
                           text: '+${widget.phoneNumber.countryCode} ${widget.phoneNumber.number}',
@@ -138,7 +139,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
                 color: Colors.transparent,
                 fontColor: Theme.of(context).primaryColor,
                 borderColor: Colors.transparent,
-                text: 'Resend',
+                text: S.of(context).resendButton,
                 onTap: () async {
                   final result = await _sendPin();
                   if (result) {

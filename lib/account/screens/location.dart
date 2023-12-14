@@ -4,6 +4,7 @@ import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/location/location.dart';
 
+import '../../generated/l10n.dart';
 import 'nation_language.dart';
 
 
@@ -51,13 +52,13 @@ class _LocationScreenState extends State<LocationScreen> {
               Image.asset('assets/images/location_authorization.png', height: 228,),
               SizedBox(height: 16),
               Text(
-                'Authorize location',
+                S.current.locationPermissionRequestTitle,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               SizedBox(height: 4),
               Text(
-                'Find foreigners in the same city',
+                S.current.locationPermissionRequestSubtitle,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelMedium,
               ),
@@ -69,7 +70,7 @@ class _LocationScreenState extends State<LocationScreen> {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: FilledButton(
-          child: Text('Next'),
+          child: Text(S.current.nextButton),
           onPressed: _next,
         ),
       ),

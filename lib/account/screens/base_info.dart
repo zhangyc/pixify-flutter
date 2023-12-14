@@ -8,6 +8,7 @@ import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/picker/gender.dart';
 
+import '../../generated/l10n.dart';
 import 'avatar.dart';
 
 class BaseInfoScreen extends StatefulWidget {
@@ -72,13 +73,13 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Text(
-                      'Introduce yourself',
+                      S.current.userInfoPageTitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
                   ),
                   SizedBox(height: 8),
-                  Text('Name', style: Theme.of(context).textTheme.titleSmall),
+                  Text(S.current.userNameInputLabel, style: Theme.of(context).textTheme.titleSmall),
                   SizedBox(height: 8),
                   TextFormField(
                     controller: _nameController,
@@ -100,7 +101,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                           borderRadius: BorderRadius.circular(12),
                           gapPadding: 8
                       ),
-                      hintText: 'Enter'
+                      hintText: S.current.userInfoPageNamePlaceholder
                       // hintStyle: TextStyle(color: Color(0xFFE9C6EE))
                     ),
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -120,7 +121,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                     }
                   ),
                   SizedBox(height: 16,),
-                  Text('Date of birth', style: Theme.of(context).textTheme.titleSmall),
+                  Text(S.current.userBirthdayInputLabel, style: Theme.of(context).textTheme.titleSmall),
                   SizedBox(height: 8),
                   GestureDetector(
                     behavior: HitTestBehavior.translucent,
@@ -154,7 +155,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                             _birthday!.toBirthdayString(),
                             style: Theme.of(context).textTheme.bodyMedium
                           ) else Text(
-                            'Choose',
+                            S.current.choosePlaceholder,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: Theme.of(context).hintColor
                             ),
@@ -165,7 +166,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                     ),
                   ),
                   SizedBox(height: 16),
-                  Text('Gender', style: Theme.of(context).textTheme.titleSmall),
+                  Text(S.current.userGenderInputLabel, style: Theme.of(context).textTheme.titleSmall),
                   SizedBox(height: 8),
                   GestureDetector(
                     behavior: HitTestBehavior.translucent,
@@ -199,7 +200,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                                 _gender!.name,
                                 style: Theme.of(context).textTheme.bodyMedium
                             ) else Text(
-                              'Choose',
+                              S.current.choosePlaceholder,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: Theme.of(context).hintColor
                               ),
@@ -217,7 +218,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: FilledButton(
-          child: Text('Next'),
+          child: Text(S.current.nextButton),
           onPressed: _disabled ? null : _next,
         ),
       ),
