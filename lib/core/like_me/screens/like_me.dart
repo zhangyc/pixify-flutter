@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/screens/profile.dart';
@@ -27,7 +28,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
   @override
   void didChangeDependencies() {
     itemWidth = (MediaQuery.of(context).size.width - 16 * 6 - 8) / 2;
-    itemHeight =  itemWidth * 4 / 3;
+    itemHeight = itemWidth * 4 / 3;
     super.didChangeDependencies();
   }
 
@@ -44,13 +45,12 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
         centerTitle: false,
       ),
       body: ref.watch(asyncLikedMeProvider).when(
-        data: (data) => data.isNotEmpty ? GridView.builder(
+        data: (data) => data.isNotEmpty ? MasonryGridView.builder(
           padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 80),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-              childAspectRatio: 165.5/288
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2
           ),
           itemBuilder: (BuildContext context, int index) => _itemBuilder(data[index]),
           itemCount: data.length
@@ -90,12 +90,14 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: itemHeight + 4,
+            height: itemHeight,
+            width: itemWidth,
             child: Stack(
               children: [
                 Positioned.fill(
                   child: Container(
-                    height: itemHeight + 4,
+                    height: itemHeight,
+                    width: itemWidth,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20)
                     ),
@@ -108,19 +110,25 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                     child: isMember ? GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: u.id,relation: Relation.likeMe,))),
-                      child: UserAvatar(
-                        url: u.avatar!,
-                        size: Size(itemWidth, itemHeight),
-                        borderSide: BorderSide.none,
+                      child: AspectRatio(
+                        aspectRatio: 0.75,
+                        child: UserAvatar(
+                          url: u.avatar!,
+                          size: Size(itemWidth, itemHeight),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ) : GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => showSubscription(SubscribeShowType.secretSonamate(),FromTag.pay_chatlist_likedme),
                       child: ImageFiltered(
                         imageFilter: ImageFilter.blur(sigmaY: 18, sigmaX: 18),
-                        child: UserAvatar(
-                          url: u.avatar!,
-                          size: Size(itemWidth, itemHeight),
+                        child: AspectRatio(
+                          aspectRatio: 0.75,
+                          child: UserAvatar(
+                            url: u.avatar!,
+                            size: Size(itemWidth, itemHeight),
+                          ),
                         ),
                       ),
                     ),
@@ -154,19 +162,23 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
               ],
             ),
           ),
-          SizedBox(height: 8),
-          Text(
-            u.name!,
-            style: Theme.of(context).textTheme.labelSmall,
-            maxLines: 1,
-            overflow: TextOverflow.clip,
+          if (isMember) Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              u.name!,
+              style: Theme.of(context).textTheme.labelSmall,
+              maxLines: 1,
+              overflow: TextOverflow.clip,
+            ),
           ),
-          SizedBox(height: 8),
-          Text(
-            u.hang,
-            style: Theme.of(context).textTheme.titleSmall,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          if (u.hang.isNotEmpty) Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              u.hang,
+              style: Theme.of(context).textTheme.titleSmall,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),
