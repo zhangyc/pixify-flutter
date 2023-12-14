@@ -37,7 +37,7 @@ final supportedSonaLocales = [
   SonaLocale.fromLanguageTag('de', 'Deutsch'),
   SonaLocale.fromLanguageTag('it', 'Italiano'),
   SonaLocale.fromLanguageTag('ru', 'Русский'),
-  SonaLocale.fromLanguageTag('yue', '粵語'),
+  // SonaLocale.fromLanguageTag('yue', '粵語'),
 ];
 
 SonaLocale findMatchedSonaLocale(String languageTag) {
