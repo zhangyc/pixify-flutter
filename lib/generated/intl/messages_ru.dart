@@ -20,29 +20,133 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static String m0(country) => "Пропустить, Только ${country}";
+  static String m0(something) => "\"Меня интересует ${something}!\"";
 
-  static String m1(country) => "Вы планируете поехать в ${country}?";
+  static String m1(something) => "Меня очень интересует ‘${something}’!";
+
+  static String m2(lang) => "Просто печатайте на ${lang}";
+
+  static String m3(gender) =>
+      "Which of ${Intl.gender(gender, female: 'her', male: 'his', other: 'their')} ideas do you like?";
+
+  static String m4(country) => "Пропустить, Только ${country}";
+
+  static String m5(country) => "Вы планируете поехать в ${country}?";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "age": MessageLookupByLibrary.simpleMessage("Возраст"),
+        "block": MessageLookupByLibrary.simpleMessage("Блокировать"),
+        "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
+            MessageLookupByLibrary.simpleMessage(
+                "Заблокируйте этого человека, чтобы не получать от него сообщения"),
+        "breakIce": MessageLookupByLibrary.simpleMessage(
+            "🔨🔨🔨 Не обращай на меня внимания🔨🔨🔨 Я просто разбиваю лед🔨🔨🔨"),
+        "buttonCopy": MessageLookupByLibrary.simpleMessage("Копировать"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("Удалить"),
+        "buttonOpenLink":
+            MessageLookupByLibrary.simpleMessage("Открыть Ссылку"),
+        "buttonResend": MessageLookupByLibrary.simpleMessage("Переслать"),
+        "buttonUnmatch":
+            MessageLookupByLibrary.simpleMessage("Отменить совпадение"),
+        "cancelButton": MessageLookupByLibrary.simpleMessage("Отменить"),
+        "chat": MessageLookupByLibrary.simpleMessage("Чат"),
+        "checkOutTheirProfiles":
+            MessageLookupByLibrary.simpleMessage("Проверьте их профили"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Выбрать"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Обычно используемые языки"),
+        "descriptionOptional":
+            MessageLookupByLibrary.simpleMessage("Описание (необязательно)"),
+        "dm": MessageLookupByLibrary.simpleMessage("DM"),
         "doneButton": MessageLookupByLibrary.simpleMessage("Готово"),
+        "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
+            "Ошибка отправки, пожалуйста, попробуйте позже."),
+        "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
+            "Не отправлено. SONA не будет переводить запрещенные слова."),
+        "exceptionSonaOverloadedTips": MessageLookupByLibrary.simpleMessage(
+            "SONA перегружена, пожалуйста, попробуйте позже."),
+        "filter": MessageLookupByLibrary.simpleMessage("Фильтр"),
         "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
             "SONA ищет потенциальных друзей..."),
+        "friendsIntention": MessageLookupByLibrary.simpleMessage(
+            "Привет, я думаю, ты потрясающий. Давай подружимся?"),
+        "gore": MessageLookupByLibrary.simpleMessage("Жестокость"),
+        "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
+            "Эй, угадай, кто первым нарушит молчание?"),
+        "haveSonaSayHi":
+            MessageLookupByLibrary.simpleMessage("Пусть SONA поздоровается"),
+        "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
+            "Что вы думаете об одновременном переводе AI?"),
+        "iDigYourEnergy": MessageLookupByLibrary.simpleMessage(
+            "Твоя энергия мне очень нравится!"),
+        "iLikeYourStyle":
+            MessageLookupByLibrary.simpleMessage("Мне нравится твой стиль!"),
+        "imInterestedSomething": m0,
+        "imVeryInterestedInSomething": m1,
+        "interests": MessageLookupByLibrary.simpleMessage("Интересы"),
+        "interpretationOff": MessageLookupByLibrary.simpleMessage(
+            "Синхронный перевод ИИ: Выключен"),
+        "interpretationOn": MessageLookupByLibrary.simpleMessage(
+            "Синхронный перевод ИИ: Включен"),
+        "justSendALike":
+            MessageLookupByLibrary.simpleMessage("Просто отправьте лайк"),
+        "justTypeInYourLanguage": m2,
+        "letSONASayHiForYou": MessageLookupByLibrary.simpleMessage(
+            "Пусть SONA поздоровается за вас"),
+        "likedPageMonetizeButton":
+            MessageLookupByLibrary.simpleMessage("Проверьте их профили"),
+        "likedPageNoData": MessageLookupByLibrary.simpleMessage(
+            "Статус: Пока нет лайков\n\nЧто делать: Проявите инициативу\n\nПредложение: Загрузите ваши удовлетворительные фотографии\nНапишите подлинную биографию\nВыберите свои интересы"),
+        "likedYou": MessageLookupByLibrary.simpleMessage("Тебе нравился"),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage(
                 "Найти иностранцев в том же городе"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("Авторизовать местоположение"),
+        "matchPageSelectIdeas": m3,
+        "nearby": MessageLookupByLibrary.simpleMessage("Рядом"),
+        "newMatch": MessageLookupByLibrary.simpleMessage("Новое совпадение!"),
         "nextButton": MessageLookupByLibrary.simpleMessage("Следующий Шаг"),
+        "noMessageTips": MessageLookupByLibrary.simpleMessage(
+            "Статус: Нет сообщений\n\nПредложение: Перейти на страницу подбора пар\n\nПредложение: Создайте потрясающий профиль"),
+        "oopsNoDataRightNow":
+            MessageLookupByLibrary.simpleMessage("Ой, сейчас нет данных"),
+        "other": MessageLookupByLibrary.simpleMessage("Другое"),
+        "peopleFromYourWishlistGetMoreRecommendations":
+            MessageLookupByLibrary.simpleMessage(
+                "Настройки вашего списка желаний будут играть более значительную роль"),
+        "personalAttack": MessageLookupByLibrary.simpleMessage("Личная атака"),
+        "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
+            MessageLookupByLibrary.simpleMessage(
+                "Пожалуйста, проверьте ваш интернет или Нажмите для обновления и попробуйте снова"),
+        "pornography": MessageLookupByLibrary.simpleMessage("Порнография"),
+        "preference": MessageLookupByLibrary.simpleMessage("Предпочтение"),
+        "refresh": MessageLookupByLibrary.simpleMessage("Обновить"),
+        "report": MessageLookupByLibrary.simpleMessage("Сообщить"),
         "resendButton": MessageLookupByLibrary.simpleMessage("Переслать"),
+        "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
+            "Встреча с иностранцами рядом с вами"),
+        "scam": MessageLookupByLibrary.simpleMessage("Мошенничество"),
+        "screenshotEvidence":
+            MessageLookupByLibrary.simpleMessage("Скриншот доказательства"),
+        "seeProfile":
+            MessageLookupByLibrary.simpleMessage("Посмотреть профиль"),
+        "seeWhoLikeU":
+            MessageLookupByLibrary.simpleMessage("Смотрите, кто вас любит"),
         "selectCountryPageTitle":
             MessageLookupByLibrary.simpleMessage("Выбрать Страну"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("Последний шаг"),
+        "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
+            "⭕ SONA Interpretazione disattivata"),
+        "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
+            "Рекомендация Сона: Охлаждение.\nЧто делать: Ждать.\nПредложение: Посмотреть фильм?"),
+        "speakSameLanguage":
+            MessageLookupByLibrary.simpleMessage("Вы говорите на одном языке"),
+        "submitButton": MessageLookupByLibrary.simpleMessage("Отправить"),
+        "theyAreWaitingForYourReply":
+            MessageLookupByLibrary.simpleMessage("👆 Они ждут твоего ответа"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Сфотографировать"),
         "userAvatarOptionGallery":
@@ -90,13 +194,22 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Введи номер телефона"),
         "verifyCodePageTitle":
             MessageLookupByLibrary.simpleMessage("Введите код подтверждения"),
+        "wannaHollaAt": MessageLookupByLibrary.simpleMessage("Скажи привет!"),
+        "warningOpenExternalLink": MessageLookupByLibrary.simpleMessage(
+            "Внешняя ссылка. Проверьте, можно ли доверять источнику перед нажатием, так как неизвестные ссылки могут быть мошенничеством или красть данные. Процедите с осторожностью."),
+        "warningTitleCaution":
+            MessageLookupByLibrary.simpleMessage("Осторожно"),
+        "warningUnmatching": MessageLookupByLibrary.simpleMessage(
+            "После отмены сопряжения весь история чата будет удалена."),
+        "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Кто тебя любит"),
+        "whoLikesU": MessageLookupByLibrary.simpleMessage("Кто тебя любит"),
         "wishActivityAddTitle":
             MessageLookupByLibrary.simpleMessage("Добавьте вашу мысль"),
         "wishActivityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "Помочь вам найти компаньонов"),
         "wishActivityPickerTitle":
             MessageLookupByLibrary.simpleMessage("Хочешь сделать что-нибудь?"),
-        "wishCityPickerSkipButton": m0,
+        "wishCityPickerSkipButton": m4,
         "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "если вы туда поедете, Какие города вы хотите посетить?"),
         "wishCountryPickerSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -111,7 +224,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Недавно, наверное"),
         "wishDateOptionYear":
             MessageLookupByLibrary.simpleMessage("В течение года"),
-        "wishDatePickerSubtitle": m1,
-        "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("Когда")
+        "wishDatePickerSubtitle": m5,
+        "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("Когда"),
+        "wishList": MessageLookupByLibrary.simpleMessage("Список желаний"),
+        "wishes": MessageLookupByLibrary.simpleMessage("Желание"),
+        "youSeemCool": MessageLookupByLibrary.simpleMessage("Кажешься крутым")
       };
 }

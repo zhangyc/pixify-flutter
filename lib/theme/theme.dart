@@ -52,6 +52,7 @@ final themeData = ThemeData(
         color: Colors.black,
         fontSize: 16,
         fontWeight: FontWeight.w600,
+        height: 1.5,
         letterSpacing: 0
     ),
     titleSmall: TextStyle(
@@ -71,12 +72,6 @@ final themeData = ThemeData(
       fontSize: 20,
       fontWeight: FontWeight.w700,
       letterSpacing: 0
-    ),
-    headlineSmall: TextStyle(
-        color: fontColour,
-        fontSize: 20,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0
     ),
     bodyLarge: TextStyle(
         color: Colors.black,

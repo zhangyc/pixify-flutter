@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 
+import '../../../generated/l10n.dart';
+
 class BizActionItem extends StatelessWidget {
   const BizActionItem({super.key, required this.report, required this.block, required this.relation, required this.unMatch});
   final VoidCallback report;
@@ -39,7 +41,7 @@ class BizActionItem extends StatelessWidget {
             ],
           ):Container(),
           GestureDetector(
-            child: Text('Block',style: TextStyle(
+            child: Text(S.of(context).block,style: TextStyle(
               color: Colors.red
             ),),
             onTap: block,
@@ -48,7 +50,7 @@ class BizActionItem extends StatelessWidget {
             width: 16,
           ),
           GestureDetector(
-            child: Text('Report',style: TextStyle(
+            child: Text(S.of(context).report,style: TextStyle(
               color: Colors.black
             ),),
             onTap: report,

@@ -11,6 +11,8 @@ import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../../generated/l10n.dart';
+
 class LikedMeListView extends StatefulHookConsumerWidget {
   const LikedMeListView({
     super.key,
@@ -56,7 +58,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                 margin: EdgeInsets.only(bottom: 16),
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
-                  'New like (${likedMeUsers.where((u) => u.isNew).length})',
+                  '${S.of(context).whoLikesU} (${likedMeUsers.length})',
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -177,7 +179,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                            'Become Super SONA',
+                            S.of(context).checkOutTheirProfiles,
                             style: Theme.of(context).textTheme.titleSmall
                         ),
                         SonaIcon(icon: SonaIcons.forward)
@@ -200,7 +202,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                          'Who like you?',
+                          S.of(context).seeWhoLikeU,
                           style: Theme.of(context).textTheme.titleSmall
                       ),
                       SonaIcon(icon: SonaIcons.forward)

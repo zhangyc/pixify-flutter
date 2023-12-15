@@ -197,7 +197,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             if (_gender != null) Text(
-                                _gender!.name,
+                                _gender!.displayName,
                                 style: Theme.of(context).textTheme.bodyMedium
                             ) else Text(
                               S.current.choosePlaceholder,

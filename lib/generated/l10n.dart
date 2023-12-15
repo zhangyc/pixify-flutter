@@ -539,6 +539,686 @@ class S {
       args: [],
     );
   }
+
+  /// `Wishes`
+  String get wishes {
+    return Intl.message(
+      'Wishes',
+      name: 'wishes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interests`
+  String get interests {
+    return Intl.message(
+      'Interests',
+      name: 'interests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Block`
+  String get block {
+    return Intl.message(
+      'Block',
+      name: 'block',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Report`
+  String get report {
+    return Intl.message(
+      'Report',
+      name: 'report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Which of {gender, select, male {his} female {her} other {their}} ideas do you like?`
+  String matchPageSelectIdeas(String gender) {
+    return Intl.message(
+      'Which of ${Intl.gender(gender, male: 'his', female: 'her', other: 'their')} ideas do you like?',
+      name: 'matchPageSelectIdeas',
+      desc: '',
+      args: [gender],
+    );
+  }
+
+  /// `Just Send a Like`
+  String get justSendALike {
+    return Intl.message(
+      'Just Send a Like',
+      name: 'justSendALike',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DM`
+  String get dm {
+    return Intl.message(
+      'DM',
+      name: 'dm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wanna holla at...`
+  String get wannaHollaAt {
+    return Intl.message(
+      'Wanna holla at...',
+      name: 'wannaHollaAt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Let SONA say hi for you`
+  String get letSONASayHiForYou {
+    return Intl.message(
+      'Let SONA say hi for you',
+      name: 'letSONASayHiForYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I’m very interested in ‘{something}’!`
+  String imVeryInterestedInSomething(Object something) {
+    return Intl.message(
+      'I’m very interested in ‘$something’!',
+      name: 'imVeryInterestedInSomething',
+      desc: '',
+      args: [something],
+    );
+  }
+
+  /// `Filter`
+  String get filter {
+    return Intl.message(
+      'Filter',
+      name: 'filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preference`
+  String get preference {
+    return Intl.message(
+      'Preference',
+      name: 'preference',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wish List`
+  String get wishList {
+    return Intl.message(
+      'Wish List',
+      name: 'wishList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `People from your wishlist get more recommendations`
+  String get peopleFromYourWishlistGetMoreRecommendations {
+    return Intl.message(
+      'People from your wishlist get more recommendations',
+      name: 'peopleFromYourWishlistGetMoreRecommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nearby`
+  String get nearby {
+    return Intl.message(
+      'Nearby',
+      name: 'nearby',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Running into foreigners near you`
+  String get runningIntoForeignersNearYou {
+    return Intl.message(
+      'Running into foreigners near you',
+      name: 'runningIntoForeignersNearYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Age`
+  String get age {
+    return Intl.message(
+      'Age',
+      name: 'age',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sona Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?`
+  String get sonaRecommendationCooldown {
+    return Intl.message(
+      'Sona Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?',
+      name: 'sonaRecommendationCooldown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh`
+  String get refresh {
+    return Intl.message(
+      'Refresh',
+      name: 'refresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Oops, no data right now`
+  String get oopsNoDataRightNow {
+    return Intl.message(
+      'Oops, no data right now',
+      name: 'oopsNoDataRightNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check your internet or Tap to Refresh and try again`
+  String get pleaseCheckYourInternetOrTapToRefreshAndTryAgain {
+    return Intl.message(
+      'Please check your internet or Tap to Refresh and try again',
+      name: 'pleaseCheckYourInternetOrTapToRefreshAndTryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Block this person so you won't receive any messages from them`
+  String get blockThisPersonSoYouWontReceiveAnyMessagesFromThem {
+    return Intl.message(
+      'Block this person so you won\'t receive any messages from them',
+      name: 'blockThisPersonSoYouWontReceiveAnyMessagesFromThem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancelButton {
+    return Intl.message(
+      'Cancel',
+      name: 'cancelButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gore`
+  String get gore {
+    return Intl.message(
+      'Gore',
+      name: 'gore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pornography`
+  String get pornography {
+    return Intl.message(
+      'Pornography',
+      name: 'pornography',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scam`
+  String get scam {
+    return Intl.message(
+      'Scam',
+      name: 'scam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal Attack`
+  String get personalAttack {
+    return Intl.message(
+      'Personal Attack',
+      name: 'personalAttack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get other {
+    return Intl.message(
+      'Other',
+      name: 'other',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Screenshot evidence`
+  String get screenshotEvidence {
+    return Intl.message(
+      'Screenshot evidence',
+      name: 'screenshotEvidence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description (optional)`
+  String get descriptionOptional {
+    return Intl.message(
+      'Description (optional)',
+      name: 'descriptionOptional',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Submit`
+  String get submitButton {
+    return Intl.message(
+      'Submit',
+      name: 'submitButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Who likes you`
+  String get whoLIkesYou {
+    return Intl.message(
+      'Who likes you',
+      name: 'whoLIkesYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Liked you`
+  String get likedYou {
+    return Intl.message(
+      'Liked you',
+      name: 'likedYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `"I'm interested in {something}"`
+  String imInterestedSomething(Object something) {
+    return Intl.message(
+      '"I\'m interested in $something"',
+      name: 'imInterestedSomething',
+      desc: '',
+      args: [something],
+    );
+  }
+
+  /// `👆 They're waiting for your reply`
+  String get theyAreWaitingForYourReply {
+    return Intl.message(
+      '👆 They\'re waiting for your reply',
+      name: 'theyAreWaitingForYourReply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check out their profiles`
+  String get likedPageMonetizeButton {
+    return Intl.message(
+      'Check out their profiles',
+      name: 'likedPageMonetizeButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status: No likes yet\n\nWhat to do: Take the initiative\n\nSuggestion:\n"Self-portraits in light,\nA genuine bio's insight,\nInterests ignite."\n\nEmm..I mean...\nUpload some nice photos\nWrite a genuine bio\nPick your interests`
+  String get likedPageNoData {
+    return Intl.message(
+      'Status: No likes yet\n\nWhat to do: Take the initiative\n\nSuggestion:\n"Self-portraits in light,\nA genuine bio\'s insight,\nInterests ignite."\n\nEmm..I mean...\nUpload some nice photos\nWrite a genuine bio\nPick your interests',
+      name: 'likedPageNoData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat`
+  String get chat {
+    return Intl.message(
+      'Chat',
+      name: 'chat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Who likes you`
+  String get whoLikesU {
+    return Intl.message(
+      'Who likes you',
+      name: 'whoLikesU',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check out their profiles`
+  String get checkOutTheirProfiles {
+    return Intl.message(
+      'Check out their profiles',
+      name: 'checkOutTheirProfiles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Matched!`
+  String get newMatch {
+    return Intl.message(
+      'New Matched!',
+      name: 'newMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status: No messages\n\nWhat to do: Go to match\n\nSuggestion: Make an awesome profile`
+  String get noMessageTips {
+    return Intl.message(
+      'Status: No messages\n\nWhat to do: Go to match\n\nSuggestion: Make an awesome profile',
+      name: 'noMessageTips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See who likes you`
+  String get seeWhoLikeU {
+    return Intl.message(
+      'See who likes you',
+      name: 'seeWhoLikeU',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Have SONA Say Hi`
+  String get haveSonaSayHi {
+    return Intl.message(
+      'Have SONA Say Hi',
+      name: 'haveSonaSayHi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Just type in {lang}`
+  String justTypeInYourLanguage(Object lang) {
+    return Intl.message(
+      'Just type in $lang',
+      name: 'justTypeInYourLanguage',
+      desc: '',
+      args: [lang],
+    );
+  }
+
+  /// `You seem cool`
+  String get youSeemCool {
+    return Intl.message(
+      'You seem cool',
+      name: 'youSeemCool',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I like your style!`
+  String get iLikeYourStyle {
+    return Intl.message(
+      'I like your style!',
+      name: 'iLikeYourStyle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I dig your energy!`
+  String get iDigYourEnergy {
+    return Intl.message(
+      'I dig your energy!',
+      name: 'iDigYourEnergy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hey, I think you're pretty awesome. How about we hit it off as friends?`
+  String get friendsIntention {
+    return Intl.message(
+      'Hey, I think you\'re pretty awesome. How about we hit it off as friends?',
+      name: 'friendsIntention',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🔨🔨🔨 Don't mind me🔨🔨🔨 I'm just here to break the ice🔨🔨🔨`
+  String get breakIce {
+    return Intl.message(
+      '🔨🔨🔨 Don\'t mind me🔨🔨🔨 I\'m just here to break the ice🔨🔨🔨',
+      name: 'breakIce',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hey, guess who's gonna break the silence first?`
+  String get guessWhoBreakSilence {
+    return Intl.message(
+      'Hey, guess who\'s gonna break the silence first?',
+      name: 'guessWhoBreakSilence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See profile`
+  String get seeProfile {
+    return Intl.message(
+      'See profile',
+      name: 'seeProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unmatch`
+  String get buttonUnmatch {
+    return Intl.message(
+      'Unmatch',
+      name: 'buttonUnmatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI Interpretation: On`
+  String get interpretationOn {
+    return Intl.message(
+      'AI Interpretation: On',
+      name: 'interpretationOn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI Interpretation: Off`
+  String get interpretationOff {
+    return Intl.message(
+      'AI Interpretation: Off',
+      name: 'interpretationOff',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `After unmatching, all your chat history will be deleted.`
+  String get warningUnmatching {
+    return Intl.message(
+      'After unmatching, all your chat history will be deleted.',
+      name: 'warningUnmatching',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `⭕ SONA interpretation is turned off`
+  String get sonaInterpretationOff {
+    return Intl.message(
+      '⭕ SONA interpretation is turned off',
+      name: 'sonaInterpretationOff',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🤝 You guys speak the same language`
+  String get speakSameLanguage {
+    return Intl.message(
+      '🤝 You guys speak the same language',
+      name: 'speakSameLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy`
+  String get buttonCopy {
+    return Intl.message(
+      'Copy',
+      name: 'buttonCopy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get buttonDelete {
+    return Intl.message(
+      'Delete',
+      name: 'buttonDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How do you feel about AI interpretation?`
+  String get howDoUFeelAboutAI {
+    return Intl.message(
+      'How do you feel about AI interpretation?',
+      name: 'howDoUFeelAboutAI',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unsent. SONA will not translate prohibited words`
+  String get exceptionSonaContentFilterTips {
+    return Intl.message(
+      'Unsent. SONA will not translate prohibited words',
+      name: 'exceptionSonaContentFilterTips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to send, please try again later.`
+  String get exceptionFailedToSendTips {
+    return Intl.message(
+      'Failed to send, please try again later.',
+      name: 'exceptionFailedToSendTips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend`
+  String get buttonResend {
+    return Intl.message(
+      'Resend',
+      name: 'buttonResend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SONA is overloaded, please try again later.`
+  String get exceptionSonaOverloadedTips {
+    return Intl.message(
+      'SONA is overloaded, please try again later.',
+      name: 'exceptionSonaOverloadedTips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Caution`
+  String get warningTitleCaution {
+    return Intl.message(
+      'Caution',
+      name: 'warningTitleCaution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `External link. Verify source is trustworthy before tapping, as unknown links may be scams or steal data. Proceed with caution.`
+  String get warningOpenExternalLink {
+    return Intl.message(
+      'External link. Verify source is trustworthy before tapping, as unknown links may be scams or steal data. Proceed with caution.',
+      name: 'warningOpenExternalLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open Link`
+  String get buttonOpenLink {
+    return Intl.message(
+      'Open Link',
+      name: 'buttonOpenLink',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
