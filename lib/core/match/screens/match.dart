@@ -28,7 +28,6 @@ import '../util/local_data.dart';
 import '../widgets/custom_pageview/src/transformer_page_view.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/match_init_animation.dart';
-import '../widgets/wish_card.dart';
 
 
 class MatchScreen extends StatefulHookConsumerWidget {
@@ -145,7 +144,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               ),
             ),
           ),
-          (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading?Container():Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+          (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading||(users[currentPage].wishList.isNotEmpty&&users[currentPage].matched)?Container():
+          Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
             width: MediaQuery.of(context).size.width,child: Padding(
               padding:EdgeInsets.symmetric(
                 horizontal: 68
@@ -246,7 +246,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
 
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
   int current=1;
 
   void _initData() async{
@@ -379,7 +379,15 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           itemBuilder: (c,index) {
             MatchUserInfo info=users[index];
             if(info.id==-1){
-              return NoMoreWidget();
+              return NoMoreWidget(
+                onTap: (){
+                  _initData();
+                  _state=PageState.loading;
+                  setState(() {
+
+                  });
+                },
+              );
             }
             return ProfileWidget(
               relation: Relation.normal,
@@ -388,25 +396,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 },
               onMatch: (v){},
             );
-            // if(info.matched){
-            //
-            //   return WishCardWidget(context: context,
-            //     info: info,
-            //     next: (){
-            //       controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-            //     },
-            //
-            //   );
-            // }else {
-            //   return ProfileWidget(
-            //     relation: Relation.normal,
-            //     info:info,next:(){
-            //     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-            //
-            //   },
-            //     onMatch: (v){},
-            //   );
-            // }
           },
           pageController: controller,
           index: currentPage,
@@ -419,6 +408,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
             currentPage=value!;
+            setState(() {
+
+            });
             if (value != 0 && value % 3 == 0 ) {
               current++;
               _loadMore();
@@ -427,7 +419,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       );
 
     }else if(_state==PageState.noData){
-      return const NoMoreWidget();
+      return NoMoreWidget(onTap: (){
+        _initData();
+        _state=PageState.loading;
+        setState(() {
+
+        });
+      },);
     }
   }
 }

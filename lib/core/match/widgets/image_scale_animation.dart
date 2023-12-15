@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sona/core/match/bean/match_user.dart';
 
+import '../../../generated/assets.dart';
+
 class MyImageAnimation extends StatefulWidget {
   const MyImageAnimation({super.key, required this.info});
   final MatchUserInfo info;
@@ -10,8 +12,7 @@ class MyImageAnimation extends StatefulWidget {
 }
 
 class _MyImageAnimationState extends State<MyImageAnimation> {
-  double _containerWidth = 343; // 初始宽度
-  double _containerHeight = 457; // 初始高度
+
   @override
   void initState() {
     _startAnimation();
@@ -24,7 +25,7 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
       child: AnimatedContainer(
         duration: Duration(milliseconds: 500),
         curve: Curves.linearToEaseOut,
-        width: widget.info.matched ? 95 : 343,
+        width: widget.info.matched ? 95 : MediaQuery.of(context).size.width-16*2,
         height: widget.info.matched ? 118 : 457,
         child: widget.info.matched
             ? Container(
@@ -46,7 +47,7 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
           child: Stack(
             alignment: Alignment.bottomLeft,
             children: [
-              widget.info.avatar==null?Container():CachedNetworkImage(imageUrl: widget.info.avatar!,fit: BoxFit.cover,width: 343,height: 457,),
+              widget.info.avatar==null?Container():CachedNetworkImage(imageUrl: widget.info.avatar!,fit: BoxFit.cover,width: MediaQuery.of(context).size.width-16*2,height: 457,),
               Container(
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
@@ -86,7 +87,10 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
                     ),
                     Row(
                       children: [
-                        Icon(Icons.location_on,color: Colors.white,),
+                        Image.asset(Assets.iconsGps,width: 16,height: 16,),
+                        SizedBox(
+                          width: 4,
+                        ),
                         Text('${widget.info.currentCity}',style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,
@@ -113,8 +117,8 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
   void _startAnimation() {
     setState(() {
       // 在这里修改目标宽高比例
-      _containerWidth = 95;
-      _containerHeight = 118;
+      // _containerWidth = 95;
+      // _containerHeight = 118;
     });
   }
 }

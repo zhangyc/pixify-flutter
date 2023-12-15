@@ -3,29 +3,38 @@ import 'package:flutter/material.dart';
 import '../../../generated/assets.dart';
 
 class NoMoreWidget extends StatelessWidget {
-  const NoMoreWidget({super.key});
+  const NoMoreWidget({super.key, required this.onTap});
+  final Function onTap;
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.black,
-      width: MediaQuery.of(context).size.width,child: Column(
-        children: [
-          SizedBox(height: 128,),
-          ClipOval(
-            child: Image.asset(Assets.imagesError,width: 151,height: 148,fit: BoxFit.cover,),
+    return Container(color: Colors.white,
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(
+          horizontal: 33
+      ),child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(Assets.imagesError,width: 132,height: 166,fit: BoxFit.cover,),
+        SizedBox(height: 32,),
+        Text('Sona Recommendation: Cooldown \nWhat to do: Wait\nSuggestion: Watch a movie?',
+          style: TextStyle(
+              color: Color(0xff2c2c2c),
+              fontSize: 14
+
           ),
-          SizedBox(height: 10,),
-          const Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 30
-            ),
-            child: Text('Your recommendation is on cooldown \nIt will be available again tomorrow',
-              style: TextStyle(
-                  color: Colors.white
-              ),
-            ),
-          )
-        ],
-      ),
+        ),
+        SizedBox(height: 12,),
+        ElevatedButton(onPressed: (){
+          onTap.call();
+        }, child: Center(child: Text('Refresh',style: TextStyle(
+            color: Colors.white
+        ),)),
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xff2c2c2c)
+          ),
+        ),
+      ],
+    ),
 
     );
   }

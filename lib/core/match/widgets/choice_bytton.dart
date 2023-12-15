@@ -28,8 +28,13 @@ class ChoiceButton extends StatelessWidget {
           //   )
           // ]
         ),
-        child: Text(text,
-          maxLines: 1,
+        child: Text('$text',
+          maxLines: 3,
+          style: TextStyle(
+            fontSize: 16,
+            color: Color(0xff2c2c2c),
+            fontWeight: FontWeight.w500
+          ),
         ),
       ),
     );

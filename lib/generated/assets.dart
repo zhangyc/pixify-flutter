@@ -12,6 +12,7 @@ class Assets {
   static const String iconsEdit = 'assets/icons/edit.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsForward = 'assets/icons/forward.png';
+  static const String iconsGps = 'assets/icons/gps.png';
   static const String iconsHandle = 'assets/icons/handle.png';
   static const String iconsLike = 'assets/icons/like.png';
   static const String iconsLiked = 'assets/icons/liked.png';

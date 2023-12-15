@@ -26,7 +26,8 @@ class _WishListItemState extends State<WishListItem> {
       children: [
         const Text('Her wishes',style: TextStyle(
             color: Color(0xff2c2c2c),
-            fontWeight: FontWeight.w800
+            fontWeight: FontWeight.w800,
+            fontSize: 20
         ),),
         const SizedBox(
           height: 16,

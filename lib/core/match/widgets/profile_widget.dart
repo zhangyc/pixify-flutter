@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,7 +20,6 @@ import 'biz_action_item.dart';
 import 'choice_bytton.dart';
 import 'dialogs.dart';
 import 'galley_item.dart';
-import 'heard_item.dart';
 import 'interest_item.dart';
 import 'wishlist_item.dart';
 
@@ -155,12 +153,12 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                         padding: const EdgeInsets.symmetric(horizontal: 32),
                                         child: Text('Are you interested in her ideas？',style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 28
+                                            fontSize: 20
                                         ),),
                                       ),
-                                      _buildPageIndicator(),
+                                      widget.info.wishList.length>1?_buildPageIndicator():Container(),
                                       SizedBox(
-                                        height: 500+202,
+                                        height: 500+100,
                                         width: 500,
                                         child:PageView(
                                           onPageChanged: (value){
@@ -178,8 +176,8 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                                   height: 16,
                                                 ),
                                                 Container(
-                                                  width: 327,
-                                                  height: 262,
+                                                  // width: 327,
+                                                  // height: 262,
                                                   decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(24),
                                                     border: Border.all(
@@ -198,6 +196,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                                             width: 16,
                                                           ),
                                                           Text('${wish.countryName}',style: TextStyle(color: Colors.black),),
+                                                          SizedBox(width: 4,),
                                                           Text('${wish.countryFlag}')
                                                         ],
                                                       ),
@@ -235,7 +234,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                                   MatchApi.like(widget.info.id,
                                                       travelWishId: wish.id
                                                   );
-                                                }, child: Text('Just like ->'))
+                                                }, child: Text('Just Send a Like ->'))
 
                                               ],
                                             ),

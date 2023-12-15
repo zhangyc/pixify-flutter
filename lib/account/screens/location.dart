@@ -4,6 +4,7 @@ import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/location/location.dart';
 
+import '../../core/match/util/local_data.dart';
 import '../../generated/l10n.dart';
 import 'nation_language.dart';
 
@@ -80,13 +81,18 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void _next() async {
     final location = await determinePosition();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => NationAndLanguageScreen(
-      name: widget.name,
-      birthday: widget.birthday,
-      gender: widget.gender,
-      avatar: widget.avatar,
-      location: location,
-      country: widget.country
-    )));
+    longitude=location.longitude;
+    latitude=location.latitude;
+    if(mounted){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => NationAndLanguageScreen(
+          name: widget.name,
+          birthday: widget.birthday,
+          gender: widget.gender,
+          avatar: widget.avatar,
+          location: location,
+          country: widget.country
+      )));
+    }
+
   }
 }

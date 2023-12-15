@@ -13,7 +13,10 @@ class InterestItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Interest'),
+          Text('Interest',style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w800
+          ),),
           SizedBox(
             height: 16,
           ),

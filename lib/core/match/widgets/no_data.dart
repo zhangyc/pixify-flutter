@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../generated/assets.dart';
-import '../../../generated/l10n.dart';
 
 class NoDataWidget extends StatelessWidget {
   const NoDataWidget({super.key, required this.onTap});
@@ -10,8 +9,8 @@ class NoDataWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    return Container(color: Colors.white,child: Column(
+     mainAxisAlignment: MainAxisAlignment.center,
      children: [
-       SizedBox(height: 128,),
        Image.asset(Assets.imagesError,width: 132,height: 166,fit: BoxFit.cover,),
        SizedBox(height: 32,),
        Text('Oops, no data right now ',

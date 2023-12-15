@@ -16,7 +16,6 @@ class BackgroundColorController extends StateNotifier<String?> {
 }
 
 
-
 List whiteTable=[
   18301579950,
   18600463136,
