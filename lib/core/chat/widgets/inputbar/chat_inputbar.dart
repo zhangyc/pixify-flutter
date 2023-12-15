@@ -8,6 +8,7 @@ import 'package:sona/common/env.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../../../generated/l10n.dart';
 import '../../../../utils/locale/locale.dart';
 import 'mode_provider.dart';
 
@@ -24,6 +25,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
     this.maxLength = 160,
     this.focusNode,
     this.autofocus = false,
+    required this.sameLanguage,
     required this.onSuggestionTap,
     required this.onHookTap
   }) : super(key: key);
@@ -38,6 +40,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   final int maxLength;
   final FocusNode? focusNode;
   final bool autofocus;
+  final bool sameLanguage;
   final Future Function() onHookTap;
   final Future Function() onSuggestionTap;
 
@@ -135,12 +138,14 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
   Widget build(BuildContext context) {
     // final currentChatStyle = ref.watch(currentChatStyleProvider(widget.chatId));
     // final isMember = ref.watch(myProfileProvider)!.isMember;
-    Locale? myLocale;
-    if (ref.read(myProfileProvider)!.locale != null) {
-      final myL = findMatchedSonaLocale(ref.read(myProfileProvider)!.locale!).locale;
-      myLocale = Locale.fromSubtags(languageCode: myL.languageCode, scriptCode: myL.scriptCode, countryCode: myL.countryCode);
-    }
-    if (kDebugMode) print('my locale in input_bar: ${myLocale?.toLanguageTag()}');
+    final myL = findMatchedSonaLocale(ref.read(myProfileProvider)!.locale!);
+    final myLocale = Locale.fromSubtags(languageCode: myL.locale.languageCode, scriptCode: myL.locale.scriptCode, countryCode: myL.locale.countryCode);
+    final hintText = widget.sameLanguage
+        ? S.of(context).speakSameLanguage
+        : ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona
+            ? S.of(context).justTypeInYourLanguage(myL.displayName)
+            : S.of(context).sonaInterpretationOff;
+    if (kDebugMode) print('my locale in input_bar: ${myLocale.toLanguageTag()}');
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../generated/l10n.dart';
 import '../bean/match_user.dart';
 
 
@@ -24,7 +25,7 @@ class _WishListItemState extends State<WishListItem> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const Text('Her wishes',style: TextStyle(
+        Text(S.of(context).wishes,style: TextStyle(
             color: Color(0xff2c2c2c),
             fontWeight: FontWeight.w800
         ),),

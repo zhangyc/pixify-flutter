@@ -24,6 +24,7 @@ import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/toast/cooldown.dart';
 
 import '../../../common/models/user.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/dialog/subsciption.dart';
 import '../models/message_type.dart';
 import '../widgets/inputbar/mode_provider.dart';
@@ -184,6 +185,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         color: Colors.white,
         child: ChatInstructionInput(
           chatId: widget.otherSide.id,
+          sameLanguage: myLocale == otherLocale,
           onSubmit: _onSend,
           onSuggestionTap: _onSuggestionTap,
           onHookTap: _onHookTap,
@@ -220,7 +222,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 size: ColoredButtonSize.large,
                 loadingWhenAsyncAction: true,
                 onTap: _startUpLine,
-                text: '👋 Have Sona say "Hi"',
+                text: S.of(context).haveSonaSayHi,
                 borderColor: Colors.black
               ),
             ),
@@ -362,8 +364,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   void _showUnmatchConfirm() async {
     final result = await showConfirm(
         context: context,
-        title: 'Unmatch',
-        content: 'After unmatch, all mutual content between you will be cleared. '
+        title: S.of(context).buttonUnmatch,
+        content: S.of(context).warningUnmatching
     );
     if (result == true) {
       MatchApi.unmatch(widget.otherSide.id);
@@ -372,22 +374,22 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   void _toggleAIEnabled() {
     if (widget.otherSide.locale == mySide.locale) {
-      Fluttertoast.showToast(msg: 'Same language - no interpretation');
+      Fluttertoast.showToast(msg: S.of(context).speakSameLanguage);
       return;
     }
     ref.read(inputModeProvider(widget.otherSide.id).notifier).update((state) => state == InputMode.sona ? InputMode.manual : InputMode.sona);
   }
 
   void _showActions() async {
-    var aiEnabledStatusDescription = ref.read(inputModeProvider(widget.otherSide.id)) == InputMode.sona ? 'AI interpretation: on' : 'AI interpretation: off';
+    var aiEnabledStatusDescription = ref.read(inputModeProvider(widget.otherSide.id)) == InputMode.sona ? S.of(context).interpretationOn : S.of(context).interpretationOff;
     if (widget.otherSide.locale == mySide.locale) {
-      aiEnabledStatusDescription = 'AI interpretation: off (same language)';
+      aiEnabledStatusDescription = S.of(context).speakSameLanguage;
     }
     final action = await showActionButtons(
         context: context,
         options: {
-          'See profile': 'see_profile',
-          'Unmatch': 'unmatch',
+          S.of(context).seeProfile: 'see_profile',
+          S.of(context).buttonUnmatch: 'unmatch',
           aiEnabledStatusDescription: 'toggle_aienabled'
         }
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../generated/l10n.dart';
 import '../bean/match_user.dart';
 
 
@@ -13,7 +14,7 @@ class InterestItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Interest'),
+          Text(S.of(context).interests),
           SizedBox(
             height: 16,
           ),

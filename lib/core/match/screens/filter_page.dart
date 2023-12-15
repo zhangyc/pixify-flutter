@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:sona/core/match/util/local_data.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
 
 class FilterPage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _FilterPageState extends State<FilterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Filter'),
+        title: Text(S.of(context).filter),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -36,7 +37,7 @@ class _FilterPageState extends State<FilterPage> {
 
             return Column(
               children: [
-                Container(child: Text('Preference'),
+                Container(child: Text(S.of(context).preference),
                   alignment: Alignment.centerLeft,
                 ),
                 SizedBox(
@@ -61,7 +62,7 @@ class _FilterPageState extends State<FilterPage> {
                 SizedBox(
                   height: 24,
                 ),
-                Align(child: Text('Gender'),alignment: Alignment.centerLeft,),
+                Align(child: Text(S.of(context).userGenderInputLabel),alignment: Alignment.centerLeft,),
                 SizedBox(
                   height: 12,
                 ),
@@ -88,7 +89,7 @@ class _FilterPageState extends State<FilterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Age'),
+                        Text(S.of(context).age),
                         Text('$currentFilterMinAge-$currentFilterMaxAge')
                       ],
                     ),
@@ -244,12 +245,12 @@ class _P{
   _P(this.title,this.subTitle,this.value);
 }
 List<_P> ps=[
-  _P('Wishlist', 'People from your wishlist get more recommendations','WISH'),
-  _P('Nearby', 'Running into foreigners near you','LOCAL'),
+  _P(S.current.wishList, S.current.peopleFromYourWishlistGetMoreRecommendations,'WISH'),
+  _P(S.current.nearby, S.current.runningIntoForeignersNearYou,'LOCAL'),
 ];
 List<_Gender> genders=[
-  _Gender('Male', 1),
-  _Gender('Female', 2),
+  _Gender(S.current.userGenderOptionMale, 1),
+  _Gender(S.current.userGenderOptionFemale, 2),
   _Gender('All People',null),
 ];
 class _Gender{

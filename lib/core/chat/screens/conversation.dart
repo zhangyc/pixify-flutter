@@ -12,6 +12,7 @@ import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../../generated/l10n.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../models/message.dart';
 import '../../like_me/widgets/liked_me.dart';
@@ -44,7 +45,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Chat', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+        title: Text(S.of(context).chat, style: Theme.of(context).textTheme.headlineLarge?.copyWith(
             fontSize: 28,
             fontWeight: FontWeight.w900
         )),
@@ -106,7 +107,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
   }
 
   Future _showConversationActions(ImConversation conversation) async {
-    final choice = await showActionButtons<String>(context: context, options: {'Delete': 'delete'});
+    final choice = await showActionButtons<String>(context: context, options: {S.of(context).buttonDelete: 'delete'});
     if (choice == 'delete') {
       deleteChat(id: conversation.otherSide.id);
     }
@@ -127,13 +128,16 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
 
   Widget _noChats() {
     return SliverToBoxAdapter(
-      child: Center(
+      child: Container(
+        alignment: Alignment.center,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset('assets/images/no_content.png', width: 272),
+            Image.asset('assets/images/data_empty.png', width: 272),
             const SizedBox(height: 20),
+            Text(S.of(context).noMessageTips)
           ],
         ),
       ),

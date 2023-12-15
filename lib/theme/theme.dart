@@ -46,61 +46,62 @@ final themeData = ThemeData(
         color: Colors.black,
         fontSize: 20,
         fontWeight: FontWeight.w800,
-        letterSpacing: 1
+        letterSpacing: 0
     ),
     titleMedium: TextStyle(
         color: Colors.black,
         fontSize: 16,
         fontWeight: FontWeight.w600,
-        letterSpacing: 1
+        height: 1.5,
+        letterSpacing: 0
     ),
     titleSmall: TextStyle(
         color: fontColour,
         fontSize: 14,
         fontWeight: FontWeight.w600,
-        letterSpacing: 1
+        letterSpacing: 0
     ),
     headlineLarge: TextStyle(
       color: fontColour,
       fontSize: 32,
       fontWeight: FontWeight.w700,
-      letterSpacing: 1
+      letterSpacing: 0
     ),
     headlineMedium: TextStyle(
       color: fontColour,
       fontSize: 20,
       fontWeight: FontWeight.w700,
-      letterSpacing: 1
+      letterSpacing: 0
     ),
     bodyLarge: TextStyle(
         color: Colors.black,
         fontSize: 18,
         fontWeight: FontWeight.w500,
-        letterSpacing: 1
+        letterSpacing: 0
     ),
     bodyMedium: TextStyle(
       color: fontColour,
       fontSize: 16,
       fontWeight: FontWeight.w400,
-      letterSpacing: 1
+      letterSpacing: 0
     ),
     bodySmall: TextStyle(
       color: fontColour,
       fontSize: 14,
       fontWeight: FontWeight.w400,
-      letterSpacing: 0.12,
+      letterSpacing: 0,
     ),
     labelMedium: TextStyle(
         color: Color(0xFF727272),
         fontSize: 14,
         fontWeight: FontWeight.w400,
-        letterSpacing: 1
+        letterSpacing: 0
     ),
     labelSmall: TextStyle(
         color: Color(0xA8111111),
         fontSize: 12,
         fontWeight: FontWeight.w400,
-        letterSpacing: 1
+        letterSpacing: 0
     )
   ),
   buttonTheme: const ButtonThemeData(

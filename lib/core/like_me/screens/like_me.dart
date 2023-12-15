@@ -10,6 +10,7 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../../../common/widgets/image/user_avatar.dart';
+import '../../../generated/l10n.dart';
 import '../models/social_user.dart';
 
 class LikeMeScreen extends StatefulHookConsumerWidget {
@@ -38,7 +39,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
     isMember = ref.watch(myProfileProvider)!.isMember;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Who liked you', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+        title: Text(S.of(context).whoLikesU, style: Theme.of(context).textTheme.headlineLarge?.copyWith(
           fontSize: 28,
           fontWeight: FontWeight.w900
         )),
@@ -46,7 +47,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
       ),
       body: ref.watch(asyncLikedMeProvider).when(
         data: (data) => data.isNotEmpty ? MasonryGridView.builder(
-          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 80),
+          padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 130),
           mainAxisSpacing: 8,
           crossAxisSpacing: 8,
           gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
@@ -54,7 +55,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
           ),
           itemBuilder: (BuildContext context, int index) => _itemBuilder(data[index]),
           itemCount: data.length
-        ) : Center(child: Text('No data')),
+        ) : Center(child: Text(S.of(context).likedPageNoData, style: Theme.of(context).textTheme.titleMedium)),
         error: (_, __) => GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () => ref.read(asyncLikedMeProvider.notifier).refresh(false),
@@ -63,13 +64,13 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
         loading: () => Center(child: SizedBox(width: 32, height: 32, child: CircularProgressIndicator()))
       ),
       floatingActionButton: !ref.read(myProfileProvider)!.isMember ? Padding(
-        padding: EdgeInsets.only(left: 16, right: 16, bottom: 50),
+        padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom),
         child: OutlinedButton(
           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unLockSona(),fromTag: FromTag.pay_chatlist_likedme))),
           style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
             backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806)),
           ),
-          child: Text('Become Super SoNA', style: Theme.of(context).textTheme.titleMedium),
+          child: Text(S.of(context).checkOutTheirProfiles, style: Theme.of(context).textTheme.titleMedium),
         ),
       ) : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -175,6 +176,14 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
             padding: const EdgeInsets.only(top: 8),
             child: Text(
               u.hang,
+              style: Theme.of(context).textTheme.titleSmall,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ) else Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              S.of(context).likedYou,
               style: Theme.of(context).textTheme.titleSmall,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

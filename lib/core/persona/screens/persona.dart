@@ -17,6 +17,7 @@ import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 
+import '../../../generated/l10n.dart';
 import '../../travel_wish/providers/my_wish.dart';
 
 class PersonaScreen extends StatefulHookConsumerWidget {
@@ -60,7 +61,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
               margin: EdgeInsets.only(top: 18),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                'Wish List',
+                S.of(context).wishList,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -77,7 +78,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                       onTap: () async {
                         final action = await showActionButtons(
                             context: context,
-                            options: {'Edit': 'edit', 'Delete': 'delete'}
+                            options: {'Edit': 'edit', S.of(context).buttonDelete: 'delete'}
                         );
                         if (action == 'delete') {
                           final resp = await deleteMyWishe(wish.id);
