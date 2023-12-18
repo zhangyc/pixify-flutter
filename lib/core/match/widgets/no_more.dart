@@ -7,11 +7,7 @@ class NoMoreWidget extends StatelessWidget {
   final Function onTap;
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.white,
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.symmetric(
-          horizontal: 33
-      ),child: Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(Assets.imagesError,width: 132,height: 166,fit: BoxFit.cover,),
@@ -24,18 +20,24 @@ class NoMoreWidget extends StatelessWidget {
           ),
         ),
         SizedBox(height: 12,),
-        ElevatedButton(onPressed: (){
-          onTap.call();
-        }, child: Center(child: Text('Refresh',style: TextStyle(
-            color: Colors.white
-        ),)),
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xff2c2c2c)
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 33
+          ),
+          child: ElevatedButton(onPressed: (){
+            onTap.call();
+          }, child: Container(child: Text('Refresh',style: TextStyle(
+              color: Colors.white,
+          ),),
+            height: 56,
+            alignment: Alignment.center,
+          ),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xff2c2c2c)
+            ),
           ),
         ),
       ],
-    ),
-
     );
   }
 }

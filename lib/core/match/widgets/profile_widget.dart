@@ -46,216 +46,196 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Column(
-          children: [
-            // (widget.relation!=Relation.normal)?SizedBox(
-            //   height: MediaQuery.of(context).viewPadding.top,
-            // ):
-            // SizedBox(
-            //   height: MediaQuery.of(context).viewPadding.top+58,
-            // ),
-            // Container(alignment: Alignment.centerLeft,child: (widget.relation!=Relation.normal)?IconButton(onPressed: (){
-            //      Navigator.pop(context);
-            //     },
-            //     icon: const Icon(Icons.arrow_back_ios_new)):Container(),
-            // ),
-            const SizedBox(
-              height: 8,
-            ),
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Stack(
+        CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16
+                    ),
+                    child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16
-                          ),
-                          child: Column(
-                            children: [
-                              //HeardItem(userInfo: info,),
-                              //HeardInitAnimation(child: ),
-                              ///头像，动画。
-                              MyImageAnimation(info: widget.info),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              Stack(
-                                children: [
-                                  widget.info.matched?Container():Column(
-                                    children: [
-                                      WishListItem(wishes: info.wishList,),
-                                      SizedBox(
-                                        height: 16,
+                        //HeardItem(userInfo: info,),
+                        //HeardInitAnimation(child: ),
+                        ///头像，动画。
+                        MyImageAnimation(info: widget.info),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Stack(
+                          children: [
+                            widget.info.matched?Container():Column(
+                              children: [
+                                WishListItem(wishes: info.wishList,),
+                                SizedBox(
+                                  height: 16,
+                                ),
+                                BioItem(bio: info.bio??'',),
+                                SizedBox(
+                                  height: 16,
+                                ),
+                                GalleyItem(images: info.photos,),
+                                InterestItem(interest: info.interest,),
+                                BizActionItem(report: () async{
+                                  SonaAnalytics.log(MatchEvent.match_report.name);
+                                  final r =await showReport(context, info.id);
+                                  if (r == true) {
+                                    ///users.removeAt(currentPage);
+                                    widget.next.call();
+                                    if (mounted) setState(() {});
+                                  }
+                                }, block: () async{
+                                  bool? result=await showConfirm(context: context,
+                                      title:'Block',
+                                      content: 'Do you wanna dissolve relationship with',
+                                      confirmText: 'Block',
+                                      danger: true
+                                  );
+                                  if(result!=true){
+                                    return;
+                                  }
+                                  final resp = await matchAction(userId: info.id, action: MatchAction.block);
+                                  if (resp.statusCode == 0) {
+                                    ///users.removeAt(currentPage);
+                                    widget.next.call();
+                                    if (mounted) setState(() {});
+                                    Fluttertoast.showToast(msg: 'The user has been blocked');
+                                    SonaAnalytics.log('post_block');
+                                  }
+                                },
+                                  unMatch: () async{
+                                    bool? result=await showConfirm(context: context,
+                                        title:'Unmatch',
+                                        content: 'Do you wanna dissolve relationship with',
+                                        confirmText: 'Dissolve'
+                                    );
+                                    if(result!=true){
+                                      return;
+                                    }
+                                    final resp = await matchAction(userId: info.id, action: MatchAction.unmatch);
+                                    if (resp.statusCode == 0) {
+                                      ///users.removeAt(currentPage);
+                                      widget.next.call();
+                                      if (mounted) setState(() {});
+                                      Fluttertoast.showToast(msg: 'Unmatch Success');
+                                      SonaAnalytics.log('post_block');
+                                    }
+                                  },
+                                  relation: widget.relation,
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).padding.bottom+64,
+                                ),
+                              ],
+                            ),
+                            !widget.info.matched?Container():Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                                  child: Text('Are you interested in her ideas？',style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20
+                                  ),),
+                                ),
+                                widget.info.wishList.length>1?_buildPageIndicator():Container(),
+                                SizedBox(
+                                  height: 500+100,
+                                  width: 500,
+                                  child:PageView(
+                                    onPageChanged: (value){
+                                      _currentPage = value;
+                                      ref.read(backgroundImageProvider.notifier).updateBgImage(widget.info.wishList[value].pic!);
+                                    },
+                                    controller: pageController,
+                                    children: widget.info.wishList.map((wish) => Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 8
                                       ),
-                                      BioItem(bio: info.bio??'',),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
-                                      GalleyItem(images: info.photos,),
-                                      InterestItem(interest: info.interest,),
-                                      BizActionItem(report: () async{
-                                        SonaAnalytics.log(MatchEvent.match_report.name);
-                                        final r =await showReport(context, info.id);
-                                        if (r == true) {
-                                          ///users.removeAt(currentPage);
-                                          widget.next.call();
-                                          if (mounted) setState(() {});
-                                        }
-                                      }, block: () async{
-                                        bool? result=await showConfirm(context: context,
-                                            title:'Block',
-                                            content: 'Do you wanna dissolve relationship with',
-                                            confirmText: 'Block',
-                                            danger: true
-                                        );
-                                        if(result!=true){
-                                          return;
-                                        }
-                                        final resp = await matchAction(userId: info.id, action: MatchAction.block);
-                                        if (resp.statusCode == 0) {
-                                          ///users.removeAt(currentPage);
-                                          widget.next.call();
-                                          if (mounted) setState(() {});
-                                          Fluttertoast.showToast(msg: 'The user has been blocked');
-                                          SonaAnalytics.log('post_block');
-                                        }
-                                      },
-                                        unMatch: () async{
-                                          bool? result=await showConfirm(context: context,
-                                              title:'Unmatch',
-                                              content: 'Do you wanna dissolve relationship with',
-                                              confirmText: 'Dissolve'
-                                          );
-                                          if(result!=true){
-                                            return;
-                                          }
-                                          final resp = await matchAction(userId: info.id, action: MatchAction.unmatch);
-                                          if (resp.statusCode == 0) {
-                                            ///users.removeAt(currentPage);
-                                            widget.next.call();
-                                            if (mounted) setState(() {});
-                                            Fluttertoast.showToast(msg: 'Unmatch Success');
-                                            SonaAnalytics.log('post_block');
-                                          }
-                                        },
-                                        relation: widget.relation,
-                                      ),
-                                      SizedBox(
-                                        height: MediaQuery.of(context).padding.bottom+64,
-                                      ),
-                                    ],
-                                  ),
-                                  !widget.info.matched?Container():Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 32),
-                                        child: Text('Are you interested in her ideas？',style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20
-                                        ),),
-                                      ),
-                                      widget.info.wishList.length>1?_buildPageIndicator():Container(),
-                                      SizedBox(
-                                        height: 500+100,
-                                        width: 500,
-                                        child:PageView(
-                                          onPageChanged: (value){
-                                            _currentPage = value;
-                                            ref.read(backgroundImageProvider.notifier).updateBgImage(widget.info.wishList[value].pic!);
-                                          },
-                                          controller: pageController,
-                                          children: widget.info.wishList.map((wish) => Container(
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 8
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 16,
+                                          ),
+                                          Container(
+                                            // width: 327,
+                                            // height: 262,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(24),
+                                              border: Border.all(
+                                                  color: Colors.black,
+                                                  width: 2
+                                              ),
                                             ),
                                             child: Column(
                                               children: [
                                                 SizedBox(
                                                   height: 16,
                                                 ),
-                                                Container(
-                                                  // width: 327,
-                                                  // height: 262,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(24),
-                                                    border: Border.all(
-                                                        color: Colors.black,
-                                                        width: 2
+                                                Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 16,
                                                     ),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 16,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 16,
-                                                          ),
-                                                          Text('${wish.countryName}',style: TextStyle(color: Colors.black),),
-                                                          SizedBox(width: 4,),
-                                                          Text('${wish.countryFlag}')
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 16,
-                                                      ),
-                                                      Padding(
-                                                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                                                        child: Column(
-                                                          children: List.generate(wish.activities.length, (index2) => Padding(
-                                                            padding: const EdgeInsets.only(bottom: 8.0),
-                                                            child: ChoiceButton(text: wish.activities[index2].title??'', onTap: () {
-                                                              ///点击切换，下一个用户.并且调用like接口
-                                                              MatchApi.like(widget.info.id,
-                                                                  activityId: wish.activities[index2].id,
-                                                                  travelWishId: wish.id
-                                                              );
-                                                              ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-
-                                                              widget.next.call();
-                                                            },),
-                                                          )),
-                                                        ),
-                                                      ),
-
-                                                    ],
-                                                  ),
+                                                    Text('${wish.countryName}',style: TextStyle(color: Colors.black),),
+                                                    SizedBox(width: 4,),
+                                                    Text('${wish.countryFlag}')
+                                                  ],
                                                 ),
                                                 SizedBox(
                                                   height: 16,
                                                 ),
-                                                // TextButton(onPressed: (){
-                                                //   widget.next.call();
-                                                //   ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-                                                //   MatchApi.like(widget.info.id,
-                                                //       travelWishId: wish.id
-                                                //   );
-                                                // }, child: Text('Just Send a Like ->'))
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                  child: Column(
+                                                    children: List.generate(wish.activities.length, (index2) => Padding(
+                                                      padding: const EdgeInsets.only(bottom: 8.0),
+                                                      child: ChoiceButton(text: wish.activities[index2].title??'', onTap: () {
+                                                        ///点击切换，下一个用户.并且调用like接口
+                                                        MatchApi.like(widget.info.id,
+                                                            activityId: wish.activities[index2].id,
+                                                            travelWishId: wish.id
+                                                        );
+                                                        ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+
+                                                        widget.next.call();
+                                                      },),
+                                                    )),
+                                                  ),
+                                                ),
 
                                               ],
                                             ),
-                                          )).toList(),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              )
+                                          ),
+                                          SizedBox(
+                                            height: 16,
+                                          ),
+                                          // TextButton(onPressed: (){
+                                          //   widget.next.call();
+                                          //   ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+                                          //   MatchApi.like(widget.info.id,
+                                          //       travelWishId: wish.id
+                                          //   );
+                                          // }, child: Text('Just Send a Like ->'))
 
-                            ],
-                          ),
-                        ),
+                                        ],
+                                      ),
+                                    )).toList(),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
+
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
+
           ],
         ),
         (widget.relation==Relation.likeMe)?Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,

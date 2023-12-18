@@ -325,7 +325,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         List list= resp.data;
 
         if(list.isEmpty){
-          _state=PageState.noData;
+          //_state=PageState.noData;
         }else {
           _state=PageState.success;
         }
