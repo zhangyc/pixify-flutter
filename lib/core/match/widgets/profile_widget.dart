@@ -8,6 +8,7 @@ import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
 import '../../../common/screens/profile.dart';
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/dialog/report.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
@@ -134,7 +135,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 32),
-                                  child: Text('Are you interested in her ideas？',style: TextStyle(
+                                  child: Text(S.of(context).matchPageSelectIdeas(widget.info.gender!.name.toLowerCase()),style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 20
                                   ),),

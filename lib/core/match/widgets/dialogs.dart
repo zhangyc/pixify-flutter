@@ -72,7 +72,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                             LengthLimitingTextInputFormatter(160), // Maximum length of 10 characters
                           ],
                           decoration: InputDecoration(
-                              hintText: 'Enter text here',
+                              hintText: S.of(context).wannaHollaAt,
                               border:OutlineInputBorder(
                                   borderSide: const BorderSide(
                                       color: Colors.black,
