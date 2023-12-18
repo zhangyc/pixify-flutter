@@ -287,7 +287,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                     }else {
                       SonaAnalytics.log(MatchEvent.match_like_limit.name);
                       Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                        return SubscribePage(SubscribeShowType.unLimitedLikes(),fromTag: FromTag.pay_match_likelimit,);
+                        return SubscribePage(SubscribeShowType.unlockUnlimitedLikes(),fromTag: FromTag.pay_match_likelimit,);
                       }));
                     }
                   },
