@@ -78,6 +78,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(Duration(milliseconds: 500),(){
         if(_scrollController.hasClients){
+
           _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
           setState(() {
 
@@ -492,7 +493,10 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       setState(() {
         _isAvailable = isAvailable;
         _products = productDetailResponse.productDetails;
-        _productDetails=_products.last;
+        if(_products.isNotEmpty){
+          _productDetails=_products.firstWhere((element) => element.id==biannually);
+        }
+        //_productDetails=_products.last;
         _notFoundIds = productDetailResponse.notFoundIDs;
         // _consumables = consumables;
         _purchasePending = false;

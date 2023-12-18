@@ -234,7 +234,64 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
         (widget.relation==Relation.likeMe)?Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
           width: MediaQuery.of(context).size.width,child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 68),
-            child: Row(
+            child: (widget.relation==Relation.likeMe)?Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
+                  onTap: (){
+                    widget.next.call();
+                    MatchApi.skip(info.id);
+
+                  },
+                ),
+                SizedBox(
+                  width: 48,
+                ),
+                GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
+                  onTap: (){
+                    // showMatched(context,target: info,next: (){
+                    //   //pageController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.linearToEaseOut);
+                    // });
+                    ///是否能like
+                    if(canLike){
+
+                      if(like>0){
+                        like=like-1;
+                      }
+                      //currentPage=index;
+                      ///如果对方喜欢我。
+                      if(info.likeMe==1){
+                        MatchApi.like(info.id);
+                        ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                        showMatched(context,target: info,next: (){
+                          widget.next.call();
+                        });
+                      }else{
+                        ///
+                        if(info.wishList.isEmpty){
+                          MatchApi.like(info.id);
+                          ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+                          widget.next.call();
+                        }else {
+                          widget.onMatch.call(true);
+                        }
+                      }
+
+                      setState(() {
+
+                      });
+                      SonaAnalytics.log(MatchEvent.match_like.name);
+
+                    }else {
+                      SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                      Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                        return SubscribePage(SubscribeShowType.unLimitedLikes(),fromTag: FromTag.pay_match_likelimit,);
+                      }));
+                    }
+                  },
+                ),
+              ],
+            ):Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
