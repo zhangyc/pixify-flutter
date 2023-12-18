@@ -50,7 +50,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Direct Message'),
+                        Text(S.of(context).dm),
                         GestureDetector(child: Image.asset(Assets.iconsSkip,width: 40,height: 40,),onTap: (){
                           Navigator.pop(context);
                         },

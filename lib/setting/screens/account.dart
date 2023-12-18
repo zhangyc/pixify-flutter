@@ -14,6 +14,7 @@ import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/picker/gender.dart';
 
+import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
 import 'package:sona/core/match/screens/match.dart';
 class AccountSettingScreen extends StatefulHookConsumerWidget {
