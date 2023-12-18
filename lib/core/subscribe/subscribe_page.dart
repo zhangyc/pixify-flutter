@@ -168,121 +168,127 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Stack(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Positioned(child: Image.asset(widget.showType.path,width: 150,height: 150,),right: 0,),
+            Column(
               children: [
-                Positioned(child: Image.asset(widget.showType.path,width: 150,height: 150,),right: 0,),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Text(widget.showType.label,style: TextStyle(
-                        color: Color(0xff2c2c2c),
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900
-                    ),),
-                    Text(''),
-                  ],
+                Container(
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Text(widget.showType.label,style: TextStyle(
+                          color: Color(0xff2c2c2c),
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900
+                      ),),
+                      Text(''),
+                    ],
+                  ),
                 ),
+                Container(
+                  child: PowersWidget(),
+                ),
+                Container(
+                  child: SizedBox(
+                    height: 10,
+                  ),
+                ),
+                Container(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 500,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: AssetImage(Assets.imagesSubBg),fit: BoxFit.fitHeight),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 55,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text('SONA Plus',style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xff2c2c2c)
+                          ),),
+                        ),
+                        _buildProductList(),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+
+                          child: RichText(
+                            text:TextSpan(
+                                text: S.current.subscriptionAgreementPrefix(Platform.isAndroid ? 'Play Store' : 'Apple ID'),
+                                style: const TextStyle(
+                                    color: Color(0xffa9a9a9)
+                                ),
+                                children: [
+                                  TextSpan(
+                                      text: S.current.subscriptionAgreement,
+                                      recognizer: TapGestureRecognizer()..onTap = () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (c){
+                                          return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                                        }));
+                                      },
+                                      style: const TextStyle(
+                                          color: Color(0xffEA01FF)
+                                      )
+                                  ),
+                                  TextSpan(text: S.current.subscriptionAgreementSuffix),
+                                ]
+                            ),
+
+                          ),
+                        ),
+                        Visibility(
+                          visible: Platform.isIOS,
+                          child: TextButton(
+                              onPressed: (){
+                                bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                                if(isMember){
+                                  Fluttertoast.showToast(msg: S.of(context).buttonAlreadyPlus);
+                                } else {
+                                  if (hasPurchased == true) {
+                                    inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
+                                  } else {
+                                    Fluttertoast.showToast(msg: 'Failed to restore, can\'t find records.');
+                                  }
+                                }
+                              },
+                              child: Text(
+                                  'Restore',
+                                  style: const TextStyle(
+                                      color: Color(0xffEA01FF)
+                                  )
+                              )
+                          ),
+                        )
+
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Container(
+                    color: Color(0xffFFE806),
+                    height: 100,
+                  ),
+                )
+
               ],
             ),
-          ),
-          SliverToBoxAdapter(
-            child: PowersWidget(),
-          ),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: 10,
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 500,
-              decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage(Assets.imagesSubBg),fit: BoxFit.fitHeight),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 55,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('SONA Plus'),
-                  ),
-                  _buildProductList(),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-
-                    child: RichText(
-                      text:TextSpan(
-                          text: S.current.subscriptionAgreementPrefix(Platform.isAndroid ? 'Play Store' : 'Apple ID'),
-                          style: const TextStyle(
-                              color: Color(0xffa9a9a9)
-                          ),
-                          children: [
-                            TextSpan(
-                                text: S.current.subscriptionAgreement,
-                                recognizer: TapGestureRecognizer()..onTap = () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (c){
-                                    return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
-                                  }));
-                                },
-                                style: const TextStyle(
-                                    color: Color(0xffEA01FF)
-                                )
-                            ),
-                            TextSpan(text: S.current.subscriptionAgreementSuffix),
-                          ]
-                      ),
-
-                    ),
-                  ),
-                  Visibility(
-                    visible: Platform.isIOS,
-                    child: TextButton(
-                        onPressed: (){
-                          bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                          if(isMember){
-                            Fluttertoast.showToast(msg: S.of(context).buttonAlreadyPlus);
-                          } else {
-                            if (hasPurchased == true) {
-                              inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
-                            } else {
-                              Fluttertoast.showToast(msg: 'Failed to restore, can\'t find records.');
-                            }
-                          }
-                        },
-                        child: Text(
-                            'Restore',
-                            style: const TextStyle(
-                                color: Color(0xffEA01FF)
-                            )
-                        )
-                    ),
-                  )
-
-                ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              color: Color(0xffFFE806),
-              height: 100,
-            ),
-          )
-
-        ],
+          ],
+        ),
       ),
 
     );
