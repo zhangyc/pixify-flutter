@@ -63,7 +63,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
         ),
         loading: () => Center(child: SizedBox(width: 32, height: 32, child: CircularProgressIndicator()))
       ),
-      floatingActionButton: !ref.read(myProfileProvider)!.isMember ? Padding(
+      floatingActionButton: !ref.read(myProfileProvider)!.isMember && ref.watch(asyncLikedMeProvider).hasValue && ref.watch(asyncLikedMeProvider).value!.isNotEmpty ? Padding(
         padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom),
         child: OutlinedButton(
           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unLockSona(),fromTag: FromTag.pay_chatlist_likedme))),
