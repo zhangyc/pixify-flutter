@@ -50,7 +50,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Direct Message'),
+                        Text(S.of(context).dm),
                         GestureDetector(child: Image.asset(Assets.iconsSkip,width: 40,height: 40,),onTap: (){
                           Navigator.pop(context);
                         },
@@ -72,7 +72,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                             LengthLimitingTextInputFormatter(160), // Maximum length of 10 characters
                           ],
                           decoration: InputDecoration(
-                              hintText: 'Enter text here',
+                              hintText: S.of(context).wannaHollaAt,
                               border:OutlineInputBorder(
                                   borderSide: const BorderSide(
                                       color: Colors.black,
