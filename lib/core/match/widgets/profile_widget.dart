@@ -48,12 +48,12 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
       children: [
         Column(
           children: [
-            (widget.relation!=Relation.normal)?SizedBox(
-              height: MediaQuery.of(context).viewPadding.top,
-            ):
-            SizedBox(
-              height: MediaQuery.of(context).viewPadding.top+58,
-            ),
+            // (widget.relation!=Relation.normal)?SizedBox(
+            //   height: MediaQuery.of(context).viewPadding.top,
+            // ):
+            // SizedBox(
+            //   height: MediaQuery.of(context).viewPadding.top+58,
+            // ),
             Container(alignment: Alignment.centerLeft,child: (widget.relation!=Relation.normal)?IconButton(onPressed: (){
                  Navigator.pop(context);
                 },

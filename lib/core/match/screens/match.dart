@@ -82,6 +82,34 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     String? bgImage=ref.watch(backgroundImageProvider);
     super.build(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
+            Row(
+              children: [
+                GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (c){
+                      return FilterPage();
+                    })).then((value){
+                      _initData();
+                      if(mounted){
+                        _state=PageState.loading;
+                        setState(() {
+
+                        });
+                      }
+
+                    });
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
       body: Stack(
         children: [
           Positioned.fill(child: bgImage==null?Container():Container(
@@ -109,41 +137,41 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           Positioned.fill(
             child: _buildMatch()
           ),
-          Positioned(
-            height: 118,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 16
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
-                  Row(
-                    children: [
-                      GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (c){
-                            return FilterPage();
-                          })).then((value){
-                            _initData();
-                            if(mounted){
-                              _state=PageState.loading;
-                              setState(() {
-
-                              });
-                            }
-
-                          });
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
+          // Positioned(
+          //   height: 118,
+          //   width: MediaQuery.of(context).size.width,
+          //   child: Padding(
+          //     padding: const EdgeInsets.symmetric(
+          //         horizontal: 16
+          //     ),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
+          //         Row(
+          //           children: [
+          //             GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
+          //               onTap: (){
+          //                 Navigator.push(context, MaterialPageRoute(builder: (c){
+          //                   return FilterPage();
+          //                 })).then((value){
+          //                   _initData();
+          //                   if(mounted){
+          //                     _state=PageState.loading;
+          //                     setState(() {
+          //
+          //                     });
+          //                   }
+          //
+          //                 });
+          //               },
+          //             ),
+          //           ],
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
           (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading||(users[currentPage].wishList.isNotEmpty&&users[currentPage].matched)?Container():
           Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
             width: MediaQuery.of(context).size.width,child: Padding(
