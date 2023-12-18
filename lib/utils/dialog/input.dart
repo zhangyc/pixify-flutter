@@ -528,6 +528,7 @@ Future<T?> showActionButtons<T>({
               clipBehavior: Clip.antiAlias,
               child: ListView.builder(
                 shrinkWrap: true,
+                padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) => OptionButton(
                     onTap: () => Navigator.pop(context, options[keys[index]]),
                     color: initialValue == options[keys[index]]
@@ -633,6 +634,7 @@ Future<T?> showRadioFields<T>({
               ),
               child: ListView.builder(
                 shrinkWrap: true,
+                padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) => RadioListTile(
                   value: options[keys[index]],
                   groupValue: initialValue,

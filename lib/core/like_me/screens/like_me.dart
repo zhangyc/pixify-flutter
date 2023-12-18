@@ -62,7 +62,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
       floatingActionButton: !ref.read(myProfileProvider)!.isMember && ref.watch(asyncLikedMeProvider).hasValue && ref.watch(asyncLikedMeProvider).value!.isNotEmpty ? Padding(
         padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom),
         child: OutlinedButton(
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unLockSona(),fromTag: FromTag.pay_chatlist_likedme))),
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockWhoLikeMe(),fromTag: FromTag.pay_chatlist_likedme))),
           style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
             backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806)),
           ),
@@ -117,7 +117,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                       ),
                     ) : GestureDetector(
                       behavior: HitTestBehavior.translucent,
-                      onTap: () => showSubscription(SubscribeShowType.secretSonamate(),FromTag.pay_chatlist_likedme),
+                      onTap: () => showSubscription(SubscribeShowType.unlockWhoLikeMe(),FromTag.pay_chatlist_likedme),
                       child: ImageFiltered(
                         imageFilter: ImageFilter.blur(sigmaY: 18, sigmaX: 18),
                         child: AspectRatio(

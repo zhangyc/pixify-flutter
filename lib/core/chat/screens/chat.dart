@@ -276,7 +276,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         if (myProfile.isMember) {
           coolDown();
         } else {
-          showSubscription(SubscribeShowType.unLockSona(),FromTag.pay_chat_sonamsg);
+          showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.pay_chat_sonamsg);
         }
       } else if (resp.statusCode == 0) {
         _onPendingMessageSucceed(message);
@@ -330,7 +330,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       if (myProfile.isMember) {
         coolDown();
       } else {
-        showSubscription(SubscribeShowType.unLockSona(),FromTag.chat_starter);
+        showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.chat_starter);
       }
     }
   }
@@ -344,7 +344,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       if (myProfile.isMember) {
         coolDown();
       } else {
-        showSubscription(SubscribeShowType.unLockSona(),FromTag.pay_chat_hook);
+        showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.pay_chat_hook);
       }
     }
     SonaAnalytics.log('chat_hook');

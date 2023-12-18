@@ -110,7 +110,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Hey, I think you\'re quite brilliant. Fancy becoming friends?"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("Get SONA Plus"),
-        "gore": MessageLookupByLibrary.simpleMessage("Gore"),
         "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
             "Hey, fancy a guess at who\'ll break the silence first?"),
         "haveSonaSayHi":
@@ -157,12 +156,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Oops, no data right now"),
-        "other": MessageLookupByLibrary.simpleMessage("Other"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "People from your wishlist get more recommendations"),
-        "personalAttack":
-            MessageLookupByLibrary.simpleMessage("Personal Attack"),
         "photos": MessageLookupByLibrary.simpleMessage("Photos"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -180,16 +176,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("Unlock to see who likes you"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 Wshes"),
-        "pornography": MessageLookupByLibrary.simpleMessage("Pornography"),
         "preference": MessageLookupByLibrary.simpleMessage("Preference"),
         "privacy": MessageLookupByLibrary.simpleMessage("Privacy"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "pushNotifications":
             MessageLookupByLibrary.simpleMessage("Push notifications"),
         "report": MessageLookupByLibrary.simpleMessage("Report"),
+        "reportOptionGore": MessageLookupByLibrary.simpleMessage("Gore"),
+        "reportOptionOther": MessageLookupByLibrary.simpleMessage("Other"),
+        "reportOptionPersonalAttack":
+            MessageLookupByLibrary.simpleMessage("Personal Attack"),
+        "reportOptionPornography":
+            MessageLookupByLibrary.simpleMessage("Pornography"),
+        "reportOptionScam": MessageLookupByLibrary.simpleMessage("Scam"),
         "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
             "Running into foreigners near you"),
-        "scam": MessageLookupByLibrary.simpleMessage("Scam"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("Screenshot evidence"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("View profile"),
@@ -212,17 +213,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "standard": MessageLookupByLibrary.simpleMessage("Standard"),
         "subPageSubtitleAIInterpretationDaily":
             MessageLookupByLibrary.simpleMessage(
-                "1000 AI Interpretation messages daily"),
+                "1000 AI \nInterpretation \nmessages daily"),
         "subPageSubtitleDMWeekly":
             MessageLookupByLibrary.simpleMessage("5 DM per week"),
         "subPageSubtitleFilterMatchingCountries":
-            MessageLookupByLibrary.simpleMessage("Filter matching Countries"),
+            MessageLookupByLibrary.simpleMessage("Filter matching \nCountries"),
+        "subPageSubtitleSonaTips": MessageLookupByLibrary.simpleMessage(
+            "SONA Tips -\nYour chat advisor"),
         "subPageSubtitleUnlimitedLikes":
             MessageLookupByLibrary.simpleMessage("Unlimited Likes"),
-        "subPageSubtittleSonaTips": MessageLookupByLibrary.simpleMessage(
-            "SONA Tips - Your chat advisor"),
-        "subPageSubtittleUnlockWhoLikesU":
-            MessageLookupByLibrary.simpleMessage("Unlock to see who likes you"),
+        "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
+            "Unlock to see\nwho likes you"),
         "subPageTitle": MessageLookupByLibrary.simpleMessage("Get SONA Plus"),
         "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("Terms"),
         "subscriptionAgreementPrefix": m4,

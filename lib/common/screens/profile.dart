@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/common/no_data/empty.dart';
 import 'package:sona/common/providers/other_info_provider.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 
@@ -31,23 +32,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
       appBar: AppBar(
       ),
       body: ref.watch(getProfileByIdProvider(widget.userId)).when(
-        data: (user) => user==null?Container():ProfileWidget(
+        data: (user) => ProfileWidget(
           relation: widget.relation,
           info: user.data, next: (){
-
         },onMatch: (v){},),
-        error: (err, stack) => GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => ref.refresh(getProfileByIdProvider(widget.userId)),
-          child: Container(
-            color: Colors.white,
-            alignment: Alignment.center,
-            child: const Text(
-                'Load user info error\nclick the screen to try again.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, decoration: TextDecoration.none)
-            ),
-          ),
+        error: (err, stack) => NoData(
+          onRefresh: () => ref.refresh(getProfileByIdProvider(widget.userId)),
         ),
         loading: () => Container(
           color: Colors.white54,

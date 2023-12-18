@@ -111,7 +111,7 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
           await Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         }
       } else if (resp.statusCode == 10150) {
-        showSubscription(SubscribeShowType.unLockThreeWish(),FromTag.travel_wish);
+        showSubscription(SubscribeShowType.unlockThreeWishes(),FromTag.travel_wish);
       }
     } catch(e) {
       // Navigator.pop(context, true);

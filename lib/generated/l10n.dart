@@ -771,50 +771,50 @@ class S {
   }
 
   /// `Gore`
-  String get gore {
+  String get reportOptionGore {
     return Intl.message(
       'Gore',
-      name: 'gore',
+      name: 'reportOptionGore',
       desc: '',
       args: [],
     );
   }
 
   /// `Pornography`
-  String get pornography {
+  String get reportOptionPornography {
     return Intl.message(
       'Pornography',
-      name: 'pornography',
+      name: 'reportOptionPornography',
       desc: '',
       args: [],
     );
   }
 
   /// `Scam`
-  String get scam {
+  String get reportOptionScam {
     return Intl.message(
       'Scam',
-      name: 'scam',
+      name: 'reportOptionScam',
       desc: '',
       args: [],
     );
   }
 
   /// `Personal Attack`
-  String get personalAttack {
+  String get reportOptionPersonalAttack {
     return Intl.message(
       'Personal Attack',
-      name: 'personalAttack',
+      name: 'reportOptionPersonalAttack',
       desc: '',
       args: [],
     );
   }
 
   /// `Other`
-  String get other {
+  String get reportOptionOther {
     return Intl.message(
       'Other',
-      name: 'other',
+      name: 'reportOptionOther',
       desc: '',
       args: [],
     );
@@ -1520,11 +1520,11 @@ class S {
     );
   }
 
-  /// `Unlock to see who likes you`
-  String get subPageSubtittleUnlockWhoLikesU {
+  /// `Unlock to see\nwho likes you`
+  String get subPageSubtitleUnlockWhoLikesU {
     return Intl.message(
-      'Unlock to see who likes you',
-      name: 'subPageSubtittleUnlockWhoLikesU',
+      'Unlock to see\nwho likes you',
+      name: 'subPageSubtitleUnlockWhoLikesU',
       desc: '',
       args: [],
     );
@@ -1550,30 +1550,30 @@ class S {
     );
   }
 
-  /// `SONA Tips - Your chat advisor`
-  String get subPageSubtittleSonaTips {
+  /// `SONA Tips - \nYour chat advisor`
+  String get subPageSubtitleSonaTips {
     return Intl.message(
-      'SONA Tips - Your chat advisor',
-      name: 'subPageSubtittleSonaTips',
+      'SONA Tips - \nYour chat advisor',
+      name: 'subPageSubtitleSonaTips',
       desc: '',
       args: [],
     );
   }
 
-  /// `Filter matching Countries`
+  /// `Filter matching \nCountries`
   String get subPageSubtitleFilterMatchingCountries {
     return Intl.message(
-      'Filter matching Countries',
+      'Filter matching \nCountries',
       name: 'subPageSubtitleFilterMatchingCountries',
       desc: '',
       args: [],
     );
   }
 
-  /// `1000 AI Interpretation messages daily`
+  /// `1000 AI \nInterpretation \nmessages daily`
   String get subPageSubtitleAIInterpretationDaily {
     return Intl.message(
-      '1000 AI Interpretation messages daily',
+      '1000 AI \nInterpretation \nmessages daily',
       name: 'subPageSubtitleAIInterpretationDaily',
       desc: '',
       args: [],

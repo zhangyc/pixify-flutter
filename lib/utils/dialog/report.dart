@@ -6,6 +6,7 @@ import 'package:sona/common/widgets/image/upload_field.dart';
 
 import '../../common/services/report.dart';
 import '../../common/widgets/button/colored.dart';
+import '../../generated/l10n.dart';
 import 'input.dart';
 
 Future<bool?> showReport(BuildContext context, int userId) async {
@@ -19,11 +20,11 @@ Future<int?> _showReportReason(BuildContext context) async {
   return showActionButtons<int>(
       context: context,
       options: {
-        'Gore': 1,
-        'Pornography': 2,
-        'Scam': 3,
-        'Personal Attack': 4,
-        'Other': 5,
+        S.of(context).reportOptionGore: 1,
+        S.of(context).reportOptionPornography: 2,
+        S.of(context).reportOptionScam: 3,
+        S.of(context).reportOptionPersonalAttack: 4,
+        S.of(context).reportOptionOther: 5,
       }
   );
 }

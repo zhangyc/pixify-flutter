@@ -190,7 +190,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         if (asyncMyTravelWishes.value!.isEmpty || myProfile.isMember) {
                           Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator()));
                         } else {
-                          showSubscription(SubscribeShowType.unLockThreeWish(),FromTag.travel_wish);
+                          showSubscription(SubscribeShowType.unlockThreeWishes(),FromTag.travel_wish);
                         }
                       },
                       child: Container(
@@ -300,7 +300,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                   ),
                   SizedBox(height: 16),
                   if (!ref.watch(myProfileProvider)!.isMember) FilledButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unLockSona(),fromTag: FromTag.profile_myplan))),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE600)),
                         side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
@@ -308,7 +308,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                       child: Text(S.of(context).getSonaPlus, style: Theme.of(context).textTheme.titleMedium)
                   ),
                   if (ref.watch(myProfileProvider)!.isMember) OutlinedButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unLockSona(),fromTag: FromTag.profile_myplan))),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
                           side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),

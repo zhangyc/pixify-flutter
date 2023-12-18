@@ -102,7 +102,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "friendsIntention":
             MessageLookupByLibrary.simpleMessage("헤이, 너 정말 멋진 것 같아. 친구가 되어볼래?"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plus받기"),
-        "gore": MessageLookupByLibrary.simpleMessage("잔인함"),
         "guessWhoBreakSilence":
             MessageLookupByLibrary.simpleMessage("헤이, 누가 먼저 침묵을 깰까?"),
         "haveSonaSayHi":
@@ -144,11 +143,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("알림"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("오잉, 지금 데이터가 없어요"),
-        "other": MessageLookupByLibrary.simpleMessage("기타"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "당신의 위시리스트 설정이 더 큰 역할을 할 것입니다"),
-        "personalAttack": MessageLookupByLibrary.simpleMessage("인신공격"),
         "photos": MessageLookupByLibrary.simpleMessage("사진"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -165,15 +162,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("좋아하는 사람이 누구인지 보려면 잠금 해제"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3개의 소원"),
-        "pornography": MessageLookupByLibrary.simpleMessage("포르노"),
         "preference": MessageLookupByLibrary.simpleMessage("취향"),
         "privacy": MessageLookupByLibrary.simpleMessage("프라이버시"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("개인정보처리방침"),
         "pushNotifications": MessageLookupByLibrary.simpleMessage("푸시 알림"),
         "report": MessageLookupByLibrary.simpleMessage("신고"),
+        "reportOptionGore": MessageLookupByLibrary.simpleMessage("잔인함"),
+        "reportOptionOther": MessageLookupByLibrary.simpleMessage("기타"),
+        "reportOptionPersonalAttack":
+            MessageLookupByLibrary.simpleMessage("인신공격"),
+        "reportOptionPornography": MessageLookupByLibrary.simpleMessage("포르노"),
+        "reportOptionScam": MessageLookupByLibrary.simpleMessage("사기"),
         "runningIntoForeignersNearYou":
             MessageLookupByLibrary.simpleMessage("당신 근처에서 외국인을 만나다"),
-        "scam": MessageLookupByLibrary.simpleMessage("사기"),
         "screenshotEvidence": MessageLookupByLibrary.simpleMessage("스크린샷 증거"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("프로필 보기"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("당신을 좋아하는 사람들 보기"),
@@ -192,17 +193,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("여러분은 같은 언어를 사용합니다"),
         "standard": MessageLookupByLibrary.simpleMessage("표준"),
         "subPageSubtitleAIInterpretationDaily":
-            MessageLookupByLibrary.simpleMessage("하루에 1000번 AI 동시통역"),
+            MessageLookupByLibrary.simpleMessage("하루에 1000번 \nAI 동시통역"),
         "subPageSubtitleDMWeekly":
             MessageLookupByLibrary.simpleMessage("주당 5회 DM"),
         "subPageSubtitleFilterMatchingCountries":
-            MessageLookupByLibrary.simpleMessage("매칭되는 국가 필터링"),
+            MessageLookupByLibrary.simpleMessage("매칭되는 국가 \n필터링"),
+        "subPageSubtitleSonaTips":
+            MessageLookupByLibrary.simpleMessage("SONA Tips - \n당신의 채팅 상담원"),
         "subPageSubtitleUnlimitedLikes":
             MessageLookupByLibrary.simpleMessage("무제한 좋아요"),
-        "subPageSubtittleSonaTips":
-            MessageLookupByLibrary.simpleMessage("SONA Tips - 당신의 채팅 상담원"),
-        "subPageSubtittleUnlockWhoLikesU":
-            MessageLookupByLibrary.simpleMessage("좋아하는 사람이 누구인지 보려면 잠금 해제"),
+        "subPageSubtitleUnlockWhoLikesU":
+            MessageLookupByLibrary.simpleMessage("좋아하는 사람이 누구인지 \n보려면 잠금 해제"),
         "subPageTitle": MessageLookupByLibrary.simpleMessage("SONA Plus받기"),
         "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("약관"),
         "subscriptionAgreementPrefix": m4,

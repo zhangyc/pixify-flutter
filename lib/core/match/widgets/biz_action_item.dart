@@ -31,7 +31,7 @@ class BizActionItem extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: unMatch,
-                child: Text('Unmatch',style: TextStyle(
+                child: Text(S.of(context).buttonUnmatch,style: TextStyle(
                     color: Colors.black
                 ),),
               ),
