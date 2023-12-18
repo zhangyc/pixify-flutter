@@ -5,6 +5,7 @@ import 'package:sona/core/chat/models/conversation.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../common/widgets/image/user_avatar.dart';
+import '../../../generated/l10n.dart';
 
 class ConversationItemWidget extends ConsumerStatefulWidget {
   final ImConversation conversation;
@@ -69,7 +70,7 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                       ),
                       SizedBox(height: 2),
                       Text(
-                        displayMessage != null && displayMessage.isNotEmpty ? displayMessage : 'New matched',
+                        displayMessage != null && displayMessage.isNotEmpty ? displayMessage : S.of(context).newMatch,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
