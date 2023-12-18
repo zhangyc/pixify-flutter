@@ -49,7 +49,7 @@ class _CountryPickerState extends ConsumerState<CountryPicker> {
       constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.85
       ),
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 16),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16),
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
