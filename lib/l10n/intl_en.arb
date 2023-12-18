@@ -312,6 +312,8 @@
   "@nextBilingDate": {},
   "buttonUnsubscribe": "Unsubscribe",
   "@buttonUnsubscribe": {},
+  "buttonRestore": "Restore",
+  "@buttonRestore": {},
   "settings": "Settings",
   "@settings": {},
   "account": "Account",
@@ -353,5 +355,9 @@
   "termsOfService": "Terms of Service",
   "@termsOfService": {},
   "feedback": "Feedback",
-  "@feedback": {}
+  "@feedback": {},
+  "toastHitDailyMaximumLimit": "👀You've hit your daily limit",
+  "@toastHitDailyMaximumLimit": {},
+  "toastHitWeeklyMaximumLimit": "👅You've hit your weekly limit",
+  "@toastHitWeeklyMaximumLimit": {}
 }

@@ -24,7 +24,7 @@ class AsyncSonaTipsNotifier extends AutoDisposeFamilyAsyncNotifier<SonaTips, int
     );
     if (resp.statusCode == 10150) {
       if (ref.read(myProfileProvider)!.isMember) {
-        coolDown();
+        coolDownWeekly();
       } else {
         showSubscription(SubscribeShowType.unlockSonaTips(),FromTag.pay_chat_suggest);
       }

@@ -160,7 +160,7 @@
   "@descriptionOptional": {},
   "buttonSubmit": "Отправить",
   "@buttonSubmit": {},
-  "allPeople": "Все люди",
+  "allPeople": "Все",
   "@allPeople": {},
   "whoLIkesYou": "Кто тебя любит",
   "@whoLIkesYou": {},
@@ -312,6 +312,8 @@
   "@nextBilingDate": {},
   "buttonUnsubscribe": "Отписаться",
   "@buttonUnsubscribe": {},
+  "buttonRestore": "Восстановить",
+  "@buttonRestore": {},
   "settings": "Настройки",
   "@settings": {},
   "account": "Аккаунт",
@@ -353,5 +355,9 @@
   "termsOfService": "Условия обслуживания",
   "@termsOfService": {},
   "feedback": "Обратная связь",
-  "@feedback": {}
+  "@feedback": {},
+  "toastHitDailyMaximumLimit": "👀достигли своего дневного лимита",
+  "@toastHitDailyMaximumLimit": {},
+  "toastHitWeeklyMaximumLimit": "👅достигли своего недельного лимита",
+  "@toastHitWeeklyMaximumLimit": {}
 }

@@ -160,7 +160,7 @@
   "@descriptionOptional": {},
   "buttonSubmit": "ส่ง",
   "@buttonSubmit": {},
-  "allPeople": "ทุกคน",
+  "allPeople": "ทั้งหมด",
   "@allPeople": {},
   "whoLIkesYou": "ใครที่ชอบคุณ",
   "@whoLIkesYou": {},
@@ -312,6 +312,8 @@
   "@nextBilingDate": {},
   "buttonUnsubscribe": "ยกเลิกการสมัครสมาชิก",
   "@buttonUnsubscribe": {},
+  "buttonRestore": "กู้คืน",
+  "@buttonRestore": {},
   "settings": "การตั้งค่า",
   "@settings": {},
   "account": "บัญชี",
@@ -353,5 +355,9 @@
   "termsOfService": "ข้อกำหนดในการให้บริการ",
   "@termsOfService": {},
   "feedback": "ข้อเสนอแนะ",
-  "@feedback": {}
+  "@feedback": {},
+  "toastHitDailyMaximumLimit": "👀คุณได้ถึงขีดจำกัดประจำวันแล้ว",
+  "@toastHitDailyMaximumLimit": {},
+  "toastHitWeeklyMaximumLimit": "👅คุณได้ถึงขีดจำกัดประจำสัปดาห์แล้ว",
+  "@toastHitWeeklyMaximumLimit": {}
 }

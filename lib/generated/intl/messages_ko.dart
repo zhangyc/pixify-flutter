@@ -43,7 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("정보"),
         "account": MessageLookupByLibrary.simpleMessage("계정"),
         "age": MessageLookupByLibrary.simpleMessage("나이"),
-        "allPeople": MessageLookupByLibrary.simpleMessage("모든 사람들"),
+        "allPeople": MessageLookupByLibrary.simpleMessage("전부"),
         "bio": MessageLookupByLibrary.simpleMessage("소개"),
         "block": MessageLookupByLibrary.simpleMessage("차단"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -70,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonPreview": MessageLookupByLibrary.simpleMessage("미리보기"),
         "buttonRefresh": MessageLookupByLibrary.simpleMessage("새로 고침"),
         "buttonResend": MessageLookupByLibrary.simpleMessage("다시 보내다"),
+        "buttonRestore": MessageLookupByLibrary.simpleMessage("복원하다"),
         "buttonSave": MessageLookupByLibrary.simpleMessage("저장"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("로그아웃"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("제출하다"),
@@ -214,6 +215,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "theyAreWaitingForYourReply":
             MessageLookupByLibrary.simpleMessage("👆 답장을 기다리고 있어요"),
         "threeMonths": MessageLookupByLibrary.simpleMessage("3개월"),
+        "toastHitDailyMaximumLimit":
+            MessageLookupByLibrary.simpleMessage("👀당신은 오늘의 한도에 도달했습니다"),
+        "toastHitWeeklyMaximumLimit":
+            MessageLookupByLibrary.simpleMessage("👅당신은 이번 주의 한도에 도달했습니다"),
         "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("사진 찍기"),
         "userAvatarOptionGallery":
             MessageLookupByLibrary.simpleMessage("갤러리에서 선택"),

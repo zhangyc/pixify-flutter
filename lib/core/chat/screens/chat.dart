@@ -47,6 +47,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   late UserInfo mySide;
   Locale? myLocale;
   Locale? otherLocale;
+  bool aiInterpretationLimited = false;
 
   @override
   void didChangeDependencies() {
@@ -183,13 +184,19 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           bottom: 8
         ),
         color: Colors.white,
-        child: ChatInstructionInput(
+        child: !aiInterpretationLimited ? ChatInstructionInput(
           chatId: widget.otherSide.id,
           sameLanguage: myLocale == otherLocale,
           onSubmit: _onSend,
           onSuggestionTap: _onSuggestionTap,
           onHookTap: _onHookTap,
           autofocus: false
+        ) : OutlinedButton(
+            onPressed: () => showSubscription(SubscribeShowType.unlockMoreAIInterpretation(), FromTag.pay_chat_sonamsg),
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806))
+            ),
+            child: Text('😪SONA is tired, 👇Tap to refuel her!')
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -274,9 +281,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     pending.then((resp) {
       if (resp.statusCode == 10150) {
         if (myProfile.isMember) {
-          coolDown();
+          coolDownDaily();
         } else {
-          showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.pay_chat_sonamsg);
+          if (mounted) {
+            setState(() {
+              aiInterpretationLimited = true;
+            });
+          }
+          // showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.pay_chat_sonamsg);
         }
       } else if (resp.statusCode == 0) {
         _onPendingMessageSucceed(message);
@@ -328,7 +340,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     SonaAnalytics.log('chat_starter');
     if (resp.statusCode == 10150) {
       if (myProfile.isMember) {
-        coolDown();
+        coolDownDaily();
       } else {
         showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.chat_starter);
       }
@@ -342,7 +354,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
     if (resp.statusCode == 10150) {
       if (myProfile.isMember) {
-        coolDown();
+        coolDownDaily();
       } else {
         showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.pay_chat_hook);
       }

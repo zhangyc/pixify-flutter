@@ -312,6 +312,8 @@
   "@nextBilingDate": {},
   "buttonUnsubscribe": "購読を解除する",
   "@buttonUnsubscribe": {},
+  "buttonRestore": "リストアする",
+  "@buttonRestore": {},
   "settings": "設定",
   "@settings": {},
   "account": "アカウント",
@@ -353,5 +355,9 @@
   "termsOfService": "利用規約",
   "@termsOfService": {},
   "feedback": "フィードバック",
-  "@feedback": {}
+  "@feedback": {},
+  "toastHitDailyMaximumLimit": "👀1日の制限に達しました",
+  "@toastHitDailyMaximumLimit": {},
+  "toastHitWeeklyMaximumLimit": "👅週の制限に達しました",
+  "@toastHitWeeklyMaximumLimit": {}
 }

@@ -312,6 +312,8 @@
   "@nextBilingDate": {},
   "buttonUnsubscribe": "取消訂閱",
   "@buttonUnsubscribe": {},
+  "buttonRestore": "恢復",
+  "@buttonRestore": {},
   "settings": "設定",
   "@settings": {},
   "account": "帳戶",
@@ -353,5 +355,9 @@
   "termsOfService": "服務條款",
   "@termsOfService": {},
   "feedback": "反饋",
-  "@feedback": {}
+  "@feedback": {},
+  "toastHitDailyMaximumLimit": "👀已達到今日限額",
+  "@toastHitDailyMaximumLimit": {},
+  "toastHitWeeklyMaximumLimit": "👅你已達到本週限額",
+  "@toastHitWeeklyMaximumLimit": {}
 }

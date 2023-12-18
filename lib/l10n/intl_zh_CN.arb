@@ -312,6 +312,8 @@
   "@nextBilingDate": {},
   "buttonUnsubscribe": "取消订阅",
   "@buttonUnsubscribe": {},
+  "buttonRestore": "恢复",
+  "@buttonRestore": {},
   "settings": "设置",
   "@settings": {},
   "account": "账户",
@@ -353,5 +355,9 @@
   "termsOfService": "服务条款",
   "@termsOfService": {},
   "feedback": "反馈",
-  "@feedback": {}
+  "@feedback": {},
+  "toastHitDailyMaximumLimit": "👀已达到今日限额",
+  "@toastHitDailyMaximumLimit": {},
+  "toastHitWeeklyMaximumLimit": "👅你已达到本周限额",
+  "@toastHitWeeklyMaximumLimit": {}
 }

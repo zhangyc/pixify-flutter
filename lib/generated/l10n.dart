@@ -1610,6 +1610,16 @@ class S {
     );
   }
 
+  /// `Restore`
+  String get buttonRestore {
+    return Intl.message(
+      'Restore',
+      name: 'buttonRestore',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settings {
     return Intl.message(
@@ -1815,6 +1825,26 @@ class S {
     return Intl.message(
       'Feedback',
       name: 'feedback',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `👀You've hit your daily limit`
+  String get toastHitDailyMaximumLimit {
+    return Intl.message(
+      '👀You\'ve hit your daily limit',
+      name: 'toastHitDailyMaximumLimit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `👅You've hit your weekly limit`
+  String get toastHitWeeklyMaximumLimit {
+    return Intl.message(
+      '👅You\'ve hit your weekly limit',
+      name: 'toastHitWeeklyMaximumLimit',
       desc: '',
       args: [],
     );

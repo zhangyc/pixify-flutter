@@ -160,7 +160,7 @@
   "@descriptionOptional": {},
   "buttonSubmit": "Inviare",
   "@buttonSubmit": {},
-  "allPeople": "Tutte le persone",
+  "allPeople": "Tutto",
   "@allPeople": {},
   "whoLIkesYou": "Chi ti piace",
   "@whoLIkesYou": {},
@@ -312,6 +312,8 @@
   "@nextBilingDate": {},
   "buttonUnsubscribe": "Disiscriviti",
   "@buttonUnsubscribe": {},
+  "buttonRestore": "Ripristinare",
+  "@buttonRestore": {},
   "settings": "Impostazioni",
   "@settings": {},
   "account": "Account",
@@ -353,5 +355,9 @@
   "termsOfService": "Termini di servizio",
   "@termsOfService": {},
   "feedback": "Feedback",
-  "@feedback": {}
+  "@feedback": {},
+  "toastHitDailyMaximumLimit": "👀Hai raggiunto il tuo limite giornaliero",
+  "@toastHitDailyMaximumLimit": {},
+  "toastHitWeeklyMaximumLimit": "👅Hai raggiunto il tuo limite settimanale",
+  "@toastHitWeeklyMaximumLimit": {}
 }
