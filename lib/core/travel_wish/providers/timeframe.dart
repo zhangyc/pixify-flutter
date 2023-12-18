@@ -21,6 +21,11 @@ class AsyncTravelTimeframeOptionsNotifier extends AsyncNotifier<List<TravelTimef
   Future<List<TravelTimeframeOptions>> build() async {
     return _fetchFrameOptions();
   }
+
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => _fetchFrameOptions());
+  }
 }
 
 final asyncTimeframeOptionsProvider = AsyncNotifierProvider<

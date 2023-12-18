@@ -71,10 +71,10 @@ class S {
   }
 
   /// `Next`
-  String get nextButton {
+  String get buttonNext {
     return Intl.message(
       'Next',
-      name: 'nextButton',
+      name: 'buttonNext',
       desc: '',
       args: [],
     );
@@ -151,10 +151,10 @@ class S {
   }
 
   /// `Resend`
-  String get resendButton {
+  String get buttonResend {
     return Intl.message(
       'Resend',
-      name: 'resendButton',
+      name: 'buttonResend',
       desc: '',
       args: [],
     );
@@ -311,10 +311,10 @@ class S {
   }
 
   /// `Change`
-  String get userAvatarPageChangeButton {
+  String get buttonChange {
     return Intl.message(
       'Change',
-      name: 'userAvatarPageChangeButton',
+      name: 'buttonChange',
       desc: '',
       args: [],
     );
@@ -381,10 +381,10 @@ class S {
   }
 
   /// `Done`
-  String get doneButton {
+  String get buttonDone {
     return Intl.message(
       'Done',
-      name: 'doneButton',
+      name: 'buttonDone',
       desc: '',
       args: [],
     );
@@ -720,16 +720,6 @@ class S {
     );
   }
 
-  /// `Refresh`
-  String get refresh {
-    return Intl.message(
-      'Refresh',
-      name: 'refresh',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Oops, no data right now`
   String get oopsNoDataRightNow {
     return Intl.message(
@@ -750,6 +740,16 @@ class S {
     );
   }
 
+  /// `Refresh`
+  String get buttonRefresh {
+    return Intl.message(
+      'Refresh',
+      name: 'buttonRefresh',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Block this person so you won't receive any messages from them`
   String get blockThisPersonSoYouWontReceiveAnyMessagesFromThem {
     return Intl.message(
@@ -761,10 +761,10 @@ class S {
   }
 
   /// `Cancel`
-  String get cancelButton {
+  String get buttonCancel {
     return Intl.message(
       'Cancel',
-      name: 'cancelButton',
+      name: 'buttonCancel',
       desc: '',
       args: [],
     );
@@ -841,10 +841,20 @@ class S {
   }
 
   /// `Submit`
-  String get submitButton {
+  String get buttonSubmit {
     return Intl.message(
       'Submit',
-      name: 'submitButton',
+      name: 'buttonSubmit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All People`
+  String get allPeople {
+    return Intl.message(
+      'All People',
+      name: 'allPeople',
       desc: '',
       args: [],
     );
@@ -1170,16 +1180,6 @@ class S {
     );
   }
 
-  /// `Resend`
-  String get buttonResend {
-    return Intl.message(
-      'Resend',
-      name: 'buttonResend',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `SONA is overloaded, please try again later.`
   String get exceptionSonaOverloadedTips {
     return Intl.message(
@@ -1215,6 +1215,606 @@ class S {
     return Intl.message(
       'Open Link',
       name: 'buttonOpenLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Me`
+  String get me {
+    return Intl.message(
+      'Me',
+      name: 'me',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit profile`
+  String get buttonEditProfile {
+    return Intl.message(
+      'Edit profile',
+      name: 'buttonEditProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get SONA Plus`
+  String get getSonaPlus {
+    return Intl.message(
+      'Get SONA Plus',
+      name: 'getSonaPlus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You're a Plus member`
+  String get buttonAlreadyPlus {
+    return Intl.message(
+      'You\'re a Plus member',
+      name: 'buttonAlreadyPlus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preview`
+  String get buttonPreview {
+    return Intl.message(
+      'Preview',
+      name: 'buttonPreview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Photos`
+  String get photos {
+    return Intl.message(
+      'Photos',
+      name: 'photos',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `More photos, higher recommendation`
+  String get morePhotosBenefit {
+    return Intl.message(
+      'More photos, higher recommendation',
+      name: 'morePhotosBenefit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bio`
+  String get bio {
+    return Intl.message(
+      'Bio',
+      name: 'bio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get buttonEdit {
+    return Intl.message(
+      'Edit',
+      name: 'buttonEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show your personality`
+  String get showYourPersonality {
+    return Intl.message(
+      'Show your personality',
+      name: 'showYourPersonality',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finding folks who share your interests`
+  String get findingFolksWhoShareYourInterests {
+    return Intl.message(
+      'Finding folks who share your interests',
+      name: 'findingFolksWhoShareYourInterests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get buttonSave {
+    return Intl.message(
+      'Save',
+      name: 'buttonSave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get SONA Plus`
+  String get subPageTitle {
+    return Intl.message(
+      'Get SONA Plus',
+      name: 'subPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlimited Likes`
+  String get plusFuncUnlimitedLikes {
+    return Intl.message(
+      'Unlimited Likes',
+      name: 'plusFuncUnlimitedLikes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlock to see who likes you`
+  String get plusFuncUnlockWhoLikesU {
+    return Intl.message(
+      'Unlock to see who likes you',
+      name: 'plusFuncUnlockWhoLikesU',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1000 AI Interpretation messages daily`
+  String get plusFuncAIInterpretation {
+    return Intl.message(
+      '1000 AI Interpretation messages daily',
+      name: 'plusFuncAIInterpretation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `5 DM per week`
+  String get plusFuncDMPerWeek {
+    return Intl.message(
+      '5 DM per week',
+      name: 'plusFuncDMPerWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3 Wshes`
+  String get plusFuncWishes {
+    return Intl.message(
+      '3 Wshes',
+      name: 'plusFuncWishes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter matching Countries`
+  String get plusFuncFilterMatchingCountries {
+    return Intl.message(
+      'Filter matching Countries',
+      name: 'plusFuncFilterMatchingCountries',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SONA Tips - Your chat advisor`
+  String get plusFuncSonaTips {
+    return Intl.message(
+      'SONA Tips - Your chat advisor',
+      name: 'plusFuncSonaTips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `6 Months`
+  String get sixMonths {
+    return Intl.message(
+      '6 Months',
+      name: 'sixMonths',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1 Year`
+  String get aYear {
+    return Intl.message(
+      '1 Year',
+      name: 'aYear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3 Months`
+  String get threeMonths {
+    return Intl.message(
+      '3 Months',
+      name: 'threeMonths',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1 Month`
+  String get aMonth {
+    return Intl.message(
+      '1 Month',
+      name: 'aMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `mo`
+  String get month {
+    return Intl.message(
+      'mo',
+      name: 'month',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Standard`
+  String get standard {
+    return Intl.message(
+      'Standard',
+      name: 'standard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via  {storeName} settings, and you agree to our `
+  String subscriptionAgreementPrefix(Object storeName) {
+    return Intl.message(
+      'By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via  $storeName settings, and you agree to our ',
+      name: 'subscriptionAgreementPrefix',
+      desc: '',
+      args: [storeName],
+    );
+  }
+
+  /// `Terms`
+  String get subscriptionAgreement {
+    return Intl.message(
+      'Terms',
+      name: 'subscriptionAgreement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` .`
+  String get subscriptionAgreementSuffix {
+    return Intl.message(
+      ' .',
+      name: 'subscriptionAgreementSuffix',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue`
+  String get buttonContinue {
+    return Intl.message(
+      'Continue',
+      name: 'buttonContinue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlock to see who likes you`
+  String get subPageSubtittleUnlockWhoLikesU {
+    return Intl.message(
+      'Unlock to see who likes you',
+      name: 'subPageSubtittleUnlockWhoLikesU',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlimited Likes`
+  String get subPageSubtitleUnlimitedLikes {
+    return Intl.message(
+      'Unlimited Likes',
+      name: 'subPageSubtitleUnlimitedLikes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `5 DM per week`
+  String get subPageSubtitleDMWeekly {
+    return Intl.message(
+      '5 DM per week',
+      name: 'subPageSubtitleDMWeekly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SONA Tips - Your chat advisor`
+  String get subPageSubtittleSonaTips {
+    return Intl.message(
+      'SONA Tips - Your chat advisor',
+      name: 'subPageSubtittleSonaTips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter matching Countries`
+  String get subPageSubtitleFilterMatchingCountries {
+    return Intl.message(
+      'Filter matching Countries',
+      name: 'subPageSubtitleFilterMatchingCountries',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1000 AI Interpretation messages daily`
+  String get subPageSubtitleAIInterpretationDaily {
+    return Intl.message(
+      '1000 AI Interpretation messages daily',
+      name: 'subPageSubtitleAIInterpretationDaily',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage`
+  String get buttonManage {
+    return Intl.message(
+      'Manage',
+      name: 'buttonManage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Next billing date`
+  String get nextBilingDate {
+    return Intl.message(
+      'Next billing date',
+      name: 'nextBilingDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unsubscribe`
+  String get buttonUnsubscribe {
+    return Intl.message(
+      'Unsubscribe',
+      name: 'buttonUnsubscribe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account`
+  String get account {
+    return Intl.message(
+      'Account',
+      name: 'account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications`
+  String get notifications {
+    return Intl.message(
+      'Notifications',
+      name: 'notifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy`
+  String get privacy {
+    return Intl.message(
+      'Privacy',
+      name: 'privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About`
+  String get about {
+    return Intl.message(
+      'About',
+      name: 'about',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign out`
+  String get buttonSignOut {
+    return Intl.message(
+      'Sign out',
+      name: 'buttonSignOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Common language`
+  String get commonLanguage {
+    return Intl.message(
+      'Common language',
+      name: 'commonLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete account`
+  String get buttonDeleteAccount {
+    return Intl.message(
+      'Delete account',
+      name: 'buttonDeleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you delete your account, you won’t be able to log in with it anymore. are you sure want to delete?`
+  String get warningDeleteAccount {
+    return Intl.message(
+      'If you delete your account, you won’t be able to log in with it anymore. are you sure want to delete?',
+      name: 'warningDeleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get buttonConfirm {
+    return Intl.message(
+      'Confirm',
+      name: 'buttonConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account will be automatically deleted in 14 days. Please remember to go to the store to cancel your current subscription to avoid additional charges.`
+  String get warningCancelSubscription {
+    return Intl.message(
+      'Your account will be automatically deleted in 14 days. Please remember to go to the store to cancel your current subscription to avoid additional charges.',
+      name: 'warningCancelSubscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Got it`
+  String get buttonGotIt {
+    return Intl.message(
+      'Got it',
+      name: 'buttonGotIt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Keep account`
+  String get buttonKeepAccount {
+    return Intl.message(
+      'Keep account',
+      name: 'buttonKeepAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Push notifications`
+  String get pushNotifications {
+    return Intl.message(
+      'Push notifications',
+      name: 'pushNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Display my city`
+  String get displayMyCity {
+    return Intl.message(
+      'Display my city',
+      name: 'displayMyCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `When turned off, your city will not be displayed when matching`
+  String get warningCancelDisplayCity {
+    return Intl.message(
+      'When turned off, your city will not be displayed when matching',
+      name: 'warningCancelDisplayCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The key is balance`
+  String get theKeyIsBalance {
+    return Intl.message(
+      'The key is balance',
+      name: 'theKeyIsBalance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disclaimer`
+  String get disclaimer {
+    return Intl.message(
+      'Disclaimer',
+      name: 'disclaimer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Policy`
+  String get privacyPolicy {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'privacyPolicy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms of Service`
+  String get termsOfService {
+    return Intl.message(
+      'Terms of Service',
+      name: 'termsOfService',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feedback`
+  String get feedback {
+    return Intl.message(
+      'Feedback',
+      name: 'feedback',
       desc: '',
       args: [],
     );

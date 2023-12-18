@@ -178,7 +178,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
             Text(S.current.userCitizenshipPickerSubtitle, style: Theme.of(context).textTheme.labelSmall),
             SizedBox(height: 16),
             FilledButton(
-              child: Text(S.current.nextButton),
+              child: Text(S.current.buttonNext),
               style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(
                       Theme.of(context).primaryColor

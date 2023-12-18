@@ -218,7 +218,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: FilledButton(
-          child: Text(S.current.nextButton),
+          child: Text(S.current.buttonNext),
           onPressed: _disabled ? null : _next,
         ),
       ),

@@ -44,7 +44,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           icon: SonaIcon(icon: SonaIcons.back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Edit Profile'),
+        title: Text(S.of(context).buttonEditProfile),
         centerTitle: true,
         actions: [
           UnconstrainedBox(
@@ -54,7 +54,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     style: ButtonStyle(
                       minimumSize: MaterialStatePropertyAll(Size.zero)
                     ),
-                    child: Text('Preview', style: Theme.of(context).textTheme.titleSmall)
+                    child: Text(S.of(context).buttonPreview, style: Theme.of(context).textTheme.titleSmall)
                 ),
               ),
           )
@@ -70,11 +70,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 SizedBox(height: 20),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-                  child: Text('Photos', style: Theme.of(context).textTheme.titleMedium),
+                  child: Text(S.of(context).photos, style: Theme.of(context).textTheme.titleMedium),
                 ),
                 Container(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('More photos, higher exposure', style: Theme.of(context).textTheme.labelMedium),
+                    child: Text(S.of(context).morePhotosBenefit, style: Theme.of(context).textTheme.labelMedium),
                 ),
                 SizedBox(height: 16),
               ],
@@ -105,10 +105,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Bio', style: Theme.of(context).textTheme.titleMedium),
+                      Text(S.of(context).bio, style: Theme.of(context).textTheme.titleMedium),
                       GestureDetector(
                         onTap: onBioEdit,
-                        child: Text('Edit', style: Theme.of(context).textTheme.titleSmall)
+                        child: Text(S.of(context).buttonEdit, style: Theme.of(context).textTheme.titleSmall)
                       ),
                     ],
                   ),
@@ -135,10 +135,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Hobbies', style: Theme.of(context).textTheme.titleMedium),
+                      Text(S.of(context).interests, style: Theme.of(context).textTheme.titleMedium),
                       GestureDetector(
                         onTap: _onEditInterests,
-                        child: Text('Edit', style: Theme.of(context).textTheme.titleSmall)
+                        child: Text(S.of(context).buttonEdit, style: Theme.of(context).textTheme.titleSmall)
                       ),
                     ],
                   ),
@@ -194,7 +194,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       if (index != 0) {
         actions['Set Default'] = 'set_default';
       }
-      actions['Delete'] = 'delete';
+      actions[S.of(context).buttonDelete] = 'delete';
     }
     return GestureDetector(
       onLongPress: () => _showPhotoActions(index, actions),

@@ -139,7 +139,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
                 color: Colors.transparent,
                 fontColor: Theme.of(context).primaryColor,
                 borderColor: Colors.transparent,
-                text: S.of(context).resendButton,
+                text: S.of(context).buttonResend,
                 onTap: () async {
                   final result = await _sendPin();
                   if (result) {

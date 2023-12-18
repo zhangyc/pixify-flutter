@@ -29,46 +29,79 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m3(gender) =>
       "${Intl.gender(gender, female: '그녀의', male: '그의', other: '그들의')} 어떤 아이디어가 마음에 드세요?";
 
-  static String m4(country) => "건너뛰기, 그냥country}";
+  static String m4(storeName) =>
+      "계속을 클릭하면 요금이 부과되며, 해당 패키지 가격에 따라 구독이 자동 갱신됩니다. ${storeName}를 통해 취소할 수 있습니다. 계속 진행하면 우리의 ";
 
-  static String m5(country) => "${country}에 가려고 하세요?";
+  static String m5(country) => "건너뛰기, 그냥country}";
+
+  static String m6(country) => "${country}에 가려고 하세요?";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "aMonth": MessageLookupByLibrary.simpleMessage("1개월"),
+        "aYear": MessageLookupByLibrary.simpleMessage("1년"),
+        "about": MessageLookupByLibrary.simpleMessage("정보"),
+        "account": MessageLookupByLibrary.simpleMessage("계정"),
         "age": MessageLookupByLibrary.simpleMessage("나이"),
+        "allPeople": MessageLookupByLibrary.simpleMessage("모든 사람들"),
+        "bio": MessageLookupByLibrary.simpleMessage("소개"),
         "block": MessageLookupByLibrary.simpleMessage("차단"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage(
                 "이 사람을 차단해서 그들로부터 메시지를 받지 않게 하세요"),
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 나를 신경 쓰지 마🔨🔨🔨 분위기를 풀러 왔어🔨🔨🔨"),
+        "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("Plus 회원이에요"),
+        "buttonCancel": MessageLookupByLibrary.simpleMessage("취소"),
+        "buttonChange": MessageLookupByLibrary.simpleMessage("변경"),
+        "buttonConfirm": MessageLookupByLibrary.simpleMessage("확인"),
+        "buttonContinue": MessageLookupByLibrary.simpleMessage("계속"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("복사"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("삭제"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("ลบ"),
+        "buttonDeleteAccount": MessageLookupByLibrary.simpleMessage("계정 삭제"),
+        "buttonDone": MessageLookupByLibrary.simpleMessage("완료"),
+        "buttonEdit": MessageLookupByLibrary.simpleMessage("편집"),
+        "buttonEditProfile": MessageLookupByLibrary.simpleMessage("프로필 편집"),
+        "buttonGotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
+        "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("계정 유지"),
+        "buttonManage": MessageLookupByLibrary.simpleMessage("관리하다"),
+        "buttonNext": MessageLookupByLibrary.simpleMessage("다음 단계"),
         "buttonOpenLink": MessageLookupByLibrary.simpleMessage("링크 열기"),
+        "buttonPreview": MessageLookupByLibrary.simpleMessage("미리보기"),
+        "buttonRefresh": MessageLookupByLibrary.simpleMessage("새로 고침"),
         "buttonResend": MessageLookupByLibrary.simpleMessage("다시 보내다"),
+        "buttonSave": MessageLookupByLibrary.simpleMessage("저장"),
+        "buttonSignOut": MessageLookupByLibrary.simpleMessage("로그아웃"),
+        "buttonSubmit": MessageLookupByLibrary.simpleMessage("제출하다"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("매치 해제"),
-        "cancelButton": MessageLookupByLibrary.simpleMessage("취소"),
+        "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("구독 취소"),
         "chat": MessageLookupByLibrary.simpleMessage("채팅"),
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("그들의 프로필을 확인하세요"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("선택"),
+        "commonLanguage": MessageLookupByLibrary.simpleMessage("주요 언어"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("자주 사용되는 언어"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("설명 (선택 사항)"),
+        "disclaimer": MessageLookupByLibrary.simpleMessage("면책 조항"),
+        "displayMyCity": MessageLookupByLibrary.simpleMessage("나의 도시 표시"),
         "dm": MessageLookupByLibrary.simpleMessage("DM"),
-        "doneButton": MessageLookupByLibrary.simpleMessage("완료"),
         "exceptionFailedToSendTips":
             MessageLookupByLibrary.simpleMessage("전송 실패, 나중에 다시 시도해주세요."),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
             "발송되지 않음. SONA는 금지된 단어를 번역하지 않습니다."),
         "exceptionSonaOverloadedTips": MessageLookupByLibrary.simpleMessage(
             "SONA가 과부하 상태입니다, 나중에 다시 시도해주세요."),
+        "feedback": MessageLookupByLibrary.simpleMessage("피드백"),
         "filter": MessageLookupByLibrary.simpleMessage("필터"),
+        "findingFolksWhoShareYourInterests":
+            MessageLookupByLibrary.simpleMessage("같은 관심사를 가진 사람들 찾기"),
         "firstLandingLoadingTitle":
             MessageLookupByLibrary.simpleMessage("SONA가 잠재적인 친구를 찾고 있습니다..."),
         "friendsIntention":
             MessageLookupByLibrary.simpleMessage("헤이, 너 정말 멋진 것 같아. 친구가 되어볼래?"),
+        "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plus받기"),
         "gore": MessageLookupByLibrary.simpleMessage("잔인함"),
         "guessWhoBreakSilence":
             MessageLookupByLibrary.simpleMessage("헤이, 누가 먼저 침묵을 깰까?"),
@@ -80,7 +113,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("스타일이 마음에 들어요!"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("관심사"),
+        "interests": MessageLookupByLibrary.simpleMessage("ความสนใจ"),
         "interpretationOff":
             MessageLookupByLibrary.simpleMessage("AI 동시 통역: 꺼짐"),
         "interpretationOn":
@@ -99,11 +132,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("위치 승인"),
         "matchPageSelectIdeas": m3,
+        "me": MessageLookupByLibrary.simpleMessage("나"),
+        "month": MessageLookupByLibrary.simpleMessage("월"),
+        "morePhotosBenefit":
+            MessageLookupByLibrary.simpleMessage("사진이 많을수록 추천도가 높아집니다"),
         "nearby": MessageLookupByLibrary.simpleMessage("근처에"),
         "newMatch": MessageLookupByLibrary.simpleMessage("새로운 매치!"),
-        "nextButton": MessageLookupByLibrary.simpleMessage("다음 단계"),
+        "nextBilingDate": MessageLookupByLibrary.simpleMessage("다음 지불 날짜"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "상태: 메시지 없음\n\n할 일: 매칭 페이지로 가자\n\n제안: 멋진 프로필을 만드세요"),
+        "notifications": MessageLookupByLibrary.simpleMessage("알림"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("오잉, 지금 데이터가 없어요"),
         "other": MessageLookupByLibrary.simpleMessage("기타"),
@@ -111,14 +149,28 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "당신의 위시리스트 설정이 더 큰 역할을 할 것입니다"),
         "personalAttack": MessageLookupByLibrary.simpleMessage("인신공격"),
+        "photos": MessageLookupByLibrary.simpleMessage("사진"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
                 "인터넷을 확인하거나 새로 고침을 탭하여 다시 시도하세요"),
+        "plusFuncAIInterpretation":
+            MessageLookupByLibrary.simpleMessage("하루에 1000번 AI 동시통역"),
+        "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("주당 5회 DM"),
+        "plusFuncFilterMatchingCountries":
+            MessageLookupByLibrary.simpleMessage("매칭되는 국가 필터링"),
+        "plusFuncSonaTips":
+            MessageLookupByLibrary.simpleMessage("SONA Tips - 당신의 채팅 상담원"),
+        "plusFuncUnlimitedLikes":
+            MessageLookupByLibrary.simpleMessage("무제한 좋아요"),
+        "plusFuncUnlockWhoLikesU":
+            MessageLookupByLibrary.simpleMessage("좋아하는 사람이 누구인지 보려면 잠금 해제"),
+        "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3개의 소원"),
         "pornography": MessageLookupByLibrary.simpleMessage("포르노"),
         "preference": MessageLookupByLibrary.simpleMessage("취향"),
-        "refresh": MessageLookupByLibrary.simpleMessage("새로 고침"),
+        "privacy": MessageLookupByLibrary.simpleMessage("프라이버시"),
+        "privacyPolicy": MessageLookupByLibrary.simpleMessage("개인정보처리방침"),
+        "pushNotifications": MessageLookupByLibrary.simpleMessage("푸시 알림"),
         "report": MessageLookupByLibrary.simpleMessage("신고"),
-        "resendButton": MessageLookupByLibrary.simpleMessage("다시 보내다"),
         "runningIntoForeignersNearYou":
             MessageLookupByLibrary.simpleMessage("당신 근처에서 외국인을 만나다"),
         "scam": MessageLookupByLibrary.simpleMessage("사기"),
@@ -126,22 +178,44 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeProfile": MessageLookupByLibrary.simpleMessage("프로필 보기"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("당신을 좋아하는 사람들 보기"),
         "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("국가 선택"),
+        "settings": MessageLookupByLibrary.simpleMessage("설정"),
+        "showYourPersonality":
+            MessageLookupByLibrary.simpleMessage("당신의 개성을 보여주세요"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("마지막 단계"),
+        "sixMonths": MessageLookupByLibrary.simpleMessage("6개월"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA 동시 통역이 꺼졌습니다"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
             "Sona 추천: 쿨다운. \n해야 할 일: 기다리기. \n제안: 영화 보기?"),
         "speakSameLanguage":
             MessageLookupByLibrary.simpleMessage("여러분은 같은 언어를 사용합니다"),
-        "submitButton": MessageLookupByLibrary.simpleMessage("제출하다"),
+        "standard": MessageLookupByLibrary.simpleMessage("표준"),
+        "subPageSubtitleAIInterpretationDaily":
+            MessageLookupByLibrary.simpleMessage("하루에 1000번 AI 동시통역"),
+        "subPageSubtitleDMWeekly":
+            MessageLookupByLibrary.simpleMessage("주당 5회 DM"),
+        "subPageSubtitleFilterMatchingCountries":
+            MessageLookupByLibrary.simpleMessage("매칭되는 국가 필터링"),
+        "subPageSubtitleUnlimitedLikes":
+            MessageLookupByLibrary.simpleMessage("무제한 좋아요"),
+        "subPageSubtittleSonaTips":
+            MessageLookupByLibrary.simpleMessage("SONA Tips - 당신의 채팅 상담원"),
+        "subPageSubtittleUnlockWhoLikesU":
+            MessageLookupByLibrary.simpleMessage("좋아하는 사람이 누구인지 보려면 잠금 해제"),
+        "subPageTitle": MessageLookupByLibrary.simpleMessage("SONA Plus받기"),
+        "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("약관"),
+        "subscriptionAgreementPrefix": m4,
+        "subscriptionAgreementSuffix":
+            MessageLookupByLibrary.simpleMessage("에 동의하는 것입니다."),
+        "termsOfService": MessageLookupByLibrary.simpleMessage("이용 약관"),
+        "theKeyIsBalance": MessageLookupByLibrary.simpleMessage("균형이 관건이다"),
         "theyAreWaitingForYourReply":
             MessageLookupByLibrary.simpleMessage("👆 답장을 기다리고 있어요"),
+        "threeMonths": MessageLookupByLibrary.simpleMessage("3개월"),
         "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("사진 찍기"),
         "userAvatarOptionGallery":
             MessageLookupByLibrary.simpleMessage("갤러리에서 선택"),
-        "userAvatarPageChangeButton":
-            MessageLookupByLibrary.simpleMessage("변경"),
         "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
             "좋은 초상화는 더 많은 매치를 가져다 줍니다. 실제 사진을 사용하세요."),
         "userAvatarPageTitle":
@@ -181,6 +255,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "verifyCodePageTitle":
             MessageLookupByLibrary.simpleMessage("인증 코드를 입력하세요"),
         "wannaHollaAt": MessageLookupByLibrary.simpleMessage("인사해봐!"),
+        "warningCancelDisplayCity":
+            MessageLookupByLibrary.simpleMessage("닫은 후에는 페어링할 때 도시가 표시되지 않습니다"),
+        "warningCancelSubscription": MessageLookupByLibrary.simpleMessage(
+            "귀하의 계정은 14일 후에 자동으로 삭제될 예정입니다. 추가 요금을 피하기 위해 현재 구독을 취소하기 위해 매장에 가야 함을 기억해 주세요."),
+        "warningDeleteAccount": MessageLookupByLibrary.simpleMessage(
+            "계정을 삭제하면 더 이상 로그인할 수 없습니다. 정말 삭제하시겠습니까?"),
         "warningOpenExternalLink": MessageLookupByLibrary.simpleMessage(
             "외부 링크입니다. 탭하기 전에 출처가 신뢰할 수 있는지 확인하세요. 알려지지 않은 링크는 사기 또는 데이터 도용일 수 있습니다. 주의해서 진행하세요."),
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("주의"),
@@ -194,7 +274,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("동반자 찾기를 도와드립니다"),
         "wishActivityPickerTitle":
             MessageLookupByLibrary.simpleMessage("뭔가 하고 싶어?"),
-        "wishCityPickerSkipButton": m4,
+        "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle":
             MessageLookupByLibrary.simpleMessage("거기에 간다면, 어떤 도시를 방문하고 싶습니까?"),
         "wishCountryPickerSubtitle":
@@ -208,7 +288,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishDateOptionRecent":
             MessageLookupByLibrary.simpleMessage("최근이라고 생각해요"),
         "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("1년 이내"),
-        "wishDatePickerSubtitle": m5,
+        "wishDatePickerSubtitle": m6,
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("언제"),
         "wishList": MessageLookupByLibrary.simpleMessage("소망 목록"),
         "wishes": MessageLookupByLibrary.simpleMessage("소원"),

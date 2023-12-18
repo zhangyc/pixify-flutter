@@ -37,7 +37,7 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
             onPressed: Navigator.of(context).pop,
           ),
           centerTitle: true,
-          title: Text('Settings'),
+          title: Text(S.of(context).account),
         ),
         body: CustomScrollView(
           slivers: [
@@ -54,15 +54,15 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
                   children: [
                     ForwardButton(
                       onTap: _switchLanguage,
-                      text: 'Common Language',
+                      text: S.of(context).commonLanguage,
                     ),
                     ForwardButton(
                       onTap: _switchGender,
-                      text: 'Gender',
+                      text: S.of(context).userGenderInputLabel,
                     ),
                     ForwardButton(
                       onTap: _deleteAccount,
-                      text: 'Delete Account',
+                      text: S.of(context).buttonDeleteAccount,
                       color: Theme.of(context).disabledColor,
                     ),
                   ],
@@ -99,20 +99,20 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
   Future<bool?> _showWarningConfirm() {
     return showConfirm(
       context: context,
-      title: 'Delete Account',
+      title: S.of(context).buttonDeleteAccount,
       confirmDelay: const Duration(seconds: 2),
-      content: 'Deleting your account is permanent.\nAll your data will be deleted and can\'t be recovered.\nAre you sure you want to proceed?',
-      confirmText: 'Delete',
+      content: S.of(context).warningDeleteAccount,
+      confirmText: S.of(context).buttonDelete,
     );
   }
 
   Future<bool?> _showFinalConfirm() {
     return showConfirm(
         context: context,
-        title: 'Delete Account',
-        content: 'Your account will be automatically deleted in 14 days.\n\nPlease remember to go to the store to cancel your current subscription to avoid additional charges.',
-        confirmText: 'Got it',
-        cancelText: 'Keep Account'
+        title: S.of(context).buttonDeleteAccount,
+        content: S.of(context).warningCancelSubscription,
+        confirmText: S.of(context).buttonGotIt,
+        cancelText: S.of(context).buttonKeepAccount
     );
   }
 

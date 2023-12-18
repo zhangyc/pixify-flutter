@@ -550,7 +550,7 @@ Future<T?> showActionButtons<T>({
               child: OptionButton(
                 onTap: () => Navigator.pop(context, null),
                 color: Colors.transparent,
-                text: 'Cancel',
+                text: S.of(context).buttonCancel,
               ),
             )
           ],
@@ -723,7 +723,7 @@ Future<String?> showLocalePicker({
   return showRadioFields<String>(
       context: context,
       options: options,
-      title: 'Common Language',
+      title: S.of(context).commonLanguageTitle,
       initialValue: initialValue,
       dismissible: dismissible
   );
