@@ -56,11 +56,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
           itemBuilder: (BuildContext context, int index) => _itemBuilder(data[index]),
           itemCount: data.length
         ) : _dataEmpty(),
-        error: (_, __) => GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => ref.read(asyncLikedMeProvider.notifier).refresh(false),
-          child: Center(child: Text('Failed to fetch data\nClick to retry'))
-        ),
+        error: (_, __) => _dataEmpty(),
         loading: () => Center(child: SizedBox(width: 32, height: 32, child: CircularProgressIndicator()))
       ),
       floatingActionButton: !ref.read(myProfileProvider)!.isMember && ref.watch(asyncLikedMeProvider).hasValue && ref.watch(asyncLikedMeProvider).value!.isNotEmpty ? Padding(
