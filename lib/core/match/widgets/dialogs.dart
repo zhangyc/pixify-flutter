@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
@@ -213,7 +214,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                       const SizedBox(
                         height: 60,
                       ),
-                      const Text('NEW MATCHED!',style: TextStyle(
+                      Text(S.current.newMatch,style: TextStyle(
                           fontSize: 24
                       ),),
                       const SizedBox(
@@ -230,7 +231,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 48),
                         child: Text(
-                          '${target.likeActivityName??''}'
+                           target.likeActivityName != null && target.likeActivityName!.isNotEmpty ? S.of(context).imVeryInterestedInSomething(target.likeActivityName!) : ''
                          ),
                       ),
                       const SizedBox(
@@ -253,7 +254,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                                 LengthLimitingTextInputFormatter(160), // Maximum length of 10 characters
                               ],
                               decoration: InputDecoration(
-                                hintText: 'Enter text here',
+                                hintText: S.of(context).wannaHollaAt,
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16
                                 ),
@@ -300,7 +301,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(Assets.iconsLogo,width: 20,height: 20,),
-                            const Text('Let SONA say hi for you ',style: TextStyle(
+                            Text(S.current.letSONASayHiForYou,style: TextStyle(
                               color: Colors.black
                             ),),
                             const Icon(Icons.arrow_forward_outlined)
