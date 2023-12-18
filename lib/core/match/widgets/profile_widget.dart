@@ -228,13 +228,13 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                                 SizedBox(
                                                   height: 16,
                                                 ),
-                                                TextButton(onPressed: (){
-                                                  widget.next.call();
-                                                  ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-                                                  MatchApi.like(widget.info.id,
-                                                      travelWishId: wish.id
-                                                  );
-                                                }, child: Text('Just Send a Like ->'))
+                                                // TextButton(onPressed: (){
+                                                //   widget.next.call();
+                                                //   ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+                                                //   MatchApi.like(widget.info.id,
+                                                //       travelWishId: wish.id
+                                                //   );
+                                                // }, child: Text('Just Send a Like ->'))
 
                                               ],
                                             ),

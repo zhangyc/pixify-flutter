@@ -137,48 +137,22 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           Positioned.fill(
             child: _buildMatch()
           ),
-          // Positioned(
-          //   height: 118,
-          //   width: MediaQuery.of(context).size.width,
-          //   child: Padding(
-          //     padding: const EdgeInsets.symmetric(
-          //         horizontal: 16
-          //     ),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
-          //         Row(
-          //           children: [
-          //             GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
-          //               onTap: (){
-          //                 Navigator.push(context, MaterialPageRoute(builder: (c){
-          //                   return FilterPage();
-          //                 })).then((value){
-          //                   _initData();
-          //                   if(mounted){
-          //                     _state=PageState.loading;
-          //                     setState(() {
-          //
-          //                     });
-          //                   }
-          //
-          //                 });
-          //               },
-          //             ),
-          //           ],
-          //         )
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading||(users[currentPage].wishList.isNotEmpty&&users[currentPage].matched)?Container():
+          (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading?Container():
           Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
             width: MediaQuery.of(context).size.width,child: Padding(
               padding:EdgeInsets.symmetric(
                 horizontal: 68
               ),
-              child: Row(
+              child: (users[currentPage].wishList.isNotEmpty&&users[currentPage].matched)?
+              TextButton(onPressed: (){
+                //widget.next.call();
+                controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+                MatchApi.like(users[currentPage].id,);
+               }, child: Text('Just Send a Like >',style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 16,
+              ),)):Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ScaleAnimation(onTap: (){

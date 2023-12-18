@@ -140,13 +140,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                   SizedBox(
                     height: 16,
                   ),
-                  TextButton(onPressed: (){
-                    widget.next.call();
-                    ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-                    MatchApi.like(widget.info.id,
-                        travelWishId: wish.id
-                    );
-                  }, child: Text('Just like ->'))
+
 
                 ],
               ),
