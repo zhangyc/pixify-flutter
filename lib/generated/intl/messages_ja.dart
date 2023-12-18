@@ -29,45 +29,79 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m3(gender) =>
       "${Intl.gender(gender, female: '彼女', male: '彼', other: '彼ら')}のどのアイデアが好きですか？";
 
-  static String m4(country) => "スキップ、ただ${country}";
+  static String m4(storeName) =>
+      "「続行」をクリックすると料金が発生し、対応するパッケージの価格で自動更新されます。${storeName}でキャンセルが可能です。続行することで、私たちの";
 
-  static String m5(country) => "${country}に行く予定ですか";
+  static String m5(country) => "スキップ、ただ${country}";
+
+  static String m6(country) => "${country}に行く予定ですか";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "aMonth": MessageLookupByLibrary.simpleMessage("1ヶ月"),
+        "aYear": MessageLookupByLibrary.simpleMessage("1年"),
+        "about": MessageLookupByLibrary.simpleMessage("約"),
+        "account": MessageLookupByLibrary.simpleMessage("アカウント"),
         "age": MessageLookupByLibrary.simpleMessage("年齢"),
+        "allPeople": MessageLookupByLibrary.simpleMessage("全部"),
+        "bio": MessageLookupByLibrary.simpleMessage("アバウトミー"),
         "block": MessageLookupByLibrary.simpleMessage("ブロック"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage(
                 "この人をブロックして、彼らからのメッセージを受け取らないようにする"),
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 気にしないで🔨🔨🔨 氷を砕くだけ🔨🔨🔨"),
+        "buttonAlreadyPlus":
+            MessageLookupByLibrary.simpleMessage("あなたはPlus会員です"),
+        "buttonCancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
+        "buttonChange": MessageLookupByLibrary.simpleMessage("変更"),
+        "buttonConfirm": MessageLookupByLibrary.simpleMessage("確認"),
+        "buttonContinue": MessageLookupByLibrary.simpleMessage("続行"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("コピー"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("削除"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("删除"),
+        "buttonDeleteAccount": MessageLookupByLibrary.simpleMessage("アカウント削除"),
+        "buttonDone": MessageLookupByLibrary.simpleMessage("済みました"),
+        "buttonEdit": MessageLookupByLibrary.simpleMessage("編集"),
+        "buttonEditProfile": MessageLookupByLibrary.simpleMessage("プロフィール編集"),
+        "buttonGotIt": MessageLookupByLibrary.simpleMessage("分かった"),
+        "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("アカウントを保持"),
+        "buttonManage": MessageLookupByLibrary.simpleMessage("管理する"),
+        "buttonNext": MessageLookupByLibrary.simpleMessage("次のステップ"),
         "buttonOpenLink": MessageLookupByLibrary.simpleMessage("リンクを開く"),
+        "buttonPreview": MessageLookupByLibrary.simpleMessage("プレビュー"),
+        "buttonRefresh": MessageLookupByLibrary.simpleMessage("更新"),
         "buttonResend": MessageLookupByLibrary.simpleMessage("再送信"),
+        "buttonSave": MessageLookupByLibrary.simpleMessage("保存"),
+        "buttonSignOut": MessageLookupByLibrary.simpleMessage("ログアウト"),
+        "buttonSubmit": MessageLookupByLibrary.simpleMessage("提出する"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("ペアリング解除"),
-        "cancelButton": MessageLookupByLibrary.simpleMessage("キャンセル"),
+        "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("購読を解除する"),
         "chat": MessageLookupByLibrary.simpleMessage("チャット"),
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("あいつらのプロフチェックしよう!"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("選択"),
+        "commonLanguage": MessageLookupByLibrary.simpleMessage("主要言語"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("一般的に使用される言語"),
         "descriptionOptional": MessageLookupByLibrary.simpleMessage("説明（任意）"),
+        "disclaimer": MessageLookupByLibrary.simpleMessage("免責事項"),
+        "displayMyCity": MessageLookupByLibrary.simpleMessage("私の都市を表示"),
         "dm": MessageLookupByLibrary.simpleMessage("ディーエム"),
-        "doneButton": MessageLookupByLibrary.simpleMessage("済みました"),
         "exceptionFailedToSendTips":
             MessageLookupByLibrary.simpleMessage("送信に失敗しました、後で再試行してください。"),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
             "送信されていない。SONAは禁止された言葉を翻訳しません。"),
         "exceptionSonaOverloadedTips":
             MessageLookupByLibrary.simpleMessage("SONAは過負荷です、後で再試行してください。"),
+        "feedback": MessageLookupByLibrary.simpleMessage("フィードバック"),
         "filter": MessageLookupByLibrary.simpleMessage("フィルター"),
+        "findingFolksWhoShareYourInterests":
+            MessageLookupByLibrary.simpleMessage("同じ趣味を持つ人を見つける"),
         "firstLandingLoadingTitle":
             MessageLookupByLibrary.simpleMessage("SONAは潜在的な友人を探しています..."),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "こんにちは!面白そうな人だね。ちょっと話してみませんか？"),
+        "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plusを入手"),
         "gore": MessageLookupByLibrary.simpleMessage("グロテスク"),
         "guessWhoBreakSilence":
             MessageLookupByLibrary.simpleMessage("ねえ、誰が最初に沈黙を破ると思う？"),
@@ -80,7 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("スタイルがすごくかわいいわね!"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("興味"),
+        "interests": MessageLookupByLibrary.simpleMessage("兴趣"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI同期通訳：オフ"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI同期通訳：オン"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("いいねを送るだけ"),
@@ -97,11 +131,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("位置を許可する"),
         "matchPageSelectIdeas": m3,
+        "me": MessageLookupByLibrary.simpleMessage("マイページ"),
+        "month": MessageLookupByLibrary.simpleMessage("月"),
+        "morePhotosBenefit":
+            MessageLookupByLibrary.simpleMessage("写真多いほどおすすめ度高くなる"),
         "nearby": MessageLookupByLibrary.simpleMessage("近くに"),
         "newMatch": MessageLookupByLibrary.simpleMessage("新しいマッチ！"),
-        "nextButton": MessageLookupByLibrary.simpleMessage("次のステップ"),
+        "nextBilingDate": MessageLookupByLibrary.simpleMessage("次の請求日"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "ステータス：メッセージなし\n\nすること：さあ、ペアリングページに行こう！\n\n提案：素晴らしいプロフィールを作る"),
+        "notifications": MessageLookupByLibrary.simpleMessage("通知"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("おっと、今はデータがありません"),
         "other": MessageLookupByLibrary.simpleMessage("その他"),
@@ -109,14 +148,28 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "あなたのウィッシュリストの設定はもっと大きな役割を果たすようになるよ"),
         "personalAttack": MessageLookupByLibrary.simpleMessage("人身攻撃"),
+        "photos": MessageLookupByLibrary.simpleMessage("写真"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
                 "ネットワークを確認するか、更新ボタンを押してリトライしてくださいね~"),
+        "plusFuncAIInterpretation":
+            MessageLookupByLibrary.simpleMessage("1日に1000回のAI同期通訳"),
+        "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("週に5回のDM"),
+        "plusFuncFilterMatchingCountries":
+            MessageLookupByLibrary.simpleMessage("マッチング国を絞り込む"),
+        "plusFuncSonaTips":
+            MessageLookupByLibrary.simpleMessage("SONA Tips - あなたのチャット参謀"),
+        "plusFuncUnlimitedLikes":
+            MessageLookupByLibrary.simpleMessage("いいね無制限"),
+        "plusFuncUnlockWhoLikesU":
+            MessageLookupByLibrary.simpleMessage("あなたを好きな人が誰か見るために解除"),
+        "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3つの願い"),
         "pornography": MessageLookupByLibrary.simpleMessage("ポルノ"),
         "preference": MessageLookupByLibrary.simpleMessage("好み"),
-        "refresh": MessageLookupByLibrary.simpleMessage("更新"),
+        "privacy": MessageLookupByLibrary.simpleMessage("プライバシー"),
+        "privacyPolicy": MessageLookupByLibrary.simpleMessage("プライバシーポリシー"),
+        "pushNotifications": MessageLookupByLibrary.simpleMessage("プッシュ通知"),
         "report": MessageLookupByLibrary.simpleMessage("報告する"),
-        "resendButton": MessageLookupByLibrary.simpleMessage("再送信"),
         "runningIntoForeignersNearYou":
             MessageLookupByLibrary.simpleMessage("あなたの近くの外国人に出会う"),
         "scam": MessageLookupByLibrary.simpleMessage("詐欺"),
@@ -126,22 +179,44 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeWhoLikeU":
             MessageLookupByLibrary.simpleMessage("誰があなたを好きになったか見てみて"),
         "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("国を選択"),
+        "settings": MessageLookupByLibrary.simpleMessage("設定"),
+        "showYourPersonality":
+            MessageLookupByLibrary.simpleMessage("あなたの世界観や個性を表現してみてね ♪"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("最後のステップ"),
+        "sixMonths": MessageLookupByLibrary.simpleMessage("6ヶ月"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA同期通訳はオフになりました"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
             "ソナおすすめ:クールダウン中\nやること:待ってる\nアドバイス:漫画でも読んどいたら?"),
         "speakSameLanguage":
             MessageLookupByLibrary.simpleMessage("🤝 同語なら翻訳しなくてもいいよ"),
-        "submitButton": MessageLookupByLibrary.simpleMessage("提出する"),
+        "standard": MessageLookupByLibrary.simpleMessage("標準"),
+        "subPageSubtitleAIInterpretationDaily":
+            MessageLookupByLibrary.simpleMessage("1日に1000回のAI同期通訳"),
+        "subPageSubtitleDMWeekly":
+            MessageLookupByLibrary.simpleMessage("週に5回のDM"),
+        "subPageSubtitleFilterMatchingCountries":
+            MessageLookupByLibrary.simpleMessage("マッチング国を絞り込む"),
+        "subPageSubtitleUnlimitedLikes":
+            MessageLookupByLibrary.simpleMessage("いいね無制限"),
+        "subPageSubtittleSonaTips":
+            MessageLookupByLibrary.simpleMessage("SONA Tips - あなたのチャット参謀"),
+        "subPageSubtittleUnlockWhoLikesU":
+            MessageLookupByLibrary.simpleMessage("あなたを好きな人が誰か見るために解除"),
+        "subPageTitle": MessageLookupByLibrary.simpleMessage("SONA Plusを入手"),
+        "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("利用規約"),
+        "subscriptionAgreementPrefix": m4,
+        "subscriptionAgreementSuffix":
+            MessageLookupByLibrary.simpleMessage("に同意したことになります。"),
+        "termsOfService": MessageLookupByLibrary.simpleMessage("利用規約"),
+        "theKeyIsBalance": MessageLookupByLibrary.simpleMessage("バランスが鍵です"),
         "theyAreWaitingForYourReply":
             MessageLookupByLibrary.simpleMessage("👆 彼らはあなたの返事を待ってるよ"),
+        "threeMonths": MessageLookupByLibrary.simpleMessage("3ヶ月"),
         "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("写真を撮る"),
         "userAvatarOptionGallery":
             MessageLookupByLibrary.simpleMessage("ギャラリーから選択"),
-        "userAvatarPageChangeButton":
-            MessageLookupByLibrary.simpleMessage("変更"),
         "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
             "良いポートレートはもっとマッチをもたらします。本物の写真を使ってください。"),
         "userAvatarPageTitle": MessageLookupByLibrary.simpleMessage("写真を追加する"),
@@ -180,6 +255,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "verifyCodePageTitle":
             MessageLookupByLibrary.simpleMessage("認証コードを入力してください"),
         "wannaHollaAt": MessageLookupByLibrary.simpleMessage("挨拶しよう！"),
+        "warningCancelDisplayCity":
+            MessageLookupByLibrary.simpleMessage("閉じた後、ペアリング時にあなたの街は表示されません"),
+        "warningCancelSubscription": MessageLookupByLibrary.simpleMessage(
+            "あなたのアカウントは14日後に自動的に削除されます。追加料金を避けるために、現在のサブスクリプションをキャンセルするために店に行くことを忘れないでください。"),
+        "warningDeleteAccount": MessageLookupByLibrary.simpleMessage(
+            "アカウントを削除すると、もうログインできなくなります。本当に削除しますか？"),
         "warningOpenExternalLink": MessageLookupByLibrary.simpleMessage(
             "外部リンクです。信頼できるソースか確認してください。未知のリンクは詐欺やデータ盗難の可能性があります。慎重に進んでください。"),
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("注意"),
@@ -193,7 +274,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("パートナーを見つけてあげるよ"),
         "wishActivityPickerTitle":
             MessageLookupByLibrary.simpleMessage("特別にしたいことあるかな?"),
-        "wishCityPickerSkipButton": m4,
+        "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle":
             MessageLookupByLibrary.simpleMessage("そこに行くなら、どの都市を訪れたいですか？"),
         "wishCountryPickerSubtitle":
@@ -206,7 +287,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("まだ確かじゃないよ"),
         "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("最近ね、たぶん"),
         "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("1年以内"),
-        "wishDatePickerSubtitle": m5,
+        "wishDatePickerSubtitle": m6,
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("いつ"),
         "wishList": MessageLookupByLibrary.simpleMessage("願いリスト"),
         "wishes": MessageLookupByLibrary.simpleMessage("願い"),

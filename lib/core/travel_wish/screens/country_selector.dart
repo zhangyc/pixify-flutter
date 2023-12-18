@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/common/no_data/empty.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 
 import '../../../generated/l10n.dart';
@@ -92,12 +93,8 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
             ],
           ),
         ),
-        error: (_, __) => GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          child: Center(
-            child: Text('Error to get initial data\nclick to try again'),
-          ),
-          onTap: () => ref.read(asyncPopularTravelCountriesProvider.notifier).refresh(),
+        error: (_, __) => NoData(
+          onRefresh: ref.read(asyncPopularTravelCountriesProvider.notifier).refresh,
         ),
         loading: () => Center(
             child: SizedBox(

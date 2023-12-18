@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/no_data/empty.dart';
 import 'package:sona/core/travel_wish/models/activity.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/popular_activity.dart';
@@ -178,7 +179,7 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
               child: ColoredButton(
                 key: ValueKey(selectedActivityIds.length),
                 size: ColoredButtonSize.large,
-                text: S.of(context).doneButton,
+                text: S.of(context).buttonDone,
                 loadingWhenAsyncAction: true,
                 onTap: widget.onDone,
                 disabled: selectedActivityIds.isEmpty,
@@ -186,11 +187,10 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
             )
           ],
         ),
-        error: (_, __) => GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => ref.read(asyncPopularTravelActivitiesProvider(key).notifier).refresh(),
-          child: Center(
-            child: Text('Error to get initial data\nclick to try again'),
+        error: (_, __) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: NoData(
+            onRefresh: ref.read(asyncPopularTravelActivitiesProvider(key).notifier).refresh,
           ),
         ),
         loading: () => Center(

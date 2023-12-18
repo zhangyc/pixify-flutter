@@ -291,7 +291,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                               backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
                             ),
                             child: Text(
-                              'Edit Profile',
+                              S.of(context).buttonEditProfile,
                               style: Theme.of(context).textTheme.titleSmall
                             )
                         ),
@@ -305,14 +305,14 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE600)),
                         side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),
-                      child: Text('Super SONA', style: Theme.of(context).textTheme.titleMedium)
+                      child: Text(S.of(context).getSonaPlus, style: Theme.of(context).textTheme.titleMedium)
                   ),
                   if (ref.watch(myProfileProvider)!.isMember) OutlinedButton(
                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unLockSona(),fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
                           side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),
-                      child: Text('You\'re Super SONA', style: Theme.of(context).textTheme.titleMedium)
+                      child: Text(S.of(context).buttonAlreadyPlus, style: Theme.of(context).textTheme.titleMedium)
                   )
                 ],
               ),

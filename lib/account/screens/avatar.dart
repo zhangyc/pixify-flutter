@@ -160,7 +160,7 @@ class _AvatarScreenState extends State<AvatarScreen> {
                   child: Text(S.current.userAvatarOptionGallery)
               ) else FilledButton(
                   onPressed: _next,
-                  child: Text(S.current.nextButton)
+                  child: Text(S.current.buttonNext)
               ),
               SizedBox(height: 16),
               if (_avatar == null) OutlinedButton(
@@ -168,7 +168,7 @@ class _AvatarScreenState extends State<AvatarScreen> {
                   child: Text(S.current.userAvatarOptionCamera)
               ) else TextButton(
                   onPressed: _change,
-                  child: Text(S.current.userAvatarPageChangeButton)
+                  child: Text(S.current.buttonChange)
               ),
               // Spacer()
             ],

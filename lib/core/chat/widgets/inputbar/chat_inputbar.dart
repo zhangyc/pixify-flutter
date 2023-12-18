@@ -51,7 +51,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
 class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware {
   late final TextEditingController _controller;
   late final _focusNode = widget.focusNode ?? FocusNode();
-  late final _height = widget.height ?? 38;
+  late final _height = widget.height ?? 56;
   final _sonaKey = GlobalKey();
   final _suggKey = GlobalKey();
 
@@ -152,6 +152,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
+          // height: _height,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -159,11 +160,12 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                 onTap: widget.onSuggestionTap,
                 child: Container(
                   key: _sonaKey,
-                  width: 38,
-                  height: 56,
-                  padding: EdgeInsets.only(top: 3),
+                  // width: 24,
+                  // height: 24,
+                  margin: EdgeInsets.only(top: 18, bottom: 18, right: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
+                    border: Border(right: BorderSide(color: Color(0xFFE8E6E6), width: 1))
                   ),
                   clipBehavior: Clip.antiAlias,
                   alignment: Alignment.center,
@@ -177,7 +179,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                 child: Container(
                   // width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(_height/4)
+                    borderRadius: BorderRadius.circular(20)
                   ),
                   padding: EdgeInsets.symmetric(vertical: 1.5),
                   child: TextField(
@@ -192,9 +194,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     keyboardAppearance: Brightness.dark,
                     keyboardType: widget.keyboardType,
                     textInputAction: TextInputAction.newline,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: 14,
                       locale: myLocale
                     ),
                     autocorrect: true,
@@ -202,19 +203,20 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(width: 1.6),
-                        borderRadius: BorderRadius.circular(_height/4),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 1.6),
-                        borderRadius: BorderRadius.circular(_height/4),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                       isDense: true,
                       filled: true,
                       fillColor: Colors.white,
                       focusColor: Color(0xFF6D91F4),
                       hintText: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Tell Sona your intention...' : 'Write sth...',
                       hintStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+                        fontSize: 14,
                         color: Theme.of(context).hintColor,
                         fontWeight: FontWeight.w500
                       )

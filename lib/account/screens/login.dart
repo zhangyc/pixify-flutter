@@ -199,7 +199,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
               size: ColoredButtonSize.large,
               // color: Color(0xFFDD70E0),
               fontColor: Colors.white,
-              text: S.current.nextButton,
+              text: S.current.buttonNext,
               onTap: _next,
               loadingWhenAsyncAction: true,
             ),

@@ -55,7 +55,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
           ),
           itemBuilder: (BuildContext context, int index) => _itemBuilder(data[index]),
           itemCount: data.length
-        ) : Center(child: Text(S.of(context).likedPageNoData, style: Theme.of(context).textTheme.titleMedium)),
+        ) : _dataEmpty(),
         error: (_, __) => GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () => ref.read(asyncLikedMeProvider.notifier).refresh(false),
@@ -191,6 +191,25 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
           ),
         ],
       ),
+    );
+  }
+  
+  Widget _dataEmpty() {
+    return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/empty_yin_yang.png', width: 115),
+            SizedBox(height: 32),
+            Text(
+                S.of(context).likedPageNoData,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500
+                )
+            ),
+            SizedBox(height: 36),
+          ],
+        )
     );
   }
 

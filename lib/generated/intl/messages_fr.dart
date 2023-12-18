@@ -29,48 +29,91 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m3(gender) =>
       "Quelle de ${Intl.gender(gender, female: 'ses', male: 'ses', other: 'leurs')} idées aimez-vous?";
 
-  static String m4(country) => "Passer, Juste ${country}";
+  static String m4(storeName) =>
+      "En appuyant sur \"Continuer\", vous serez facturé, votre abonnement sera automatiquement renouvelé au même prix et pour la même durée jusqu\'à son annulation via les paramètres du ${storeName}, et vous acceptez nos ";
 
-  static String m5(country) => "Prévoyez-vous d\'aller au ${country}?";
+  static String m5(country) => "Passer, Juste ${country}";
+
+  static String m6(country) => "Prévoyez-vous d\'aller au ${country}?";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "aMonth": MessageLookupByLibrary.simpleMessage("1 mois"),
+        "aYear": MessageLookupByLibrary.simpleMessage("1 an"),
+        "about": MessageLookupByLibrary.simpleMessage("À propos"),
+        "account": MessageLookupByLibrary.simpleMessage("Compte"),
         "age": MessageLookupByLibrary.simpleMessage("Âge"),
+        "allPeople":
+            MessageLookupByLibrary.simpleMessage("Toutes les personnes"),
+        "bio": MessageLookupByLibrary.simpleMessage("Introduction"),
         "block": MessageLookupByLibrary.simpleMessage("Bloquer"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage(
                 "Bloquez cette personne pour ne plus recevoir de messages d\'elle"),
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 Ne fais pas attention à moi🔨🔨🔨 Je brise juste la glace🔨🔨🔨"),
+        "buttonAlreadyPlus":
+            MessageLookupByLibrary.simpleMessage("Tu es membre Plus"),
+        "buttonCancel": MessageLookupByLibrary.simpleMessage("Annuler"),
+        "buttonChange": MessageLookupByLibrary.simpleMessage("Changer"),
+        "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirmer"),
+        "buttonContinue": MessageLookupByLibrary.simpleMessage("Continuer"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("Copier"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("Supprimer"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("Löschen"),
+        "buttonDeleteAccount":
+            MessageLookupByLibrary.simpleMessage("Supprimer le compte"),
+        "buttonDone": MessageLookupByLibrary.simpleMessage("Fait"),
+        "buttonEdit": MessageLookupByLibrary.simpleMessage("Éditer"),
+        "buttonEditProfile":
+            MessageLookupByLibrary.simpleMessage("Modifier le profil"),
+        "buttonGotIt": MessageLookupByLibrary.simpleMessage("Compris"),
+        "buttonKeepAccount":
+            MessageLookupByLibrary.simpleMessage("Garder le compte"),
+        "buttonManage": MessageLookupByLibrary.simpleMessage("Gérer"),
+        "buttonNext": MessageLookupByLibrary.simpleMessage("Prochaine Étape"),
         "buttonOpenLink":
             MessageLookupByLibrary.simpleMessage("Ouvrir le Lien"),
+        "buttonPreview": MessageLookupByLibrary.simpleMessage("Aperçu"),
+        "buttonRefresh": MessageLookupByLibrary.simpleMessage("Actualiser"),
         "buttonResend": MessageLookupByLibrary.simpleMessage("Renvoyer"),
+        "buttonSave": MessageLookupByLibrary.simpleMessage("Sauvegarder"),
+        "buttonSignOut": MessageLookupByLibrary.simpleMessage("Se déconnecter"),
+        "buttonSubmit": MessageLookupByLibrary.simpleMessage("Soumettre"),
         "buttonUnmatch":
             MessageLookupByLibrary.simpleMessage("Annuler la correspondance"),
-        "cancelButton": MessageLookupByLibrary.simpleMessage("Annuler"),
+        "buttonUnsubscribe":
+            MessageLookupByLibrary.simpleMessage("Se désabonner"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("Vérifiez leurs profils"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Choisir"),
+        "commonLanguage":
+            MessageLookupByLibrary.simpleMessage("Langue principale"),
         "commonLanguageTitle": MessageLookupByLibrary.simpleMessage(
             "Langues couramment utilisées"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("Description (facultative)"),
+        "disclaimer": MessageLookupByLibrary.simpleMessage("Avertissement"),
+        "displayMyCity":
+            MessageLookupByLibrary.simpleMessage("Afficher ma ville"),
         "dm": MessageLookupByLibrary.simpleMessage("DM"),
-        "doneButton": MessageLookupByLibrary.simpleMessage("Fait"),
         "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
             "Échec de l\'envoi, veuillez réessayer plus tard."),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
             "Non envoyé. SONA ne traduira pas les mots interdits."),
         "exceptionSonaOverloadedTips": MessageLookupByLibrary.simpleMessage(
             "SONA est surchargée, veuillez réessayer plus tard."),
+        "feedback": MessageLookupByLibrary.simpleMessage("Rétroaction"),
         "filter": MessageLookupByLibrary.simpleMessage("Filtre"),
+        "findingFolksWhoShareYourInterests":
+            MessageLookupByLibrary.simpleMessage(
+                "Trouver des personnes qui partagent vos intérêts"),
         "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
             "SONA recherche des amis potentiels..."),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Hé, je pense que tu es génial. Ça te dirait qu\'on devienne amis ?"),
+        "getSonaPlus":
+            MessageLookupByLibrary.simpleMessage("Obtenir SONA Plus"),
         "gore": MessageLookupByLibrary.simpleMessage("Gore"),
         "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
             "Hé, devine qui va briser le silence en premier ?"),
@@ -84,7 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("J\'aime ton style !"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("Intérêts"),
+        "interests": MessageLookupByLibrary.simpleMessage("Interessen"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "Interprétation Synchrone IA : Désactivée"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
@@ -105,12 +148,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("Autoriser l\'emplacement"),
         "matchPageSelectIdeas": m3,
+        "me": MessageLookupByLibrary.simpleMessage("Moi"),
+        "month": MessageLookupByLibrary.simpleMessage("Mois"),
+        "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
+            "Plus il y a de photos, plus la recommandation est élevée"),
         "nearby": MessageLookupByLibrary.simpleMessage("À proximité"),
         "newMatch":
             MessageLookupByLibrary.simpleMessage("Nouvelle correspondance !"),
-        "nextButton": MessageLookupByLibrary.simpleMessage("Prochaine Étape"),
+        "nextBilingDate":
+            MessageLookupByLibrary.simpleMessage("Prochaine date de paiement"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "Statut : Pas de messages\n\nSuggestion : Allez à la page de jumelage\n\nSuggestion : Faites un profil génial"),
+        "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage(
             "Oups, pas de données pour l\'instant"),
         "other": MessageLookupByLibrary.simpleMessage("Autre"),
@@ -119,14 +168,31 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Les paramètres de votre liste de souhaits joueront un rôle plus important"),
         "personalAttack":
             MessageLookupByLibrary.simpleMessage("Attaque personnelle"),
+        "photos": MessageLookupByLibrary.simpleMessage("Photos"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
                 "Veuillez vérifier votre internet ou Appuyez pour Rafraîchir et réessayer"),
+        "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
+            "1000 interprétations simultanées/jour"),
+        "plusFuncDMPerWeek":
+            MessageLookupByLibrary.simpleMessage("5 DM par semaine"),
+        "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
+            "Filtrer les pays correspondants"),
+        "plusFuncSonaTips": MessageLookupByLibrary.simpleMessage(
+            "SONA Tips - Ton conseiller de chat"),
+        "plusFuncUnlimitedLikes":
+            MessageLookupByLibrary.simpleMessage("Likes illimités"),
+        "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
+            "Débloquer pour voir qui vous aime"),
+        "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 souhaits"),
         "pornography": MessageLookupByLibrary.simpleMessage("Pornographie"),
         "preference": MessageLookupByLibrary.simpleMessage("Préférence"),
-        "refresh": MessageLookupByLibrary.simpleMessage("Actualiser"),
+        "privacy": MessageLookupByLibrary.simpleMessage("Confidentialité"),
+        "privacyPolicy": MessageLookupByLibrary.simpleMessage(
+            "Politique de confidentialité"),
+        "pushNotifications":
+            MessageLookupByLibrary.simpleMessage("Notifications push"),
         "report": MessageLookupByLibrary.simpleMessage("Signaler"),
-        "resendButton": MessageLookupByLibrary.simpleMessage("Renvoyer"),
         "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
             "Rencontrer des étrangers près de chez vous"),
         "scam": MessageLookupByLibrary.simpleMessage("Arnaque"),
@@ -137,23 +203,51 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Voir qui vous aime"),
         "selectCountryPageTitle":
             MessageLookupByLibrary.simpleMessage("Sélectionner le Pays"),
+        "settings": MessageLookupByLibrary.simpleMessage("Paramètres"),
+        "showYourPersonality":
+            MessageLookupByLibrary.simpleMessage("Montre ta personnalité"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("Dernière étape"),
+        "sixMonths": MessageLookupByLibrary.simpleMessage("6 mois"),
         "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
             "⭕ SONA Interprétation désactivée"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
             "Recommandation de Sona : Refroidissement.\nQue faire : Attendre.\nSuggestion : Regarder un film ?"),
         "speakSameLanguage":
             MessageLookupByLibrary.simpleMessage("Vous parlez la même langue"),
-        "submitButton": MessageLookupByLibrary.simpleMessage("Soumettre"),
+        "standard": MessageLookupByLibrary.simpleMessage("Standard"),
+        "subPageSubtitleAIInterpretationDaily":
+            MessageLookupByLibrary.simpleMessage(
+                "1000 interprétations simultanées/jour"),
+        "subPageSubtitleDMWeekly":
+            MessageLookupByLibrary.simpleMessage("5 DM par semaine"),
+        "subPageSubtitleFilterMatchingCountries":
+            MessageLookupByLibrary.simpleMessage(
+                "Filtrer les pays correspondants"),
+        "subPageSubtitleUnlimitedLikes":
+            MessageLookupByLibrary.simpleMessage("Likes illimités"),
+        "subPageSubtittleSonaTips": MessageLookupByLibrary.simpleMessage(
+            "SONA Tips - Ton conseiller de chat"),
+        "subPageSubtittleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
+            "Débloquer pour voir qui vous aime"),
+        "subPageTitle":
+            MessageLookupByLibrary.simpleMessage("Obtenir SONA Plus"),
+        "subscriptionAgreement":
+            MessageLookupByLibrary.simpleMessage("Conditions Générales"),
+        "subscriptionAgreementPrefix": m4,
+        "subscriptionAgreementSuffix":
+            MessageLookupByLibrary.simpleMessage(" ."),
+        "termsOfService":
+            MessageLookupByLibrary.simpleMessage("Conditions de Service"),
+        "theKeyIsBalance":
+            MessageLookupByLibrary.simpleMessage("La clé est l\'équilibre"),
         "theyAreWaitingForYourReply":
             MessageLookupByLibrary.simpleMessage("👆 Ils attendent ta réponse"),
+        "threeMonths": MessageLookupByLibrary.simpleMessage("3 mois"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Prendre une photo"),
         "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage(
             "Sélectionner dans la galerie"),
-        "userAvatarPageChangeButton":
-            MessageLookupByLibrary.simpleMessage("Changer"),
         "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
             "Un bon portrait vous apporte plus de correspondances. Soyez réel et utilisez une photo légitime de vous-même."),
         "userAvatarPageTitle":
@@ -197,6 +291,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage(
             "Entrez le code de vérification"),
         "wannaHollaAt": MessageLookupByLibrary.simpleMessage("Dites bonjour !"),
+        "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
+            "Après la fermeture, votre ville ne sera pas affichée lors de l\'appariement"),
+        "warningCancelSubscription": MessageLookupByLibrary.simpleMessage(
+            "Votre compte sera automatiquement supprimé dans 14 jours. N\'oubliez pas de vous rendre en magasin pour annuler votre abonnement actuel afin d\'éviter des frais supplémentaires."),
+        "warningDeleteAccount": MessageLookupByLibrary.simpleMessage(
+            "Si vous supprimez votre compte, vous ne pourrez plus vous connecter avec. Êtes-vous sûr de vouloir supprimer ?"),
         "warningOpenExternalLink": MessageLookupByLibrary.simpleMessage(
             "Lien externe. Vérifiez si la source est fiable avant de cliquer, car les liens inconnus peuvent être des arnaques ou voler des données. Procédez avec prudence."),
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Prudence"),
@@ -210,7 +310,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Aider à trouver des compagnons"),
         "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
             "Tu veux faire quelque chose ?"),
-        "wishCityPickerSkipButton": m4,
+        "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "si vous y allez, Quelles villes souhaitez-vous visiter ?"),
         "wishCountryPickerSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -225,7 +325,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Récemment, je suppose"),
         "wishDateOptionYear":
             MessageLookupByLibrary.simpleMessage("Dans un an"),
-        "wishDatePickerSubtitle": m5,
+        "wishDatePickerSubtitle": m6,
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("Quand"),
         "wishList": MessageLookupByLibrary.simpleMessage("Liste de souhaits"),
         "wishes": MessageLookupByLibrary.simpleMessage("Souhait"),

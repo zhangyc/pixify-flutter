@@ -71,7 +71,7 @@ class _LocationScreenState extends State<LocationScreen> {
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: FilledButton(
-          child: Text(S.current.nextButton),
+          child: Text(S.current.buttonNext),
           onPressed: _next,
         ),
       ),

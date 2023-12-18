@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/no_data/empty.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/popular_city.dart';
 import 'package:sona/core/travel_wish/providers/popular_country.dart';
@@ -126,12 +127,8 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                           )
                       ),
                       error: (_, __) => SliverToBoxAdapter(
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          child: Center(
-                            child: Text('Error to get initial data\nclick to try again'),
-                          ),
-                          onTap: () => ref.read(asyncPopularTravelCitiesProvider(key).notifier).refresh(),
+                        child: NoData(
+                          onRefresh: ref.read(asyncPopularTravelCitiesProvider(key).notifier).refresh,
                         ),
                       ),
                       loading: () => SliverToBoxAdapter(
@@ -235,7 +232,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
           right: 16,
           bottom: 16,
           child: FilledButton(
-            child: Text(S.of(context).nextButton),
+            child: Text(S.of(context).buttonNext),
             onPressed: widget.onNext
           ),
         ),

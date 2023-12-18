@@ -30,8 +30,12 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (widget.wish != null)
-        ref.read(travelWishParamsProvider.notifier).setState(TravelWishParams.fromTravelWish(widget.wish!));
+      if (widget.wish != null) {
+        ref.read(travelWishParamsProvider.notifier).setState(
+            TravelWishParams.fromTravelWish(widget.wish!));
+      } else {
+        ref.read(travelWishParamsProvider.notifier).setState(TravelWishParams());
+      }
     });
   }
 

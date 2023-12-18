@@ -490,7 +490,7 @@ Future<T?> showActionButtons<T>({
       return Container(
         margin: EdgeInsets.all(16),
         color: Colors.transparent,
-        padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -504,7 +504,7 @@ Future<T?> showActionButtons<T>({
             ),
             Container(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.7
+                maxHeight: MediaQuery.of(context).size.height * 0.7,
               ),
               decoration: ShapeDecoration(
                 color: Colors.white,
@@ -550,7 +550,7 @@ Future<T?> showActionButtons<T>({
               child: OptionButton(
                 onTap: () => Navigator.pop(context, null),
                 color: Colors.transparent,
-                text: 'Cancel',
+                text: S.of(context).buttonCancel,
               ),
             )
           ],
@@ -723,7 +723,7 @@ Future<String?> showLocalePicker({
   return showRadioFields<String>(
       context: context,
       options: options,
-      title: 'Common Language',
+      title: S.of(context).commonLanguageTitle,
       initialValue: initialValue,
       dismissible: dismissible
   );

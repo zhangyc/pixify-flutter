@@ -251,7 +251,7 @@ List<_P> ps=[
 List<_Gender> genders=[
   _Gender(S.current.userGenderOptionMale, 1),
   _Gender(S.current.userGenderOptionFemale, 2),
-  _Gender('All People',null),
+  _Gender(S.current.allPeople, null),
 ];
 class _Gender{
   String label;

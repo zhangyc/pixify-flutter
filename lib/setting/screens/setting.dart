@@ -36,7 +36,7 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
           onPressed: Navigator.of(context).pop,
         ),
         centerTitle: true,
-        title: Text('Settings'),
+        title: Text(S.of(context).settings),
       ),
       body: CustomScrollView(
         slivers: [
@@ -53,23 +53,23 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                 children: [
                   ForwardButton(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AccountSettingScreen())),
-                    text: 'Account Setting',
+                    text: S.of(context).account,
                   ),
                   ForwardButton(
                     onTap: _showNotificationSetting,
-                    text: 'Notification',
+                    text: S.of(context).notifications,
                   ),
                   ForwardButton(
                     onTap: _showPrivacy,
-                    text: 'Privacy',
+                    text: S.of(context).privacy,
                   ),
                   ForwardButton(
                     onTap: _showAbout,
-                    text: 'About',
+                    text: S.of(context).about,
                   ),
                   ForwardButton(
                     onTap: _logout,
-                    text: 'Sign out',
+                    text: S.of(context).buttonSignOut,
                     color: Color(0xFFEA4710),
                   ),
                 ],
@@ -84,12 +84,12 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
   void _showNotificationSetting() async {
     await showCommonBottomSheet(
         context: context,
-        title: 'Notifications',
+        title: S.of(context).notifications,
         actions: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Push notifications', style: Theme.of(context).textTheme.titleMedium),
+              Text(S.of(context).pushNotifications, style: Theme.of(context).textTheme.titleMedium),
               Consumer(
                 builder: (_, _ref, __) => Switch(
                   value: _ref.watch(myProfileProvider)!.pushEnabled,
@@ -123,13 +123,13 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
   Future _showPrivacy() async {
     await showCommonBottomSheet(
       context: context,
-      title: 'Privacy',
-      description: 'When turned off, your city will not be displayed, which may prevent you from being found by other people',
+      title: S.of(context).privacy,
+      description: S.of(context).warningCancelDisplayCity,
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Display my city', style: Theme.of(context).textTheme.titleMedium),
+            Text(S.of(context).displayMyCity, style: Theme.of(context).textTheme.titleMedium),
             Consumer(
               builder: (_, _ref, __) => Switch(
                   value: _ref.watch(myProfileProvider)!.cityVisibility,
@@ -158,22 +158,22 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
 
   Future _showAbout() async {
     var result = await showActionButtons(context: context, options: {
-      'Privacy Policy': '1',
-      'Disclaimer': '2',
-      'Terms and Conditions':'3'
+      S.of(context).privacyPolicy: '1',
+      S.of(context).disclaimer: '2',
+      S.of(context).termsOfService: '3'
     });
     if (result != null && mounted){
       if(result=='1'){
         Navigator.push(context, MaterialPageRoute(builder: (c){
-          return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
+          return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: S.of(context).privacyPolicy);
         }));
       }else if(result=='2'){
         Navigator.push(context, MaterialPageRoute(builder: (c){
-          return WebView(url: 'https://h5.sona.pinpon.fun/disclaimer.html', title: 'Disclaimer');
+          return WebView(url: 'https://h5.sona.pinpon.fun/disclaimer.html', title: S.of(context).disclaimer);
         }));
       }else if(result=='3'){
         Navigator.push(context, MaterialPageRoute(builder: (c){
-          return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+          return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: S.of(context).termsOfService);
         }));
       }
     }
