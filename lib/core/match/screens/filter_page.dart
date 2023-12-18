@@ -14,7 +14,15 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-
+  List<_P> ps=[
+    _P(S.current.wishList, S.current.peopleFromYourWishlistGetMoreRecommendations,'WISH'),
+    _P(S.current.nearby, S.current.runningIntoForeignersNearYou,'LOCAL'),
+  ];
+  List<_Gender> genders=[
+    _Gender(S.current.userGenderOptionMale, 1),
+    _Gender(S.current.userGenderOptionFemale, 2),
+    _Gender(S.current.allPeople, null),
+  ];
   String? p=recommendMode;
   int? gender=currentFilterGender;
   @override
@@ -244,15 +252,7 @@ class _P{
   String value;
   _P(this.title,this.subTitle,this.value);
 }
-List<_P> ps=[
-  _P(S.current.wishList, S.current.peopleFromYourWishlistGetMoreRecommendations,'WISH'),
-  _P(S.current.nearby, S.current.runningIntoForeignersNearYou,'LOCAL'),
-];
-List<_Gender> genders=[
-  _Gender(S.current.userGenderOptionMale, 1),
-  _Gender(S.current.userGenderOptionFemale, 2),
-  _Gender(S.current.allPeople, null),
-];
+
 class _Gender{
   String label;
   int? value;
