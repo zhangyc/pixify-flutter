@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/providers/tips.dart';
 
+import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
 import '../models/message.dart';
 import '../services/chat.dart';
@@ -70,8 +71,9 @@ class SonaTipsDialog extends ConsumerWidget {
           child: Container(
             color: Colors.white,
             alignment: Alignment.center,
-            child: const Text(
-                'Cannot connect to server, tap to retry',
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+                S.of(context).toastHitWeeklyMaximumLimit,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 16,

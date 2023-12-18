@@ -43,7 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("เกี่ยวกับ"),
         "account": MessageLookupByLibrary.simpleMessage("บัญชี"),
         "age": MessageLookupByLibrary.simpleMessage("อายุ"),
-        "allPeople": MessageLookupByLibrary.simpleMessage("ทุกคน"),
+        "allPeople": MessageLookupByLibrary.simpleMessage("ทั้งหมด"),
         "bio": MessageLookupByLibrary.simpleMessage("บทนำ"),
         "block": MessageLookupByLibrary.simpleMessage("บล็อก"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -72,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonPreview": MessageLookupByLibrary.simpleMessage("ตัวอย่าง"),
         "buttonRefresh": MessageLookupByLibrary.simpleMessage("รีเฟรช"),
         "buttonResend": MessageLookupByLibrary.simpleMessage("ส่งอีกครั้ง"),
+        "buttonRestore": MessageLookupByLibrary.simpleMessage("กู้คืน"),
         "buttonSave": MessageLookupByLibrary.simpleMessage("บันทึก"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("ออกจากระบบ"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("ส่ง"),
@@ -233,6 +234,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "theyAreWaitingForYourReply":
             MessageLookupByLibrary.simpleMessage("👆พวกเขากำลังรอคำตอบจากคุณ"),
         "threeMonths": MessageLookupByLibrary.simpleMessage("3 เดือน"),
+        "toastHitDailyMaximumLimit": MessageLookupByLibrary.simpleMessage(
+            "👀คุณได้ถึงขีดจำกัดประจำวันแล้ว"),
+        "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
+            "👅คุณได้ถึงขีดจำกัดประจำสัปดาห์แล้ว"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("ถ่ายภาพ"),
         "userAvatarOptionGallery":

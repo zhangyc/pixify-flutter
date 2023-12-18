@@ -71,6 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonPreview": MessageLookupByLibrary.simpleMessage("プレビュー"),
         "buttonRefresh": MessageLookupByLibrary.simpleMessage("更新"),
         "buttonResend": MessageLookupByLibrary.simpleMessage("再送信"),
+        "buttonRestore": MessageLookupByLibrary.simpleMessage("リストアする"),
         "buttonSave": MessageLookupByLibrary.simpleMessage("保存"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("ログアウト"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("提出する"),
@@ -215,6 +216,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "theyAreWaitingForYourReply":
             MessageLookupByLibrary.simpleMessage("👆 彼らはあなたの返事を待ってるよ"),
         "threeMonths": MessageLookupByLibrary.simpleMessage("3ヶ月"),
+        "toastHitDailyMaximumLimit":
+            MessageLookupByLibrary.simpleMessage("👀1日の制限に達しました"),
+        "toastHitWeeklyMaximumLimit":
+            MessageLookupByLibrary.simpleMessage("👅週の制限に達しました"),
         "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("写真を撮る"),
         "userAvatarOptionGallery":
             MessageLookupByLibrary.simpleMessage("ギャラリーから選択"),

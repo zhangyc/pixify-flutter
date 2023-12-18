@@ -43,7 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("О"),
         "account": MessageLookupByLibrary.simpleMessage("Аккаунт"),
         "age": MessageLookupByLibrary.simpleMessage("Возраст"),
-        "allPeople": MessageLookupByLibrary.simpleMessage("Все люди"),
+        "allPeople": MessageLookupByLibrary.simpleMessage("Все"),
         "bio": MessageLookupByLibrary.simpleMessage("Введение"),
         "block": MessageLookupByLibrary.simpleMessage("Блокировать"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -75,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonPreview": MessageLookupByLibrary.simpleMessage("Предпросмотр"),
         "buttonRefresh": MessageLookupByLibrary.simpleMessage("Обновить"),
         "buttonResend": MessageLookupByLibrary.simpleMessage("Переслать"),
+        "buttonRestore": MessageLookupByLibrary.simpleMessage("Восстановить"),
         "buttonSave": MessageLookupByLibrary.simpleMessage("Сохранить"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("Выйти"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("Отправить"),
@@ -244,6 +245,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "theyAreWaitingForYourReply":
             MessageLookupByLibrary.simpleMessage("👆 Они ждут твоего ответа"),
         "threeMonths": MessageLookupByLibrary.simpleMessage("3 месяцев"),
+        "toastHitDailyMaximumLimit": MessageLookupByLibrary.simpleMessage(
+            "👀достигли своего дневного лимита"),
+        "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
+            "👅достигли своего недельного лимита"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Сфотографировать"),
         "userAvatarOptionGallery":

@@ -74,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonPreview": MessageLookupByLibrary.simpleMessage("Preview"),
         "buttonRefresh": MessageLookupByLibrary.simpleMessage("Refresh"),
         "buttonResend": MessageLookupByLibrary.simpleMessage("Resend"),
+        "buttonRestore": MessageLookupByLibrary.simpleMessage("Restore"),
         "buttonSave": MessageLookupByLibrary.simpleMessage("Save"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("Sign out"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("Submit"),
@@ -236,6 +237,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "theyAreWaitingForYourReply": MessageLookupByLibrary.simpleMessage(
             "👆 They\'re waiting for your reply"),
         "threeMonths": MessageLookupByLibrary.simpleMessage("3 Months"),
+        "toastHitDailyMaximumLimit": MessageLookupByLibrary.simpleMessage(
+            "👀You\'ve hit your daily limit"),
+        "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
+            "👅You\'ve hit your weekly limit"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Take a photo"),
         "userAvatarOptionGallery":

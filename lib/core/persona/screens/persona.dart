@@ -78,7 +78,10 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                       onTap: () async {
                         final action = await showActionButtons(
                             context: context,
-                            options: {S.of(context).buttonEdit: 'edit', S.of(context).buttonDelete: 'delete'}
+                            options: {
+                              S.of(context).buttonEdit: 'edit',
+                              S.of(context).buttonDelete: 'delete'
+                            }
                         );
                         if (action == 'delete') {
                           final resp = await deleteMyWishe(wish.id);

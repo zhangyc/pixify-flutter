@@ -160,7 +160,7 @@
   "@descriptionOptional": {},
   "buttonSubmit": "제출하다",
   "@buttonSubmit": {},
-  "allPeople": "모든 사람들",
+  "allPeople": "전부",
   "@allPeople": {},
   "whoLIkesYou": "너를 좋아하는 사람",
   "@whoLIkesYou": {},
@@ -312,6 +312,8 @@
   "@nextBilingDate": {},
   "buttonUnsubscribe": "구독 취소",
   "@buttonUnsubscribe": {},
+  "buttonRestore": "복원하다",
+  "@buttonRestore": {},
   "settings": "설정",
   "@settings": {},
   "account": "계정",
@@ -353,5 +355,9 @@
   "termsOfService": "이용 약관",
   "@termsOfService": {},
   "feedback": "피드백",
-  "@feedback": {}
+  "@feedback": {},
+  "toastHitDailyMaximumLimit": "👀당신은 오늘의 한도에 도달했습니다",
+  "@toastHitDailyMaximumLimit": {},
+  "toastHitWeeklyMaximumLimit": "👅당신은 이번 주의 한도에 도달했습니다",
+  "@toastHitWeeklyMaximumLimit": {}
 }

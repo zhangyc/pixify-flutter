@@ -274,7 +274,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     pending.then((resp) {
       if (resp.statusCode == 10150) {
         if (myProfile.isMember) {
-          coolDown();
+          coolDownDaily();
         } else {
           showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.pay_chat_sonamsg);
         }
@@ -328,7 +328,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     SonaAnalytics.log('chat_starter');
     if (resp.statusCode == 10150) {
       if (myProfile.isMember) {
-        coolDown();
+        coolDownDaily();
       } else {
         showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.chat_starter);
       }
@@ -342,7 +342,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
     if (resp.statusCode == 10150) {
       if (myProfile.isMember) {
-        coolDown();
+        coolDownDaily();
       } else {
         showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.pay_chat_hook);
       }

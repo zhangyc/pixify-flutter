@@ -69,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonPreview": MessageLookupByLibrary.simpleMessage("預覽"),
         "buttonRefresh": MessageLookupByLibrary.simpleMessage("刷新"),
         "buttonResend": MessageLookupByLibrary.simpleMessage("重新發送"),
+        "buttonRestore": MessageLookupByLibrary.simpleMessage("恢復"),
         "buttonSave": MessageLookupByLibrary.simpleMessage("儲存"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("登出"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("提交"),
@@ -201,6 +202,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "theyAreWaitingForYourReply":
             MessageLookupByLibrary.simpleMessage("👆 在等你的回答喲"),
         "threeMonths": MessageLookupByLibrary.simpleMessage("3個月"),
+        "toastHitDailyMaximumLimit":
+            MessageLookupByLibrary.simpleMessage("👀已達到今日限額"),
+        "toastHitWeeklyMaximumLimit":
+            MessageLookupByLibrary.simpleMessage("👅你已達到本週限額"),
         "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("拍照"),
         "userAvatarOptionGallery":
             MessageLookupByLibrary.simpleMessage("從圖庫選擇"),
