@@ -91,7 +91,7 @@ class _MatchItemState extends ConsumerState<MatchItem> with SingleTickerProvider
                     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                   }else{
                     Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                      return SubscribePage(SubscribeShowType.unLockDM(),fromTag: FromTag.pay_match_arrow,);
+                      return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
                     }));
                   }
                 }

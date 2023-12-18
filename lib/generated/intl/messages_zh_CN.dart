@@ -98,7 +98,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "friendsIntention":
             MessageLookupByLibrary.simpleMessage("嘿，我觉得你很棒。我们聊聊怎么样？"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("获取SONA Plus"),
-        "gore": MessageLookupByLibrary.simpleMessage("血腥"),
         "guessWhoBreakSilence":
             MessageLookupByLibrary.simpleMessage("嘿，猜猜谁会先打破沉默？"),
         "haveSonaSayHi": MessageLookupByLibrary.simpleMessage("让SONA打招呼"),
@@ -135,10 +134,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "状态：暂无消息\n\n该做什么：前往匹配\n\n建议：制作棒棒的个人资料"),
         "notifications": MessageLookupByLibrary.simpleMessage("通知"),
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage("哎呀，现在没有数据"),
-        "other": MessageLookupByLibrary.simpleMessage("其他"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage("更多推荐来自你心愿单的人"),
-        "personalAttack": MessageLookupByLibrary.simpleMessage("人身攻击"),
         "photos": MessageLookupByLibrary.simpleMessage("照片"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage("请检查网络或点击刷新重试"),
@@ -153,15 +150,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("解锁查看谁喜欢了你"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3个心愿"),
-        "pornography": MessageLookupByLibrary.simpleMessage("色情"),
         "preference": MessageLookupByLibrary.simpleMessage("偏好"),
         "privacy": MessageLookupByLibrary.simpleMessage("隐私"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("隐私政策"),
         "pushNotifications": MessageLookupByLibrary.simpleMessage("推送通知"),
         "report": MessageLookupByLibrary.simpleMessage("举报"),
+        "reportOptionGore": MessageLookupByLibrary.simpleMessage("血腥"),
+        "reportOptionOther": MessageLookupByLibrary.simpleMessage("其他"),
+        "reportOptionPersonalAttack":
+            MessageLookupByLibrary.simpleMessage("人身攻击"),
+        "reportOptionPornography": MessageLookupByLibrary.simpleMessage("色情"),
+        "reportOptionScam": MessageLookupByLibrary.simpleMessage("骗局"),
         "runningIntoForeignersNearYou":
             MessageLookupByLibrary.simpleMessage("优先展示附近的老外"),
-        "scam": MessageLookupByLibrary.simpleMessage("骗局"),
         "screenshotEvidence": MessageLookupByLibrary.simpleMessage("截图证据"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("查看资料"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("看看谁喜欢你"),
@@ -179,17 +180,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("🤝 同语无需译,灵犀一点通"),
         "standard": MessageLookupByLibrary.simpleMessage("标准"),
         "subPageSubtitleAIInterpretationDaily":
-            MessageLookupByLibrary.simpleMessage("每天1000条AI传译"),
+            MessageLookupByLibrary.simpleMessage("每天1000条\nAI传译"),
         "subPageSubtitleDMWeekly":
             MessageLookupByLibrary.simpleMessage("每周5条DM"),
         "subPageSubtitleFilterMatchingCountries":
-            MessageLookupByLibrary.simpleMessage("筛选配对的国家"),
+            MessageLookupByLibrary.simpleMessage("筛选配对的\n国家"),
+        "subPageSubtitleSonaTips":
+            MessageLookupByLibrary.simpleMessage("SONA Tips - \n你的聊天参谋"),
         "subPageSubtitleUnlimitedLikes":
             MessageLookupByLibrary.simpleMessage("无限点赞"),
-        "subPageSubtittleSonaTips":
-            MessageLookupByLibrary.simpleMessage("SONA Tips - 你的聊天参谋"),
-        "subPageSubtittleUnlockWhoLikesU":
-            MessageLookupByLibrary.simpleMessage("解锁查看谁喜欢了你"),
+        "subPageSubtitleUnlockWhoLikesU":
+            MessageLookupByLibrary.simpleMessage("解锁查看\n谁喜欢了你"),
         "subPageTitle": MessageLookupByLibrary.simpleMessage("获取SONA Plus"),
         "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("条款"),
         "subscriptionAgreementPrefix": m4,

@@ -102,7 +102,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "こんにちは!面白そうな人だね。ちょっと話してみませんか？"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plusを入手"),
-        "gore": MessageLookupByLibrary.simpleMessage("グロテスク"),
         "guessWhoBreakSilence":
             MessageLookupByLibrary.simpleMessage("ねえ、誰が最初に沈黙を破ると思う？"),
         "haveSonaSayHi": MessageLookupByLibrary.simpleMessage("SONAに挨拶させて"),
@@ -143,11 +142,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("通知"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("おっと、今はデータがありません"),
-        "other": MessageLookupByLibrary.simpleMessage("その他"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "あなたのウィッシュリストの設定はもっと大きな役割を果たすようになるよ"),
-        "personalAttack": MessageLookupByLibrary.simpleMessage("人身攻撃"),
         "photos": MessageLookupByLibrary.simpleMessage("写真"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -164,15 +161,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("あなたを好きな人が誰か見るために解除"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3つの願い"),
-        "pornography": MessageLookupByLibrary.simpleMessage("ポルノ"),
         "preference": MessageLookupByLibrary.simpleMessage("好み"),
         "privacy": MessageLookupByLibrary.simpleMessage("プライバシー"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("プライバシーポリシー"),
         "pushNotifications": MessageLookupByLibrary.simpleMessage("プッシュ通知"),
         "report": MessageLookupByLibrary.simpleMessage("報告する"),
+        "reportOptionGore": MessageLookupByLibrary.simpleMessage("グロテスク"),
+        "reportOptionOther": MessageLookupByLibrary.simpleMessage("その他"),
+        "reportOptionPersonalAttack":
+            MessageLookupByLibrary.simpleMessage("人身攻撃"),
+        "reportOptionPornography": MessageLookupByLibrary.simpleMessage("ポルノ"),
+        "reportOptionScam": MessageLookupByLibrary.simpleMessage("詐欺"),
         "runningIntoForeignersNearYou":
             MessageLookupByLibrary.simpleMessage("あなたの近くの外国人に出会う"),
-        "scam": MessageLookupByLibrary.simpleMessage("詐欺"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("スクリーンショットの証拠"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("プロフィールを見る"),
@@ -193,17 +194,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("🤝 同語なら翻訳しなくてもいいよ"),
         "standard": MessageLookupByLibrary.simpleMessage("標準"),
         "subPageSubtitleAIInterpretationDaily":
-            MessageLookupByLibrary.simpleMessage("1日に1000回のAI同期通訳"),
+            MessageLookupByLibrary.simpleMessage("1日に1000回\nのAI同期通訳"),
         "subPageSubtitleDMWeekly":
             MessageLookupByLibrary.simpleMessage("週に5回のDM"),
         "subPageSubtitleFilterMatchingCountries":
-            MessageLookupByLibrary.simpleMessage("マッチング国を絞り込む"),
+            MessageLookupByLibrary.simpleMessage("マッチング\n国を絞り込む"),
+        "subPageSubtitleSonaTips":
+            MessageLookupByLibrary.simpleMessage("SONA Tips - \nあなたのチャット参謀"),
         "subPageSubtitleUnlimitedLikes":
             MessageLookupByLibrary.simpleMessage("いいね無制限"),
-        "subPageSubtittleSonaTips":
-            MessageLookupByLibrary.simpleMessage("SONA Tips - あなたのチャット参謀"),
-        "subPageSubtittleUnlockWhoLikesU":
-            MessageLookupByLibrary.simpleMessage("あなたを好きな人が誰か見るために解除"),
+        "subPageSubtitleUnlockWhoLikesU":
+            MessageLookupByLibrary.simpleMessage("あなたを好きな人が\n誰か見るために解除"),
         "subPageTitle": MessageLookupByLibrary.simpleMessage("SONA Plusを入手"),
         "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("利用規約"),
         "subscriptionAgreementPrefix": m4,

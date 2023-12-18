@@ -67,7 +67,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
                   }
                 } else {
                   SonaAnalytics.log('chatlist_tapblur');
-                  showSubscription(SubscribeShowType.secretSonamate(),FromTag.pay_chatlist_blur);
+                  showSubscription(SubscribeShowType.unlockWhoLikeMe(),FromTag.pay_chatlist_blur);
                 }
               }
               ),

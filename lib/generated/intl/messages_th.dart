@@ -108,7 +108,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "เฮ้ย ฉันว่านายน่าทึ่งมาก มาเป็นเพื่อนกันไหม?"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("รับ SONA Plus"),
-        "gore": MessageLookupByLibrary.simpleMessage("โหดร้าย"),
         "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
             "เฮ้ย ลองทายสิว่าใครจะเป็นคนพูดก่อน?"),
         "haveSonaSayHi":
@@ -154,12 +153,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("การแจ้งเตือน"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("อุ๊ปส์ ไม่มีข้อมูลในตอนนี้"),
-        "other": MessageLookupByLibrary.simpleMessage("อื่นๆ"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "การตั้งค่าของรายการสิ่งที่ปรารถนาของคุณจะมีบทบาทที่ใหญ่ขึ้น"),
-        "personalAttack":
-            MessageLookupByLibrary.simpleMessage("การโจมตีส่วนบุคคล"),
         "photos": MessageLookupByLibrary.simpleMessage("รูปภาพ"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -177,7 +173,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("ปลดล็อกเพื่อดูว่าใครชอบคุณ"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 คำอธิษฐาน"),
-        "pornography": MessageLookupByLibrary.simpleMessage("โป๊"),
         "preference": MessageLookupByLibrary.simpleMessage("การตั้งค่า"),
         "privacy": MessageLookupByLibrary.simpleMessage("ความเป็นส่วนตัว"),
         "privacyPolicy":
@@ -185,9 +180,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "pushNotifications":
             MessageLookupByLibrary.simpleMessage("การแจ้งเตือนแบบพุช"),
         "report": MessageLookupByLibrary.simpleMessage("รายงาน"),
+        "reportOptionGore": MessageLookupByLibrary.simpleMessage("โหดร้าย"),
+        "reportOptionOther": MessageLookupByLibrary.simpleMessage("อื่นๆ"),
+        "reportOptionPersonalAttack":
+            MessageLookupByLibrary.simpleMessage("การโจมตีส่วนบุคคล"),
+        "reportOptionPornography": MessageLookupByLibrary.simpleMessage("โป๊"),
+        "reportOptionScam": MessageLookupByLibrary.simpleMessage("การหลอกลวง"),
         "runningIntoForeignersNearYou":
             MessageLookupByLibrary.simpleMessage("พบชาวต่างชาติที่อยู่ใกล้คุณ"),
-        "scam": MessageLookupByLibrary.simpleMessage("การหลอกลวง"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("หลักฐานภาพหน้าจอ"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("ดูโปรไฟล์"),
@@ -209,16 +209,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "standard": MessageLookupByLibrary.simpleMessage("มาตรฐาน"),
         "subPageSubtitleAIInterpretationDaily":
             MessageLookupByLibrary.simpleMessage(
-                "AI แปลภาษาเรียลไทม์ 1000 ครั้ง/วัน"),
+                "AI \nแปลภาษาเรียลไทม์ \n1000 ครั้ง/วัน"),
         "subPageSubtitleDMWeekly":
             MessageLookupByLibrary.simpleMessage("ทุกสัปดาห์ 5 DM"),
         "subPageSubtitleFilterMatchingCountries":
             MessageLookupByLibrary.simpleMessage("กรองประเทศที่จับคู่ได้"),
+        "subPageSubtitleSonaTips": MessageLookupByLibrary.simpleMessage(
+            "SONA Tips - \nที่ปรึกษาการแชทของคุณ"),
         "subPageSubtitleUnlimitedLikes":
             MessageLookupByLibrary.simpleMessage("ไลค์ไม่จำกัด"),
-        "subPageSubtittleSonaTips": MessageLookupByLibrary.simpleMessage(
-            "SONA Tips - ที่ปรึกษาการแชทของคุณ"),
-        "subPageSubtittleUnlockWhoLikesU":
+        "subPageSubtitleUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("ปลดล็อกเพื่อดูว่าใครชอบคุณ"),
         "subPageTitle": MessageLookupByLibrary.simpleMessage("รับ SONA Plus"),
         "subscriptionAgreement":

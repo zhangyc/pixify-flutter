@@ -26,7 +26,7 @@ class AsyncSonaTipsNotifier extends AutoDisposeFamilyAsyncNotifier<SonaTips, int
       if (ref.read(myProfileProvider)!.isMember) {
         coolDown();
       } else {
-        showSubscription(SubscribeShowType.unLockSona(),FromTag.pay_chat_suggest);
+        showSubscription(SubscribeShowType.unlockSonaTips(),FromTag.pay_chat_suggest);
       }
       throw Error();
     }

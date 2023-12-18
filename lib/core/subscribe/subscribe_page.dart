@@ -21,6 +21,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../account/providers/profile.dart';
 import '../../common/widgets/webview.dart';
+import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
 import '../match/util/event.dart';
 import '../match/util/iap_helper.dart';
@@ -92,17 +93,17 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Get Sona Plus'),
+        title: Text(S.of(context).subPageTitle),
         actions: [
           ref.read(myProfileProvider)!.isMember?
           GestureDetector(
             onTap: () async {
               var result=await showActionButtons(
                   context: context,
-                  title: 'Manage Payments',
+                  title: S.of(context).buttonManage,
                   options: {
                     // 'Next Billing Date': '${ref.read(myProfileProvider)?.vipEndDate}',
-                    'Unsubscribe': 'Unsubscribe'});
+                    S.of(context).buttonUnsubscribe: 'Unsubscribe'});
               if(result=='Unsubscribe'){
                 if(Platform.isAndroid){
                   launchUrl(Uri.parse('https://play.google.com/store/account/subscriptions?package=com.planetwalk.sona'), mode: LaunchMode.externalApplication);
@@ -115,7 +116,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('manage'),
+              child: Text(S.of(context).buttonManage),
             ),
           ):
           Container(),
@@ -162,7 +163,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               padding: EdgeInsets.zero,
               backgroundColor: Colors.white
           ),
-          child: const Text('🌟 Subscribe 🌟'),
+          child: Text('🌟 ${S.of(context).buttonContinue} 🌟'),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -223,13 +224,13 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
                     child: RichText(
                       text:TextSpan(
-                          text: _terms,
+                          text: S.current.subscriptionAgreementPrefix(Platform.isAndroid ? 'Play Store' : 'Apple ID'),
                           style: const TextStyle(
                               color: Color(0xffa9a9a9)
                           ),
                           children: [
                             TextSpan(
-                                text: 'Terms',
+                                text: S.current.subscriptionAgreement,
                                 recognizer: TapGestureRecognizer()..onTap = () {
                                   Navigator.push(context, MaterialPageRoute(builder: (c){
                                     return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
@@ -239,7 +240,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                                     color: Color(0xffEA01FF)
                                 )
                             ),
-                            TextSpan(text: '.'),
+                            TextSpan(text: S.current.subscriptionAgreementSuffix),
                           ]
                       ),
 
@@ -251,7 +252,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                         onPressed: (){
                           bool isMember=ref.read(myProfileProvider)?.isMember??false;
                           if(isMember){
-                            Fluttertoast.showToast(msg: 'You are Super SONA');
+                            Fluttertoast.showToast(msg: S.of(context).buttonAlreadyPlus);
                           } else {
                             if (hasPurchased == true) {
                               inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
@@ -548,7 +549,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         _purchases.add(purchaseDetails);
         _purchasePending = false;
       });
-      Fluttertoast.showToast(msg: 'You are Super SONA now!');
+      Fluttertoast.showToast(msg: S.of(context).buttonAlreadyPlus);
     }
   }
 
@@ -661,20 +662,20 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     String per='';
 
     if(id==month){
-      p='1 Month';
+      p=S.current.aMonth;
       // return Container();
     }else if(id==quarter){
       per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/3)/monthBill).toStringAsFixed(2)))}';
-      p='3 Month';
+      p=S.current.threeMonths;
     }
     else if(id==biannually){
-      p='6 Month';
+      p=S.current.sixMonths;
       per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/6)/monthBill).toStringAsFixed(2)))}';
 
      // per='${detail s.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}';
     }
     else if(id==annually){
-      p='12 Month';
+      p=S.current.aYear;
       per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/12)/monthBill).toStringAsFixed(2)))}';
 
       //(details.rawPrice/12)/monthBill;
@@ -719,18 +720,18 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     String id=details.id;
     String p='';
     if(id==month){
-      p='${details.currencySymbol}${(details.rawPrice).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice).toStringAsFixed(2)}/${S.current.month}';
       //return Container();
     }else if(id==quarter){
       // return Text('${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(1)}');
-      p='${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(2)}/${S.current.month}';
     }
     else if(id==biannually){
       // return Text('${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(1)}');
-      p='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}/${S.current.month}';
     }
     else if(id==annually){
-      p='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}/mo';
+      p='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}/${S.current.month}';
       // return Text();
     }
     return Text(p,style: TextStyle(
@@ -759,29 +760,27 @@ class SubscribeShowType{
   String label;
   SubscribeShowType(this.label,this.path);
   ///解锁who lik eme
-  factory SubscribeShowType.secretSonamate(){
-    return SubscribeShowType('Uncover your \nsecret Sonamate',Assets.imagesM1);
+  factory SubscribeShowType.unlockWhoLikeMe(){
+    return SubscribeShowType(S.current.subPageSubtitleUnlockWhoLikesU,Assets.imagesM1);
   }
   ///解锁无限like
-  factory SubscribeShowType.unLimitedLikes(){
-    return SubscribeShowType('Unlimited Likes\n for you',Assets.imagesM2);
+  factory SubscribeShowType.unlockUnlimitedLikes(){
+    return SubscribeShowType(S.current.subPageSubtitleUnlimitedLikes,Assets.imagesM2);
   }
   ///解锁DM
-  factory SubscribeShowType.unLockDM(){
-    return SubscribeShowType('Message people\n you like directly',Assets.imagesM3);
+  factory SubscribeShowType.unlockDM(){
+    return SubscribeShowType(S.current.subPageSubtitleDMWeekly,Assets.imagesM3);
   }
   ///解锁sona建议
-  factory SubscribeShowType.unLockSona(){
-    return SubscribeShowType('Get tips from\n SONA anytime',Assets.imagesM4);
+  factory SubscribeShowType.unlockSonaTips(){
+    return SubscribeShowType(S.current.subPageSubtitleSonaTips,Assets.imagesM4);
   }
   ///解锁三个愿望单
-  factory SubscribeShowType.unLockThreeWish(){
-    return SubscribeShowType('Make friends from\n specific countries',Assets.imagesM5);
+  factory SubscribeShowType.unlockThreeWishes(){
+    return SubscribeShowType(S.current.subPageSubtitleFilterMatchingCountries,Assets.imagesM5);
   }
   ///解锁无限次的sona翻译
-  factory SubscribeShowType.unLockUnLimitedTranslate(){
-    return SubscribeShowType('1000 AI \nInterpretation\n messages daily',Assets.imagesM6);
+  factory SubscribeShowType.unlockMoreAIInterpretation(){
+    return SubscribeShowType(S.current.subPageSubtitleAIInterpretationDaily,Assets.imagesM6);
   }
 }
-
-String _terms='''By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via ${Platform.isAndroid ? 'Play Store' : 'Apple ID'} settings, and you agree to our ''';

@@ -112,7 +112,6 @@ class MessageLookup extends MessageLookupByLibrary {
             "Привет, я думаю, ты потрясающий. Давай подружимся?"),
         "getSonaPlus":
             MessageLookupByLibrary.simpleMessage("Получить SONA Plus"),
-        "gore": MessageLookupByLibrary.simpleMessage("Жестокость"),
         "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
             "Эй, угадай, кто первым нарушит молчание?"),
         "haveSonaSayHi":
@@ -159,11 +158,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "notifications": MessageLookupByLibrary.simpleMessage("Уведомления"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Ой, сейчас нет данных"),
-        "other": MessageLookupByLibrary.simpleMessage("Другое"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "Настройки вашего списка желаний будут играть более значительную роль"),
-        "personalAttack": MessageLookupByLibrary.simpleMessage("Личная атака"),
         "photos": MessageLookupByLibrary.simpleMessage("Фотографии"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -181,7 +178,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
             "Разблокировать, чтобы увидеть, кто вас любит"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 желания"),
-        "pornography": MessageLookupByLibrary.simpleMessage("Порнография"),
         "preference": MessageLookupByLibrary.simpleMessage("Предпочтение"),
         "privacy": MessageLookupByLibrary.simpleMessage("Конфиденциальность"),
         "privacyPolicy":
@@ -189,9 +185,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "pushNotifications":
             MessageLookupByLibrary.simpleMessage("Пуш-уведомления"),
         "report": MessageLookupByLibrary.simpleMessage("Сообщить"),
+        "reportOptionGore": MessageLookupByLibrary.simpleMessage("Жестокость"),
+        "reportOptionOther": MessageLookupByLibrary.simpleMessage("Другое"),
+        "reportOptionPersonalAttack":
+            MessageLookupByLibrary.simpleMessage("Личная атака"),
+        "reportOptionPornography":
+            MessageLookupByLibrary.simpleMessage("Порнография"),
+        "reportOptionScam":
+            MessageLookupByLibrary.simpleMessage("Мошенничество"),
         "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
             "Встреча с иностранцами рядом с вами"),
-        "scam": MessageLookupByLibrary.simpleMessage("Мошенничество"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("Скриншот доказательства"),
         "seeProfile":
@@ -215,18 +218,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "standard": MessageLookupByLibrary.simpleMessage("Стандарт"),
         "subPageSubtitleAIInterpretationDaily":
             MessageLookupByLibrary.simpleMessage(
-                "1000 синхронных переводов/день"),
+                "1000 \nсинхронных \nпереводов/день"),
         "subPageSubtitleDMWeekly":
             MessageLookupByLibrary.simpleMessage("5 DM в неделю"),
         "subPageSubtitleFilterMatchingCountries":
             MessageLookupByLibrary.simpleMessage(
-                "Фильтровать страны для совпадений"),
+                "Фильтровать \nстраны для совпадений"),
+        "subPageSubtitleSonaTips": MessageLookupByLibrary.simpleMessage(
+            "SONA Tips - \nТвой советник по чату"),
         "subPageSubtitleUnlimitedLikes":
             MessageLookupByLibrary.simpleMessage("Неограниченные лайки"),
-        "subPageSubtittleSonaTips": MessageLookupByLibrary.simpleMessage(
-            "SONA Tips - Твой советник по чату"),
-        "subPageSubtittleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-            "Разблокировать, чтобы увидеть, кто вас любит"),
+        "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
+            "Разблокировать, \nчтобы увидеть, кто вас любит"),
         "subPageTitle":
             MessageLookupByLibrary.simpleMessage("Получить SONA Plus"),
         "subscriptionAgreement":
