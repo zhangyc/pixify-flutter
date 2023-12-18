@@ -14,9 +14,8 @@ import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/picker/gender.dart';
 
-import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
-
+import 'package:sona/core/match/screens/match.dart';
 class AccountSettingScreen extends StatefulHookConsumerWidget {
   const AccountSettingScreen({super.key});
 
@@ -120,6 +119,8 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
     String? local=ref.read(myProfileProvider)!.locale;
     var value = await showLocalePicker(context: context, initialValue: local);
     if (value != null) {
+
+      languageNotifier.value=findMatchedSonaLocale(value);
       await ref.read(myProfileProvider.notifier).updateField(locale: findMatchedSonaLocale(value));
       ref.invalidate(asyncPopularTravelCountriesProvider);
       ref.invalidate(asyncTimeframeOptionsProvider);

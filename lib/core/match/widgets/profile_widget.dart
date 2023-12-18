@@ -54,11 +54,11 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
             // SizedBox(
             //   height: MediaQuery.of(context).viewPadding.top+58,
             // ),
-            Container(alignment: Alignment.centerLeft,child: (widget.relation!=Relation.normal)?IconButton(onPressed: (){
-                 Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back_ios_new)):Container(),
-            ),
+            // Container(alignment: Alignment.centerLeft,child: (widget.relation!=Relation.normal)?IconButton(onPressed: (){
+            //      Navigator.pop(context);
+            //     },
+            //     icon: const Icon(Icons.arrow_back_ios_new)):Container(),
+            // ),
             const SizedBox(
               height: 8,
             ),
@@ -262,7 +262,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
           width: MediaQuery.of(context).size.width,child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 68),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
                   onTap: (){

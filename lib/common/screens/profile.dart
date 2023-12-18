@@ -27,7 +27,9 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
     //return Profile(info: info, next: next);
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
+      appBar: AppBar(
+      ),
       body: ref.watch(getProfileByIdProvider(widget.userId)).when(
         data: (user) => user==null?Container():ProfileWidget(
           relation: widget.relation,

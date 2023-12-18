@@ -13,6 +13,7 @@ import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
+import 'package:sona/utils/locale/locale.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
@@ -29,6 +30,7 @@ import '../widgets/custom_pageview/src/transformer_page_view.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/match_init_animation.dart';
 
+var languageNotifier = ValueNotifier<SonaLocale>(SonaLocale.fromLanguageTag('en', 'English (US)'));
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});
@@ -54,6 +56,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       });
     });
     _initData();
+    languageNotifier.addListener(() {
+      _initData();
+    });
 
     // _initData();
 
