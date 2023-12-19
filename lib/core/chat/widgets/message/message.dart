@@ -2,25 +2,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
-import 'package:sona/core/chat/services/chat.dart';
+import 'package:sona/core/chat/models/message_type.dart';
+import 'package:sona/core/chat/providers/message.dart';
+import 'package:sona/core/chat/widgets/inputbar/mode_provider.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
 import 'package:sona/utils/dialog/input.dart';
-import 'package:sona/utils/locale/locale.dart';
 
-import 'local_pending_message_from_me.dart';
+import '../../../../common/providers/entitlements.dart';
+import '../../../../generated/l10n.dart';
+import '../../../../utils/global/global.dart';
+import '../../../../utils/toast/cooldown.dart';
+import '../../providers/chat.dart';
 
-class MessageWidget extends StatefulWidget {
+class MessageWidget extends ConsumerStatefulWidget {
   const MessageWidget({
     super.key,
     required this.prevMessage,
     required this.message,
     required this.fromMe,
     required this.onDelete,
-    required this.onPendingMessageSucceed,
-    required this.onShorten,
     required this.mySide,
     required this.otherSide,
     required this.myLocale,
@@ -35,29 +41,49 @@ class MessageWidget extends StatefulWidget {
   final Locale? myLocale;
   final Locale? otherLocale;
   final Future Function(ImMessage) onDelete;
-  final void Function(ImMessage) onPendingMessageSucceed;
-  final Future Function(ImMessage) onShorten;
 
   @override
-  State<StatefulWidget> createState() => _MessageWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MessageWidgetState();
 }
 
-class _MessageWidgetState extends State<MessageWidget> {
+class _MessageWidgetState extends ConsumerState<MessageWidget> {
 
   bool _clicked = false;
 
   @override
   Widget build(BuildContext context) {
-    Widget? localPendingMessage;
     String? upperMessage;
     String? lowerMessage;
 
+    final asyncMessageSending = widget.message.params != null ? ref.watch(asyncMessageSendingProvider(widget.message.params!)) : null;
+
     if (widget.fromMe) {
-      if (widget.message.pending != null) {
-        localPendingMessage = LocalPendingMessageFromMe(
-            message: widget.message,
-            myLocale: widget.myLocale,
-            onSucceed: () => widget.onPendingMessageSucceed(widget.message)
+      if (widget.message.params != null) {
+        upperMessage = widget.message.originalContent;
+        lowerMessage = asyncMessageSending!.when(
+          data: (data) {
+            if (data.success) {
+              SonaAnalytics.log(widget.message.params!.mode == InputMode.sona ? 'chat_sona' : 'chat_manual');
+              if (mounted) ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(widget.message));
+              return data.data?['txt'] ?? '';
+            } else {
+              switch (data.error) {
+                case MessageSendingError.maximumLimit:
+                  if (ref.read(myProfileProvider)!.isMember) {
+                    coolDownDaily();
+                  } else {
+                    ref.read(entitlementsProvider.notifier).limit(interpretation: 0);
+                  }
+                  return S.current.toastHitDailyMaximumLimit;
+                case MessageSendingError.contentFilter:
+                  return S.current.exceptionSonaContentFilterTips;
+                default:
+                  return S.current.exceptionFailedToSendTips;
+              };
+            }
+          },
+          error: (_, __) => S.current.exceptionFailedToSendTips,
+          loading: () => '...'
         );
       } else {
         upperMessage = widget.message.originalContent;
@@ -95,7 +121,6 @@ class _MessageWidgetState extends State<MessageWidget> {
                     GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onLongPress: () async {
-                        if (localPendingMessage != null) return;
                         final action = await showActionButtons(
                             context: context,
                             options: {
@@ -124,7 +149,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                         ),
                         padding: EdgeInsets.all(12),
                         clipBehavior: Clip.antiAlias,
-                        child: localPendingMessage != null ? localPendingMessage : Text(
+                        child: Text(
                           upperMessage!,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
@@ -181,6 +206,33 @@ class _MessageWidgetState extends State<MessageWidget> {
               ),
             ],
           ),
+          if (widget.message.params != null) asyncMessageSending!.when(
+            data: (data) {
+              if (data.success) {
+                return Container();
+              } else {
+                return switch (data.error) {
+                  MessageSendingError.maximumLimit => Container(),
+                  MessageSendingError.contentFilter => Container(),
+                  _ => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ColoredButton(
+                          onTap: () {ref.read(asyncMessageSendingProvider(widget.message.params!).notifier).resend();},
+                          color: Color(0xFFF6F3F3),
+                          fontColor: Theme.of(context).primaryColor,
+                          borderColor: Colors.transparent,
+                          text: S.current.buttonResend
+                      ),
+                    ],
+                  )
+                };
+              }
+            },
+            error: (_, __) => Container(),
+            loading: () => Container()
+          )
         ],
       ),
     );

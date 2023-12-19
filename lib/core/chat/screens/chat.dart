@@ -5,12 +5,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/providers/entitlements.dart';
 import 'package:sona/common/providers/profile.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/chat.dart';
+import 'package:sona/core/chat/providers/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
@@ -42,7 +44,9 @@ class ChatScreen extends StatefulHookConsumerWidget {
 }
 
 class _ChatScreenState extends ConsumerState<ChatScreen> {
-  
+
+  static int _lastLocalId = -99999;
+
   late MyProfile myProfile;
   late UserInfo mySide;
   Locale? myLocale;
@@ -121,7 +125,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
           data: (messages) {
             final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
-            final msgs = [...localPendingMessages, ...messages]..sort((m1, m2) => m2.time.compareTo(m1.time));
+            final msgs = [...localPendingMessages, ...messages]
+              ..sort((m1, m2) => m2.time.compareTo(m1.time));
             if (msgs.isNotEmpty) {
               return Container(
                 alignment: Alignment.topCenter,
@@ -137,8 +142,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     otherSide: widget.otherSide,
                     myLocale: myLocale,
                     otherLocale: otherLocale,
-                    onPendingMessageSucceed: _onPendingMessageSucceed,
-                    onShorten: _shortenMessage,
+                    // onPendingMessageSucceed: _onPendingMessageSucceed,
+                    // onShorten: _shortenMessage,
                     onDelete: _deleteMessage,
                   ),
                   itemCount: msgs.length,
@@ -242,86 +247,43 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
   }
 
-  void _sendMessage(String text, ImMessageType type) async {
-    if (text.trim().isEmpty) return;
-
-    await sendMessage(
-      userId: widget.otherSide.id,
-      type: type,
-      content: text,
-    );
-  }
-
-  int _lastLocalId = -9999;
   Future _onSend(String? text) async {
     if (text == null || text.trim().isEmpty) return;
 
-    if (ref.read(inputModeProvider(widget.otherSide.id)) == InputMode.manual) {
-      SonaAnalytics.log('chat_handwriting');
-      return _sendMessage(text, ImMessageType.manual);
-    }
-
-    func() => callSona(
-        userId: widget.otherSide.id,
-        input: text,
-        type: CallSonaType.INPUT,
-        // chatStyleId: ref.read(currentChatStyleProvider(widget.otherSide.id))?.id
-    );
+    final mode = ref.read(inputModeProvider(widget.otherSide.id));
     final message = ImMessage(
       id: _lastLocalId++,
-      type: CallSonaType.INPUT.index + 1,
+      type: mode == InputMode.sona ? CallSonaType.INPUT.index + 1 : ImMessageType.manual.index,
       originalContent: text,
       translatedContent: null,
       sender: mySide,
       receiver: widget.otherSide,
       time: DateTime.now(),
     );
-    final pending = func();
-    message
-      ..func = func
-      ..pending = pending;
-    ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
-    pending.then((resp) {
-      if (resp.statusCode == 10150) {
-        if (myProfile.isMember) {
-          coolDownDaily();
-        } else {
-          if (mounted) {
-            setState(() {
-              aiInterpretationLimited = true;
-            });
-          }
-          // showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.pay_chat_sonamsg);
-        }
-      } else if (resp.statusCode == 0) {
-        _onPendingMessageSucceed(message);
-      }
-    });
-    SonaAnalytics.log('chat_sona');
-  }
-
-  void _onPendingMessageSucceed(ImMessage message) {
-    if (mounted) {
-      ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
-    }
-  }
-
-  Future _shortenMessage(ImMessage message) {
-    if (kvStore.getBool('chat_shorten') != true) {
-      kvStore.setBool('chat_shorten', true);
-      return showInfo(
-        context: context,
-        title: 'Concise',
-        content: 'Tap once -  The content more concise\nTap twice-  Back to what you  inputted',
-        buttonText: 'Got it'
-      );
-    }
-    SonaAnalytics.log('chat_shorten');
-    return callSona(
-      type: CallSonaType.SIMPLE,
-      userId: widget.otherSide.id,
-      messageId: message.id
+    message.params = MessageSendingParams(
+        id: message.id!,
+        userId: widget.otherSide.id,
+        mode: mode,
+        content: text,
+        dateTime: message.time
     );
+
+    // ref.read(asyncMessageSendingProvider(message.params!)).whenData((data) {
+    //   if (!data.success) {
+    //     if (data.error! == MessageSendingError.maximumLimit) {
+    //       if (myProfile.isMember) {
+    //         coolDownDaily();
+    //       } else {
+    //         ref.read(entitlementsProvider.notifier).limit(interpretation: 0);
+    //       }
+    //     }
+    //   } else {
+    //     if (mounted) ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
+    //     SonaAnalytics.log(mode == InputMode.sona ? 'chat_sona' : 'chat_manual');
+    //   }
+    // });
+
+    ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
   }
 
   Future _deleteMessage(ImMessage message) {

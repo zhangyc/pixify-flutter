@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/core/chat/providers/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
 
 class ImMessage {
@@ -20,8 +21,7 @@ class ImMessage {
   final UserInfo sender;
   final UserInfo receiver;
   final DateTime time;
-  Future? pending;
-  Future Function()? func;
+  MessageSendingParams? params;
 
   factory ImMessage.fromJson(Map<String, dynamic> json) {
     return ImMessage(
