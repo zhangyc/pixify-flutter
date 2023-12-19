@@ -124,9 +124,9 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
         ],
       ),
-      floatingActionButton: Padding(
+      floatingActionButton:Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: OutlinedButton(onPressed: () async{
+        child: OutlinedButton(onPressed: _purchasePending?null:() async{
           late PurchaseParam purchaseParam;
           if(_productDetails==null){
             return;
@@ -164,7 +164,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               padding: EdgeInsets.zero,
               backgroundColor: Colors.white
           ),
-          child: Text('🌟 ${S.of(context).buttonContinue} 🌟'),
+          child: _purchasePending?CircularProgressIndicator():Text('🌟 ${S.of(context).buttonContinue} 🌟'),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -287,6 +287,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
               ],
             ),
+
           ],
         ),
       ),

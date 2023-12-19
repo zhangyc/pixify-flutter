@@ -215,7 +215,8 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                         height: 60,
                       ),
                       Text(S.current.newMatch,style: TextStyle(
-                          fontSize: 24
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900
                       ),),
                       const SizedBox(
                         height: 16,
@@ -230,8 +231,31 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 48),
-                        child: Text(
-                           target.likeActivityName != null && target.likeActivityName!.isNotEmpty ? S.of(context).imVeryInterestedInSomething(target.likeActivityName!) : ''
+                        child: Text.rich(
+                          TextSpan(text: '"',style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 28
+                          ),
+                          children: [
+                            TextSpan(
+                              text:target.likeActivityName != null && target.likeActivityName!.isNotEmpty ? S.of(context).imVeryInterestedInSomething(target.likeActivityName!) : S.of(context).youSeemCool,
+                              style: TextStyle(
+                                color: Color(0xff2c2c2c),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 20
+                              ),
+                            ),
+                            TextSpan(
+                              text: '"',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 28
+
+                              ),
+                            ),
+                          ]
+                          ),
+
                          ),
                       ),
                       const SizedBox(
@@ -301,8 +325,10 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(Assets.iconsLogo,width: 20,height: 20,),
-                            Text(S.current.letSONASayHiForYou,style: TextStyle(
-                              color: Colors.black
+                            Text('${S.current.letSONASayHiForYou}',style: TextStyle(
+                              color: Color(0xff2c2c2c),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800
                             ),),
                             const Icon(Icons.arrow_forward_outlined)
                           ],

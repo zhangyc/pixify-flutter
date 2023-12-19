@@ -68,7 +68,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   void dispose() {
 
-    controller.dispose();
+    //controller.dispose();
     // indexController.dispose();
     super.dispose();
   }
