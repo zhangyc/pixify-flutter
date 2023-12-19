@@ -88,7 +88,7 @@ class _ColoredButtonState extends State<ColoredButton> {
       textAlign: TextAlign.center,
       style: TextStyle(
           color: _disabled ? Color(0xFF828282) : widget.fontColor,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w800,
           fontSize: widget.size.fontSize
       )
   ) : SizedBox(
@@ -126,7 +126,7 @@ class _ColoredButtonState extends State<ColoredButton> {
                 borderRadius: BorderRadius.circular(widget.size.borderRadiusCircular),
                 border: _disabled ? null : Border.all(color: widget.borderColor, width: widget.size.borderWidth)
             ),
-            padding: EdgeInsets.symmetric(horizontal: widget.size.height * 0.2),
+            padding: EdgeInsets.symmetric(horizontal: widget.size.height * 0.2 + 2),
             height: widget.size.height,
             child: Center(child: child)
         ),
@@ -151,7 +151,7 @@ enum ColoredButtonSize {
       height: 44,
       fontSize: 15,
       borderWidth: 2.5,
-      borderRadiusCircular: 12
+      borderRadiusCircular: 16
   ),
   small(
       height: 30,

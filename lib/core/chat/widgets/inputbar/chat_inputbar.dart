@@ -145,7 +145,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
         : ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona
             ? S.of(context).justTypeInYourLanguage(myL.displayName)
             : S.of(context).sonaInterpretationOff;
-    if (kDebugMode) print('my locale in input_bar: ${myLocale.toLanguageTag()}');
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -214,7 +213,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                       filled: true,
                       fillColor: Colors.white,
                       focusColor: Color(0xFF6D91F4),
-                      hintText: ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona ? 'Tell Sona your intention...' : 'Write sth...',
+                      hintText: hintText,
                       hintStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
                         fontSize: 14,
                         color: Theme.of(context).hintColor,
