@@ -266,7 +266,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                                 }
                               },
                               child: Text(
-                                  'Restore',
+                                  S.of(context).buttonRestore,
                                   style: const TextStyle(
                                       color: Color(0xffEA01FF)
                                   )
