@@ -40,6 +40,11 @@ class ProfileWidget extends ConsumerStatefulWidget {
 }
 
 class _ProfileState extends ConsumerState<ProfileWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   PageController pageController=PageController(viewportFraction: 0.8);
 
   late MatchUserInfo info=widget.info;

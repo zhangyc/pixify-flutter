@@ -19,6 +19,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
 import '../../../common/screens/profile.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
 import '../../../utils/location/location.dart';
 import '../../subscribe/subscribe_page.dart';
@@ -152,7 +153,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                     ref.read(backgroundImageProvider.notifier).updateBgImage(null);
                     MatchApi.like(users[currentPage].id,);
-                   }, child: Text('Just Send a Like >',style: TextStyle(
+                   }, child: Text('${S.of(context).justSendALike} >',style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
                   ),)):Row(
@@ -197,6 +198,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                 controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                               }else {
                                 users[currentPage].matched=true;
+                                if(users[currentPage].matched&&users[currentPage].wishList.isNotEmpty){
+                                  ref.read(backgroundImageProvider.notifier).updateBgImage(users[currentPage].wishList.first.pic!);
+                                }
                                 setState(() {
 
                                 });
