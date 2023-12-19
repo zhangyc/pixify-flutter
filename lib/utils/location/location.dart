@@ -40,7 +40,7 @@ Future<Position> determinePosition() async {
   // continue accessing the position of the device.
   var position = await Geolocator.getLastKnownPosition();
   position ??= await Geolocator.getCurrentPosition(
-    desiredAccuracy: LocationAccuracy.low,
+    desiredAccuracy: LocationAccuracy.high,
   );
   return position;
 }

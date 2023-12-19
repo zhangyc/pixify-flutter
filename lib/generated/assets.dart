@@ -39,7 +39,9 @@ class Assets {
   static const String iconsSparkles = 'assets/icons/sparkles.png';
   static const String imagesArrow = 'assets/images/arrow.png';
   static const String imagesCatPortrait = 'assets/images/cat_portrait.jpeg';
+  static const String imagesDataEmpty = 'assets/images/data_empty.png';
   static const String imagesDm = 'assets/images/dm.png';
+  static const String imagesEmptyYinYang = 'assets/images/empty_yin_yang.png';
   static const String imagesError = 'assets/images/error.png';
   static const String imagesGirlPortrait = 'assets/images/girl_portrait.jpeg';
   static const String imagesHumanPortrait = 'assets/images/human_portrait.png';
@@ -52,8 +54,6 @@ class Assets {
   static const String imagesM6 = 'assets/images/m6.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
   static const String imagesMatched = 'assets/images/matched.png';
-  static const String imagesNoChat = 'assets/images/no_chat.png';
-  static const String imagesNoContent = 'assets/images/no_content.png';
   static const String imagesPetPortrait = 'assets/images/pet_portrait.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
   static const String imagesRewardArrow = 'assets/images/reward_arrow.png';
@@ -74,5 +74,9 @@ class Assets {
   static const String mPlusRounded1cMPLUSRounded1cMedium = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Medium.ttf';
   static const String mPlusRounded1cMPLUSRounded1cRegular = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Regular.ttf';
   static const String mPlusRounded1cMPLUSRounded1cThin = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Thin.ttf';
+  static const String svgDislike = 'assets/svg/dislike.svg';
+  static const String svgDislikeTag = 'assets/svg/dislike_tag.svg';
+  static const String svgLike = 'assets/svg/like.svg';
+  static const String svgLikeTag = 'assets/svg/like_tag.svg';
 
 }

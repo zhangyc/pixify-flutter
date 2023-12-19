@@ -34,7 +34,9 @@ class _FilterPageState extends State<FilterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).filter),
+        title: Text(S.of(context).filter,style: TextStyle(
+          fontWeight: FontWeight.w800
+        ),),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -45,7 +47,10 @@ class _FilterPageState extends State<FilterPage> {
 
             return Column(
               children: [
-                Container(child: Text(S.of(context).preference),
+                Container(child: Text(S.of(context).preference,style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800
+                ),),
                   alignment: Alignment.centerLeft,
                 ),
                 SizedBox(
@@ -70,7 +75,10 @@ class _FilterPageState extends State<FilterPage> {
                 SizedBox(
                   height: 24,
                 ),
-                Align(child: Text(S.of(context).userGenderInputLabel),alignment: Alignment.centerLeft,),
+                Align(child: Text(S.of(context).userGenderInputLabel,style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800
+                ),),alignment: Alignment.centerLeft,),
                 SizedBox(
                   height: 12,
                 ),
@@ -97,7 +105,10 @@ class _FilterPageState extends State<FilterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(S.of(context).age),
+                        Text(S.of(context).age,style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800
+                        ),),
                         Text('$currentFilterMinAge-$currentFilterMaxAge')
                       ],
                     ),
@@ -159,10 +170,14 @@ class SelectedButton extends StatelessWidget {
       child: Column(
         children: [
           Text(p.title,style: TextStyle(
-              color: Colors.white
+              color: Colors.white,
+              fontWeight: FontWeight.w900
           ),),
           Text(p.subTitle,style: TextStyle(
-              color: Colors.white
+              color: Color(0xffb7b7b7),
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+
           ),)
         ],
       ),
@@ -192,8 +207,17 @@ class UnselectedButton extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(p.title),
-          Text(p.subTitle)
+          Text(p.title,style: TextStyle(
+              color: Color(0xff2c2c2c),
+              fontWeight: FontWeight.w500
+
+          ),),
+          Text(p.subTitle,style: TextStyle(
+              color: Color(0xff727272),
+              fontSize: 12,
+              fontWeight: FontWeight.w500
+
+          ),)
         ],
       ),
     );
@@ -218,7 +242,8 @@ class GenderButton extends StatelessWidget {
 
       ),
       child: Text(gender.label,style: TextStyle(
-        color: Colors.white
+        color: Colors.white,
+        fontWeight: FontWeight.w900
       ),),
     );
   }
@@ -239,10 +264,13 @@ class UnSelectedGenderButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
               width: 2,
-              color: Colors.black
+            color: Color(0xff2c2c2c),
           )
       ),
-      child: Text(gender.label),
+      child: Text(gender.label,style: TextStyle(
+          color: Color(0xff2c2c2c),
+          fontWeight: FontWeight.w500
+      ),),
     );
   }
 }
@@ -296,7 +324,7 @@ class CustomThumbShape2 extends RangeSliderThumbShape {
 
     final borderPaint = Paint()
       ..color = Colors.black
-      ..strokeWidth = 2
+      ..strokeWidth = 5
       ..style = PaintingStyle.stroke;
 
     //旋转坐标系
@@ -315,6 +343,16 @@ class CustomThumbShape2 extends RangeSliderThumbShape {
 
     final thumbRect = Rect.fromPoints(Offset(-thumbRadius/2, -thumbRadius/2),Offset(thumbRadius/2,thumbRadius/2));
     path.addRRect(RRect.fromRectXY(thumbRect, radius, radius));
+
+    // path.addRRect(
+    //     RRect.fromRectAndCorners(
+    //         thumbRect,
+    //         topLeft: Radius.circular(radius),
+    //         topRight: Radius.circular(radius),
+    //         bottomLeft: Radius.circular(radius),
+    //         bottomRight: Radius.circular(radius),
+    //     )
+    // );
     path.close();
 
     //绘制边框和填充

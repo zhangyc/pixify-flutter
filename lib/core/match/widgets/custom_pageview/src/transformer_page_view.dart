@@ -431,6 +431,7 @@ class _TransformerPageViewState extends State<TransformerPageView> {
   Widget build(BuildContext context) {
     final builder = _transformer == null ? _buildItemNormal : _buildItem;
     final Widget child = PageView.builder(
+      key: const ValueKey('home1'),
       itemBuilder: builder,
       itemCount: _pageController!.getRealItemCount(),
       onPageChanged: _onIndexChanged,

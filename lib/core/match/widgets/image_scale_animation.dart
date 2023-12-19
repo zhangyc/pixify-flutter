@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sona/core/match/bean/match_user.dart';
+import 'package:sona/core/match/providers/match_provider.dart';
+import 'package:sona/core/match/widgets/icon_animation.dart';
 
 import '../../../generated/assets.dart';
+import 'custom_pageview/src/skip_transformer.dart';
 
 class MyImageAnimation extends StatefulWidget {
   const MyImageAnimation({super.key, required this.info});
@@ -10,7 +14,6 @@ class MyImageAnimation extends StatefulWidget {
   @override
   _MyImageAnimationState createState() => _MyImageAnimationState();
 }
-
 class _MyImageAnimationState extends State<MyImageAnimation> {
 
   @override
@@ -100,7 +103,9 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
                     )
                   ],
                 ),
-              )
+              ),
+
+              Positioned(top: 11,child: IconAnimation())
             ],
           ),
         ),

@@ -1,7 +1,7 @@
 const _env = String.fromEnvironment('ENV', defaultValue: 'prod');
 const _apiServer = _env == 'prod'
   ? 'https://manager.sona.pinpon.fun/api'
-  : 'http://test.sona.pinpon.fun/api';
+  : 'http://test.sona.ninja/api';
 const _firestorePrefix = _env == 'prod'
   ? 'prod'
   : 'test';

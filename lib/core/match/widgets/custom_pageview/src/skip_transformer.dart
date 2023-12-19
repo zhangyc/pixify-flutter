@@ -2,20 +2,23 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 
+import '../../../providers/match_provider.dart';
 import 'transformer_page_view.dart';
 enum TransformStatus {
   leftRotate,
-  rightRotate
+  rightRotate,
+  idle
 }
 ///这个设计一般般，权宜之计
-TransformStatus currentStatus = TransformStatus.leftRotate;
+// TransformStatus currentStatus = TransformStatus.leftRotate;
 class RotatePageTransformer extends PageTransformer {
   RotatePageTransformer() : super(reverse: false);
 
   @override
   Widget transform(Widget child, TransformInfo info) {
     final position = info.position!;
-    if(currentStatus==TransformStatus.leftRotate){
+
+    if(matchAnimation.value==TransformStatus.leftRotate){
       if (position <= 0) {
         double angle = position;
         angle += 2 * pi;
@@ -41,7 +44,7 @@ class RotatePageTransformer extends PageTransformer {
           ),
         );
       }
-    }else if(currentStatus==TransformStatus.rightRotate){
+    }else if(matchAnimation.value==TransformStatus.rightRotate){
       if (position <= 0) {
 
         double angle = -position * pi / 2;

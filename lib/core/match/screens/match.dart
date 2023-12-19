@@ -14,6 +14,7 @@ import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/locale/locale.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
@@ -59,15 +60,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     languageNotifier.addListener(() {
       _initData();
     });
-
-    // _initData();
-
-    // clickSubject
-    //     .debounceTime(Duration(seconds: 1))
-    //     .listen((_) {
-    //
-    //   // 处理点击逻辑
-    // });
     super.initState();
   }
   List<MatchUserInfo> users =[];
@@ -80,175 +72,183 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     super.dispose();
   }
   int currentPage=0;
-  TransformerPageController controller=TransformerPageController();
+  late TransformerPageController controller;
   // IndexController indexController=IndexController();
   @override
   Widget build(BuildContext context) {
     String? bgImage=ref.watch(backgroundImageProvider);
+    controller = ref.watch(pageControllerProvider);
+
     super.build(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
-            Row(
-              children: [
-                GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (c){
-                      return FilterPage();
-                    })).then((value){
-                      _initData();
-                      if(mounted){
-                        _state=PageState.loading;
-                        setState(() {
+    return Stack(
+      children: [
+        Positioned.fill(child: bgImage==null?Container():Container(
+          height: MediaQuery.of(context).size.height,
+          alignment: Alignment.topCenter,
+          color: Colors.white,
+          child: ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return const LinearGradient(
+                begin:Alignment.bottomCenter,
+                end:Alignment.topCenter  ,
+                colors: [Colors.transparent, Colors.black],
+                stops: [0.0, 0.8], // 调整渐变的范围
+              ).createShader(bounds);
+            },
+            blendMode: BlendMode.dstIn,
+            child: CachedNetworkImage(imageUrl: bgImage,
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width,
 
-                        });
-                      }
-
-                    });
-                  },
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-      body: Stack(
-        children: [
-          Positioned.fill(child: bgImage==null?Container():Container(
-            height: MediaQuery.of(context).size.height,
-            alignment: Alignment.topCenter,
-            color: Colors.white,
-             child: ShaderMask(
-               shaderCallback: (Rect bounds) {
-                 return const LinearGradient(
-                   begin:Alignment.bottomCenter,
-                   end:Alignment.topCenter  ,
-                   colors: [Colors.transparent, Colors.black],
-                   stops: [0.0, 0.8], // 调整渐变的范围
-                 ).createShader(bounds);
-               },
-               blendMode: BlendMode.dstIn,
-               child: CachedNetworkImage(imageUrl: bgImage,
-                 fit: BoxFit.cover,
-                 width: MediaQuery.of(context).size.width,
-                 height: MediaQuery.of(context).size.width,
-
-               ),
-             ),
-          ),),
-          Positioned.fill(
-            child: _buildMatch()
+            ),
           ),
-          (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading?Container():
-          Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
-            width: MediaQuery.of(context).size.width,child: Padding(
-              padding:EdgeInsets.symmetric(
-                horizontal: 68
-              ),
-              child: (users[currentPage].wishList.isNotEmpty&&users[currentPage].matched)?
-              TextButton(onPressed: (){
-                //widget.next.call();
-                controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-                MatchApi.like(users[currentPage].id,);
-               }, child: Text('Just Send a Like >',style: TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 16,
-              ),)):Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ScaleAnimation(onTap: (){
-                    if(currentPage==users.length-1){
-                      return;
-                    }
-                    currentStatus=TransformStatus.leftRotate;
-                    // status=PageAnimStatus.dislike;
-                    controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                    MatchApi.skip(users[currentPage].id);
-                  },
-                      child: Image.asset(Assets.iconsSkip,width: 56,height: 56,)
-                  ),
-                  ScaleAnimation(child: Image.asset(Assets.iconsLike,width: 64,height: 64,), onTap: (){
-                    if(currentPage==users.length-1){
-                              return;
-                            }
-                      if(canLike){
-                        currentStatus=TransformStatus.rightRotate;
-
-                        if(like>0){
-                          like=like-1;
-                        }
-                        //currentPage=index;
-                        ///如果对方喜欢我。
-                        if(users[currentPage].likeMe==1){
-                          MatchApi.like(users[currentPage].id);
-                          ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
-                          showMatched(context,target: users[currentPage],next: (){
-
-                            controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                          });
-                        }else{
-                          ///
-                          if(users[currentPage].wishList.isEmpty){
-                            MatchApi.like(users[currentPage].id);
-                            ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-
-                            controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                          }else {
-                            users[currentPage].matched=true;
+        ),),
+        Scaffold(
+          extendBodyBehindAppBar: false,
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
+                Row(
+                  children: [
+                    GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (c){
+                          return FilterPage();
+                        })).then((value){
+                          _initData();
+                          if(mounted){
+                            _state=PageState.loading;
                             setState(() {
 
                             });
                           }
-                        }
-
-                        setState(() {
 
                         });
-                        SonaAnalytics.log(MatchEvent.match_like.name);
-
-                      }else {
-                        SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                        Navigator.push(context, MaterialPageRoute(builder:(c){
-                          return SubscribePage(SubscribeShowType.unlockUnlimitedLikes(),fromTag: FromTag.pay_match_likelimit,);
-                        }));
-                      }
-                  }),
-                  ScaleAnimation(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,), onTap: (){
-                    if(currentPage==users.length-1){
-                              return;
-                            }
-                          Future.delayed(Duration(milliseconds: 200),(){
-                            currentStatus=TransformStatus.rightRotate;
-                             if(canArrow){
-
-                        showDm(context, users[currentPage],(){
-
-                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                          //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
-                        });
-                      }else {
-                        bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                        if(isMember){
-                          Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                        }else{
-                          Navigator.push(context, MaterialPageRoute(builder:(c){
-                            return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
-                          }));
-                        }
-                      }
-                      });
-
-                  })
-                ],
-              ),
+                      },
+                    ),
+                  ],
+                )
+              ],
             ),
           ),
-        ],
-      ),
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: _buildMatch()
+              ),
+              (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading?Container():
+              Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
+                width: MediaQuery.of(context).size.width,child: Padding(
+                  padding:EdgeInsets.symmetric(
+                    horizontal: 68
+                  ),
+                  child: (users[currentPage].wishList.isNotEmpty&&users[currentPage].matched)?
+                  TextButton(onPressed: (){
+                    //widget.next.call();
+                    controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                    ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+                    MatchApi.like(users[currentPage].id,);
+                   }, child: Text('Just Send a Like >',style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                  ),)):Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ScaleAnimation(onTap: (){
+                        if(currentPage==users.length-1){
+                          return;
+                        }
+                        matchAnimation.value=TransformStatus.leftRotate;
+                        // status=PageAnimStatus.dislike;
+                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                        MatchApi.skip(users[currentPage].id);
+                      },
+                          child: SvgPicture.asset(Assets.svgDislike,width: 56,height: 56,)
+                      ),
+                      ScaleAnimation(child: SvgPicture.asset(Assets.svgLike,width: 64,height: 64,), onTap: (){
+                        if(currentPage==users.length-1){
+                                  return;
+                                }
+                          if(canLike){
+                            matchAnimation.value=TransformStatus.rightRotate;
+
+                            if(like>0){
+                              like=like-1;
+                            }
+                            //currentPage=index;
+                            ///如果对方喜欢我。
+                            if(users[currentPage].likeMe==1){
+                              MatchApi.like(users[currentPage].id);
+                              ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                              showMatched(context,target: users[currentPage],next: (){
+
+                                controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                              });
+                            }else{
+                              ///
+                              if(users[currentPage].wishList.isEmpty){
+                                MatchApi.like(users[currentPage].id);
+                                ref.read(backgroundImageProvider.notifier).updateBgImage(null);
+
+                                controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                              }else {
+                                users[currentPage].matched=true;
+                                setState(() {
+
+                                });
+                              }
+                            }
+
+                            setState(() {
+
+                            });
+                            SonaAnalytics.log(MatchEvent.match_like.name);
+
+                          }else {
+                            SonaAnalytics.log(MatchEvent.match_like_limit.name);
+                            Navigator.push(context, MaterialPageRoute(builder:(c){
+                              return SubscribePage(SubscribeShowType.unlockUnlimitedLikes(),fromTag: FromTag.pay_match_likelimit,);
+                            }));
+                          }
+                      }),
+                      ScaleAnimation(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,), onTap: (){
+                        if(currentPage==users.length-1){
+                                  return;
+                                }
+                              Future.delayed(Duration(milliseconds: 200),(){
+                                matchAnimation.value=TransformStatus.rightRotate;
+                                 if(canArrow){
+
+                            showDm(context, users[currentPage],(){
+
+                              controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                              //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
+                            });
+                          }else {
+                            bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                            if(isMember){
+                              Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                            }else{
+                              Navigator.push(context, MaterialPageRoute(builder:(c){
+                                return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
+                              }));
+                            }
+                          }
+                          });
+
+                      })
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -398,9 +398,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             }
             return ProfileWidget(
               relation: Relation.normal,
-              info:info,next:(){
+              info:info,
+              next:(){
                   controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                },
+                  },
               onMatch: (v){},
             );
           },
@@ -414,6 +415,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           duration: const Duration(milliseconds: 2000),
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
+
             currentPage=value!;
             setState(() {
 

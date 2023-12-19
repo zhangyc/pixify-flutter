@@ -1,6 +1,10 @@
 // 1. 创建一个Notifier管理分页状态
 
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../widgets/custom_pageview/src/skip_transformer.dart';
+import '../widgets/custom_pageview/src/transformer_page_view.dart';
 
 
 final backgroundImageProvider = StateNotifierProvider<BackgroundColorController, String?>(
@@ -14,6 +18,9 @@ class BackgroundColorController extends StateNotifier<String?> {
     state = url;
   }
 }
+ValueNotifier<TransformStatus> matchAnimation=ValueNotifier<TransformStatus>(TransformStatus.idle);
+final pageControllerProvider = Provider((ref) => TransformerPageController());
+
 
 
 List whiteTable=[
