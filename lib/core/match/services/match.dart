@@ -35,6 +35,17 @@ Future<HttpResult> matchAction({
   );
 }
 
+Future<String?> getLikeActivity({
+  required int userId,
+}) {
+  return post(
+    '/user/find-like-reason',
+    data: {'id': userId}
+  ).then<String>((resp) => resp.statusCode == 0 ? resp.data['likeReason'] : '')
+  .then<String?>((String value) => value.isEmpty ? null : value)
+  .catchError((e) => null);
+}
+
 enum MatchAction {
   skip(1),
   like(2),

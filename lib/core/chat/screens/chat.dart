@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pinput/pinput.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/providers/entitlements.dart';
@@ -17,6 +18,7 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/chat/widgets/tips_dialog.dart';
+import 'package:sona/core/match/providers/match_info.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/common.dart';
@@ -126,33 +128,29 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
             final msgs = [...localPendingMessages, ...messages]
               ..sort((m1, m2) => m2.time.compareTo(m1.time));
-            if (msgs.isNotEmpty) {
-              return Container(
-                alignment: Alignment.topCenter,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
-                  reverse: true,
-                  itemBuilder: (BuildContext context, int index) => MessageWidget(
-                    prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
-                    message: msgs[index],
-                    fromMe: mySide.id == msgs[index].sender.id,
-                    mySide: mySide,
-                    otherSide: widget.otherSide,
-                    myLocale: myLocale,
-                    otherLocale: otherLocale,
-                    // onPendingMessageSucceed: _onPendingMessageSucceed,
-                    // onShorten: _shortenMessage,
-                    onDelete: _deleteMessage,
-                  ),
-                  itemCount: msgs.length,
-                  separatorBuilder: (_, __) => SizedBox(height: 5),
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                ),
-              );
-            } else {
-              return _startupline();
-            }
+            return Container(
+              alignment: Alignment.topCenter,
+              child: ListView.separated(
+                shrinkWrap: true,
+                padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
+                reverse: true,
+                itemBuilder: (BuildContext context, int index) => index != msgs.length ? MessageWidget(
+                  prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
+                  message: msgs[index],
+                  fromMe: mySide.id == msgs[index].sender.id,
+                  mySide: mySide,
+                  otherSide: widget.otherSide,
+                  myLocale: myLocale,
+                  otherLocale: otherLocale,
+                  // onPendingMessageSucceed: _onPendingMessageSucceed,
+                  // onShorten: _shortenMessage,
+                  onDelete: _deleteMessage,
+                ) : _startupline(msgs.isNotEmpty),
+                itemCount: msgs.length + 1,
+                separatorBuilder: (_, __) => SizedBox(height: 5),
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              ),
+            );
           },
           error: (error, __) => GestureDetector(
             behavior: HitTestBehavior.translucent,
@@ -210,7 +208,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
   }
 
-  Widget _startupline() {
+  Widget _startupline(bool hasMsg) {
     return Container(
       alignment: Alignment.topRight,
       margin: EdgeInsets.symmetric(vertical: 16),
@@ -228,8 +226,31 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
           ),
           SizedBox(height: 16),
-          Text(''),
-          Center(
+          ref.watch(asyncMatchActivityProvider(widget.otherSide.id)).when(
+            data: (activity) => activity != null ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Text.rich(
+                TextSpan(
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontSize: 28
+                  ),
+                  children: [
+                    TextSpan(text: '”'),
+                    TextSpan(
+                      text: S.of(context).imVeryInterestedInSomething(activity),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 20
+                      )
+                    ),
+                    TextSpan(text: '”'),
+                  ]
+                ),
+              ),
+            ) : Container(),
+            error: (_, __) => Container(),
+            loading: () => Container()
+          ),
+          if (!hasMsg) Center(
             child: SizedBox(
               width: 248,
               child: ColoredButton(
