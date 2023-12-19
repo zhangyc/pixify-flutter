@@ -75,17 +75,19 @@ class _MessageWidgetState extends State<MessageWidget> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (widget.prevMessage == null || widget.prevMessage!.time.add(const Duration(minutes: 5)).isBefore(widget.message.time)) MessageTime(time: widget.message.time),
+          if (widget.prevMessage == null || widget.prevMessage!.time.add(const Duration(minutes: 5)).isBefore(widget.message.time))
+            MessageTime(time: widget.message.time),
           SizedBox(height: 12),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: widget.fromMe ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
               if (!widget.fromMe) Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(40)),
               ),
-              Expanded(
+              Flexible(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: widget.fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
