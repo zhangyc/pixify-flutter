@@ -23,7 +23,7 @@ class _IconAnimationState extends ConsumerState<IconAnimation> {
     return co.hasClients?ValueListenableBuilder<TransformStatus>(
       valueListenable: matchAnimation,
       builder: (context, value, child) {
-        if(value==TransformStatus.idle){
+        if(value==TransformStatus.idle||!co.hasClients){
           return Container();
         }
         double fractionalPart = co.page! % 1;
