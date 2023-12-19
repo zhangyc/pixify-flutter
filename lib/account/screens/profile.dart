@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/my_profile.dart';
@@ -271,7 +274,44 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if (source == null) throw Exception('No source');
     final picker = ImagePicker();
     final file = await picker.pickImage(source: source);
+
     if (file == null) throw Exception('No file');
+    final options = FaceDetectorOptions(
+      enableClassification: true,
+      enableContours: true,
+      enableLandmarks: true,
+      enableTracking: true
+    );
+    final faceDetector = FaceDetector(options: options);
+    final List<Face> faces = await faceDetector.processImage(InputImage.fromFilePath(file.path));
+    if(faces.isEmpty){
+      Fluttertoast.showToast(msg: 'Please upload photos according to the recommended standards.');
+      return;
+    }
+    // for (Face face in faces) {
+    //   final Rect boundingBox = face.boundingBox;
+    //
+    //   final double? rotX = face.headEulerAngleX; // Head is tilted up and down rotX degrees
+    //   final double? rotY = face.headEulerAngleY; // Head is rotated to the right rotY degrees
+    //   final double? rotZ = face.headEulerAngleZ; // Head is tilted sideways rotZ degrees
+    //
+    //   // If landmark detection was enabled with FaceDetectorOptions (mouth, ears,
+    //   // eyes, cheeks, and nose available):
+    //   final FaceLandmark? leftEar = face.landmarks[FaceLandmarkType.leftEar];
+    //   if (leftEar != null) {
+    //     final Point<int> leftEarPos = leftEar.position;
+    //   }
+    //
+    //   // If classification was enabled with FaceDetectorOptions:
+    //   if (face.smilingProbability != null) {
+    //     final double? smileProb = face.smilingProbability;
+    //   }
+    //
+    //   // If face tracking was enabled with FaceDetectorOptions:
+    //   if (face.trackingId != null) {
+    //     final int? id = face.trackingId;
+    //   }
+    // }
     if (file.name.toLowerCase().endsWith('.gif')) {
       Fluttertoast.showToast(msg: 'GIF is not allowed');
       return;
