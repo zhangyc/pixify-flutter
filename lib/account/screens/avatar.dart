@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
+import 'package:sona/utils/face_detection/detection.dart';
 
 import '../../generated/l10n.dart';
 import '../../utils/dialog/crop_image.dart';
@@ -185,7 +186,10 @@ class _AvatarScreenState extends State<AvatarScreen> {
     try {
       final picker = ImagePicker();
       final file = await picker.pickImage(source: source);
+
       if (file == null) throw Exception('No file');
+      ///todo 人脸检测
+      ///faceDetection(file.path);
       if (file.name.toLowerCase().endsWith('.gif')) {
         Fluttertoast.showToast(msg: 'GIF is not allowed');
         throw Error();

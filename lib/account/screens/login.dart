@@ -222,7 +222,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
   Future _next() async {
     try {
       final pn = PhoneNumber(countryISOCode: _country.code, countryCode: _country.dialCode, number: _phoneController.text);
-      if (pn.isValidNumber()) {
+      if (_validator(_phoneController.text)==null) {
         final result = await _sendPin();
         if (!result) return;
         if (mounted) setState(() {});
