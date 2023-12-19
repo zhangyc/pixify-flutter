@@ -206,6 +206,8 @@
   "@seeProfile": {},
   "buttonUnmatch": "取消匹配",
   "@buttonUnmatch": {},
+  "buttonHitAIInterpretationMaximumLimit": "😪SONA累了，👇点击给她加油！",
+  "@buttonHitAIInterpretationMaximumLimit": {},
   "interpretationOn": "AI传译：开",
   "@interpretationOn": {},
   "interpretationOff": "AI传译：关",

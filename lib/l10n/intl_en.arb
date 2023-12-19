@@ -206,6 +206,8 @@
   "@seeProfile": {},
   "buttonUnmatch": "Unmatch",
   "@buttonUnmatch": {},
+  "buttonHitAIInterpretationMaximumLimit": "😪SONA is tired, 👇Tap to refuel her!",
+  "@buttonHitAIInterpretationMaximumLimit": {},
   "interpretationOn": "AI Interpretation: On",
   "@interpretationOn": {},
   "interpretationOff": "AI Interpretation: Off",

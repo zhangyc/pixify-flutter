@@ -63,6 +63,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEdit": MessageLookupByLibrary.simpleMessage("편집"),
         "buttonEditProfile": MessageLookupByLibrary.simpleMessage("프로필 편집"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
+        "buttonHitAIInterpretationMaximumLimit":
+            MessageLookupByLibrary.simpleMessage("😪SONA 피곤해, 👇탭하고 에너지 충전해!"),
         "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("계정 유지"),
         "buttonManage": MessageLookupByLibrary.simpleMessage("관리하다"),
         "buttonNext": MessageLookupByLibrary.simpleMessage("다음 단계"),

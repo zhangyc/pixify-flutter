@@ -66,6 +66,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEditProfile":
             MessageLookupByLibrary.simpleMessage("Editar perfil"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("Entendi"),
+        "buttonHitAIInterpretationMaximumLimit":
+            MessageLookupByLibrary.simpleMessage(
+                "😪SONA cansada, 👇Toque pra recarregar!"),
         "buttonKeepAccount":
             MessageLookupByLibrary.simpleMessage("Manter a conta"),
         "buttonManage": MessageLookupByLibrary.simpleMessage("Gerenciar"),

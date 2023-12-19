@@ -184,19 +184,22 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           bottom: 8
         ),
         color: Colors.white,
-        child: !aiInterpretationLimited ? ChatInstructionInput(
+        child: !aiInterpretationLimited || ref.watch(inputModeProvider(widget.otherSide.id)) == InputMode.manual ? ChatInstructionInput(
           chatId: widget.otherSide.id,
           sameLanguage: myLocale == otherLocale,
           onSubmit: _onSend,
           onSuggestionTap: _onSuggestionTap,
           onHookTap: _onHookTap,
           autofocus: false
-        ) : OutlinedButton(
-            onPressed: () => showSubscription(SubscribeShowType.unlockMoreAIInterpretation(), FromTag.pay_chat_sonamsg),
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806))
-            ),
-            child: Text('😪SONA is tired, 👇Tap to refuel her!')
+        ) : Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: OutlinedButton(
+              onPressed: () => showSubscription(SubscribeShowType.unlockMoreAIInterpretation(), FromTag.pay_chat_sonamsg),
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806))
+              ),
+              child: Text(S.of(context).buttonHitAIInterpretationMaximumLimit)
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
