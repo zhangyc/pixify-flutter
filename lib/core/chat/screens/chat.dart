@@ -51,7 +51,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   late UserInfo mySide;
   Locale? myLocale;
   Locale? otherLocale;
-  bool aiInterpretationLimited = false;
 
   @override
   void didChangeDependencies() {
@@ -189,7 +188,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           bottom: 8
         ),
         color: Colors.white,
-        child: !aiInterpretationLimited || ref.watch(inputModeProvider(widget.otherSide.id)) == InputMode.manual ? ChatInstructionInput(
+        child: ref.watch(entitlementsProvider).interpretation > 0 || ref.watch(inputModeProvider(widget.otherSide.id)) == InputMode.manual ? ChatInstructionInput(
           chatId: widget.otherSide.id,
           sameLanguage: myLocale == otherLocale,
           onSubmit: _onSend,
