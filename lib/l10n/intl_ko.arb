@@ -206,6 +206,8 @@
   "@seeProfile": {},
   "buttonUnmatch": "매치 해제",
   "@buttonUnmatch": {},
+  "buttonHitAIInterpretationMaximumLimit": "😪SONA 피곤해, 👇탭하고 에너지 충전해!",
+  "@buttonHitAIInterpretationMaximumLimit": {},
   "interpretationOn": "AI 동시 통역: 켜짐",
   "@interpretationOn": {},
   "interpretationOff": "AI 동시 통역: 꺼짐",

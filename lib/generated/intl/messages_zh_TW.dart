@@ -62,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEdit": MessageLookupByLibrary.simpleMessage("編輯"),
         "buttonEditProfile": MessageLookupByLibrary.simpleMessage("編輯資料"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("明白了"),
+        "buttonHitAIInterpretationMaximumLimit":
+            MessageLookupByLibrary.simpleMessage("😪SONA累了，👇點擊給她加油！"),
         "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("保留帳戶"),
         "buttonManage": MessageLookupByLibrary.simpleMessage("管理"),
         "buttonNext": MessageLookupByLibrary.simpleMessage("下一步"),

@@ -206,6 +206,8 @@
   "@seeProfile": {},
   "buttonUnmatch": "Desfazer match",
   "@buttonUnmatch": {},
+  "buttonHitAIInterpretationMaximumLimit": "😪SONA cansada, 👇Toque pra recarregar!",
+  "@buttonHitAIInterpretationMaximumLimit": {},
   "interpretationOn": "Interpretação Síncrona AI: Ligada",
   "@interpretationOn": {},
   "interpretationOff": "Interpretação Síncrona AI: Desligada",

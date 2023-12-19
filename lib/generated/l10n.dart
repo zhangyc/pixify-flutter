@@ -1080,6 +1080,16 @@ class S {
     );
   }
 
+  /// `😪SONA is tired, 👇Tap to refuel her!`
+  String get buttonHitAIInterpretationMaximumLimit {
+    return Intl.message(
+      '😪SONA is tired, 👇Tap to refuel her!',
+      name: 'buttonHitAIInterpretationMaximumLimit',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `AI Interpretation: On`
   String get interpretationOn {
     return Intl.message(

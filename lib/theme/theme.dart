@@ -146,6 +146,7 @@ final themeData = ThemeData(
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: ButtonStyle(
+      foregroundColor: MaterialStatePropertyAll(primaryColor),
       backgroundColor: MaterialStateProperty.resolveWith((states) {
         if (states.contains(MaterialState.disabled)) {
           return Color(0xFF7E7E7E);

@@ -206,6 +206,8 @@
   "@seeProfile": {},
   "buttonUnmatch": "Match aufheben",
   "@buttonUnmatch": {},
+  "buttonHitAIInterpretationMaximumLimit": "😪SONA ist müde, 👇Tippen Sie, um sie aufzuladen!",
+  "@buttonHitAIInterpretationMaximumLimit": {},
   "interpretationOn": "KI-Synchrone Interpretation: Ein",
   "@interpretationOn": {},
   "interpretationOff": "KI-Synchrone Interpretation: Aus",

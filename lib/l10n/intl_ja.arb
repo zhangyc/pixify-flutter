@@ -206,6 +206,8 @@
   "@seeProfile": {},
   "buttonUnmatch": "ペアリング解除",
   "@buttonUnmatch": {},
+  "buttonHitAIInterpretationMaximumLimit": "SONA疲れた😪、👇クリックでエネルギーチャージ！",
+  "@buttonHitAIInterpretationMaximumLimit": {},
   "interpretationOn": "AI同期通訳：オン",
   "@interpretationOn": {},
   "interpretationOff": "AI同期通訳：オフ",

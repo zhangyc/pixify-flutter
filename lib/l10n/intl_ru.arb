@@ -206,6 +206,8 @@
   "@seeProfile": {},
   "buttonUnmatch": "Отменить совпадение",
   "@buttonUnmatch": {},
+  "buttonHitAIInterpretationMaximumLimit": "😪SONA устала, 👇жми, чтоб зарядить!",
+  "@buttonHitAIInterpretationMaximumLimit": {},
   "interpretationOn": "Синхронный перевод ИИ: Включен",
   "@interpretationOn": {},
   "interpretationOff": "Синхронный перевод ИИ: Выключен",

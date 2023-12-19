@@ -206,6 +206,8 @@
   "@seeProfile": {},
   "buttonUnmatch": "ยกเลิกการจับคู่",
   "@buttonUnmatch": {},
+  "buttonHitAIInterpretationMaximumLimit": "😪SONA เหนื่อย, 👇แตะเพื่อเติมพลังให้เธอ!",
+  "@buttonHitAIInterpretationMaximumLimit": {},
   "interpretationOn": "AI การแปลภาษาแบบพร้อมเพรียง: เปิด",
   "@interpretationOn": {},
   "interpretationOff": "AI การแปลภาษาแบบพร้อมเพรียง: ปิด",

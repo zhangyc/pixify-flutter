@@ -206,6 +206,8 @@
   "@seeProfile": {},
   "buttonUnmatch": "Annuler la correspondance",
   "@buttonUnmatch": {},
+  "buttonHitAIInterpretationMaximumLimit": "😪SONA est fatiguée, 👇Tapez pour la recharger!",
+  "@buttonHitAIInterpretationMaximumLimit": {},
   "interpretationOn": "Interprétation Synchrone IA : Activée",
   "@interpretationOn": {},
   "interpretationOff": "Interprétation Synchrone IA : Désactivée",
