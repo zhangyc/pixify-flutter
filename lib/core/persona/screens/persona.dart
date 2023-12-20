@@ -58,11 +58,13 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 18),
+              margin: EdgeInsets.only(top: 18, bottom: 6),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 S.of(context).wishList,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontSize: 18
+                ),
               ),
             ),
             Container(

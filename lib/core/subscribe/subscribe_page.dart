@@ -240,8 +240,9 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                                           return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
                                         }));
                                       },
-                                      style: const TextStyle(
-                                          color: Color(0xffEA01FF)
+                                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w800
                                       )
                                   ),
                                   TextSpan(text: S.current.subscriptionAgreementSuffix),
@@ -265,12 +266,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                                   }
                                 }
                               },
-                              child: Text(
-                                  S.of(context).buttonRestore,
-                                  style: const TextStyle(
-                                      color: Color(0xffEA01FF)
-                                  )
-                              )
+                              child: Text(S.of(context).buttonRestore)
                           ),
                         )
 
