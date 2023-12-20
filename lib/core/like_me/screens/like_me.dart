@@ -28,7 +28,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
 
   @override
   void didChangeDependencies() {
-    itemWidth = (MediaQuery.of(context).size.width - 16 * 6 - 8) / 2;
+    itemWidth = (MediaQuery.of(context).size.width - 16 * 6 - 12) / 2;
     itemHeight = itemWidth * 4 / 3;
     super.didChangeDependencies();
   }
@@ -48,8 +48,8 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
       body: ref.watch(asyncLikedMeProvider).when(
         data: (data) => data.isNotEmpty ? MasonryGridView.builder(
           padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 130),
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 12,
           gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2
           ),
@@ -136,7 +136,8 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                   right: 12,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
                       color: Colors.black.withOpacity(0.45)
                     ),
                     clipBehavior: Clip.antiAlias,
@@ -145,8 +146,8 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                       u.displayTag!,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500
                       ),
                     )
                   )
@@ -170,9 +171,19 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
           ),
           if (u.hang.isNotEmpty) Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              u.hang,
-              style: Theme.of(context).textTheme.titleSmall,
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  // TextSpan(text: '”', style: Theme.of(context).textTheme.headlineMedium),
+                  TextSpan(
+                    text: S.of(context).imInterestedSomething("'${u.hang}'")
+                  ),
+                  // TextSpan(text: '”', style: Theme.of(context).textTheme.headlineMedium)
+                ]
+              ),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w500
+              ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -180,7 +191,9 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
             padding: const EdgeInsets.only(top: 8),
             child: Text(
               S.of(context).likedYou,
-              style: Theme.of(context).textTheme.titleSmall,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w500
+              ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

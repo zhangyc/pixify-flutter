@@ -47,19 +47,19 @@ final themeData = ThemeData(
         fontSize: 20,
         fontWeight: FontWeight.w800,
         height: 1.5,
-        letterSpacing: 0
+        letterSpacing: 0.4
     ),
     titleMedium: TextStyle(
         color: Colors.black,
         fontSize: 16,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700,
         height: 1.5,
-        letterSpacing: 0
+        letterSpacing: 0.2
     ),
     titleSmall: TextStyle(
         color: fontColour,
         fontSize: 14,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         height: 1.5,
         letterSpacing: 0
     ),
@@ -134,8 +134,8 @@ final themeData = ThemeData(
         TextStyle(
           color: fontColour,
           fontSize: 16,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.6
+          fontWeight: FontWeight.w800,
+          letterSpacing: 0
         )
       ),
       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
@@ -163,8 +163,8 @@ final themeData = ThemeData(
           TextStyle(
               color: fontColour,
               fontSize: 16,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.6
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0
           )
       ),
       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
@@ -183,8 +183,8 @@ final themeData = ThemeData(
         return TextStyle(
           color: primaryColor,
           fontSize: 16,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.6
+          fontWeight: FontWeight.w800,
+          letterSpacing: 0
         );
       }),
       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 24)),
