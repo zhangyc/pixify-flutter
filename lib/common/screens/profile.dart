@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/no_data/empty.dart';
 import 'package:sona/common/providers/other_info_provider.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 
 
@@ -30,6 +31,10 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
+        leading: IconButton(
+          icon: SonaIcon(icon: SonaIcons.back),
+          onPressed: () => Navigator.pop(context)
+        ),
       ),
       body: ref.watch(getProfileByIdProvider(widget.userId)).when(
         data: (user) => ProfileWidget(
