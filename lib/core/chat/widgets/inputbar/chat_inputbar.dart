@@ -65,7 +65,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     _focusNode.addListener(_focusChangeListener);
     super.initState();
     kvStore.setInt(enterTimesKey, (kvStore.getInt(enterTimesKey) ?? 0) + 1);
-    _addOverlay();
+    //_addOverlay();
   }
 
   @override
