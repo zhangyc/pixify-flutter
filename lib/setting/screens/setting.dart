@@ -7,6 +7,8 @@ import 'package:sona/core/providers/token.dart';
 import 'package:sona/setting/screens/account.dart';
 import 'package:sona/utils/dialog/common.dart';
 import 'package:sona/utils/global/global.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../common/widgets/webview.dart';
 import '../../generated/l10n.dart';
@@ -160,7 +162,8 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
     var result = await showActionButtons(context: context, options: {
       S.of(context).privacyPolicy: '1',
       S.of(context).disclaimer: '2',
-      S.of(context).termsOfService: '3'
+      S.of(context).termsOfService: '3',
+      S.of(context).feedback: 'feedback'
     });
     if (result != null && mounted){
       if(result=='1'){
@@ -175,6 +178,9 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
         Navigator.push(context, MaterialPageRoute(builder: (c){
           return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: S.of(context).termsOfService);
         }));
+      } else if (result == 'feedback') {
+        final email = 'sona@zervo.me';
+        final result = await launchUrl(Uri(scheme: 'mailto', path: email), mode: LaunchMode.externalApplication);
       }
     }
   }
