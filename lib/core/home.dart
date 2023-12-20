@@ -10,6 +10,7 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
+import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/like_me/screens/like_me.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/home_provider.dart';
@@ -85,9 +86,6 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         unselectedFontSize: 0,
         selectedItemColor: Theme.of(context).primaryColor,
         unselectedItemColor: Theme.of(context).primaryColor,
-        // selectedLabelStyle: TextStyle(fontWeight: FontWeight.w700),
-        // unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400),
-        // showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
             icon: Padding(
@@ -100,7 +98,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, activeProvider: bottomChatNoticeProvider),
+              child: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, activeProvider: likeMeNoticeNotifier),
             ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_like_me_active, size: 24),
             label: ''
@@ -108,7 +106,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: SonaIcon(icon: SonaIcons.navicon_chat, size: 24, activeProvider: bottomChatNoticeProvider),
+              child: SonaIcon(icon: SonaIcons.navicon_chat, size: 24, activeProvider: chatNoticeProvider),
             ),
             activeIcon: SonaIcon(icon: SonaIcons.navicon_chat_active, size: 24),
             label: ''

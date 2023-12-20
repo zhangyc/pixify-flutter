@@ -40,6 +40,12 @@ class _MultiLineTextFieldScreenState extends State<MultiLineTextFieldScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -51,8 +57,11 @@ class _MultiLineTextFieldScreenState extends State<MultiLineTextFieldScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              if (true) {
-                widget.onSave(_controller.text);
+              final input = _controller.text.trim();
+              if (input.isNotEmpty && input != widget.initialValue) {
+                widget.onSave(input);
+              } else {
+                Navigator.pop(context);
               }
             },
             style: ButtonStyle(

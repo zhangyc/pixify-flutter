@@ -58,7 +58,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     style: ButtonStyle(
                       minimumSize: MaterialStatePropertyAll(Size.zero)
                     ),
-                    child: Text(S.of(context).buttonPreview, style: Theme.of(context).textTheme.titleSmall)
+                    child: Text(S.of(context).buttonPreview)
                 ),
               ),
           )
