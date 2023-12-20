@@ -181,7 +181,6 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
       } else if (result == 'feedback') {
         final email = 'sona@zervo.me';
         final result = await launchUrl(Uri(scheme: 'mailto', path: email), mode: LaunchMode.externalApplication);
-        print(result);
       }
     }
   }
