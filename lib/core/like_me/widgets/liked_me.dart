@@ -60,7 +60,9 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                 child: Text(
                   '${S.of(context).whoLikesU} (${likedMeUsers.length})',
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontSize: 18
+                  ),
                 ),
               ),
               Container(
@@ -144,8 +146,8 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                                   'New',
                                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                     color: Colors.white,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w800
                                   ),
                                 ),
                               )
@@ -178,10 +180,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                            S.of(context).checkOutTheirProfiles,
-                            style: Theme.of(context).textTheme.titleSmall
-                        ),
+                        Text(S.of(context).checkOutTheirProfiles, style: Theme.of(context).textTheme.titleMedium),
                         SonaIcon(icon: SonaIcons.forward)
                       ],
                     ),

@@ -73,7 +73,8 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                         displayMessage != null && displayMessage.isNotEmpty ? displayMessage : S.of(context).newMatch,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
                           color: widget.conversation.hasUnreadMessage ? Theme.of(context).primaryColor : Colors.grey,
                         ),
                       )
@@ -86,8 +87,9 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                 width: 8,
                 height: 8,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(4)
+                  color: Color(0xFFFFE806),
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(color: Colors.white.withOpacity(0.2), width: 1)
                 ),
               )
             ],
