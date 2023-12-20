@@ -31,17 +31,17 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
         width: widget.info.matched ? 95 : MediaQuery.of(context).size.width-16*2,
         height: widget.info.matched ? 118 : 457,
         child: widget.info.matched
-            ? Container(
-          decoration: BoxDecoration(
-              image: widget.info.avatar==null?null:DecorationImage(image: CachedNetworkImageProvider(widget.info.avatar!),fit: BoxFit.cover),
-              border: Border.all(
-                  color: Colors.black,
-                  width: 2
-              ),
-              borderRadius: BorderRadius.circular(20)
-          ),
+            ? Container(decoration: BoxDecoration(
+            color: Colors.black,
+            image: widget.info.avatar==null?null:DecorationImage(image: CachedNetworkImageProvider(widget.info.avatar!),fit: BoxFit.cover),
+            border: Border.all(
+                color: Colors.black,
+                width: 2
+            ),
+            borderRadius: BorderRadius.circular(20)
+        ),
           clipBehavior: Clip.antiAlias,
-        ) :
+        ):
         Container(
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(

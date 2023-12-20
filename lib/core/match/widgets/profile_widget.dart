@@ -45,7 +45,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
     super.initState();
   }
 
-  PageController pageController=PageController(viewportFraction: 0.8);
+  PageController pageController=PageController(viewportFraction: 0.9);
 
   late MatchUserInfo info=widget.info;
   @override
@@ -66,6 +66,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                         //HeardItem(userInfo: info,),
                         //HeardInitAnimation(child: ),
                         ///头像，动画。
+                        SizedBox(height: widget.info.matched&&info.wishList.isNotEmpty?27:0,),
                         MyImageAnimation(info: widget.info),
                         SizedBox(
                           height: 16,
@@ -143,14 +144,14 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 32),
                                   child: Text(S.of(context).matchPageSelectIdeas(widget.info.gender!.name.toLowerCase()),style: TextStyle(
-                                      color: Colors.black,
+                                      color: Color(0xff2c2c2c),
                                       fontSize: 20
                                   ),),
                                 ),
                                 widget.info.wishList.length>1?_buildPageIndicator():Container(),
                                 SizedBox(
                                   height: 500+100,
-                                  width: 500,
+                                  // width: MediaQuery.of(context).size.width,
                                   child:PageView(
                                     onPageChanged: (value){
                                       _currentPage = value;
@@ -159,7 +160,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                     controller: pageController,
                                     children: widget.info.wishList.map((wish) => Container(
                                       margin: EdgeInsets.symmetric(
-                                          horizontal: 8
+                                          horizontal: 4
                                       ),
                                       child: Column(
                                         children: [
@@ -167,8 +168,8 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                             height: 16,
                                           ),
                                           Container(
-                                            // width: 327,
-                                            // height: 262,
+                                            // width: MediaQuery.of(context).size.width,
+                                            height: 266,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(24),
                                               border: Border.all(
@@ -393,7 +394,17 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
     );
   }
   Widget _buildIndicator(int index) {
-    return Container(
+    return _currentPage == index?Container(
+
+      width: _currentPage == index ?16:8,
+      height: 8,
+      margin: EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        shape: BoxShape.rectangle,
+        color: _currentPage == index ? Color(0xff2C2C2C) : Color(0xffE8E6E6),
+      ),
+    ):Container(
 
       width: _currentPage == index ?16:8,
       height: 8,
