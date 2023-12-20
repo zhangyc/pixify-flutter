@@ -640,7 +640,10 @@ Future<T?> showRadioFields<T>({
                   groupValue: initialValue,
                   controlAffinity: ListTileControlAffinity.trailing,
                   onChanged: (value) => Navigator.pop(context, value),
-                  selectedTileColor: Color(0xFFF6F3F3),
+                  activeColor: Theme.of(context).primaryColor,
+                  selectedTileColor: Theme.of(context).primaryColor,
+                  tileColor: Theme.of(context).primaryColor,
+                  contentPadding: EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 0),
                   title: Text(keys[index])
                 ),
                 itemCount: keys.length,
