@@ -3,9 +3,9 @@ import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
 
 final chatNoticeProvider = StateProvider<bool>((ref) {
-  final convos = ref.watch(conversationStreamProvider).value;
+  final convos = ref.watch(conversationStreamProvider).unwrapPrevious().valueOrNull;
   if (convos == null) return false;
-  if (convos.any((convo) => convo.hasUnreadMessage)) {
+  if (convos.any((convo) => convo.hasUnreadMessage || convo.lastMessageId == null)) {
     return true;
   } else {
     return false;

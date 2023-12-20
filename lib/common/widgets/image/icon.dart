@@ -13,7 +13,7 @@ class SonaIcon extends ConsumerWidget {
   final SonaIcons icon;
   final double size;
   final Color? color;
-  final StateProvider? activeProvider;
+  final StateProvider<bool>? activeProvider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +36,7 @@ class SonaIcon extends ConsumerWidget {
               top: 0,
               right: 0,
               child: Visibility(
-                visible: ref.watch(activeProvider!) != ChatNoticeMode.none,
+                visible: ref.watch(activeProvider!),
                 child: Container(
                   width: 8,
                   height: 8,

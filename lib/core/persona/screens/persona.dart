@@ -287,16 +287,16 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         ),
                         SizedBox(height: 16),
                         FilledButton(
-                            onPressed: () => Navigator.push(context, MaterialPageRoute(
-                                builder: (_) => const ProfileScreen()
-                            )),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
-                            ),
-                            child: Text(
-                              S.of(context).buttonEditProfile,
-                              style: Theme.of(context).textTheme.titleSmall
-                            )
+                          onPressed: () => Navigator.push(context, MaterialPageRoute(
+                              builder: (_) => const ProfileScreen()
+                          )),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
+                          ),
+                          child: Text(
+                            S.of(context).buttonEditProfile,
+                            style: Theme.of(context).textTheme.titleMedium
+                          )
                         ),
                       ],
                     ),
