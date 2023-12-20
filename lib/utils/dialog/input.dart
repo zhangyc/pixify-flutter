@@ -581,7 +581,7 @@ Future<T?> showRadioFields<T>({
       final keys = options.keys.toList(growable: false);
       return Container(
         margin: EdgeInsets.only(top: 16),
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).viewInsets.bottom + 16),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
