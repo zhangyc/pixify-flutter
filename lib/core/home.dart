@@ -40,6 +40,10 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     SonaAnalytics.init();
     _determinePosition();
     initUserPermission();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _handlerNotification();
+
+    });
     super.initState();
   }
 
@@ -146,6 +150,22 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         _ => 'none'
       };
       SonaAnalytics.log('home_tab_$tabName');
+    }
+  }
+
+  void _handlerNotification() async{
+    RemoteMessage? initialMessage = await messagesService.getInitialMessage();
+    if(initialMessage!=null){
+      print('------------initialMessage----------');
+      if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
+        print('------------initialMessage2----------');
+        String ext= initialMessage.data['ext'];
+        if (kDebugMode) print('push_data: $ext');
+        UserInfo info1 =UserInfo.fromJson(jsonDecode(ext));
+        Navigator.push(navigatorKey.currentState!.context, MaterialPageRoute(builder: (c){
+          return ChatScreen(entry: ChatEntry.push, otherSide: info1);
+        }));
+      }
     }
   }
 

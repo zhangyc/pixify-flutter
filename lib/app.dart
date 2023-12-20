@@ -14,6 +14,7 @@ import 'package:sona/utils/global/global.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sona/utils/locale/locale.dart';
 
+import 'core/chat/screens/chat.dart';
 import 'core/home.dart';
 import 'generated/l10n.dart';
 
@@ -57,7 +58,8 @@ class SonaApp extends HookConsumerWidget {
 final _routes = <String, WidgetBuilder>{
   '/': (_) => const SonaHome(),
   'login': (_) => const LoginPhoneNumberScreen(),
-  'setting': (_) => const SettingScreen()
+  'setting': (_) => const SettingScreen(),
+  'lib/core/chat/screens/conversation_list':(_) => const SettingScreen(),
 };
 
 Route<dynamic>? _onGenerateRoute(RouteSettings settings) {

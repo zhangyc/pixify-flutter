@@ -98,17 +98,7 @@ Future<void> initFireBaseService(FirebaseApp firebase) async {
 void _setUpFcmListener() async{
   await Future.delayed(Duration(seconds: 1));
   ///kill
-  RemoteMessage? initialMessage = await messagesService.getInitialMessage();
-  if(initialMessage!=null){
-    if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
-      String ext= initialMessage.data['ext'];
-      if (kDebugMode) print('push_data: $ext');
-      user.UserInfo info1 =user.UserInfo.fromJson(jsonDecode(ext));
-      Navigator.push(navigatorKey.currentState!.context, MaterialPageRoute(builder: (c){
-        return ChatScreen(entry: ChatEntry.push, otherSide: info1);
-      }));
-    }
-  }
+
 
   ///background start
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
