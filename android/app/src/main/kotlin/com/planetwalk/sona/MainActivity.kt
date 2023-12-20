@@ -10,7 +10,7 @@ import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity: FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
+        //GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

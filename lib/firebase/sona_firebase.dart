@@ -102,7 +102,7 @@ void _setUpFcmListener() async{
 
   ///background start
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    if(message.data.containsKey('route')&&message.data['route']=='lib/core/chat/screens/conversation_list'){
+    if(message.data.containsKey('screen')&&message.data['screen']=='lib/core/chat/screens/conversation_list'){
       String ext= message.data['ext'];
       if (kDebugMode) print('push_data: $ext');
       user.UserInfo info =user.UserInfo.fromJson(jsonDecode(ext));

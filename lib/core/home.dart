@@ -157,7 +157,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     RemoteMessage? initialMessage = await messagesService.getInitialMessage();
     if(initialMessage!=null){
       print('------------initialMessage----------');
-      if(initialMessage.data.containsKey('route')&&initialMessage.data['route']=='lib/core/chat/screens/conversation_list'){
+      if(initialMessage.data.containsKey('screen')&&initialMessage.data['screen']=='lib/core/chat/screens/conversation_list'){
         print('------------initialMessage2----------');
         String ext= initialMessage.data['ext'];
         if (kDebugMode) print('push_data: $ext');

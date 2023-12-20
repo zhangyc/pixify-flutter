@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="test" type="FlutterRunConfigurationType" factoryName="Flutter">
-    <option name="additionalArgs" value="--dart-define=ENV=test" />
+    <option name="additionalArgs" value="--dart-define=ENV=test --release" />
     <option name="attachArgs" value="--dart-define=ENV=test" />
     <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
     <method v="2" />
