@@ -230,7 +230,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                             text:TextSpan(
                                 text: S.current.subscriptionAgreementPrefix(Platform.isAndroid ? 'Play Store' : 'Apple ID'),
                                 style: const TextStyle(
-                                    color: Color(0xffa9a9a9)
+                                  color: Color(0xffa9a9a9),
+                                  fontSize: 12,
                                 ),
                                 children: [
                                   TextSpan(
