@@ -129,6 +129,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
   Widget _noChats() {
     return SliverToBoxAdapter(
       child: Container(
+        width: 272,
         alignment: Alignment.center,
         child: Column(
           mainAxisSize: MainAxisSize.min,
