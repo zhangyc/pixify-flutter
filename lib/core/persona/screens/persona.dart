@@ -307,7 +307,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                   if (!ref.watch(myProfileProvider)!.isMember) FilledButton(
                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE600)),
+                        backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06)),
                         side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),
                       child: Text(S.of(context).getSonaPlus, style: Theme.of(context).textTheme.titleMedium)
