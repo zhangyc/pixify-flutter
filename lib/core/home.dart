@@ -138,6 +138,8 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       ref.read(chatNoticeProvider.notifier).update((state) => false);
     }
     if (index != _currentIndex) {
+      _currentIndex = index;
+      _pageController.jumpToPage(index);
       final tabName = switch(index) {
         0 => 'chat',
         1 => 'match',
