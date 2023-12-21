@@ -422,12 +422,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           duration: const Duration(milliseconds: 2000),
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
-            if(mounted){
-              showChooseHobbies(context);
-            }
-            if(showUpdateUserInfo){
-              if(ref.watch(myProfileProvider)!.interests.isEmpty){
 
+            if(showUpdateUserInfo){
+              if(ref.watch(myProfileProvider)!.interests.isEmpty&&ref.watch(myProfileProvider)!.bio==null){
+                if(mounted){
+                  showChooseHobbies(context);
+                }
+              }else if(ref.watch(myProfileProvider)!.photos.length<3){
+                if(mounted){
+                  showEditBio(context);
+                }
               }
             }
             currentPage=value!;

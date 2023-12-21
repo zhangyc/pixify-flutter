@@ -182,6 +182,9 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   ),
                   padding: EdgeInsets.symmetric(vertical: 1.5),
                   child: TextField(
+                    onTapOutside: (cv){
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
                     controller: _controller,
                     focusNode: _focusNode,
                     textAlign: TextAlign.left,

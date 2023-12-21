@@ -62,6 +62,9 @@ Future<bool?> _showReportForm(BuildContext context, int userId, int reason) {
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextField(
+        onTapOutside: (cv){
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         controller: _controller,
         style: Theme.of(context).textTheme.bodyMedium,
         decoration: InputDecoration(

@@ -219,6 +219,9 @@ Future<String?> showNameTextField({
             Container(
               alignment: Alignment.centerLeft,
               child: TextField(
+                onTapOutside: (cv){
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
                 controller: controller,
                 textAlign: TextAlign.left,
                 keyboardType: TextInputType.text,
@@ -402,6 +405,9 @@ Future<String?> showTextFieldDialog({
       borderRadius: BorderRadius.circular(20)
     ),
     child: TextField(
+      onTapOutside: (cv){
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       controller: controller,
       style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(

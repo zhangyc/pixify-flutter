@@ -39,6 +39,7 @@ ThemeData get themeData => ThemeData(
       statusBarIconBrightness: Brightness.dark
     )
   ),
+
   textTheme: const TextTheme(
     titleLarge: TextStyle(
         color: Colors.black,
@@ -207,5 +208,6 @@ ThemeData get themeData => ThemeData(
   ),
   progressIndicatorTheme: ProgressIndicatorThemeData(
     color: primaryColor
-  )
+  ),
+
 );

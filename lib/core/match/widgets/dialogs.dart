@@ -25,6 +25,7 @@ import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
 import '../providers/matched.dart';
+import '../providers/update_info_provider.dart';
 import '../util/event.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sona/core/match/widgets/avatar_animation.dart';
@@ -32,29 +33,228 @@ showEditBio<T>(BuildContext context){
   showModalBottomSheet<T>(
     context: context,
     isScrollControlled: true,
-    elevation: 0,
-    clipBehavior: Clip.none,
-    isDismissible: true,
+    // elevation: 0,
+    // clipBehavior: Clip.none,
+    // isDismissible: true,
     builder: (BuildContext context) {
 
-      const maxCount = 10;
-      late Set<String> _selected={};
+      TextEditingController controller=TextEditingController();
+      return Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        return Padding(
 
-      return StatefulBuilder(
-        builder: (BuildContext context, void Function(void Function()) setState) {
-          return Consumer(
-            builder: (BuildContext context, WidgetRef ref, Widget? child) {
-              List<ProfilePhoto> fixedLengthList = [ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, '')];
-              for(int i=0;i<ref.watch(myProfileProvider)!.photos.length;i++){
-                fixedLengthList[i]=ref.watch(myProfileProvider)!.photos[i];
-              }
-              return Container(
-                constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.9
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  width: 2,
+                  strokeAlign: BorderSide.strokeAlignOutside,
+                  color: Color(0xFF2C2C2C),
                 ),
-                padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+              ),
+              shadows: [
+                BoxShadow(
+                  color: Color(0xFF2C2C2C),
+                  blurRadius: 0,
+                  offset: Offset(0, -4),
+                  spreadRadius: 0,
+                )
+              ],
+            ),
+            height: 500,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ref.watch(updateProfileBioProvider).when(
+                    data: (data) => Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(S.current.bio,style: TextStyle(
+                                  color: Color(0xff2c2c2c),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w900
+                              ),),
+                              GestureDetector(child: SvgPicture.asset(Assets.svgDislike,width: 40,height: 40,),
+                                onTap: (){
+                                  Navigator.pop(context);
+                                },)
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(S.current.hereSonaCookedUpForU,style: TextStyle(
+                              color: Color(0xff2c2c2c),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w900
+                          ),),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            height: 248,
+                            padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Color(0xff2c2c2c),
+                                    width: 2
+                                ),
+                                borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: TextField(
+                              onTapOutside: (cv){
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400
+                              ),
+                              controller: controller..text=data.data,
+                              keyboardType: TextInputType.multiline,
+                              minLines: 7,
+                              maxLines: 7,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                isDense: true,
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Text(S.current.youCanEditItAnytime,style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400
+                          ),),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: ColoredButton(
+                                  fontColor: Color(0xff2c2c2c),
+                                  size: ColoredButtonSize.large,
+                                  text: S.current.noThanks,
+                                  loadingWhenAsyncAction: false,
+                                  onTap: () => Navigator.pop(context),
+                                  color: Color(0xfff6f3f3),
+                                  borderColor: Color(0xfff6f3f3),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Flexible(
+                                child: ColoredButton(
+                                    borderColor:Color(0xff7e7e7e),
+                                    fontColor: Color(0xffF6F3F3),
+                                    color: Color(0xff7e7e7e),
+                                    size: ColoredButtonSize.large,
+                                    text: S.of(context).takeIt,
+                                    loadingWhenAsyncAction: true,
+                                    onTap: () {
+                                      if(controller.text.isEmpty){
+                                        return;
+                                      }
+                                      ref.read(myProfileProvider.notifier).updateField(bio: controller.text).then((_) => Navigator.pop(context));
+                                    }
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    loading: () => Container(
+                      color: Colors.white54,
+                      alignment: Alignment.center,
+                      child: const SizedBox(
+                          width: 32,
+                          height: 32,
+                          child: CircularProgressIndicator()
+                      ),
+                    ),
+                    error: (err, stack) => GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => ref.read(asyncInterestsProvider.notifier).refresh(),
+                      child: Container(
+                        color: Colors.white,
+                        alignment: Alignment.center,
+                        child: const Text(
+                            'Cannot connect to server\ntap to retry',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 16,
+                                decoration: TextDecoration.none
+                            )
+                        ),
+                      ),
+                    )
+                ),
+              ],
+            ),
+          ),
+        );
+        return Scaffold(
+          floatingActionButton: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: ColoredButton(
+                    fontColor: Color(0xff2c2c2c),
+                    size: ColoredButtonSize.large,
+                    text: S.current.noThanks,
+                    loadingWhenAsyncAction: false,
+                    onTap: () => Navigator.pop(context),
+                    color: Color(0xfff6f3f3),
+                    borderColor: Color(0xfff6f3f3),
+                  ),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Flexible(
+                  child: ColoredButton(
+                      borderColor:Color(0xff7e7e7e),
+                      fontColor: Color(0xffF6F3F3),
+                      color: Color(0xff7e7e7e),
+                      size: ColoredButtonSize.large,
+                      text: S.of(context).takeIt,
+                      loadingWhenAsyncAction: true,
+                      onTap: () {
+                        if(controller.text.isEmpty){
+                          return;
+                        }
+                        ref.read(myProfileProvider.notifier).updateField(bio: controller.text).then((_) => Navigator.pop(context));
+                      }
+                  ),
+                ),
+              ],
+            ),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          body: StatefulBuilder(
+            builder: (BuildContext context, void Function(void Function()) setState) {
+              return Container(
+                height: 500,
+                // constraints: BoxConstraints(
+                //     maxHeight: MediaQuery.of(context).size.height * 0.6
+                // ),
+                padding: EdgeInsets.only(top: 16, left: 16, right: 16,),
                 decoration: ShapeDecoration(
-                  color: Colors.white,
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
                       width: 2,
@@ -73,146 +273,107 @@ showEditBio<T>(BuildContext context){
                   ],
                 ),
                 clipBehavior: Clip.antiAlias,
-                child: Scaffold(
-                  body: ref.watch(asyncInterestsProvider).when(
-                      data: (data) => SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                child: ref.watch(updateProfileBioProvider).when(
+                    data: (data) => Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text.rich(
-                                    TextSpan(
-                                        text: '${S.current.interests} ${_selected.length}',
-                                        style: Theme.of(context).textTheme.titleMedium,
-                                        children: [
-                                          TextSpan(
-                                              text: '/$maxCount',
-                                              style: Theme.of(context).textTheme.bodySmall
-                                          )
-                                        ]
-                                    ),
-                                  ),
-                                  GestureDetector(child: SvgPicture.asset(Assets.svgDislike,width: 40,height: 40,),
-                                    onTap: (){
-                                      Navigator.pop(context);
-                                    },)
-                                ],
-                              ),
-
-                              SizedBox(
-                                height: 16,
-                              ),
-                              Text.rich(
-                                TextSpan(
-                                    text: 'SONA',
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                    children: [
-                                      TextSpan(
-                                          text: ' will cook up a bio based on your interests',
-                                          style: Theme.of(context).textTheme.bodySmall
-                                      )
-                                    ]
-                                ),
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              Wrap(
-                                spacing: 8,
-                                runSpacing: 6,
-                                children: [
-                                  for (final hobby in data)
-                                    HobbyTag<String>(
-                                        displayName: hobby.displayName,
-                                        value: hobby.code,
-                                        selected: _selected.contains(hobby.code),
-                                        onSelect: (hb) {
-                                          if (_selected.contains(hb)) {
-                                            _selected.remove(hb);
-                                          } else {
-                                            if (_selected.length >= 10) {
-                                              return;
-                                            }
-                                            _selected.add(hb);
-                                          }
-                                          setState(() {});
-                                        }
-                                    )
-                                ],
-                              ),
+                              Text(S.current.bio,style: TextStyle(
+                                  color: Color(0xff2c2c2c),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w900
+                              ),),
+                              GestureDetector(child: SvgPicture.asset(Assets.svgDislike,width: 40,height: 40,),
+                                onTap: (){
+                                  Navigator.pop(context);
+                                },)
                             ],
                           ),
-                        ),
-                      ),
-                      loading: () => Container(
-                        color: Colors.white54,
-                        alignment: Alignment.center,
-                        child: const SizedBox(
-                            width: 32,
-                            height: 32,
-                            child: CircularProgressIndicator()
-                        ),
-                      ),
-                      error: (err, stack) => GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () => ref.read(asyncInterestsProvider.notifier).refresh(),
-                        child: Container(
-                          color: Colors.white,
-                          alignment: Alignment.center,
-                          child: const Text(
-                              'Cannot connect to server\ntap to retry',
-                              textAlign: TextAlign.center,
+
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(S.current.hereSonaCookedUpForU),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            height: 248,
+                            padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Color(0xff2c2c2c),
+                                    width: 2
+                                ),
+                                borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: TextField(
+                              onTapOutside: (cv){
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
                               style: TextStyle(
                                   fontSize: 16,
-                                  decoration: TextDecoration.none
-                              )
+                                  fontWeight: FontWeight.w400
+                              ),
+                              controller: controller..text=data.data,
+                              keyboardType: TextInputType.multiline,
+                              minLines: 7,
+                              maxLines: 7,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                isDense: true,
+                                border: InputBorder.none,
+                              ),
+                            ),
                           ),
-                        ),
-                      )
-                  ),
-                  floatingActionButton: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: ColoredButton(
-                            fontColor: Color(0xff2c2c2c),
-                            size: ColoredButtonSize.large,
-                            text: S.current.buttonCancel,
-                            loadingWhenAsyncAction: false,
-                            onTap: () => Navigator.pop(context),
-                            color: Color(0xfff6f3f3),
-                            borderColor: Color(0xfff6f3f3),
+                          SizedBox(
+                            height: 12,
                           ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Flexible(
-                          child: ColoredButton(
-                            borderColor:Color(0xff7e7e7e),
-                            fontColor: Color(0xffF6F3F3),
-                            color: Color(0xff7e7e7e),
-                            size: ColoredButtonSize.large,
-                            text: S.of(context).buttonGenerate,
-                            loadingWhenAsyncAction: true,
-                            onTap: () => ref.read(myProfileProvider.notifier).updateField(interests: _selected).then((_) => Navigator.pop(context)),
-                          ),
-                        ),
-                      ],
+                          Text(S.current.youCanEditItAnytime,style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400
+                          ),),
+
+                        ],
+                      ),
                     ),
-                  ),
-                  floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+                    loading: () => Container(
+                      color: Colors.white54,
+                      alignment: Alignment.center,
+                      child: const SizedBox(
+                          width: 32,
+                          height: 32,
+                          child: CircularProgressIndicator()
+                      ),
+                    ),
+                    error: (err, stack) => GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => ref.read(asyncInterestsProvider.notifier).refresh(),
+                      child: Container(
+                        color: Colors.white,
+                        alignment: Alignment.center,
+                        child: const Text(
+                            'Cannot connect to server\ntap to retry',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 16,
+                                decoration: TextDecoration.none
+                            )
+                        ),
+                      ),
+                    )
                 ),
               );
             },
-          );
-        },
+          ),
+        );
+      },
+
       );
     },
   );
@@ -390,7 +551,12 @@ showChooseHobbies<T>(BuildContext context){
                             size: ColoredButtonSize.large,
                             text: S.of(context).buttonGenerate,
                             loadingWhenAsyncAction: true,
-                            onTap: () => ref.read(myProfileProvider.notifier).updateField(interests: _selected).then((_) => Navigator.pop(context)),
+                            onTap: (){
+                              ref.read(myProfileProvider.notifier).updateField(interests: _selected).then((_){
+                                Navigator.pop(context);
+                                showEditBio(context);
+                              });
+                            }
                           ),
                         ),
                       ],
@@ -575,6 +741,9 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                     Row(
                       children: [
                         Flexible(child: TextField(
+                          onTapOutside: (cv){
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
                           controller: controller,
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(160), // Maximum length of 10 characters
@@ -778,6 +947,9 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Flexible(child: TextField(
+                              onTapOutside: (cv){
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
                               // keyboardType: TextInputType.multiline,
                               // maxLines: null,
                               // minLines: 1,
