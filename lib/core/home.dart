@@ -130,19 +130,14 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
 
   void _onPageChange(int index) {
     if (index == 0) {
-      ref.read(backgroundColorProvider.notifier).updateColor(BottomColor(Colors.white, 0));
+      // ref.read(backgroundColorProvider.notifier).updateColor(BottomColor(Colors.white, 0));
     } else if (index == 1) {
-      ref.read(backgroundColorProvider.notifier).updateColor(BottomColor(Colors.black, 1));
+      ref.read(likeMeNoticeNotifier.notifier).update((state) => false);
       // 更新其他颜色
-    }else if(index == 2){
-      ref.read(backgroundColorProvider.notifier).updateColor(BottomColor(Colors.white, 2));
-
+    } else if(index == 2) {
+      ref.read(chatNoticeProvider.notifier).update((state) => false);
     }
     if (index != _currentIndex) {
-      setState(() {
-        _currentIndex = index;
-        _pageController.jumpToPage(_currentIndex);
-      });
       final tabName = switch(index) {
         0 => 'chat',
         1 => 'match',
@@ -168,6 +163,4 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       }
     }
   }
-
-
 }
