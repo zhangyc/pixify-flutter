@@ -175,7 +175,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                       Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockWhoLikeMe(),fromTag: FromTag.pay_chatlist_likedme)));
                     },
                     style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806))
+                        backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06))
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -87,7 +87,7 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                 width: 8,
                 height: 8,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFE806),
+                  color: Color(0xFFBEFF06),
                   borderRadius: BorderRadius.circular(4),
                   border: Border.all(color: Colors.white.withOpacity(0.2), width: 1)
                 ),

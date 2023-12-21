@@ -198,7 +198,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           child: OutlinedButton(
               onPressed: () => showSubscription(SubscribeShowType.unlockMoreAIInterpretation(), FromTag.pay_chat_sonamsg),
               style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806))
+                backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06))
               ),
               child: Text(S.of(context).buttonHitAIInterpretationMaximumLimit)
           ),

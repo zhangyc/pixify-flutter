@@ -115,7 +115,7 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                                   minimumSize: MaterialStatePropertyAll(Size.zero),
                                   side: MaterialStatePropertyAll(BorderSide(width: 2)),
                                   padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 12, vertical: 4)),
-                                  backgroundColor: selectedActivityIds.contains(activity.id) ? MaterialStatePropertyAll(Color(0xFFFFE806)) : null,
+                                  backgroundColor: selectedActivityIds.contains(activity.id) ? MaterialStatePropertyAll(Color(0xFFBEFF06)) : null,
                                 foregroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor)
                               ),
                               child: Text(activity.displayName)
