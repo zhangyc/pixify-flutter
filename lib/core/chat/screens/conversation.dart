@@ -138,7 +138,12 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
           children: [
             Image.asset('assets/images/data_empty.png', width: 272),
             const SizedBox(height: 20),
-            Text(S.of(context).noMessageTips)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(S.of(context).noMessageTips, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500
+              )),
+            )
           ],
         ),
       ),
