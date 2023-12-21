@@ -1,5 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+final currentHomeTapIndexProvider = StateProvider<int>((ref) => 0);
+
 final matchIconProvider = StateNotifierProvider<MatchIconProvider, int>(
       (ref) => MatchIconProvider(),
 );

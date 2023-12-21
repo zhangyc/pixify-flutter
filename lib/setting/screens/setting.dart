@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/env.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/setting/screens/account.dart';
@@ -166,17 +167,18 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
       S.of(context).feedback: 'feedback'
     });
     if (result != null && mounted){
-      if(result=='1'){
+      print(env.privacyPolicy);
+      if (result == '1') {
         Navigator.push(context, MaterialPageRoute(builder: (c){
-          return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: S.of(context).privacyPolicy);
+          return WebView(url: env.privacyPolicy, title: S.of(context).privacyPolicy);
         }));
-      }else if(result=='2'){
+      } else if(result == '2') {
         Navigator.push(context, MaterialPageRoute(builder: (c){
-          return WebView(url: 'https://h5.sona.pinpon.fun/disclaimer.html', title: S.of(context).disclaimer);
+          return WebView(url: env.disclaimer, title: S.of(context).disclaimer);
         }));
-      }else if(result=='3'){
+      } else if(result == '3') {
         Navigator.push(context, MaterialPageRoute(builder: (c){
-          return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: S.of(context).termsOfService);
+          return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
         }));
       } else if (result == 'feedback') {
         final email = 'sona@zervo.me';

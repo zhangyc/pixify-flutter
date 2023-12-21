@@ -13,6 +13,7 @@ import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:intl/intl.dart';
+import 'package:sona/common/env.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/core/subscribe/utils/pay_util.dart';
 import 'package:sona/generated/assets.dart';
@@ -237,7 +238,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                                       text: S.current.subscriptionAgreement,
                                       recognizer: TapGestureRecognizer()..onTap = () {
                                         Navigator.push(context, MaterialPageRoute(builder: (c){
-                                          return const WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                                          return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
                                         }));
                                       },
                                       style: Theme.of(context).textTheme.titleSmall?.copyWith(

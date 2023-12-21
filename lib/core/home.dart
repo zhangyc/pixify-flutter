@@ -79,66 +79,65 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
           PersonaScreen(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        iconSize: 24,
-        currentIndex: _currentIndex,
-        onTap: _onPageChange,
-        selectedFontSize: 0,
-        unselectedFontSize: 0,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Theme.of(context).primaryColor,
-        items: [
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SonaIcon(icon: SonaIcons.navicon_match, size: 24),
+      bottomNavigationBar: Consumer(
+        builder: (_, ref, __) => BottomNavigationBar(
+          elevation: 0,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          iconSize: 24,
+          currentIndex: ref.watch(currentHomeTapIndexProvider),
+          onTap: _onPageChange,
+          selectedFontSize: 0,
+          unselectedFontSize: 0,
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Theme.of(context).primaryColor,
+          items: [
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SonaIcon(icon: SonaIcons.navicon_match, size: 24),
+              ),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 24),
+              label: ''
             ),
-            activeIcon: SonaIcon(icon: SonaIcons.navicon_match_active, size: 24),
-            label: ''
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, activeProvider: likeMeNoticeNotifier),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SonaIcon(icon: SonaIcons.navicon_like_me, size: 24, activeProvider: likeMeNoticeNotifier),
+              ),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_like_me_active, size: 24),
+              label: ''
             ),
-            activeIcon: SonaIcon(icon: SonaIcons.navicon_like_me_active, size: 24),
-            label: ''
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SonaIcon(icon: SonaIcons.navicon_chat, size: 24, activeProvider: chatNoticeProvider),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SonaIcon(icon: SonaIcons.navicon_chat, size: 24, activeProvider: chatNoticeProvider),
+              ),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_chat_active, size: 24),
+              label: ''
             ),
-            activeIcon: SonaIcon(icon: SonaIcons.navicon_chat_active, size: 24),
-            label: ''
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SonaIcon(icon: SonaIcons.navicon_sona, size: 24),
-            ),
-            activeIcon: SonaIcon(icon: SonaIcons.navicon_sona_active, size: 24),
-            label: ''
-          )
-        ],
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SonaIcon(icon: SonaIcons.navicon_sona, size: 24),
+              ),
+              activeIcon: SonaIcon(icon: SonaIcons.navicon_sona_active, size: 24),
+              label: ''
+            )
+          ],
+        ),
       ),
     );
   }
 
   void _onPageChange(int index) {
-    if (index == 0) {
-      // ref.read(backgroundColorProvider.notifier).updateColor(BottomColor(Colors.white, 0));
-    } else if (index == 1) {
+    if (index == 1) {
       ref.read(likeMeNoticeNotifier.notifier).update((state) => false);
-      // 更新其他颜色
     } else if(index == 2) {
       ref.read(chatNoticeProvider.notifier).update((state) => false);
     }
-    if (index != _currentIndex) {
-      _currentIndex = index;
+    if (index != ref.read(currentHomeTapIndexProvider)) {
+      ref.read(currentHomeTapIndexProvider.notifier).update((_) => index);
       _pageController.jumpToPage(index);
       final tabName = switch(index) {
         0 => 'chat',
