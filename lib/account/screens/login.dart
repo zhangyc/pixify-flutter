@@ -11,6 +11,7 @@ import 'package:intl_phone_field/helpers.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:sona/account/screens/login_pin.dart';
 import 'package:sona/account/services/auth.dart';
+import 'package:sona/common/env.dart';
 import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
@@ -167,7 +168,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
-                        return WebView(url: 'https://h5.sona.pinpon.fun/privacy-policy.html', title: 'Privacy policy');
+                        return WebView(url: env.privacyPolicy, title: S.of(context).privacyPolicy);
                       }))
                   ),
                   TextSpan(
@@ -181,7 +182,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
-                        return WebView(url: 'https://h5.sona.pinpon.fun/terms-and-conditions.html', title: 'Terms and conditions');
+                        return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
                       }))
                   ),
                   TextSpan(
