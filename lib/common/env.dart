@@ -23,7 +23,7 @@ class _Env {
   final String staticDomain = 'https://h5.sona.ninja';
 
   String get privacyPolicy => '$staticDomain/privacy-policy-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
-  String get termsOfService => '$staticDomain/terms-and-conditions-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
+  String get termsOfService => '$staticDomain/terms-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
   String get disclaimer => '$staticDomain/disclaimer-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
 }
 
