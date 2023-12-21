@@ -361,5 +361,21 @@
   "toastHitDailyMaximumLimit": "👀คุณได้ถึงขีดจำกัดประจำวันแล้ว",
   "@toastHitDailyMaximumLimit": {},
   "toastHitWeeklyMaximumLimit": "👅คุณได้ถึงขีดจำกัดประจำสัปดาห์แล้ว",
-  "@toastHitWeeklyMaximumLimit": {}
+  "@toastHitWeeklyMaximumLimit": {},
+  "boostYourAppeal": "เสน่ห์ขึ้น!",
+  "@boostYourAppeal": {},
+  "morePhotosMoreCharm": "รูปเยอะ, เสน่ห์เยอะ!",
+  "@morePhotosMoreCharm": {},
+  "sonaWillGenerateABioBasedOnInterests": "SONA จะสร้างประวัติตามความสนใจของคุณ",
+  "@sonaWillGenerateABioBasedOnInterests": {},
+  "buttonGenerate": "สร้าง",
+  "@buttonGenerate": {},
+  "hereSonaCookedUpForU": "นี่คือสิ่งที่ SONA ทำเป็นพิเศษเพื่อคุณ",
+  "@hereSonaCookedUpForU": {},
+  "youCanEditItAnytime": "คุณสามารถแก้ไขได้ตลอดเวลา",
+  "@youCanEditItAnytime": {},
+  "takeIt": "ใช้",
+  "@takeIt": {},
+  "noThanks": "ไม่ละ ขอบคุณนะ",
+  "@noThanks": {}
 }

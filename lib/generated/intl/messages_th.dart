@@ -49,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage(
                 "บล็อกคนนี้เพื่อไม่ให้คุณได้รับข้อความจากพวกเขา"),
+        "boostYourAppeal": MessageLookupByLibrary.simpleMessage("เสน่ห์ขึ้น!"),
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 ไม่ต้องสนใจฉัน🔨🔨🔨 ฉันแค่มาทำลายความเงียบ🔨🔨🔨"),
         "buttonAlreadyPlus":
@@ -64,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEdit": MessageLookupByLibrary.simpleMessage("แก้ไข"),
         "buttonEditProfile":
             MessageLookupByLibrary.simpleMessage("แก้ไขโปรไฟล์"),
+        "buttonGenerate": MessageLookupByLibrary.simpleMessage("สร้าง"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("เข้าใจแล้ว"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
@@ -116,6 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "เฮ้ย ลองทายสิว่าใครจะเป็นคนพูดก่อน?"),
         "haveSonaSayHi":
             MessageLookupByLibrary.simpleMessage("ให้SONAทักทายหน่อย"),
+        "hereSonaCookedUpForU": MessageLookupByLibrary.simpleMessage(
+            "นี่คือสิ่งที่ SONA ทำเป็นพิเศษเพื่อคุณ"),
         "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
             "คุณคิดว่าการแปลภาษาโดย AI แบบเรียลไทม์เป็นอย่างไร?"),
         "iDigYourEnergy":
@@ -148,12 +152,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "month": MessageLookupByLibrary.simpleMessage("เดือน"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "ยิ่งมีรูปภาพมากเท่าไร ค่าแนะนำก็ยิ่งสูงขึ้น"),
+        "morePhotosMoreCharm":
+            MessageLookupByLibrary.simpleMessage("รูปเยอะ, เสน่ห์เยอะ!"),
         "nearby": MessageLookupByLibrary.simpleMessage("ใกล้ๆ"),
         "newMatch": MessageLookupByLibrary.simpleMessage("จับคู่ใหม่!"),
         "nextBilingDate":
             MessageLookupByLibrary.simpleMessage("วันชำระเงินครั้งต่อไป"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "สถานะ: ไม่มีข้อความ\n\nทำอย่างไร: ไปที่หน้าจับคู่กันเถอะ\n\nข้อเสนอ: ทำโปรไฟล์ที่ดี"),
+        "noThanks": MessageLookupByLibrary.simpleMessage("ไม่ละ ขอบคุณนะ"),
         "notifications": MessageLookupByLibrary.simpleMessage("การแจ้งเตือน"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("อุ๊ปส์ ไม่มีข้อมูลในตอนนี้"),
@@ -208,6 +215,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("⭕ SONA การแปลภาษาถูกปิดแล้ว"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
             "Sonaแนะนำ: ระงับ.\nทำอย่างไร: รอ.\nแนะนำ: ดูหนัง?"),
+        "sonaWillGenerateABioBasedOnInterests":
+            MessageLookupByLibrary.simpleMessage(
+                "SONA จะสร้างประวัติตามความสนใจของคุณ"),
         "speakSameLanguage":
             MessageLookupByLibrary.simpleMessage("คุณทั้งสองพูดภาษาเดียวกัน"),
         "standard": MessageLookupByLibrary.simpleMessage("มาตรฐาน"),
@@ -230,6 +240,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementPrefix": m4,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage(" ของเรา"),
+        "takeIt": MessageLookupByLibrary.simpleMessage("ใช้"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("ข้อกำหนดในการให้บริการ"),
         "theKeyIsBalance":
@@ -326,6 +337,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishList":
             MessageLookupByLibrary.simpleMessage("รายการสิ่งที่ปรารถนา"),
         "wishes": MessageLookupByLibrary.simpleMessage("ความปรารถนา"),
+        "youCanEditItAnytime":
+            MessageLookupByLibrary.simpleMessage("คุณสามารถแก้ไขได้ตลอดเวลา"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("คุณดูเท่ห์นะ")
       };
 }

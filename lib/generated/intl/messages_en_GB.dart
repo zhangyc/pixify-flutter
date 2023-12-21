@@ -49,6 +49,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage(
                 "Block this person so you won\'t receive any messages from them"),
+        "boostYourAppeal":
+            MessageLookupByLibrary.simpleMessage("Boost your appeal"),
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 Pay no mind🔨🔨🔨 Just here to break the ice🔨🔨🔨"),
         "buttonAlreadyPlus":
@@ -65,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEdit": MessageLookupByLibrary.simpleMessage("Edit"),
         "buttonEditProfile":
             MessageLookupByLibrary.simpleMessage("Edit profile"),
+        "buttonGenerate": MessageLookupByLibrary.simpleMessage("Generate"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("Got it"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
@@ -118,6 +121,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Hey, fancy a guess at who\'ll break the silence first?"),
         "haveSonaSayHi":
             MessageLookupByLibrary.simpleMessage("Have SONA Say Hi"),
+        "hereSonaCookedUpForU": MessageLookupByLibrary.simpleMessage(
+            "Here\'s SONA cooked up for you!"),
         "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
             "How do you feel about AI interpretation?"),
         "iDigYourEnergy":
@@ -151,12 +156,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "month": MessageLookupByLibrary.simpleMessage("mo"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "More photos, higher recommendation"),
+        "morePhotosMoreCharm":
+            MessageLookupByLibrary.simpleMessage("More photos, More charm!"),
         "nearby": MessageLookupByLibrary.simpleMessage("Nearby"),
         "newMatch": MessageLookupByLibrary.simpleMessage("New Matched!"),
         "nextBilingDate":
             MessageLookupByLibrary.simpleMessage("Next billing date"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "Status: No messages\n\nWhat to do: Go to match\n\nSuggestion: Make an awesome profile"),
+        "noThanks": MessageLookupByLibrary.simpleMessage("No Thanks"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Oops, no data right now"),
@@ -212,6 +220,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "⭕ SONA interpretation is turned off"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
             "Sona Recommendation: Cooldown\nWhat to do: Wait Suggestion: Watch a movie?"),
+        "sonaWillGenerateABioBasedOnInterests":
+            MessageLookupByLibrary.simpleMessage(
+                "SONA will generate a bio based on your interests"),
         "speakSameLanguage": MessageLookupByLibrary.simpleMessage(
             "🤝 You guys speak the same language"),
         "standard": MessageLookupByLibrary.simpleMessage("Standard"),
@@ -233,6 +244,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementPrefix": m4,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage(" ."),
+        "takeIt": MessageLookupByLibrary.simpleMessage("Take It"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
         "theKeyIsBalance":
@@ -330,6 +342,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("When"),
         "wishList": MessageLookupByLibrary.simpleMessage("Wish List"),
         "wishes": MessageLookupByLibrary.simpleMessage("Wishes"),
+        "youCanEditItAnytime":
+            MessageLookupByLibrary.simpleMessage("You can edit it anytime"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("You seem cool")
       };
 }

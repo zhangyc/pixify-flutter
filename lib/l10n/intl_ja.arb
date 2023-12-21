@@ -361,5 +361,21 @@
   "toastHitDailyMaximumLimit": "👀1日の制限に達しました",
   "@toastHitDailyMaximumLimit": {},
   "toastHitWeeklyMaximumLimit": "👅週の制限に達しました",
-  "@toastHitWeeklyMaximumLimit": {}
+  "@toastHitWeeklyMaximumLimit": {},
+  "boostYourAppeal": "魅力をアップさせる",
+  "@boostYourAppeal": {},
+  "morePhotosMoreCharm": "写真増えて、魅力もね♪",
+  "@morePhotosMoreCharm": {},
+  "sonaWillGenerateABioBasedOnInterests": "あなたの興味に基づいてSONAがバイオを生成します",
+  "@sonaWillGenerateABioBasedOnInterests": {},
+  "buttonGenerate": "生成する",
+  "@buttonGenerate": {},
+  "hereSonaCookedUpForU": "これはSONA特製です",
+  "@hereSonaCookedUpForU": {},
+  "youCanEditItAnytime": "いつでも編集できます",
+  "@youCanEditItAnytime": {},
+  "takeIt": "使用する",
+  "@takeIt": {},
+  "noThanks": "いいえ、ありがとう",
+  "@noThanks": {}
 }

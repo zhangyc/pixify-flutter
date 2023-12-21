@@ -1859,6 +1859,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Boost your appeal`
+  String get boostYourAppeal {
+    return Intl.message(
+      'Boost your appeal',
+      name: 'boostYourAppeal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `More photos, More charm!`
+  String get morePhotosMoreCharm {
+    return Intl.message(
+      'More photos, More charm!',
+      name: 'morePhotosMoreCharm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SONA will generate a bio based on your interests`
+  String get sonaWillGenerateABioBasedOnInterests {
+    return Intl.message(
+      'SONA will generate a bio based on your interests',
+      name: 'sonaWillGenerateABioBasedOnInterests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generate`
+  String get buttonGenerate {
+    return Intl.message(
+      'Generate',
+      name: 'buttonGenerate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here's SONA cooked up for you!`
+  String get hereSonaCookedUpForU {
+    return Intl.message(
+      'Here\'s SONA cooked up for you!',
+      name: 'hereSonaCookedUpForU',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can edit it anytime`
+  String get youCanEditItAnytime {
+    return Intl.message(
+      'You can edit it anytime',
+      name: 'youCanEditItAnytime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take It`
+  String get takeIt {
+    return Intl.message(
+      'Take It',
+      name: 'takeIt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Thanks`
+  String get noThanks {
+    return Intl.message(
+      'No Thanks',
+      name: 'noThanks',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

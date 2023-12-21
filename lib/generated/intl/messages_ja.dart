@@ -49,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage(
                 "この人をブロックして、彼らからのメッセージを受け取らないようにする"),
+        "boostYourAppeal": MessageLookupByLibrary.simpleMessage("魅力をアップさせる"),
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 気にしないで🔨🔨🔨 氷を砕くだけ🔨🔨🔨"),
         "buttonAlreadyPlus":
@@ -63,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonDone": MessageLookupByLibrary.simpleMessage("済みました"),
         "buttonEdit": MessageLookupByLibrary.simpleMessage("編集"),
         "buttonEditProfile": MessageLookupByLibrary.simpleMessage("プロフィール編集"),
+        "buttonGenerate": MessageLookupByLibrary.simpleMessage("生成する"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("分かった"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage("SONA疲れた😪、👇クリックでエネルギーチャージ！"),
@@ -108,6 +110,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "guessWhoBreakSilence":
             MessageLookupByLibrary.simpleMessage("ねえ、誰が最初に沈黙を破ると思う？"),
         "haveSonaSayHi": MessageLookupByLibrary.simpleMessage("SONAに挨拶させて"),
+        "hereSonaCookedUpForU":
+            MessageLookupByLibrary.simpleMessage("これはSONA特製です"),
         "howDoUFeelAboutAI":
             MessageLookupByLibrary.simpleMessage("AIのAI同期通訳についてどう思いますか?"),
         "iDigYourEnergy":
@@ -137,11 +141,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "month": MessageLookupByLibrary.simpleMessage("月"),
         "morePhotosBenefit":
             MessageLookupByLibrary.simpleMessage("写真多いほどおすすめ度高くなる"),
+        "morePhotosMoreCharm":
+            MessageLookupByLibrary.simpleMessage("写真増えて、魅力もね♪"),
         "nearby": MessageLookupByLibrary.simpleMessage("近くに"),
         "newMatch": MessageLookupByLibrary.simpleMessage("新しいマッチ！"),
         "nextBilingDate": MessageLookupByLibrary.simpleMessage("次の請求日"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "ステータス：メッセージなし\n\nすること：さあ、ペアリングページに行こう！\n\n提案：素晴らしいプロフィールを作る"),
+        "noThanks": MessageLookupByLibrary.simpleMessage("いいえ、ありがとう"),
         "notifications": MessageLookupByLibrary.simpleMessage("通知"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("おっと、今はデータがありません"),
@@ -193,6 +200,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("⭕ SONA同期通訳はオフになりました"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
             "ソナおすすめ:クールダウン中\nやること:待ってる\nアドバイス:漫画でも読んどいたら?"),
+        "sonaWillGenerateABioBasedOnInterests":
+            MessageLookupByLibrary.simpleMessage("あなたの興味に基づいてSONAがバイオを生成します"),
         "speakSameLanguage":
             MessageLookupByLibrary.simpleMessage("🤝 同語なら翻訳しなくてもいいよ"),
         "standard": MessageLookupByLibrary.simpleMessage("標準"),
@@ -213,6 +222,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementPrefix": m4,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("に同意したことになります。"),
+        "takeIt": MessageLookupByLibrary.simpleMessage("使用する"),
         "termsOfService": MessageLookupByLibrary.simpleMessage("利用規約"),
         "theKeyIsBalance": MessageLookupByLibrary.simpleMessage("バランスが鍵です"),
         "theyAreWaitingForYourReply":
@@ -299,6 +309,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("いつ"),
         "wishList": MessageLookupByLibrary.simpleMessage("願いリスト"),
         "wishes": MessageLookupByLibrary.simpleMessage("願い"),
+        "youCanEditItAnytime":
+            MessageLookupByLibrary.simpleMessage("いつでも編集できます"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("かっこよさそう。")
       };
 }

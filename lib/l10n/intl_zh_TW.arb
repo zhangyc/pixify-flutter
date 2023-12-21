@@ -361,5 +361,21 @@
   "toastHitDailyMaximumLimit": "👀已達到今日限額",
   "@toastHitDailyMaximumLimit": {},
   "toastHitWeeklyMaximumLimit": "👅你已達到本週限額",
-  "@toastHitWeeklyMaximumLimit": {}
+  "@toastHitWeeklyMaximumLimit": {},
+  "boostYourAppeal": "魅力UP!",
+  "@boostYourAppeal": {},
+  "morePhotosMoreCharm": "照片多多魅力增！",
+  "@morePhotosMoreCharm": {},
+  "sonaWillGenerateABioBasedOnInterests": "SONA會根據你的興趣生成一份簡介",
+  "@sonaWillGenerateABioBasedOnInterests": {},
+  "buttonGenerate": "生成",
+  "@buttonGenerate": {},
+  "hereSonaCookedUpForU": "這是SONA為你特製的",
+  "@hereSonaCookedUpForU": {},
+  "youCanEditItAnytime": "你可以隨時編輯",
+  "@youCanEditItAnytime": {},
+  "takeIt": "使用",
+  "@takeIt": {},
+  "noThanks": "不了，謝謝",
+  "@noThanks": {}
 }

@@ -361,5 +361,21 @@
   "toastHitDailyMaximumLimit": "👀You've hit your daily limit",
   "@toastHitDailyMaximumLimit": {},
   "toastHitWeeklyMaximumLimit": "👅You've hit your weekly limit",
-  "@toastHitWeeklyMaximumLimit": {}
+  "@toastHitWeeklyMaximumLimit": {},
+  "boostYourAppeal": "Boost your appeal",
+  "@boostYourAppeal": {},
+  "morePhotosMoreCharm": "More photos, More charm!",
+  "@morePhotosMoreCharm": {},
+  "sonaWillGenerateABioBasedOnInterests": "SONA will generate a bio based on your interests",
+  "@sonaWillGenerateABioBasedOnInterests": {},
+  "buttonGenerate": "Generate",
+  "@buttonGenerate": {},
+  "hereSonaCookedUpForU": "Here's SONA cooked up for you!",
+  "@hereSonaCookedUpForU": {},
+  "youCanEditItAnytime": "You can edit it anytime",
+  "@youCanEditItAnytime": {},
+  "takeIt": "Take It",
+  "@takeIt": {},
+  "noThanks": "No Thanks",
+  "@noThanks": {}
 }

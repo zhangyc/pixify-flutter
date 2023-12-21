@@ -361,5 +361,21 @@
   "toastHitDailyMaximumLimit": "👀Você atingiu seu limite diário",
   "@toastHitDailyMaximumLimit": {},
   "toastHitWeeklyMaximumLimit": "👅Você atingiu seu limite semanal",
-  "@toastHitWeeklyMaximumLimit": {}
+  "@toastHitWeeklyMaximumLimit": {},
+  "boostYourAppeal": "Aumentar o Charme",
+  "@boostYourAppeal": {},
+  "morePhotosMoreCharm": "Mais fotos, Mais charme!",
+  "@morePhotosMoreCharm": {},
+  "sonaWillGenerateABioBasedOnInterests": "SONA irá gerar uma biografia baseada nos seus interesses",
+  "@sonaWillGenerateABioBasedOnInterests": {},
+  "buttonGenerate": "Gerar",
+  "@buttonGenerate": {},
+  "hereSonaCookedUpForU": "Isto foi feito pela SONA para você",
+  "@hereSonaCookedUpForU": {},
+  "youCanEditItAnytime": "Você pode editá-lo a qualquer momento",
+  "@youCanEditItAnytime": {},
+  "takeIt": "Utilizar",
+  "@takeIt": {},
+  "noThanks": "Não, obrigado",
+  "@noThanks": {}
 }

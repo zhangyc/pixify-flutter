@@ -49,6 +49,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage(
                 "Заблокируйте этого человека, чтобы не получать от него сообщения"),
+        "boostYourAppeal":
+            MessageLookupByLibrary.simpleMessage("Прелесть Вверх!"),
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 Не обращай на меня внимания🔨🔨🔨 Я просто разбиваю лед🔨🔨🔨"),
         "buttonAlreadyPlus":
@@ -65,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEdit": MessageLookupByLibrary.simpleMessage("Редактировать"),
         "buttonEditProfile":
             MessageLookupByLibrary.simpleMessage("Редактировать профиль"),
+        "buttonGenerate": MessageLookupByLibrary.simpleMessage("Генерировать"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("Понял"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
@@ -120,6 +123,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Эй, угадай, кто первым нарушит молчание?"),
         "haveSonaSayHi":
             MessageLookupByLibrary.simpleMessage("Пусть SONA поздоровается"),
+        "hereSonaCookedUpForU": MessageLookupByLibrary.simpleMessage(
+            "Это специально сделано SONA для вас"),
         "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
             "Что вы думаете об одновременном переводе AI?"),
         "iDigYourEnergy": MessageLookupByLibrary.simpleMessage(
@@ -153,12 +158,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "month": MessageLookupByLibrary.simpleMessage("Месяц"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "Чем больше фотографий, тем выше рекомендация"),
+        "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage(
+            "Больше фото, Больше очарования!"),
         "nearby": MessageLookupByLibrary.simpleMessage("Рядом"),
         "newMatch": MessageLookupByLibrary.simpleMessage("Новое совпадение!"),
         "nextBilingDate":
             MessageLookupByLibrary.simpleMessage("Следующая дата оплаты"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "Статус: Нет сообщений\n\nПредложение: Перейти на страницу подбора пар\n\nПредложение: Создайте потрясающий профиль"),
+        "noThanks": MessageLookupByLibrary.simpleMessage("Нет, спасибо"),
         "notifications": MessageLookupByLibrary.simpleMessage("Уведомления"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Ой, сейчас нет данных"),
@@ -217,6 +225,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "⭕ SONA Interpretazione disattivata"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
             "Рекомендация Сона: Охлаждение.\nЧто делать: Ждать.\nПредложение: Посмотреть фильм?"),
+        "sonaWillGenerateABioBasedOnInterests":
+            MessageLookupByLibrary.simpleMessage(
+                "SONA создаст биографию, основанную на ваших интересах"),
         "speakSameLanguage":
             MessageLookupByLibrary.simpleMessage("Вы говорите на одном языке"),
         "standard": MessageLookupByLibrary.simpleMessage("Стандарт"),
@@ -241,6 +252,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementPrefix": m4,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("."),
+        "takeIt": MessageLookupByLibrary.simpleMessage("Использовать"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Условия обслуживания"),
         "theKeyIsBalance":
@@ -337,6 +349,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("Когда"),
         "wishList": MessageLookupByLibrary.simpleMessage("Список желаний"),
         "wishes": MessageLookupByLibrary.simpleMessage("Желание"),
+        "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage(
+            "Вы можете редактировать это в любое время"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("Кажешься крутым")
       };
 }
