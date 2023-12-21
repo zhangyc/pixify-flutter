@@ -377,5 +377,9 @@
   "takeIt": "ใช้",
   "@takeIt": {},
   "noThanks": "ไม่ละ ขอบคุณนะ",
-  "@noThanks": {}
+  "@noThanks": {},
+  "photoFromGallery": "จากแกลเลอรีเลือก",
+  "@photoFromGallery": {},
+  "photoFromCamera": "ถ่ายภาพ",
+  "@photoFromCamera": {}
 }

@@ -1939,6 +1939,26 @@ class S {
       args: [],
     );
   }
+
+  /// `From gallery`
+  String get photoFromGallery {
+    return Intl.message(
+      'From gallery',
+      name: 'photoFromGallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take a photo`
+  String get photoFromCamera {
+    return Intl.message(
+      'Take a photo',
+      name: 'photoFromCamera',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

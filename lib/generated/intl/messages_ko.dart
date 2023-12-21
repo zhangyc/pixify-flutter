@@ -156,6 +156,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "당신의 위시리스트 설정이 더 큰 역할을 할 것입니다"),
+        "photoFromCamera": MessageLookupByLibrary.simpleMessage("사진 찍기"),
+        "photoFromGallery": MessageLookupByLibrary.simpleMessage("갤러리에서 선택"),
         "photos": MessageLookupByLibrary.simpleMessage("사진"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(

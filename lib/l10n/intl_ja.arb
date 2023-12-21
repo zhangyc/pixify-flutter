@@ -377,5 +377,9 @@
   "takeIt": "使用する",
   "@takeIt": {},
   "noThanks": "いいえ、ありがとう",
-  "@noThanks": {}
+  "@noThanks": {},
+  "photoFromGallery": "ギャラリーから選択",
+  "@photoFromGallery": {},
+  "photoFromCamera": "写真を撮る",
+  "@photoFromCamera": {}
 }

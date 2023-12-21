@@ -172,6 +172,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "As configurações da sua lista de desejos terão um papel maior"),
+        "photoFromCamera":
+            MessageLookupByLibrary.simpleMessage("Tirar uma foto"),
+        "photoFromGallery":
+            MessageLookupByLibrary.simpleMessage("Selecionar da galeria"),
         "photos": MessageLookupByLibrary.simpleMessage("Fotos"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(

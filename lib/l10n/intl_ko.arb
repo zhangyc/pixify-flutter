@@ -377,5 +377,9 @@
   "takeIt": "사용하다",
   "@takeIt": {},
   "noThanks": "아니요, 감사합니다",
-  "@noThanks": {}
+  "@noThanks": {},
+  "photoFromGallery": "갤러리에서 선택",
+  "@photoFromGallery": {},
+  "photoFromCamera": "사진 찍기",
+  "@photoFromCamera": {}
 }

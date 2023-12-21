@@ -377,5 +377,9 @@
   "takeIt": "Benutzen",
   "@takeIt": {},
   "noThanks": "Nein, danke",
-  "@noThanks": {}
+  "@noThanks": {},
+  "photoFromGallery": "Aus der Galerie auswählen",
+  "@photoFromGallery": {},
+  "photoFromCamera": "Ein Foto machen",
+  "@photoFromCamera": {}
 }

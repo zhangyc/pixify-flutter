@@ -145,6 +145,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage("哎呀，现在没有数据"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage("更多推荐来自你心愿单的人"),
+        "photoFromCamera": MessageLookupByLibrary.simpleMessage("拍照"),
+        "photoFromGallery": MessageLookupByLibrary.simpleMessage("从图库选择"),
         "photos": MessageLookupByLibrary.simpleMessage("照片"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage("请检查网络或点击刷新重试"),

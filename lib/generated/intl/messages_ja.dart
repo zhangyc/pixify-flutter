@@ -155,6 +155,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "あなたのウィッシュリストの設定はもっと大きな役割を果たすようになるよ"),
+        "photoFromCamera": MessageLookupByLibrary.simpleMessage("写真を撮る"),
+        "photoFromGallery": MessageLookupByLibrary.simpleMessage("ギャラリーから選択"),
         "photos": MessageLookupByLibrary.simpleMessage("写真"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(

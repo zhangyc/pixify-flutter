@@ -377,5 +377,9 @@
   "takeIt": "使用",
   "@takeIt": {},
   "noThanks": "不了，谢谢",
-  "@noThanks": {}
+  "@noThanks": {},
+  "photoFromGallery": "从图库选择",
+  "@photoFromGallery": {},
+  "photoFromCamera": "拍照",
+  "@photoFromCamera": {}
 }

@@ -299,8 +299,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   Future _onAddPhoto() async {
     final source = await showActionButtons(context: context, options: {
-      'Choose a photo': ImageSource.gallery,
-      'Take a photo': ImageSource.camera
+      S.of(context).photoFromGallery: ImageSource.gallery,
+      S.of(context).photoFromCamera: ImageSource.camera
     });
     if (source == null) throw Exception('No source');
     final picker = ImagePicker();
