@@ -6,6 +6,7 @@ import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/tag/hobby.dart';
 
 import '../../common/widgets/image/icon.dart';
+import '../../generated/l10n.dart';
 import '../models/hobby.dart';
 
 class HobbiesSelector extends ConsumerStatefulWidget {
@@ -38,7 +39,7 @@ class _HobbiesSelectorState extends ConsumerState<HobbiesSelector> {
           onPressed: () => Navigator.pop(context),
           icon: SonaIcon(icon: SonaIcons.back),
         ),
-        title: Text('Choose Hobbies'),
+        title: Text(S.of(context).interests),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16),
@@ -106,7 +107,7 @@ class _HobbiesSelectorState extends ConsumerState<HobbiesSelector> {
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ColoredButton(
           size: ColoredButtonSize.large,
-          text: 'Save',
+          text: S.of(context).buttonSave,
           loadingWhenAsyncAction: true,
           onTap: () => ref.read(myProfileProvider.notifier).updateField(interests: _selected).then((_) => Navigator.pop(context)),
         ),

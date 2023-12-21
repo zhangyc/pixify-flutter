@@ -70,6 +70,7 @@ Future<void> initFireBaseService(FirebaseApp firebase) async {
   );
   messagesService.getToken().then((value){
     deviceToken=value;
+    print('push token: $value');
     if(value!=null){
       post(
           '/user/update',
