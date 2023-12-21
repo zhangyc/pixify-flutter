@@ -423,7 +423,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
             if(mounted){
-              showUploadPortrait(context);
+              showChooseHobbies(context);
             }
             if(showUpdateUserInfo){
               if(ref.watch(myProfileProvider)!.interests.isEmpty){

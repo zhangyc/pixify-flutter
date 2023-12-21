@@ -11,9 +11,13 @@ import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/utils/dialog/input.dart';
 
+import '../../../account/providers/interests.dart';
 import '../../../account/providers/profile.dart';
 import '../../../account/services/info.dart';
 import '../../../common/permission/permission.dart';
+import '../../../common/widgets/button/colored.dart';
+import '../../../common/widgets/image/icon.dart';
+import '../../../common/widgets/tag/hobby.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/dialog/crop_image.dart';
@@ -24,6 +28,385 @@ import '../providers/matched.dart';
 import '../util/event.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sona/core/match/widgets/avatar_animation.dart';
+showEditBio<T>(BuildContext context){
+  showModalBottomSheet<T>(
+    context: context,
+    isScrollControlled: true,
+    elevation: 0,
+    clipBehavior: Clip.none,
+    isDismissible: true,
+    builder: (BuildContext context) {
+
+      const maxCount = 10;
+      late Set<String> _selected={};
+
+      return StatefulBuilder(
+        builder: (BuildContext context, void Function(void Function()) setState) {
+          return Consumer(
+            builder: (BuildContext context, WidgetRef ref, Widget? child) {
+              List<ProfilePhoto> fixedLengthList = [ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, '')];
+              for(int i=0;i<ref.watch(myProfileProvider)!.photos.length;i++){
+                fixedLengthList[i]=ref.watch(myProfileProvider)!.photos[i];
+              }
+              return Container(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.9
+                ),
+                padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 2,
+                      strokeAlign: BorderSide.strokeAlignOutside,
+                      color: Color(0xFF2C2C2C),
+                    ),
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0xFF2C2C2C),
+                      blurRadius: 0,
+                      offset: Offset(0, -4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Scaffold(
+                  body: ref.watch(asyncInterestsProvider).when(
+                      data: (data) => SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text.rich(
+                                    TextSpan(
+                                        text: '${S.current.interests} ${_selected.length}',
+                                        style: Theme.of(context).textTheme.titleMedium,
+                                        children: [
+                                          TextSpan(
+                                              text: '/$maxCount',
+                                              style: Theme.of(context).textTheme.bodySmall
+                                          )
+                                        ]
+                                    ),
+                                  ),
+                                  GestureDetector(child: SvgPicture.asset(Assets.svgDislike,width: 40,height: 40,),
+                                    onTap: (){
+                                      Navigator.pop(context);
+                                    },)
+                                ],
+                              ),
+
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text.rich(
+                                TextSpan(
+                                    text: 'SONA',
+                                    style: Theme.of(context).textTheme.titleMedium,
+                                    children: [
+                                      TextSpan(
+                                          text: ' will cook up a bio based on your interests',
+                                          style: Theme.of(context).textTheme.bodySmall
+                                      )
+                                    ]
+                                ),
+                              ),
+                              SizedBox(
+                                height: 12,
+                              ),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 6,
+                                children: [
+                                  for (final hobby in data)
+                                    HobbyTag<String>(
+                                        displayName: hobby.displayName,
+                                        value: hobby.code,
+                                        selected: _selected.contains(hobby.code),
+                                        onSelect: (hb) {
+                                          if (_selected.contains(hb)) {
+                                            _selected.remove(hb);
+                                          } else {
+                                            if (_selected.length >= 10) {
+                                              return;
+                                            }
+                                            _selected.add(hb);
+                                          }
+                                          setState(() {});
+                                        }
+                                    )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      loading: () => Container(
+                        color: Colors.white54,
+                        alignment: Alignment.center,
+                        child: const SizedBox(
+                            width: 32,
+                            height: 32,
+                            child: CircularProgressIndicator()
+                        ),
+                      ),
+                      error: (err, stack) => GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () => ref.read(asyncInterestsProvider.notifier).refresh(),
+                        child: Container(
+                          color: Colors.white,
+                          alignment: Alignment.center,
+                          child: const Text(
+                              'Cannot connect to server\ntap to retry',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  decoration: TextDecoration.none
+                              )
+                          ),
+                        ),
+                      )
+                  ),
+                  floatingActionButton: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: ColoredButton(
+                            fontColor: Color(0xff2c2c2c),
+                            size: ColoredButtonSize.large,
+                            text: S.current.buttonCancel,
+                            loadingWhenAsyncAction: false,
+                            onTap: () => Navigator.pop(context),
+                            color: Color(0xfff6f3f3),
+                            borderColor: Color(0xfff6f3f3),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Flexible(
+                          child: ColoredButton(
+                            borderColor:Color(0xff7e7e7e),
+                            fontColor: Color(0xffF6F3F3),
+                            color: Color(0xff7e7e7e),
+                            size: ColoredButtonSize.large,
+                            text: S.of(context).buttonGenerate,
+                            loadingWhenAsyncAction: true,
+                            onTap: () => ref.read(myProfileProvider.notifier).updateField(interests: _selected).then((_) => Navigator.pop(context)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+                ),
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+showChooseHobbies<T>(BuildContext context){
+  showModalBottomSheet<T>(
+    context: context,
+    isScrollControlled: true,
+    elevation: 0,
+    clipBehavior: Clip.none,
+    isDismissible: true,
+    builder: (BuildContext context) {
+
+      const maxCount = 10;
+      late Set<String> _selected={};
+
+      return StatefulBuilder(
+        builder: (BuildContext context, void Function(void Function()) setState) {
+          return Consumer(
+            builder: (BuildContext context, WidgetRef ref, Widget? child) {
+              List<ProfilePhoto> fixedLengthList = [ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, '')];
+              for(int i=0;i<ref.watch(myProfileProvider)!.photos.length;i++){
+                fixedLengthList[i]=ref.watch(myProfileProvider)!.photos[i];
+              }
+              return Container(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.9
+                ),
+                padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      width: 2,
+                      strokeAlign: BorderSide.strokeAlignOutside,
+                      color: Color(0xFF2C2C2C),
+                    ),
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0xFF2C2C2C),
+                      blurRadius: 0,
+                      offset: Offset(0, -4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Scaffold(
+                  body: ref.watch(asyncInterestsProvider).when(
+                      data: (data) => SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text.rich(
+                                    TextSpan(
+                                        text: '${S.current.interests} ${_selected.length}',
+                                        style: Theme.of(context).textTheme.titleMedium,
+                                        children: [
+                                          TextSpan(
+                                              text: '/$maxCount',
+                                              style: Theme.of(context).textTheme.bodySmall
+                                          )
+                                        ]
+                                    ),
+                                  ),
+                                  GestureDetector(child: SvgPicture.asset(Assets.svgDislike,width: 40,height: 40,),
+                                    onTap: (){
+                                      Navigator.pop(context);
+                                    },)
+                                ],
+                              ),
+
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text.rich(
+                                TextSpan(
+                                    text: 'SONA',
+                                    style: Theme.of(context).textTheme.titleMedium,
+                                    children: [
+                                      TextSpan(
+                                          text: ' will cook up a bio based on your interests',
+                                          style: Theme.of(context).textTheme.bodySmall
+                                      )
+                                    ]
+                                ),
+                              ),
+                              SizedBox(
+                                height: 12,
+                              ),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 6,
+                                children: [
+                                  for (final hobby in data)
+                                    HobbyTag<String>(
+                                        displayName: hobby.displayName,
+                                        value: hobby.code,
+                                        selected: _selected.contains(hobby.code),
+                                        onSelect: (hb) {
+                                          if (_selected.contains(hb)) {
+                                            _selected.remove(hb);
+                                          } else {
+                                            if (_selected.length >= 10) {
+                                              return;
+                                            }
+                                            _selected.add(hb);
+                                          }
+                                          setState(() {});
+                                        }
+                                    )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      loading: () => Container(
+                        color: Colors.white54,
+                        alignment: Alignment.center,
+                        child: const SizedBox(
+                            width: 32,
+                            height: 32,
+                            child: CircularProgressIndicator()
+                        ),
+                      ),
+                      error: (err, stack) => GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () => ref.read(asyncInterestsProvider.notifier).refresh(),
+                        child: Container(
+                          color: Colors.white,
+                          alignment: Alignment.center,
+                          child: const Text(
+                              'Cannot connect to server\ntap to retry',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  decoration: TextDecoration.none
+                              )
+                          ),
+                        ),
+                      )
+                  ),
+                  floatingActionButton: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: ColoredButton(
+                            fontColor: Color(0xff2c2c2c),
+                            size: ColoredButtonSize.large,
+                            text: S.current.buttonCancel,
+                            loadingWhenAsyncAction: false,
+                            onTap: () => Navigator.pop(context),
+                            color: Color(0xfff6f3f3),
+                            borderColor: Color(0xfff6f3f3),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Flexible(
+                          child: ColoredButton(
+                            borderColor:Color(0xff7e7e7e),
+                            fontColor: Color(0xffF6F3F3),
+                            color: Color(0xff7e7e7e),
+                            size: ColoredButtonSize.large,
+                            text: S.of(context).buttonGenerate,
+                            loadingWhenAsyncAction: true,
+                            onTap: () => ref.read(myProfileProvider.notifier).updateField(interests: _selected).then((_) => Navigator.pop(context)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+                ),
+              );
+            },
+          );
+        },
+      );
+    },
+  );
+}
+
 
 showUploadPortrait<T>(BuildContext context){
    showModalBottomSheet<T>(
@@ -33,7 +416,6 @@ showUploadPortrait<T>(BuildContext context){
     clipBehavior: Clip.none,
     isDismissible: true,
     builder: (BuildContext context) {
-
       return Consumer(
         builder: (BuildContext context, WidgetRef ref, Widget? child) {
           List<ProfilePhoto> fixedLengthList = [ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, '')];
@@ -72,11 +454,14 @@ showUploadPortrait<T>(BuildContext context){
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Upload Portrait',style: TextStyle(
+                    Text(S.current.boostYourAppeal,style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 18
                     ),),
-                    SvgPicture.asset(Assets.svgDislike,width: 40,height: 40,)
+                    GestureDetector(child: SvgPicture.asset(Assets.svgDislike,width: 40,height: 40,),
+                      onTap: (){
+                        Navigator.pop(context);
+                      },)
                   ],
                 ),
                 SizedBox(
