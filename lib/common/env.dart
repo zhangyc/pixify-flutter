@@ -5,7 +5,7 @@ import 'package:sona/utils/locale/locale.dart';
 
 const _env = String.fromEnvironment('ENV', defaultValue: 'prod');
 const _apiServer = _env == 'prod'
-  ? 'https://manager.sona.pinpon.fun/api'
+  ? 'https://api.sona.ninja/api'
   : 'http://test.sona.ninja/api';
 const _firestorePrefix = _env == 'prod'
   ? 'prod'
