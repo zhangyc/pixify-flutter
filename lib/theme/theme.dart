@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sona/utils/global/global.dart';
 
 import 'const.dart';
 
-final themeData = ThemeData(
+ThemeData get themeData => ThemeData(
   useMaterial3: true,
   brightness: Brightness.light,
   primaryColor: primaryColor,
@@ -15,12 +16,9 @@ final themeData = ThemeData(
   hintColor: const Color(0xFFBABABA),
   fontFamily: 'M PLUS Rounded 1c',
   fontFamilyFallback: [
-    if (Platform.isAndroid) 'Roboto',
-    if (Platform.isAndroid) 'Source Sans Pro',
-    if (Platform.isIOS) '.SF UI Display',
-    if (Platform.isIOS) '.SF UI Text',
-    if (Platform.isIOS) 'PingFang SC',
-    if (Platform.isIOS) 'Heiti SC'
+    if (Platform.isAndroid) 'Source Han Sans',
+    if (Platform.isIOS && (profile?.locale ?? Platform.localeName).startsWith('zh')) 'PingFang SC',
+    if (Platform.isIOS && (profile?.locale ?? Platform.localeName).startsWith('ja')) 'Hiragino Sans',
   ],
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
@@ -54,7 +52,7 @@ final themeData = ThemeData(
         fontSize: 16,
         fontWeight: FontWeight.w700,
         height: 1.5,
-        letterSpacing: 0.2
+        letterSpacing: 0.2,
     ),
     titleSmall: TextStyle(
         color: fontColour,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,10 +56,13 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
   Widget build(BuildContext context) {
     String? upperMessage;
     String? lowerMessage;
+    Locale? upperLocale;
+    Locale? lowerLocale;
 
     final asyncMessageSending = widget.message.params != null ? ref.watch(asyncMessageSendingProvider(widget.message.params!)) : null;
 
     if (widget.fromMe) {
+      upperLocale = widget.myLocale;
       if (widget.message.params != null) {
         upperMessage = widget.message.originalContent;
         lowerMessage = asyncMessageSending!.when(
@@ -90,6 +95,7 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
         lowerMessage = widget.message.translatedContent;
       }
     } else {
+      lowerLocale = widget.otherLocale;
       upperMessage = widget.message.translatedContent;
       lowerMessage = widget.message.originalContent;
     }
@@ -124,8 +130,8 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
                         final action = await showActionButtons(
                             context: context,
                             options: {
-                              'Copy': 'copy',
-                              if (widget.fromMe) 'Delete': 'delete'
+                              S.of(context).buttonCopy: 'copy',
+                              if (widget.fromMe) S.of(context).buttonDelete: 'delete'
                             }
                         );
                         if (action == 'copy') {
@@ -154,6 +160,11 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
                             height: 1.5,
+                            fontFamilyFallback: [
+                              if (Platform.isAndroid) 'Source Han Sans',
+                              if (Platform.isIOS && upperLocale?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                              if (Platform.isIOS && upperLocale?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                            ],
                             locale: widget.myLocale
                           )
                         )
@@ -171,7 +182,7 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
                         final action = await showActionButtons(
                             context: context,
                             options: {
-                              'Copy': 'copy',
+                              S.of(context).buttonCopy: 'copy',
                             }
                         );
                         if (action == 'copy') {
@@ -192,6 +203,11 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: Color(0xFFB7B7B7),
                             height: 1.5,
+                            fontFamilyFallback: [
+                              if (Platform.isAndroid) 'Source Han Sans',
+                              if (Platform.isIOS && lowerLocale?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                              if (Platform.isIOS && lowerLocale?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                            ],
                             locale: widget.otherLocale
                           ),
                         ),

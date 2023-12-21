@@ -120,10 +120,10 @@ class S {
     );
   }
 
-  /// ``
+  /// ` `
   String get userPhoneNumberPagePrivacySuffix {
     return Intl.message(
-      '',
+      ' ',
       name: 'userPhoneNumberPagePrivacySuffix',
       desc: '',
       args: [],
@@ -1855,6 +1855,106 @@ class S {
     return Intl.message(
       '👅You\'ve hit your weekly limit',
       name: 'toastHitWeeklyMaximumLimit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Boost your appeal`
+  String get boostYourAppeal {
+    return Intl.message(
+      'Boost your appeal',
+      name: 'boostYourAppeal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `More photos, More charm!`
+  String get morePhotosMoreCharm {
+    return Intl.message(
+      'More photos, More charm!',
+      name: 'morePhotosMoreCharm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SONA will generate a bio based on your interests`
+  String get sonaWillGenerateABioBasedOnInterests {
+    return Intl.message(
+      'SONA will generate a bio based on your interests',
+      name: 'sonaWillGenerateABioBasedOnInterests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generate`
+  String get buttonGenerate {
+    return Intl.message(
+      'Generate',
+      name: 'buttonGenerate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here's SONA cooked up for you!`
+  String get hereSonaCookedUpForU {
+    return Intl.message(
+      'Here\'s SONA cooked up for you!',
+      name: 'hereSonaCookedUpForU',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can edit it anytime`
+  String get youCanEditItAnytime {
+    return Intl.message(
+      'You can edit it anytime',
+      name: 'youCanEditItAnytime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take It`
+  String get takeIt {
+    return Intl.message(
+      'Take It',
+      name: 'takeIt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Thanks`
+  String get noThanks {
+    return Intl.message(
+      'No Thanks',
+      name: 'noThanks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From gallery`
+  String get photoFromGallery {
+    return Intl.message(
+      'From gallery',
+      name: 'photoFromGallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take a photo`
+  String get photoFromCamera {
+    return Intl.message(
+      'Take a photo',
+      name: 'photoFromCamera',
       desc: '',
       args: [],
     );

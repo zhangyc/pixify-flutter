@@ -49,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage(
                 "이 사람을 차단해서 그들로부터 메시지를 받지 않게 하세요"),
+        "boostYourAppeal": MessageLookupByLibrary.simpleMessage("매력 업"),
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 나를 신경 쓰지 마🔨🔨🔨 분위기를 풀러 왔어🔨🔨🔨"),
         "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("Plus 회원이에요"),
@@ -57,11 +58,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("확인"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("계속"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("복사"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("ลบ"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("삭제"),
         "buttonDeleteAccount": MessageLookupByLibrary.simpleMessage("계정 삭제"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("완료"),
         "buttonEdit": MessageLookupByLibrary.simpleMessage("편집"),
         "buttonEditProfile": MessageLookupByLibrary.simpleMessage("프로필 편집"),
+        "buttonGenerate": MessageLookupByLibrary.simpleMessage("생성하다"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage("😪SONA 피곤해, 👇탭하고 에너지 충전해!"),
@@ -109,13 +111,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("헤이, 누가 먼저 침묵을 깰까?"),
         "haveSonaSayHi":
             MessageLookupByLibrary.simpleMessage("SONA에게 인사하게 하세요"),
+        "hereSonaCookedUpForU": MessageLookupByLibrary.simpleMessage(
+            "이것은 SONA가 당신을 위해 특별히 만든 것입니다"),
         "howDoUFeelAboutAI":
             MessageLookupByLibrary.simpleMessage("AI 동시통역에 대해 어떻게 생각하세요?"),
         "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("너의 에너지가 대단해!"),
         "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("스타일이 마음에 들어요!"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("ความสนใจ"),
+        "interests": MessageLookupByLibrary.simpleMessage("관심사"),
         "interpretationOff":
             MessageLookupByLibrary.simpleMessage("AI 동시 통역: 꺼짐"),
         "interpretationOn":
@@ -138,17 +142,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "month": MessageLookupByLibrary.simpleMessage("월"),
         "morePhotosBenefit":
             MessageLookupByLibrary.simpleMessage("사진이 많을수록 추천도가 높아집니다"),
+        "morePhotosMoreCharm":
+            MessageLookupByLibrary.simpleMessage("사진이 더 많으면 매력도 더해요"),
         "nearby": MessageLookupByLibrary.simpleMessage("근처에"),
         "newMatch": MessageLookupByLibrary.simpleMessage("새로운 매치!"),
         "nextBilingDate": MessageLookupByLibrary.simpleMessage("다음 지불 날짜"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "상태: 메시지 없음\n\n할 일: 매칭 페이지로 가자\n\n제안: 멋진 프로필을 만드세요"),
+        "noThanks": MessageLookupByLibrary.simpleMessage("아니요, 감사합니다"),
         "notifications": MessageLookupByLibrary.simpleMessage("알림"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("오잉, 지금 데이터가 없어요"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "당신의 위시리스트 설정이 더 큰 역할을 할 것입니다"),
+        "photoFromCamera": MessageLookupByLibrary.simpleMessage("사진 찍기"),
+        "photoFromGallery": MessageLookupByLibrary.simpleMessage("갤러리에서 선택"),
         "photos": MessageLookupByLibrary.simpleMessage("사진"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -192,6 +201,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("⭕ SONA 동시 통역이 꺼졌습니다"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
             "Sona 추천: 쿨다운. \n해야 할 일: 기다리기. \n제안: 영화 보기?"),
+        "sonaWillGenerateABioBasedOnInterests":
+            MessageLookupByLibrary.simpleMessage(
+                "SONA는 당신의 관심사에 기반하여 바이오를 생성할 것입니다"),
         "speakSameLanguage":
             MessageLookupByLibrary.simpleMessage("여러분은 같은 언어를 사용합니다"),
         "standard": MessageLookupByLibrary.simpleMessage("표준"),
@@ -212,6 +224,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementPrefix": m4,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("에 동의하는 것입니다."),
+        "takeIt": MessageLookupByLibrary.simpleMessage("사용하다"),
         "termsOfService": MessageLookupByLibrary.simpleMessage("이용 약관"),
         "theKeyIsBalance": MessageLookupByLibrary.simpleMessage("균형이 관건이다"),
         "theyAreWaitingForYourReply":
@@ -300,6 +313,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("언제"),
         "wishList": MessageLookupByLibrary.simpleMessage("소망 목록"),
         "wishes": MessageLookupByLibrary.simpleMessage("소원"),
+        "youCanEditItAnytime":
+            MessageLookupByLibrary.simpleMessage("언제든지 편집할 수 있습니다"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("멋져 보여요.")
       };
 }

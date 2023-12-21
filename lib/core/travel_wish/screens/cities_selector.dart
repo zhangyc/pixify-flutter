@@ -109,7 +109,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                                       style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
                                         minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
                                         side: MaterialStatePropertyAll(BorderSide(width: 2)),
-                                        backgroundColor: selectedCityIds.contains(city.id) ? MaterialStatePropertyAll(Color(0xFFFFE806)) : null,
+                                        backgroundColor: selectedCityIds.contains(city.id) ? MaterialStatePropertyAll(Color(0xFFBEFF06)) : null,
                                         foregroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor)
                                       )
                                   ),
@@ -162,7 +162,7 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                               style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
                                   minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
                                   side: MaterialStatePropertyAll(BorderSide(width: 2)),
-                                  backgroundColor: selectedCityIds.contains(city.id) ? MaterialStatePropertyAll(Color(0xFFFFE806)) : null,
+                                  backgroundColor: selectedCityIds.contains(city.id) ? MaterialStatePropertyAll(Color(0xFFBEFF06)) : null,
                                   foregroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor)
                               )
                           ),

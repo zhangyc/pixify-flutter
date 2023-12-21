@@ -28,7 +28,7 @@ class HobbyTag<T> extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
           padding: EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
-            color: selected ? Color(0xFFFFE806) : Colors.white,
+            color: selected ? Color(0xFFBEFF06) : Colors.white,
             border: Border.all(color: Theme.of(context).primaryColor, width: 2),
             borderRadius: BorderRadius.circular(20)
           ),

@@ -49,6 +49,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage(
                 "Bloqueie essa pessoa para não receber mais mensagens dela"),
+        "boostYourAppeal":
+            MessageLookupByLibrary.simpleMessage("Aumentar o Charme"),
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 Não ligue para mim🔨🔨🔨 Só estou quebrando o gelo🔨🔨🔨"),
         "buttonAlreadyPlus":
@@ -58,13 +60,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirmar"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("Continuar"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("Copiar"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("Borrar"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("Excluir"),
         "buttonDeleteAccount":
             MessageLookupByLibrary.simpleMessage("Deletar conta"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("Concluído"),
         "buttonEdit": MessageLookupByLibrary.simpleMessage("Editar"),
         "buttonEditProfile":
             MessageLookupByLibrary.simpleMessage("Editar perfil"),
+        "buttonGenerate": MessageLookupByLibrary.simpleMessage("Gerar"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("Entendi"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
@@ -119,6 +122,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ei, adivinha quem vai quebrar o silêncio primeiro?"),
         "haveSonaSayHi":
             MessageLookupByLibrary.simpleMessage("Deixe a SONA dizer oi"),
+        "hereSonaCookedUpForU": MessageLookupByLibrary.simpleMessage(
+            "Isto foi feito pela SONA para você"),
         "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
             "O que você acha da interpretação simultânea por IA?"),
         "iDigYourEnergy":
@@ -127,7 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Eu gosto do seu estilo!"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("Intereses"),
+        "interests": MessageLookupByLibrary.simpleMessage("Interesses"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "Interpretação Síncrona AI: Desligada"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
@@ -152,18 +157,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "month": MessageLookupByLibrary.simpleMessage("Mês"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "Quanto mais fotos, maior o valor de recomendação"),
+        "morePhotosMoreCharm":
+            MessageLookupByLibrary.simpleMessage("Mais fotos, Mais charme!"),
         "nearby": MessageLookupByLibrary.simpleMessage("Perto"),
         "newMatch": MessageLookupByLibrary.simpleMessage("Novo Correspondido!"),
         "nextBilingDate":
             MessageLookupByLibrary.simpleMessage("Próxima data de pagamento"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "Status: Sem mensagens\n\nSugestão: Vá para a página de emparelhamento\n\nSugestão: Faça um perfil incrível"),
+        "noThanks": MessageLookupByLibrary.simpleMessage("Não, obrigado"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notificações"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Ops, sem dados agora"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "As configurações da sua lista de desejos terão um papel maior"),
+        "photoFromCamera":
+            MessageLookupByLibrary.simpleMessage("Tirar uma foto"),
+        "photoFromGallery":
+            MessageLookupByLibrary.simpleMessage("Selecionar da galeria"),
         "photos": MessageLookupByLibrary.simpleMessage("Fotos"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -214,6 +226,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "⭕ SONA Interpretação Síncrona desligada"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
             "Recomendação da Sona: Cooldown.\nO que fazer: Esperar.\nSugestão: Assistir a um filme?"),
+        "sonaWillGenerateABioBasedOnInterests":
+            MessageLookupByLibrary.simpleMessage(
+                "SONA irá gerar uma biografia baseada nos seus interesses"),
         "speakSameLanguage":
             MessageLookupByLibrary.simpleMessage("Vocês falam a mesma língua"),
         "standard": MessageLookupByLibrary.simpleMessage("Padrão"),
@@ -237,6 +252,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementPrefix": m4,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("."),
+        "takeIt": MessageLookupByLibrary.simpleMessage("Utilizar"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Termos de Serviço"),
         "theKeyIsBalance":
@@ -281,7 +297,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPagePlaceholder":
             MessageLookupByLibrary.simpleMessage("Número de Telefone"),
         "userPhoneNumberPagePrivacySuffix":
-            MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(" "),
         "userPhoneNumberPagePrivacyText":
             MessageLookupByLibrary.simpleMessage("política de privacidade"),
         "userPhoneNumberPageTermsAnd":
@@ -335,6 +351,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("Quando"),
         "wishList": MessageLookupByLibrary.simpleMessage("Lista de Desejos"),
         "wishes": MessageLookupByLibrary.simpleMessage("Desejo"),
+        "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage(
+            "Você pode editá-lo a qualquer momento"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("Você parece legal")
       };
 }

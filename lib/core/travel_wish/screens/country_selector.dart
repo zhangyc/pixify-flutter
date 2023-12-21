@@ -61,7 +61,7 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
                         child: OutlinedButtonTheme(
                           data: OutlinedButtonThemeData(
                               style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
-                                backgroundColor: MaterialStatePropertyAll(ref.watch(travelWishParamsProvider).countryId == country.id ? Color(0xFFFFE806) : null),
+                                backgroundColor: MaterialStatePropertyAll(ref.watch(travelWishParamsProvider).countryId == country.id ? Color(0xFFBEFF06) : null),
                                 foregroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor),
                                 minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
                                 side: MaterialStatePropertyAll(BorderSide(width: 2)),

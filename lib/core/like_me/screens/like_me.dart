@@ -64,7 +64,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
         child: OutlinedButton(
           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockWhoLikeMe(),fromTag: FromTag.pay_chatlist_likedme))),
           style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
-            backgroundColor: MaterialStatePropertyAll(Color(0xFFFFE806)),
+            backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06)),
           ),
           child: Text(S.of(context).checkOutTheirProfiles, style: Theme.of(context).textTheme.titleMedium),
         ),

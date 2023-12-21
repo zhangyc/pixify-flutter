@@ -48,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "block": MessageLookupByLibrary.simpleMessage("屏蔽"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
             MessageLookupByLibrary.simpleMessage("屏蔽此人以免收到他們的任何消息"),
+        "boostYourAppeal": MessageLookupByLibrary.simpleMessage("魅力UP!"),
         "breakIce":
             MessageLookupByLibrary.simpleMessage("🔨🔨🔨 別介意🔨🔨🔨 我在破冰🔨🔨🔨"),
         "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("你是Plus會員"),
@@ -56,11 +57,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("確認"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("繼續"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("複製"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("삭제"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("刪除"),
         "buttonDeleteAccount": MessageLookupByLibrary.simpleMessage("刪除帳戶"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("完成"),
         "buttonEdit": MessageLookupByLibrary.simpleMessage("編輯"),
         "buttonEditProfile": MessageLookupByLibrary.simpleMessage("編輯資料"),
+        "buttonGenerate": MessageLookupByLibrary.simpleMessage("生成"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("明白了"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage("😪SONA累了，👇點擊給她加油！"),
@@ -105,13 +107,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "guessWhoBreakSilence":
             MessageLookupByLibrary.simpleMessage("嘿，猜猜誰會先打破沉默？"),
         "haveSonaSayHi": MessageLookupByLibrary.simpleMessage("讓SONA打招呼"),
+        "hereSonaCookedUpForU":
+            MessageLookupByLibrary.simpleMessage("這是SONA為你特製的"),
         "howDoUFeelAboutAI":
             MessageLookupByLibrary.simpleMessage("你覺得AI傳譯怎麼樣?"),
         "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("你的活力很有吸引力！"),
         "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("我中意你的風格！"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("관심사"),
+        "interests": MessageLookupByLibrary.simpleMessage("興趣"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI傳譯：關"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI傳譯：開"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("就是按讚"),
@@ -131,15 +135,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "me": MessageLookupByLibrary.simpleMessage("我的"),
         "month": MessageLookupByLibrary.simpleMessage("月"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage("照片越多，推薦值越高"),
+        "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage("照片多多魅力增！"),
         "nearby": MessageLookupByLibrary.simpleMessage("附近"),
         "newMatch": MessageLookupByLibrary.simpleMessage("新配對！"),
         "nextBilingDate": MessageLookupByLibrary.simpleMessage("下次付費日"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
             "狀態：暫無消息\n\n該做什麼：前往配對\n\n建議：製作棒棒的個人資料"),
+        "noThanks": MessageLookupByLibrary.simpleMessage("不了，謝謝"),
         "notifications": MessageLookupByLibrary.simpleMessage("通知"),
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage("哎呀，現在沒有數據"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage("更多推薦來自你心願單的人"),
+        "photoFromCamera": MessageLookupByLibrary.simpleMessage("拍照"),
+        "photoFromGallery": MessageLookupByLibrary.simpleMessage("從圖庫選擇"),
         "photos": MessageLookupByLibrary.simpleMessage("照片"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage("請檢查網路或點擊刷新重試"),
@@ -179,6 +187,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("⭕ SONA傳譯已關閉"),
         "sonaRecommendationCooldown":
             MessageLookupByLibrary.simpleMessage("Sona推薦：冷卻\n怎麼辦：等待\n建議：看看電影？"),
+        "sonaWillGenerateABioBasedOnInterests":
+            MessageLookupByLibrary.simpleMessage("SONA會根據你的興趣生成一份簡介"),
         "speakSameLanguage":
             MessageLookupByLibrary.simpleMessage("🤝 同語無需譯,靈犀一點通"),
         "standard": MessageLookupByLibrary.simpleMessage("標準"),
@@ -199,6 +209,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementPrefix": m4,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("。"),
+        "takeIt": MessageLookupByLibrary.simpleMessage("使用"),
         "termsOfService": MessageLookupByLibrary.simpleMessage("服務條款"),
         "theKeyIsBalance": MessageLookupByLibrary.simpleMessage("關鍵是平衡"),
         "theyAreWaitingForYourReply":
@@ -235,7 +246,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPagePlaceholder":
             MessageLookupByLibrary.simpleMessage("電話號碼"),
         "userPhoneNumberPagePrivacySuffix":
-            MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(" "),
         "userPhoneNumberPagePrivacyText":
             MessageLookupByLibrary.simpleMessage("隱私政策"),
         "userPhoneNumberPageTermsAnd":
@@ -282,6 +293,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("何時"),
         "wishList": MessageLookupByLibrary.simpleMessage("心願單"),
         "wishes": MessageLookupByLibrary.simpleMessage("心願"),
+        "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage("你可以隨時編輯"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("你看起來很酷。")
       };
 }
