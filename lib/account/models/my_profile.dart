@@ -149,7 +149,12 @@ class ProfilePhoto {
   });
   final int id;
   final String url;
-
+  factory ProfilePhoto.idle(int id,String url) {
+    return ProfilePhoto(
+        id: id,
+        url: url
+    );
+  }
   factory ProfilePhoto.fromJson(Map<String, dynamic> json) {
     return ProfilePhoto(
       id: json['id'],

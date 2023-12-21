@@ -37,6 +37,7 @@ class Assets {
   static const String iconsSona = 'assets/icons/sona.png';
   static const String iconsSonaMessage = 'assets/icons/sona_message.png';
   static const String iconsSparkles = 'assets/icons/sparkles.png';
+  static const String imagesAddPhoto = 'assets/images/add_photo.png';
   static const String imagesArrow = 'assets/images/arrow.png';
   static const String imagesCatPortrait = 'assets/images/cat_portrait.jpeg';
   static const String imagesDataEmpty = 'assets/images/data_empty.png';

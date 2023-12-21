@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/utils/timer/debounce.dart';
 
@@ -80,3 +81,8 @@ class MatchSettingNotifier extends Notifier<MatchSetting> {
 final matchSettingProvider = NotifierProvider<MatchSettingNotifier, MatchSetting>(
     () => MatchSettingNotifier()
 );
+
+bool get showUpdateUserInfo => (appCommonBox.get(DateFormat('yyyy.MM.dd').format(DateTime.now()),defaultValue: 0))==10;
+set showUpdateUserInfo(value){
+  appCommonBox.put(DateFormat('yyyy.MM.dd').format(DateTime.now()), value);
+}

@@ -5,7 +5,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
+import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
 import 'package:sona/core/match/widgets/button_animations.dart';
 import 'package:sona/core/match/widgets/custom_pageview/src/skip_transformer.dart';
@@ -13,6 +15,7 @@ import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
+import 'package:sona/utils/dialog/common.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -419,12 +422,21 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           duration: const Duration(milliseconds: 2000),
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
+            if(mounted){
+              showUploadPortrait(context);
+            }
+            if(showUpdateUserInfo){
+              if(ref.watch(myProfileProvider)!.interests.isEmpty){
 
+              }
+            }
             currentPage=value!;
             setState(() {
 
             });
             if (value != 0 && value % 3 == 0 ) {
+              ///判断当天的次数为null
+
               current++;
               _loadMore();
             }
