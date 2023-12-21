@@ -133,7 +133,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           borderRadius: BorderRadius.circular(12)
                       ),
                       child: Text(
-                        S.of(context).findingFolksWhoShareYourInterests,
+                        S.of(context).showYourPersonality,
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
                             fontSize: 14,
                             color: Theme.of(context).hintColor
