@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("ยืนยัน"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("ดำเนินการต่อ"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("คัดลอก"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("Eliminar"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("ลบ"),
         "buttonDeleteAccount": MessageLookupByLibrary.simpleMessage("ลบบัญชี"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("เสร็จสิ้น"),
         "buttonEdit": MessageLookupByLibrary.simpleMessage("แก้ไข"),
@@ -124,7 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ฉันชอบสไตล์ของคุณ!"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("Interesses"),
+        "interests": MessageLookupByLibrary.simpleMessage("ความสนใจ"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "AI การแปลภาษาแบบพร้อมเพรียง: ปิด"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(

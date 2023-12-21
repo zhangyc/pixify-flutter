@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Bestätigen"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("Fortsetzen"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("Kopieren"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("Cancellare"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("Löschen"),
         "buttonDeleteAccount":
             MessageLookupByLibrary.simpleMessage("Konto löschen"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("Erledigt"),
@@ -127,7 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ich mag deinen Stil!"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("Interessi"),
+        "interests": MessageLookupByLibrary.simpleMessage("Interessen"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "KI-Synchrone Interpretation: Aus"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(

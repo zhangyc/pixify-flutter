@@ -120,10 +120,10 @@ class S {
     );
   }
 
-  /// ``
+  /// ` `
   String get userPhoneNumberPagePrivacySuffix {
     return Intl.message(
-      '',
+      ' ',
       name: 'userPhoneNumberPagePrivacySuffix',
       desc: '',
       args: [],

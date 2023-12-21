@@ -14,7 +14,7 @@
   "@userPhoneNumberPageTermsAnd": {},
   "userPhoneNumberPagePrivacyText": "privacy policy",
   "@userPhoneNumberPagePrivacyText": {},
-  "userPhoneNumberPagePrivacySuffix": "",
+  "userPhoneNumberPagePrivacySuffix": " ",
   "@userPhoneNumberPagePrivacySuffix": {},
   "selectCountryPageTitle": "Select Country",
   "@selectCountryPageTitle": {},

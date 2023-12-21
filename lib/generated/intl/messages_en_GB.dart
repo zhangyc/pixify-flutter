@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("Continue"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("Copy"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("削除"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("Delete"),
         "buttonDeleteAccount":
             MessageLookupByLibrary.simpleMessage("Delete account"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("Done"),
@@ -126,7 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("I like your style!"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("興味"),
+        "interests": MessageLookupByLibrary.simpleMessage("Interests"),
         "interpretationOff":
             MessageLookupByLibrary.simpleMessage("AI Interpretation: Off"),
         "interpretationOn":
@@ -276,7 +276,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPagePlaceholder":
             MessageLookupByLibrary.simpleMessage("Phone Number"),
         "userPhoneNumberPagePrivacySuffix":
-            MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(" "),
         "userPhoneNumberPagePrivacyText":
             MessageLookupByLibrary.simpleMessage("privacy policy"),
         "userPhoneNumberPageTermsAnd":

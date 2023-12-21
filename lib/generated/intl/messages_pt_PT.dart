@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirmar"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("Continuar"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("Copiar"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("Excluir"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("Eliminar"),
         "buttonDeleteAccount":
             MessageLookupByLibrary.simpleMessage("Apagar conta"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("Concluído"),
@@ -282,7 +282,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPagePlaceholder":
             MessageLookupByLibrary.simpleMessage("Número de Telefone"),
         "userPhoneNumberPagePrivacySuffix":
-            MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(" "),
         "userPhoneNumberPagePrivacyText":
             MessageLookupByLibrary.simpleMessage("política de privacidade"),
         "userPhoneNumberPageTermsAnd":

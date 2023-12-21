@@ -56,7 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("確認"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("繼續"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("複製"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("삭제"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("刪除"),
         "buttonDeleteAccount": MessageLookupByLibrary.simpleMessage("刪除帳戶"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("完成"),
         "buttonEdit": MessageLookupByLibrary.simpleMessage("編輯"),
@@ -111,7 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("我中意你的風格！"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("관심사"),
+        "interests": MessageLookupByLibrary.simpleMessage("興趣"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI傳譯：關"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI傳譯：開"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("就是按讚"),
@@ -235,7 +235,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPagePlaceholder":
             MessageLookupByLibrary.simpleMessage("電話號碼"),
         "userPhoneNumberPagePrivacySuffix":
-            MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(" "),
         "userPhoneNumberPagePrivacyText":
             MessageLookupByLibrary.simpleMessage("隱私政策"),
         "userPhoneNumberPageTermsAnd":

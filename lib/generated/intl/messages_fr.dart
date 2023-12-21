@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirmer"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("Continuer"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("Copier"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("Löschen"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("Supprimer"),
         "buttonDeleteAccount":
             MessageLookupByLibrary.simpleMessage("Supprimer le compte"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("Fait"),
@@ -129,7 +129,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("J\'aime ton style !"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("Interessen"),
+        "interests": MessageLookupByLibrary.simpleMessage("Intérêts"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "Interprétation Synchrone IA : Désactivée"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
@@ -285,7 +285,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPagePlaceholder":
             MessageLookupByLibrary.simpleMessage("Numéro de Téléphone"),
         "userPhoneNumberPagePrivacySuffix":
-            MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(" "),
         "userPhoneNumberPagePrivacyText": MessageLookupByLibrary.simpleMessage(
             "politique de confidentialité"),
         "userPhoneNumberPageTermsAnd":

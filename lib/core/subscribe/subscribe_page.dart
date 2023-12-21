@@ -180,10 +180,9 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                       SizedBox(
                         width: 16,
                       ),
-                      Text(widget.showType.label,style: TextStyle(
-                          color: Color(0xff2c2c2c),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900
+                      Text(widget.showType.label,style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w900
                       ),),
                       Text(''),
                     ],

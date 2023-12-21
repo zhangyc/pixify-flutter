@@ -57,7 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("확인"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("계속"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("복사"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("ลบ"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("삭제"),
         "buttonDeleteAccount": MessageLookupByLibrary.simpleMessage("계정 삭제"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("완료"),
         "buttonEdit": MessageLookupByLibrary.simpleMessage("편집"),
@@ -115,7 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("스타일이 마음에 들어요!"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("ความสนใจ"),
+        "interests": MessageLookupByLibrary.simpleMessage("관심사"),
         "interpretationOff":
             MessageLookupByLibrary.simpleMessage("AI 동시 통역: 꺼짐"),
         "interpretationOn":

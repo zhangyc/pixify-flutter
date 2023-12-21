@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m2(lang) => "Просто печатайте на ${lang}";
 
   static String m3(gender) =>
-      "Which of ${Intl.gender(gender, female: 'her', male: 'his', other: 'their')} ideas do you like?";
+      "Какая из ${Intl.gender(gender, female: 'её', male: 'его', other: 'их')}  идей вам нравится?";
 
   static String m4(storeName) =>
       "При нажатии \"Продолжить\" взимается плата, подписка продлевается автоматически, Вы можете отменить через ${storeName}. Продолжая, вы соглашаетесь с нашими ";
@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
         "buttonContinue": MessageLookupByLibrary.simpleMessage("Продолжить"),
         "buttonCopy": MessageLookupByLibrary.simpleMessage("Копировать"),
-        "buttonDelete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "buttonDelete": MessageLookupByLibrary.simpleMessage("Удалить"),
         "buttonDeleteAccount":
             MessageLookupByLibrary.simpleMessage("Удалить аккаунт"),
         "buttonDone": MessageLookupByLibrary.simpleMessage("Готово"),
@@ -128,7 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Мне нравится твой стиль!"),
         "imInterestedSomething": m0,
         "imVeryInterestedInSomething": m1,
-        "interests": MessageLookupByLibrary.simpleMessage("Interests"),
+        "interests": MessageLookupByLibrary.simpleMessage("Интересы"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "Синхронный перевод ИИ: Выключен"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
@@ -284,7 +284,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "userPhoneNumberPagePlaceholder":
             MessageLookupByLibrary.simpleMessage("Номер Телефона"),
         "userPhoneNumberPagePrivacySuffix":
-            MessageLookupByLibrary.simpleMessage(""),
+            MessageLookupByLibrary.simpleMessage(" "),
         "userPhoneNumberPagePrivacyText": MessageLookupByLibrary.simpleMessage(
             "политикой конфиденциальности"),
         "userPhoneNumberPageTermsAnd":
