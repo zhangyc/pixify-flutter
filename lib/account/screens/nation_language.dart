@@ -82,6 +82,8 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                   ),
                 ),
                 SizedBox(height: 8),
+                Text(S.current.commonLanguageTitle, style: Theme.of(context).textTheme.titleSmall),
+                SizedBox(height: 8),
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () async {
@@ -124,7 +126,9 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                       )
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 8),
+                Text(S.current.userCitizenshipPickerTitle, style: Theme.of(context).textTheme.titleSmall),
+                SizedBox(height: 8),
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () async {

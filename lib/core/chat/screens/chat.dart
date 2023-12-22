@@ -35,9 +35,15 @@ import '../widgets/inputbar/mode_provider.dart';
 import '../widgets/message/message.dart';
 
 class ChatScreen extends StatefulHookConsumerWidget {
-  const ChatScreen({super.key, required this.entry, required this.otherSide});
+  const ChatScreen({
+    super.key,
+    required this.entry,
+    required this.otherSide,
+    this.hasHistoryMessage = true
+  });
   final ChatEntry entry;
   final UserInfo otherSide;
+  final bool hasHistoryMessage;
 
   static const routeName = "/chat";
 
@@ -250,7 +256,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             error: (_, __) => Container(),
             loading: () => Container()
           ),
-          if (!hasMsg) Center(
+          if (!hasMsg && !widget.hasHistoryMessage) Center(
             child: SizedBox(
               width: 248,
               child: ColoredButton(
