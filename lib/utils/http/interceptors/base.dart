@@ -5,6 +5,7 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/timer/debounce.dart';
+import 'package:sona/utils/timer/throttle.dart';
 
 
 class BaseInterceptor extends Interceptor {
@@ -40,7 +41,7 @@ class BaseInterceptor extends Interceptor {
   }
 
   void _onTokenInvalid() {
-    Debounce(duration: const Duration(seconds: 1)).run(_clearAndLogin);
+    Throttle(const Duration(seconds: 30)).run(_clearAndLogin);
   }
 
   void _clearAndLogin() {
