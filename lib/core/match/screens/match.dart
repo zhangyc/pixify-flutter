@@ -277,7 +277,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         'longitude': longitude,
         'latitude': latitude,
         "page":current,    // 页码
-        "pageSize":5, // 每页数量
+        "pageSize":50, // 每页数量
         "recommendMode":recommendMode
 
       });
@@ -328,7 +328,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         'longitude': longitude,
         'latitude': latitude,
         "page":current,    // 页码
-        "pageSize":5, // 每页数量,
+        "pageSize":50, // 每页数量,
         "recommendMode":recommendMode
       });
       if(resp.isSuccess){
@@ -443,7 +443,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             setState(() {
 
             });
-            if (value != 0 && value % 3 == 0 ) {
+            if (value != 0 && value % 40 == 0 ) {
               ///判断当天的次数为null
 
               current++;
