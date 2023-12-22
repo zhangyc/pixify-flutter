@@ -290,16 +290,17 @@ showChooseHobbies<T>(BuildContext context){
                               SizedBox(
                                 height: 16,
                               ),
+
                               Text.rich(
                                 TextSpan(
-                                    text: 'SONA',
+                                    text: '${S.current.sonaWillGenerateABioBasedOnInterests}',
                                     style: Theme.of(context).textTheme.titleMedium,
-                                    children: [
-                                      TextSpan(
-                                          text: ' will cook up a bio based on your interests',
-                                          style: Theme.of(context).textTheme.bodySmall
-                                      )
-                                    ]
+                                    // children: [
+                                    //   TextSpan(
+                                    //       text: ' ${S.current.sonaWillGenerateABioBasedOnInterests}',
+                                    //       style: Theme.of(context).textTheme.bodySmall
+                                    //   )
+                                    // ]
                                 ),
                               ),
                               SizedBox(
