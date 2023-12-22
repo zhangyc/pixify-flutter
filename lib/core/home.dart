@@ -52,7 +52,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     final position = await determinePosition();
     longitude=position.longitude;
     latitude=position.latitude;
-    ref.read(myProfileProvider.notifier).updateField(position: position);
+    ref.read(myProfileProvider.notifier).updateFields(position: position);
   }
 
   @override

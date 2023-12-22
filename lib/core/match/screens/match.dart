@@ -53,7 +53,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       determinePosition().then((value){
         longitude=value.longitude;
         latitude=value.latitude;
-        ref.read(myProfileProvider.notifier).updateField(position: value);
+        ref.read(myProfileProvider.notifier).updateFields(position: value);
         _initData();
 
       }).catchError((e){

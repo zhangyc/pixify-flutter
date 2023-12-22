@@ -122,7 +122,7 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
     if (value != null) {
 
       languageNotifier.value=findMatchedSonaLocale(value);
-      await ref.read(myProfileProvider.notifier).updateField(locale: findMatchedSonaLocale(value));
+      await ref.read(myProfileProvider.notifier).updateFields(locale: findMatchedSonaLocale(value));
       ref.invalidate(asyncPopularTravelCountriesProvider);
       ref.invalidate(asyncTimeframeOptionsProvider);
       ref.invalidate(asyncMyTravelWishesProvider);
@@ -132,7 +132,7 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
   Future _switchGender() async {
     var value = await showGenderPicker(context: context, initialValue: ref.read(myProfileProvider)!.gender);
     if (value != null) {
-      await ref.read(myProfileProvider.notifier).updateField(gender: value);
+      await ref.read(myProfileProvider.notifier).updateFields(gender: value);
     }
   }
 }

@@ -261,7 +261,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     SonaAnalytics.log('profile_interests');
     final result = await showHobbiesSelector(context: context);
     if (result != null) {
-      ref.read(myProfileProvider.notifier).updateField(interests: result);
+      ref.read(myProfileProvider.notifier).updateFields(interests: result);
     }
   }
 
@@ -273,7 +273,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           title: S.of(context).bio,
           maxLength: 360,
           onSave: (String text) async {
-            await ref.read(myProfileProvider.notifier).updateField(bio: text);
+            await ref.read(myProfileProvider.notifier).updateFields(bio: text);
             Navigator.pop(context);
             SonaAnalytics.log('profile_bio');
           }

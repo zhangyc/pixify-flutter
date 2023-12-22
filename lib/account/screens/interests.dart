@@ -109,7 +109,7 @@ class _HobbiesSelectorState extends ConsumerState<HobbiesSelector> {
           size: ColoredButtonSize.large,
           text: S.of(context).buttonSave,
           loadingWhenAsyncAction: true,
-          onTap: () => ref.read(myProfileProvider.notifier).updateField(interests: _selected).then((_) => Navigator.pop(context)),
+          onTap: () => ref.read(myProfileProvider.notifier).updateFields(interests: _selected).then((_) => Navigator.pop(context)),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
