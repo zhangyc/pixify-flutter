@@ -100,7 +100,7 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
     return showConfirm(
       context: context,
       title: S.of(context).buttonDeleteAccount,
-      confirmDelay: const Duration(seconds: 2),
+      confirmDelay: const Duration(seconds: 15),
       content: S.of(context).warningDeleteAccount,
       confirmText: S.of(context).buttonDelete,
     );
