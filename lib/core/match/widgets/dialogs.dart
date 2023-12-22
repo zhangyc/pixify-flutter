@@ -468,7 +468,7 @@ showUploadPortrait<T>(BuildContext context){
                 SizedBox(
                   height: 16,
                 ),
-                Text('More photos,More charm!',style: TextStyle(
+                Text(S.current.morePhotosMoreCharm,style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 14
                 ),),
@@ -485,8 +485,8 @@ showUploadPortrait<T>(BuildContext context){
                         return GestureDetector(child: Image.asset(Assets.imagesAddPhoto,width: 104,height: 140,),
                           onTap: () async {
                             final source = await showActionButtons(context: context, options: {
-                              'Choose a photo': ImageSource.gallery,
-                              'Take a photo': ImageSource.camera
+                              S.current.photoFromGallery: ImageSource.gallery,
+                              S.current.photoFromCamera: ImageSource.camera
                             });
                             if (source == null) throw Exception('No source');
                             final picker = ImagePicker();

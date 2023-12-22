@@ -63,19 +63,27 @@ class _WishListItemState extends State<WishListItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('${e.countryName}',style: const TextStyle(
-                    color: Colors.white
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400
                 ),),
                 Text('${e.cityName}',style: const TextStyle(
-                    color: Colors.white
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400
                 ),),
                 Text('${e.activities.map((e) => e.title).toList().join(',')??''}',style: const TextStyle(
-                  color: Colors.white
+                  color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400
                 ),),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${e.timeType}',style: const TextStyle(
-                        color: Colors.white
+                    Text('${e.timeType}',style:  TextStyle(
+                        color: Colors.white.withOpacity(0.4),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400
                     ),),
                     Text('${e.countryFlag}')
                   ],

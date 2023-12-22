@@ -217,7 +217,7 @@ class WishBean {
     cityId = json['cityId'];
     cityName = json['cityName'];
     pic = json['pic'];
-    timeType = json['timeType'];
+    timeType = json['timeTypeName'];
     endDate = json['endDate'];
     activityIds = json['activityIds'];
     activityNames = json['activityNames'];
@@ -239,7 +239,7 @@ class WishBean {
     data['cityId'] = this.cityId;
     data['cityName'] = this.cityName;
     data['pic'] = this.pic;
-    data['timeType'] = this.timeType;
+    data['timeTypeName'] = this.timeType;
     data['endDate'] = this.endDate;
     data['activityIds'] = this.activityIds;
     data['activityNames'] = this.activityNames;
