@@ -277,7 +277,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                 ),
                 Container(
                   child: Container(
-                    color: Color(0xffFFE806),
+                    color: Color(0xffBEFF06),
                     height: 100,
                   ),
                 )

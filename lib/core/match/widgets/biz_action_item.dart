@@ -32,7 +32,7 @@ class BizActionItem extends StatelessWidget {
               GestureDetector(
                 onTap: unMatch,
                 child: Text(S.of(context).buttonUnmatch,style: TextStyle(
-                    color: Colors.black
+                    color: Color(0xffBDBDBD)
                 ),),
               ),
               SizedBox(
@@ -42,7 +42,7 @@ class BizActionItem extends StatelessWidget {
           ):Container(),
           GestureDetector(
             child: Text(S.of(context).block,style: TextStyle(
-              color: Colors.red
+                color: Color(0xffBDBDBD)
             ),),
             onTap: block,
           ),
@@ -51,7 +51,7 @@ class BizActionItem extends StatelessWidget {
           ),
           GestureDetector(
             child: Text(S.of(context).report,style: TextStyle(
-              color: Colors.black
+                color: Color(0xffBDBDBD)
             ),),
             onTap: report,
           ),

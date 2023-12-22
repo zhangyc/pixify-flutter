@@ -125,7 +125,7 @@ class Arrow extends StatelessWidget {
               curve: Curves.fastOutSlowIn,
               width: 300,
               height:300,
-              child: Image.asset(Assets.imagesArrow,),
+              // child: Image.asset(Assets.imagesArrow,),
             ),
             Lottie.asset(Assets.lottieArrowAnimation,
                 controller: _animationController2,repeat: true),
