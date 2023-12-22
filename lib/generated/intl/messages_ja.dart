@@ -133,7 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "ステータス：一時的には空白ページだね\n\nすること：主導権を取る\n\n提案：\n満足写真 アップを\n自己紹介に 心込めよ\n魅力的に もっとなれ\n\n興味選べ \n人の海の中で\n面白い出会いが待っています"),
         "likedYou": MessageLookupByLibrary.simpleMessage("月が...ううん"),
         "locationPermissionRequestSubtitle":
-            MessageLookupByLibrary.simpleMessage("同じ市の外国人を見つける"),
+            MessageLookupByLibrary.simpleMessage("より良いサービスのために, 位置情報提供をお願いします"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("位置を許可する"),
         "matchPageSelectIdeas": m3,
@@ -150,6 +150,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "ステータス：メッセージなし\n\nすること：さあ、ペアリングページに行こう！\n\n提案：素晴らしいプロフィールを作る"),
         "noThanks": MessageLookupByLibrary.simpleMessage("いいえ、ありがとう"),
         "notifications": MessageLookupByLibrary.simpleMessage("通知"),
+        "onboarding0":
+            MessageLookupByLibrary.simpleMessage("SONAは世界中の人々の共通の我が家です"),
+        "onboarding1": MessageLookupByLibrary.simpleMessage(
+            "自宅にいても、旅行中でも、世界中の人々と出会おう。そして…"),
+        "onboarding2": MessageLookupByLibrary.simpleMessage(
+            "ほら、魔法を授けるよ:\n全知言語\nもう外国語が分からないなんて心配いらないだろ"),
+        "onboarding3": MessageLookupByLibrary.simpleMessage(
+            "余計な話は省いて、始めよう！\n伝説のロマンチックな出会いがあなたを待っているよ"),
+        "onboardingWish":
+            MessageLookupByLibrary.simpleMessage("願いリストを完成させて、より理想的なマッチを得ましょう"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("おっと、今はデータがありません"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -197,7 +207,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("あなたの世界観や個性を表現してみてね ♪"),
         "signUpLastStepPageTitle":
-            MessageLookupByLibrary.simpleMessage("最後のステップ"),
+            MessageLookupByLibrary.simpleMessage("もうすぐ完成です"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6ヶ月"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA同期通訳はオフになりました"),
@@ -298,9 +308,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle":
             MessageLookupByLibrary.simpleMessage("そこに行くなら、どの都市を訪れたいですか？"),
-        "wishCountryPickerSubtitle":
-            MessageLookupByLibrary.simpleMessage("国の人たちと波長が合いますか?"),
-        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("どの"),
+        "wishCountryPickerTitle":
+            MessageLookupByLibrary.simpleMessage("ど の国にもっと興味がありますか？"),
         "wishCreationComplete":
             MessageLookupByLibrary.simpleMessage("あなたの願い、受け取ったよ!"),
         "wishDateOptionHere": MessageLookupByLibrary.simpleMessage("既にここにいます"),

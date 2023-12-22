@@ -148,9 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "Статус: Пока нет лайков\n\nЧто делать: Проявите инициативу\n\nПредложение: Загрузите ваши удовлетворительные фотографии\nНапишите подлинную биографию\nВыберите свои интересы"),
         "likedYou": MessageLookupByLibrary.simpleMessage("Тебе нравился"),
-        "locationPermissionRequestSubtitle":
-            MessageLookupByLibrary.simpleMessage(
-                "Найти иностранцев в том же городе"),
+        "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Нам нужно ваше местоположение, чтобы улучшить ваш социальный опыт"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("Авторизовать местоположение"),
         "matchPageSelectIdeas": m3,
@@ -168,6 +167,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Статус: Нет сообщений\n\nПредложение: Перейти на страницу подбора пар\n\nПредложение: Создайте потрясающий профиль"),
         "noThanks": MessageLookupByLibrary.simpleMessage("Нет, спасибо"),
         "notifications": MessageLookupByLibrary.simpleMessage("Уведомления"),
+        "onboarding0": MessageLookupByLibrary.simpleMessage(
+            "SONA подобно домашней базе для граждан мира"),
+        "onboarding1": MessageLookupByLibrary.simpleMessage(
+            "Независимо от того, дома вы или в пути, встречайте людей со всего мира. И..."),
+        "onboarding2": MessageLookupByLibrary.simpleMessage(
+            "Вы получите суперспособность:\nВладение языками Больше никаких барьеров в общении"),
+        "onboarding3": MessageLookupByLibrary.simpleMessage(
+            "Меньше говори, больше люби. Легендарный роман ждет тебя"),
+        "onboardingWish": MessageLookupByLibrary.simpleMessage(
+            "Заполните список желаний для лучшего совпадения"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Ой, сейчас нет данных"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -225,7 +234,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showYourPersonality": MessageLookupByLibrary.simpleMessage(
             "Покажите вашу индивидуальность"),
         "signUpLastStepPageTitle":
-            MessageLookupByLibrary.simpleMessage("Последний шаг"),
+            MessageLookupByLibrary.simpleMessage("Скоро будет готово"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6 месяцев"),
         "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
             "⭕ SONA Interpretazione disattivata"),
@@ -339,9 +348,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "если вы туда поедете, Какие города вы хотите посетить?"),
-        "wishCountryPickerSubtitle": MessageLookupByLibrary.simpleMessage(
-            "страны у вас лучше всего складываются отношения?"),
-        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("Какой"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage(
+            "За какую страну вы больше всего интересуетесь?"),
         "wishCreationComplete":
             MessageLookupByLibrary.simpleMessage("Ваше желание получено"),
         "wishDateOptionHere": MessageLookupByLibrary.simpleMessage("Уже здесь"),

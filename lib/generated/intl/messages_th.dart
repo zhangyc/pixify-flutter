@@ -142,9 +142,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "สถานะ: ยังไม่มีไลค์\n\nทำอย่างไร: ริเริ่ม\n\nข้อเสนอ:\nอัปโหลดรูปภาพที่คุณพอใจ\nเขียนประวัติของคุณอย่างแท้จริง\nเลือกความสนใจของคุณ"),
         "likedYou": MessageLookupByLibrary.simpleMessage("ที่ชอบคุณ"),
-        "locationPermissionRequestSubtitle":
-            MessageLookupByLibrary.simpleMessage(
-                "ค้นหาชาวต่างชาติในเมืองเดียวกัน"),
+        "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
+            "เราต้องการตำแหน่งของคุณเพื่อทำให้ประสบการณ์ทางสังคมของคุณดีขึ้น"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("อนุญาตตำแหน่ง"),
         "matchPageSelectIdeas": m3,
@@ -162,6 +161,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "สถานะ: ไม่มีข้อความ\n\nทำอย่างไร: ไปที่หน้าจับคู่กันเถอะ\n\nข้อเสนอ: ทำโปรไฟล์ที่ดี"),
         "noThanks": MessageLookupByLibrary.simpleMessage("ไม่ละ ขอบคุณนะ"),
         "notifications": MessageLookupByLibrary.simpleMessage("การแจ้งเตือน"),
+        "onboarding0": MessageLookupByLibrary.simpleMessage(
+            "SONA เหมือนกับฐานบ้านสำหรับพลเมืองโลก"),
+        "onboarding1": MessageLookupByLibrary.simpleMessage(
+            "ไม่ว่าจะอยู่ที่บ้านหรือบนท้องถนน พบปะผู้คนทั่วโลก และ..."),
+        "onboarding2": MessageLookupByLibrary.simpleMessage(
+            "คุณจะได้พลังพิเศษ: \nความเชี่ยวชาญในภาษา\nไม่ต้องกังวลเรื่องอุปสรรคในการสื่อสารอีกต่อไป"),
+        "onboarding3": MessageLookupByLibrary.simpleMessage(
+            "พูดน้อยลง\nรักมากขึ้น\nโรแมนติกตำนานรอคุณอยู่"),
+        "onboardingWish": MessageLookupByLibrary.simpleMessage(
+            "กรุณาทำตามรายการสิ่งที่ปรารถนาเพื่อการจับคู่ที่เหมาะสมยิ่งขึ้น"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("อุ๊ปส์ ไม่มีข้อมูลในตอนนี้"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -214,7 +223,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("แสดงบุคลิกของคุณ"),
         "signUpLastStepPageTitle":
-            MessageLookupByLibrary.simpleMessage("ขั้นตอนสุดท้าย"),
+            MessageLookupByLibrary.simpleMessage("ใกล้จะเสร็จแล้ว"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6 เดือน"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA การแปลภาษาถูกปิดแล้ว"),
@@ -324,9 +333,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "ถ้าคุณไปที่นั่น คุณอยากเยี่ยมชมเมืองไหนบ้าง?"),
-        "wishCountryPickerSubtitle": MessageLookupByLibrary.simpleMessage(
-            "มีความรู้สึกที่ดีกับคนจากประเทศใด?"),
-        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("คุณ"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage(
+            "คุณ สนใจประเทศไหนมากกว่ากัน?"),
         "wishCreationComplete":
             MessageLookupByLibrary.simpleMessage("ได้รับความปรารถนาของคุณแล้ว"),
         "wishDateOptionHere":

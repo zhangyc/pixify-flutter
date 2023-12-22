@@ -128,7 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "狀態：姑且沒贊哦\n\n該做什麼：採取主動\n\n建議：\n多傳照片多加分\n寫下簡介顯真誠\n興趣選擇得\n同道中人"),
         "likedYou": MessageLookupByLibrary.simpleMessage("喜歡你"),
         "locationPermissionRequestSubtitle":
-            MessageLookupByLibrary.simpleMessage("同城外國人尋找"),
+            MessageLookupByLibrary.simpleMessage("我們需要您的位置信息來改善您的社交體驗"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("位置授權"),
         "matchPageSelectIdeas": m3,
@@ -143,6 +143,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "狀態：暫無消息\n\n該做什麼：前往配對\n\n建議：製作棒棒的個人資料"),
         "noThanks": MessageLookupByLibrary.simpleMessage("不了，謝謝"),
         "notifications": MessageLookupByLibrary.simpleMessage("通知"),
+        "onboarding0": MessageLookupByLibrary.simpleMessage("SONA是世界公民的家園"),
+        "onboarding1": MessageLookupByLibrary.simpleMessage(
+            "無論在家或是在旅途，都可以結識世界各地的朋友。 並且..."),
+        "onboarding2":
+            MessageLookupByLibrary.simpleMessage("你將獲得超能力：\n通曉語言\n無需再擔心交流障礙"),
+        "onboarding3":
+            MessageLookupByLibrary.simpleMessage("閒話少說，開始吧！\n傳奇的浪漫邂逅在等著你"),
+        "onboardingWish":
+            MessageLookupByLibrary.simpleMessage("請完成心願單獲得更理想的配對"),
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage("哎呀，現在沒有數據"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage("更多推薦來自你心願單的人"),
@@ -182,7 +191,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "setDefault": MessageLookupByLibrary.simpleMessage("設定預設"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
         "showYourPersonality": MessageLookupByLibrary.simpleMessage("展現你的個性"),
-        "signUpLastStepPageTitle": MessageLookupByLibrary.simpleMessage("最後一步"),
+        "signUpLastStepPageTitle": MessageLookupByLibrary.simpleMessage("即將完成"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6個月"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA傳譯已關閉"),
@@ -281,9 +290,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle":
             MessageLookupByLibrary.simpleMessage("如果你去那裡，你想去哪些城市？"),
-        "wishCountryPickerSubtitle":
-            MessageLookupByLibrary.simpleMessage("國家的人更有共鳴?"),
-        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("哪個"),
+        "wishCountryPickerTitle":
+            MessageLookupByLibrary.simpleMessage("你 對哪個國家更感興趣？"),
         "wishCreationComplete":
             MessageLookupByLibrary.simpleMessage("已收到你的心願!"),
         "wishDateOptionHere": MessageLookupByLibrary.simpleMessage("已經在這了"),

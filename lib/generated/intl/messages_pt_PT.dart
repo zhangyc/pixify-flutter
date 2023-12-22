@@ -148,9 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "Status: Ainda sem curtidas\n\nO que fazer: Tome a iniciativa\n\nSugestão:\nFaça o upload de suas fotos satisfatórias\nEscreva uma biografia genuína\nEscolha seus interesses"),
         "likedYou": MessageLookupByLibrary.simpleMessage("Gostou de você"),
-        "locationPermissionRequestSubtitle":
-            MessageLookupByLibrary.simpleMessage(
-                "Encontrar estrangeiros na mesma cidade"),
+        "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Precisamos da sua localização para melhorar a sua experiência social"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("Autorizar localização"),
         "matchPageSelectIdeas": m3,
@@ -168,6 +167,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Status: Sem mensagens\n\nSugestão: Vá para a página de emparelhamento\n\nSugestão: Faça um perfil incrível"),
         "noThanks": MessageLookupByLibrary.simpleMessage("Não, obrigado"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notificações"),
+        "onboarding0": MessageLookupByLibrary.simpleMessage(
+            "SONA é como uma base de casa para cidadãos do mundo"),
+        "onboarding1": MessageLookupByLibrary.simpleMessage(
+            "Quer em casa ou na estrada, conhece pessoas de todo o mundo. E..."),
+        "onboarding2": MessageLookupByLibrary.simpleMessage(
+            "Ganharás um superpoder: \nDomínio das línguas Sem mais barreiras de comunicação"),
+        "onboarding3": MessageLookupByLibrary.simpleMessage(
+            "Fala menos, ama mais. Uma romântica\nlenda espera por ti"),
+        "onboardingWish": MessageLookupByLibrary.simpleMessage(
+            "Por favor, completa a lista de desejos para obteres um par mais ideal"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Ops, sem dados agora"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -223,7 +232,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("Mostra a tua personalidade"),
         "signUpLastStepPageTitle":
-            MessageLookupByLibrary.simpleMessage("Último passo"),
+            MessageLookupByLibrary.simpleMessage("Prestes a terminar"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6 meses"),
         "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
             "⭕ SONA Interpretação Síncrona desligada"),
@@ -337,9 +346,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "se você for lá, Quais cidades você quer visitar?"),
-        "wishCountryPickerSubtitle": MessageLookupByLibrary.simpleMessage(
-            "país você se identifica mais?"),
-        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("Qual"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage(
+            "Em que país estás mais interessado?"),
         "wishCreationComplete":
             MessageLookupByLibrary.simpleMessage("Seu desejo foi recebido"),
         "wishDateOptionHere":

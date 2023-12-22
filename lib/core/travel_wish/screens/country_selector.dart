@@ -28,7 +28,7 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
                 child: Container(
                   margin: EdgeInsets.only(bottom: 8),
                   child: Text(
-                      S.of(context).wishCountryPickerTitle,
+                      S.of(context).wishCountryPickerTitle.split(' ').first,
                       style: Theme.of(context).textTheme.headlineLarge
                   ),
                 ),
@@ -37,7 +37,7 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
                 child: Container(
                   margin: EdgeInsets.only(bottom: 32),
                   child: Text(
-                      S.of(context).wishCountryPickerSubtitle,
+                      S.of(context).wishCountryPickerTitle.split(' ').last,
                       style: Theme.of(context).textTheme.bodyMedium
                   ),
                 ),
