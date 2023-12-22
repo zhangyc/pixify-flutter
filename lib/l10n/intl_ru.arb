@@ -381,5 +381,7 @@
   "photoFromGallery": "Из галереи выбрать",
   "@photoFromGallery": {},
   "photoFromCamera": "Сфотографировать",
-  "@photoFromCamera": {}
+  "@photoFromCamera": {},
+  "setDefault": "Установить по умолчанию",
+  "@setDefault": {}
 }

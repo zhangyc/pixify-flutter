@@ -381,5 +381,7 @@
   "photoFromGallery": "Aus der Galerie auswählen",
   "@photoFromGallery": {},
   "photoFromCamera": "Ein Foto machen",
-  "@photoFromCamera": {}
+  "@photoFromCamera": {},
+  "setDefault": "Als Standard festlegen",
+  "@setDefault": {}
 }

@@ -381,5 +381,7 @@
   "photoFromGallery": "从图库选择",
   "@photoFromGallery": {},
   "photoFromCamera": "拍照",
-  "@photoFromCamera": {}
+  "@photoFromCamera": {},
+  "setDefault": "设置默认",
+  "@setDefault": {}
 }

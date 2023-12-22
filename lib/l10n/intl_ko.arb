@@ -381,5 +381,7 @@
   "photoFromGallery": "갤러리에서 선택",
   "@photoFromGallery": {},
   "photoFromCamera": "사진 찍기",
-  "@photoFromCamera": {}
+  "@photoFromCamera": {},
+  "setDefault": "기본으로 설정",
+  "@setDefault": {}
 }
