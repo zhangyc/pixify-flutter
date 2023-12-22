@@ -494,7 +494,7 @@ Future<T?> showActionButtons<T>({
     builder: (BuildContext context) {
       final keys = options.keys.toList(growable: false);
       return Container(
-        margin: EdgeInsets.all(4),
+        margin: EdgeInsets.only(top: 4),
         color: Colors.transparent,
         padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom),
         child: Column(
