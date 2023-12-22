@@ -167,7 +167,6 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
       S.of(context).feedback: 'feedback'
     });
     if (result != null && mounted){
-      print(env.privacyPolicy);
       if (result == '1') {
         Navigator.push(context, MaterialPageRoute(builder: (c){
           return WebView(url: env.privacyPolicy, title: S.of(context).privacyPolicy);
@@ -181,8 +180,8 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
           return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
         }));
       } else if (result == 'feedback') {
-        final email = 'sona@zervo.me';
-        final result = await launchUrl(Uri(scheme: 'mailto', path: email), mode: LaunchMode.externalApplication);
+        const email = 'sona@zervo.me';
+        launchUrl(Uri(scheme: 'mailto', path: email), mode: LaunchMode.externalApplication);
       }
     }
   }

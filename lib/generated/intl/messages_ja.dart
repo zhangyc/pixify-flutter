@@ -192,6 +192,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeWhoLikeU":
             MessageLookupByLibrary.simpleMessage("誰があなたを好きになったか見てみて"),
         "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("国を選択"),
+        "setDefault": MessageLookupByLibrary.simpleMessage("デフォルトに設定"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("あなたの世界観や個性を表現してみてね ♪"),

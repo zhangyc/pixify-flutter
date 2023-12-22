@@ -381,5 +381,7 @@
   "photoFromGallery": "จากแกลเลอรีเลือก",
   "@photoFromGallery": {},
   "photoFromCamera": "ถ่ายภาพ",
-  "@photoFromCamera": {}
+  "@photoFromCamera": {},
+  "setDefault": "ตั้งค่าเป็นค่าเริ่มต้น",
+  "@setDefault": {}
 }

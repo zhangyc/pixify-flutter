@@ -1959,6 +1959,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Set Default`
+  String get setDefault {
+    return Intl.message(
+      'Set Default',
+      name: 'setDefault',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

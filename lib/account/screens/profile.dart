@@ -228,7 +228,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final actions = <String, String>{};
     if (_profile.photos.length > 1) {
       if (index != 0) {
-        actions['Set Default'] = 'set_default';
+        actions[S.of(context).setDefault] = 'set_default';
       }
       actions[S.of(context).buttonDelete] = 'delete';
     }

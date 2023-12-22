@@ -381,5 +381,7 @@
   "photoFromGallery": "ギャラリーから選択",
   "@photoFromGallery": {},
   "photoFromCamera": "写真を撮る",
-  "@photoFromCamera": {}
+  "@photoFromCamera": {},
+  "setDefault": "デフォルトに設定",
+  "@setDefault": {}
 }

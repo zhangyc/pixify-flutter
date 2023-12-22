@@ -381,5 +381,7 @@
   "photoFromGallery": "從圖庫選擇",
   "@photoFromGallery": {},
   "photoFromCamera": "拍照",
-  "@photoFromCamera": {}
+  "@photoFromCamera": {},
+  "setDefault": "設定預設",
+  "@setDefault": {}
 }

@@ -381,5 +381,7 @@
   "photoFromGallery": "From gallery",
   "@photoFromGallery": {},
   "photoFromCamera": "Take a photo",
-  "@photoFromCamera": {}
+  "@photoFromCamera": {},
+  "setDefault": "Set as default",
+  "@setDefault": {}
 }

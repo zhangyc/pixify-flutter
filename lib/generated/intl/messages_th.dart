@@ -208,6 +208,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("ดูว่าใครชอบคุณ"),
         "selectCountryPageTitle":
             MessageLookupByLibrary.simpleMessage("เลือกประเทศ"),
+        "setDefault":
+            MessageLookupByLibrary.simpleMessage("ตั้งค่าเป็นค่าเริ่มต้น"),
         "settings": MessageLookupByLibrary.simpleMessage("การตั้งค่า"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("แสดงบุคลิกของคุณ"),
