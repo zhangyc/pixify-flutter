@@ -575,9 +575,9 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                     Row(
                       children: [
                         Flexible(child: TextField(
-                          onTapOutside: (cv){
-                            FocusManager.instance.primaryFocus?.unfocus();
-                          },
+                          // onTapOutside: (cv){
+                          //   FocusManager.instance.primaryFocus?.unfocus();
+                          // },
                           controller: controller,
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(160), // Maximum length of 10 characters
