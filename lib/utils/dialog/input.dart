@@ -514,7 +514,7 @@ Future<T?> showActionButtons<T>({
       return Container(
         margin: EdgeInsets.only(top: 4),
         color: Colors.transparent,
-        padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom),
+        padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom + 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -605,7 +605,7 @@ Future<T?> showRadioFields<T>({
       final keys = options.keys.toList(growable: false);
       return Container(
         margin: EdgeInsets.only(top: 4),
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 12),
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
