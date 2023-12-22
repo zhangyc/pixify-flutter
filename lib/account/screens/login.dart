@@ -141,7 +141,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                       _validate = true;
                     });
                   },
-                  onTapOutside: (_) => _phoneFocusNode.unfocus(),
+                  // onTapOutside: (_) => _phoneFocusNode.unfocus(),
                   validator: _validator,
                   autovalidateMode: _validate ? AutovalidateMode.disabled : AutovalidateMode.always,
                 ),

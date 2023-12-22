@@ -45,6 +45,7 @@ class BaseInterceptor extends Interceptor {
   }
 
   void _clearAndLogin() {
+    if (token == null) return;
     token = null;
     kvStore.remove(profileKey);
     navigatorKey.currentState?.pushNamedAndRemoveUntil('login', (route) => false);
