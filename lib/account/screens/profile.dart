@@ -308,7 +308,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
     if (file == null) throw Exception('No file');
     ///todo 人脸检测
-    ///faceDetection(file.path);
+    //await faceDetection(file.path);
 
     if (file.name.toLowerCase().endsWith('.gif')) {
       Fluttertoast.showToast(msg: 'GIF is not allowed');

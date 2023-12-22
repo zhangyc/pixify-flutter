@@ -10,7 +10,7 @@ Future<bool> faceDetection(String path) async {
   final faceDetector = FaceDetector(options: options);
   final List<Face> faces = await faceDetector.processImage(InputImage.fromFilePath(path));
   if(faces.isEmpty){
-    Fluttertoast.showToast(msg: 'Please upload photos according to the recommended standards.');
+    // Fluttertoast.showToast(msg: 'Please upload photos according to the recommended standards.');
     return false;
   }else {
     return true;

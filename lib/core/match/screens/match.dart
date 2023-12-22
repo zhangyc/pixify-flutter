@@ -156,7 +156,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                     ref.read(backgroundImageProvider.notifier).updateBgImage(null);
                     MatchApi.like(users[currentPage].id,);
-                   }, child: Text('${S.of(context).justSendALike} >',style: TextStyle(
+                    SonaAnalytics.log(MatchEvent.match_like_wishlist.name);
+
+                  }, child: Text('${S.of(context).justSendALike} >',style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
                   ),)):Row(
@@ -167,6 +169,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           return;
                         }
                         matchAnimation.value=TransformStatus.leftRotate;
+                        SonaAnalytics.log(MatchEvent.match_dislike.name);
                         // status=PageAnimStatus.dislike;
                         controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                         MatchApi.skip(users[currentPage].id);

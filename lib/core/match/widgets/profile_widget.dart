@@ -206,6 +206,8 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                                             activityId: wish.activities[index2].id,
                                                             travelWishId: wish.id
                                                         );
+                                                        SonaAnalytics.log(MatchEvent.match_like_wishlist.name);
+
                                                         ref.read(backgroundImageProvider.notifier).updateBgImage(null);
 
                                                         widget.next.call();

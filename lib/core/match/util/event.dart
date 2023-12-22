@@ -1,12 +1,14 @@
 enum MatchEvent{
-  match_swipe_up,
-  match_swipe_down,
   match_like,
   match_arrow_send,
   match_gopay,
   match_report,
   match_like_limit,
-  match_popup_sona
+  match_popup_sona,
+  //20231222 add
+  match_like_wishlist,
+  match_like_justlike,
+  match_dislike
 }
 enum ChatEvent{
   pay_page_open,
@@ -15,8 +17,6 @@ enum ChatEvent{
   pay_chatlist_blur,
   pay_chat_sonamsg,
   pay_chat_suggest,
-  pay_chat_style,
-  pay_chat_hook,
   pay_match_arrow,
   pay_match_likelimit,
   pay_continue,

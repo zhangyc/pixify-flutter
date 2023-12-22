@@ -607,18 +607,12 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                             if(controller.text.isEmpty){
                               return ;
                             }
-
                             if(canArrow){
                               arrow=arrow-1;
                               MatchApi.customSend(info.id,controller.text);
-
-                              //MatchApi.arrow(info.id);
                               SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                               next.call();
                               Navigator.pop(context);
-                              //arrowController.reset();
-                              //arrowController.forward() ;
-                              //widget.userInfo.arrowed=true;
                             }else {
                               bool isMember=ref.read(myProfileProvider)?.isMember??false;
                               if(isMember){

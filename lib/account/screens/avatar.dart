@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/face_detection/detection.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../generated/l10n.dart';
 import '../../utils/dialog/crop_image.dart';
@@ -189,7 +190,17 @@ class _AvatarScreenState extends State<AvatarScreen> {
 
       if (file == null) throw Exception('No file');
       ///todo 人脸检测
-      ///faceDetection(file.path);
+      faceDetection(file.path).then((value){
+        if(value){
+           SonaAnalytics.log('reg_faceDetection',{
+             "result":1
+           });
+        }else {
+          SonaAnalytics.log('reg_faceDetection',{
+            "result":0
+          });
+        }
+      });
       if (file.name.toLowerCase().endsWith('.gif')) {
         Fluttertoast.showToast(msg: 'GIF is not allowed');
         throw Error();
