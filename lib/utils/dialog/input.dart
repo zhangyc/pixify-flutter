@@ -268,7 +268,7 @@ Future<String?> showSingleLineTextField({
   String? content,
   String? hintText,
   keyboardType = TextInputType.text,
-  int maxLength = 64
+  int maxLen = 64
 }) {
   final controller = TextEditingController();
   return showModalBottomSheet<String>(
@@ -279,6 +279,15 @@ Future<String?> showSingleLineTextField({
     useSafeArea: true,
     clipBehavior: Clip.antiAlias,
     builder: (BuildContext context) {
+      String? validator(String? text) {
+        if (text == null || text.isEmpty) return 'Activity can not be empty';
+        final len = utf8.encode(text).length;
+        if (len > maxLen) {
+          return 'Can not over 30 characters';
+        }
+        return null;
+      }
+
       return Container(
         margin: EdgeInsets.only(top: 16),
         padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).viewInsets.bottom + 16),
@@ -347,13 +356,17 @@ Future<String?> showSingleLineTextField({
                         borderRadius: BorderRadius.circular(20)
                       ),
                     ),
-                    validator: (String? text) {
-                      if (text == null || text.isEmpty) return 'Activity can not be empty';
+                    validator: validator,
+                    onChanged: (String text) {
                       final len = utf8.encode(text).length;
-                      if (len > 30) {
-                        return 'Can not over 30 characters';
+                      if (len > maxLen) {
+                        controller.text = utf8.decode(utf8.encode(text).sublist(0, 30), allowMalformed: true);
                       }
-                      return null;
+                    },
+                    buildCounter: (_, {required int currentLength, required bool isFocused, required int? maxLength}) {
+                      final currLen = utf8.encode(controller.text).length;
+                      if (currLen < maxLen / 2) return Container();
+                      return Text('$currLen/$maxLen');
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     autofocus: true,
@@ -364,9 +377,14 @@ Future<String?> showSingleLineTextField({
                 Container(
                   padding: EdgeInsets.only(top: 4),
                   child: SIconButton(
-                      icon: SonaIcons.check,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      onTap: () => Navigator.pop(context, controller.text.trim())
+                    icon: SonaIcons.check,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    onTap: () {
+                      final text = controller.text.trim();
+                      if (validator(text) == null) {
+                        Navigator.pop(context, text);
+                      }
+                    }
                   ),
                 )
               ],
@@ -494,7 +512,7 @@ Future<T?> showActionButtons<T>({
     builder: (BuildContext context) {
       final keys = options.keys.toList(growable: false);
       return Container(
-        margin: EdgeInsets.all(16),
+        margin: EdgeInsets.only(top: 4),
         color: Colors.transparent,
         padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom),
         child: Column(
@@ -586,7 +604,7 @@ Future<T?> showRadioFields<T>({
     builder: (BuildContext context) {
       final keys = options.keys.toList(growable: false);
       return Container(
-        margin: EdgeInsets.only(top: 16),
+        margin: EdgeInsets.only(top: 4),
         padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
         decoration: ShapeDecoration(
           color: Colors.white,

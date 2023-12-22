@@ -7,7 +7,7 @@ import 'package:sona/utils/global/global.dart';
 import 'const.dart';
 
 ThemeData get themeData {
-  final isCJK = (profile?.locale ?? Platform.localeName).startsWith(RegExp('[zh|ja|ko]'));
+  final isCJK = RegExp(r'^(zh|ja|ko|yue)').hasMatch(profile?.locale ?? Platform.localeName);
   return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,

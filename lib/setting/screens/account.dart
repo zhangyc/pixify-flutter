@@ -117,10 +117,9 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
   }
 
   Future _switchLanguage() async {
-    String? local=ref.read(myProfileProvider)!.locale;
+    String? local = ref.read(myProfileProvider)!.locale;
     var value = await showLocalePicker(context: context, initialValue: local);
     if (value != null) {
-
       languageNotifier.value=findMatchedSonaLocale(value);
       await ref.read(myProfileProvider.notifier).updateFields(locale: findMatchedSonaLocale(value));
       ref.invalidate(asyncPopularTravelCountriesProvider);

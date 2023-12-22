@@ -10,11 +10,17 @@ import 'package:sona/core/travel_wish/screens/country_selector.dart';
 import 'package:sona/core/travel_wish/screens/timeframe_selector.dart';
 import 'package:sona/core/travel_wish/services/travel_wish.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../common/widgets/image/icon.dart';
 
 class TravelWishCreator extends ConsumerStatefulWidget {
-  const TravelWishCreator({super.key, this.wish});
+  const TravelWishCreator({
+    super.key,
+    this.first = false,
+    this.wish
+  });
+  final bool first;
   final TravelWish? wish;
 
   @override
@@ -103,6 +109,12 @@ class _TravelWishCreatorState extends ConsumerState<TravelWishCreator> {
         timeframe: params.timeframe!
       );
       if (resp.statusCode == 0) {
+        if (widget.first) SonaAnalytics.log('reg_wishlist');
+        if (widget.wish == null) {
+          SonaAnalytics.log('wish_create');
+        } else {
+          SonaAnalytics.log('wish_edit');
+        }
         ref.invalidate(asyncMyTravelWishesProvider);
         if (!mounted) return;
         if (Navigator.of(context).canPop()) {

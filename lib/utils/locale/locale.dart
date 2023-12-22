@@ -37,8 +37,10 @@ final supportedSonaLocales = [
   SonaLocale.fromLanguageTag('de', 'Deutsch'),
   SonaLocale.fromLanguageTag('it', 'Italiano'),
   SonaLocale.fromLanguageTag('ru', 'Русский'),
-  // SonaLocale.fromLanguageTag('yue', '粵語'),
+  SonaLocale.fromLanguageTag('yue', '粵語'),
 ];
+
+Iterable<ui.Locale> supportedLocales = (List.from(supportedSonaLocales)..removeLast()).map<ui.Locale>((sl) => sl.toUILocale());
 
 SonaLocale findMatchedSonaLocale(String languageTag) {
   final locale = Locale.tryParse(languageTag);
