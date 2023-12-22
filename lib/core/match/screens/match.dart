@@ -57,10 +57,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         _initData();
 
       }).catchError((e){
+        _initData();
         Fluttertoast.showToast(msg: 'Failed to obtain permission.');
       });
     });
-    _initData();
     languageNotifier.addListener(() {
       _initData();
     });
@@ -433,7 +433,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 }
               }else if(ref.watch(myProfileProvider)!.photos.length<3){
                 if(mounted){
-                  showEditBio(context);
+                  showUploadPortrait(context);
                 }
               }
             }

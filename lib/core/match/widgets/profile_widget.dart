@@ -168,8 +168,11 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                             height: 16,
                                           ),
                                           Container(
+                                            constraints: BoxConstraints(
+                                              minHeight: 266
+                                            ),
                                             // width: MediaQuery.of(context).size.width,
-                                            height: 266,
+                                            // height: 266,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(24),
                                               border: Border.all(
