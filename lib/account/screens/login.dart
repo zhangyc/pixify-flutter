@@ -169,7 +169,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
-                        return WebView(url: env.privacyPolicy, title: S.of(context).privacyPolicy);
+                        return WebView(url: env.termsOfService, title: S.of(context).privacyPolicy);
                       }))
                   ),
                   TextSpan(
@@ -183,7 +183,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
-                        return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
+                        return WebView(url: env.privacyPolicy, title: S.of(context).termsOfService);
                       }))
                   ),
                   TextSpan(

@@ -39,18 +39,20 @@ class SonaApp extends HookConsumerWidget {
       navigatorObservers: [routeObserver],
       // routes: _routes,
       onGenerateRoute: _onGenerateRoute,
-      supportedLocales: supportedSonaLocales.map<Locale>((sl) => sl.toUILocale()),
-      localizationsDelegates: [
+      supportedLocales: supportedLocales,
+      localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       locale: ref.watch(localeProvider),
-      // localeListResolutionCallback: (List<Locale>? locales, Iterable<Locale> supportedLocales) {
-      //
-      //   // 判断当前locale是否为英语系国家，如果是直接返回Locale('en', 'US')
-      // },
+      localeListResolutionCallback: (List<Locale>? locales, Iterable<Locale> supportedLocales) {
+        if (profile?.locale == 'yue') {
+          return const Locale('zh', 'TW');
+        }
+        return const Locale('en');
+      },
     );
   }
 }

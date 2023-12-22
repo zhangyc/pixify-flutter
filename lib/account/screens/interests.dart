@@ -68,7 +68,7 @@ class _HobbiesSelectorState extends ConsumerState<HobbiesSelector> {
               children: [
                 for (final hobby in data)
                   HobbyTag<String>(
-                      displayName: '${hobby.emoji ?? ''} ${hobby.displayName}',
+                      displayName: hobby.displayName,
                       value: hobby.code,
                       selected: _selected.contains(hobby.code),
                       onSelect: (hb) => _toggleInterest(hb)

@@ -1,20 +1,25 @@
 class UserHobby {
   const UserHobby({
     required this.code,
-    required this.displayName,
+    required this.name,
     this.emoji
   });
   final String code;
-  final String displayName;
+  final String name;
   final String? emoji;
+  String get displayName => '${emoji ?? ''} $name';
 
   factory UserHobby.fromJson(Map<String, dynamic> json) {
-    return UserHobby(code: json['code'], displayName: json['name'], emoji: json['icon']);
+    return UserHobby(
+        code: json['code'],
+        name: json['name'],
+        emoji: json['icon']
+    );
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
     'code': code,
-    'name': displayName,
+    'name': name,
     'icon': emoji
   };
 }
