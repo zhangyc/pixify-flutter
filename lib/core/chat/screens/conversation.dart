@@ -115,7 +115,11 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
 
   Future _chat(ChatEntry entry, ImConversation convo) {
     if (convo.hasUnreadMessage) SonaAnalytics.log('chatlist_unread');
-    return Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(entry: entry, otherSide: convo.otherSide)));
+    return Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(
+      entry: entry,
+      otherSide: convo.otherSide,
+      hasHistoryMessage: convo.lastMessageId != null
+    )));
   }
 
   Future _onHookTap(int userId) async {
