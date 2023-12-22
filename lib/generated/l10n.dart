@@ -330,20 +330,20 @@ class S {
     );
   }
 
-  /// `Find foreigners in the same city`
+  /// `We need your location to make your social experience better`
   String get locationPermissionRequestSubtitle {
     return Intl.message(
-      'Find foreigners in the same city',
+      'We need your location to make your social experience better',
       name: 'locationPermissionRequestSubtitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Last step`
+  /// `Almost done`
   String get signUpLastStepPageTitle {
     return Intl.message(
-      'Last step',
+      'Almost done',
       name: 'signUpLastStepPageTitle',
       desc: '',
       args: [],
@@ -390,21 +390,11 @@ class S {
     );
   }
 
-  /// `Which`
+  /// `Which Country are you more interested in?`
   String get wishCountryPickerTitle {
     return Intl.message(
-      'Which',
+      'Which Country are you more interested in?',
       name: 'wishCountryPickerTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Country's peeps you vibin' with?`
-  String get wishCountryPickerSubtitle {
-    return Intl.message(
-      'Country\'s peeps you vibin\' with?',
-      name: 'wishCountryPickerSubtitle',
       desc: '',
       args: [],
     );
@@ -1965,6 +1955,56 @@ class S {
     return Intl.message(
       'Set Default',
       name: 'setDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SONA is like a home base for world citizens`
+  String get onboarding0 {
+    return Intl.message(
+      'SONA is like a home base for world citizens',
+      name: 'onboarding0',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Whether at home or on the road, meet people worldwide. And...`
+  String get onboarding1 {
+    return Intl.message(
+      'Whether at home or on the road, meet people worldwide. And...',
+      name: 'onboarding1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You'll gain superpower:\nPolyglot\nNo more language worries`
+  String get onboarding2 {
+    return Intl.message(
+      'You\'ll gain superpower:\nPolyglot\nNo more language worries',
+      name: 'onboarding2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Talk less, Love more\nA legendary romance awaits you`
+  String get onboarding3 {
+    return Intl.message(
+      'Talk less, Love more\nA legendary romance awaits you',
+      name: 'onboarding3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set your wishlist for better matching!`
+  String get onboardingWish {
+    return Intl.message(
+      'Set your wishlist for better matching!',
+      name: 'onboardingWish',
       desc: '',
       args: [],
     );

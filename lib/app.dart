@@ -6,6 +6,7 @@ import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/screens/login.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/providers/token.dart';
+import 'package:sona/onboarding/screen/onboarding.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sona/theme/theme.dart';
@@ -29,7 +30,9 @@ class SonaApp extends HookConsumerWidget {
       profile = ref.read(myProfileProvider);
     }
     final navigatorKey = global.navigatorKey;
-    final initialRoute = profile == null || !profile.completed ? 'login' : '/';
+    final onboarding = kvStore.getBool('onboarding') ?? false;
+    var initialRoute = profile == null || !profile.completed ? 'login' : '/';
+    if (profile == null && !onboarding) initialRoute = 'onboarding';
     return MaterialApp(
       key: ValueKey(token),
       navigatorKey: navigatorKey,
@@ -58,6 +61,7 @@ class SonaApp extends HookConsumerWidget {
 }
 
 final _routes = <String, WidgetBuilder>{
+  'onboarding': (_) => const OnboardingScreen(),
   '/': (_) => const SonaHome(),
   'login': (_) => const LoginPhoneNumberScreen(),
   'setting': (_) => const SettingScreen(),

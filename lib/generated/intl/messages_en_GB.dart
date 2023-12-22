@@ -148,7 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedYou": MessageLookupByLibrary.simpleMessage("Liked you"),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage(
-                "Find foreigners in the same city"),
+                "We need your location to make your social experience better"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("Authorize location"),
         "matchPageSelectIdeas": m3,
@@ -166,6 +166,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Status: No messages\n\nWhat to do: Go to match\n\nSuggestion: Make an awesome profile"),
         "noThanks": MessageLookupByLibrary.simpleMessage("No Thanks"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "onboarding0": MessageLookupByLibrary.simpleMessage(
+            "SONA is like a home base for world citizens"),
+        "onboarding1": MessageLookupByLibrary.simpleMessage(
+            "Whether at home or on the road, meet people worldwide. And..."),
+        "onboarding2": MessageLookupByLibrary.simpleMessage(
+            "You\'ll gain superpower:\nPolyglot\nNo more language worries"),
+        "onboarding3": MessageLookupByLibrary.simpleMessage(
+            "Talk less, Love more\nA legendary romance awaits you"),
+        "onboardingWish": MessageLookupByLibrary.simpleMessage(
+            "Set your wishlist for better matching!"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Oops, no data right now"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -218,7 +228,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("Show your personality"),
         "signUpLastStepPageTitle":
-            MessageLookupByLibrary.simpleMessage("Last step"),
+            MessageLookupByLibrary.simpleMessage("Almost done"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6 Months"),
         "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
             "⭕ SONA interpretation is turned off"),
@@ -329,9 +339,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "if you go there, Which cities do you want to visit?"),
-        "wishCountryPickerSubtitle": MessageLookupByLibrary.simpleMessage(
-            "Country\'s peeps you vibin\' with?"),
-        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("Which"),
+        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage(
+            "Which Country are you more interested in?"),
         "wishCreationComplete":
             MessageLookupByLibrary.simpleMessage("Your wish has been received"),
         "wishDateOptionHere":

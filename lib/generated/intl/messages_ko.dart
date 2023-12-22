@@ -134,7 +134,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "상태: 아직 좋아요 없음\n\n할 일: 주도권을 잡다\n\n제안: \n만족스러운 사진을 업로드하세요\n진실된 바이오를 작성하세요\n관심사를 고르세요"),
         "likedYou": MessageLookupByLibrary.simpleMessage("당신을 좋아했어요"),
         "locationPermissionRequestSubtitle":
-            MessageLookupByLibrary.simpleMessage("같은 도시의 외국인 찾기"),
+            MessageLookupByLibrary.simpleMessage(
+                "소셜 경험을 향상시키기 위해 위치 정보가 필요합니다"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("위치 승인"),
         "matchPageSelectIdeas": m3,
@@ -151,6 +152,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "상태: 메시지 없음\n\n할 일: 매칭 페이지로 가자\n\n제안: 멋진 프로필을 만드세요"),
         "noThanks": MessageLookupByLibrary.simpleMessage("아니요, 감사합니다"),
         "notifications": MessageLookupByLibrary.simpleMessage("알림"),
+        "onboarding0":
+            MessageLookupByLibrary.simpleMessage("SONA는 세계 시민들의 근거지와 같습니다"),
+        "onboarding1": MessageLookupByLibrary.simpleMessage(
+            "집에 있든 길 위에 있든, 전 세계 사람들을 만나세요. 그리고..."),
+        "onboarding2": MessageLookupByLibrary.simpleMessage(
+            "언어를 마스터하는 초능력을 얻게 됩니다. 더 이상 의사소통 장벽은 없습니다"),
+        "onboarding3": MessageLookupByLibrary.simpleMessage(
+            "말은 줄이고, 사랑은 늘려요. 전설적인 로맨스가 당신을 기다리고 있습니다"),
+        "onboardingWish":
+            MessageLookupByLibrary.simpleMessage("소원 목록을 완성하여 더 이상적인 매칭을 얻으세요"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("오잉, 지금 데이터가 없어요"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -196,7 +207,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("당신의 개성을 보여주세요"),
         "signUpLastStepPageTitle":
-            MessageLookupByLibrary.simpleMessage("마지막 단계"),
+            MessageLookupByLibrary.simpleMessage("곧 완성됩니다"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6개월"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA 동시 통역이 꺼졌습니다"),
@@ -299,9 +310,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishCityPickerSkipButton": m5,
         "wishCityPickerSubtitle":
             MessageLookupByLibrary.simpleMessage("거기에 간다면, 어떤 도시를 방문하고 싶습니까?"),
-        "wishCountryPickerSubtitle":
-            MessageLookupByLibrary.simpleMessage("나라 사람들과 잘 맞습니까?"),
-        "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage("어느"),
+        "wishCountryPickerTitle":
+            MessageLookupByLibrary.simpleMessage("어느 나라에 더 관심이 있나요?"),
         "wishCreationComplete":
             MessageLookupByLibrary.simpleMessage("당신의 소원을 받았습니다"),
         "wishDateOptionHere": MessageLookupByLibrary.simpleMessage("이미 여기 있어요"),
