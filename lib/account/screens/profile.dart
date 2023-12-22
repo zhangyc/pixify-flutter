@@ -36,6 +36,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   void initState() {
+    SonaAnalytics.log('my_profile_edit');
     super.initState();
   }
 
@@ -249,6 +250,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   void _seeMyProfile() {
+    SonaAnalytics.log('my_profile_preview');
     Navigator.push(context, MaterialPageRoute(
         builder: (_) => UserProfileScreen(
           userId: ref.read(myProfileProvider)!.toUser().id,
@@ -258,10 +260,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Future _onEditInterests() async {
-    SonaAnalytics.log('profile_interests');
     final result = await showHobbiesSelector(context: context);
     if (result != null) {
       ref.read(myProfileProvider.notifier).updateFields(interests: result);
+      SonaAnalytics.log('my_profile_interests_edit');
     }
   }
 
@@ -275,7 +277,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           onSave: (String text) async {
             await ref.read(myProfileProvider.notifier).updateFields(bio: text);
             Navigator.pop(context);
-            SonaAnalytics.log('profile_bio');
+            SonaAnalytics.log('my_profile_bio_edit');
           }
         )
       )
@@ -319,6 +321,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if (bytes == null) return;
     await addPhoto(bytes: bytes, filename: file.name);
     ref.read(myProfileProvider.notifier).refresh();
+    SonaAnalytics.log('my_profile_photo_add');
   }
 
   Future _onRemovePhoto(int photoId) async {

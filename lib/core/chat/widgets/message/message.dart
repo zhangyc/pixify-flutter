@@ -76,11 +76,14 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
                 case MessageSendingError.maximumLimit:
                   if (ref.read(myProfileProvider)!.isMember) {
                     coolDownDaily();
+                    SonaAnalytics.log('sona_message_hit_maximum_limit:plus');
                   } else {
                     ref.read(entitlementsProvider.notifier).limit(interpretation: 0);
+                    SonaAnalytics.log('sona_message_hit_maximum_limit:non-plus');
                   }
                   return S.current.toastHitDailyMaximumLimit;
                 case MessageSendingError.contentFilter:
+                  SonaAnalytics.log('sona_message_hit_content_filter');
                   return S.current.exceptionSonaContentFilterTips;
                 default:
                   return S.current.exceptionFailedToSendTips;

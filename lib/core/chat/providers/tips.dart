@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../utils/dialog/subsciption.dart';
 import '../../../utils/toast/cooldown.dart';
@@ -25,8 +26,10 @@ class AsyncSonaTipsNotifier extends AutoDisposeFamilyAsyncNotifier<SonaTips, int
     if (resp.statusCode == 10150) {
       if (ref.read(myProfileProvider)!.isMember) {
         coolDownWeekly();
+        SonaAnalytics.log('sona_tips_hit_maximum_limit:plus');
       } else {
         showSubscription(SubscribeShowType.unlockSonaTips(),FromTag.pay_chat_suggest);
+        SonaAnalytics.log('sona_tips_hit_maximum_limit:non-plus');
       }
       throw Error();
     }
