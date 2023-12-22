@@ -36,7 +36,7 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
     state = state?.copyWith(cityVisibility: value);
   }
 
-  Future<void> updateField({
+  Future<bool> updateFields({
     String? name,
     Gender? gender,
     DateTime? birthday,
@@ -59,18 +59,19 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
       countryCode: countryCode
     );
     if (resp.statusCode == 0) {
-      await refresh();
+      return refresh();
     } else {
-      //
+      return false;
     }
   }
 
-  Future<void> refresh() async {
+  Future<bool> refresh() async {
     final resp = await getMyProfile();
     if (resp.statusCode == 0) {
       update(MyProfile.fromJson(resp.data));
+      return true;
     } else {
-      //
+      return false;
     }
   }
 }

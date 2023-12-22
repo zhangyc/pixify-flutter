@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -193,32 +194,35 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
     );
   }
 
-  void _next() async {
+  Future<void> _next() async {
     if (_nation == null || _language == null) return;
     String? url;
     try {
       EasyLoading.show();
       url = await uploadImage(bytes: widget.avatar);
+      await _updateFields(url);
     } catch (e) {
       if (kDebugMode) print('upload avatar error: $e');
+      Fluttertoast.showToast(msg: 'Failed to upload avatar');
       EasyLoading.dismiss();
       return;
     }
+  }
+
+  Future _updateFields(String avatar) async {
     try {
-      await ref.read(myProfileProvider.notifier).updateField(
+      final result = await ref.read(myProfileProvider.notifier).updateFields(
         name: widget.name,
         birthday: widget.birthday,
         gender: widget.gender,
-        avatar: url,
+        avatar: avatar,
         position: widget.location,
         locale: findMatchedSonaLocale(_language!),
         countryCode: _nation!.code
       );
-      EasyLoading.dismiss();
-      if (!mounted) return;
-      await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => TravelWishCreator()), (_) => false);
+      if (result) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => TravelWishCreator()), (_) => false);
     } catch (e) {
-      //
+      Fluttertoast.showToast(msg: 'Network error, please try again later');
     } finally {
       EasyLoading.dismiss();
     }

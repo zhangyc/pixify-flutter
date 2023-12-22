@@ -167,7 +167,7 @@ showEditBio<T>(BuildContext context){
                                       if(controller.text.isEmpty){
                                         return;
                                       }
-                                      ref.read(myProfileProvider.notifier).updateField(bio: controller.text).then((_) => Navigator.pop(context));
+                                      ref.read(myProfileProvider.notifier).updateFields(bio: controller.text).then((_) => Navigator.pop(context));
                                     }
                                 ),
                               ),
@@ -387,7 +387,7 @@ showChooseHobbies<T>(BuildContext context){
                             text: S.of(context).buttonGenerate,
                             loadingWhenAsyncAction: true,
                             onTap: (){
-                              ref.read(myProfileProvider.notifier).updateField(interests: _selected).then((_){
+                              ref.read(myProfileProvider.notifier).updateFields(interests: _selected).then((_){
                                 Navigator.pop(context);
                                 showEditBio(context);
                               });
