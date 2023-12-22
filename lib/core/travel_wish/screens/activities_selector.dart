@@ -137,7 +137,7 @@ class _CitiesSelectorState extends ConsumerState<ActivitiesSelector> {
                             ),
                             child: OutlinedButton(
                               onPressed: () async {
-                                final input = await showSingleLineTextField(context: context, title: 'Add your thought', maxLength: 30);
+                                final input = await showSingleLineTextField(context: context, title: 'Add your thought', maxLen: 30);
                                 if (input != null) {
                                   try {
                                     EasyLoading.show();

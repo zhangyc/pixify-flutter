@@ -47,12 +47,12 @@ class SonaApp extends HookConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       locale: ref.watch(localeProvider),
-      localeListResolutionCallback: (List<Locale>? locales, Iterable<Locale> supportedLocales) {
+      localeResolutionCallback: (_, __) {
         if (profile?.locale == 'yue') {
           return const Locale('zh', 'TW');
         }
-        return const Locale('en');
-      },
+        return null;
+      }
     );
   }
 }
