@@ -494,7 +494,7 @@ Future<T?> showActionButtons<T>({
     builder: (BuildContext context) {
       final keys = options.keys.toList(growable: false);
       return Container(
-        margin: EdgeInsets.all(16),
+        margin: EdgeInsets.all(4),
         color: Colors.transparent,
         padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom),
         child: Column(
@@ -586,7 +586,7 @@ Future<T?> showRadioFields<T>({
     builder: (BuildContext context) {
       final keys = options.keys.toList(growable: false);
       return Container(
-        margin: EdgeInsets.only(top: 16),
+        margin: EdgeInsets.only(top: 4),
         padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
         decoration: ShapeDecoration(
           color: Colors.white,
