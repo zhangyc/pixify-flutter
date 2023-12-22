@@ -6,6 +6,26 @@ class GalleyItem extends StatelessWidget {
   final List<String> images;
   @override
   Widget build(BuildContext context) {
+    return ListView.builder(itemBuilder: (_,i){
+      if(i==0){
+        return Container();
+      }
+      return Container(
+        margin: EdgeInsets.only(
+            bottom: 16
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          image: DecorationImage(image: CachedNetworkImageProvider(images[i]),fit: BoxFit.cover),
+        ),
+        height: 457,
+        width: MediaQuery.of(context).size.width-16*2,
+      );
+    },
+    itemCount: images.length,
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+    );
     return Column(
       children: images.map((e) => Container(
           margin: EdgeInsets.only(

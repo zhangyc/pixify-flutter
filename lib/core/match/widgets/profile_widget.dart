@@ -44,7 +44,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
   @override
   void initState() {
     info=widget.info;
-    info.photos.removeAt(0);
+    // info.photos.removeAt(0);
     super.initState();
   }
 
