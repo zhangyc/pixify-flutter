@@ -40,14 +40,17 @@ class ProfileWidget extends ConsumerStatefulWidget {
 }
 
 class _ProfileState extends ConsumerState<ProfileWidget> {
+  late MatchUserInfo info;
   @override
   void initState() {
+    info=widget.info;
+    info.photos.removeAt(0);
     super.initState();
   }
 
   PageController pageController=PageController(viewportFraction: 0.9);
 
-  late MatchUserInfo info=widget.info;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
