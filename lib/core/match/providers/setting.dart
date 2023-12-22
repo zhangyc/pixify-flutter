@@ -86,3 +86,7 @@ bool get showUpdateUserInfo => (appCommonBox.get(DateFormat('yyyy.MM.dd').format
 set showUpdateUserInfo(value){
   appCommonBox.put(DateFormat('yyyy.MM.dd').format(DateTime.now()), value);
 }
+bool get todayIsShowed => appCommonBox.get('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowed',defaultValue: false);
+set todayIsShowed(value){
+  appCommonBox.put('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowed', value);
+}

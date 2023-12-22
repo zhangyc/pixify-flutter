@@ -380,9 +380,9 @@ showChooseHobbies<T>(BuildContext context){
                         ),
                         Flexible(
                           child: ColoredButton(
-                            borderColor:Color(0xff7e7e7e),
+                            borderColor:_selected.isEmpty?Color(0xff7e7e7e):Color(0xff2c2c2c),
                             fontColor: Color(0xffF6F3F3),
-                            color: Color(0xff7e7e7e),
+                            color: _selected.isEmpty?Color(0xff7e7e7e):Color(0xff2c2c2c),
                             size: ColoredButtonSize.large,
                             text: S.of(context).buttonGenerate,
                             loadingWhenAsyncAction: true,
