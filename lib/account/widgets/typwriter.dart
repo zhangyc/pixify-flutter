@@ -56,33 +56,18 @@ class _TypwriterState extends State<Typwriter> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Text.rich(
-        TextSpan(
-          children: [
-            WidgetSpan(
-              child: Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  shape: BoxShape.circle
-                ),
-                alignment: Alignment.center,
-                child: Text('SONA', style: TextStyle(fontSize: 7, fontWeight: FontWeight.w600)),
-              )
-            ),
-            ...List.generate(_index, (index) => index).map((index) => TextSpan(
-              text: _text[index],
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: matches.any((range) => index >= range.start && index <= range.end) ? Color(0xFFDD70E0) : Color(0xFF5D5D5F),
-                  fontSize: 20
-              )
-            ))
-          ]
-        )
+    return Text.rich(
+      TextSpan(
+        children: [
+          ...List.generate(_index, (index) => index).map((index) => TextSpan(
+            text: _text[index],
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontSize: 28
+            )
+          ))
+        ]
       ),
+      textAlign: TextAlign.center,
     );
   }
 }

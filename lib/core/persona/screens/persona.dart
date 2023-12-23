@@ -36,7 +36,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
     final asyncMyTravelWishes = ref.watch(asyncMyTravelWishesProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Me', style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+        title: Text(S.of(context).me, style: Theme.of(context).textTheme.headlineLarge?.copyWith(
             fontSize: 28,
             fontWeight: FontWeight.w900
         )),

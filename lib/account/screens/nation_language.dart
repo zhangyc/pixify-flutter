@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
+import 'package:sona/core/travel_wish/screens/onboarding.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/locale/locale.dart';
@@ -224,7 +225,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
         locale: findMatchedSonaLocale(_language!),
         countryCode: _nation!.code
       );
-      if (result) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => TravelWishCreator(first: true)), (_) => false);
+      if (result) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => TravelWishOnboardingScreen()), (_) => false);
     } catch (e) {
       Fluttertoast.showToast(msg: 'Network error, please try again later');
     } finally {

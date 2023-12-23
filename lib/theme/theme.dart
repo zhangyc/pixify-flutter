@@ -45,7 +45,7 @@ ThemeData get themeData {
           titleLarge: TextStyle(
               color: Colors.black,
               fontSize: 20,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w900,
               height: 1.5,
               letterSpacing: 0.4
           ),
@@ -66,7 +66,7 @@ ThemeData get themeData {
           headlineLarge: TextStyle(
               color: fontColour,
               fontSize: 32,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w900,
               height: 1.5,
               letterSpacing: 0
           ),
