@@ -1,28 +1,23 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
+import 'package:sona/utils/global/global.dart';
+
+import '../chat/models/conversation.dart';
 
 final chatNoticeProvider = StateProvider<bool>((ref) {
   final convos = ref.watch(conversationStreamProvider).unwrapPrevious().valueOrNull;
+  ref.listenSelf((previous, next) {
+    kvStore.setInt('convos_check_time', DateTime.now().millisecondsSinceEpoch);
+  });
+  final convosCheckTime = kvStore.getInt('convos_check_time') != null ? DateTime.fromMillisecondsSinceEpoch(kvStore.getInt('convos_check_time')!) : null;
   if (convos == null) return false;
-  if (convos.any((convo) => convo.hasUnreadMessage || convo.lastMessageId == null)) {
+  if (convos.any((ImConversation convo) => (convo.hasUnreadMessage || convo.lastMessageId == null) && (convosCheckTime == null || convo.dateTime.isAfter(convosCheckTime)))) {
     return true;
   } else {
     return false;
   }
 }, dependencies: [conversationStreamProvider]);
-
-final bottomChatNoticeProvider = StateProvider<ChatNoticeMode>((ref) {
-  try {
-    final hasNewMsg = ref.watch(chatNoticeProvider);
-    final hasNewLikeMe = ref.watch(likeMeNoticeNotifier);
-    if (hasNewMsg) return ChatNoticeMode.message;
-    if (hasNewLikeMe) return ChatNoticeMode.like;
-  } catch (e) {
-    //
-  }
-  return ChatNoticeMode.none;
-}, dependencies: [chatNoticeProvider, likeMeNoticeNotifier]);
 
 enum ChatNoticeMode {
   message,
