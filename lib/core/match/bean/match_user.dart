@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
+import 'package:sona/account/models/hobby.dart';
 
 import '../../../common/models/user.dart';
 
@@ -85,7 +86,7 @@ class MatchUserInfo extends UserInfo{
   @override
   final String? impression;
   int likeMe=0;  //1 喜欢了，0 无
-  List<Interest> interest=[];
+  List<UserHobby> interest=[];
   List<WishBean> wishList=[];
   String? likeActivityName; // 喜欢的原因，点击喜欢时选中的活动名称
   factory MatchUserInfo.fromJson(Map<String, dynamic> json) {
@@ -94,7 +95,7 @@ class MatchUserInfo extends UserInfo{
     final _travelWish = json['travelWish'];
 
     List<String> photos = [];
-    List<Interest> interest = [];
+    List<UserHobby> interest = [];
     List<WishBean> wishList = [];
 
     if (images is List && images.isNotEmpty) {
@@ -105,7 +106,7 @@ class MatchUserInfo extends UserInfo{
       }
     }
     if(interestTag is List && interestTag.isNotEmpty){
-      interest=interestTag.map((e) => Interest.fromJson(e)).toList();
+      interest=interestTag.map((e) => UserHobby.fromJson(e)).toList();
     }
     if(_travelWish is List && _travelWish.isNotEmpty){
       wishList=_travelWish.map((e) => WishBean.fromJson(e)).toList();
@@ -150,24 +151,6 @@ class MatchUserInfo extends UserInfo{
   }
 }
 
-class Interest {
-  String? code;
-  String? name;
-
-  Interest({this.code, this.name});
-
-  Interest.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['name'] = this.name;
-    return data;
-  }
-}
 class WishBean {
   int? id;
   int? createDate;

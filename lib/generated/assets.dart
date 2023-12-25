@@ -53,7 +53,14 @@ class Assets {
   static const String imagesM5 = 'assets/images/m5.png';
   static const String imagesM6 = 'assets/images/m6.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
+  static const String imagesOnboarding0 = 'assets/images/onboarding_0.png';
+  static const String imagesOnboarding1 = 'assets/images/onboarding_1.png';
+  static const String imagesOnboarding2 = 'assets/images/onboarding_2.png';
+  static const String imagesOnboarding3 = 'assets/images/onboarding_3.png';
+  static const String imagesOnboardingBg = 'assets/images/onboarding_bg.png';
+  static const String imagesOnboardingFg = 'assets/images/onboarding_fg.png';
   static const String imagesPetPortrait = 'assets/images/pet_portrait.png';
+  static const String imagesPlaceholder = 'assets/images/placeholder.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
   static const String imagesRewardArrow = 'assets/images/reward_arrow.png';
   static const String imagesSubBg = 'assets/images/sub_bg.png';

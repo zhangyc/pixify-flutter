@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../account/models/hobby.dart';
 import '../../../generated/l10n.dart';
 import '../bean/match_user.dart';
 
 
 class InterestItem extends StatelessWidget {
   const InterestItem({super.key, required this.interest});
-  final List<Interest> interest;
+  final List<UserHobby> interest;
   @override
   Widget build(BuildContext context) {
     return interest.isEmpty?Container():SizedBox(
@@ -33,7 +34,7 @@ class InterestItem extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(14)
               ),
-              child: Text(e.name??'',style: TextStyle(
+              child: Text(e.displayName??'',style: TextStyle(
                 color: Color(0xff2c2c2c)
               ),)
             )).toList(),
