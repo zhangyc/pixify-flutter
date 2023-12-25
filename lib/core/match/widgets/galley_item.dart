@@ -25,6 +25,7 @@ class GalleyItem extends StatelessWidget {
     itemCount: images.length,
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
     );
     return Column(
       children: images.map((e) => Container(
