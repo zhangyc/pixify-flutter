@@ -157,9 +157,9 @@ showEditBio<T>(BuildContext context){
                               ),
                               Flexible(
                                 child: ColoredButton(
-                                    borderColor:Color(0xff7e7e7e),
+                                    borderColor:Color(0xff2c2c2c),
                                     fontColor: Color(0xffF6F3F3),
-                                    color: Color(0xff7e7e7e),
+                                    color: Color(0xff2c2c2c),
                                     size: ColoredButtonSize.large,
                                     text: S.of(context).takeIt,
                                     loadingWhenAsyncAction: true,
