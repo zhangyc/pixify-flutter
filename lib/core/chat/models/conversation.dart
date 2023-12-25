@@ -61,7 +61,8 @@ class ImConversation {
   }
 
   bool get hasUnreadMessage =>
-      lastMessageOriginalContent != null
-        && convoId == lastMessageSenderId
+      (lastMessageId == null
+        || lastMessageOriginalContent != null
+        && convoId == lastMessageSenderId)
         && (checkTime == null || checkTime!.isBefore(dateTime));
 }
