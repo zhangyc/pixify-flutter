@@ -49,7 +49,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-
+      ///直接获取用户信息里的经纬度。
       determinePosition().then((value){
         longitude=value.longitude;
         latitude=value.latitude;
@@ -425,6 +425,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           duration: const Duration(milliseconds: 2000),
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
+            currentPage=value!;
             showUpdateUserInfo=value;
             if(showUpdateUserInfo&&!todayIsShowed){
               if(ref.watch(myProfileProvider)!.interests.isEmpty&&ref.watch(myProfileProvider)!.bio==null){
@@ -439,7 +440,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 }
               }
             }
-            currentPage=value!;
             setState(() {
 
             });
