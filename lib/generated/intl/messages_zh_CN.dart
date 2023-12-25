@@ -150,7 +150,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "onboarding3":
             MessageLookupByLibrary.simpleMessage("闲话少说，开始吧！\n传奇的浪漫邂逅在等着你"),
         "onboardingWish":
-            MessageLookupByLibrary.simpleMessage("请完成心愿单获得更理想的配对"),
+            MessageLookupByLibrary.simpleMessage("请完成心愿单\n获得更理想的配对"),
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage("哎呀，现在没有数据"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage("更多推荐来自你心愿单的人"),

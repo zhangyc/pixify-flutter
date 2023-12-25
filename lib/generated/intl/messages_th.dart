@@ -170,7 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "onboarding3": MessageLookupByLibrary.simpleMessage(
             "พูดน้อยลง\nรักมากขึ้น\nโรแมนติกตำนานรอคุณอยู่"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
-            "กรุณาทำตามรายการสิ่งที่ปรารถนาเพื่อการจับคู่ที่เหมาะสมยิ่งขึ้น"),
+            "กรุณาทำตามรายการสิ่งที่ปรารถนาเ\nพื่อการจับคู่ที่เหมาะสมยิ่งขึ้น"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("อุ๊ปส์ ไม่มีข้อมูลในตอนนี้"),
         "peopleFromYourWishlistGetMoreRecommendations":

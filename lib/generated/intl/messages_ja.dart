@@ -158,8 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "ほら、魔法を授けるよ:\n全知言語\nもう外国語が分からないなんて心配いらないだろ"),
         "onboarding3": MessageLookupByLibrary.simpleMessage(
             "余計な話は省いて、始めよう！\n伝説のロマンチックな出会いがあなたを待っているよ"),
-        "onboardingWish":
-            MessageLookupByLibrary.simpleMessage("願いリストを完成させて、より理想的なマッチを得ましょう"),
+        "onboardingWish": MessageLookupByLibrary.simpleMessage(
+            "願いリストを完成させて、\nより理想的なマッチを得ましょう"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("おっと、今はデータがありません"),
         "peopleFromYourWishlistGetMoreRecommendations":

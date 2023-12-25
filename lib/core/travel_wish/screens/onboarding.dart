@@ -45,7 +45,7 @@ class _TravelWishOnboardingScreenState extends State<TravelWishOnboardingScreen>
               highlights: [],
               duration: const Duration(milliseconds: 60),
               onDone: () {
-                Future.delayed(const Duration(seconds: 2))
+                Future.delayed(const Duration(seconds: 1))
                     .then((value) => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => TravelWishCreator(first: true)), (route) => false));
               },
             ),

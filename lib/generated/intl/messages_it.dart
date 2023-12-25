@@ -175,7 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "onboarding3": MessageLookupByLibrary.simpleMessage(
             "Parla meno, ama di più. Ti aspetta un romantico leggendario"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
-            "Perfavore, completa la tua lista dei desideri per un abbinamento migliore"),
+            "Perfavore, completa la tua lista dei\ndesideri per un abbinamento migliore"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Ops, nessun dato al momento"),
         "peopleFromYourWishlistGetMoreRecommendations":

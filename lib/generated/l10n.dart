@@ -2000,10 +2000,10 @@ class S {
     );
   }
 
-  /// `Set your wishlist for better matching!`
+  /// `Set your wishlist for\n better matching!`
   String get onboardingWish {
     return Intl.message(
-      'Set your wishlist for better matching!',
+      'Set your wishlist for\n better matching!',
       name: 'onboardingWish',
       desc: '',
       args: [],
