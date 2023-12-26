@@ -228,10 +228,6 @@ showChooseHobbies<T>(BuildContext context){
         builder: (BuildContext context, void Function(void Function()) setState) {
           return Consumer(
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
-              List<ProfilePhoto> fixedLengthList = [ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, ''),ProfilePhoto.idle(-1, '')];
-              for(int i=0;i<ref.watch(myProfileProvider)!.photos.length;i++){
-                fixedLengthList[i]=ref.watch(myProfileProvider)!.photos[i];
-              }
               return Container(
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height * 0.9

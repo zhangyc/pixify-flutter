@@ -426,20 +426,24 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
             currentPage=value!;
-            showUpdateUserInfo=value;
-            if(showUpdateUserInfo&&!todayIsShowed){
-              if(ref.watch(myProfileProvider)!.interests.isEmpty&&ref.watch(myProfileProvider)!.bio==null){
-                if(mounted){
-                  showChooseHobbies(context);
-                  todayIsShowed=true;
-                }
-              }else if(ref.watch(myProfileProvider)!.photos.length<3&&!todayIsShowed){
-                if(mounted){
-                  showUploadPortrait(context);
-                  todayIsShowed=true;
-                }
-              }
+            if(mounted){
+              showChooseHobbies(context);
+              todayIsShowed=true;
             }
+            // showUpdateUserInfo=value;
+            // if(showUpdateUserInfo&&!todayIsShowed){
+            //   if(ref.watch(myProfileProvider)!.interests.isEmpty&&ref.watch(myProfileProvider)!.bio==null){
+            //     if(mounted){
+            //       showChooseHobbies(context);
+            //       todayIsShowed=true;
+            //     }
+            //   }else if(ref.watch(myProfileProvider)!.photos.length<3&&!todayIsShowed){
+            //     if(mounted){
+            //       showUploadPortrait(context);
+            //       todayIsShowed=true;
+            //     }
+            //   }
+            // }
             setState(() {
 
             });
