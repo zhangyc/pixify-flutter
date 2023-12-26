@@ -82,11 +82,11 @@ final matchSettingProvider = NotifierProvider<MatchSettingNotifier, MatchSetting
     () => MatchSettingNotifier()
 );
 
-bool get showUpdateUserInfo => (appCommonBox.get(DateFormat('yyyy.MM.dd').format(DateTime.now()),defaultValue: 0))==10;
-set showUpdateUserInfo(value){
-  appCommonBox.put(DateFormat('yyyy.MM.dd').format(DateTime.now()), value);
+bool get todayIsShowedPhoto => appCommonBox.get('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowedPhoto',defaultValue: false);
+set todayIsShowedPhoto(value){
+  appCommonBox.put('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowedPhoto', value);
 }
-bool get todayIsShowed => appCommonBox.get('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowed',defaultValue: false);
-set todayIsShowed(value){
-  appCommonBox.put('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowed', value);
+bool get todayIsShowedInterest => appCommonBox.get('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowedInterest',defaultValue: false);
+set todayIsShowedInterest(value){
+  appCommonBox.put('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowedInterest', value);
 }

@@ -426,30 +426,26 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
             currentPage=value!;
+            if(value==4&&!todayIsShowedInterest){
+              if(ref.watch(myProfileProvider)!.interests.isEmpty&&ref.watch(myProfileProvider)!.bio==null){
                 if(mounted){
                   showChooseHobbies(context);
-                  // todayIsShowed=true;
+                  todayIsShowedInterest=true;
                 }
-            // showUpdateUserInfo=value;
-            // if(showUpdateUserInfo&&!todayIsShowed){
-            //   if(ref.watch(myProfileProvider)!.interests.isEmpty&&ref.watch(myProfileProvider)!.bio==null){
-            //     if(mounted){
-            //       showChooseHobbies(context);
-            //       todayIsShowed=true;
-            //     }
-            //   }else if(ref.watch(myProfileProvider)!.photos.length<3&&!todayIsShowed){
-            //     if(mounted){
-            //       showUploadPortrait(context);
-            //       todayIsShowed=true;
-            //     }
-            //   }
-            // }
+              }
+            }else if(value==10&&!todayIsShowedPhoto){
+              if(ref.watch(myProfileProvider)!.photos.length<3&&!todayIsShowedPhoto){
+                if(mounted){
+                  showUploadPortrait(context);
+                  todayIsShowedPhoto=true;
+                }
+              }
+            }
             setState(() {
 
             });
             if (value != 0 && value % 40 == 0 ) {
               ///判断当天的次数为null
-
               current++;
               _loadMore();
             }
