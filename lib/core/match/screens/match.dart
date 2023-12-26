@@ -291,7 +291,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
         List<MatchUserInfo> users1=list.map((e) => MatchUserInfo.fromJson(e)).toList();
         users=users1;
-        if(users.every((element) => element.id!=-1)&&users.length<10){
+        if(users.every((element) => element.id!=-1)&&users.length<=50){
           users.add(MatchUserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
         }
         for (var element in users1) {
