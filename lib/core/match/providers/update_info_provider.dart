@@ -11,7 +11,7 @@ Future<HttpResult> updateProfileBio(UpdateProfileBioRef ref) async {
     "type":"BIO",
   });
   if(result.isSuccess&&result.data!=null){
-    result.data=result.data['txt'];
+    result.data=result.data['txt']??'';
     return result;
   }
 

@@ -120,7 +120,7 @@ showEditBio<T>(BuildContext context){
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400
                               ),
-                              controller: controller..text=data.data,
+                              controller: controller..text=data.data??'',
                               keyboardType: TextInputType.multiline,
                               minLines: 7,
                               maxLines: 7,
@@ -162,9 +162,10 @@ showEditBio<T>(BuildContext context){
                                     color: Color(0xff2c2c2c),
                                     size: ColoredButtonSize.large,
                                     text: S.of(context).takeIt,
-                                    loadingWhenAsyncAction: true,
+                                    loadingWhenAsyncAction: controller.text.isEmpty?false:true,
                                     onTap: () {
                                       if(controller.text.isEmpty){
+                                        Navigator.pop(context);
                                         return;
                                       }
                                       ref.read(myProfileProvider.notifier).updateFields(bio: controller.text).then((_) => Navigator.pop(context));
