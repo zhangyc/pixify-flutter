@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sona/core/match/widgets/image_loading_animation.dart';
 
 import '../../../generated/assets.dart';
 
@@ -24,10 +25,7 @@ class GalleyItem extends StatelessWidget {
           height: 457,
           width: MediaQuery.of(context).size.width-16*2,
           placeholder: (_,__){
-            return Image.asset(Assets.imagesPlaceholder,height: 457,
-              width: MediaQuery.of(context).size.width-16*2,
-              fit: BoxFit.cover,
-            );
+            return ImageLoadingAnimation();
           },
         ),
       );

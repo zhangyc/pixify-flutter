@@ -63,6 +63,7 @@ class Assets {
   static const String imagesPlaceholder = 'assets/images/placeholder.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
   static const String imagesRewardArrow = 'assets/images/reward_arrow.png';
+  static const String imagesSona = 'assets/images/sona.png';
   static const String imagesSubBg = 'assets/images/sub_bg.png';
   static const String imagesSuperSonaBg = 'assets/images/super_sona_bg.png';
   static const String imagesTenderAffection = 'assets/images/tender_affection.png';
