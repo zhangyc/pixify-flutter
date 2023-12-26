@@ -201,7 +201,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "screenshotEvidence": MessageLookupByLibrary.simpleMessage("스크린샷 증거"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("프로필 보기"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("당신을 좋아하는 사람들 보기"),
-        "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("국가 선택"),
+        "selectCountryPageTitle":
+            MessageLookupByLibrary.simpleMessage("국가 또는 지역"),
         "setDefault": MessageLookupByLibrary.simpleMessage("기본으로 설정"),
         "settings": MessageLookupByLibrary.simpleMessage("설정"),
         "showYourPersonality":

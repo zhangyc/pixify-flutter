@@ -186,7 +186,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "screenshotEvidence": MessageLookupByLibrary.simpleMessage("截图证据"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("查看资料"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("看看谁喜欢你"),
-        "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("选择国家"),
+        "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("国家或地区"),
         "setDefault": MessageLookupByLibrary.simpleMessage("设置默认"),
         "settings": MessageLookupByLibrary.simpleMessage("设置"),
         "showYourPersonality":
