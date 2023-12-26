@@ -130,10 +130,10 @@ class S {
     );
   }
 
-  /// `Select Country`
+  /// `Country or Region`
   String get selectCountryPageTitle {
     return Intl.message(
-      'Select Country',
+      'Country or Region',
       name: 'selectCountryPageTitle',
       desc: '',
       args: [],

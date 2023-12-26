@@ -216,7 +216,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeProfile": MessageLookupByLibrary.simpleMessage("ดูโปรไฟล์"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("ดูว่าใครชอบคุณ"),
         "selectCountryPageTitle":
-            MessageLookupByLibrary.simpleMessage("เลือกประเทศ"),
+            MessageLookupByLibrary.simpleMessage("ประเทศหรือภูมิภาค"),
         "setDefault":
             MessageLookupByLibrary.simpleMessage("ตั้งค่าเป็นค่าเริ่มต้น"),
         "settings": MessageLookupByLibrary.simpleMessage("การตั้งค่า"),

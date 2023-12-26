@@ -227,7 +227,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeWhoLikeU":
             MessageLookupByLibrary.simpleMessage("Смотрите, кто вас любит"),
         "selectCountryPageTitle":
-            MessageLookupByLibrary.simpleMessage("Выбрать Страну"),
+            MessageLookupByLibrary.simpleMessage("Страна или регион"),
         "setDefault":
             MessageLookupByLibrary.simpleMessage("Установить по умолчанию"),
         "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
