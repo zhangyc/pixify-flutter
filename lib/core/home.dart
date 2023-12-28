@@ -152,9 +152,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   void _handlerNotification() async{
     RemoteMessage? initialMessage = await messagesService.getInitialMessage();
     if(initialMessage!=null){
-      print('------------initialMessage----------');
       if(initialMessage.data.containsKey('screen')&&initialMessage.data['screen']=='lib/core/chat/screens/conversation_list'){
-        print('------------initialMessage2----------');
         String ext= initialMessage.data['ext'];
         if (kDebugMode) print('push_data: $ext');
         UserInfo info1 =UserInfo.fromJson(jsonDecode(ext));

@@ -69,6 +69,7 @@ Future<void> initFireBaseService(FirebaseApp firebase) async {
       badge: true
   );
   messagesService.getToken().then((value){
+    if (profile == null) return;
     deviceToken=value;
     if(value!=null){
       post(
@@ -80,6 +81,7 @@ Future<void> initFireBaseService(FirebaseApp firebase) async {
     }
   });
   messagesService.onTokenRefresh.listen((event) {
+    if (profile == null) return;
     deviceToken=event;
     post(
         '/user/update',
