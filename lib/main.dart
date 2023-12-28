@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -29,6 +30,10 @@ void main() async {
   final firebase = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
     name: 'sona'
+  );
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
+    appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttest,
   );
   purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
     purchaseDetailsList.forEach((p) {
