@@ -49,17 +49,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ///直接获取用户信息里的经纬度。
-      determinePosition().then((value){
-        longitude=value.longitude;
-        latitude=value.latitude;
-        ref.read(myProfileProvider.notifier).updateFields(position: value);
-        _initData();
 
-      }).catchError((e){
-        _initData();
-        Fluttertoast.showToast(msg: 'Failed to obtain permission.');
-      });
+      longitude=ref.read(myProfileProvider)!.position?.longitude;
+      latitude=ref.read(myProfileProvider)!.position?.latitude;
+      _initData();
+      ///直接获取用户信息里的经纬度。
     });
     languageNotifier.addListener(() {
       _initData();
