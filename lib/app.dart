@@ -71,6 +71,5 @@ final _routes = <String, WidgetBuilder>{
 Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
   final name = settings.name;
   final builder = _routes[name]!;
-  print('${settings.arguments}');
   return MaterialPageRoute(builder: builder, settings: settings);
 }
