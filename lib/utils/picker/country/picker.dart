@@ -21,7 +21,10 @@ class _CountryPickerState extends ConsumerState<CountryPicker> {
   late final List<SonaCountry> _countries;
   late final TextEditingController _searchController;
 
-  List<SonaCountry> get filtered => _countries.where((country) => country.displayName.toLowerCase().contains(_searchController.text.toLowerCase().trim())).toList(growable: false);
+  List<SonaCountry> get filtered => _countries.where((country) =>
+      country.displayName.toLowerCase().contains(_searchController.text.toLowerCase().trim())
+      || country.dialCode == _searchController.text
+  ).toList(growable: false);
 
   @override
   void initState() {

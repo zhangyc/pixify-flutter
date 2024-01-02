@@ -3286,7 +3286,7 @@
     "maxLength": 9
   },
   {
-    "name": "Campione d'Italia",
+    "name": "Italy",
     "nameTranslations": {
       "sk": "Taliansko",
       "se": "Itália",
@@ -3312,9 +3312,9 @@
     },
     "flag": "🇮🇹",
     "code": "IT",
-    "dialCode": "41",
-    "minLength": 13,
-    "maxLength": 13
+    "dialCode": "39",
+    "minLength": 10,
+    "maxLength": 10
   },
   {
     "name": "Jamaica",

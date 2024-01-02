@@ -28,11 +28,12 @@ class MessageWidget extends ConsumerStatefulWidget {
     required this.prevMessage,
     required this.message,
     required this.fromMe,
-    required this.onDelete,
     required this.mySide,
     required this.otherSide,
     required this.myLocale,
-    required this.otherLocale
+    required this.otherLocale,
+    required this.onDelete,
+    this.onResend
   });
 
   final ImMessage? prevMessage;
@@ -43,6 +44,7 @@ class MessageWidget extends ConsumerStatefulWidget {
   final Locale? myLocale;
   final Locale? otherLocale;
   final Future Function(ImMessage) onDelete;
+  final Future Function(ImMessage)? onResend;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MessageWidgetState();
@@ -53,41 +55,39 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
   bool _clicked = false;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     String? upperMessage;
     String? lowerMessage;
     Locale? upperLocale;
     Locale? lowerLocale;
 
-    final asyncMessageSending = widget.message.params != null ? ref.watch(asyncMessageSendingProvider(widget.message.params!)) : null;
-
     if (widget.fromMe) {
       upperLocale = widget.myLocale;
-      if (widget.message.params != null) {
+      if (widget.message.sendingParams != null) {
         upperMessage = widget.message.originalContent;
-        lowerMessage = asyncMessageSending!.when(
+        lowerMessage = ref.watch(asyncMessageSendingProvider(widget.message.sendingParams!)).when(
           data: (data) {
             if (data.success) {
-              SonaAnalytics.log(widget.message.params!.mode == InputMode.sona ? 'chat_sona' : 'chat_manual');
-              if (mounted) ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(widget.message));
               return data.data?['txt'] ?? '';
             } else {
               switch (data.error) {
                 case MessageSendingError.maximumLimit:
                   if (ref.read(myProfileProvider)!.isMember) {
                     coolDownDaily();
-                    SonaAnalytics.log('sona_message_hit_maximum_limit:plus');
                   } else {
                     ref.read(entitlementsProvider.notifier).limit(interpretation: 0);
-                    SonaAnalytics.log('sona_message_hit_maximum_limit:non-plus');
                   }
                   return S.current.toastHitDailyMaximumLimit;
                 case MessageSendingError.contentFilter:
-                  SonaAnalytics.log('sona_message_hit_content_filter');
                   return S.current.exceptionSonaContentFilterTips;
                 default:
                   return S.current.exceptionFailedToSendTips;
-              };
+              }
             }
           },
           error: (_, __) => S.current.exceptionFailedToSendTips,
@@ -225,7 +225,7 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
               ),
             ],
           ),
-          if (widget.message.params != null) asyncMessageSending!.when(
+          if (widget.message.sendingParams != null) ref.watch(asyncMessageSendingProvider(widget.message.sendingParams!)).when(
             data: (data) {
               if (data.success) {
                 return Container();
@@ -238,7 +238,9 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ColoredButton(
-                          onTap: () {ref.read(asyncMessageSendingProvider(widget.message.params!).notifier).resend();},
+                          onTap: () {
+                            widget.onResend!(widget.message);
+                          },
                           color: Color(0xFFF6F3F3),
                           fontColor: Theme.of(context).primaryColor,
                           borderColor: Colors.transparent,

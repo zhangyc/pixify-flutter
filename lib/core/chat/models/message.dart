@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/chat/providers/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
@@ -21,7 +22,7 @@ class ImMessage {
   final UserInfo sender;
   final UserInfo receiver;
   final DateTime time;
-  MessageSendingParams? params;
+  String? sendingParams;
 
   factory ImMessage.fromJson(Map<String, dynamic> json) {
     return ImMessage(
