@@ -264,7 +264,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         'longitude': longitude,
         'latitude': latitude,
         "page":current,    // 页码
-        "pageSize":50, // 每页数量
+        "pageSize":30, // 每页数量
         "recommendMode":recommendMode
       });
       if(resp.isSuccess){
@@ -277,7 +277,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
         List<MatchUserInfo> users1=list.map((e) => MatchUserInfo.fromJson(e)).toList();
         users=users1;
-        if(users.every((element) => element.id!=-1)&&users.length<=50){
+        if(users.every((element) => element.id!=-1)&&users.length<=30){
           users.add(MatchUserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
         }
         for (var element in users1) {
@@ -314,7 +314,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         'longitude': longitude,
         'latitude': latitude,
         "page":current,    // 页码
-        "pageSize":50, // 每页数量,
+        "pageSize":30, // 每页数量,
         "recommendMode":recommendMode
       });
       if(resp.isSuccess){
@@ -427,7 +427,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             setState(() {
 
             });
-            if (value != 0 && value % 40 == 0 ) {
+            if (value != 0 && value % 25 == 0 ) {
               ///判断当天的次数为null
               current++;
               _loadMore();
