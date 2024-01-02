@@ -823,6 +823,7 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
                           ///发送一个快捷的sona打招呼
                           next.call();
                           MatchApi.sayHi(target.id);
+                          SonaAnalytics.log(MatchEvent.match_popup_sona.name);
                           Navigator.pop(context);
 
                         },

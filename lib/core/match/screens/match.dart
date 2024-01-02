@@ -143,7 +143,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                     ref.read(backgroundImageProvider.notifier).updateBgImage(null);
                     MatchApi.like(users[currentPage].id,);
-                    SonaAnalytics.log(MatchEvent.match_like_wishlist.name);
+                    SonaAnalytics.log(MatchEvent.match_like_justlike.name);
 
                   }, child: Text('${S.of(context).justSendALike} >',style: TextStyle(
                     fontWeight: FontWeight.w800,
