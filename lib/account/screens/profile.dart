@@ -274,6 +274,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         builder: (_) => MultiLineTextFieldScreen(
           title: S.of(context).bio,
           maxLength: 360,
+          initialValue: _profile.bio,
           onSave: (String text) async {
             await ref.read(myProfileProvider.notifier).updateFields(bio: text);
             Navigator.pop(context);
