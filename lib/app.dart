@@ -34,6 +34,7 @@ class SonaApp extends HookConsumerWidget {
     var initialRoute = profile == null || !profile.completed ? 'login' : '/';
     if (profile == null && !onboarding) initialRoute = 'onboarding';
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       key: ValueKey(token),
       navigatorKey: navigatorKey,
       builder: EasyLoading.init(),

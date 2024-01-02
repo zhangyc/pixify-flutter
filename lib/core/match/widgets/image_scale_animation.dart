@@ -1,12 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sona/core/match/bean/match_user.dart';
-import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/widgets/icon_animation.dart';
 
 import '../../../generated/assets.dart';
-import 'custom_pageview/src/skip_transformer.dart';
 
 class MyImageAnimation extends StatefulWidget {
   const MyImageAnimation({super.key, required this.info});
@@ -88,7 +85,7 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
                         widget.info.countryFlag!=null?Text(widget.info.countryFlag??''):Container()
                       ],
                     ),
-                    Row(
+                    widget.info.currentCity?.isEmpty ?? true?Container():Row(
                       children: [
                         Image.asset(Assets.iconsGps,width: 16,height: 16,),
                         SizedBox(
