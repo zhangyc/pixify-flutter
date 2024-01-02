@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -141,6 +142,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
                 reverse: true,
                 itemBuilder: (BuildContext context, int index) => index != msgs.length ? MessageWidget(
+                  key: ValueKey(msgs[index].id),
                   prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
                   message: msgs[index],
                   fromMe: mySide.id == msgs[index].sender.id,
@@ -151,6 +153,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   // onPendingMessageSucceed: _onPendingMessageSucceed,
                   // onShorten: _shortenMessage,
                   onDelete: _deleteMessage,
+                  onResend: _resendMessage,
                 ) : _startupline(msgs.isNotEmpty),
                 itemCount: msgs.length + 1,
                 separatorBuilder: (_, __) => SizedBox(height: 5),
@@ -286,31 +289,22 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       receiver: widget.otherSide,
       time: DateTime.now(),
     );
-    message.params = MessageSendingParams(
+    message.sendingParams = MessageSendingParams(
         id: message.id!,
         userId: widget.otherSide.id,
         mode: mode,
         content: text,
         dateTime: message.time
-    );
-
-    // ref.read(asyncMessageSendingProvider(message.params!)).whenData((data) {
-    //   if (!data.success) {
-    //     if (data.error! == MessageSendingError.maximumLimit) {
-    //       if (myProfile.isMember) {
-    //         coolDownDaily();
-    //       } else {
-    //         ref.read(entitlementsProvider.notifier).limit(interpretation: 0);
-    //       }
-    //     }
-    //   } else {
-    //     if (mounted) ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
-    //     SonaAnalytics.log(mode == InputMode.sona ? 'chat_sona' : 'chat_manual');
-    //   }
-    // });
+    ).toJsonString();
 
     ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
   }
+
+  Future _resendMessage(ImMessage message) {
+    ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
+    return _onSend(message.originalContent);
+  }
+
 
   Future _deleteMessage(ImMessage message) {
     return deleteMessage(

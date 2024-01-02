@@ -192,7 +192,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     maxLines: 5,
                     minLines: 1,
                     maxLength: widget.maxLength,
-                    buildCounter: (BuildContext, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
+                    buildCounter: (BuildContext _, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
                     keyboardAppearance: Brightness.dark,
                     keyboardType: widget.keyboardType,
                     textInputAction: TextInputAction.newline,
@@ -227,6 +227,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                       if (widget.onInputChange != null) widget.onInputChange!(text);
                     },
                     onSubmitted: (String text) {
+                      if (text.isEmpty) return;
                       onSubmit(text);
                       _controller.text = '';
                     },
@@ -243,7 +244,9 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     iconSize: 56,
                     padding: EdgeInsets.all(14),
                     onPressed: () {
+                      if (_controller.text.isEmpty) return;
                       onSubmit(_controller.text);
+                      _controller.text = '';
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(
@@ -355,6 +358,5 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     if (widget.onSubmit != null) {
       widget.onSubmit!(text);
     }
-    _controller.clear();
   }
 }
