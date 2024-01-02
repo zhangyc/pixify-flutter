@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
@@ -15,7 +14,6 @@ import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
-import 'package:sona/utils/dialog/common.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -24,7 +22,6 @@ import '../../../common/permission/permission.dart';
 import '../../../common/screens/profile.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
-import '../../../utils/location/location.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
 import '../providers/matched.dart';
@@ -64,14 +61,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   void dispose() {
-
-    //controller.dispose();
-    // indexController.dispose();
     super.dispose();
   }
   int currentPage=0;
   late TransformerPageController controller;
-  // IndexController indexController=IndexController();
   @override
   Widget build(BuildContext context) {
     String? bgImage=ref.watch(backgroundImageProvider);
@@ -273,7 +266,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         "page":current,    // 页码
         "pageSize":50, // 每页数量
         "recommendMode":recommendMode
-
       });
       if(resp.isSuccess){
         List list= resp.data;
@@ -371,9 +363,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
 
   PageState _state= PageState.loading;
-  //TransformerPageController transformerPageController=TransformerPageController();
-  // PageController controller=PageController();
-  ///todo skip
   _buildMatch() {
     if(_state==PageState.loading){
      return  Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
