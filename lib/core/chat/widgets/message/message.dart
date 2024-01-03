@@ -33,7 +33,8 @@ class MessageWidget extends ConsumerStatefulWidget {
     required this.myLocale,
     required this.otherLocale,
     required this.onDelete,
-    this.onResend
+    this.onResend,
+    this.onAvatarTap
   });
 
   final ImMessage? prevMessage;
@@ -45,6 +46,7 @@ class MessageWidget extends ConsumerStatefulWidget {
   final Locale? otherLocale;
   final Future Function(ImMessage) onDelete;
   final Future Function(ImMessage)? onResend;
+  final Function()? onAvatarTap;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MessageWidgetState();
@@ -120,7 +122,10 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
             children: [
               if (!widget.fromMe) Padding(
                 padding: const EdgeInsets.only(right: 8.0),
-                child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(40)),
+                child: GestureDetector(
+                  onTap: widget.onAvatarTap,
+                  child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(40))
+                ),
               ),
               Flexible(
                 child: Column(

@@ -95,7 +95,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                UserAvatar(url: widget.otherSide.avatar!, size: Size.square(32)),
+                GestureDetector(
+                  onTap: _showInfo,
+                  child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(32))
+                ),
                 SizedBox(width: 8),
                 Text(widget.otherSide.name!),
                 SizedBox(width: 8),
@@ -161,6 +164,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     // onShorten: _shortenMessage,
                     onDelete: _deleteMessage,
                     onResend: _resendMessage,
+                    onAvatarTap: _showInfo,
                   ) : _startupline(msgs.isNotEmpty),
                   itemCount: msgs.length + 1,
                   separatorBuilder: (_, __) => SizedBox(height: 5),
