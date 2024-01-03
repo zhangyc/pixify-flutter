@@ -4,6 +4,7 @@ import 'package:sona/common/no_data/empty.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/timeframe.dart';
 
+import '../../../common/widgets/image/icon.dart';
 import '../../../generated/l10n.dart';
 import '../providers/popular_country.dart';
 
@@ -76,8 +77,10 @@ class _CountrySelectorState extends ConsumerState<TimeframeSelector> {
                                 widget.onDone();
                               },
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(option.name)
+                                  Text(option.name),
+                                  if (ref.watch(travelWishParamsProvider).timeframe == option.value) const SonaIcon(icon: SonaIcons.conch_selected)
                                 ],
                               )
                           ),

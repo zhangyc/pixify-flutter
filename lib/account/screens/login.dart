@@ -91,7 +91,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                         width: 2,
                         color: Theme.of(context).primaryColor
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(20),
                       gapPadding: 8
                     ),
                     enabledBorder: OutlineInputBorder(
@@ -99,7 +99,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                         width: 2,
                         color: Theme.of(context).primaryColor
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(20),
                       gapPadding: 8
                     ),
                     prefixIcon: GestureDetector(

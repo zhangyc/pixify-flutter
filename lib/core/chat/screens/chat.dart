@@ -125,67 +125,75 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         //     statusBarIconBrightness: Brightness.dark
         // )
       ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
-          data: (messages) {
-            final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
-            final msgs = [...localPendingMessages, ...messages]
-              ..sort((m1, m2) => m2.time.compareTo(m1.time));
-            return Container(
-              alignment: Alignment.topCenter,
-              child: ListView.separated(
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
-                reverse: true,
-                itemBuilder: (BuildContext context, int index) => index != msgs.length ? MessageWidget(
-                  key: ValueKey(msgs[index].id),
-                  prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
-                  message: msgs[index],
-                  fromMe: mySide.id == msgs[index].sender.id,
-                  mySide: mySide,
-                  otherSide: widget.otherSide,
-                  myLocale: myLocale,
-                  otherLocale: otherLocale,
-                  // onPendingMessageSucceed: _onPendingMessageSucceed,
-                  // onShorten: _shortenMessage,
-                  onDelete: _deleteMessage,
-                  onResend: _resendMessage,
-                ) : _startupline(msgs.isNotEmpty),
-                itemCount: msgs.length + 1,
-                separatorBuilder: (_, __) => SizedBox(height: 5),
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              ),
-            );
-          },
-          error: (error, __) => GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => ref.refresh(messageStreamProvider(widget.otherSide.id)),
-            child: Container(
-              color: Colors.white,
-              alignment: Alignment.center,
-              child: const Text(
-                  'Cannot connect to server, tap to retry',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 16,
-                      decoration: TextDecoration.none
-                  )
-              ),
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/chat_bg.png'),
+            fit: BoxFit.cover
           ),
-          loading: () => Container(
-            alignment: Alignment.center,
-            child: const SizedBox(
-              height: 32,
-              width: 32,
-              child: CircularProgressIndicator(),
+        ),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
+            data: (messages) {
+              final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
+              final msgs = [...localPendingMessages, ...messages]
+                ..sort((m1, m2) => m2.time.compareTo(m1.time));
+              return Container(
+                alignment: Alignment.topCenter,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
+                  reverse: true,
+                  itemBuilder: (BuildContext context, int index) => index != msgs.length ? MessageWidget(
+                    key: ValueKey(msgs[index].id),
+                    prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
+                    message: msgs[index],
+                    fromMe: mySide.id == msgs[index].sender.id,
+                    mySide: mySide,
+                    otherSide: widget.otherSide,
+                    myLocale: myLocale,
+                    otherLocale: otherLocale,
+                    // onPendingMessageSucceed: _onPendingMessageSucceed,
+                    // onShorten: _shortenMessage,
+                    onDelete: _deleteMessage,
+                    onResend: _resendMessage,
+                  ) : _startupline(msgs.isNotEmpty),
+                  itemCount: msgs.length + 1,
+                  separatorBuilder: (_, __) => SizedBox(height: 5),
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                ),
+              );
+            },
+            error: (error, __) => GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () => ref.refresh(messageStreamProvider(widget.otherSide.id)),
+              child: Container(
+                color: Colors.white,
+                alignment: Alignment.center,
+                child: const Text(
+                    'Cannot connect to server, tap to retry',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16,
+                        decoration: TextDecoration.none
+                    )
+                ),
+              ),
             ),
+            loading: () => Container(
+              alignment: Alignment.center,
+              child: const SizedBox(
+                height: 32,
+                width: 32,
+                child: CircularProgressIndicator(),
+              ),
+            )
           )
-        )
+        ),
       ),
       floatingActionButton: Container(
         padding: const EdgeInsets.only(

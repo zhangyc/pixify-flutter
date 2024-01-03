@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/no_data/empty.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 import 'package:sona/core/travel_wish/providers/popular_city.dart';
 import 'package:sona/core/travel_wish/providers/popular_country.dart';
@@ -117,8 +118,10 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                                       key: ValueKey(city.displayName),
                                       onPressed: () => ref.read(travelWishParamsProvider.notifier).toggleCity(city.id),
                                       child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(city.displayName)
+                                          Text(city.displayName),
+                                          if (selectedCityIds.contains(city.id)) const SonaIcon(icon: SonaIcons.conch_selected)
                                         ],
                                       )
                                   ),
@@ -170,8 +173,10 @@ class _CitiesSelectorState extends ConsumerState<CitiesSelector> {
                               key: ValueKey(city.displayName),
                               onPressed: () => ref.read(travelWishParamsProvider.notifier).toggleCity(city.id),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(city.displayName)
+                                  Text(city.displayName),
+                                  if (selectedCityIds.contains(city.id)) const SonaIcon(icon: SonaIcons.conch_selected)
                                 ],
                               )
                           ),
