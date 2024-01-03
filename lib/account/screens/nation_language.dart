@@ -18,6 +18,7 @@ import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/picker/country/country.dart';
 
 import '../../generated/l10n.dart';
+import '../../utils/global/global.dart';
 import '../models/gender.dart';
 
 
@@ -97,6 +98,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                       setState(() {
                         _language = value;
                       });
+                      SonaAnalytics.log('reg_language');
                     }
                   },
                   child: Container(
@@ -142,6 +144,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
                       setState(() {
                         _nation = value;
                       });
+                      SonaAnalytics.log('reg_country_region');
                     }
                   },
                   child: Container(
@@ -210,7 +213,8 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
       if (kDebugMode) print('upload avatar error: $e');
       Fluttertoast.showToast(msg: 'Failed to upload avatar');
       EasyLoading.dismiss();
-      return;
+    } finally {
+      SonaAnalytics.log('reg_confirm');
     }
   }
 

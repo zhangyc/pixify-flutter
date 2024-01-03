@@ -7,6 +7,7 @@ import 'package:sona/utils/location/location.dart';
 
 import '../../core/match/util/local_data.dart';
 import '../../generated/l10n.dart';
+import '../../utils/global/global.dart';
 import 'nation_language.dart';
 
 
@@ -93,7 +94,7 @@ class _LocationScreenState extends State<LocationScreen> {
           location: location,
           country: widget.country
       )));
+      SonaAnalytics.log('reg_location');
     }
-
   }
 }

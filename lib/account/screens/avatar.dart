@@ -218,6 +218,8 @@ class _AvatarScreenState extends State<AvatarScreen> {
     } catch (e) {
       //
       if (kDebugMode) print(e);
+    } finally {
+      SonaAnalytics.log(source == ImageSource.camera ? 'reg_album' : 'reg_camera');
     }
   }
 

@@ -6,6 +6,7 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/dialog/input.dart';
+import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/picker/gender.dart';
 
 import '../../generated/l10n.dart';
@@ -135,6 +136,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                         setState(() {
                           _birthday = value;
                         });
+                        SonaAnalytics.log('reg_birthday');
                       }
                     },
                     child: Container(
@@ -180,6 +182,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
                         setState(() {
                           _gender = value;
                         });
+                        SonaAnalytics.log('reg_gender');
                       }
                     },
                     child: Container(
@@ -236,5 +239,6 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
           country: widget.country
         ))
     );
+    SonaAnalytics.log('reg_base_info');
   }
 }
