@@ -85,6 +85,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                 child: TextFormField(
                   controller: _phoneController,
                   focusNode: _phoneFocusNode,
+                  keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
