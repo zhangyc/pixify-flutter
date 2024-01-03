@@ -15,7 +15,7 @@ final likeMeStreamProvider = StreamProvider((ref) {
       (m) => SocialUser.fromJson(m)
     ).toList()).then((list) => streamController.add(list)).catchError((_) {});
   }
-  Timer.periodic(const Duration(seconds: 5), fetchData);
+  Timer.periodic(const Duration(seconds: 30), fetchData);
   fetchData();
 
   return streamController.stream;
