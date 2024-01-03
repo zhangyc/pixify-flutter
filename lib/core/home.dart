@@ -15,6 +15,7 @@ import 'package:sona/core/like_me/screens/like_me.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/home_provider.dart';
 import 'package:sona/core/providers/notice.dart';
+import 'package:sona/core/travel_wish/providers/my_wish.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/location/location.dart';
 
@@ -42,7 +43,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     initUserPermission();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _handlerNotification();
-
+      ref.read(asyncMyTravelWishesProvider);
     });
     super.initState();
   }
@@ -132,9 +133,9 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
 
   void _onPageChange(int index) {
     if (index == 1) {
-      ref.read(likeMeNoticeNotifier.notifier).update((state) => false);
+      kvStore.setInt(likeMeStoreKey, DateTime.now().millisecondsSinceEpoch);
     } else if(index == 2) {
-      ref.read(chatNoticeProvider.notifier).update((state) => false);
+      kvStore.setInt(convosStoreKey, DateTime.now().millisecondsSinceEpoch);
     }
     if (index != ref.read(currentHomeTapIndexProvider)) {
       ref.read(currentHomeTapIndexProvider.notifier).update((_) => index);

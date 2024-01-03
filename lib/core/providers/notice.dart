@@ -1,16 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/providers/chat.dart';
-import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../chat/models/conversation.dart';
 
+const convosStoreKey = 'convos_last_check_time';
 final chatNoticeProvider = StateProvider<bool>((ref) {
   final convos = ref.watch(conversationStreamProvider).unwrapPrevious().valueOrNull;
-  ref.listenSelf((previous, next) {
-    kvStore.setInt('convos_check_time', DateTime.now().millisecondsSinceEpoch);
-  });
-  final convosCheckTime = kvStore.getInt('convos_check_time') != null ? DateTime.fromMillisecondsSinceEpoch(kvStore.getInt('convos_check_time')!) : null;
+  final convosCheckTime = kvStore.getInt(convosStoreKey) != null ? DateTime.fromMillisecondsSinceEpoch(kvStore.getInt(convosStoreKey)!) : null;
   if (convos == null) return false;
   if (convos.any((ImConversation convo) => (convo.hasUnreadMessage || convo.lastMessageId == null) && (convosCheckTime == null || convo.dateTime.isAfter(convosCheckTime)))) {
     return true;

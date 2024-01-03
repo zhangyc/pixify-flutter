@@ -45,7 +45,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
         )),
         centerTitle: false,
       ),
-      body: ref.watch(asyncLikedMeProvider).when(
+      body: ref.watch(likeMeStreamProvider).when(
         data: (data) => data.isNotEmpty ? MasonryGridView.builder(
           padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 130),
           mainAxisSpacing: 16,
@@ -59,7 +59,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
         error: (_, __) => _dataEmpty(),
         loading: () => Center(child: SizedBox(width: 32, height: 32, child: CircularProgressIndicator()))
       ),
-      floatingActionButton: !ref.read(myProfileProvider)!.isMember && ref.watch(asyncLikedMeProvider).hasValue && ref.watch(asyncLikedMeProvider).value!.isNotEmpty ? Padding(
+      floatingActionButton: !ref.read(myProfileProvider)!.isMember && ref.watch(likeMeStreamProvider).hasValue && ref.watch(likeMeStreamProvider).value!.isNotEmpty ? Padding(
         padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom),
         child: OutlinedButton(
           onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockWhoLikeMe(),fromTag: FromTag.pay_chatlist_likedme))),
