@@ -225,6 +225,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
   }
 
+  var _startupSent = false;
   Widget _startupline(bool hasMsg) {
     return Container(
       alignment: Alignment.topRight,
@@ -267,7 +268,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             error: (_, __) => Container(),
             loading: () => Container()
           ),
-          if (!hasMsg && !widget.hasHistoryMessage) Center(
+          if (!_startupSent && !hasMsg && !widget.hasHistoryMessage) Center(
             child: SizedBox(
               width: 248,
               child: ColoredButton(
@@ -331,7 +332,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       type: CallSonaType.PROLOGUE
     );
     SonaAnalytics.log('chat_starter');
-    if (resp.statusCode == 10150) {
+    if (mounted && resp.statusCode == 0) {
+      setState(() {
+        _startupSent = true;
+      });
+    } else if (resp.statusCode == 10150) {
       if (myProfile.isMember) {
         coolDownDaily();
       } else {
