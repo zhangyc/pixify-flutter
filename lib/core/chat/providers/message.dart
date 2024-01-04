@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/models/message_type.dart';
@@ -74,7 +75,7 @@ class MessageSendingResult {
     this.error
   });
   final bool success;
-  final Map<String, dynamic>? data;
+  final dynamic data;
   final MessageSendingError? error;
 }
 
@@ -133,6 +134,7 @@ class AsyncMessageSendingNotifier extends AutoDisposeFamilyAsyncNotifier<Message
         }
       }
     } catch(e) {
+      if (kDebugMode) print(e);
       result = const MessageSendingResult(
         success: false,
         error: MessageSendingError.other

@@ -75,7 +75,7 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
         lowerMessage = ref.watch(asyncMessageSendingProvider(widget.message.sendingParams!)).when(
           data: (data) {
             if (data.success) {
-              return data.data?['txt'] ?? '';
+              return (data.data is int) ? null : data.data?['txt'] ?? '';
             } else {
               switch (data.error) {
                 case MessageSendingError.maximumLimit:
