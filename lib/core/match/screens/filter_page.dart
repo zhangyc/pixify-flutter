@@ -1,10 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:sona/core/match/util/local_data.dart';
+import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
+import 'dart:ui' as ui;
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -19,15 +22,21 @@ class _FilterPageState extends State<FilterPage> {
     _P(S.current.nearby, S.current.runningIntoForeignersNearYou,'LOCAL'),
   ];
   List<_Gender> genders=[
-    _Gender(S.current.userGenderOptionMale, 1),
-    _Gender(S.current.userGenderOptionFemale, 2),
-    _Gender(S.current.allPeople, null),
+    _Gender(S.current.userGenderOptionMale, 1,[Assets.iconsManUnselected],[Assets.iconsManSelected]),
+    _Gender(S.current.userGenderOptionFemale, 2,[Assets.iconsWomanUnselected],[Assets.iconsWonmanSelected]),
+    _Gender(S.current.allPeople, null,[Assets.iconsManUnselected,Assets.iconsWomanUnselected],[Assets.iconsManSelected,Assets.iconsWonmanSelected]),
   ];
   String? p=recommendMode;
   int? gender=currentFilterGender;
+   ui.Image? customImage;
+
   @override
   void initState() {
-
+    load(Assets.iconsHandle).then((image) {
+      setState(() {
+        customImage = image;
+      });
+    });
     super.initState();
   }
   @override
@@ -83,6 +92,7 @@ class _FilterPageState extends State<FilterPage> {
                   height: 12,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: genders.map((e) => GestureDetector(
                     child: e.value==gender?GenderButton(gender: e):UnSelectedGenderButton(gender: e),
                     onTap: (){
@@ -115,7 +125,7 @@ class _FilterPageState extends State<FilterPage> {
                     SizedBox(
                       height: 12,
                     ),
-                    SliderTheme(
+                    customImage==null?Container():SliderTheme(
                       data: SliderThemeData(
                         rangeThumbShape: CustomThumbShape2(
                             thumbRadius:20,
@@ -231,20 +241,47 @@ class GenderButton extends StatelessWidget {
   final _Gender gender;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.only(
-        right: 10
-      ),
-      decoration: BoxDecoration(
-          color: Color(0xff2c2c2c),
-          borderRadius: BorderRadius.circular(24),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
 
-      ),
-      child: Text(gender.label,style: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.w900
-      ),),
+      children: [
+        Container(
+          alignment: Alignment.center,
+          width: 108,
+          height: 56,
+          decoration: BoxDecoration(
+              color: Color(0xff2c2c2c),
+              borderRadius: BorderRadius.circular(24),
+
+          ),
+          child: ListView.separated(itemBuilder: (_,i){
+            return Image.asset(gender.selectedIcons[i],width: 24,height: 24,);
+          }, separatorBuilder: (_,i){
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 8
+              ),
+              child: VerticalDivider(
+                indent: 16,
+                endIndent: 16,
+                width: 1, // 分割线高度
+                color: Colors.white , // 分割线颜色
+              ),
+            );
+          }, itemCount: gender.selectedIcons.length,shrinkWrap: true,scrollDirection: Axis.horizontal,)
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        Center(
+          child: Text(gender.label,style: TextStyle(
+              color: Color(0xff2c2c2c),
+              fontSize: 14,
+              fontWeight: FontWeight.w400
+          ),),
+        ),
+      ],
     );
   }
 }
@@ -254,23 +291,53 @@ class UnSelectedGenderButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.only(
-          right: 10
-      ),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(
-              width: 2,
-            color: Color(0xff2c2c2c),
-          )
-      ),
-      child: Text(gender.label,style: TextStyle(
-          color: Color(0xff2c2c2c),
-          fontWeight: FontWeight.w500
-      ),),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          alignment: Alignment.center,
+          width: 108,
+          height: 56,
+          // padding: EdgeInsets.all(16),
+          // margin: EdgeInsets.only(
+          //     right: 10
+          // ),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                  width: 2,
+                color: Color(0xff2c2c2c),
+              )
+          ),
+          child: ListView.separated(itemBuilder: (_,i){
+            return Image.asset(gender.unSelectedIcons[i],width: 24,height: 24,);
+          }, separatorBuilder: (_,i){
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 8
+              ),
+              child: VerticalDivider(
+                indent: 16,
+                endIndent: 16,
+                width: 1, // 分割线高度
+                color: Color(0xff2c2c2c), // 分割线颜色
+              ),
+            );
+          }, itemCount: gender.unSelectedIcons.length,shrinkWrap: true,scrollDirection: Axis.horizontal,)
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        Center(
+          child: Text(gender.label,style: TextStyle(
+              color: Color(0xff2c2c2c),
+              fontSize: 14,
+              fontWeight: FontWeight.w400
+          ),),
+        ),
+      ],
     );
   }
 }
@@ -284,7 +351,10 @@ class _P{
 class _Gender{
   String label;
   int? value;
-  _Gender(this.label,this.value);
+  List<String> unSelectedIcons;
+  List<String> selectedIcons;
+
+  _Gender(this.label,this.value,this.unSelectedIcons,this.selectedIcons);
 }
 
 
@@ -361,4 +431,49 @@ class CustomThumbShape2 extends RangeSliderThumbShape {
 
     canvas.restore();
   }
+}
+
+class SliderThumbImage extends SliderComponentShape {
+  final ui.Image image;
+
+  SliderThumbImage(this.image);
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    return Size(image.width.toDouble(), image.height.toDouble());
+  }
+  @override
+  void paint(PaintingContext context,
+      Offset center,
+      {required Animation<double> activationAnimation,
+        required Animation<double> enableAnimation,
+        required bool isDiscrete,
+        required TextPainter labelPainter,
+        required RenderBox parentBox,
+        required SliderThemeData sliderTheme,
+        required TextDirection textDirection,
+        required double value,
+        required double textScaleFactor,
+        required Size sizeWithOverflow}) {
+    final canvas = context.canvas;
+    final imageWidth = image?.width ?? 20;
+    final imageHeight = image?.height ?? 20;
+
+    Offset imageOffset = Offset(
+      center.dx - (imageWidth / 2),
+      center.dy - (imageHeight / 2),
+    );
+
+    Paint paint = Paint()..filterQuality = FilterQuality.high;
+    canvas.drawImage(image, imageOffset, paint);
+
+  }
+
+
+}
+Future<ui.Image> load(String asset) async {
+  ByteData data = await rootBundle.load(asset);
+  ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+  ui.FrameInfo fi = await codec.getNextFrame();
+  return fi.image;
 }

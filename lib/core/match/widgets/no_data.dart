@@ -8,9 +8,10 @@ class NoDataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
    return Column(
      mainAxisAlignment: MainAxisAlignment.center,
-     children: [
+     children: [ 
        Image.asset(Assets.imagesError,width: 132,height: 166,fit: BoxFit.cover,),
        const SizedBox(height: 32,),
        const Text('Oops, no data right now ',
@@ -39,13 +40,6 @@ class NoDataWidget extends StatelessWidget {
            ),
          textAlign: TextAlign.center,
        ),
-       // Text('Please check your internet or Tap to ${Text('Refresh',style: TextStyle(color: Color(0xff2c2c2c)),)} and try again',
-       //   style: TextStyle(
-       //       color: Color(0xff727272),
-       //       fontSize: 14
-       //
-       //   ),
-       // ),
        const SizedBox(height: 12,),
        Padding(
          padding: const EdgeInsets.symmetric(

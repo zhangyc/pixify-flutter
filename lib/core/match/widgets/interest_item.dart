@@ -28,6 +28,7 @@ class InterestItem extends StatelessWidget {
             children: interest.map((e) => Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
+                color: Color(0xffBEFF06),
                 border: Border.all(
                   width: 2,
                   color: Color(0xff2c2c2c)

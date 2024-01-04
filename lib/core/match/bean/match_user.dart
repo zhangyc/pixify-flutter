@@ -237,7 +237,7 @@ class WishBean {
 class Activity {
   int? id;
   String? title;
-
+  bool selected=false;
   Activity({this.id, this.title});
 
   Activity.fromJson(Map<String, dynamic> json) {

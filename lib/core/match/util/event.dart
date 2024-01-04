@@ -8,7 +8,19 @@ enum MatchEvent{
   //20231222 add
   match_like_wishlist,
   match_like_justlike,
-  match_dislike
+  match_dislike,
+  //20230104 add
+  match_matched,
+  match_interests_pop,
+  match_interests_cancel,
+  match_bio_pop,
+  match_bio_gen,
+  match_bio_take,
+  match_bio_cancel,
+  match_avatar_pop,
+  match_avatar_up,
+  match_avatar_done,
+  match_avatar_cancel
 }
 enum ChatEvent{
   pay_page_open,

@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
@@ -54,6 +55,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     });
     languageNotifier.addListener(() {
       _initData();
+    });
+    Permission.locationWhenInUse.request().then((value){
+      setState(() {
+        _state=PageState.notLocation;
+      });
     });
     super.initState();
   }
@@ -176,6 +182,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             //currentPage=index;
                             ///如果对方喜欢我。
                             if(users[currentPage].likeMe==1){
+                              SonaAnalytics.log(MatchEvent.match_matched.name);
+
                               MatchApi.like(users[currentPage].id);
                               ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
                               showMatched(context,target: users[currentPage],next: (){
@@ -212,10 +220,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             }));
                           }
                       }),
-                      ScaleAnimation(child: Image.asset(Assets.iconsArrow,width: 56,height: 56,), onTap: (){
-                        if(currentPage==users.length-1){
+                      ScaleAnimation(child: SvgPicture.asset(Assets.svgArrow,width: 56,height: 56,), onTap: (){
+                              if(currentPage==users.length-1){
                                   return;
-                                }
+                               }
                               Future.delayed(Duration(milliseconds: 200),(){
                                 matchAnimation.value=TransformStatus.rightRotate;
                                  if(canArrow){
@@ -365,7 +373,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   PageState _state= PageState.loading;
   _buildMatch() {
     if(_state==PageState.loading){
-     return  Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
+     return Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){
       return NoDataWidget(onTap: (){
         _initData();
@@ -410,6 +418,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           onPageChanged: (value) async {
             currentPage=value!;
             if(value==4&&!todayIsShowedInterest){
+              SonaAnalytics.log(MatchEvent.match_interests_pop.name);
+
               if(ref.watch(myProfileProvider)!.interests.isEmpty&&ref.watch(myProfileProvider)!.bio==null){
                 if(mounted){
                   showChooseHobbies(context);
@@ -417,6 +427,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                 }
               }
             }else if(value==10&&!todayIsShowedPhoto){
+              SonaAnalytics.log(MatchEvent.match_avatar_pop.name);
+
               if(ref.watch(myProfileProvider)!.photos.length<3&&!todayIsShowedPhoto){
                 if(mounted){
                   showUploadPortrait(context);
@@ -451,7 +463,8 @@ enum PageState{
   loading,
   noData,
   success,
-  fail
+  fail,
+  notLocation
 }
 enum PageAnimStatus {
   dislike,

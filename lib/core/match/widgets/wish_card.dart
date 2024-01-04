@@ -120,7 +120,8 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                           child: Column(
                             children: List.generate(wish.activities.length, (index2) => Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
-                              child: ChoiceButton(text: wish.activities[index2].title??'', onTap: () {
+                              child: ChoiceButton(activity: wish.activities[index2], onTap: () {
+
                                 ///点击切换，下一个用户.并且调用like接口
                                 MatchApi.like(widget.info.id,
                                     activityId: wish.activities[index2].id,
