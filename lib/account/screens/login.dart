@@ -42,6 +42,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
     final initialCountryCode = findMatchedSonaLocale(Platform.localeName).locale.countryCode;
     _country = findCountryByCode(initialCountryCode);
     super.initState();
+    SonaAnalytics.log('reg_show_phone');
   }
 
   @override
@@ -110,7 +111,11 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                           setState(() {
                             _country = c;
                           });
+                          SonaAnalytics.log('reg_code_select');
+                        } else {
+                          SonaAnalytics.log('reg_code_x');
                         }
+                        SonaAnalytics.log('reg_code_pop');
                       },
                       child: FittedBox(
                         child: Container(
