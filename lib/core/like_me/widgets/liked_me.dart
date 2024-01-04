@@ -27,26 +27,9 @@ class LikedMeListView extends StatefulHookConsumerWidget {
 }
 
 class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
-
-  late Timer _timer;
-
-  @override
-  void initState() {
-    _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
-      if (mounted) ref.read(asyncLikedMeProvider.notifier).refresh();
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ref.watch(asyncLikedMeProvider).when<Widget>(
+    return ref.watch(likeMeStreamProvider).when<Widget>(
       data: (likedMeUsers) {
         return likedMeUsers.isEmpty ? Container() : Container(
           margin: EdgeInsets.only(top: 20, bottom: 20),

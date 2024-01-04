@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEdit": MessageLookupByLibrary.simpleMessage("編輯"),
         "buttonEditProfile": MessageLookupByLibrary.simpleMessage("編輯資料"),
         "buttonGenerate": MessageLookupByLibrary.simpleMessage("生成"),
+        "buttonGo": MessageLookupByLibrary.simpleMessage("前往"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("明白了"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage("😪SONA累了，👇點擊給她加油！"),
@@ -118,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "interests": MessageLookupByLibrary.simpleMessage("興趣"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI傳譯：關"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI傳譯：開"),
+        "justNow": MessageLookupByLibrary.simpleMessage("剛剛"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("就是按讚"),
         "justTypeInYourLanguage": m2,
         "letSONASayHiForYou":
@@ -155,6 +157,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage("哎呀，現在沒有數據"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage("更多推薦來自你心願單的人"),
+        "permissionRequiredContent": MessageLookupByLibrary.simpleMessage(
+            "Sona需要您的位置信息才能正常工作。您需要在手機設置中打開位置訪問權限"),
+        "permissionRequiredTitle": MessageLookupByLibrary.simpleMessage("需要權限"),
         "photoFromCamera": MessageLookupByLibrary.simpleMessage("拍照"),
         "photoFromGallery": MessageLookupByLibrary.simpleMessage("從圖庫選擇"),
         "photos": MessageLookupByLibrary.simpleMessage("照片"),

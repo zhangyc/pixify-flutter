@@ -61,6 +61,7 @@ enum SonaIcons {
   chat_send,
   check,
   close,
+  conch_selected,
   edit,
   forward,
   navicon_sona,

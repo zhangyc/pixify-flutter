@@ -66,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEditProfile":
             MessageLookupByLibrary.simpleMessage("แก้ไขโปรไฟล์"),
         "buttonGenerate": MessageLookupByLibrary.simpleMessage("สร้าง"),
+        "buttonGo": MessageLookupByLibrary.simpleMessage("ไป"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("เข้าใจแล้ว"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
@@ -133,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "AI การแปลภาษาแบบพร้อมเพรียง: ปิด"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
             "AI การแปลภาษาแบบพร้อมเพรียง: เปิด"),
+        "justNow": MessageLookupByLibrary.simpleMessage("เมื่อสักครู่"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("เพียงส่งไลค์"),
         "justTypeInYourLanguage": m2,
         "letSONASayHiForYou":
@@ -176,6 +178,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "การตั้งค่าของรายการสิ่งที่ปรารถนาของคุณจะมีบทบาทที่ใหญ่ขึ้น"),
+        "permissionRequiredContent": MessageLookupByLibrary.simpleMessage(
+            "Sonaต้องการตำแหน่งของคุณเพื่อให้ทำงานได้อย่างเหมาะสม คุณต้องเปิดการเข้าถึงตำแหน่งในการตั้งค่าโทรศัพท์ของคุณ"),
+        "permissionRequiredTitle":
+            MessageLookupByLibrary.simpleMessage("ต้องการอนุญาต"),
         "photoFromCamera": MessageLookupByLibrary.simpleMessage("ถ่ายภาพ"),
         "photoFromGallery":
             MessageLookupByLibrary.simpleMessage("จากแกลเลอรีเลือก"),

@@ -18,7 +18,7 @@ final tokenProvider = StateProvider<String?>(
         global.navigatorKey.currentState?.pushNamedAndRemoveUntil('login', (route) => false);
         ref.invalidate(currentHomeTapIndexProvider);
         ref.invalidate(myProfileProvider);
-        ref.invalidate(asyncLikedMeProvider);
+        ref.invalidate(likeMeStreamProvider);
         ref.invalidate(asyncPersonaProvider);
         ref.invalidate(conversationStreamProvider);
         // ref.invalidate(asyncChatStylesProvider);

@@ -42,6 +42,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
     final initialCountryCode = findMatchedSonaLocale(Platform.localeName).locale.countryCode;
     _country = findCountryByCode(initialCountryCode);
     super.initState();
+    SonaAnalytics.log('reg_show_phone');
   }
 
   @override
@@ -85,13 +86,14 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                 child: TextFormField(
                   controller: _phoneController,
                   focusNode: _phoneFocusNode,
+                  keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 2,
                         color: Theme.of(context).primaryColor
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(20),
                       gapPadding: 8
                     ),
                     enabledBorder: OutlineInputBorder(
@@ -99,7 +101,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                         width: 2,
                         color: Theme.of(context).primaryColor
                       ),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(20),
                       gapPadding: 8
                     ),
                     prefixIcon: GestureDetector(
@@ -109,7 +111,11 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
                           setState(() {
                             _country = c;
                           });
+                          SonaAnalytics.log('reg_code_select');
+                        } else {
+                          SonaAnalytics.log('reg_code_x');
                         }
+                        SonaAnalytics.log('reg_code_pop');
                       },
                       child: FittedBox(
                         child: Container(

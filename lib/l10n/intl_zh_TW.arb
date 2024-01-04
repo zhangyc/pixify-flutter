@@ -391,5 +391,13 @@
   "onboarding3": "閒話少說，開始吧！\n傳奇的浪漫邂逅在等著你",
   "@onboarding3": {},
   "onboardingWish": "請完成心願單\n獲得更理想的配對",
-  "@onboardingWish": {}
+  "@onboardingWish": {},
+  "justNow": "剛剛",
+  "@justNow": {},
+  "permissionRequiredTitle": "需要權限",
+  "@permissionRequiredTitle": {},
+  "permissionRequiredContent": "Sona需要您的位置信息才能正常工作。您需要在手機設置中打開位置訪問權限",
+  "@permissionRequiredContent": {},
+  "buttonGo": "前往",
+  "@buttonGo": {}
 }

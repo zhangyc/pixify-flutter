@@ -391,5 +391,13 @@
   "onboarding3": "余計な話は省いて、始めよう！\n伝説のロマンチックな出会いがあなたを待っているよ",
   "@onboarding3": {},
   "onboardingWish": "願いリストを完成させて、\nより理想的なマッチを得ましょう",
-  "@onboardingWish": {}
+  "@onboardingWish": {},
+  "justNow": "たった今",
+  "@justNow": {},
+  "permissionRequiredTitle": "許可が必要です",
+  "@permissionRequiredTitle": {},
+  "permissionRequiredContent": "Sonaは適切に機能するためにあなたの位置情報が必要です。電話の設定で位置情報へのアクセスをオンにする必要があります",
+  "@permissionRequiredContent": {},
+  "buttonGo": "行く",
+  "@buttonGo": {}
 }

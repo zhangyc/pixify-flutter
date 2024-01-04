@@ -68,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEditProfile":
             MessageLookupByLibrary.simpleMessage("Editar perfil"),
         "buttonGenerate": MessageLookupByLibrary.simpleMessage("Gerar"),
+        "buttonGo": MessageLookupByLibrary.simpleMessage("Ir"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("Entendi"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
@@ -137,6 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Interpretação Síncrona AI: Desligada"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
             "Interpretação Síncrona AI: Ligada"),
+        "justNow": MessageLookupByLibrary.simpleMessage("agora mesmo"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Apenas Envie um Like"),
         "justTypeInYourLanguage": m2,
@@ -181,6 +183,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "As configurações da sua lista de desejos terão um papel maior"),
+        "permissionRequiredContent": MessageLookupByLibrary.simpleMessage(
+            "Sona precisa da sua localização para funcionar corretamente. Você terá que ativar o acesso à localização nas configurações do seu telefone"),
+        "permissionRequiredTitle":
+            MessageLookupByLibrary.simpleMessage("Permissão necessária"),
         "photoFromCamera":
             MessageLookupByLibrary.simpleMessage("Tirar uma foto"),
         "photoFromGallery":

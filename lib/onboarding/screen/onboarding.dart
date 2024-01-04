@@ -22,6 +22,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     _controller = PageController();
     super.initState();
+    SonaAnalytics.log('reg_intro_1');
   }
 
   @override
@@ -55,8 +56,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
         child: PageView(
           controller: _controller,
+          onPageChanged: (index) {
+            if (index == 3) {
+              SonaAnalytics.log('reg_intro_last');
+            }
+          },
           children: [
-            ...[0,1,2,3].map((i) => _itemBuilder(i))
+            ...[0,1,2,3].map((i) => _itemBuilder(i)),
           ],
         ),
       ),
@@ -164,6 +170,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _onSkip() {
     kvStore.setBool('onboarding', true);
     Navigator.pushReplacementNamed(context, 'login');
+    SonaAnalytics.log('reg_intro_lastclick');
   }
 
   void _onNext() {

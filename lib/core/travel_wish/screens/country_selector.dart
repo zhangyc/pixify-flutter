@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/no_data/empty.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/travel_wish/providers/creator.dart';
 
 import '../../../generated/l10n.dart';
@@ -82,7 +83,9 @@ class _CountrySelector extends ConsumerState<CountrySelector> {
                                 children: [
                                   Text(findFlagByCountryCode(country.code)),
                                   SizedBox(width: 16),
-                                  Text(country.displayName)
+                                  Text(country.displayName),
+                                  Expanded(child: Container()),
+                                  if (ref.read(travelWishParamsProvider).countryId == country.id) SonaIcon(icon: SonaIcons.conch_selected)
                                 ],
                               )
                           ),

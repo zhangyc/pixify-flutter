@@ -391,5 +391,13 @@
   "onboarding3": "Habla menos, ama más. Te espera un romance legendario",
   "@onboarding3": {},
   "onboardingWish": "Por favor, completa la lista de\ndeseos para conseguir una pareja más ideal",
-  "@onboardingWish": {}
+  "@onboardingWish": {},
+  "justNow": "justo ahora",
+  "@justNow": {},
+  "permissionRequiredTitle": "Permiso requerido",
+  "@permissionRequiredTitle": {},
+  "permissionRequiredContent": "Sona necesita tu ubicación para funcionar correctamente. Tendrás que activar el acceso a la ubicación en la configuración de tu teléfono",
+  "@permissionRequiredContent": {},
+  "buttonGo": "Ir",
+  "@buttonGo": {}
 }
