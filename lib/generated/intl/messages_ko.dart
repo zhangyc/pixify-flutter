@@ -124,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("AI 동시 통역: 꺼짐"),
         "interpretationOn":
             MessageLookupByLibrary.simpleMessage("AI 동시 통역: 켜짐"),
+        "justNow": MessageLookupByLibrary.simpleMessage("방금"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("그냥 좋아요를 보내세요"),
         "justTypeInYourLanguage": m2,
         "letSONASayHiForYou":

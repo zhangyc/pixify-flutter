@@ -123,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "interests": MessageLookupByLibrary.simpleMessage("興味"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI同期通訳：オフ"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI同期通訳：オン"),
+        "justNow": MessageLookupByLibrary.simpleMessage("たった今"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("いいねを送るだけ"),
         "justTypeInYourLanguage": m2,
         "letSONASayHiForYou":

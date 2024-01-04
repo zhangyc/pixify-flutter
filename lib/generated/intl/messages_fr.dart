@@ -138,6 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Interprétation Synchrone IA : Désactivée"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
             "Interprétation Synchrone IA : Activée"),
+        "justNow": MessageLookupByLibrary.simpleMessage("à l\'instant"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Envoie juste un J\'aime"),
         "justTypeInYourLanguage": m2,

@@ -136,6 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("AI Interpretation: Off"),
         "interpretationOn":
             MessageLookupByLibrary.simpleMessage("AI Interpretation: On"),
+        "justNow": MessageLookupByLibrary.simpleMessage("just now"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Just Send a Like"),
         "justTypeInYourLanguage": m2,

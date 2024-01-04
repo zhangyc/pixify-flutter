@@ -391,5 +391,7 @@
   "onboarding3": "闲话少说，开始吧！\n传奇的浪漫邂逅在等着你",
   "@onboarding3": {},
   "onboardingWish": "请完成心愿单\n获得更理想的配对",
-  "@onboardingWish": {}
+  "@onboardingWish": {},
+  "justNow": "刚刚",
+  "@justNow": {}
 }

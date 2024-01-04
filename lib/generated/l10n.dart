@@ -2009,6 +2009,16 @@ class S {
       args: [],
     );
   }
+
+  /// `just now`
+  String get justNow {
+    return Intl.message(
+      'just now',
+      name: 'justNow',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

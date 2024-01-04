@@ -391,5 +391,7 @@
   "onboarding3": "Talk less, Love more\nA legendary romance awaits you",
   "@onboarding3": {},
   "onboardingWish": "Set your wishlist for\n better matching!",
-  "@onboardingWish": {}
+  "@onboardingWish": {},
+  "justNow": "just now",
+  "@justNow": {}
 }

@@ -133,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "AI การแปลภาษาแบบพร้อมเพรียง: ปิด"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
             "AI การแปลภาษาแบบพร้อมเพรียง: เปิด"),
+        "justNow": MessageLookupByLibrary.simpleMessage("เมื่อสักครู่"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("เพียงส่งไลค์"),
         "justTypeInYourLanguage": m2,
         "letSONASayHiForYou":

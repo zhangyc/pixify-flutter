@@ -137,6 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "KI-Synchrone Interpretation: Aus"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
             "KI-Synchrone Interpretation: Ein"),
+        "justNow": MessageLookupByLibrary.simpleMessage("soeben"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Schicke einfach ein Like"),
         "justTypeInYourLanguage": m2,

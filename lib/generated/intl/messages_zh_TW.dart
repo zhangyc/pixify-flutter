@@ -118,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "interests": MessageLookupByLibrary.simpleMessage("興趣"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI傳譯：關"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI傳譯：開"),
+        "justNow": MessageLookupByLibrary.simpleMessage("剛剛"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("就是按讚"),
         "justTypeInYourLanguage": m2,
         "letSONASayHiForYou":

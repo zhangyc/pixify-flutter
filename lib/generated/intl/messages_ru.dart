@@ -138,6 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Синхронный перевод ИИ: Выключен"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
             "Синхронный перевод ИИ: Включен"),
+        "justNow": MessageLookupByLibrary.simpleMessage("только что"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Просто отправьте лайк"),
         "justTypeInYourLanguage": m2,

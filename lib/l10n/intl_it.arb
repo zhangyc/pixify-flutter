@@ -391,5 +391,7 @@
   "onboarding3": "Parla meno, ama di più. Ti aspetta un romantico leggendario",
   "@onboarding3": {},
   "onboardingWish": "Perfavore, completa la tua lista dei\ndesideri per un abbinamento migliore",
-  "@onboardingWish": {}
+  "@onboardingWish": {},
+  "justNow": "proprio ora",
+  "@justNow": {}
 }

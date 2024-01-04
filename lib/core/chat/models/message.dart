@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/chat/providers/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
+
+import '../../../generated/l10n.dart';
 
 class ImMessage {
   ImMessage({
@@ -52,28 +55,28 @@ enum CallSonaType {
 }
 
 extension DateTimeExt on DateTime {
-  String toMessageTime() {
+  String toMessageTime(String languageTag) {
     final now = DateTime.now();
     if (year == now.year) {
       if (month == now.month) {
         if (day == now.day) {
           if (now.difference(this) < const Duration(hours: 1)) {
             if (now.difference(this) < const Duration(minutes: 1)) {
-              return 'just now';
+              return S.current.justNow;
             } else {
-              return 'Today ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+              return DateFormat.Hm(languageTag).format(this);
             }
           } else {
-            return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+            return DateFormat.Hm(languageTag).format(this);
           }
         } else {
-          return '${_getMonthShort(month)} ${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+          return DateFormat.MMMd(languageTag).add_Hm().format(this);
         }
       } else {
-        return '${_getMonthShort(month)} ${day.toString().padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+        return DateFormat.yMMMd(languageTag).add_Hm().format(this);
       }
     } else {
-      return '${_getMonthShort(month)} ${day.toString().padLeft(2, '0')}, $year ${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+      return DateFormat.yMMMd(languageTag).add_Hm().format(this);
     }
   }
 }

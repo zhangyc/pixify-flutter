@@ -117,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "interests": MessageLookupByLibrary.simpleMessage("兴趣"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI传译：关"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI传译：开"),
+        "justNow": MessageLookupByLibrary.simpleMessage("刚刚"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("就点个赞"),
         "justTypeInYourLanguage": m2,
         "letSONASayHiForYou":
