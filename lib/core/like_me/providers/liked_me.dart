@@ -21,22 +21,23 @@ final likeMeStreamProvider = StreamProvider((ref) {
   return streamController.stream;
 });
 
-const likeMeStoreKey = 'like_me_last_check_time';
 final likeMeNoticeNotifier = StateProvider<bool>((ref) {
-  var state = false;
   final list = ref.watch(likeMeStreamProvider).unwrapPrevious().valueOrNull;
-  if (list != null) {
-    if (list.isNotEmpty) {
-      final mill = kvStore.getInt(likeMeStoreKey);
-      if (mill == null) {
-        state = true;
-      } else {
-        final lastCheckTime = DateTime.fromMillisecondsSinceEpoch(mill);
-        state = list.any((u) => u.updateTime!.isAfter(lastCheckTime));
-      }
+  final lastCheckTime = ref.watch(likeMeLastCheckTimeProvider);
+  if (list == null || list.isEmpty) return false;
+  if (lastCheckTime == null) return true;
+  return (list.any((u) => u.updateTime!.isAfter(lastCheckTime)));
+}, dependencies: [likeMeStreamProvider, likeMeLastCheckTimeProvider]);
+
+const _lastCheckTimeKey = 'like_me_last_check_time';
+final likeMeLastCheckTimeProvider = StateProvider<DateTime?>((ref) {
+  final millisecondsSinceEpoch = kvStore.getInt(_lastCheckTimeKey);
+  ref.listenSelf((previous, next) {
+    if (next != null) {
+      kvStore.setInt(_lastCheckTimeKey, next.millisecondsSinceEpoch);
     } else {
-      state = false;
+      kvStore.remove(_lastCheckTimeKey);
     }
-  }
-  return state;
-}, dependencies: [likeMeStreamProvider]);
+  });
+  return millisecondsSinceEpoch != null ? DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch) : null;
+});

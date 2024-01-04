@@ -133,9 +133,9 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
 
   void _onPageChange(int index) {
     if (index == 1) {
-      kvStore.setInt(likeMeStoreKey, DateTime.now().millisecondsSinceEpoch);
+      ref.read(likeMeLastCheckTimeProvider.notifier).update((state) => DateTime.now());
     } else if(index == 2) {
-      kvStore.setInt(convosStoreKey, DateTime.now().millisecondsSinceEpoch);
+      ref.read(convosLastCheckTimeProvider.notifier).update((state) => DateTime.now());
     }
     if (index != ref.read(currentHomeTapIndexProvider)) {
       ref.read(currentHomeTapIndexProvider.notifier).update((_) => index);

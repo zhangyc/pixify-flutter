@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/dialog/common.dart';
@@ -33,7 +32,34 @@ class LocationScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _LocationScreenState();
 }
 
-class _LocationScreenState extends State<LocationScreen> {
+class _LocationScreenState extends State<LocationScreen> with WidgetsBindingObserver {
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _check();
+    }
+    super.didChangeAppLifecycleState(state);
+  }
+
+  void _check() async {
+    final permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
+      _next();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +117,19 @@ class _LocationScreenState extends State<LocationScreen> {
     } catch(e) {
       var permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
-        showCommonBottomSheet(
+        if (!mounted) return;
+        await showCommonBottomSheet(
           context: context,
           title: S.current.permissionRequiredTitle,
           content: S.current.permissionRequiredContent,
           actions: [
-            FilledButton(onPressed: SystemSettings.app, child: Text(S.of(context).buttonGo))
+            FilledButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                await SystemSettings.app();
+              },
+              child: Text(S.current.buttonGo)
+            )
           ]
         );
       }
@@ -104,7 +137,7 @@ class _LocationScreenState extends State<LocationScreen> {
     }
     longitude=location.longitude;
     latitude=location.latitude;
-    if(mounted){
+    if (mounted) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => NationAndLanguageScreen(
           name: widget.name,
           birthday: widget.birthday,

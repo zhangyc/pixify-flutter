@@ -25,8 +25,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler); ///后台消息处理
   initHelper();
-  var appStateObserver = AppStateObserver();
-  WidgetsBinding.instance.addObserver(appStateObserver);  ///判断app当前在前台还是后台
   final firebase = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
     name: 'sona'
