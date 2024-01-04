@@ -64,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEdit": MessageLookupByLibrary.simpleMessage("편집"),
         "buttonEditProfile": MessageLookupByLibrary.simpleMessage("프로필 편집"),
         "buttonGenerate": MessageLookupByLibrary.simpleMessage("생성하다"),
+        "buttonGo": MessageLookupByLibrary.simpleMessage("가다"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage("😪SONA 피곤해, 👇탭하고 에너지 충전해!"),
@@ -168,6 +169,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "당신의 위시리스트 설정이 더 큰 역할을 할 것입니다"),
+        "permissionRequiredContent": MessageLookupByLibrary.simpleMessage(
+            "Sona는 제대로 작동하기 위해 귀하의 위치 정보가 필요합니다. 휴대폰 설정에서 위치 접근을 켜야 합니다"),
+        "permissionRequiredTitle":
+            MessageLookupByLibrary.simpleMessage("허가 필요"),
         "photoFromCamera": MessageLookupByLibrary.simpleMessage("사진 찍기"),
         "photoFromGallery": MessageLookupByLibrary.simpleMessage("갤러리에서 선택"),
         "photos": MessageLookupByLibrary.simpleMessage("사진"),

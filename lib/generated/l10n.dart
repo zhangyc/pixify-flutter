@@ -2019,6 +2019,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Permission required`
+  String get permissionRequiredTitle {
+    return Intl.message(
+      'Permission required',
+      name: 'permissionRequiredTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sona needs your location to work properly. You'll have to turn on location access in your phone's settings`
+  String get permissionRequiredContent {
+    return Intl.message(
+      'Sona needs your location to work properly. You\'ll have to turn on location access in your phone\'s settings',
+      name: 'permissionRequiredContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Go`
+  String get buttonGo {
+    return Intl.message(
+      'Go',
+      name: 'buttonGo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

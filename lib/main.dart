@@ -66,7 +66,7 @@ void main() async {
 Future<void> _initAttribution() async {
   AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
       afDevKey: 'pjgPTCev87vC2WK6dGhg3n',
-      appId: Platform.isIOS ? 'id6464375495' : 'com.planetwalk.sona',
+      appId: Platform.isIOS ? '6464375495' : 'com.planetwalk.sona',
       showDebug: kDebugMode,
       timeToWaitForATTUserAuthorization: 50, // for iOS 14.5
       disableAdvertisingIdentifier: Platform.isIOS,

@@ -393,5 +393,11 @@
   "onboardingWish": "กรุณาทำตามรายการสิ่งที่ปรารถนาเ\nพื่อการจับคู่ที่เหมาะสมยิ่งขึ้น",
   "@onboardingWish": {},
   "justNow": "เมื่อสักครู่",
-  "@justNow": {}
+  "@justNow": {},
+  "permissionRequiredTitle": "ต้องการอนุญาต",
+  "@permissionRequiredTitle": {},
+  "permissionRequiredContent": "Sonaต้องการตำแหน่งของคุณเพื่อให้ทำงานได้อย่างเหมาะสม คุณต้องเปิดการเข้าถึงตำแหน่งในการตั้งค่าโทรศัพท์ของคุณ",
+  "@permissionRequiredContent": {},
+  "buttonGo": "ไป",
+  "@buttonGo": {}
 }

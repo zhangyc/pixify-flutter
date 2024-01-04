@@ -393,5 +393,11 @@
   "onboardingWish": "Perfavore, completa la tua lista dei\ndesideri per un abbinamento migliore",
   "@onboardingWish": {},
   "justNow": "proprio ora",
-  "@justNow": {}
+  "@justNow": {},
+  "permissionRequiredTitle": "Permesso richiesto",
+  "@permissionRequiredTitle": {},
+  "permissionRequiredContent": "Sona ha bisogno della tua posizione per funzionare correttamente. Dovrai attivare l'accesso alla posizione nelle impostazioni del tuo telefono",
+  "@permissionRequiredContent": {},
+  "buttonGo": "Andare",
+  "@buttonGo": {}
 }

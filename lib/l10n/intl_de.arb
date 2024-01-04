@@ -393,5 +393,11 @@
   "onboardingWish": "Bitte vervollständige die\nWunschliste für eine ideale Übereinstimmung",
   "@onboardingWish": {},
   "justNow": "soeben",
-  "@justNow": {}
+  "@justNow": {},
+  "permissionRequiredTitle": "Erlaubnis erforderlich",
+  "@permissionRequiredTitle": {},
+  "permissionRequiredContent": "Sona benötigt Ihren Standort, um ordnungsgemäß zu funktionieren. Sie müssen den Zugriff auf den Standort in den Einstellungen Ihres Telefons aktivieren",
+  "@permissionRequiredContent": {},
+  "buttonGo": "Gehen",
+  "@buttonGo": {}
 }

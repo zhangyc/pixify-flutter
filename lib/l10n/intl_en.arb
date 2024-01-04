@@ -393,5 +393,11 @@
   "onboardingWish": "Set your wishlist for\n better matching!",
   "@onboardingWish": {},
   "justNow": "just now",
-  "@justNow": {}
+  "@justNow": {},
+  "permissionRequiredTitle": "Permission required",
+  "@permissionRequiredTitle": {},
+  "permissionRequiredContent": "Sona needs your location to work properly. You'll have to turn on location access in your phone's settings",
+  "@permissionRequiredContent": {},
+  "buttonGo": "Go",
+  "@buttonGo": {}
 }

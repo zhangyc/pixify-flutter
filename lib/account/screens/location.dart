@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
+import 'package:sona/utils/dialog/common.dart';
 import 'package:sona/utils/location/location.dart';
+import 'package:system_settings/system_settings.dart';
 
 import '../../core/match/util/local_data.dart';
 import '../../generated/l10n.dart';
@@ -82,7 +85,23 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void _next() async {
-    final location = await determinePosition();
+    Position location;
+    try {
+      location = await determinePosition();
+    } catch(e) {
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+        showCommonBottomSheet(
+          context: context,
+          title: S.current.permissionRequiredTitle,
+          content: S.current.permissionRequiredContent,
+          actions: [
+            FilledButton(onPressed: SystemSettings.app, child: Text(S.of(context).buttonGo))
+          ]
+        );
+      }
+      return;
+    }
     longitude=location.longitude;
     latitude=location.latitude;
     if(mounted){

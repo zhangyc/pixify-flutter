@@ -393,5 +393,11 @@
   "onboardingWish": "소원 목록을 완성하여\n 더 이상적인 매칭을 얻으세요",
   "@onboardingWish": {},
   "justNow": "방금",
-  "@justNow": {}
+  "@justNow": {},
+  "permissionRequiredTitle": "허가 필요",
+  "@permissionRequiredTitle": {},
+  "permissionRequiredContent": "Sona는 제대로 작동하기 위해 귀하의 위치 정보가 필요합니다. 휴대폰 설정에서 위치 접근을 켜야 합니다",
+  "@permissionRequiredContent": {},
+  "buttonGo": "가다",
+  "@buttonGo": {}
 }

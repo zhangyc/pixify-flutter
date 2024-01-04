@@ -68,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEditProfile":
             MessageLookupByLibrary.simpleMessage("Edit profile"),
         "buttonGenerate": MessageLookupByLibrary.simpleMessage("Generate"),
+        "buttonGo": MessageLookupByLibrary.simpleMessage("Go"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("Got it"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
@@ -182,6 +183,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "People from your wishlist get more recommendations"),
+        "permissionRequiredContent": MessageLookupByLibrary.simpleMessage(
+            "Sona needs your location to work properly. You\'ll have to turn on location access in your phone\'s settings"),
+        "permissionRequiredTitle":
+            MessageLookupByLibrary.simpleMessage("Permission required"),
         "photoFromCamera": MessageLookupByLibrary.simpleMessage("Take a photo"),
         "photoFromGallery":
             MessageLookupByLibrary.simpleMessage("From gallery"),

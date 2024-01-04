@@ -393,5 +393,11 @@
   "onboardingWish": "願いリストを完成させて、\nより理想的なマッチを得ましょう",
   "@onboardingWish": {},
   "justNow": "たった今",
-  "@justNow": {}
+  "@justNow": {},
+  "permissionRequiredTitle": "許可が必要です",
+  "@permissionRequiredTitle": {},
+  "permissionRequiredContent": "Sonaは適切に機能するためにあなたの位置情報が必要です。電話の設定で位置情報へのアクセスをオンにする必要があります",
+  "@permissionRequiredContent": {},
+  "buttonGo": "行く",
+  "@buttonGo": {}
 }

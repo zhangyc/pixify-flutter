@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonEdit": MessageLookupByLibrary.simpleMessage("編集"),
         "buttonEditProfile": MessageLookupByLibrary.simpleMessage("プロフィール編集"),
         "buttonGenerate": MessageLookupByLibrary.simpleMessage("生成する"),
+        "buttonGo": MessageLookupByLibrary.simpleMessage("行く"),
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("分かった"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage("SONA疲れた😪、👇クリックでエネルギーチャージ！"),
@@ -166,6 +167,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage(
                 "あなたのウィッシュリストの設定はもっと大きな役割を果たすようになるよ"),
+        "permissionRequiredContent": MessageLookupByLibrary.simpleMessage(
+            "Sonaは適切に機能するためにあなたの位置情報が必要です。電話の設定で位置情報へのアクセスをオンにする必要があります"),
+        "permissionRequiredTitle":
+            MessageLookupByLibrary.simpleMessage("許可が必要です"),
         "photoFromCamera": MessageLookupByLibrary.simpleMessage("写真を撮る"),
         "photoFromGallery": MessageLookupByLibrary.simpleMessage("ギャラリーから選択"),
         "photos": MessageLookupByLibrary.simpleMessage("写真"),
