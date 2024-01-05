@@ -119,6 +119,7 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
           SizedBox(height: 12),
           Row(
             mainAxisAlignment: widget.fromMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (!widget.fromMe) Padding(
                 padding: const EdgeInsets.only(right: 8.0),
