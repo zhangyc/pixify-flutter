@@ -2000,6 +2000,16 @@ class S {
     );
   }
 
+  /// `Ease off the social pressure\nChill with fun souls worldwide`
+  String get onboardingB {
+    return Intl.message(
+      'Ease off the social pressure\nChill with fun souls worldwide',
+      name: 'onboardingB',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Set your wishlist for\n better matching!`
   String get onboardingWish {
     return Intl.message(

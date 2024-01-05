@@ -177,6 +177,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Du wirst eine Superkraft erlangen: \nSprachenbeherrschung Keine Kommunikationsbarrieren mehr"),
         "onboarding3": MessageLookupByLibrary.simpleMessage(
             "Weniger reden, mehr lieben. Eine legendäre Romanze wartet auf dich"),
+        "onboardingB": MessageLookupByLibrary.simpleMessage(
+            "Lass den sozialen Druck nach.\nChill mit lustigen Seelen weltweit"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "Bitte vervollständige die\nWunschliste für eine ideale Übereinstimmung"),
         "oopsNoDataRightNow":

@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:sona/account/screens/login.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/onboarding/screen/onboarding.dart';
+import 'package:sona/onboarding/screen/onboarding_b.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sona/theme/theme.dart';
@@ -32,7 +34,24 @@ class SonaApp extends HookConsumerWidget {
     final navigatorKey = global.navigatorKey;
     final onboarding = kvStore.getBool('onboarding') ?? false;
     var initialRoute = profile == null || !profile.completed ? 'login' : '/';
-    if (profile == null && !onboarding) initialRoute = 'onboarding';
+    if (profile == null && !onboarding) {
+      switch (Random().nextInt(3) % 3) {
+        case 0:
+          initialRoute = 'onboarding';
+          break;
+        case 1:
+          initialRoute = 'onboarding_b';
+          break;
+        case 2:
+          initialRoute = 'login';
+          kvStore.setBool('onboarding', true);
+          SonaAnalytics.log('reg_intro_v3go');
+          break;
+        default:
+          initialRoute = 'login';
+          break;
+      }
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       key: ValueKey(token),
@@ -63,6 +82,7 @@ class SonaApp extends HookConsumerWidget {
 
 final _routes = <String, WidgetBuilder>{
   'onboarding': (_) => const OnboardingScreen(),
+  'onboarding_b': (_) => const OnboardingScreenB(),
   '/': (_) => const SonaHome(),
   'login': (_) => const LoginPhoneNumberScreen(),
   'setting': (_) => const SettingScreen(),

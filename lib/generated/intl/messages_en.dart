@@ -176,6 +176,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You\'ll gain superpower:\nPolyglot\nNo more language worries"),
         "onboarding3": MessageLookupByLibrary.simpleMessage(
             "Talk less, Love more\nA legendary romance awaits you"),
+        "onboardingB": MessageLookupByLibrary.simpleMessage(
+            "Ease off the social pressure\nChill with fun souls worldwide"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "Set your wishlist for\n better matching!"),
         "oopsNoDataRightNow":
