@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
@@ -47,8 +47,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
-    Permission.locationWhenInUse.request().then((value){
-      if(value.isGranted){
+    Geolocator.checkPermission().then((value){
+      if(value==LocationPermission.whileInUse||value==LocationPermission.always){
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
           longitude=ref.read(myProfileProvider)!.position?.longitude;
@@ -61,7 +61,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           _state=PageState.notLocation;
         });
       }
-
     });
 
     languageNotifier.addListener(() {
@@ -144,13 +143,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               Positioned.fill(
                 child: _buildMatch()
               ),
-              (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading?Container():
+              (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading||_state==PageState.notLocation?Container():
               Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
                 width: MediaQuery.of(context).size.width,child: Padding(
                   padding:EdgeInsets.symmetric(
                     horizontal: 68
                   ),
-                  child: (users[currentPage].wishList.isNotEmpty&&users[currentPage].matched)?
+                  child: (users.isNotEmpty&&users[currentPage].wishList.isNotEmpty&&users[currentPage].matched)?
                   TextButton(onPressed: (){
                     //widget.next.call();
                     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
@@ -379,9 +378,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   PageState _state= PageState.loading;
   _buildMatch() {
-    if(_state==PageState.notLocation){
-      return Container();
-    }
     if(_state==PageState.loading){
      return Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){

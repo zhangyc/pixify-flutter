@@ -10,10 +10,33 @@ class NoDataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
    return Column(
-     mainAxisAlignment: MainAxisAlignment.center,
-     children: [ 
-       Image.asset(Assets.imagesError,width: 132,height: 166,fit: BoxFit.cover,),
-       const SizedBox(height: 32,),
+     mainAxisAlignment: MainAxisAlignment.start,
+     children: [
+       Container(
+         decoration: BoxDecoration(
+           gradient: LinearGradient(colors: [
+             Colors.white,
+             Color(0x00ffffff),
+             Color(0x00ffffff),
+             Colors.white,
+           ],
+             begin: Alignment.topCenter,
+             end: Alignment.bottomCenter
+           )
+         ),
+         height: 425,
+         child: Stack(
+           children: [
+             Image.asset(Assets.imagesNoDataBg,fit: BoxFit.cover,width: MediaQuery.of(context).size.width ,),
+             Positioned(child: Align(child: Image.asset(Assets.imagesNoDataBgContent,width: 165,height: 165,),alignment: Alignment.bottomCenter,),
+              bottom: 110   ,
+              left: MediaQuery.of(context).size.width/2-165/2,
+             )
+           ],
+         ),
+       ),
+       // Image.asset(Assets.imagesError,width: 132,height: 166,fit: BoxFit.cover,),
+       const SizedBox(height: 4,),
        const Text('Oops, no data right now ',
          style: TextStyle(
              color: Color(0xff2c2c2c),

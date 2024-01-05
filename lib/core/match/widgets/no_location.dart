@@ -9,8 +9,18 @@ class NoLocation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset(Assets.imagesTenderAffection),
-        Text("Sorry,you've got to allow location access before you can use this service "),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Image.asset(Assets.imagesTenderAffection),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text("Sorry,you've got to allow location access before you can use this service ",style: TextStyle(
+    color: Color(0xff2c2c2c),
+    fontSize: 14
+
+    ),),
+        ),
         SizedBox(height: 12,),
         Padding(
           padding: EdgeInsets.symmetric(

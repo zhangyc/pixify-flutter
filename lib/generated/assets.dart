@@ -61,6 +61,8 @@ class Assets {
   static const String imagesM6 = 'assets/images/m6.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
   static const String imagesMatchImageBg = 'assets/images/match_image_bg.png';
+  static const String imagesNoDataBg = 'assets/images/no_data_bg.png';
+  static const String imagesNoDataBgContent = 'assets/images/no_data_bg_content.png';
   static const String imagesOnboarding0 = 'assets/images/onboarding_0.png';
   static const String imagesOnboarding1 = 'assets/images/onboarding_1.png';
   static const String imagesOnboarding2 = 'assets/images/onboarding_2.png';
