@@ -390,6 +390,8 @@
   "@onboarding2": {},
   "onboarding3": "Меньше говори, больше люби. Легендарный роман ждет тебя",
   "@onboarding3": {},
+  "onboardingB": "Ослабь социальное давление.\nОтдохни с веселыми душами по всему миру",
+  "@onboardingB": {},
   "onboardingWish": "Заполните список желаний\nдля лучшего совпадения",
   "@onboardingWish": {},
   "justNow": "только что",
@@ -399,5 +401,9 @@
   "permissionRequiredContent": "Sona нуждается в вашем местоположении для корректной работы. Вам нужно включить доступ к местоположению в настройках вашего телефона",
   "@permissionRequiredContent": {},
   "buttonGo": "Идти",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "Извините, вы должны разрешить доступ к местоположению, прежде чем сможете использовать эту услугу",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "Авторизовать",
+  "@buttonAuthorize": {}
 }

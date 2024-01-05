@@ -58,6 +58,28 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
 
   @override
   void initState() {
+    if (widget.message.id == null) {
+      ref.read(asyncMessageSendingProvider(widget.message.sendingParams!)).whenData((data) async {
+        if (data.success) {
+          if (data.data is int) {
+            widget.message.id = data.data;
+          } else {
+            widget.message.id = data.data['id'];
+            widget.message.translatedContent = data.data['txt'];
+          }
+          // await Future.delayed(const Duration(seconds: 0));
+          // ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => List.from(state));
+        } else {
+          if (data.error == MessageSendingError.maximumLimit) {
+            if (ref.read(myProfileProvider)!.isMember) {
+              coolDownDaily();
+            } else {
+              ref.read(entitlementsProvider.notifier).limit(interpretation: 0);
+            }
+          }
+        }
+      });
+    }
     super.initState();
   }
 
@@ -79,11 +101,6 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
             } else {
               switch (data.error) {
                 case MessageSendingError.maximumLimit:
-                  if (ref.read(myProfileProvider)!.isMember) {
-                    coolDownDaily();
-                  } else {
-                    ref.read(entitlementsProvider.notifier).limit(interpretation: 0);
-                  }
                   return S.current.toastHitDailyMaximumLimit;
                 case MessageSendingError.contentFilter:
                   return S.current.exceptionSonaContentFilterTips;
@@ -244,13 +261,13 @@ class _MessageWidgetState extends ConsumerState<MessageWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ColoredButton(
-                          onTap: () {
-                            widget.onResend!(widget.message);
-                          },
-                          color: Color(0xFFF6F3F3),
-                          fontColor: Theme.of(context).primaryColor,
-                          borderColor: Colors.transparent,
-                          text: S.current.buttonResend
+                        onTap: () {
+                          widget.onResend!(widget.message);
+                        },
+                        color: Color(0xFFF6F3F3),
+                        fontColor: Theme.of(context).primaryColor,
+                        borderColor: Colors.transparent,
+                        text: S.current.buttonResend
                       ),
                     ],
                   )

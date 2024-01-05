@@ -390,6 +390,8 @@
   "@onboarding2": {},
   "onboarding3": "Parla meno, ama di più. Ti aspetta un romantico leggendario",
   "@onboarding3": {},
+  "onboardingB": "Alleggerisci la pressione sociale.\nRilassati con anime divertenti in tutto il mondo",
+  "@onboardingB": {},
   "onboardingWish": "Perfavore, completa la tua lista dei\ndesideri per un abbinamento migliore",
   "@onboardingWish": {},
   "justNow": "proprio ora",
@@ -399,5 +401,9 @@
   "permissionRequiredContent": "Sona ha bisogno della tua posizione per funzionare correttamente. Dovrai attivare l'accesso alla posizione nelle impostazioni del tuo telefono",
   "@permissionRequiredContent": {},
   "buttonGo": "Andare",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "Spiacente, devi consentire l'accesso alla posizione prima di poter utilizzare questo servizio",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "Autorizzare",
+  "@buttonAuthorize": {}
 }

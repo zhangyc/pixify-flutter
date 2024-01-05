@@ -54,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "🔨🔨🔨 気にしないで🔨🔨🔨 氷を砕くだけ🔨🔨🔨"),
         "buttonAlreadyPlus":
             MessageLookupByLibrary.simpleMessage("あなたはPlus会員です"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("認可する"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("変更"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("確認"),
@@ -134,6 +135,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "ステータス：一時的には空白ページだね\n\nすること：主導権を取る\n\n提案：\n満足写真 アップを\n自己紹介に 心込めよ\n魅力的に もっとなれ\n\n興味選べ \n人の海の中で\n面白い出会いが待っています"),
         "likedYou": MessageLookupByLibrary.simpleMessage("月が...ううん"),
+        "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
+            "申し訳ありませんが、このサービスを利用する前に位置情報へのアクセスを許可する必要があります"),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage("より良いサービスのために, 位置情報提供をお願いします"),
         "locationPermissionRequestTitle":
@@ -160,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "ほら、魔法を授けるよ:\n全知言語\nもう外国語が分からないなんて心配いらないだろ"),
         "onboarding3": MessageLookupByLibrary.simpleMessage(
             "余計な話は省いて、始めよう！\n伝説のロマンチックな出会いがあなたを待っているよ"),
+        "onboardingB": MessageLookupByLibrary.simpleMessage(
+            "社会的なプレッシャーを和らげてください\n世界中の楽しい魂とリラックスしましょう"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "願いリストを完成させて、\nより理想的なマッチを得ましょう"),
         "oopsNoDataRightNow":

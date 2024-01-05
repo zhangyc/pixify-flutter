@@ -2000,6 +2000,16 @@ class S {
     );
   }
 
+  /// `Ease off the social pressure\nChill with fun souls worldwide`
+  String get onboardingB {
+    return Intl.message(
+      'Ease off the social pressure\nChill with fun souls worldwide',
+      name: 'onboardingB',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Set your wishlist for\n better matching!`
   String get onboardingWish {
     return Intl.message(
@@ -2045,6 +2055,26 @@ class S {
     return Intl.message(
       'Go',
       name: 'buttonGo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorry, you've got to allow location access before you can use this service`
+  String get locationAuthorizeContent {
+    return Intl.message(
+      'Sorry, you\'ve got to allow location access before you can use this service',
+      name: 'locationAuthorizeContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Authorize`
+  String get buttonAuthorize {
+    return Intl.message(
+      'Authorize',
+      name: 'buttonAuthorize',
       desc: '',
       args: [],
     );

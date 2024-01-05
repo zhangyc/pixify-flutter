@@ -25,6 +25,7 @@ Future<Response> fetchMessageList({
 }
 
 Future<Response> callSona({
+  String? uuid,
   int? userId,
   required CallSonaType type,
   int? chatStyleId,
@@ -34,16 +35,18 @@ Future<Response> callSona({
   return dio.post(
       '/prompt/common',
       data: {
+        'uuid': uuid,
         'userId': userId,
         'type': type.name,
         'chatStyleId': chatStyleId,
         'input': input,
         'messageId': messageId
-      }
+      }..removeWhere((key, value) => value == null)
   );
 }
 
 Future<Response> sendMessage({
+  required String uuid,
   required int userId,
   required ImMessageType type,
   required String content,
@@ -51,6 +54,7 @@ Future<Response> sendMessage({
   return dio.post(
       '/message/send',
       data: {
+        'uuid': uuid,
         'userId': userId,
         'message': content,
         'messageType': type.name

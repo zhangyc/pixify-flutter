@@ -390,6 +390,8 @@
   "@onboarding2": {},
   "onboarding3": "พูดน้อยลง\nรักมากขึ้น\nโรแมนติกตำนานรอคุณอยู่",
   "@onboarding3": {},
+  "onboardingB": "ลดความกดดันทางสังคม \nผ่อนคลายกับวิญญาณที่สนุกสนานทั่วโลก",
+  "@onboardingB": {},
   "onboardingWish": "กรุณาทำตามรายการสิ่งที่ปรารถนาเ\nพื่อการจับคู่ที่เหมาะสมยิ่งขึ้น",
   "@onboardingWish": {},
   "justNow": "เมื่อสักครู่",
@@ -399,5 +401,9 @@
   "permissionRequiredContent": "Sonaต้องการตำแหน่งของคุณเพื่อให้ทำงานได้อย่างเหมาะสม คุณต้องเปิดการเข้าถึงตำแหน่งในการตั้งค่าโทรศัพท์ของคุณ",
   "@permissionRequiredContent": {},
   "buttonGo": "ไป",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "ขอโทษครับ/ค่ะ คุณต้องอนุญาตการเข้าถึงตำแหน่งก่อนจึงจะใช้บริการนี้ได้",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "อนุมัติ",
+  "@buttonAuthorize": {}
 }

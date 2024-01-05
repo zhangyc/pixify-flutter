@@ -390,6 +390,8 @@
   "@onboarding2": {},
   "onboarding3": "Talk less, Love more\nA legendary romance awaits you",
   "@onboarding3": {},
+  "onboardingB": "Ease off the social pressure\nChill with fun souls worldwide",
+  "@onboardingB": {},
   "onboardingWish": "Set your wishlist for\n better matching!",
   "@onboardingWish": {},
   "justNow": "just now",
@@ -399,5 +401,9 @@
   "permissionRequiredContent": "Sona needs your location to work properly. You'll have to turn on location access in your phone's settings",
   "@permissionRequiredContent": {},
   "buttonGo": "Go",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "Sorry, you've got to allow location access before you can use this service",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "Authorize",
+  "@buttonAuthorize": {}
 }

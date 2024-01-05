@@ -390,6 +390,8 @@
   "@onboarding2": {},
   "onboarding3": "闲话少说，开始吧！\n传奇的浪漫邂逅在等着你",
   "@onboarding3": {},
+  "onboardingB": "减轻社交压力\n与全球有趣的人们一起放松",
+  "@onboardingB": {},
   "onboardingWish": "请完成心愿单\n获得更理想的配对",
   "@onboardingWish": {},
   "justNow": "刚刚",
@@ -399,5 +401,9 @@
   "permissionRequiredContent": "Sona需要您的位置信息才能正常工作。您需要在手机设置中打开位置访问权限",
   "@permissionRequiredContent": {},
   "buttonGo": "前往",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "很抱歉，在您使用此服务之前，必须允许访问位置信息",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "授权",
+  "@buttonAuthorize": {}
 }

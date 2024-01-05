@@ -390,6 +390,8 @@
   "@onboarding2": {},
   "onboarding3": "말은 줄이고, 사랑은 늘려요. 전설적인 로맨스가 당신을 기다리고 있습니다",
   "@onboarding3": {},
+  "onboardingB": "사회적 압박을 줄이세요.\n전 세계의 재미있는 영혼들과 함께 휴식을 취하세요",
+  "@onboardingB": {},
   "onboardingWish": "소원 목록을 완성하여\n 더 이상적인 매칭을 얻으세요",
   "@onboardingWish": {},
   "justNow": "방금",
@@ -399,5 +401,9 @@
   "permissionRequiredContent": "Sona는 제대로 작동하기 위해 귀하의 위치 정보가 필요합니다. 휴대폰 설정에서 위치 접근을 켜야 합니다",
   "@permissionRequiredContent": {},
   "buttonGo": "가다",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "죄송하지만, 이 서비스를 사용하기 전에 위치 접근을 허용해야 합니다",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "승인하다",
+  "@buttonAuthorize": {}
 }

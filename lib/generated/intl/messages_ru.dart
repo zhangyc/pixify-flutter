@@ -55,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "🔨🔨🔨 Не обращай на меня внимания🔨🔨🔨 Я просто разбиваю лед🔨🔨🔨"),
         "buttonAlreadyPlus":
             MessageLookupByLibrary.simpleMessage("Вы Plus участник"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("Авторизовать"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("Отменить"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("Изменить"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
@@ -150,6 +151,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "Статус: Пока нет лайков\n\nЧто делать: Проявите инициативу\n\nПредложение: Загрузите ваши удовлетворительные фотографии\nНапишите подлинную биографию\nВыберите свои интересы"),
         "likedYou": MessageLookupByLibrary.simpleMessage("Тебе нравился"),
+        "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
+            "Извините, вы должны разрешить доступ к местоположению, прежде чем сможете использовать эту услугу"),
         "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
             "Нам нужно ваше местоположение, чтобы улучшить ваш социальный опыт"),
         "locationPermissionRequestTitle":
@@ -177,6 +180,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Вы получите суперспособность:\nВладение языками Больше никаких барьеров в общении"),
         "onboarding3": MessageLookupByLibrary.simpleMessage(
             "Меньше говори, больше люби. Легендарный роман ждет тебя"),
+        "onboardingB": MessageLookupByLibrary.simpleMessage(
+            "Ослабь социальное давление.\nОтдохни с веселыми душами по всему миру"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "Заполните список желаний\nдля лучшего совпадения"),
         "oopsNoDataRightNow":

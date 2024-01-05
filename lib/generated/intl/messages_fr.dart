@@ -54,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "🔨🔨🔨 Ne fais pas attention à moi🔨🔨🔨 Je brise juste la glace🔨🔨🔨"),
         "buttonAlreadyPlus":
             MessageLookupByLibrary.simpleMessage("Tu es membre Plus"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("Autoriser"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("Annuler"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("Changer"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirmer"),
@@ -150,6 +151,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "Statut : Pas encore de likes\n\nQue faire : Prendre l\'initiative\n\nSuggestion :\nTéléchargez vos photos satisfaisantes\nÉcrivez une bio authentique\nChoisissez vos intérêts"),
         "likedYou": MessageLookupByLibrary.simpleMessage("T\'aimait"),
+        "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
+            "Désolé, vous devez autoriser l\'accès à la localisation avant de pouvoir utiliser ce service"),
         "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
             "Nous avons besoin de votre localisation pour améliorer votre expérience sociale"),
         "locationPermissionRequestTitle":
@@ -178,6 +181,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Vous obtiendrez un superpouvoir :\nMaîtrise des langues Plus de barrières à la communication"),
         "onboarding3": MessageLookupByLibrary.simpleMessage(
             "Parle moins, aime plus. Une romance légendaire t\'attend"),
+        "onboardingB": MessageLookupByLibrary.simpleMessage(
+            "Allège la pression sociale.\nDétends-toi avec des âmes amusantes du monde entier"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "Veuillez compléter la liste de\nsouhaits pour obtenir un match plus idéal"),
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage(

@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 나를 신경 쓰지 마🔨🔨🔨 분위기를 풀러 왔어🔨🔨🔨"),
         "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("Plus 회원이에요"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("승인하다"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("취소"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("변경"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("확인"),
@@ -135,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "상태: 아직 좋아요 없음\n\n할 일: 주도권을 잡다\n\n제안: \n만족스러운 사진을 업로드하세요\n진실된 바이오를 작성하세요\n관심사를 고르세요"),
         "likedYou": MessageLookupByLibrary.simpleMessage("당신을 좋아했어요"),
+        "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
+            "죄송하지만, 이 서비스를 사용하기 전에 위치 접근을 허용해야 합니다"),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage(
                 "소셜 경험을 향상시키기 위해 위치 정보가 필요합니다"),
@@ -162,6 +165,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "언어를 마스터하는 초능력을 얻게 됩니다. 더 이상 의사소통 장벽은 없습니다"),
         "onboarding3": MessageLookupByLibrary.simpleMessage(
             "말은 줄이고, 사랑은 늘려요. 전설적인 로맨스가 당신을 기다리고 있습니다"),
+        "onboardingB": MessageLookupByLibrary.simpleMessage(
+            "사회적 압박을 줄이세요.\n전 세계의 재미있는 영혼들과 함께 휴식을 취하세요"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "소원 목록을 완성하여\n 더 이상적인 매칭을 얻으세요"),
         "oopsNoDataRightNow":

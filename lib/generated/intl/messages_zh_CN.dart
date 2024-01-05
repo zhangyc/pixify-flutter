@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 别在意我🔨🔨🔨 我在破冰🔨🔨🔨"),
         "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("你是Plus会员"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("授权"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("取消"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("更改"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("确认"),
@@ -128,6 +129,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "状态：暂时没有赞哦\n\n该做什么：采取主动\n\n建议：\n多传照片多加分\n写下简介显真诚\n选择兴趣有\n同道中人"),
         "likedYou": MessageLookupByLibrary.simpleMessage("喜欢了你"),
+        "locationAuthorizeContent":
+            MessageLookupByLibrary.simpleMessage("很抱歉，在您使用此服务之前，必须允许访问位置信息"),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage("我们需要您的位置信息来改善您的社交体验"),
         "locationPermissionRequestTitle":
@@ -151,6 +154,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("你将获得超能力：\n通晓语言\n无需再担心交流障碍"),
         "onboarding3":
             MessageLookupByLibrary.simpleMessage("闲话少说，开始吧！\n传奇的浪漫邂逅在等着你"),
+        "onboardingB":
+            MessageLookupByLibrary.simpleMessage("减轻社交压力\n与全球有趣的人们一起放松"),
         "onboardingWish":
             MessageLookupByLibrary.simpleMessage("请完成心愿单\n获得更理想的配对"),
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage("哎呀，现在没有数据"),

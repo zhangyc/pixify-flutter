@@ -20,15 +20,11 @@ final conversationStreamProvider = StreamProvider<List<ImConversation>>((ref) as
   }
 });
 
-final messagePaginationProvider = StateProvider.family.autoDispose<DocumentSnapshot?, int>(
-    (ref, roomId) => null
-);
-
-final localPendingMessagesProvider = StateProvider.autoDispose.family<List<ImMessage>, int>(
+final localMessagesProvider = StateProvider.autoDispose.family<List<ImMessage>, int>(
   (ref, arg) => <ImMessage>[]
 );
 
-final messageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>, int>(
+final remoteMessageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>, int>(
   (ref, roomId) async* {
     List<ImMessage> messages = [];
     final userId = ref.read(myProfileProvider)!.id;
@@ -37,32 +33,21 @@ final messageStreamProvider = StreamProvider.family.autoDispose<List<ImMessage>,
         .collection('rooms').doc('$roomId')
         .collection('msgs').orderBy('id', descending: true)
         .snapshots();
-    ref.listen(
-      messagePaginationProvider(roomId),
-      (previous, next) async {
-        if (next != null) {
-          final historyMessages = await FirebaseFirestore.instance
-              .collection('${env.firestorePrefix}_users').doc('$userId')
-              .collection('rooms').doc('$roomId')
-              .collection('msgs').orderBy('id', descending: true).startAfterDocument(next)
-              .get()
-              .then<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((snapshot) => snapshot.docs)
-              .then<Iterable<ImMessage>>((docs) => docs.map<ImMessage>((doc) => ImMessage.fromJson(doc.data())));
-          messages = [...messages, ...historyMessages];
-        }
-      },
-      onError: (_, __) {
-        //
-      }
-    );
     await for (var snapshot in stream) {
-      // snapshot.docChanges.
       messages = snapshot.docs.map<ImMessage>((doc) => ImMessage.fromJson(doc.data())).toList();
       yield messages;
     }
   },
-  dependencies: [messagePaginationProvider]
 );
+
+final messagesProvider = StateProvider.autoDispose.family<List<ImMessage>, int>((ref, roomId) {
+  final localMessages = ref.watch(localMessagesProvider(roomId));
+  final remoteMessages = ref.watch(remoteMessageStreamProvider(roomId)).unwrapPrevious().valueOrNull ?? [];
+  for (var m in remoteMessages) {
+    localMessages.removeWhere((lm) => lm.uuid == m.uuid);
+  }
+  return [...localMessages, ...remoteMessages]..sort((m1, m2) => m2.time.compareTo(m1.time));
+}, dependencies: [localMessagesProvider, remoteMessageStreamProvider]);
 
 final futureUserProvider = FutureProvider.family<UserInfo, int>((ref, arg) {
   return FirebaseFirestore.instance
