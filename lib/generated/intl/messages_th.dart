@@ -54,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "🔨🔨🔨 ไม่ต้องสนใจฉัน🔨🔨🔨 ฉันแค่มาทำลายความเงียบ🔨🔨🔨"),
         "buttonAlreadyPlus":
             MessageLookupByLibrary.simpleMessage("คุณเป็นสมาชิก Plus"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("อนุมัติ"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("ยกเลิก"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("เปลี่ยนแปลง"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("ยืนยัน"),
@@ -144,6 +145,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "สถานะ: ยังไม่มีไลค์\n\nทำอย่างไร: ริเริ่ม\n\nข้อเสนอ:\nอัปโหลดรูปภาพที่คุณพอใจ\nเขียนประวัติของคุณอย่างแท้จริง\nเลือกความสนใจของคุณ"),
         "likedYou": MessageLookupByLibrary.simpleMessage("ที่ชอบคุณ"),
+        "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
+            "ขอโทษครับ/ค่ะ คุณต้องอนุญาตการเข้าถึงตำแหน่งก่อนจึงจะใช้บริการนี้ได้"),
         "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
             "เราต้องการตำแหน่งของคุณเพื่อทำให้ประสบการณ์ทางสังคมของคุณดีขึ้น"),
         "locationPermissionRequestTitle":

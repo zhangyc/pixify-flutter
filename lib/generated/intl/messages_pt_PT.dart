@@ -55,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "🔨🔨🔨 Não ligue para mim🔨🔨🔨 Estou só quebrando o gelo🔨🔨🔨"),
         "buttonAlreadyPlus":
             MessageLookupByLibrary.simpleMessage("És membro Plus"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("Autorizar"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("Mudar"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirmar"),
@@ -150,6 +151,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "Status: Ainda sem curtidas\n\nO que fazer: Tome a iniciativa\n\nSugestão:\nFaça o upload de suas fotos satisfatórias\nEscreva uma biografia genuína\nEscolha seus interesses"),
         "likedYou": MessageLookupByLibrary.simpleMessage("Gostou de você"),
+        "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
+            "Lamentamos, mas tens de permitir o acesso à localização antes de poderes usar este serviço"),
         "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
             "Precisamos da sua localização para melhorar a sua experiência social"),
         "locationPermissionRequestTitle":

@@ -2059,6 +2059,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Sorry, you've got to allow location access before you can use this service`
+  String get locationAuthorizeContent {
+    return Intl.message(
+      'Sorry, you\'ve got to allow location access before you can use this service',
+      name: 'locationAuthorizeContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Authorize`
+  String get buttonAuthorize {
+    return Intl.message(
+      'Authorize',
+      name: 'buttonAuthorize',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

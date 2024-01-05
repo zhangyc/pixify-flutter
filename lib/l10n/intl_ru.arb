@@ -401,5 +401,9 @@
   "permissionRequiredContent": "Sona нуждается в вашем местоположении для корректной работы. Вам нужно включить доступ к местоположению в настройках вашего телефона",
   "@permissionRequiredContent": {},
   "buttonGo": "Идти",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "Извините, вы должны разрешить доступ к местоположению, прежде чем сможете использовать эту услугу",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "Авторизовать",
+  "@buttonAuthorize": {}
 }

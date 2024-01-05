@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 나를 신경 쓰지 마🔨🔨🔨 분위기를 풀러 왔어🔨🔨🔨"),
         "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("Plus 회원이에요"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("승인하다"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("취소"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("변경"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("확인"),
@@ -135,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "상태: 아직 좋아요 없음\n\n할 일: 주도권을 잡다\n\n제안: \n만족스러운 사진을 업로드하세요\n진실된 바이오를 작성하세요\n관심사를 고르세요"),
         "likedYou": MessageLookupByLibrary.simpleMessage("당신을 좋아했어요"),
+        "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
+            "죄송하지만, 이 서비스를 사용하기 전에 위치 접근을 허용해야 합니다"),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage(
                 "소셜 경험을 향상시키기 위해 위치 정보가 필요합니다"),

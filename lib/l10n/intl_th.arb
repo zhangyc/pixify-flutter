@@ -401,5 +401,9 @@
   "permissionRequiredContent": "Sonaต้องการตำแหน่งของคุณเพื่อให้ทำงานได้อย่างเหมาะสม คุณต้องเปิดการเข้าถึงตำแหน่งในการตั้งค่าโทรศัพท์ของคุณ",
   "@permissionRequiredContent": {},
   "buttonGo": "ไป",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "ขอโทษครับ/ค่ะ คุณต้องอนุญาตการเข้าถึงตำแหน่งก่อนจึงจะใช้บริการนี้ได้",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "อนุมัติ",
+  "@buttonAuthorize": {}
 }

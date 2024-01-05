@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "breakIce": MessageLookupByLibrary.simpleMessage(
             "🔨🔨🔨 别在意我🔨🔨🔨 我在破冰🔨🔨🔨"),
         "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("你是Plus会员"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("授权"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("取消"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("更改"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("确认"),
@@ -128,6 +129,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "状态：暂时没有赞哦\n\n该做什么：采取主动\n\n建议：\n多传照片多加分\n写下简介显真诚\n选择兴趣有\n同道中人"),
         "likedYou": MessageLookupByLibrary.simpleMessage("喜欢了你"),
+        "locationAuthorizeContent":
+            MessageLookupByLibrary.simpleMessage("很抱歉，在您使用此服务之前，必须允许访问位置信息"),
         "locationPermissionRequestSubtitle":
             MessageLookupByLibrary.simpleMessage("我们需要您的位置信息来改善您的社交体验"),
         "locationPermissionRequestTitle":

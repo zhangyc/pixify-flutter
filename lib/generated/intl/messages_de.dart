@@ -55,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "🔨🔨🔨 Beachte mich nicht🔨🔨🔨 Ich breche nur das Eis🔨🔨🔨"),
         "buttonAlreadyPlus":
             MessageLookupByLibrary.simpleMessage("Du bist Plus Mitglied"),
+        "buttonAuthorize": MessageLookupByLibrary.simpleMessage("Autorisieren"),
         "buttonCancel": MessageLookupByLibrary.simpleMessage("Abbrechen"),
         "buttonChange": MessageLookupByLibrary.simpleMessage("Ändern"),
         "buttonConfirm": MessageLookupByLibrary.simpleMessage("Bestätigen"),
@@ -149,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "likedPageNoData": MessageLookupByLibrary.simpleMessage(
             "Status: Noch keine Likes\n\nWas tun: Ergreifen Sie die Initiative\n\nVorschlag: Laden Sie Ihre zufriedenstellenden Fotos hoch\nSchreiben Sie eine echte Biografie\nWählen Sie Ihre Interessen"),
         "likedYou": MessageLookupByLibrary.simpleMessage("Hat dich gemocht"),
+        "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
+            "Entschuldigung, Sie müssen den Zugriff auf den Standort erlauben, bevor Sie diesen Dienst nutzen können"),
         "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
             "Wir benötigen Ihren Standort, um Ihr soziales Erlebnis zu verbessern"),
         "locationPermissionRequestTitle":

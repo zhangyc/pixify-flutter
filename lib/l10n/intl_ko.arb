@@ -401,5 +401,9 @@
   "permissionRequiredContent": "Sona는 제대로 작동하기 위해 귀하의 위치 정보가 필요합니다. 휴대폰 설정에서 위치 접근을 켜야 합니다",
   "@permissionRequiredContent": {},
   "buttonGo": "가다",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "죄송하지만, 이 서비스를 사용하기 전에 위치 접근을 허용해야 합니다",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "승인하다",
+  "@buttonAuthorize": {}
 }

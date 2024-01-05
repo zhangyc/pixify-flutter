@@ -401,5 +401,9 @@
   "permissionRequiredContent": "Sona a besoin de votre emplacement pour fonctionner correctement. Vous devrez activer l'accès à la localisation dans les paramètres de votre téléphone",
   "@permissionRequiredContent": {},
   "buttonGo": "Aller",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "Désolé, vous devez autoriser l'accès à la localisation avant de pouvoir utiliser ce service",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "Autoriser",
+  "@buttonAuthorize": {}
 }

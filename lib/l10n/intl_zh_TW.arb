@@ -401,5 +401,9 @@
   "permissionRequiredContent": "Sona需要您的位置信息才能正常工作。您需要在手機設置中打開位置訪問權限",
   "@permissionRequiredContent": {},
   "buttonGo": "前往",
-  "@buttonGo": {}
+  "@buttonGo": {},
+  "locationAuthorizeContent": "很抱歉，在您使用此服務之前，必須允許訪問位置信息",
+  "@locationAuthorizeContent": {},
+  "buttonAuthorize": "授權",
+  "@buttonAuthorize": {}
 }
