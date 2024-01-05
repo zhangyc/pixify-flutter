@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 
 class NoLocation extends StatelessWidget {
   const NoLocation({super.key, required this.onTap});
@@ -15,9 +16,16 @@ class NoLocation extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text(
-            "Sorry,you've got to allow location access before you can use this service ",
-            style: TextStyle(color: Color(0xff2c2c2c), fontSize: 14),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width-16*2,
+            child: Text(
+              S.current.locationAuthorizeContent,
+              style: TextStyle(
+                  color: Color(0xff2c2c2c),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900
+              ),
+            ),
           ),
         ),
         SizedBox(height: 12,),
@@ -27,7 +35,7 @@ class NoLocation extends StatelessWidget {
           ),
           child: ElevatedButton(onPressed: (){
             onTap.call();
-           }, child: Container(child: Text('Authorize',style: TextStyle(
+           }, child: Container(child: Text(S.current.buttonAuthorize,style: TextStyle(
             color: Colors.white,
           ),),
             height: 56,
