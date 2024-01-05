@@ -15,13 +15,13 @@ import 'chat.dart';
 
 class MessageSendingParams {
   const MessageSendingParams({
-    required this.id,
+    required this.uuid,
     required this.userId,
     required this.mode,
     required this.content,
     required this.dateTime
   });
-  final int id;
+  final String uuid;
   final int userId;
   final InputMode mode;
   final String content;
@@ -30,7 +30,7 @@ class MessageSendingParams {
   factory MessageSendingParams.fromJsonString(String jsonString) {
     final json = jsonDecode(jsonString);
     return MessageSendingParams(
-        id: json['id'],
+        uuid: json['uuid'],
         userId: json['userId'],
         mode: InputMode.values[json['mode']],
         content: json['content'],
@@ -40,7 +40,7 @@ class MessageSendingParams {
 
   String toJsonString() {
     return jsonEncode({
-      'id': id,
+      'uuid': uuid,
       'userId': userId,
       'mode': mode.index,
       'content': content,
@@ -52,7 +52,7 @@ class MessageSendingParams {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! MessageSendingParams) return false;
-    return id == other.id
+    return uuid == other.uuid
       && userId == other.userId
       && mode == other.mode
       && content == other.content
@@ -60,11 +60,11 @@ class MessageSendingParams {
   }
 
   @override
-  int get hashCode => Object.hash(id, userId, mode, content, dateTime);
+  int get hashCode => Object.hash(uuid, userId, mode, content, dateTime);
 
   @override
   String toString() {
-    return 'MessageSendingParams: $id, $userId, $mode, $content, $dateTime';
+    return 'MessageSendingParams: $uuid, $userId, $mode, $content, $dateTime';
   }
 }
 
@@ -96,12 +96,14 @@ class AsyncMessageSendingNotifier extends AutoDisposeFamilyAsyncNotifier<Message
     try {
       if (params.mode == InputMode.manual) {
         response = await sendMessage(
+          uuid: params.uuid,
           userId: params.userId,
           type: ImMessageType.manual,
           content: params.content,
         );
       } else {
         response = await callSona(
+          uuid: params.uuid,
           userId: params.userId,
           type: CallSonaType.INPUT,
           input: params.content
@@ -115,7 +117,6 @@ class AsyncMessageSendingNotifier extends AutoDisposeFamilyAsyncNotifier<Message
       };
 
       if (result.success) {
-        ref.read(localPendingMessagesProvider(params.userId).notifier).update((state) => List.from(state..removeWhere((msg) => msg.id == params.id)));
         SonaAnalytics.log(params.mode == InputMode.sona ? 'chat_sona' : 'chat_manual');
       } else {
         switch (result.error) {

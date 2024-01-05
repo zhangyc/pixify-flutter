@@ -10,6 +10,7 @@ import '../../../generated/l10n.dart';
 class ImMessage {
   ImMessage({
     required this.id,
+    required this.uuid,
     required this.type,
     required this.sender,
     required this.receiver,
@@ -18,10 +19,11 @@ class ImMessage {
     required this.time,
   });
 
-  final int? id;
+  int? id;
+  final String? uuid;
   final int? type;
   final String? originalContent;
-  final String? translatedContent;
+  String? translatedContent;
   final UserInfo sender;
   final UserInfo receiver;
   final DateTime time;
@@ -30,12 +32,35 @@ class ImMessage {
   factory ImMessage.fromJson(Map<String, dynamic> json) {
     return ImMessage(
       id: json['id'],
+      uuid: json['uuid'],
       type: json['messageType'],
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
       originalContent: json['originalContent'],
       translatedContent: json['translatedContent'],
       time: (json['createDate'] as Timestamp).toDate(),
+    );
+  }
+
+  factory ImMessage.copyWith(ImMessage message, {
+    int? id,
+    String? uuid,
+    int? type,
+    String? originalContent,
+    String? translatedContent,
+    UserInfo? sender,
+    UserInfo? receiver,
+    DateTime? time,
+  }) {
+    return ImMessage(
+      id: id ?? message.id,
+      uuid: uuid ?? message.uuid,
+      type: type ?? message.type,
+      sender: sender ?? message.sender,
+      receiver: receiver ?? message.receiver,
+      originalContent: originalContent ?? message.originalContent,
+      translatedContent: translatedContent ?? message.translatedContent,
+      time: time ?? message.time,
     );
   }
 }

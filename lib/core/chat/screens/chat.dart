@@ -78,6 +78,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final messages = ref.watch(messagesProvider(widget.otherSide.id));
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -140,63 +141,32 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           onTap: () {
             FocusManager.instance.primaryFocus?.unfocus();
           },
-          child: ref.watch(messageStreamProvider(widget.otherSide.id)).when(
-            data: (messages) {
-              final localPendingMessages = ref.watch(localPendingMessagesProvider(widget.otherSide.id));
-              final msgs = [...localPendingMessages, ...messages]
-                ..sort((m1, m2) => m2.time.compareTo(m1.time));
-              return Container(
-                alignment: Alignment.topCenter,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
-                  reverse: true,
-                  itemBuilder: (BuildContext context, int index) => index != msgs.length ? MessageWidget(
-                    key: ValueKey(msgs[index].id),
-                    prevMessage: index == msgs.length - 1 ? null : msgs[index + 1],
-                    message: msgs[index],
-                    fromMe: mySide.id == msgs[index].sender.id,
-                    mySide: mySide,
-                    otherSide: widget.otherSide,
-                    myLocale: myLocale,
-                    otherLocale: otherLocale,
-                    // onPendingMessageSucceed: _onPendingMessageSucceed,
-                    // onShorten: _shortenMessage,
-                    onDelete: _deleteMessage,
-                    onResend: _resendMessage,
-                    onAvatarTap: _showInfo,
-                  ) : _startupline(msgs.isNotEmpty),
-                  itemCount: msgs.length + 1,
-                  separatorBuilder: (_, __) => SizedBox(height: 5),
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                ),
-              );
-            },
-            error: (error, __) => GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () => ref.refresh(messageStreamProvider(widget.otherSide.id)),
-              child: Container(
-                color: Colors.white,
-                alignment: Alignment.center,
-                child: const Text(
-                    'Cannot connect to server, tap to retry',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 16,
-                        decoration: TextDecoration.none
-                    )
-                ),
-              ),
+          child: Container(
+            alignment: Alignment.topCenter,
+            child: ListView.separated(
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
+              reverse: true,
+              itemBuilder: (BuildContext context, int index) => index != messages.length ? MessageWidget(
+                key: ValueKey(messages[index].uuid ?? messages[index].id),
+                prevMessage: index == messages.length - 1 ? null : messages[index + 1],
+                message: messages[index],
+                fromMe: mySide.id == messages[index].sender.id,
+                mySide: mySide,
+                otherSide: widget.otherSide,
+                myLocale: myLocale,
+                otherLocale: otherLocale,
+                // onPendingMessageSucceed: _onPendingMessageSucceed,
+                // onShorten: _shortenMessage,
+                onDelete: _deleteMessage,
+                onResend: _resendMessage,
+                onAvatarTap: _showInfo,
+              ) : _startupline(messages.isNotEmpty),
+              itemCount: messages.length + 1,
+              separatorBuilder: (_, __) => SizedBox(height: 5),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             ),
-            loading: () => Container(
-              alignment: Alignment.center,
-              child: const SizedBox(
-                height: 32,
-                width: 32,
-                child: CircularProgressIndicator(),
-              ),
-            )
-          )
+          ),
         ),
       ),
       floatingActionButton: Container(
@@ -294,7 +264,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
     final mode = ref.read(inputModeProvider(widget.otherSide.id));
     final message = ImMessage(
-      id: _lastLocalId++,
+      id: null,
+      uuid: uuid.v4(),
       type: mode == InputMode.sona ? CallSonaType.INPUT.index + 1 : ImMessageType.manual.index,
       originalContent: text,
       translatedContent: null,
@@ -303,18 +274,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       time: DateTime.now(),
     );
     message.sendingParams = MessageSendingParams(
-        id: message.id!,
+        uuid: message.uuid!,
         userId: widget.otherSide.id,
         mode: mode,
         content: text,
         dateTime: message.time
     ).toJsonString();
 
-    ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
+    ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
   }
 
   Future _resendMessage(ImMessage message) {
-    ref.read(localPendingMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
+    ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
     return _onSend(message.originalContent);
   }
 

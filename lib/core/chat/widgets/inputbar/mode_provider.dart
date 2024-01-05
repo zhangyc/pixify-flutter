@@ -34,21 +34,6 @@ final currentInputEmptyProvider = StateProvider.autoDispose.family<bool, int>((r
   }
 }, dependencies: [inputModeProvider, sonaInputProvider, manualInputProvider]);
 
-final hookVisibilityProvider = StateProvider.autoDispose.family<bool, int>((ref, arg) {
-  final messages = ref.watch(messageStreamProvider(arg));
-  final lastOtherSideMessageIndex = messages.value?.lastIndexWhere((msg) => msg.receiver.id == ref.read(myProfileProvider)!.id);
-  if (lastOtherSideMessageIndex != null && lastOtherSideMessageIndex >= 0) {
-    final lastOtherSideMessage = messages.value![lastOtherSideMessageIndex];
-    return DateTime.now().difference(lastOtherSideMessage.time).inMinutes >= 30;
-  } else {
-    if (messages.hasValue && messages.value!.isNotEmpty && messages.value!.first.type != 7) {
-      return true;
-    }
-  }
-  return false;
-}, dependencies: [messageStreamProvider]);
-
-
 enum InputMode {
   sona,
   manual
