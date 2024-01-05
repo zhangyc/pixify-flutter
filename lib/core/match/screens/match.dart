@@ -12,6 +12,7 @@ import 'package:sona/core/match/screens/filter_page.dart';
 import 'package:sona/core/match/widgets/button_animations.dart';
 import 'package:sona/core/match/widgets/custom_pageview/src/skip_transformer.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
+import 'package:sona/core/match/widgets/no_location.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
@@ -46,21 +47,27 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    Permission.locationWhenInUse.request().then((value){
+      if(value.isGranted){
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
-      longitude=ref.read(myProfileProvider)!.position?.longitude;
-      latitude=ref.read(myProfileProvider)!.position?.latitude;
-      _initData();
-      ///直接获取用户信息里的经纬度。
+          longitude=ref.read(myProfileProvider)!.position?.longitude;
+          latitude=ref.read(myProfileProvider)!.position?.latitude;
+          _initData();
+          ///直接获取用户信息里的经纬度。
+        });
+      }else {
+        setState(() {
+          _state=PageState.notLocation;
+        });
+      }
+
     });
+
     languageNotifier.addListener(() {
       _initData();
     });
-    Permission.locationWhenInUse.request().then((value){
-      setState(() {
-        _state=PageState.notLocation;
-      });
-    });
+
     super.initState();
   }
   List<MatchUserInfo> users =[];
@@ -372,6 +379,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   PageState _state= PageState.loading;
   _buildMatch() {
+    if(_state==PageState.notLocation){
+      return Container();
+    }
     if(_state==PageState.loading){
      return Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
     }else if(_state==PageState.fail){
@@ -454,6 +464,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         setState(() {
 
         });
+      },);
+    }else if(_state==PageState.notLocation){
+      return NoLocation(onTap: (){
+
       },);
     }
   }
