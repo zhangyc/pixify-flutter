@@ -15,11 +15,10 @@ class NoLocation extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text("Sorry,you've got to allow location access before you can use this service ",style: TextStyle(
-    color: Color(0xff2c2c2c),
-    fontSize: 14
-
-    ),),
+          child: Text(
+            "Sorry,you've got to allow location access before you can use this service ",
+            style: TextStyle(color: Color(0xff2c2c2c), fontSize: 14),
+          ),
         ),
         SizedBox(height: 12,),
         Padding(

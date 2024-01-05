@@ -18,11 +18,13 @@ import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:system_settings/system_settings.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
 import '../../../common/screens/profile.dart';
 import '../../../generated/l10n.dart';
+import '../../../utils/dialog/common.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
@@ -44,7 +46,7 @@ class MatchScreen extends StatefulHookConsumerWidget {
 }
 
 class _MatchScreenState extends ConsumerState<MatchScreen>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin,WidgetsBindingObserver {
   @override
   void initState() {
     Geolocator.checkPermission().then((value){
@@ -66,6 +68,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     languageNotifier.addListener(() {
       _initData();
     });
+    WidgetsBinding.instance.addObserver(this);
 
     super.initState();
   }
@@ -73,7 +76,21 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _check();
+    }
+    super.didChangeAppLifecycleState(state);
+  }
+  void _check() async {
+    final permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
+      _initData();
+    }
   }
   int currentPage=0;
   late TransformerPageController controller;
@@ -462,8 +479,25 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         });
       },);
     }else if(_state==PageState.notLocation){
-      return NoLocation(onTap: (){
-
+      return NoLocation(onTap: ()async{
+        var permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+          if (!mounted) return;
+          await showCommonBottomSheet(
+          context: context,
+          title: S.current.permissionRequiredTitle,
+          content: S.current.permissionRequiredContent,
+          actions: [
+            FilledButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  await SystemSettings.app();
+                },
+                child: Text(S.current.buttonGo)
+            )
+          ]
+          );
+        }
       },);
     }
   }
