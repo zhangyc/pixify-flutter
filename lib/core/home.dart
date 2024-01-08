@@ -144,7 +144,8 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         0 => 'match',
         1 => 'like',
         2 => 'chat',
-        _ => 'me'
+        3 => 'me',
+        _ => 'unknown'
       };
       SonaAnalytics.log('home_tab_$tabName');
     }
