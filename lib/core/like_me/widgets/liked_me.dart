@@ -8,6 +8,7 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
+import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/global/global.dart';
 
@@ -196,7 +197,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
           ),
         );
       },
-      error: (error, stackTrace) => Container(),
+      error: (error, stackTrace) => NoDataWidget(onTap: () => ref.refresh(likeMeStreamProvider)),
       loading: () => Container()
     );
   }
