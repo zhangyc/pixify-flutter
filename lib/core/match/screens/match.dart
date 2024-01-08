@@ -82,10 +82,13 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _check();
+      if(!isAuth){
+        _check();
+      }
     }
     super.didChangeAppLifecycleState(state);
   }
+  bool isAuth=false;
   void _check() async {
     final permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
@@ -141,7 +144,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         })).then((value){
                           _initData();
                           if(mounted){
-                            _state=PageState.loading;
                             setState(() {
 
                             });
@@ -285,6 +287,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   int current=1;
 
   void _initData() async{
+    _state=PageState.loading;
+    if(mounted){
+      setState(() {
+
+      });
+    }
     current=1;
     currentPage=0;
     try{
@@ -304,6 +312,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           _state=PageState.noData;
         }else {
           _state=PageState.success;
+          isAuth=true;
         }
 
         List<MatchUserInfo> users1=list.map((e) => MatchUserInfo.fromJson(e)).toList();
@@ -400,7 +409,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }else if(_state==PageState.fail){
       return NoDataWidget(onTap: (){
         _initData();
-        _state=PageState.loading;
         setState(() {
 
         });
@@ -413,7 +421,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
               return NoMoreWidget(
                 onTap: (){
                   _initData();
-                  _state=PageState.loading;
                   setState(() {
 
                   });
@@ -473,7 +480,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     }else if(_state==PageState.noData){
       return NoMoreWidget(onTap: (){
         _initData();
-        _state=PageState.loading;
         setState(() {
 
         });
