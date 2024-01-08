@@ -46,29 +46,22 @@ class MatchScreen extends StatefulHookConsumerWidget {
 }
 
 class _MatchScreenState extends ConsumerState<MatchScreen>
-    with AutomaticKeepAliveClientMixin,WidgetsBindingObserver {
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
-    Geolocator.checkPermission().then((value){
-      if(value==LocationPermission.whileInUse||value==LocationPermission.always){
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-
-          longitude=ref.read(myProfileProvider)!.position?.longitude;
-          latitude=ref.read(myProfileProvider)!.position?.latitude;
-          _initData();
-          ///直接获取用户信息里的经纬度。
-        });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      longitude=ref.read(myProfileProvider)!.position?.longitude;
+      latitude=ref.read(myProfileProvider)!.position?.latitude;
+      if(longitude==null||latitude==null){
+        _state=PageState.notLocation;
       }else {
-        setState(() {
-          _state=PageState.notLocation;
-        });
+        _initData();
       }
+      ///直接获取用户信息里的经纬度。
     });
-
     languageNotifier.addListener(() {
       _initData();
     });
-    WidgetsBinding.instance.addObserver(this);
 
     super.initState();
   }
@@ -76,24 +69,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
-  }
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      if(!isAuth){
-        _check();
-      }
-    }
-    super.didChangeAppLifecycleState(state);
-  }
-  bool isAuth=false;
-  void _check() async {
-    final permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
-      _initData();
-    }
   }
   int currentPage=0;
   late TransformerPageController controller;
@@ -287,6 +263,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   int current=1;
 
   void _initData() async{
+    longitude=ref.read(myProfileProvider)!.position?.longitude;
+    latitude=ref.read(myProfileProvider)!.position?.latitude;
     _state=PageState.loading;
     if(mounted){
       setState(() {
@@ -312,7 +290,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           _state=PageState.noData;
         }else {
           _state=PageState.success;
-          isAuth=true;
         }
 
         List<MatchUserInfo> users1=list.map((e) => MatchUserInfo.fromJson(e)).toList();
