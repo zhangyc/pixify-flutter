@@ -34,6 +34,9 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
       displayMessage = widget.conversation.lastMessageOriginalContent;
     } else {
       displayMessage = widget.conversation.lastMessageTranslatedContent;
+      if (displayMessage == null || displayMessage.isEmpty) {
+        displayMessage = widget.conversation.lastMessageOriginalContent;
+      }
     }
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
