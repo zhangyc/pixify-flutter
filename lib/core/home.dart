@@ -147,7 +147,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         3 => 'me',
         _ => 'unknown'
       };
-      SonaAnalytics.log('home_tab_$tabName');
+      SonaAnalytics.log('home_tab', {'index': index, 'name': tabName});
     }
   }
 
