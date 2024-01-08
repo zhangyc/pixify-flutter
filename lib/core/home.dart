@@ -141,10 +141,11 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       ref.read(currentHomeTapIndexProvider.notifier).update((_) => index);
       _pageController.jumpToPage(index);
       final tabName = switch(index) {
-        0 => 'chat',
-        1 => 'match',
-        2 => 'profile',
-        _ => 'none'
+        0 => 'match',
+        1 => 'like',
+        2 => 'chat',
+        3 => 'me',
+        _ => 'unknown'
       };
       SonaAnalytics.log('home_tab_$tabName');
     }
