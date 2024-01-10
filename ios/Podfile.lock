@@ -628,6 +628,12 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - AppAuth (1.6.2):
+    - AppAuth/Core (= 1.6.2)
+    - AppAuth/ExternalUserAgent (= 1.6.2)
+  - AppAuth/Core (1.6.2)
+  - AppAuth/ExternalUserAgent (1.6.2):
+    - AppAuth/Core
   - AppCheckCore (10.18.0):
     - GoogleUtilities/Environment (~> 7.11)
     - PromisesObjC (~> 2.3)
@@ -643,7 +649,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
-  - cloud_firestore (4.13.0):
+  - cloud_firestore (4.14.0):
     - Firebase/Firestore (= 10.18.0)
     - firebase_core
     - Flutter
@@ -670,7 +676,7 @@ PODS:
   - Firebase/Storage (10.18.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 10.18.0)
-  - firebase_analytics (10.6.4):
+  - firebase_analytics (10.8.0):
     - Firebase/Analytics (= 10.18.0)
     - firebase_core
     - Flutter
@@ -679,22 +685,22 @@ PODS:
     - firebase_core
     - FirebaseAppCheck (~> 10.18.0-beta)
     - Flutter
-  - firebase_auth (4.13.0):
+  - firebase_auth (4.16.0):
     - Firebase/Auth (= 10.18.0)
     - firebase_core
     - Flutter
   - firebase_core (2.24.2):
     - Firebase/CoreOnly (= 10.18.0)
     - Flutter
-  - firebase_crashlytics (3.4.4):
+  - firebase_crashlytics (3.4.9):
     - Firebase/Crashlytics (= 10.18.0)
     - firebase_core
     - Flutter
-  - firebase_messaging (14.7.4):
+  - firebase_messaging (14.7.10):
     - Firebase/Messaging (= 10.18.0)
     - firebase_core
     - Flutter
-  - firebase_storage (11.5.0):
+  - firebase_storage (11.6.0):
     - Firebase/Storage (= 10.18.0)
     - firebase_core
     - Flutter
@@ -818,6 +824,10 @@ PODS:
     - Flutter
     - google_mlkit_commons
     - GoogleMLKit/FaceDetection (~> 4.0.0)
+  - google_sign_in_ios (0.0.1):
+    - Flutter
+    - FlutterMacOS
+    - GoogleSignIn (~> 7.0)
   - GoogleAppMeasurement (10.18.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.18.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
@@ -847,6 +857,10 @@ PODS:
     - MLKitFaceDetection (~> 3.0.0)
   - GoogleMLKit/MLKitCore (4.0.0):
     - MLKitCommon (~> 9.0.0)
+  - GoogleSignIn (7.0.0):
+    - AppAuth (~> 1.5)
+    - GTMAppAuth (< 3.0, >= 1.3)
+    - GTMSessionFetcher/Core (< 4.0, >= 1.1)
   - GoogleToolboxForMac/DebugUtils (2.3.2):
     - GoogleToolboxForMac/Defines (= 2.3.2)
   - GoogleToolboxForMac/Defines (2.3.2)
@@ -941,6 +955,9 @@ PODS:
     - BoringSSL-GRPC (= 0.0.24)
     - gRPC-Core/Interface (= 1.49.1)
   - gRPC-Core/Interface (1.49.1)
+  - GTMAppAuth (2.0.0):
+    - AppAuth/Core (~> 1.6)
+    - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (2.3.0)
   - image_picker_ios (0.0.1):
     - Flutter
@@ -1006,6 +1023,8 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - sign_in_with_apple (0.0.1):
+    - Flutter
   - smart_auth (0.0.1):
     - Flutter
   - sqflite (0.0.3):
@@ -1036,12 +1055,14 @@ DEPENDENCIES:
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
   - google_mlkit_face_detection (from `.symlinks/plugins/google_mlkit_face_detection/ios`)
+  - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - smart_auth (from `.symlinks/plugins/smart_auth/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - system_settings (from `.symlinks/plugins/system_settings/ios`)
@@ -1051,6 +1072,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - AppAuth
     - AppCheckCore
     - AppsFlyerFramework
     - BoringSSL-GRPC
@@ -1075,11 +1097,13 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleMLKit
+    - GoogleSignIn
     - GoogleToolboxForMac
     - GoogleUtilities
     - GoogleUtilitiesComponents
     - "gRPC-C++"
     - gRPC-Core
+    - GTMAppAuth
     - GTMSessionFetcher
     - leveldb-library
     - libwebp
@@ -1129,6 +1153,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_commons/ios"
   google_mlkit_face_detection:
     :path: ".symlinks/plugins/google_mlkit_face_detection/ios"
+  google_sign_in_ios:
+    :path: ".symlinks/plugins/google_sign_in_ios/darwin"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   in_app_purchase_storekit:
@@ -1141,6 +1167,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  sign_in_with_apple:
+    :path: ".symlinks/plugins/sign_in_with_apple/ios"
   smart_auth:
     :path: ".symlinks/plugins/smart_auth/ios"
   sqflite:
@@ -1154,19 +1182,20 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
+  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   AppCheckCore: 4687c03428947d5b26a6bf9bb5566b39f5473bf1
   appsflyer_sdk: beae2edc91c51ca92cad637534b45b22ff35d287
   AppsFlyerFramework: 6eb4d89d2eb9a6632317f1055b359d9fd85fd5ff
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
-  cloud_firestore: 4f81a35458d1d3812375b5c5067254da8748e2bd
+  cloud_firestore: 73eece22ce25a0565238c283ee9990f1618d8063
   Firebase: 414ad272f8d02dfbf12662a9d43f4bba9bec2a06
-  firebase_analytics: 7c31194b709466b98b5a2de330f628db67afebd7
+  firebase_analytics: b3d6dd14c61549a29abb10e9843446a4d8bb53eb
   firebase_app_check: 375d2482bc2219ef06df67f2ad659c377b2c1075
-  firebase_auth: 8b031e520999a7235c76356ed702e8ea883afeaa
+  firebase_auth: 8e9ec02991ca4659111cc671c84d0c010b6bfb26
   firebase_core: 0af4a2b24f62071f9bf283691c0ee41556dcb3f5
-  firebase_crashlytics: 5a59106b0585c2972f75c2141460e9e3f6cfa71a
-  firebase_messaging: d22721fcb70a1e1ec228bb039c9e9cf1ec462941
-  firebase_storage: 63c76754e0fa1a78b54453f36e400821a1f564d4
+  firebase_crashlytics: 4b91b8ad60ee7c168fe88979f84c9573a729de7a
+  firebase_messaging: 90e8a6db84b6e1e876cebce4f30f01dc495e7014
+  firebase_storage: 2b932fa5461f4efac36a2dcfbe240898b190b5b1
   FirebaseAnalytics: 4d310b35c48eaa4a058ddc04bdca6bdb5dc0fe80
   FirebaseAppCheck: f34226df40cf6057dc54916ab5a5d461bb51ee68
   FirebaseAppCheckInterop: 37884781f3e16a1ba47e7ec80a1e805f987788e3
@@ -1191,14 +1220,17 @@ SPEC CHECKSUMS:
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   google_mlkit_commons: 3857c1e9f23ca02073f8dd34a7a3580feb814cef
   google_mlkit_face_detection: 52f7e4c15a7c49b98940fa32af4c2b10fd8608fc
+  google_sign_in_ios: ede92ec558c3a73ec07cb180f31820152fb8ca89
   GoogleAppMeasurement: 70ce9aa438cff1cfb31ea3e660bcc67734cb716e
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
+  GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   "gRPC-C++": 2df8cba576898bdacd29f0266d5236fa0e26ba6a
   gRPC-Core: a21a60aefc08c68c247b439a9ef97174b0c54f96
+  GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
@@ -1219,6 +1251,7 @@ SPEC CHECKSUMS:
   SDWebImage: c0de394d7cf7f9838aed1fd6bb6037654a4572e4
   SDWebImageWebPCoder: af09429398d99d524cae2fe00f6f0f6e491ed102
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
+  sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   system_settings: 8f5cdbfa72c677fc8d665b863bcc20d393d87e9d

@@ -62,6 +62,7 @@ void main() async {
 }
 
 Future<void> _initAttribution() async {
+  if (kDebugMode) return;
   AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
       afDevKey: 'pjgPTCev87vC2WK6dGhg3n',
       appId: Platform.isIOS ? '6464375495' : 'com.planetwalk.sona',

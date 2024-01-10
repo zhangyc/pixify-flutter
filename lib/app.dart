@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/my_profile.dart';
-import 'package:sona/account/screens/login.dart';
+import 'package:sona/account/screens/auth_landing.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/onboarding/screen/onboarding.dart';
@@ -84,7 +84,7 @@ final _routes = <String, WidgetBuilder>{
   'onboarding': (_) => const OnboardingScreen(),
   'onboarding_b': (_) => const OnboardingScreenB(),
   '/': (_) => const SonaHome(),
-  'login': (_) => const LoginPhoneNumberScreen(),
+  'login': (_) => const AuthLandingScreen(),
   'setting': (_) => const SettingScreen(),
   'lib/core/chat/screens/conversation_list':(_) => const SettingScreen(),
 };

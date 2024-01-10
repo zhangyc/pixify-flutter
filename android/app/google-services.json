@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "686212353505-c6o2horavu20g6f9fvdrd4ll4t3esgug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.planetwalk.sona",
+            "certificate_hash": "6cd5161a8507c7f6d8240344570ce7dee4c32241"
+          }
+        },
+        {
           "client_id": "105564526567915017702",
           "client_type": 3
         }

@@ -229,7 +229,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
         locale: findMatchedSonaLocale(_language!),
         countryCode: _nation!.code
       );
-      if (result) Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => TravelWishOnboardingScreen()), (_) => false);
+      if (result && mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);;
     } catch (e) {
       Fluttertoast.showToast(msg: 'Network error, please try again later');
     } finally {

@@ -57,13 +57,16 @@ class SonaIcon extends ConsumerWidget {
 }
 
 enum SonaIcons {
+  apple,
   back,
   chat_send,
   check,
   close,
   conch_selected,
   edit,
+  email,
   forward,
+  google,
   navicon_sona,
   navicon_sona_active,
   navicon_like_me,
@@ -72,6 +75,7 @@ enum SonaIcons {
   navicon_match_active,
   navicon_chat,
   navicon_chat_active,
+  phone,
   search,
   send,
   settings,

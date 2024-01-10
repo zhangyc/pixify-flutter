@@ -19,16 +19,15 @@ import '../../generated/l10n.dart';
 import '../models/my_profile.dart';
 
 
-class LoginPinScreen extends StatefulHookConsumerWidget {
-  const LoginPinScreen({super.key, required this.phoneNumber});
-  final PhoneNumber phoneNumber;
+class EmailPinScreen extends StatefulHookConsumerWidget {
+  const EmailPinScreen({super.key, required this.email});
+  final String email;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _EmailPinScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginPinScreen> {
-  late final _pn = widget.phoneNumber;
+class _EmailPinScreenState extends ConsumerState<EmailPinScreen> {
   final _pinController = TextEditingController();
   final _pinFocusNode = FocusNode();
   final _pinKey = GlobalKey<FormState>(debugLabel: 'pin_number');
@@ -91,7 +90,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
                       text: '${S.of(context).verifyCodePageTitle}\n\n',
                       children: [
                         TextSpan(
-                          text: '+${widget.phoneNumber.countryCode} ${widget.phoneNumber.number}',
+                          text: widget.email,
                           style: Theme.of(context).textTheme.titleMedium
                         )
                       ]
@@ -161,7 +160,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
 
   Future<bool> _sendPin() async {
     try {
-      final resp = await sendPin(countryCode: _pn.countryCode, phoneNumber: _pn.number);
+      final resp = await sendEmailPin(email: widget.email);
       if (resp.statusCode == 0) {
         setState(() {});
         return true;
@@ -182,9 +181,8 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
     if (_pinKey.currentState!.validate()) {
       try {
         EasyLoading.show();
-        final resp = await login(
-            countryCode: _pn.countryCode,
-            phoneNumber: _pn.number,
+        final resp = await signInWithEmail(
+            email: widget.email,
             pinCode: _pinController.text
         );
 
@@ -225,7 +223,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
   void _completeRequiredInfo() async {
     if (mounted) {
       await Navigator.push(context, MaterialPageRoute(
-          builder: (_) => BaseInfoScreen(country: findCountryByCode(widget.phoneNumber.countryISOCode))));
+          builder: (_) => BaseInfoScreen(country: findCountryByCode(null))));
     }
   }
 }

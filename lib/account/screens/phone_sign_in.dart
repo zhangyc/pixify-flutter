@@ -9,7 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/helpers.dart';
 import 'package:intl_phone_field/phone_number.dart';
-import 'package:sona/account/screens/login_pin.dart';
+import 'package:sona/account/screens/phone_pin.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/env.dart';
 import 'package:sona/common/widgets/button/colored.dart';
@@ -22,14 +22,14 @@ import '../../common/widgets/webview.dart';
 import '../../generated/l10n.dart';
 
 
-class LoginPhoneNumberScreen extends StatefulHookConsumerWidget {
-  const LoginPhoneNumberScreen({super.key});
+class SignInWithPhoneNumberScreen extends StatefulHookConsumerWidget {
+  const SignInWithPhoneNumberScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignInWithPhoneNumberScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
+class _SignInWithPhoneNumberScreenState extends ConsumerState<SignInWithPhoneNumberScreen> {
   late SonaCountry _country;
   final _phoneController = TextEditingController();
   final _phoneFocusNode = FocusNode();
@@ -50,7 +50,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         // forceMaterialTransparency: true,
       ),
       extendBody: false,
@@ -250,7 +250,7 @@ class _LoginScreenState extends ConsumerState<LoginPhoneNumberScreen> {
 
   Future<bool> _sendPin() async {
     try {
-      final resp = await sendPin(countryCode: _country.dialCode, phoneNumber: _phoneController.text);
+      final resp = await sendSMSPin(countryCode: _country.dialCode, phoneNumber: _phoneController.text);
       if (resp.statusCode == 0) {
         return true;
       } else if (resp.statusCode == 10070) {

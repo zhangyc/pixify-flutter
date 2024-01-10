@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../firebase/sona_firebase.dart';
-Future<Response> sendPin({
+Future<Response> sendSMSPin({
   required String countryCode,
   required String phoneNumber
 }) async {
@@ -15,7 +15,18 @@ Future<Response> sendPin({
   );
 }
 
-Future<Response> login({
+Future<Response> sendEmailPin({
+  required String email,
+}) async {
+  return dio.post(
+      '/auth/send-email-code',
+      data: {
+        'email': email,
+      }
+  );
+}
+
+Future<Response> signInWithPhone({
   required String countryCode,
   required String phoneNumber,
   required String pinCode
@@ -26,6 +37,36 @@ Future<Response> login({
         'phonePrefix': countryCode,
         'phone': phoneNumber,
         'code': pinCode,
+        'deviceToken': deviceToken,
+        'timezone':'${DateTime.now().timeZoneOffset.inHours}'
+      }..removeWhere((key, value) => value==null)
+  );
+}
+
+Future<Response> signInWithEmail({
+  required String email,
+  required String pinCode
+}) async {
+  return dio.post(
+      '/auth/login-email-code',
+      data: {
+        'email': email,
+        'code': pinCode,
+        'deviceToken': deviceToken,
+        'timezone':'${DateTime.now().timeZoneOffset.inHours}'
+      }..removeWhere((key, value) => value==null)
+  );
+}
+
+Future<Response> signInWithOAuth({
+  required String source,
+  required String token
+}) async {
+  return dio.post(
+      '/auth/ext-login/login',
+      data: {
+        'loginType': source,
+        'token': token,
         'deviceToken': deviceToken,
         'timezone':'${DateTime.now().timeZoneOffset.inHours}'
       }..removeWhere((key, value) => value==null)

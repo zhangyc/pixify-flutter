@@ -11,6 +11,7 @@ class SonaAnalytics {
   }
 
   static log(String name, [Map<String, dynamic>? parameters]) {
+    if (kDebugMode) return;
     try {
       FirebaseAnalytics.instance.logEvent(name: name, parameters: parameters);
     } catch(e) {

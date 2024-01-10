@@ -53,6 +53,10 @@ String findFlagByCountryCode(String? code) {
 }
 
 SonaCountry findCountryByCode(String? code, [String defaultCountryCode = 'US']) {
+  if (code == null) {
+    final locale = Platform.localeName;
+    code = Locale.tryParse(locale)?.countryCode;
+  }
   return supportedSonaCountries.firstWhere(
       (c) => c.code == code,
       orElse: () => supportedSonaCountries.firstWhere((c) => c.code == defaultCountryCode)
