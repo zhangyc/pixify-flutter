@@ -60,15 +60,14 @@ Future<Response> signInWithEmail({
 
 Future<Response> signInWithOAuth({
   required String source,
-  required String token
+  required Map<String, dynamic> params
 }) async {
   return dio.post(
       '/auth/ext-login/login',
-      data: {
+      data: params..addAll({
         'loginType': source,
-        'token': token,
         'deviceToken': deviceToken,
         'timezone':'${DateTime.now().timeZoneOffset.inHours}'
-      }..removeWhere((key, value) => value==null)
+      })..removeWhere((key, value) => value==null)
   );
 }

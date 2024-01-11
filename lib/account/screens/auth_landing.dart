@@ -182,27 +182,30 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
     } catch (e) {
       if (kDebugMode) print(e);
     }
-    if (t != null) _signInWithOAuth('GOOGLE', t);
+    if (t != null) _signInWithOAuth('GOOGLE', {'token': t});
   }
 
   void _signInWithApple() async {
-    String? t;
+    Map<String, dynamic> params = {};
     try {
       final account = await SignInWithApple.getAppleIDCredential(scopes: [AppleIDAuthorizationScopes.email]);
-      t = account.authorizationCode;
+      params.addAll({
+        'token': account.identityToken,
+        'code': account.authorizationCode
+      });
     } catch (e) {
       //
       if (kDebugMode) print(e);
     }
-    if (t != null) _signInWithOAuth('APPLE', t);
+    if (params.isNotEmpty) _signInWithOAuth('APPLE', params);
   }
 
-  Future _signInWithOAuth(String source, String token) async {
+  Future _signInWithOAuth(String source, Map<String, dynamic> params) async {
     try {
       EasyLoading.show();
       final resp = await signInWithOAuth(
           source: source,
-          token: token
+          params: params
       );
 
       if (resp.statusCode == 0 || resp.statusCode == 2) {
