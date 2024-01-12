@@ -98,6 +98,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Langue principale"),
         "commonLanguageTitle": MessageLookupByLibrary.simpleMessage(
             "Langues couramment utilisées"),
+        "continueWithApple":
+            MessageLookupByLibrary.simpleMessage("Continuer avec Apple"),
+        "continueWithEmail":
+            MessageLookupByLibrary.simpleMessage("Continuer avec E-Mail"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Continuer avec Google"),
+        "continueWithPhone":
+            MessageLookupByLibrary.simpleMessage("Continuer avec Téléphone"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("Description (facultative)"),
         "disclaimer": MessageLookupByLibrary.simpleMessage("Avertissement"),
@@ -289,6 +297,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀Tu as atteint ta limite quotidienne"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅Tu as atteint ta limite hebdomadaire"),
+        "uploadYourPhoto":
+            MessageLookupByLibrary.simpleMessage("Télécharge ta photo"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONA s\'efforce de fournir un environnement de communication authentique, veuillez télécharger votre photo réelle,"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Prendre une photo"),
         "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage(
@@ -347,6 +359,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Prudence"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "Après annulation de l\'appariement, tout l\'historique du chat sera supprimé."),
+        "whatsYourEmail":
+            MessageLookupByLibrary.simpleMessage("Entrez l\'email"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Qui t\'aime"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("Qui t\'aime"),
         "wishActivityAddTitle":

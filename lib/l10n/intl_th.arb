@@ -405,5 +405,19 @@
   "locationAuthorizeContent": "ขอโทษครับ/ค่ะ คุณต้องอนุญาตการเข้าถึงตำแหน่งก่อนจึงจะใช้บริการนี้ได้",
   "@locationAuthorizeContent": {},
   "buttonAuthorize": "อนุมัติ",
-  "@buttonAuthorize": {}
+  "@buttonAuthorize": {},
+  "uploadYourPhoto": "อัปโหลดรูปภาพของคุณ",
+  "@uploadYourPhoto": {},
+  "uploadYourPhotoHint": "SONA พยายามที่จะมอบสภาพแวดล้อมการสื่อสารที่แท้จริง โปรดอัปโหลดรูปภาพของคุณ ",
+  "@uploadYourPhotoHint": {},
+  "whatsYourEmail": "ป้อนอีเมล",
+  "@whatsYourEmail": {},
+  "continueWithGoogle": "ดำเนินการต่อด้วย Google",
+  "@continueWithGoogle": {},
+  "continueWithApple": "ดำเนินการต่อด้วย Apple",
+  "@continueWithApple": {},
+  "continueWithEmail": "ดำเนินการต่อด้วยอีเมล",
+  "@continueWithEmail": {},
+  "continueWithPhone": "ดำเนินการต่อด้วยโทรศัพท์",
+  "@continueWithPhone": {}
 }

@@ -34,6 +34,15 @@ class AuthLandingScreen extends ConsumerStatefulWidget {
 }
 
 class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
+
+  final ab = Random().nextBool();
+
+  @override
+  void initState() {
+    SonaAnalytics.log('auth_landing', {'index': ab ? 0 : 1, 'name': ab ? 'original' : 'from_daifeng'});
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +58,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/sign_in_bg.png'),
+            image: AssetImage(ab ? 'assets/images/sign_in_bg.png' : 'assets/images/sign_in_bg_b.png'),
             fit: BoxFit.fitWidth,
             alignment: Alignment.topCenter
           )
@@ -78,7 +87,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                       foregroundColor: MaterialStatePropertyAll(Colors.white)
                     ),
                     icon: SonaIcon(icon: SonaIcons.phone),
-                    label: Text('Continue with Phone')
+                    label: Text(S.current.continueWithPhone)
                 ),
               ),
               Padding(
@@ -89,7 +98,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                       backgroundColor: MaterialStatePropertyAll(Colors.white),
                     ),
                     icon: SonaIcon(icon: SonaIcons.email),
-                    label: Text('Continue with Email')
+                    label: Text(S.current.continueWithEmail)
                 ),
               ),
               if (Platform.isAndroid) Padding(
@@ -100,7 +109,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                       backgroundColor: MaterialStatePropertyAll(Colors.white),
                     ),
                   icon: SonaIcon(icon: SonaIcons.google),
-                  label: Text('Continue with Google')
+                  label: Text(S.current.continueWithGoogle)
                 ),
               ),
               if (Platform.isIOS) Padding(
@@ -111,7 +120,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                       backgroundColor: MaterialStatePropertyAll(Colors.white),
                     ),
                     icon: SonaIcon(icon: SonaIcons.apple),
-                    label: Text('Continue with Apple')
+                    label: Text(S.current.continueWithApple)
                 ),
               ),
               Padding(

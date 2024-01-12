@@ -89,6 +89,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "commonLanguage": MessageLookupByLibrary.simpleMessage("주요 언어"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("자주 사용되는 언어"),
+        "continueWithApple":
+            MessageLookupByLibrary.simpleMessage("Apple로 계속하기"),
+        "continueWithEmail": MessageLookupByLibrary.simpleMessage("이메일로 계속하기"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Google로 계속하기"),
+        "continueWithPhone": MessageLookupByLibrary.simpleMessage("전화로 계속하기"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("설명 (선택 사항)"),
         "disclaimer": MessageLookupByLibrary.simpleMessage("면책 조항"),
@@ -258,6 +264,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀당신은 오늘의 한도에 도달했습니다"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅당신은 이번 주의 한도에 도달했습니다"),
+        "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("사진을 업로드하세요"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONA는 진정한 커뮤니케이션 환경을 제공하기 위해 노력하고 있습니다. 본인의 사진을 업로드해 주세요"),
         "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("사진 찍기"),
         "userAvatarOptionGallery":
             MessageLookupByLibrary.simpleMessage("갤러리에서 선택"),
@@ -311,6 +320,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("주의"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "페어링 해제 후, 서로의 채팅 내용이 모두 삭제됩니다."),
+        "whatsYourEmail": MessageLookupByLibrary.simpleMessage("이메일 입력"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("너를 좋아하는 사람"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("너를 좋아하는 사람"),
         "wishActivityAddTitle":

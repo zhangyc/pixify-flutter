@@ -86,6 +86,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("选择"),
         "commonLanguage": MessageLookupByLibrary.simpleMessage("主要语言"),
         "commonLanguageTitle": MessageLookupByLibrary.simpleMessage("常用语言"),
+        "continueWithApple": MessageLookupByLibrary.simpleMessage("使用Apple继续"),
+        "continueWithEmail": MessageLookupByLibrary.simpleMessage("使用电子邮件继续"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("使用Google继续"),
+        "continueWithPhone": MessageLookupByLibrary.simpleMessage("使用电话继续"),
         "descriptionOptional": MessageLookupByLibrary.simpleMessage("描述（可选）"),
         "disclaimer": MessageLookupByLibrary.simpleMessage("免责声明"),
         "displayMyCity": MessageLookupByLibrary.simpleMessage("显示我的城市"),
@@ -239,6 +244,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀已达到今日限额"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅你已达到本周限额"),
+        "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("上传你的照片"),
+        "uploadYourPhotoHint":
+            MessageLookupByLibrary.simpleMessage("SONA努力提供一个真实的交流环境，请上传你的本人照片"),
         "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("拍照"),
         "userAvatarOptionGallery":
             MessageLookupByLibrary.simpleMessage("从图库选择"),
@@ -290,6 +298,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("注意"),
         "warningUnmatching":
             MessageLookupByLibrary.simpleMessage("取消匹配后，你们之间的聊天内容都将被清除。"),
+        "whatsYourEmail": MessageLookupByLibrary.simpleMessage("输入邮箱"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("谁喜欢了你"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("谁喜欢了你"),
         "wishActivityAddTitle": MessageLookupByLibrary.simpleMessage("添加你的想法"),

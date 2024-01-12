@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -45,104 +46,50 @@ class _AvatarScreenState extends State<AvatarScreen> {
       extendBodyBehindAppBar: true,
       body: SafeArea(
         top: false,
-        child: SingleChildScrollView(
+        child: Container(
           padding: EdgeInsets.only(
               left: 16,
               right: 16,
               top: MediaQuery.of(context).viewPadding.top + 16,
               bottom: 16
           ),
+          alignment: Alignment.topCenter,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Spacer(),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  S.current.userAvatarPageTitle,
+                  S.current.uploadYourPhoto,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),
-              SizedBox(height: 24),
-              if (_avatar == null) Container(
-                width: 316,
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 150,
-                          height: 200,
-                          padding: const EdgeInsets.all(10),
-                          decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(width: 2),
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              image: DecorationImage(
-                                  image: AssetImage(widget.gender == Gender.male ? 'assets/images/human_portrait.png' : 'assets/images/girl_portrait.jpeg'),
-                                  fit: BoxFit.cover
-                              )
-                          ),
-                          alignment: Alignment.bottomRight,
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-                            foregroundDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: Theme.of(context).primaryColor, width: 2)
-                            ),
-                            decoration: BoxDecoration(
-                              color: Color(0xFF0DF892),
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            clipBehavior: Clip.antiAlias,
-                            child: Icon(Icons.check, size: 16),
-                          ),
-                        ),
-                        SizedBox(width: 16),
-                        Container(
-                          width: 150,
-                          height: 200,
-                          padding: const EdgeInsets.all(10),
-                          decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(width: 2),
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              image: DecorationImage(
-                                  image: AssetImage(widget.gender == Gender.male ? 'assets/images/pet_portrait.png' : 'assets/images/cat_portrait.jpeg'),
-                                  fit: BoxFit.cover
-                              )
-                          ),
-                          alignment: Alignment.bottomRight,
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-                            foregroundDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(color: Theme.of(context).primaryColor, width: 2)
-                            ),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFEA4710),
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            clipBehavior: Clip.antiAlias,
-                            child: Icon(Icons.close, size: 16),
-                          ),
-                        )
-                      ],
+              SizedBox(height: 36),
+              if (_avatar == null) DottedBorder(
+                borderType: BorderType.RRect,
+                radius: Radius.circular(24),
+                color: Color(0xFFB7B7B7),
+                dashPattern: [5, 5],
+                strokeWidth: 1.2,
+                padding: EdgeInsets.zero,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () => _getPhotoAndUpload(ImageSource.gallery),
+                  child: Container(
+                    width: 150,
+                    height: 200,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF6F3F3),
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                    SizedBox(height: 16),
-                    Text(
-                      S.current.userAvatarPageSubtitle,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.labelSmall,
-                    )
-                  ],
+                    clipBehavior: Clip.antiAlias,
+                    alignment: Alignment.center,
+                    child: Icon(Icons.add, size: 32, color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ) else Container(
                   width: 150,
@@ -159,29 +106,39 @@ class _AvatarScreenState extends State<AvatarScreen> {
                     )
                   ),
               ),
-              SizedBox(height: 24),
-              if (_avatar == null) FilledButton(
-                  onPressed: () => _getPhotoAndUpload(ImageSource.gallery),
-                  child: Text(S.current.userAvatarOptionGallery)
-              ) else FilledButton(
-                  onPressed: _next,
-                  child: Text(S.current.buttonNext)
-              ),
               SizedBox(height: 16),
-              if (_avatar == null) OutlinedButton(
-                  onPressed: () => _getPhotoAndUpload(ImageSource.camera),
-                  child: Text(S.current.userAvatarOptionCamera)
-              ) else TextButton(
-                  onPressed: _change,
-                  child: Text(S.current.buttonChange)
-              ),
-              // Spacer()
+              Text(S.current.uploadYourPhotoHint, style: Theme.of(context).textTheme.bodySmall)
             ],
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (_avatar == null) OutlinedButton(
+                onPressed: () => _getPhotoAndUpload(ImageSource.camera),
+                child: Text(S.current.userAvatarOptionCamera)
+            ) else FilledButton(
+                onPressed: _next,
+                child: Text(S.current.buttonNext)
+            ),
+            SizedBox(height: 16),
+            if (_avatar == null) FilledButton(
+                onPressed: () => _getPhotoAndUpload(ImageSource.gallery),
+                child: Text(S.current.userAvatarOptionGallery)
+            ) else TextButton(
+                onPressed: _change,
+                child: Text(S.current.buttonChange)
+            ),
+          ],
+        ),
+      ),
     );
   }
+
 
   void _getPhotoAndUpload(ImageSource source) async {
     try {

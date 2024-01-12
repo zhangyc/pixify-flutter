@@ -99,6 +99,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Língua principal"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Línguas comumente usadas"),
+        "continueWithApple":
+            MessageLookupByLibrary.simpleMessage("Continuar com a Apple"),
+        "continueWithEmail":
+            MessageLookupByLibrary.simpleMessage("Continuar com E-Mail"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Continuar com o Google"),
+        "continueWithPhone":
+            MessageLookupByLibrary.simpleMessage("Continuar com Telefone"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("Descrição (opcional)"),
         "disclaimer": MessageLookupByLibrary.simpleMessage("Aviso legal"),
@@ -287,6 +295,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀Atingiste o teu limite diário"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅Atingiste o teu limite semanal"),
+        "uploadYourPhoto":
+            MessageLookupByLibrary.simpleMessage("Carrega a tua foto"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONA esforça-se por proporcionar um ambiente de comunicação genuíno, por favor carrega a tua foto real"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Tirar uma foto"),
         "userAvatarOptionGallery":
@@ -345,6 +357,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Cautela"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "Após desfazer o emparelhamento, todo o histórico de chat será apagado."),
+        "whatsYourEmail": MessageLookupByLibrary.simpleMessage("Insere email"),
         "whoLIkesYou":
             MessageLookupByLibrary.simpleMessage("Quem gosta de você"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("Quem gosta de você"),

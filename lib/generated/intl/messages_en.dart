@@ -97,6 +97,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Common language"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Common language"),
+        "continueWithApple":
+            MessageLookupByLibrary.simpleMessage("Continue with Apple"),
+        "continueWithEmail":
+            MessageLookupByLibrary.simpleMessage("Continue with E-Mail"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Continue with Google"),
+        "continueWithPhone":
+            MessageLookupByLibrary.simpleMessage("Continue with Phone"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("Description (optional)"),
         "disclaimer": MessageLookupByLibrary.simpleMessage("Disclaimer"),
@@ -281,6 +289,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀You\'ve hit your daily limit"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅You\'ve hit your weekly limit"),
+        "uploadYourPhoto":
+            MessageLookupByLibrary.simpleMessage("Upload your photo"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONA strives to provide a genuine communication environment, please upload your real photo"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Take a photo"),
         "userAvatarOptionGallery":
@@ -339,6 +351,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Caution"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "After unmatching, all your chat history will be deleted."),
+        "whatsYourEmail":
+            MessageLookupByLibrary.simpleMessage("What’s your E-Mail?"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Who likes you"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("Who likes you"),
         "wishActivityAddTitle":

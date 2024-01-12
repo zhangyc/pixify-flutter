@@ -405,5 +405,19 @@
   "locationAuthorizeContent": "Извините, вы должны разрешить доступ к местоположению, прежде чем сможете использовать эту услугу",
   "@locationAuthorizeContent": {},
   "buttonAuthorize": "Авторизовать",
-  "@buttonAuthorize": {}
+  "@buttonAuthorize": {},
+  "uploadYourPhoto": "Загрузите ваше фото",
+  "@uploadYourPhoto": {},
+  "uploadYourPhotoHint": "SONA стремится обеспечить подлинную среду общения, пожалуйста, загрузите свое настоящее фото",
+  "@uploadYourPhotoHint": {},
+  "whatsYourEmail": "Введите email",
+  "@whatsYourEmail": {},
+  "continueWithGoogle": "Продолжить с Google",
+  "@continueWithGoogle": {},
+  "continueWithApple": "Продолжить с Apple",
+  "@continueWithApple": {},
+  "continueWithEmail": "Продолжить с E-Mail",
+  "@continueWithEmail": {},
+  "continueWithPhone": "Продолжить с телефоном",
+  "@continueWithPhone": {}
 }

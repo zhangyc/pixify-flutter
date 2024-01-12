@@ -405,5 +405,19 @@
   "locationAuthorizeContent": "죄송하지만, 이 서비스를 사용하기 전에 위치 접근을 허용해야 합니다",
   "@locationAuthorizeContent": {},
   "buttonAuthorize": "승인하다",
-  "@buttonAuthorize": {}
+  "@buttonAuthorize": {},
+  "uploadYourPhoto": "사진을 업로드하세요",
+  "@uploadYourPhoto": {},
+  "uploadYourPhotoHint": "SONA는 진정한 커뮤니케이션 환경을 제공하기 위해 노력하고 있습니다. 본인의 사진을 업로드해 주세요",
+  "@uploadYourPhotoHint": {},
+  "whatsYourEmail": "이메일 입력",
+  "@whatsYourEmail": {},
+  "continueWithGoogle": "Google로 계속하기",
+  "@continueWithGoogle": {},
+  "continueWithApple": "Apple로 계속하기",
+  "@continueWithApple": {},
+  "continueWithEmail": "이메일로 계속하기",
+  "@continueWithEmail": {},
+  "continueWithPhone": "전화로 계속하기",
+  "@continueWithPhone": {}
 }

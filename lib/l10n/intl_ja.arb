@@ -405,5 +405,19 @@
   "locationAuthorizeContent": "申し訳ありませんが、このサービスを利用する前に位置情報へのアクセスを許可する必要があります",
   "@locationAuthorizeContent": {},
   "buttonAuthorize": "認可する",
-  "@buttonAuthorize": {}
+  "@buttonAuthorize": {},
+  "uploadYourPhoto": "写真をアップロード",
+  "@uploadYourPhoto": {},
+  "uploadYourPhotoHint": "SONAは本物のコミュニケーション環境を提供する努力をしています。本人の写真をアップロードしてください",
+  "@uploadYourPhotoHint": {},
+  "whatsYourEmail": "メールアドレスを入力",
+  "@whatsYourEmail": {},
+  "continueWithGoogle": "Googleで続行",
+  "@continueWithGoogle": {},
+  "continueWithApple": "Appleで続ける",
+  "@continueWithApple": {},
+  "continueWithEmail": "Eメールで続行",
+  "@continueWithEmail": {},
+  "continueWithPhone": "電話で続行",
+  "@continueWithPhone": {}
 }

@@ -405,5 +405,19 @@
   "locationAuthorizeContent": "Sorry, you've got to allow location access before you can use this service",
   "@locationAuthorizeContent": {},
   "buttonAuthorize": "Authorise",
-  "@buttonAuthorize": {}
+  "@buttonAuthorize": {},
+  "uploadYourPhoto": "Upload your photo",
+  "@uploadYourPhoto": {},
+  "uploadYourPhotoHint": "SONA strives to provide a genuine communication environment, please upload your real photo",
+  "@uploadYourPhotoHint": {},
+  "whatsYourEmail": "What’s your E-Mail?",
+  "@whatsYourEmail": {},
+  "continueWithGoogle": "Continue with Google",
+  "@continueWithGoogle": {},
+  "continueWithApple": "Continue with Apple",
+  "@continueWithApple": {},
+  "continueWithEmail": "Continue with E-Mail",
+  "@continueWithEmail": {},
+  "continueWithPhone": "Continue with Phone",
+  "@continueWithPhone": {}
 }

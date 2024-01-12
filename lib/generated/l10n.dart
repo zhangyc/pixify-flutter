@@ -2079,6 +2079,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Upload your photo`
+  String get uploadYourPhoto {
+    return Intl.message(
+      'Upload your photo',
+      name: 'uploadYourPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SONA strives to provide a genuine communication environment, please upload your real photo`
+  String get uploadYourPhotoHint {
+    return Intl.message(
+      'SONA strives to provide a genuine communication environment, please upload your real photo',
+      name: 'uploadYourPhotoHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What’s your E-Mail?`
+  String get whatsYourEmail {
+    return Intl.message(
+      'What’s your E-Mail?',
+      name: 'whatsYourEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue with Google`
+  String get continueWithGoogle {
+    return Intl.message(
+      'Continue with Google',
+      name: 'continueWithGoogle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue with Apple`
+  String get continueWithApple {
+    return Intl.message(
+      'Continue with Apple',
+      name: 'continueWithApple',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue with E-Mail`
+  String get continueWithEmail {
+    return Intl.message(
+      'Continue with E-Mail',
+      name: 'continueWithEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue with Phone`
+  String get continueWithPhone {
+    return Intl.message(
+      'Continue with Phone',
+      name: 'continueWithPhone',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

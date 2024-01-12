@@ -97,6 +97,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "commonLanguage": MessageLookupByLibrary.simpleMessage("Основной язык"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Обычно используемые языки"),
+        "continueWithApple":
+            MessageLookupByLibrary.simpleMessage("Продолжить с Apple"),
+        "continueWithEmail":
+            MessageLookupByLibrary.simpleMessage("Продолжить с E-Mail"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Продолжить с Google"),
+        "continueWithPhone":
+            MessageLookupByLibrary.simpleMessage("Продолжить с телефоном"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("Описание (необязательно)"),
         "disclaimer":
@@ -290,6 +298,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀достигли своего дневного лимита"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅достигли своего недельного лимита"),
+        "uploadYourPhoto":
+            MessageLookupByLibrary.simpleMessage("Загрузите ваше фото"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONA стремится обеспечить подлинную среду общения, пожалуйста, загрузите свое настоящее фото"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Сфотографировать"),
         "userAvatarOptionGallery":
@@ -348,6 +360,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Осторожно"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "После отмены сопряжения весь история чата будет удалена."),
+        "whatsYourEmail": MessageLookupByLibrary.simpleMessage("Введите email"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Кто тебя любит"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("Кто тебя любит"),
         "wishActivityAddTitle":

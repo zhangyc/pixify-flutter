@@ -97,6 +97,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "commonLanguage": MessageLookupByLibrary.simpleMessage("Hauptsprache"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Häufig verwendete Sprachen"),
+        "continueWithApple":
+            MessageLookupByLibrary.simpleMessage("Mit Apple fortfahren"),
+        "continueWithEmail":
+            MessageLookupByLibrary.simpleMessage("Mit E-Mail fortfahren"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Mit Google fortfahren"),
+        "continueWithPhone":
+            MessageLookupByLibrary.simpleMessage("Mit Telefon fortfahren"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("Beschreibung (optional)"),
         "disclaimer":
@@ -287,6 +295,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀Du hast dein Tageslimit erreicht"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅Du hast dein Wochenlimit erreicht"),
+        "uploadYourPhoto":
+            MessageLookupByLibrary.simpleMessage("Lade dein Foto hoch"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONA bemüht sich, eine authentische Kommunikationsumgebung zu bieten. Bitte lade dein echtes Foto hoch"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Ein Foto machen"),
         "userAvatarOptionGallery":
@@ -346,6 +358,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Vorsicht"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "Nach dem Aufheben der Paarung wird der gesamte Chatverlauf gelöscht."),
+        "whatsYourEmail":
+            MessageLookupByLibrary.simpleMessage("E-Mail eingeben"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Wer mag dich"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("Wer mag dich"),
         "wishActivityAddTitle":

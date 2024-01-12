@@ -98,6 +98,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Língua principal"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Línguas comumente usadas"),
+        "continueWithApple":
+            MessageLookupByLibrary.simpleMessage("Continuar com a Apple"),
+        "continueWithEmail":
+            MessageLookupByLibrary.simpleMessage("Continuar com E-Mail"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Continuar com o Google"),
+        "continueWithPhone":
+            MessageLookupByLibrary.simpleMessage("Continuar com Telefone"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("Descrição (opcional)"),
         "disclaimer": MessageLookupByLibrary.simpleMessage("Aviso legal"),
@@ -286,6 +294,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀Você atingiu seu limite diário"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅Você atingiu seu limite semanal"),
+        "uploadYourPhoto":
+            MessageLookupByLibrary.simpleMessage("Envie sua foto"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONA se esforça para fornecer um ambiente de comunicação genuíno, por favor, envie sua foto real"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Tirar uma foto"),
         "userAvatarOptionGallery":
@@ -344,6 +356,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Cautela"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "Após desfazer o emparelhamento, todo o histórico de chat será apagado."),
+        "whatsYourEmail": MessageLookupByLibrary.simpleMessage("Insira email"),
         "whoLIkesYou":
             MessageLookupByLibrary.simpleMessage("Quem gosta de você"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("Quem gosta de você"),

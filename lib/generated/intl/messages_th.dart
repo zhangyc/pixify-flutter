@@ -94,6 +94,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "commonLanguage": MessageLookupByLibrary.simpleMessage("ภาษาหลัก"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("ภาษาที่ใช้บ่อย"),
+        "continueWithApple":
+            MessageLookupByLibrary.simpleMessage("ดำเนินการต่อด้วย Apple"),
+        "continueWithEmail":
+            MessageLookupByLibrary.simpleMessage("ดำเนินการต่อด้วยอีเมล"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("ดำเนินการต่อด้วย Google"),
+        "continueWithPhone":
+            MessageLookupByLibrary.simpleMessage("ดำเนินการต่อด้วยโทรศัพท์"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("คำอธิบาย (ไม่บังคับ)"),
         "disclaimer": MessageLookupByLibrary.simpleMessage("คำชี้แจง"),
@@ -277,6 +285,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀คุณได้ถึงขีดจำกัดประจำวันแล้ว"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅คุณได้ถึงขีดจำกัดประจำสัปดาห์แล้ว"),
+        "uploadYourPhoto":
+            MessageLookupByLibrary.simpleMessage("อัปโหลดรูปภาพของคุณ"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONA พยายามที่จะมอบสภาพแวดล้อมการสื่อสารที่แท้จริง โปรดอัปโหลดรูปภาพของคุณ "),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("ถ่ายภาพ"),
         "userAvatarOptionGallery":
@@ -333,6 +345,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("ระวัง"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "หลังจากยกเลิกการจับคู่ ข้อความสนทนาทั้งหมดจะถูกลบออก"),
+        "whatsYourEmail": MessageLookupByLibrary.simpleMessage("ป้อนอีเมล"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("ใครที่ชอบคุณ"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("ใครที่ชอบคุณ"),
         "wishActivityAddTitle":

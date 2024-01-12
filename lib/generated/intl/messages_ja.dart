@@ -90,6 +90,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "commonLanguage": MessageLookupByLibrary.simpleMessage("主要言語"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("一般的に使用される言語"),
+        "continueWithApple": MessageLookupByLibrary.simpleMessage("Appleで続ける"),
+        "continueWithEmail": MessageLookupByLibrary.simpleMessage("Eメールで続行"),
+        "continueWithGoogle": MessageLookupByLibrary.simpleMessage("Googleで続行"),
+        "continueWithPhone": MessageLookupByLibrary.simpleMessage("電話で続行"),
         "descriptionOptional": MessageLookupByLibrary.simpleMessage("説明（任意）"),
         "disclaimer": MessageLookupByLibrary.simpleMessage("免責事項"),
         "displayMyCity": MessageLookupByLibrary.simpleMessage("私の都市を表示"),
@@ -257,6 +261,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀1日の制限に達しました"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅週の制限に達しました"),
+        "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("写真をアップロード"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONAは本物のコミュニケーション環境を提供する努力をしています。本人の写真をアップロードしてください"),
         "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("写真を撮る"),
         "userAvatarOptionGallery":
             MessageLookupByLibrary.simpleMessage("ギャラリーから選択"),
@@ -309,6 +316,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("注意"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "ペアリング解除後、お互いのチャット内容が全て消去されます。"),
+        "whatsYourEmail": MessageLookupByLibrary.simpleMessage("メールアドレスを入力"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("あなたを好きな人は"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("あなたを好きな人は"),
         "wishActivityAddTitle":

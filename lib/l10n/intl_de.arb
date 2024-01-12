@@ -405,5 +405,19 @@
   "locationAuthorizeContent": "Entschuldigung, Sie müssen den Zugriff auf den Standort erlauben, bevor Sie diesen Dienst nutzen können",
   "@locationAuthorizeContent": {},
   "buttonAuthorize": "Autorisieren",
-  "@buttonAuthorize": {}
+  "@buttonAuthorize": {},
+  "uploadYourPhoto": "Lade dein Foto hoch",
+  "@uploadYourPhoto": {},
+  "uploadYourPhotoHint": "SONA bemüht sich, eine authentische Kommunikationsumgebung zu bieten. Bitte lade dein echtes Foto hoch",
+  "@uploadYourPhotoHint": {},
+  "whatsYourEmail": "E-Mail eingeben",
+  "@whatsYourEmail": {},
+  "continueWithGoogle": "Mit Google fortfahren",
+  "@continueWithGoogle": {},
+  "continueWithApple": "Mit Apple fortfahren",
+  "@continueWithApple": {},
+  "continueWithEmail": "Mit E-Mail fortfahren",
+  "@continueWithEmail": {},
+  "continueWithPhone": "Mit Telefon fortfahren",
+  "@continueWithPhone": {}
 }

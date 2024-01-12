@@ -97,6 +97,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Idioma principal"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Idiomas comúnmente usados"),
+        "continueWithApple":
+            MessageLookupByLibrary.simpleMessage("Continuar con Apple"),
+        "continueWithEmail":
+            MessageLookupByLibrary.simpleMessage("Continuar con E-Mail"),
+        "continueWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Continuar con Google"),
+        "continueWithPhone":
+            MessageLookupByLibrary.simpleMessage("Continuar con Teléfono"),
         "descriptionOptional":
             MessageLookupByLibrary.simpleMessage("Descripción (opcional)"),
         "disclaimer":
@@ -290,6 +298,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀Has alcanzado tu límite diario"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅Has alcanzado tu límite semanal"),
+        "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("Sube tu foto"),
+        "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
+            "SONA se esfuerza por proporcionar un ambiente de comunicación genuino, por favor, sube tu foto real"),
         "userAvatarOptionCamera":
             MessageLookupByLibrary.simpleMessage("Tomar una foto"),
         "userAvatarOptionGallery":
@@ -348,6 +359,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Cuidado"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "Después de desemparejar, todo el historial de chat será eliminado."),
+        "whatsYourEmail":
+            MessageLookupByLibrary.simpleMessage("Ingresa correo"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Quién te gusta"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("Quién te gusta"),
         "wishActivityAddTitle":

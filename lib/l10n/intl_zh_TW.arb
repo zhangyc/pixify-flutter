@@ -405,5 +405,19 @@
   "locationAuthorizeContent": "很抱歉，在您使用此服務之前，必須允許訪問位置信息",
   "@locationAuthorizeContent": {},
   "buttonAuthorize": "授權",
-  "@buttonAuthorize": {}
+  "@buttonAuthorize": {},
+  "uploadYourPhoto": "上傳你的照片",
+  "@uploadYourPhoto": {},
+  "uploadYourPhotoHint": "SONA努力提供一個真實的交流環境，請上傳你的本人照片",
+  "@uploadYourPhotoHint": {},
+  "whatsYourEmail": "輸入郵箱",
+  "@whatsYourEmail": {},
+  "continueWithGoogle": "使用Google繼續",
+  "@continueWithGoogle": {},
+  "continueWithApple": "使用Apple繼續",
+  "@continueWithApple": {},
+  "continueWithEmail": "使用電子郵件繼續",
+  "@continueWithEmail": {},
+  "continueWithPhone": "使用電話繼續",
+  "@continueWithPhone": {}
 }

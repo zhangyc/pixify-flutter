@@ -65,7 +65,7 @@ class _SignInWithEmailScreenState extends ConsumerState<SignInWithEmailScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 24),
                 child: Text(
-                  'What’s your email?',
+                  S.current.whatsYourEmail,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),

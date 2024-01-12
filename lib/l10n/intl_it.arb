@@ -405,5 +405,19 @@
   "locationAuthorizeContent": "Spiacente, devi consentire l'accesso alla posizione prima di poter utilizzare questo servizio",
   "@locationAuthorizeContent": {},
   "buttonAuthorize": "Autorizzare",
-  "@buttonAuthorize": {}
+  "@buttonAuthorize": {},
+  "uploadYourPhoto": "Carica la tua foto",
+  "@uploadYourPhoto": {},
+  "uploadYourPhotoHint": "SONA si impegna a fornire un ambiente di comunicazione autentico, per favore carica la tua foto reale",
+  "@uploadYourPhotoHint": {},
+  "whatsYourEmail": "Inserisci email",
+  "@whatsYourEmail": {},
+  "continueWithGoogle": "Continua con Google",
+  "@continueWithGoogle": {},
+  "continueWithApple": "Continua con Apple",
+  "@continueWithApple": {},
+  "continueWithEmail": "Continua con E-Mail",
+  "@continueWithEmail": {},
+  "continueWithPhone": "Continua con Telefono",
+  "@continueWithPhone": {}
 }
