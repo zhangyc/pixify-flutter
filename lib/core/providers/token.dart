@@ -16,14 +16,16 @@ final tokenProvider = StateProvider<String?>(
       if (next == null) {
         if (previous == null) return;
         global.navigatorKey.currentState?.pushNamedAndRemoveUntil('login', (route) => false);
-        ref.invalidate(currentHomeTapIndexProvider);
-        ref.invalidate(myProfileProvider);
-        ref.invalidate(likeMeStreamProvider);
-        ref.invalidate(asyncPersonaProvider);
-        ref.invalidate(conversationStreamProvider);
-        // ref.invalidate(asyncChatStylesProvider);
-        ref.invalidate(asyncMyTravelWishesProvider);
-        ref.invalidate(travelWishParamsProvider);
+        Future.delayed(const Duration(seconds: 1), () {
+          ref.invalidate(currentHomeTapIndexProvider);
+          ref.invalidate(myProfileProvider);
+          ref.invalidate(likeMeStreamProvider);
+          ref.invalidate(asyncPersonaProvider);
+          ref.invalidate(conversationStreamProvider);
+          // ref.invalidate(asyncChatStylesProvider);
+          ref.invalidate(asyncMyTravelWishesProvider);
+          ref.invalidate(travelWishParamsProvider);
+        });
       }
     });
     return global.token;
