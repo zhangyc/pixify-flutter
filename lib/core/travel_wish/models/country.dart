@@ -57,6 +57,9 @@ SonaCountry findCountryByCode(String? code, [String defaultCountryCode = 'US']) 
     final locale = Platform.localeName;
     code = Locale.tryParse(locale)?.countryCode;
   }
+  if (Platform.localeName.startsWith('ja')) {
+    code = 'JP';
+  }
   return supportedSonaCountries.firstWhere(
       (c) => c.code == code,
       orElse: () => supportedSonaCountries.firstWhere((c) => c.code == defaultCountryCode)

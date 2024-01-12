@@ -103,6 +103,7 @@ class _SignInWithEmailScreenState extends ConsumerState<SignInWithEmailScreen> {
                       _validate = true;
                     });
                   },
+                  autofocus: true,
                   // onTapOutside: (_) => _phoneFocusNode.unfocus(),
                   validator: _validator,
                   autovalidateMode: _validate ? AutovalidateMode.disabled : AutovalidateMode.always,

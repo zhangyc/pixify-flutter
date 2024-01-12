@@ -148,6 +148,7 @@ class _SignInWithPhoneNumberScreenState extends ConsumerState<SignInWithPhoneNum
                     });
                   },
                   // onTapOutside: (_) => _phoneFocusNode.unfocus(),
+                  autofocus: true,
                   validator: _validator,
                   autovalidateMode: _validate ? AutovalidateMode.disabled : AutovalidateMode.always,
                 ),

@@ -101,7 +101,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                     label: Text(S.current.continueWithEmail)
                 ),
               ),
-              if (Platform.isAndroid) Padding(
+              if (false && Platform.isAndroid) Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                 child: OutlinedButton.icon(
                   onPressed: _signInWithGoogle,
