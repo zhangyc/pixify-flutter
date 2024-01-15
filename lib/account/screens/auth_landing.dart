@@ -185,7 +185,9 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
   void _signInWithGoogle() async {
     Map<String, dynamic> params = {};
     try {
-      final account = await GoogleSignIn().signIn();
+      final googleSignIn = GoogleSignIn();
+      await googleSignIn.signOut();
+      final account = await googleSignIn.signIn();
       if (account == null) throw(Exception('Account is null'));
       final auth = await account.authentication;
       params.addAll({
