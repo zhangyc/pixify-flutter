@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "686212353505-c6o2horavu20g6f9fvdrd4ll4t3esgug.apps.googleusercontent.com",
+          "client_id": "686212353505-fkt32lmsr79ihv3l2kqsu7tfqucevm1g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.planetwalk.sona",
@@ -22,7 +22,23 @@
           }
         },
         {
-          "client_id": "105564526567915017702",
+          "client_id": "686212353505-onpd170hl82t2iub6tf8a2f0n0c5ocn8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.planetwalk.sona",
+            "certificate_hash": "8c636edd1c4ac744f4d9a32cb77d8a3bee68a6f3"
+          }
+        },
+        {
+          "client_id": "686212353505-v9d9r7njc9099f0c3t0vjo3i81eorjq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.planetwalk.sona",
+            "certificate_hash": "c5470c3484424a2301ec9efbe59dc66f870134ed"
+          }
+        },
+        {
+          "client_id": "686212353505-3lsdsp2snbq2m9r3st54ls0d7jv5psse.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,15 +51,8 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "105564526567915017702",
+              "client_id": "686212353505-3lsdsp2snbq2m9r3st54ls0d7jv5psse.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "686212353505-eu1iv85e1sr2lqfkq6mlmsnefvefteaf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.planetwalk.sona"
-              }
             }
           ]
         }

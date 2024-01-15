@@ -15,8 +15,10 @@ import 'avatar.dart';
 class BaseInfoScreen extends StatefulWidget {
   const BaseInfoScreen({
     super.key,
+    this.name,
     required this.country
   });
+  final String? name;
   final SonaCountry country;
 
   @override
@@ -26,7 +28,7 @@ class BaseInfoScreen extends StatefulWidget {
 class _BaseInfoScreenState extends State<BaseInfoScreen> {
 
   final _formKey = GlobalKey<FormState>(debugLabel: 'base_info');
-  final _nameController = TextEditingController();
+  late final _nameController = TextEditingController(text: widget.name);
   final _nameFocusNode = FocusNode();
   DateTime? _birthday;
   Gender? _gender;

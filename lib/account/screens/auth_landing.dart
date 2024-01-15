@@ -101,7 +101,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                     label: Text(S.current.continueWithEmail)
                 ),
               ),
-              if (false && Platform.isAndroid) Padding(
+              if (Platform.isAndroid) Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
                 child: OutlinedButton.icon(
                   onPressed: _signInWithGoogle,
@@ -183,22 +183,32 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
   }
 
   void _signInWithGoogle() async {
-    String? t;
+    Map<String, dynamic> params = {};
     try {
-      final account = await GoogleSignIn.standard(scopes: const ['email']).signIn();
+      final account = await GoogleSignIn().signIn();
       if (account == null) throw(Exception('Account is null'));
-      t = (await account.authentication).accessToken;
+      final auth = await account.authentication;
+      params.addAll({
+        'id': account.id,
+        'email': account.email,
+        'name': account.displayName,
+        'token': auth.idToken,
+        'code': account.serverAuthCode
+      });
     } catch (e) {
       if (kDebugMode) print(e);
     }
-    if (t != null) _signInWithOAuth('GOOGLE', {'token': t});
+    if (params.isNotEmpty) _signInWithOAuth('GOOGLE', params);
   }
 
   void _signInWithApple() async {
     Map<String, dynamic> params = {};
     try {
-      final account = await SignInWithApple.getAppleIDCredential(scopes: [AppleIDAuthorizationScopes.email]);
+      final account = await SignInWithApple.getAppleIDCredential(scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName]);
       params.addAll({
+        'id': account.userIdentifier,
+        'email': account.email,
+        'name': '${account.givenName} ${account.familyName}',
         'token': account.identityToken,
         'code': account.authorizationCode
       });
@@ -224,7 +234,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
         //userToken=token;
         // 未注册
         if (resp.statusCode == 2) {
-          _completeRequiredInfo();
+          _completeRequiredInfo(name: params['name']);
           return;
         }
 
@@ -233,7 +243,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
           final profile = MyProfile.fromJson(response.data);
           ref.read(myProfileProvider.notifier).update(profile);
           if (!profile.completed) {
-            _completeRequiredInfo();
+            _completeRequiredInfo(name: params['name']);
             return;
           }
           if (mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -250,10 +260,13 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
     }
   }
 
-  void _completeRequiredInfo() async {
+  void _completeRequiredInfo({required String? name}) async {
     if (mounted) {
       await Navigator.push(context, MaterialPageRoute(
-          builder: (_) => BaseInfoScreen(country: findCountryByCode(null))));
+          builder: (_) => BaseInfoScreen(
+            name: name,
+            country: findCountryByCode(null)
+          )));
     }
   }
 }
