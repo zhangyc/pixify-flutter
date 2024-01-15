@@ -10,6 +10,7 @@ class UserInfo {
     required this.birthday,
     this.countryId,
     this.countryCode,
+    this.countryName,
     this.countryFlag,
     this.locale,
     required this.avatar,
@@ -29,6 +30,7 @@ class UserInfo {
   final DateTime? birthday;
   final int? countryId;
   final String? countryCode;
+  final String? countryName;
   final String? countryFlag;
   final String? locale;
   final String? avatar;
@@ -59,6 +61,7 @@ class UserInfo {
         locale: json['lang'],
         countryId: json['countryId'],
         countryCode: json['countryCode'],
+        countryName: json['countryName'],
         countryFlag: json['countryFlag'],
         avatar: json['avatar'],
         bio: json['description'],
@@ -81,6 +84,7 @@ class UserInfo {
         locale: json['lang'],
         countryId: json['countryId'],
         countryCode: json['countryCode'],
+        countryName: json['countryName'],
         countryFlag: json['countryFlag'] ?? '🇺🇸',
         avatar: json['avatar'],
         bio: json['description']

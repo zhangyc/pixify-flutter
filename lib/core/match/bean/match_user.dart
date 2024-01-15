@@ -18,6 +18,7 @@ class MatchUserInfo extends UserInfo{
     required this.birthday,
     this.countryId,
     this.countryCode,
+    this.countryName,
     this.countryFlag,
     this.locale,
     required this.avatar,
@@ -39,6 +40,7 @@ class MatchUserInfo extends UserInfo{
     birthday: birthday,
     countryId: countryId,
     countryCode: countryCode,
+    countryName: countryName,
     countryFlag: countryFlag,
     locale: locale,
     avatar: avatar,
@@ -63,6 +65,8 @@ class MatchUserInfo extends UserInfo{
   final int? countryId;
   @override
   final String? countryCode;
+  @override
+  final String? countryName;
   @override
   final String? countryFlag;
   @override
@@ -119,6 +123,7 @@ class MatchUserInfo extends UserInfo{
         locale: json['lang'],
         countryId: json['countryId'],
         countryCode: json['countryCode'],
+        countryName: json['countryName'],
         countryFlag: json['countryFlag'],
         avatar: json['avatar'],
         bio: json['description'],
@@ -145,6 +150,7 @@ class MatchUserInfo extends UserInfo{
         countryId: json['countryId'],
         countryCode: json['countryCode'],
         countryFlag: json['countryFlag'] ?? '🇺🇸',
+        countryName: json['countryName'],
         avatar: json['avatar'],
         bio: json['description']
     );

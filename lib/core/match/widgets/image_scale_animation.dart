@@ -82,16 +82,25 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
                             maxLines: 2,
                           ),
                         ),
-                        widget.info.countryFlag!=null?Text(widget.info.countryFlag??''):Container()
                       ],
                     ),
-                    widget.info.currentCity?.isEmpty ?? true?Container():Row(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Image.asset(Assets.iconsGps,width: 16,height: 16,),
+                        if (widget.info.countryFlag != null) Text(widget.info.countryFlag??''),
+                        if (widget.info.countryName != null) Padding(
+                          padding: const EdgeInsets.only(left: 6, right: 12),
+                          child: Text(widget.info.countryName??'', style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w900
+                          )),
+                        ),
+                        if (widget.info.currentCity != null && widget.info.currentCity!.isNotEmpty) Image.asset(Assets.iconsGps,width: 16,height: 16,),
                         SizedBox(
                           width: 4,
                         ),
-                        Text('${widget.info.currentCity}',style: TextStyle(
+                        if (widget.info.currentCity != null && widget.info.currentCity!.isNotEmpty) Text('${widget.info.currentCity}',style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.w900
