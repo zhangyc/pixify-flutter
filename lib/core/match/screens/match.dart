@@ -228,10 +228,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                               Future.delayed(Duration(milliseconds: 200),(){
                                 matchAnimation.value=TransformStatus.rightRotate;
                                  if(canArrow){
-
-                            showDm(context, users[currentPage],(){
-
-                              controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                 showDm(context, users[currentPage],(){
+                                 controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
                               //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
                             });
                           }else {

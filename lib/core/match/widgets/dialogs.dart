@@ -642,7 +642,7 @@ showDm(BuildContext context,MatchUserInfo info,VoidCallback next){
                       onPressed: (){
                         if(canArrow){
                           arrow=arrow-1;
-                          MatchApi.sayHi(info.id);
+                          MatchApi.sayHi(info.id,'dm');
                           SonaAnalytics.log(MatchEvent.match_arrow_send.name);
                           next.call();
                           Navigator.pop(context);
@@ -872,7 +872,7 @@ class _MatchedContentState extends State<MatchedContent> {
                       onPressed: (){
                         ///发送一个快捷的sona打招呼
                         widget.next.call();
-                        MatchApi.sayHi(widget.target.id);
+                        MatchApi.sayHi(widget.target.id,'matched');
                         SonaAnalytics.log(MatchEvent.match_popup_sona.name);
                         Navigator.pop(context);
 

@@ -41,7 +41,7 @@ class MatchApi{
         data: {
           // 请求类型,取值范围见下方说明
           // x
-          "type":"INPUT",
+          "type":"ARROW",
           "userId":id, // 对方用户的ID
           // 当type=INPUT 时，该参数必填，内容为用户的输入内容
           "chatStyleId":-1, // 风格ID
@@ -49,7 +49,7 @@ class MatchApi{
         }
     );
   }
- static  Future<HttpResult> sayHi(int id) {
+ static  Future<HttpResult> sayHi(int id,String channel) {
     return post(
         '/prompt/common',
         data: {
@@ -59,6 +59,7 @@ class MatchApi{
           "userId":id, // 对方用户的ID
           // 当type=INPUT 时，该参数必填，内容为用户的输入内容
           "chatStyleId":-1, // 风格ID
+          "channel":channel
         }
     );
   }
