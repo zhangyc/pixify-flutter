@@ -1,8 +1,13 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
+import 'package:sona/common/providers/package_info.dart';
 import 'package:sona/common/widgets/button/forward.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/setting/screens/account.dart';
@@ -41,45 +46,68 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
         centerTitle: true,
         title: Text(S.of(context).settings),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ForwardButton(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AccountSettingScreen())),
-                    text: S.of(context).account,
-                  ),
-                  ForwardButton(
-                    onTap: _showNotificationSetting,
-                    text: S.of(context).notifications,
-                  ),
-                  ForwardButton(
-                    onTap: _showPrivacy,
-                    text: S.of(context).privacy,
-                  ),
-                  ForwardButton(
-                    onTap: _showAbout,
-                    text: S.of(context).about,
-                  ),
-                  ForwardButton(
-                    onTap: _logout,
-                    text: S.of(context).buttonSignOut,
-                    color: Color(0xFFEA4710),
-                  ),
-                ],
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ForwardButton(
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AccountSettingScreen())),
+                      text: S.of(context).account,
+                    ),
+                    ForwardButton(
+                      onTap: _showNotificationSetting,
+                      text: S.of(context).notifications,
+                    ),
+                    ForwardButton(
+                      onTap: _showPrivacy,
+                      text: S.of(context).privacy,
+                    ),
+                    ForwardButton(
+                      onTap: _showAbout,
+                      text: S.of(context).about,
+                    ),
+                    ForwardButton(
+                      onTap: _logout,
+                      text: S.of(context).buttonSignOut,
+                      color: Color(0xFFEA4710),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+            SliverFillRemaining(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/about_logo.png', height: 20),
+                  SizedBox(height: 8),
+                  Text(
+                    ref.watch(asyncPackageInfoProvider).when(
+                        data: (info) => kDebugMode ? 'Version ${info.version}  build ${info.buildNumber}' : 'Version ${info.version}',
+                        error: (_, __) => '',
+                        loading: () => ''
+                    ),
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Color(0xFFB7B7B7)
+                    )
+                  ),
+                  SizedBox(height: 16)
+                ],
+              ),
+            )
+          ],
+        ),
       )
     );
   }
