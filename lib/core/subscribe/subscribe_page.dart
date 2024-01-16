@@ -427,6 +427,10 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   Future<void> initStoreInfo() async {
     ///可用
     final bool isAvailable = await inAppPurchase.isAvailable();
+    if(!isAvailable){
+      SonaAnalytics.log('inAppPurchase_unAvailable');
+    }
+
     if (!isAvailable&&mounted ) {
       setState(() {
         _isAvailable = isAvailable;
@@ -539,6 +543,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   }
   ///传递
   Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
+    SonaAnalytics.log('iap_deliver');
+
     // IMPORTANT!! Always verify purchase details before delivering the product.
     // if (purchaseDetails.productID == _kConsumableId) {
     //   await ConsumableStore.save(purchaseDetails.purchaseID!);
@@ -581,10 +587,14 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     // 遍历购买列表
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
       if (purchaseDetails.status == PurchaseStatus.pending) {
+        SonaAnalytics.log('iap_error_pending');
+
         // purchaseDetails.status=PurchaseStatus.canceled;
         showPendingUI();
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
+          SonaAnalytics.log('iap_error_${purchaseDetails.error!.code}');
+
           handleError(purchaseDetails.error!);
           // 已购买
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
@@ -593,8 +603,12 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           try {
             final resp = await _verifyPurchase(purchaseDetails);
             if (resp.statusCode == 0) {
+              SonaAnalytics.log('iap_verified');
+
               unawaited(deliverProduct(purchaseDetails));
             } else {
+              SonaAnalytics.log('iap_verify_failed');
+
               Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
               // if (resp.statusCode == 40030) {
               //   // 已绑定在其他账号
@@ -608,6 +622,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               // }
             }
           } catch(e){
+            SonaAnalytics.log('iap_error');
             Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
           } finally {
             setState(() {
@@ -617,6 +632,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         }
 
         if (purchaseDetails.pendingCompletePurchase) {
+          SonaAnalytics.log('iap_Completed');
           await inAppPurchase.completePurchase(purchaseDetails);
         }
       }
