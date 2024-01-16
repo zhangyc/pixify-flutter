@@ -32,26 +32,26 @@ class SonaApp extends HookConsumerWidget {
       profile = ref.read(myProfileProvider);
     }
     final navigatorKey = global.navigatorKey;
-    final onboarding = kvStore.getBool('onboarding') ?? false;
     var initialRoute = profile == null || !profile.completed ? 'login' : '/';
-    if (profile == null && !onboarding) {
-      switch (Random().nextInt(3) % 3) {
-        case 0:
-          initialRoute = 'onboarding';
-          break;
-        case 1:
-          initialRoute = 'onboarding_b';
-          break;
-        case 2:
-          initialRoute = 'login';
-          kvStore.setBool('onboarding', true);
-          SonaAnalytics.log('reg_intro_v3go');
-          break;
-        default:
-          initialRoute = 'login';
-          break;
-      }
-    }
+    // final onboarding = kvStore.getBool('onboarding') ?? false;
+    // if (profile == null && !onboarding) {
+    //   switch (Random().nextInt(3) % 3) {
+    //     case 0:
+    //       initialRoute = 'onboarding';
+    //       break;
+    //     case 1:
+    //       initialRoute = 'onboarding_b';
+    //       break;
+    //     case 2:
+    //       initialRoute = 'login';
+    //       kvStore.setBool('onboarding', true);
+    //       SonaAnalytics.log('reg_intro_v3go');
+    //       break;
+    //     default:
+    //       initialRoute = 'login';
+    //       break;
+    //   }
+    // }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       key: ValueKey(token),
