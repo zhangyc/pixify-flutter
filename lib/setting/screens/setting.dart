@@ -86,7 +86,9 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
               ),
             ),
             SliverFillRemaining(
+              hasScrollBody: false,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
