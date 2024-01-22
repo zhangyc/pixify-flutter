@@ -26,8 +26,8 @@ final tokenProvider = StateProvider<String?>(
           // ref.invalidate(asyncChatStylesProvider);
           ref.invalidate(asyncMyTravelWishesProvider);
           ref.invalidate(travelWishParamsProvider);
-          FirebaseMessaging.instance.deleteToken();
         });
+        FirebaseMessaging.instance.deleteToken();
       }
     });
     return global.token;
