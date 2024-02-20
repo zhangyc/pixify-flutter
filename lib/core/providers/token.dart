@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/chat/providers/chat.dart';
@@ -26,6 +27,7 @@ final tokenProvider = StateProvider<String?>(
           ref.invalidate(asyncMyTravelWishesProvider);
           ref.invalidate(travelWishParamsProvider);
         });
+        FirebaseMessaging.instance.deleteToken();
       }
     });
     return global.token;

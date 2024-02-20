@@ -197,7 +197,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
           ),
         );
       },
-      error: (error, stackTrace) => NoDataWidget(onTap: () => ref.refresh(likeMeStreamProvider)),
+      error: (error, stackTrace) => Container(),
       loading: () => Container()
     );
   }
