@@ -2,7 +2,7 @@ name: sona
 description: an AI persona dating app.
 publish_to: 'none'
 
-version: 1.0.4+27
+version: 1.0.5+29
 
 environment:
   sdk: '>=3.0.6 <4.0.0'

@@ -522,6 +522,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   }
 
   Future<Response> _verifyPurchase(PurchaseDetails purchaseDetails) async{
+
     Map<String,dynamic> map={};
     if(Platform.isAndroid){
       map={

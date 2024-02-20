@@ -29,8 +29,8 @@ class _IconAnimationState extends ConsumerState<IconAnimation> {
         double fractionalPart = co.page! % 1;
 
         if (co.position.isScrollingNotifier.value&&fractionalPart<0.1) {
-          return Container(child: SvgPicture.asset(value==TransformStatus.rightRotate?Assets.svgLikeTag:Assets.svgDislikeTag),alignment: Alignment.topCenter,
-          width: MediaQuery.of(context).size.width-16*2,
+          return Container(alignment: Alignment.topCenter,
+           width: MediaQuery.of(context).size.width-16*2,child: SvgPicture.asset(value==TransformStatus.rightRotate?Assets.svgLikeTag:Assets.svgDislikeTag),
           );
         } else {
           return Container();

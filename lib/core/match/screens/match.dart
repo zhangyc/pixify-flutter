@@ -152,7 +152,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     MatchApi.like(users[currentPage].id,);
                     SonaAnalytics.log(MatchEvent.match_like_justlike.name);
 
-                  }, child: Text('${S.of(context).justSendALike} >',style: TextStyle(
+                   }, child: Text('${S.of(context).justSendALike} >',style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
                   ),)):Row(
