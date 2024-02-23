@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -61,23 +62,32 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      body: PageView(
-        controller: _pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: _onPageChange,
+      body: Column(
         children: [
-          MatchScreen(),
-          LikeMeScreen(),
-          ConversationScreen(
-            onShowLikeMe: () {
-              _pageController.animateToPage(
-                  1,
-                  duration: const Duration(milliseconds: 2),
-                  curve: Curves.ease
-              );
-            }
+          _currentIndex==0?SizedBox(
+            height: 56,
+          ):Container(),
+          Expanded(
+            child: PageView(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              onPageChanged: _onPageChange,
+              children: [
+                MatchScreen(),
+                LikeMeScreen(),
+                ConversationScreen(
+                  onShowLikeMe: () {
+                    _pageController.animateToPage(
+                        1,
+                        duration: const Duration(milliseconds: 2),
+                        curve: Curves.ease
+                    );
+                  }
+                ),
+                PersonaScreen(),
+              ],
+            ),
           ),
-          PersonaScreen(),
         ],
       ),
       bottomNavigationBar: Consumer(

@@ -11,6 +11,7 @@ import 'package:sona/core/travel_wish/providers/timeframe.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/picker/gender.dart';
+import 'package:image/image.dart' as img;
 
 import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
@@ -26,6 +27,7 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         backgroundColor: Color(0xFFF6F3F3),
         appBar: AppBar(

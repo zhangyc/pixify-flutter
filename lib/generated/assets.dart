@@ -4,6 +4,7 @@ class Assets {
 
   static const String apngMatchBgAnim = 'assets/apng/match_bg_anim.png';
   static const String i18nCountries = 'assets/i18n/countries.json';
+  static const String iconsApple = 'assets/icons/apple.png';
   static const String iconsArrow = 'assets/icons/arrow.png';
   static const String iconsBack = 'assets/icons/back.png';
   static const String iconsChatSend = 'assets/icons/chat_send.png';
@@ -12,8 +13,10 @@ class Assets {
   static const String iconsConchSelected = 'assets/icons/conch_selected.png';
   static const String iconsCorrect = 'assets/icons/correct.png';
   static const String iconsEdit = 'assets/icons/edit.png';
+  static const String iconsEmail = 'assets/icons/email.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsForward = 'assets/icons/forward.png';
+  static const String iconsGoogle = 'assets/icons/google.png';
   static const String iconsGps = 'assets/icons/gps.png';
   static const String iconsHandle = 'assets/icons/handle.png';
   static const String iconsLike = 'assets/icons/like.png';
@@ -32,6 +35,7 @@ class Assets {
   static const String iconsNaviconSona = 'assets/icons/navicon_sona.png';
   static const String iconsNaviconSonaActive = 'assets/icons/navicon_sona_active.png';
   static const String iconsNotice = 'assets/icons/notice.png';
+  static const String iconsPhone = 'assets/icons/phone.png';
   static const String iconsRedHeart = 'assets/icons/red_heart.png';
   static const String iconsSearch = 'assets/icons/search.png';
   static const String iconsSelected = 'assets/icons/selected.png';
@@ -43,6 +47,7 @@ class Assets {
   static const String iconsSparkles = 'assets/icons/sparkles.png';
   static const String iconsWomanUnselected = 'assets/icons/woman_unselected.png';
   static const String iconsWonmanSelected = 'assets/icons/wonman_selected.png';
+  static const String imagesAboutLogo = 'assets/images/about_logo.png';
   static const String imagesAddPhoto = 'assets/images/add_photo.png';
   static const String imagesCatPortrait = 'assets/images/cat_portrait.jpeg';
   static const String imagesChatBg = 'assets/images/chat_bg.png';
@@ -67,11 +72,15 @@ class Assets {
   static const String imagesOnboarding1 = 'assets/images/onboarding_1.png';
   static const String imagesOnboarding2 = 'assets/images/onboarding_2.png';
   static const String imagesOnboarding3 = 'assets/images/onboarding_3.png';
+  static const String imagesOnboardingB = 'assets/images/onboarding_b.png';
+  static const String imagesOnboardingBBg = 'assets/images/onboarding_b_bg.png';
   static const String imagesOnboardingBg = 'assets/images/onboarding_bg.png';
   static const String imagesOnboardingFg = 'assets/images/onboarding_fg.png';
   static const String imagesPetPortrait = 'assets/images/pet_portrait.png';
   static const String imagesPlaceholder = 'assets/images/placeholder.png';
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
+  static const String imagesSignInBg = 'assets/images/sign_in_bg.png';
+  static const String imagesSignInBgB = 'assets/images/sign_in_bg_b.png';
   static const String imagesSona = 'assets/images/sona.png';
   static const String imagesSubBg = 'assets/images/sub_bg.png';
   static const String imagesTenderAffection = 'assets/images/tender_affection.png';
@@ -91,6 +100,7 @@ class Assets {
   static const String svgArrow = 'assets/svg/arrow.svg';
   static const String svgDislike = 'assets/svg/dislike.svg';
   static const String svgDislikeTag = 'assets/svg/dislike_tag.svg';
+  static const String svgDuosnap = 'assets/svg/duosnap.svg';
   static const String svgLike = 'assets/svg/like.svg';
   static const String svgLikeTag = 'assets/svg/like_tag.svg';
 

@@ -221,30 +221,55 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             }));
                           }
                       }),
-                      ScaleAnimation(child: SvgPicture.asset(Assets.svgArrow,width: 56,height: 56,), onTap: (){
+                      ScaleAnimation(child: SvgPicture.asset(Assets.svgDuosnap,width: 56,height: 56,), onTap: (){
                               if(currentPage==users.length-1){
                                   return;
                                }
-                              Future.delayed(Duration(milliseconds: 200),(){
-                                matchAnimation.value=TransformStatus.rightRotate;
-                                 if(canArrow){
-                                 showDm(context, users[currentPage],(){
-                                 controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                              //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
-                            });
-                          }else {
-                            bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                            if(isMember){
-                              Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                            }else{
-                              Navigator.push(context, MaterialPageRoute(builder:(c){
-                                return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
-                              }));
-                            }
-                          }
-                          });
+                               showDuoSnapDialog(context,target: users[currentPage]);
+                          //     Future.delayed(Duration(milliseconds: 200),(){
+                          //       matchAnimation.value=TransformStatus.rightRotate;
+                          //        if(canArrow){
+                          //        showDm(context, users[currentPage],(){
+                          //        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                          //     //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
+                          //   });
+                          // }else {
+                          //   bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                          //   if(isMember){
+                          //     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                          //   }else{
+                          //     Navigator.push(context, MaterialPageRoute(builder:(c){
+                          //       return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
+                          //     }));
+                          //   }
+                          // }
+                          // });
 
                       })
+                      // ScaleAnimation(child: SvgPicture.asset(Assets.svgArrow,width: 56,height: 56,), onTap: (){
+                      //         if(currentPage==users.length-1){
+                      //             return;
+                      //          }
+                      //         Future.delayed(Duration(milliseconds: 200),(){
+                      //           matchAnimation.value=TransformStatus.rightRotate;
+                      //            if(canArrow){
+                      //            showDm(context, users[currentPage],(){
+                      //            controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                      //         //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
+                      //       });
+                      //     }else {
+                      //       bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                      //       if(isMember){
+                      //         Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                      //       }else{
+                      //         Navigator.push(context, MaterialPageRoute(builder:(c){
+                      //           return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
+                      //         }));
+                      //       }
+                      //     }
+                      //     });
+                      //
+                      // })
                     ],
                   ),
                 ),

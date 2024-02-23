@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/my_profile.dart';
+import 'package:sona/core/match/widgets/tuosnap_dialog.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../../account/providers/interests.dart';
@@ -898,4 +899,18 @@ class _MatchedContentState extends State<MatchedContent> {
       ),
     );
   }
+}
+showDuoSnapDialog(BuildContext context,{required MatchUserInfo target}){
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled:true,
+    builder: (BuildContext context) {
+      return CustomBottomDialog(
+        title: 'Duo Snap',
+        onClosePressed: () {
+          Navigator.of(context).pop(); // 关闭 BottomDialog
+        },
+      );
+    },
+  );
 }
