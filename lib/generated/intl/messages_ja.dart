@@ -20,21 +20,24 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ja';
 
-  static String m0(something) => "\"${something}に興味があります\"";
+  static String m0(storeName) =>
+      "「参加」をクリックすると料金が発生し、対応するパッケージの価格で自動更新されます。${storeName}でキャンセルが可能です。続行することで、私たちの";
 
-  static String m1(something) => "「${something}」にとても興味があります！";
+  static String m1(something) => "\"${something}に興味があります\"";
 
-  static String m2(lang) => "${lang}でチャットできるよー";
+  static String m2(something) => "「${something}」にとても興味があります！";
 
-  static String m3(gender) =>
+  static String m3(lang) => "${lang}でチャットできるよー";
+
+  static String m4(gender) =>
       "${Intl.gender(gender, female: '彼女', male: '彼', other: '彼ら')}のどのアイデアが好きですか？";
 
-  static String m4(storeName) =>
+  static String m5(storeName) =>
       "「続行」をクリックすると料金が発生し、対応するパッケージの価格で自動更新されます。${storeName}でキャンセルが可能です。続行することで、私たちの";
 
-  static String m5(country) => "スキップ、ただ${country}";
+  static String m6(country) => "スキップ、ただ${country}";
 
-  static String m6(country) => "${country}に行く予定ですか";
+  static String m7(country) => "${country}に行く予定ですか";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -70,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("分かった"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage("SONA疲れた😪、👇クリックでエネルギーチャージ！"),
+        "buttonJoinNow": MessageLookupByLibrary.simpleMessage("今すぐ参加！"),
         "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("アカウントを保持"),
         "buttonManage": MessageLookupByLibrary.simpleMessage("管理する"),
         "buttonNext": MessageLookupByLibrary.simpleMessage("次のステップ"),
@@ -81,12 +85,28 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonSave": MessageLookupByLibrary.simpleMessage("保存"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("ログアウト"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("提出する"),
+        "buttonUnlockVipPerks":
+            MessageLookupByLibrary.simpleMessage("VIP特典を解除！"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("ペアリング解除"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("購読を解除する"),
         "chat": MessageLookupByLibrary.simpleMessage("チャット"),
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("あいつらのプロフチェックしよう!"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("選択"),
+        "clubFeeJoking": MessageLookupByLibrary.simpleMessage("ただの飲み物の価格です"),
+        "clubFeePrefix":
+            MessageLookupByLibrary.simpleMessage("SONA Clubに加入、超お得"),
+        "clubPerkBadge": MessageLookupByLibrary.simpleMessage("エクスクルーシブクラブバッジ"),
+        "clubPerkDuoSnap": MessageLookupByLibrary.simpleMessage("週3回のDuo Snap"),
+        "clubPerkLike":
+            MessageLookupByLibrary.simpleMessage("1日に100いいね（無料の2倍）"),
+        "clubPerkSonaMessage":
+            MessageLookupByLibrary.simpleMessage("1日にSONAメッセージ100件（無料の3倍）"),
+        "clubPerkSonaTip": MessageLookupByLibrary.simpleMessage("1日にSONAの提案5回"),
+        "clubPromotionContent":
+            MessageLookupByLibrary.simpleMessage("取引をゲット - クラブに参加して輝こう！"),
+        "clubPromotionTitle": MessageLookupByLibrary.simpleMessage("期間限定オファー"),
+        "clubTerms": m0,
         "commonLanguage": MessageLookupByLibrary.simpleMessage("主要言語"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("一般的に使用される言語"),
@@ -124,14 +144,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("あなたのオーラがすごくいい感じ！"),
         "iLikeYourStyle":
             MessageLookupByLibrary.simpleMessage("スタイルがすごくかわいいわね!"),
-        "imInterestedSomething": m0,
-        "imVeryInterestedInSomething": m1,
+        "imInterestedSomething": m1,
+        "imVeryInterestedInSomething": m2,
         "interests": MessageLookupByLibrary.simpleMessage("興味"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI同期通訳：オフ"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI同期通訳：オン"),
         "justNow": MessageLookupByLibrary.simpleMessage("たった今"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("いいねを送るだけ"),
-        "justTypeInYourLanguage": m2,
+        "justTypeInYourLanguage": m3,
         "letSONASayHiForYou":
             MessageLookupByLibrary.simpleMessage("SONAに挨拶させて"),
         "likedPageMonetizeButton":
@@ -145,8 +165,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("より良いサービスのために, 位置情報提供をお願いします"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("位置を許可する"),
-        "matchPageSelectIdeas": m3,
+        "matchPageSelectIdeas": m4,
         "me": MessageLookupByLibrary.simpleMessage("マイページ"),
+        "membersPerks": MessageLookupByLibrary.simpleMessage("会員特典"),
         "month": MessageLookupByLibrary.simpleMessage("月"),
         "morePhotosBenefit":
             MessageLookupByLibrary.simpleMessage("写真多いほどおすすめ度高くなる"),
@@ -248,7 +269,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("あなたを好きな人が\n誰か見るために解除"),
         "subPageTitle": MessageLookupByLibrary.simpleMessage("SONA Plusを入手"),
         "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("利用規約"),
-        "subscriptionAgreementPrefix": m4,
+        "subscriptionAgreementPrefix": m5,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("に同意したことになります。"),
         "takeIt": MessageLookupByLibrary.simpleMessage("使用する"),
@@ -325,7 +346,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("パートナーを見つけてあげるよ"),
         "wishActivityPickerTitle":
             MessageLookupByLibrary.simpleMessage("特別にしたいことあるかな?"),
-        "wishCityPickerSkipButton": m5,
+        "wishCityPickerSkipButton": m6,
         "wishCityPickerSubtitle":
             MessageLookupByLibrary.simpleMessage("そこに行くなら、どの都市を訪れたいですか？"),
         "wishCountryPickerTitle":
@@ -337,10 +358,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("まだ確かじゃないよ"),
         "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("最近ね、たぶん"),
         "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("1年以内"),
-        "wishDatePickerSubtitle": m6,
+        "wishDatePickerSubtitle": m7,
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("いつ"),
         "wishList": MessageLookupByLibrary.simpleMessage("願いリスト"),
         "wishes": MessageLookupByLibrary.simpleMessage("願い"),
+        "youAreAClubMemberNow":
+            MessageLookupByLibrary.simpleMessage("あなたは今クラブのメンバーです"),
         "youCanEditItAnytime":
             MessageLookupByLibrary.simpleMessage("いつでも編集できます"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("かっこよさそう。")

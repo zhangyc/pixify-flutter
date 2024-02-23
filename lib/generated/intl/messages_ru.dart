@@ -20,21 +20,24 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static String m0(something) => "\"Меня интересует ${something}!\"";
+  static String m0(storeName) =>
+      "При нажатии \"Присоединиться\" взимается плата, подписка продлевается автоматически, Вы можете отменить через ${storeName}. Продолжая, вы соглашаетесь с нашими ";
 
-  static String m1(something) => "Меня очень интересует ‘${something}’!";
+  static String m1(something) => "\"Меня интересует ${something}!\"";
 
-  static String m2(lang) => "Просто печатайте на ${lang}";
+  static String m2(something) => "Меня очень интересует ‘${something}’!";
 
-  static String m3(gender) =>
+  static String m3(lang) => "Просто печатайте на ${lang}";
+
+  static String m4(gender) =>
       "Какая из ${Intl.gender(gender, female: 'её', male: 'его', other: 'их')}  идей вам нравится?";
 
-  static String m4(storeName) =>
+  static String m5(storeName) =>
       "При нажатии \"Продолжить\" взимается плата, подписка продлевается автоматически, Вы можете отменить через ${storeName}. Продолжая, вы соглашаетесь с нашими ";
 
-  static String m5(country) => "Пропустить, Только ${country}";
+  static String m6(country) => "Пропустить, Только ${country}";
 
-  static String m6(country) => "Вы планируете поехать в ${country}?";
+  static String m7(country) => "Вы планируете поехать в ${country}?";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -74,6 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
                 "😪SONA устала, 👇жми, чтоб зарядить!"),
+        "buttonJoinNow":
+            MessageLookupByLibrary.simpleMessage("Присоединяйтесь сейчас!"),
         "buttonKeepAccount":
             MessageLookupByLibrary.simpleMessage("Сохранить аккаунт"),
         "buttonManage": MessageLookupByLibrary.simpleMessage("Управлять"),
@@ -87,6 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonSave": MessageLookupByLibrary.simpleMessage("Сохранить"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("Выйти"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("Отправить"),
+        "buttonUnlockVipPerks": MessageLookupByLibrary.simpleMessage(
+            "Разблокируйте привилегии VIP!"),
         "buttonUnmatch":
             MessageLookupByLibrary.simpleMessage("Отменить совпадение"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("Отписаться"),
@@ -94,6 +101,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("Проверьте их профили"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Выбрать"),
+        "clubFeeJoking":
+            MessageLookupByLibrary.simpleMessage("Только цена напитка"),
+        "clubFeePrefix": MessageLookupByLibrary.simpleMessage(
+            "Вступите в SONA Club, очень выгодно"),
+        "clubPerkBadge":
+            MessageLookupByLibrary.simpleMessage("Эксклюзивный значок клуба"),
+        "clubPerkDuoSnap":
+            MessageLookupByLibrary.simpleMessage("3 Duo Snap / неделю"),
+        "clubPerkLike": MessageLookupByLibrary.simpleMessage(
+            "100 Лайков в день (в 2 раза больше бесплатно)"),
+        "clubPerkSonaMessage": MessageLookupByLibrary.simpleMessage(
+            "100 сообщений SONA в день (в 3 раза больше бесплатно)"),
+        "clubPerkSonaTip":
+            MessageLookupByLibrary.simpleMessage("5 предложений SONA в день"),
+        "clubPromotionContent": MessageLookupByLibrary.simpleMessage(
+            "Ухватите сделку - Присоединяйтесь к клубу и сияйте!"),
+        "clubPromotionTitle": MessageLookupByLibrary.simpleMessage(
+            "Предложение ограничено по времени"),
+        "clubTerms": m0,
         "commonLanguage": MessageLookupByLibrary.simpleMessage("Основной язык"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("Обычно используемые языки"),
@@ -141,8 +167,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Твоя энергия мне очень нравится!"),
         "iLikeYourStyle":
             MessageLookupByLibrary.simpleMessage("Мне нравится твой стиль!"),
-        "imInterestedSomething": m0,
-        "imVeryInterestedInSomething": m1,
+        "imInterestedSomething": m1,
+        "imVeryInterestedInSomething": m2,
         "interests": MessageLookupByLibrary.simpleMessage("Интересы"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "Синхронный перевод ИИ: Выключен"),
@@ -151,7 +177,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "justNow": MessageLookupByLibrary.simpleMessage("только что"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Просто отправьте лайк"),
-        "justTypeInYourLanguage": m2,
+        "justTypeInYourLanguage": m3,
         "letSONASayHiForYou": MessageLookupByLibrary.simpleMessage(
             "Пусть SONA поздоровается за вас"),
         "likedPageMonetizeButton":
@@ -165,8 +191,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "Нам нужно ваше местоположение, чтобы улучшить ваш социальный опыт"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("Авторизовать местоположение"),
-        "matchPageSelectIdeas": m3,
+        "matchPageSelectIdeas": m4,
         "me": MessageLookupByLibrary.simpleMessage("Я"),
+        "membersPerks":
+            MessageLookupByLibrary.simpleMessage("Привилегии участника"),
         "month": MessageLookupByLibrary.simpleMessage("Месяц"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "Чем больше фотографий, тем выше рекомендация"),
@@ -283,7 +311,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Получить SONA Plus"),
         "subscriptionAgreement":
             MessageLookupByLibrary.simpleMessage("Условиями использования"),
-        "subscriptionAgreementPrefix": m4,
+        "subscriptionAgreementPrefix": m5,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("."),
         "takeIt": MessageLookupByLibrary.simpleMessage("Использовать"),
@@ -369,7 +397,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Помочь вам найти компаньонов"),
         "wishActivityPickerTitle":
             MessageLookupByLibrary.simpleMessage("Хочешь сделать что-нибудь?"),
-        "wishCityPickerSkipButton": m5,
+        "wishCityPickerSkipButton": m6,
         "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "если вы туда поедете, Какие города вы хотите посетить?"),
         "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage(
@@ -383,10 +411,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Недавно, наверное"),
         "wishDateOptionYear":
             MessageLookupByLibrary.simpleMessage("В течение года"),
-        "wishDatePickerSubtitle": m6,
+        "wishDatePickerSubtitle": m7,
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("Когда"),
         "wishList": MessageLookupByLibrary.simpleMessage("Список желаний"),
         "wishes": MessageLookupByLibrary.simpleMessage("Желание"),
+        "youAreAClubMemberNow":
+            MessageLookupByLibrary.simpleMessage("Теперь вы член клуба"),
         "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage(
             "Вы можете редактировать это в любое время"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("Кажешься крутым")

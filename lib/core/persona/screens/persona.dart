@@ -310,7 +310,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06)),
                         side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),
-                      child: Text(S.of(context).getSonaPlus, style: Theme.of(context).textTheme.titleMedium)
+                      child: Text(S.of(context).buttonUnlockVipPerks, style: Theme.of(context).textTheme.titleMedium)
                   ),
                   if (ref.watch(myProfileProvider)!.isMember) OutlinedButton(
                       onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.profile_myplan))),

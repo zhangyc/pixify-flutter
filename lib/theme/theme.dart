@@ -168,7 +168,8 @@ ThemeData get themeData {
                   )
               ),
               padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
-              minimumSize: MaterialStatePropertyAll(Size.fromHeight(0)),
+              minimumSize: MaterialStatePropertyAll(Size(20, 20)),
+              maximumSize: MaterialStatePropertyAll(Size(375, 56)),
               fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
               alignment: Alignment.center
           )

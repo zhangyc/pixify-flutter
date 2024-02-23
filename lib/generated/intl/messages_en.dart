@@ -20,21 +20,24 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(something) => "\"I\'m interested in ${something}\"";
+  static String m0(storeName) =>
+      "By tapping Join, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via  ${storeName} settings, and you agree to our ";
 
-  static String m1(something) => "I’m very interested in ‘${something}’!";
+  static String m1(something) => "\"I\'m interested in ${something}\"";
 
-  static String m2(lang) => "Just type in ${lang}";
+  static String m2(something) => "I’m very interested in ‘${something}’!";
 
-  static String m3(gender) =>
+  static String m3(lang) => "Just type in ${lang}";
+
+  static String m4(gender) =>
       "Which of ${Intl.gender(gender, female: 'her', male: 'his', other: 'their')} ideas do you like?";
 
-  static String m4(storeName) =>
+  static String m5(storeName) =>
       "By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via  ${storeName} settings, and you agree to our ";
 
-  static String m5(country) => "Skip, Just ${country}";
+  static String m6(country) => "Skip, Just ${country}";
 
-  static String m6(country) => "are you planning to go to ${country}";
+  static String m7(country) => "are you planning to go to ${country}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -74,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
                 "😪SONA is tired, 👇Tap to refuel her!"),
+        "buttonJoinNow": MessageLookupByLibrary.simpleMessage("Join Now"),
         "buttonKeepAccount":
             MessageLookupByLibrary.simpleMessage("Keep account"),
         "buttonManage": MessageLookupByLibrary.simpleMessage("Manage"),
@@ -86,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonSave": MessageLookupByLibrary.simpleMessage("Save"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("Sign out"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("Submit"),
+        "buttonUnlockVipPerks":
+            MessageLookupByLibrary.simpleMessage("Unlock VIP Perks!"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("Unmatch"),
         "buttonUnsubscribe":
             MessageLookupByLibrary.simpleMessage("Unsubscribe"),
@@ -93,6 +99,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("Check out their profiles"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Choose"),
+        "clubFeeJoking":
+            MessageLookupByLibrary.simpleMessage("that\'s the price of a coke"),
+        "clubFeePrefix": MessageLookupByLibrary.simpleMessage(
+            "Join the SONA Club, for Just"),
+        "clubPerkBadge":
+            MessageLookupByLibrary.simpleMessage("Exclusive Club badge"),
+        "clubPerkDuoSnap":
+            MessageLookupByLibrary.simpleMessage("3  Duo Snap  / week"),
+        "clubPerkLike":
+            MessageLookupByLibrary.simpleMessage("100 Likes / day (2x free)"),
+        "clubPerkSonaMessage": MessageLookupByLibrary.simpleMessage(
+            "100 Sona messages / day  (3x free)"),
+        "clubPerkSonaTip":
+            MessageLookupByLibrary.simpleMessage("5 SONA Tips / day"),
+        "clubPromotionContent": MessageLookupByLibrary.simpleMessage(
+            "Snag the deal -  Join the Club & shine!"),
+        "clubPromotionTitle":
+            MessageLookupByLibrary.simpleMessage("Time-limited offer"),
+        "clubTerms": m0,
         "commonLanguage":
             MessageLookupByLibrary.simpleMessage("Common language"),
         "commonLanguageTitle":
@@ -139,8 +164,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("I dig your energy!"),
         "iLikeYourStyle":
             MessageLookupByLibrary.simpleMessage("I like your style!"),
-        "imInterestedSomething": m0,
-        "imVeryInterestedInSomething": m1,
+        "imInterestedSomething": m1,
+        "imVeryInterestedInSomething": m2,
         "interests": MessageLookupByLibrary.simpleMessage("Interests"),
         "interpretationOff":
             MessageLookupByLibrary.simpleMessage("AI Interpretation: Off"),
@@ -149,7 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "justNow": MessageLookupByLibrary.simpleMessage("just now"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Just Send a Like"),
-        "justTypeInYourLanguage": m2,
+        "justTypeInYourLanguage": m3,
         "letSONASayHiForYou":
             MessageLookupByLibrary.simpleMessage("Let SONA say hi for you"),
         "likedPageMonetizeButton":
@@ -164,8 +189,10 @@ class MessageLookup extends MessageLookupByLibrary {
                 "We need your location to make your social experience better"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("Authorize location"),
-        "matchPageSelectIdeas": m3,
+        "matchPageSelectIdeas": m4,
         "me": MessageLookupByLibrary.simpleMessage("Me"),
+        "membersPerks":
+            MessageLookupByLibrary.simpleMessage("Membership Perks"),
         "month": MessageLookupByLibrary.simpleMessage("mo"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "More photos, higher recommendation"),
@@ -274,7 +301,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Unlock to see\nwho likes you"),
         "subPageTitle": MessageLookupByLibrary.simpleMessage("Get SONA Plus"),
         "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("Terms"),
-        "subscriptionAgreementPrefix": m4,
+        "subscriptionAgreementPrefix": m5,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage(" ."),
         "takeIt": MessageLookupByLibrary.simpleMessage("Take It"),
@@ -361,7 +388,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Help you find companions"),
         "wishActivityPickerTitle":
             MessageLookupByLibrary.simpleMessage("Wanna do something?"),
-        "wishCityPickerSkipButton": m5,
+        "wishCityPickerSkipButton": m6,
         "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "if you go there, Which cities do you want to visit?"),
         "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage(
@@ -376,10 +403,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Recently, I guess"),
         "wishDateOptionYear":
             MessageLookupByLibrary.simpleMessage("Within a year"),
-        "wishDatePickerSubtitle": m6,
+        "wishDatePickerSubtitle": m7,
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("When"),
         "wishList": MessageLookupByLibrary.simpleMessage("Wish List"),
         "wishes": MessageLookupByLibrary.simpleMessage("Wishes"),
+        "youAreAClubMemberNow":
+            MessageLookupByLibrary.simpleMessage("You\'re a Club member now "),
         "youCanEditItAnytime":
             MessageLookupByLibrary.simpleMessage("You can edit it anytime"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("You seem cool")

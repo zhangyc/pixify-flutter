@@ -20,21 +20,24 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'th';
 
-  static String m0(something) => "\"ฉันสนใจ${something}\"";
+  static String m0(storeName) =>
+      "เข้าร่วม คุณจะถูกเรียกเก็บเงิน การสมัครใช้งานของคุณจะถูกต่ออายุอัตโนมัติในราคาแพ็กเกจ คุณสามารถยกเลิกได้ผ่าน ${storeName} การดำเนินการต่อคุณจะตกลงกับ ";
 
-  static String m1(something) => "ฉันสนใจ \'${something}\' มาก！";
+  static String m1(something) => "\"ฉันสนใจ${something}\"";
 
-  static String m2(lang) => "เพียงพิมพ์เป็น${lang}";
+  static String m2(something) => "ฉันสนใจ \'${something}\' มาก！";
 
-  static String m3(gender) =>
+  static String m3(lang) => "เพียงพิมพ์เป็น${lang}";
+
+  static String m4(gender) =>
       "คุณชอบความคิดของ${Intl.gender(gender, female: 'เธอ', male: 'เขา', other: 'พวกเขา')} อันไหน?";
 
-  static String m4(storeName) =>
+  static String m5(storeName) =>
       "ดำเนินการต่อ คุณจะถูกเรียกเก็บเงิน การสมัครใช้งานของคุณจะถูกต่ออายุอัตโนมัติในราคาแพ็กเกจ คุณสามารถยกเลิกได้ผ่าน ${storeName} การดำเนินการต่อคุณจะตกลงกับ ";
 
-  static String m5(country) => "ข้าม, แค่${country}";
+  static String m6(country) => "ข้าม, แค่${country}";
 
-  static String m6(country) => "คุณวางแผนจะไป${country}ไหม";
+  static String m7(country) => "คุณวางแผนจะไป${country}ไหม";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -72,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage(
                 "😪SONA เหนื่อย, 👇แตะเพื่อเติมพลังให้เธอ!"),
+        "buttonJoinNow":
+            MessageLookupByLibrary.simpleMessage("สมัครเลยตอนนี้!"),
         "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("รักษาบัญชี"),
         "buttonManage": MessageLookupByLibrary.simpleMessage("จัดการ"),
         "buttonNext": MessageLookupByLibrary.simpleMessage("ขั้นตอนถัดไป"),
@@ -83,6 +88,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonSave": MessageLookupByLibrary.simpleMessage("บันทึก"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("ออกจากระบบ"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("ส่ง"),
+        "buttonUnlockVipPerks":
+            MessageLookupByLibrary.simpleMessage("ปลดล็อกสิทธิพิเศษ VIP!"),
         "buttonUnmatch":
             MessageLookupByLibrary.simpleMessage("ยกเลิกการจับคู่"),
         "buttonUnsubscribe":
@@ -91,6 +98,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("ตรวจสอบโปรไฟล์ของพวกเขา"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("เลือก"),
+        "clubFeeJoking": MessageLookupByLibrary.simpleMessage(
+            "เพียงราคาของเครื่องดื่มหนึ่งแก้ว"),
+        "clubFeePrefix": MessageLookupByLibrary.simpleMessage(
+            "เข้าร่วม SONA Club คุ้มค่ามาก"),
+        "clubPerkBadge": MessageLookupByLibrary.simpleMessage("ป้ายสโมสรพิเศษ"),
+        "clubPerkDuoSnap":
+            MessageLookupByLibrary.simpleMessage("3 Duo Snap / สัปดาห์"),
+        "clubPerkLike": MessageLookupByLibrary.simpleMessage(
+            "ไลค์ 100 ครั้งต่อวัน (ฟรี 2 เท่า)"),
+        "clubPerkSonaMessage": MessageLookupByLibrary.simpleMessage(
+            "ข้อความ SONA 100 ข้อความต่อวัน "),
+        "clubPerkSonaTip":
+            MessageLookupByLibrary.simpleMessage("วันละ 5 คำแนะนำ SONA"),
+        "clubPromotionContent": MessageLookupByLibrary.simpleMessage(
+            "คว้าข้อเสนอ - เข้าร่วมคลับและเปล่งประกาย!"),
+        "clubPromotionTitle":
+            MessageLookupByLibrary.simpleMessage("ข้อเสนอจำกัดเวลา"),
+        "clubTerms": m0,
         "commonLanguage": MessageLookupByLibrary.simpleMessage("ภาษาหลัก"),
         "commonLanguageTitle":
             MessageLookupByLibrary.simpleMessage("ภาษาที่ใช้บ่อย"),
@@ -136,8 +161,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ฉันชอบพลังงานในตัวคุณ!"),
         "iLikeYourStyle":
             MessageLookupByLibrary.simpleMessage("ฉันชอบสไตล์ของคุณ!"),
-        "imInterestedSomething": m0,
-        "imVeryInterestedInSomething": m1,
+        "imInterestedSomething": m1,
+        "imVeryInterestedInSomething": m2,
         "interests": MessageLookupByLibrary.simpleMessage("ความสนใจ"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "AI การแปลภาษาแบบพร้อมเพรียง: ปิด"),
@@ -145,7 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "AI การแปลภาษาแบบพร้อมเพรียง: เปิด"),
         "justNow": MessageLookupByLibrary.simpleMessage("เมื่อสักครู่"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("เพียงส่งไลค์"),
-        "justTypeInYourLanguage": m2,
+        "justTypeInYourLanguage": m3,
         "letSONASayHiForYou":
             MessageLookupByLibrary.simpleMessage("SONA ช่วยคุณทักทายนะ"),
         "likedPageMonetizeButton":
@@ -159,8 +184,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "เราต้องการตำแหน่งของคุณเพื่อทำให้ประสบการณ์ทางสังคมของคุณดีขึ้น"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("อนุญาตตำแหน่ง"),
-        "matchPageSelectIdeas": m3,
+        "matchPageSelectIdeas": m4,
         "me": MessageLookupByLibrary.simpleMessage("ฉัน"),
+        "membersPerks":
+            MessageLookupByLibrary.simpleMessage("สิทธิพิเศษสมาชิก"),
         "month": MessageLookupByLibrary.simpleMessage("เดือน"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "ยิ่งมีรูปภาพมากเท่าไร ค่าแนะนำก็ยิ่งสูงขึ้น"),
@@ -270,7 +297,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subPageTitle": MessageLookupByLibrary.simpleMessage("รับ SONA Plus"),
         "subscriptionAgreement":
             MessageLookupByLibrary.simpleMessage("ข้อกำหนดและเงื่อนไข"),
-        "subscriptionAgreementPrefix": m4,
+        "subscriptionAgreementPrefix": m5,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage(" ของเรา"),
         "takeIt": MessageLookupByLibrary.simpleMessage("ใช้"),
@@ -354,7 +381,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ช่วยคุณหาเพื่อน"),
         "wishActivityPickerTitle":
             MessageLookupByLibrary.simpleMessage("อยากทำอะไรบ้าง?"),
-        "wishCityPickerSkipButton": m5,
+        "wishCityPickerSkipButton": m6,
         "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
             "ถ้าคุณไปที่นั่น คุณอยากเยี่ยมชมเมืองไหนบ้าง?"),
         "wishCountryPickerTitle": MessageLookupByLibrary.simpleMessage(
@@ -369,11 +396,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("บางทีในไม่ช้านี้"),
         "wishDateOptionYear":
             MessageLookupByLibrary.simpleMessage("ภายในหนึ่งปี"),
-        "wishDatePickerSubtitle": m6,
+        "wishDatePickerSubtitle": m7,
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("เมื่อ"),
         "wishList":
             MessageLookupByLibrary.simpleMessage("รายการสิ่งที่ปรารถนา"),
         "wishes": MessageLookupByLibrary.simpleMessage("ความปรารถนา"),
+        "youAreAClubMemberNow":
+            MessageLookupByLibrary.simpleMessage("คุณเป็นสมาชิกของคลับแล้ว"),
         "youCanEditItAnytime":
             MessageLookupByLibrary.simpleMessage("คุณสามารถแก้ไขได้ตลอดเวลา"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("คุณดูเท่ห์นะ")

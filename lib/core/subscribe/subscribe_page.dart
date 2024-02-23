@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -29,9 +32,19 @@ import '../match/util/iap_helper.dart';
 import 'widgets/powers_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+const uuid = Uuid();
+const String annually = '1_annually';
+const String month = '1_month';
+const String quarter = '1_quarter';
+const String biannually = '1_biannually';
+const clubMonthly = 'club_monthly';
+const List<String> _kProductIds = <String>[
+  month,
+  quarter,
+  biannually,
+  annually,
+];
 
-
-Uuid uuid=const Uuid();
 class SubscribePage extends ConsumerStatefulWidget {
   const SubscribePage(this.showType,  {super.key,required this.fromTag,});
   final FromTag fromTag;
@@ -40,31 +53,23 @@ class SubscribePage extends ConsumerStatefulWidget {
   ConsumerState createState() => _SubscribePageState();
 }
 
-const String annually = '1_annually';
-const String month = '1_month';
-const String quarter = '1_quarter';
-const String biannually = '1_biannually';
-const List<String> _kProductIds = <String>[
-  month,
-  quarter,
-  biannually,
-  annually,
-];
 class _SubscribePageState extends ConsumerState<SubscribePage> {
   //final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
   List<String> _notFoundIds = <String>[];
   List<ProductDetails> _products = <ProductDetails>[];
   List<PurchaseDetails> _purchases = <PurchaseDetails>[];
+  ProductDetails? _clubProduct;
   bool _isAvailable = false;
   bool _purchasePending = false;
   bool _loading = true;
   String? _queryProductError;
   ProductDetails? _productDetails;
   ScrollController _scrollController=ScrollController();
+  var _showing = 'club';
+
   @override
   void initState() {
-
     SonaAnalytics.log(ChatEvent.pay_page_open.name,{
       "fromTag":widget.fromTag.name
     });
@@ -80,11 +85,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(Duration(milliseconds: 500),(){
         if(_scrollController.hasClients){
-
           _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
-          setState(() {
-
-          });
+          setState(() {});
         }
       });
     });
@@ -94,8 +96,10 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _showing == 'club' ? Colors.white : const Color(0xFFBEFF06),
       appBar: AppBar(
-        title: Text(S.of(context).subPageTitle),
+        backgroundColor: _showing == 'club' ? const Color(0xFFBEFF06) : Colors.white,
+        title: Text('Subscribe'),
         actions: [
           ref.read(myProfileProvider)!.isMember?
           GestureDetector(
@@ -129,7 +133,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: OutlinedButton(onPressed: _purchasePending?null:() async{
           late PurchaseParam purchaseParam;
-          if(_productDetails==null){
+          if (_productDetails == null || _clubProduct == null) {
             return;
           }
           if (Platform.isAndroid) {
@@ -140,7 +144,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
             purchaseParam = GooglePlayPurchaseParam(
                 applicationUserName: ref.read(myProfileProvider)!.id.toString(),
-                productDetails: _productDetails!,
+                productDetails: _showing == 'club' ? _clubProduct! : _productDetails!,
                 changeSubscriptionParam: (oldSubscription != null)
                     ? ChangeSubscriptionParam(
                   oldPurchaseDetails: oldSubscription,
@@ -150,7 +154,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             //InAppPurchase.instance.restorePurchases();
             purchaseParam = AppStorePurchaseParam(
               applicationUserName: ref.read(myProfileProvider)!.id.toString(),
-              productDetails: _productDetails!,
+              productDetails: _showing == 'club' ? _clubProduct! : _productDetails!,
             );
           }
           try {
@@ -163,134 +167,335 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         },
           style: ElevatedButton.styleFrom(
               padding: EdgeInsets.zero,
-              backgroundColor: Colors.white
+              backgroundColor: _showing == 'club' ? Color(0xFFBEFF06) : Colors.white
           ),
-          child: _purchasePending?CircularProgressIndicator():Text('🌟 ${S.of(context).buttonContinue} 🌟'),
+          child: _purchasePending ? CircularProgressIndicator() : Text(_showing == 'club' ? S.current.buttonJoinNow : '🌟 ${S.of(context).buttonContinue} 🌟'),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: SingleChildScrollView(
+      body: _showing == 'club' ? _buildClub() : SingleChildScrollView(
         child: Stack(
           children: [
-            Positioned(child: Image.asset(widget.showType.path,width: 150,height: 150,),right: 0,),
             Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  child: Row(
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 16,
+                      _buildTabBar(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(widget.showType.label,
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w900
+                            )
+                        ),
                       ),
-                      Text(widget.showType.label,style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900
-                      ),),
-                      Text(''),
+                      PowersWidget(),
                     ],
                   ),
                 ),
                 Container(
-                  child: PowersWidget(),
-                ),
-                Container(
-                  child: SizedBox(
-                    height: 10,
-                  ),
-                ),
-                Container(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 500,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage(Assets.imagesSubBg),fit: BoxFit.fitHeight),
+                  padding: EdgeInsets.only(top: 80),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(Assets.imagesSubBg),
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.topCenter
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 55,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text('SONA Plus',style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w800,
-                            color: Color(0xff2c2c2c)
-                          ),),
-                        ),
-                        _buildProductList(),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-
-                          child: RichText(
-                            text:TextSpan(
-                                text: S.current.subscriptionAgreementPrefix(Platform.isAndroid ? 'Play Store' : 'Apple ID'),
-                                style: const TextStyle(
-                                  color: Color(0xffa9a9a9),
-                                  fontSize: 12,
-                                ),
-                                children: [
-                                  TextSpan(
-                                      text: S.current.subscriptionAgreement,
-                                      recognizer: TapGestureRecognizer()..onTap = () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (c){
-                                          return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
-                                        }));
-                                      },
-                                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w800
-                                      )
-                                  ),
-                                  TextSpan(text: S.current.subscriptionAgreementSuffix),
-                                ]
+                    color: Colors.white
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text('SONA Plus',style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xff2c2c2c)
+                        ),),
+                      ),
+                      Container(
+                        color: Color(0xFFBEFF06),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildProductList(),
+                            SizedBox(
+                              height: 8,
                             ),
-
-                          ),
+                            _buildPlusTerms(),
+                            Visibility(
+                              visible: Platform.isIOS,
+                              child: TextButton(
+                                  onPressed: (){
+                                    bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                                    if(isMember){
+                                      Fluttertoast.showToast(msg: S.of(context).buttonAlreadyPlus);
+                                    } else {
+                                      if (hasPurchased == true) {
+                                        inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
+                                      } else {
+                                        Fluttertoast.showToast(msg: 'Failed to restore, can\'t find records.');
+                                      }
+                                    }
+                                  },
+                                  child: Text(S.of(context).buttonRestore)
+                              ),
+                            )
+                          ],
                         ),
-                        Visibility(
-                          visible: Platform.isIOS,
-                          child: TextButton(
-                              onPressed: (){
-                                bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                                if(isMember){
-                                  Fluttertoast.showToast(msg: S.of(context).buttonAlreadyPlus);
-                                } else {
-                                  if (hasPurchased == true) {
-                                    inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
-                                  } else {
-                                    Fluttertoast.showToast(msg: 'Failed to restore, can\'t find records.');
-                                  }
-                                }
-                              },
-                              child: Text(S.of(context).buttonRestore)
-                          ),
-                        )
-
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 100)
+                    ],
                   ),
                 ),
-                Container(
-                  child: Container(
-                    color: Color(0xffBEFF06),
-                    height: 100,
-                  ),
-                )
-
               ],
             ),
-
+            Positioned(child: Image.asset(widget.showType.path,width: 150,height: 150,),right: 0, top: 70),
           ],
         ),
       ),
-
     );
   }
+
+  void _showTab(String name) {
+    if (_showing != name) {
+      setState(() {
+        _showing = name;
+      });
+    }
+  }
+
+  Widget _buildTabBar() => Container(
+    margin: EdgeInsets.symmetric(vertical: 12),
+    padding: EdgeInsets.symmetric(horizontal: 16),
+    child: Row(
+      children: [
+        Flexible(
+          child: OutlinedButton(
+              onPressed: () => _showTab('club'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(_showing == 'club' ? Colors.black : Colors.transparent),
+                foregroundColor: MaterialStatePropertyAll(_showing == 'club' ? Colors.white : Colors.black),
+              ),
+              child: Text('Club')
+          ),
+        ),
+        SizedBox(width: 12),
+        Flexible(
+          child: OutlinedButton(
+              onPressed: () => _showTab('plus'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(_showing == 'plus' ? Colors.black : Colors.transparent),
+                foregroundColor: MaterialStatePropertyAll(_showing == 'plus' ? Colors.white : Colors.black),
+              ),
+              child: Text('Plus')
+          ),
+        ),
+      ],
+    ),
+  );
+
+  Widget _buildPlusTerms() => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    child: RichText(
+      text: TextSpan(
+        text: S.current.subscriptionAgreementPrefix(Platform.isAndroid ? 'Play Store' : 'Apple ID'),
+        style: const TextStyle(
+          color: Color(0xffa9a9a9),
+          fontSize: 12,
+        ),
+        children: [
+          TextSpan(
+              text: S.current.subscriptionAgreement,
+              recognizer: TapGestureRecognizer()..onTap = () {
+                Navigator.push(context, MaterialPageRoute(builder: (c){
+                  return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
+                }));
+              },
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w800
+              )
+          ),
+          TextSpan(text: S.current.subscriptionAgreementSuffix),
+        ]
+      ),
+    ),
+  );
+
+  Widget _buildClubTerms() => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16),
+    child: RichText(
+      text: TextSpan(
+          text: S.current.clubTerms(Platform.isAndroid ? 'Play Store' : 'Apple ID'),
+          style: const TextStyle(
+            color: Color(0xffa9a9a9),
+            fontSize: 12,
+          ),
+          children: [
+            TextSpan(
+                text: S.current.subscriptionAgreement,
+                recognizer: TapGestureRecognizer()..onTap = () {
+                  Navigator.push(context, MaterialPageRoute(builder: (c){
+                    return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
+                  }));
+                },
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800
+                )
+            ),
+            TextSpan(text: S.current.subscriptionAgreementSuffix),
+          ]
+      ),
+    ),
+  );
+
+  Widget _buildClubFee() {
+    return _clubProduct != null ? Padding(
+      padding: EdgeInsets.only(top: 20, bottom: 20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          FittedBox(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black, width: 2),
+                borderRadius: BorderRadius.circular(12)
+              ),
+              clipBehavior: Clip.antiAlias,
+              alignment: Alignment.center,
+              child: Text(S.current.clubPromotionTitle, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900),),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 12),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            alignment: Alignment.center,
+            child: Text(S.current.clubFeePrefix,
+              style: Theme.of(context).textTheme.titleLarge
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 4),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            alignment: Alignment.center,
+            child: Text('${_clubProduct!.price}/mo',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontSize: 32
+                )
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 4),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            alignment: Alignment.center,
+            child: Text('😉 ${S.current.clubFeeJoking}',
+                style: Theme.of(context).textTheme.bodySmall
+            ),
+          ),
+        ],
+      ),
+    ) : Container(
+      height: 200,
+      alignment: Alignment.center,
+      child: const SizedBox(width: 32, height: 32, child: CircularProgressIndicator())
+    );
+  }
+
+  static final _clubPerks = [
+    S.current.clubPerkDuoSnap,
+    S.current.clubPerkLike,
+    S.current.clubPerkSonaMessage,
+    S.current.clubPerkSonaTip,
+    S.current.clubPerkBadge
+  ];
+  Widget _buildClubDesc() {
+    return Container(
+      padding: const EdgeInsets.only(top: 60, left: 16, right: 16, bottom: 16),
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/white_star_bg.png'),
+          alignment: Alignment.topCenter,
+          fit: BoxFit.fitWidth
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(S.current.membersPerks,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w900
+              )
+          ),
+          const SizedBox(height: 8),
+          ..._clubPerks.map((perk) => Container(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              children: [
+                Image.asset(Assets.iconsCorrect, width: 14, height: 14, color: Colors.black),
+                const SizedBox(width: 8),
+                Text(perk,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w800
+                  )
+                ),
+              ],
+            ),
+          )),
+          const SizedBox(height: 8),
+          Text(S.current.clubPromotionContent,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: Color(0xFFFFE41F),
+                fontWeight: FontWeight.w900
+              )
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildClub() {
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(bottom: 90),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/green_bg.png'),
+            alignment: Alignment.topCenter,
+            fit: BoxFit.fitWidth
+          ),
+          color: Colors.white,
+        ),
+        child: Column(
+          children: [
+            _buildTabBar(),
+            _buildClubFee(),
+            _buildClubDesc(),
+            _buildClubTerms()
+          ],
+        ),
+      ),
+    );
+  }
+
   ///连接检查
   Card _buildConnectionCheckTile() {
     if (_loading) {
@@ -458,7 +663,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       await iosPlatformAddition.setDelegate(IOSPaymentQueueDelegate());
     }
     ///产品详情响应
-    final ProductDetailsResponse productDetailResponse = await inAppPurchase.queryProductDetails(_kProductIds.toSet());
+    final ProductDetailsResponse productDetailResponse = await inAppPurchase.queryProductDetails(_kProductIds.toSet()..add(clubMonthly));
     ///如果没有错误
     if (productDetailResponse.error != null) {
       if(mounted){
@@ -501,10 +706,10 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       ///载入本地保存的消耗品的id
       setState(() {
         _isAvailable = isAvailable;
-        _products = productDetailResponse.productDetails;
-        if(_products.isNotEmpty){
-          _productDetails=_products.firstWhere((element) => element.id==biannually);
-        }
+        var clubIndex = productDetailResponse.productDetails.indexWhere((pd) => pd.id == clubMonthly);
+        _clubProduct = productDetailResponse.productDetails.removeAt(clubIndex);
+        _products = List.from(productDetailResponse.productDetails);
+        _productDetails=_products.firstWhere((element) => element.id==biannually);
         //_productDetails=_products.last;
         _notFoundIds = productDetailResponse.notFoundIDs;
         // _consumables = consumables;
