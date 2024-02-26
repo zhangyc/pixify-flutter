@@ -122,7 +122,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           )
         ],
       ),
-      floatingActionButton:Padding(
+      floatingActionButton: ref.watch(myProfileProvider)!.memberType == MemberType.none
+        || (ref.watch(myProfileProvider)!.memberType == MemberType.club && _showing == 'plus') ? Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: OutlinedButton(onPressed: _purchasePending?null:() async{
           late PurchaseParam purchaseParam;
@@ -164,7 +165,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           ),
           child: _purchasePending ? CircularProgressIndicator() : Text(_showing == 'club' ? S.current.buttonJoinNow : '🌟 ${S.of(context).buttonContinue} 🌟'),
         ),
-      ),
+      ) : Container(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: _showing == 'club' ? _buildClub() : SingleChildScrollView(
         child: Stack(
