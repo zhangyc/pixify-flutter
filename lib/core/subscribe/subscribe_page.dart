@@ -230,30 +230,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                               height: 8,
                             ),
                             _buildPlusTerms(),
-                            Visibility(
-                              visible: Platform.isIOS,
-                              child: TextButton(
-                                  onPressed: (){
-                                    bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                                    if(isMember){
-                                      Fluttertoast.showToast(
-                                        msg: switch(ref.read(myProfileProvider)?.memberType) {
-                                          MemberType.club => S.current.youAreAClubMemberNow,
-                                          MemberType.plus => S.current.buttonAlreadyPlus,
-                                          _ => ''
-                                        }
-                                      );
-                                    } else {
-                                      if (hasPurchased == true) {
-                                        inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
-                                      } else {
-                                        Fluttertoast.showToast(msg: 'Failed to restore, can\'t find records.');
-                                      }
-                                    }
-                                  },
-                                  child: Text(S.of(context).buttonRestore)
-                              ),
-                            )
+                            _buildRestoreButton()
                           ],
                         ),
                       ),
@@ -471,6 +448,37 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     );
   }
 
+  Widget _buildRestoreButton() {
+    return Visibility(
+      visible: Platform.isIOS,
+      child: TextButton(
+        onPressed: (){
+          bool isMember=ref.read(myProfileProvider)?.isMember??false;
+          if(isMember){
+            Fluttertoast.showToast(
+                msg: switch(ref.read(myProfileProvider)?.memberType) {
+                  MemberType.club => S.current.youAreAClubMemberNow,
+                  MemberType.plus => S.current.buttonAlreadyPlus,
+                  _ => ''
+                }
+            );
+          } else {
+            if (hasPurchased == true) {
+              inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
+            } else {
+              Fluttertoast.showToast(msg: 'Failed to restore, can\'t find records.');
+            }
+          }
+        },
+        style: TextButton.styleFrom(
+            maximumSize: Size(MediaQuery.of(context).size.width, 56),
+            fixedSize: Size(MediaQuery.of(context).size.width, 56)
+        ),
+        child: Text(S.of(context).buttonRestore)
+      ),
+    );
+  }
+
   Widget _buildClub() {
     return SingleChildScrollView(
       child: Container(
@@ -488,7 +496,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             _buildTabBar(),
             _buildClubFee(),
             _buildClubDesc(),
-            _buildClubTerms()
+            _buildClubTerms(),
+            _buildRestoreButton()
           ],
         ),
       ),
