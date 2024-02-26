@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:appsflyer_sdk/appsflyer_sdk.dart';
+// import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -49,7 +49,7 @@ void main() async {
     initFireBaseService(firebase);
   }
   await global.init();
-  unawaited(_initAttribution());
+  // unawaited(_initAttribution());
   // 先放这，以后整理
   countryMapList = (jsonDecode(await rootBundle.loadString('assets/i18n/countries.json')) as List)
     .map((d) => d as Map<String, dynamic>)
@@ -61,16 +61,16 @@ void main() async {
   );
 }
 
-Future<void> _initAttribution() async {
-  if (kDebugMode) return;
-  AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
-      afDevKey: 'pjgPTCev87vC2WK6dGhg3n',
-      appId: Platform.isIOS ? '6464375495' : 'com.planetwalk.sona',
-      showDebug: kDebugMode,
-      timeToWaitForATTUserAuthorization: 50, // for iOS 14.5
-      disableAdvertisingIdentifier: Platform.isIOS,
-      disableCollectASA: Platform.isIOS
-  );
-  AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
-  await appsflyerSdk.initSdk();
-}
+// Future<void> _initAttribution() async {
+//   if (kDebugMode) return;
+//   AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
+//       afDevKey: 'pjgPTCev87vC2WK6dGhg3n',
+//       appId: Platform.isIOS ? '6464375495' : 'com.planetwalk.sona',
+//       showDebug: kDebugMode,
+//       timeToWaitForATTUserAuthorization: 50, // for iOS 14.5
+//       disableAdvertisingIdentifier: Platform.isIOS,
+//       disableCollectASA: Platform.isIOS
+//   );
+//   AppsflyerSdk appsflyerSdk = AppsflyerSdk(appsFlyerOptions);
+//   await appsflyerSdk.initSdk();
+// }
