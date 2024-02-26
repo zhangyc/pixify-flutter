@@ -1,13 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/profile.dart';
 
 import '../../../generated/assets.dart';
+import '../bean/match_user.dart';
 
 class CustomBottomDialog extends StatelessWidget {
   final String title;
   final VoidCallback onClosePressed;
-
-  CustomBottomDialog({required this.title, required this.onClosePressed});
+  final MatchUserInfo target;
+  CustomBottomDialog({required this.title, required this.onClosePressed,required this.target});
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +54,12 @@ class CustomBottomDialog extends StatelessWidget {
             children: [
               Transform.rotate(
                   angle: -15 * 3.14 / 180,
-                  child: Image.asset(Assets.imagesTenderAffection,width: 122,height: 163,)), // 替换为您的左侧图片路径
+                  child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                    return CachedNetworkImage(imageUrl: ref.read(myProfileProvider)!.avatar??'',width: 122,height: 163,);
+                  },)), // 替换为您的左侧图片路径
               Transform.rotate(
                   angle: 15 * 3.14 / 180,
-                  child: Image.asset(Assets.imagesTenderAffection,width: 122,height: 163,)), // 替换为您的右侧图片路径
+                  child: CachedNetworkImage(imageUrl: target.avatar??'',width: 122,height: 163,)), // 替换为您的右侧图片路径
             ],
           ),
           SizedBox(height: 16.0),

@@ -12,6 +12,7 @@ class Assets {
   static const String iconsClose = 'assets/icons/close.png';
   static const String iconsConchSelected = 'assets/icons/conch_selected.png';
   static const String iconsCorrect = 'assets/icons/correct.png';
+  static const String iconsDoneArrow = 'assets/icons/done_arrow.png';
   static const String iconsEdit = 'assets/icons/edit.png';
   static const String iconsEmail = 'assets/icons/email.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
@@ -81,6 +82,8 @@ class Assets {
   static const String imagesQuickReply = 'assets/images/quick_reply.png';
   static const String imagesSignInBg = 'assets/images/sign_in_bg.png';
   static const String imagesSignInBgB = 'assets/images/sign_in_bg_b.png';
+  static const String imagesSnap1 = 'assets/images/snap_1.png';
+  static const String imagesSnap2 = 'assets/images/snap_2.png';
   static const String imagesSona = 'assets/images/sona.png';
   static const String imagesSubBg = 'assets/images/sub_bg.png';
   static const String imagesTenderAffection = 'assets/images/tender_affection.png';
@@ -98,10 +101,13 @@ class Assets {
   static const String mPlusRounded1cMPLUSRounded1cRegular = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Regular.ttf';
   static const String mPlusRounded1cMPLUSRounded1cThin = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Thin.ttf';
   static const String svgArrow = 'assets/svg/arrow.svg';
+  static const String svgCamera = 'assets/svg/camera.svg';
   static const String svgDislike = 'assets/svg/dislike.svg';
   static const String svgDislikeTag = 'assets/svg/dislike_tag.svg';
+  static const String svgDownload = 'assets/svg/download.svg';
   static const String svgDuosnap = 'assets/svg/duosnap.svg';
   static const String svgLike = 'assets/svg/like.svg';
   static const String svgLikeTag = 'assets/svg/like_tag.svg';
+  static const String svgShare = 'assets/svg/share.svg';
 
 }

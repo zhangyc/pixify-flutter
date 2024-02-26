@@ -6,6 +6,8 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
@@ -15,16 +17,22 @@ import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_location.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
+import 'package:sona/core/widgets/generate_banner.dart';
+import 'package:sona/core/widgets/not_meet_conditions.dart';
+import 'package:sona/core/widgets/other_not_meet_conditions.dart';
 import 'package:sona/generated/assets.dart';
+import 'package:sona/utils/face_detection/detection.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_settings/system_settings.dart';
 
 import '../../../account/providers/profile.dart';
+import '../../../account/services/info.dart';
 import '../../../common/permission/permission.dart';
 import '../../../common/screens/profile.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/dialog/common.dart';
+import '../../../utils/dialog/crop_image.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
@@ -136,7 +144,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           body: Stack(
             children: [
               Positioned.fill(
-                child: _buildMatch()
+                child: Column(
+                  children: [
+                    GenerateBanner(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Expanded(child: _buildMatch())
+
+                  ],
+                )
               ),
               (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading||_state==PageState.notLocation?Container():
               Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
@@ -221,30 +238,135 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             }));
                           }
                       }),
-                      ScaleAnimation(child: SvgPicture.asset(Assets.svgDuosnap,width: 56,height: 56,), onTap: (){
+                      ScaleAnimation(child: SvgPicture.asset(Assets.svgDuosnap,width: 56,height: 56,), onTap: () async {
                               if(currentPage==users.length-1){
                                   return;
                                }
-                               showDuoSnapDialog(context,target: users[currentPage]);
-                          //     Future.delayed(Duration(milliseconds: 200),(){
-                          //       matchAnimation.value=TransformStatus.rightRotate;
-                          //        if(canArrow){
-                          //        showDm(context, users[currentPage],(){
-                          //        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                          //     //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
-                          //   });
-                          // }else {
-                          //   bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                          //   if(isMember){
-                          //     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                          //   }else{
-                          //     Navigator.push(context, MaterialPageRoute(builder:(c){
-                          //       return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
-                          //     }));
-                          //   }
-                          // }
-                          // });
+                              FileInfo file=await DefaultCacheManager().downloadFile(ref.read(myProfileProvider)!.photos.first.url);
+                              FileInfo file2=await DefaultCacheManager().downloadFile(users[currentPage].photos.first);
 
+                              bool con1=await faceDetection(file.file.path);
+                              bool con2=await faceDetection(file2.file.path);
+                              if(con1&&con2){
+                                showDuoSnapDialog(context,target: users[currentPage]);
+                              }else if(!con1&&con2){
+                                showDuoSnapTip(context, child: NotMeetConditions(
+                                  close: (){
+                                    Navigator.pop(context);
+                                  },
+                                  camera: () async {
+                                    final picker = ImagePicker();
+                                    final file = await picker.pickImage(source: ImageSource.camera);
+
+                                    if (file == null) throw Exception('No file');
+                                    ///todo 人脸检测
+                                    ///faceDetection(file.path);
+
+                                    if (file.name.toLowerCase().endsWith('.gif')) {
+                                      Fluttertoast.showToast(msg: 'GIF is not allowed');
+                                      return;
+                                    }
+                                    Uint8List? bytes = await file.readAsBytes();
+                                    bytes = await cropImage(bytes);
+                                    if (bytes == null) return;
+                                    await addPhoto(bytes: bytes, filename: file.name);
+                                    ref.read(myProfileProvider.notifier).refresh();
+
+                                  },
+                                  gallery: () async {
+                                    final picker = ImagePicker();
+                                    final file = await picker.pickImage(source: ImageSource.gallery);
+
+                                    if (file == null) throw Exception('No file');
+                                    ///todo 人脸检测
+                                    ///faceDetection(file.path);
+
+                                    if (file.name.toLowerCase().endsWith('.gif')) {
+                                      Fluttertoast.showToast(msg: 'GIF is not allowed');
+                                      return;
+                                    }
+                                    Uint8List? bytes = await file.readAsBytes();
+                                    bytes = await cropImage(bytes);
+                                    if (bytes == null) return;
+                                    await addPhoto(bytes: bytes, filename: file.name);
+                                    ref.read(myProfileProvider.notifier).refresh();
+                                  },
+                                ),
+                                    dialogHeight: 307);
+                              }else if(con1&&!con2){
+                                showDuoSnapTip(context, child: OtherNotMeetConditions(
+                                  close: (){
+                                    Navigator.pop(context);
+                                  },
+                                  gotit: (){
+                                    Navigator.pop(context);
+                                  },
+                                  sendDM: (){
+                                    Future.delayed(Duration(milliseconds: 200),(){
+                                      matchAnimation.value=TransformStatus.rightRotate;
+                                      if(canArrow){
+                                        showDm(context, users[currentPage],(){
+                                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                          //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
+                                        });
+                                      }else {
+                                        bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                                        if(isMember){
+                                          Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                                        }else{
+                                          Navigator.push(context, MaterialPageRoute(builder:(c){
+                                            return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
+                                          }));
+                                        }
+                                      }
+                                    });
+                                  },
+
+                                ), dialogHeight: 331);
+                              }else if(!con1&&!con2){
+                                showDuoSnapTip(context, child: NotMeetConditions(
+                                  close: (){
+                                    Navigator.pop(context);
+                                  },
+                                  camera: () async {
+                                    final picker = ImagePicker();
+                                    final file = await picker.pickImage(source: ImageSource.camera);
+
+                                    if (file == null) throw Exception('No file');
+                                    ///todo 人脸检测
+                                    ///faceDetection(file.path);
+
+                                    if (file.name.toLowerCase().endsWith('.gif')) {
+                                      Fluttertoast.showToast(msg: 'GIF is not allowed');
+                                      return;
+                                    }
+                                    Uint8List? bytes = await file.readAsBytes();
+                                    bytes = await cropImage(bytes);
+                                    if (bytes == null) return;
+                                    await addPhoto(bytes: bytes, filename: file.name);
+                                    ref.read(myProfileProvider.notifier).refresh();
+
+                                  },
+                                  gallery: () async {
+                                    final picker = ImagePicker();
+                                    final file = await picker.pickImage(source: ImageSource.gallery);
+
+                                    if (file == null) throw Exception('No file');
+                                    ///todo 人脸检测
+                                    ///faceDetection(file.path);
+
+                                    if (file.name.toLowerCase().endsWith('.gif')) {
+                                      Fluttertoast.showToast(msg: 'GIF is not allowed');
+                                      return;
+                                    }
+                                    Uint8List? bytes = await file.readAsBytes();
+                                    bytes = await cropImage(bytes);
+                                    if (bytes == null) return;
+                                    await addPhoto(bytes: bytes, filename: file.name);
+                                    ref.read(myProfileProvider.notifier).refresh();
+                                  },
+                                ), dialogHeight: 307);
+                              }
                       })
                       // ScaleAnimation(child: SvgPicture.asset(Assets.svgArrow,width: 56,height: 56,), onTap: (){
                       //         if(currentPage==users.length-1){

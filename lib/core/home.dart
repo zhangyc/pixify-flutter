@@ -17,6 +17,7 @@ import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/home_provider.dart';
 import 'package:sona/core/providers/notice.dart';
 import 'package:sona/core/travel_wish/providers/my_wish.dart';
+import 'package:sona/core/widgets/generate_banner.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/location/location.dart';
 
@@ -62,32 +63,23 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      body: Column(
+      body: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        onPageChanged: _onPageChange,
         children: [
-          _currentIndex==0?SizedBox(
-            height: 56,
-          ):Container(),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              onPageChanged: _onPageChange,
-              children: [
-                MatchScreen(),
-                LikeMeScreen(),
-                ConversationScreen(
-                  onShowLikeMe: () {
-                    _pageController.animateToPage(
-                        1,
-                        duration: const Duration(milliseconds: 2),
-                        curve: Curves.ease
-                    );
-                  }
-                ),
-                PersonaScreen(),
-              ],
-            ),
+          MatchScreen(),
+          LikeMeScreen(),
+          ConversationScreen(
+              onShowLikeMe: () {
+                _pageController.animateToPage(
+                    1,
+                    duration: const Duration(milliseconds: 2),
+                    curve: Curves.ease
+                );
+              }
           ),
+          PersonaScreen(),
         ],
       ),
       bottomNavigationBar: Consumer(
@@ -142,6 +134,10 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   }
 
   void _onPageChange(int index) {
+    _currentIndex=index;
+    setState(() {
+
+    });
     if (index == 1) {
       ref.read(likeMeLastCheckTimeProvider.notifier).update((state) => DateTime.now());
     } else if(index == 2) {
