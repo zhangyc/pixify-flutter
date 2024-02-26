@@ -2,13 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -29,6 +25,7 @@ import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
 import '../match/util/event.dart';
 import '../match/util/iap_helper.dart';
+import 'model/member.dart';
 import 'widgets/powers_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -101,32 +98,28 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         backgroundColor: _showing == 'club' ? const Color(0xFFBEFF06) : Colors.white,
         title: Text('Subscribe'),
         actions: [
-          ref.read(myProfileProvider)!.isMember?
-          GestureDetector(
-            onTap: () async {
-              var result=await showActionButtons(
-                  context: context,
-                  title: S.of(context).buttonManage,
-                  options: {
-                    // 'Next Billing Date': '${ref.read(myProfileProvider)?.vipEndDate}',
-                    S.of(context).buttonUnsubscribe: 'Unsubscribe'});
-              if(result=='Unsubscribe'){
-                if(Platform.isAndroid){
-                  launchUrl(Uri.parse('https://play.google.com/store/account/subscriptions?package=com.planetwalk.sona'), mode: LaunchMode.externalApplication);
+          if (ref.read(myProfileProvider)!.isMember) UnconstrainedBox(
+            child: TextButton(
+              onPressed: () async {
+                var result=await showActionButtons(
+                    context: context,
+                    title: S.of(context).buttonManage,
+                    options: {
+                      // 'Next Billing Date': '${ref.read(myProfileProvider)?.vipEndDate}',
+                      S.of(context).buttonUnsubscribe: 'Unsubscribe'});
+                if(result=='Unsubscribe'){
+                  if(Platform.isAndroid){
+                    launchUrl(Uri.parse('https://play.google.com/store/account/subscriptions?package=com.planetwalk.sona'), mode: LaunchMode.externalApplication);
 
-                }else if(Platform.isIOS){
-                  launchUrl(Uri.parse("https://apps.apple.com/account/subscriptions"), mode: LaunchMode.externalApplication);
+                  }else if(Platform.isIOS){
+                    launchUrl(Uri.parse("https://apps.apple.com/account/subscriptions"), mode: LaunchMode.externalApplication);
 
+                  }
                 }
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              },
               child: Text(S.of(context).buttonManage),
             ),
-          ):
-          Container(),
-
+          )
         ],
       ),
       floatingActionButton:Padding(
@@ -243,7 +236,13 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                                   onPressed: (){
                                     bool isMember=ref.read(myProfileProvider)?.isMember??false;
                                     if(isMember){
-                                      Fluttertoast.showToast(msg: S.of(context).buttonAlreadyPlus);
+                                      Fluttertoast.showToast(
+                                        msg: switch(ref.read(myProfileProvider)?.memberType) {
+                                          MemberType.club => S.current.youAreAClubMemberNow,
+                                          MemberType.plus => S.current.buttonAlreadyPlus,
+                                          _ => ''
+                                        }
+                                      );
                                     } else {
                                       if (hasPurchased == true) {
                                         inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
@@ -768,7 +767,13 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         _purchases.add(purchaseDetails);
         _purchasePending = false;
       });
-      Fluttertoast.showToast(msg: S.of(context).buttonAlreadyPlus);
+      Fluttertoast.showToast(
+          msg: switch(ref.read(myProfileProvider)?.memberType) {
+            MemberType.club => S.current.youAreAClubMemberNow,
+            MemberType.plus => S.current.buttonAlreadyPlus,
+            _ => ''
+          }
+      );
     }
   }
 

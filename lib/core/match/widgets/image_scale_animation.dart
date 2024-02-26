@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/match/bean/match_user.dart';
 import 'package:sona/core/match/widgets/icon_animation.dart';
 
 import '../../../generated/assets.dart';
+import '../../subscribe/model/member.dart';
 
 class MyImageAnimation extends StatefulWidget {
   const MyImageAnimation({super.key, required this.info});
@@ -74,11 +76,37 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Text('${widget.info.name??''}, ${widget.info.age}',style: TextStyle(
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: '${widget.info.name??''}, ${widget.info.age} '
+                                ),
+                                WidgetSpan(child: switch(widget.info.memberType) {
+                                  MemberType.club => FittedBox(
+                                    child: Container(
+                                        height: 42,
+                                        alignment: Alignment.centerLeft,
+                                        child: SonaIcon(icon: SonaIcons.club_mark, size: 24)
+                                    ),
+                                  ),
+                                  MemberType.plus => FittedBox(
+                                    child: Container(
+                                        height: 42,
+                                        alignment: Alignment.centerLeft,
+                                        child: SonaIcon(icon: SonaIcons.plus_mark, size: 24)
+                                    ),
+                                  ),
+                                  _ => Container(height: 42),
+                                })
+                              ]
+                            ),
+                            style: TextStyle(
                               color: Colors.white,
                               fontSize: 28,
-                              fontWeight: FontWeight.w800
-                          ),
+                              fontWeight: FontWeight.w800,
+                              height: 1.5,
+                            ),
                             maxLines: 2,
                           ),
                         ),

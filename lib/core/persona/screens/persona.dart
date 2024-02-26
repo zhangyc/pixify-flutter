@@ -18,6 +18,7 @@ import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../../../generated/l10n.dart';
+import '../../subscribe/model/member.dart';
 import '../../travel_wish/providers/my_wish.dart';
 
 class PersonaScreen extends StatefulHookConsumerWidget {
@@ -287,6 +288,14 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                             ),
                           ],
                         ),
+                        SizedBox(height: 4),
+                        Center(
+                          child: switch(ref.read(myProfileProvider)?.memberType) {
+                            MemberType.club => SonaIcon(icon: SonaIcons.club_mark),
+                            MemberType.plus => SonaIcon(icon: SonaIcons.plus_mark),
+                            _ => Container()
+                          },
+                        ),
                         SizedBox(height: 16),
                         FilledButton(
                           onPressed: () => Navigator.push(context, MaterialPageRoute(
@@ -317,7 +326,14 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                       style: ButtonStyle(
                           side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),
-                      child: Text(S.of(context).buttonAlreadyPlus, style: Theme.of(context).textTheme.titleMedium)
+                      child: Text(
+                        switch(ref.watch(myProfileProvider)!.memberType) {
+                          MemberType.club => S.current.youAreAClubMemberNow,
+                          MemberType.plus => S.current.buttonAlreadyPlus,
+                          _ => ''
+                        },
+                        style: Theme.of(context).textTheme.titleMedium
+                      )
                   )
                 ],
               ),
