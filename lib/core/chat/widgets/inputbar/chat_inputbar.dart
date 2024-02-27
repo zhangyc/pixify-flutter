@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
 import 'package:sona/common/widgets/image/icon.dart';
+import 'package:sona/core/chat/widgets/voice_message_recorder.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../../generated/l10n.dart';
@@ -51,9 +56,9 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
 class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware {
   late final TextEditingController _controller;
   late final _focusNode = widget.focusNode ?? FocusNode();
-  late final _height = widget.height ?? 56;
   final _sonaKey = GlobalKey();
   final _suggKey = GlobalKey();
+  OverlayEntry? _voiceEntry;
 
   static const enterTimesKey = 'enter_times';
 
@@ -174,7 +179,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   )
                 )
               ),
-              Expanded(
+              if (ref.watch(inputMethodProvider(widget.chatId)) == InputMethod.keyboard) Expanded(
                 child: Container(
                   // width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
                   decoration: BoxDecoration(
@@ -234,30 +239,75 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     autofocus: widget.autofocus,
                   ),
                 ),
+              )
+              else Expanded(
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onLongPressStart: (_) async {
+                    _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
+                    Overlay.of(context).insert(_voiceEntry!);
+                  },
+                  onLongPressEnd: (_) async {
+                    // _voicePath = await recorder.stop();
+                    // print('voice len: ${(await File(_voicePath!).length()) / 1024}');
+                    // player.setFilePath(_voicePath!);
+                    // await player.play();
+                    _voiceEntry?.remove();
+                  },
+                  child: Container(
+                    height: 56,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(width: 1.5)
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 1.5),
+                    alignment: Alignment.center,
+                    child: Text('Hold to speek', style: Theme.of(context).textTheme.titleMedium),
+                  ),
+                )
               ),
               SizedBox(width: 4),
-              Visibility(
-                visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
-                child: Container(
-                  margin: EdgeInsets.all(1),
-                  child: IconButton(
+              if (ref.watch(currentInputEmptyProvider(widget.chatId))) Container(
+                margin: EdgeInsets.all(1),
+                child: IconButton(
                     iconSize: 56,
                     padding: EdgeInsets.all(14),
                     onPressed: () {
-                      if (_controller.text.isEmpty) return;
-                      onSubmit(_controller.text);
-                      _controller.text = '';
+                      ref.watch(inputMethodProvider(widget.chatId).notifier)
+                        .update((state) => state == InputMethod.voice
+                          ? InputMethod.keyboard
+                          : InputMethod.voice);
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                          Theme.of(context).primaryColor
-                      ),
-                      shape: MaterialStatePropertyAll(
-                        ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
-                      )
+                        backgroundColor: MaterialStatePropertyAll(
+                            Theme.of(context).primaryColor
+                        ),
+                        shape: MaterialStatePropertyAll(
+                            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
+                        )
                     ),
-                    icon: SonaIcon(icon: SonaIcons.chat_send)
+                    icon: Icon(ref.read(inputMethodProvider(widget.chatId)) == InputMethod.keyboard ? Icons.keyboard_voice : Icons.keyboard_alt, size: 28, color: Colors.white)
+                ),
+              )
+              else Container(
+                margin: EdgeInsets.all(1),
+                child: IconButton(
+                  iconSize: 56,
+                  padding: EdgeInsets.all(14),
+                  onPressed: () {
+                    if (_controller.text.isEmpty) return;
+                    onSubmit(_controller.text);
+                    _controller.text = '';
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                        Theme.of(context).primaryColor
+                    ),
+                    shape: MaterialStatePropertyAll(
+                      ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
+                    )
                   ),
+                  icon: SonaIcon(icon: SonaIcons.chat_send, size: 28)
                 ),
               ),
             ],

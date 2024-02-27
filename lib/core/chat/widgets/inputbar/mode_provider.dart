@@ -23,6 +23,10 @@ final chatStylesVisibleProvider = StateProvider.family.autoDispose<bool, int>((r
   return false;
 }, dependencies: [inputModeProvider]);
 
+final inputMethodProvider = StateProvider.family<InputMethod, int>((ref, arg) {
+  return InputMethod.keyboard;
+});
+
 final sonaInputProvider = StateProvider.autoDispose.family<String, int>((ref, arg) => '');
 final manualInputProvider = StateProvider.autoDispose.family<String, int>((ref, arg) => '');
 final currentInputEmptyProvider = StateProvider.autoDispose.family<bool, int>((ref, arg) {
@@ -37,4 +41,9 @@ final currentInputEmptyProvider = StateProvider.autoDispose.family<bool, int>((r
 enum InputMode {
   sona,
   manual
+}
+
+enum InputMethod {
+  keyboard,
+  voice
 }

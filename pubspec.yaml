@@ -63,6 +63,10 @@ dependencies:
   google_sign_in: ^6.2.1
   dotted_border: ^2.1.0
   image: ^4.1.7
+  record: ^5.0.4
+  path_provider: ^2.1.2
+  just_audio: ^0.9.36
+  speech_to_text: ^6.6.0
 
 dev_dependencies:
   custom_lint: ^0.5.7

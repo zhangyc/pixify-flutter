@@ -53,6 +53,10 @@
 	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
+	<key>NSMicrophoneUsageDescription</key>
+  <string>Allow Sona to access your microphone to record voice message.</string>
+  <key>NSSpeechRecognitionUsageDescription</key>
+  <string>Allow Sona to access your speech recognition to transform your voice message to text.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
