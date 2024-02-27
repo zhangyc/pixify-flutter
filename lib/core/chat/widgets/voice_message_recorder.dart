@@ -61,9 +61,12 @@ class _VoiceMessageRecorderState extends State<VoiceMessageRecorder> {
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
+    if (result.recognizedWords.isEmpty) {
+      return;
+    }
     print('on speech result: ${result.recognizedWords}');
     setState(() {
-      _lastWords += result.recognizedWords;
+      _lastWords = result.recognizedWords;
     });
   }
 
