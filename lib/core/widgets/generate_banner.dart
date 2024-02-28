@@ -192,7 +192,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
                            )
                          ),
                          child: CachedNetworkImage(
-                           imageUrl: ref.read(myProfileProvider)!.avatar??'',
+                           imageUrl: duoSnapTask?.userAvatar??'',
                            width: 26,
                            height: 35,
                          )
