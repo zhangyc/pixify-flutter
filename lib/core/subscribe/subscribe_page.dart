@@ -609,7 +609,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               unawaited(deliverProduct(purchaseDetails));
             } else {
               SonaAnalytics.log('iap_verify_failed');
-
               Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
               // if (resp.statusCode == 40030) {
               //   // 已绑定在其他账号

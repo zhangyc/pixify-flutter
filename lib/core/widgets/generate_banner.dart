@@ -1,12 +1,20 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/match/bean/duosnap_task.dart';
+import 'package:sona/core/match/util/http_util.dart';
+import 'package:sona/core/match/util/local_data.dart';
+import 'package:sona/core/match/widgets/catch_more.dart';
 import 'package:sona/core/match/widgets/dialogs.dart';
 import 'package:sona/core/match/widgets/duosnap_completed.dart';
 
 import '../../account/providers/profile.dart';
 import '../../generated/assets.dart';
+
+final ValueNotifier<int> startGenerate = ValueNotifier<int>(0);
 
 class GenerateBanner extends ConsumerStatefulWidget {
   const GenerateBanner({super.key});
@@ -16,7 +24,51 @@ class GenerateBanner extends ConsumerStatefulWidget {
 }
 
 class _GenerateBannerState extends ConsumerState<GenerateBanner> {
-  GenerateState _generateState=GenerateState.done;
+  GenerateState _generateState=GenerateState.cancel;
+  late Timer timer;
+  DuoSnapTask duoSnapTask=DuoSnapTask();
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+  @override
+  void initState() {
+    timer=Timer.periodic(Duration(seconds: 5), (timer) {
+      _initTask();
+    });
+    startGenerate.addListener(() {
+      _initTask();
+    });
+    super.initState();
+  }
+
+  _initTask() async{
+    HttpResult result=await post('/merge-photo/find-last');
+    if(result.isSuccess){
+     duoSnapTask=DuoSnapTask.fromJson(result.data);
+     if(duoSnapTask.status==null){
+       _generateState=GenerateState.requesting;
+     }else if(duoSnapTask.status==1){
+       _generateState=GenerateState.line;
+
+     }else if(duoSnapTask.status==2){
+       _generateState=GenerateState.almost;
+
+     }else if(duoSnapTask.status==3){
+       _generateState=GenerateState.done;
+     }else if(duoSnapTask.status==4){
+       _generateState=GenerateState.fail;
+
+     }else if(duoSnapTask.status==5){
+       _generateState=GenerateState.cancel;
+
+     }
+     setState(() {
+
+     });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return _buildTip();
@@ -75,16 +127,33 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
    }else if(_generateState==GenerateState.done){
     return  GestureDetector(
       onTap: (){
+        if(mounted){
+          setState(() {
+
+          });
+        }
+        _generateState=GenerateState.cancel;
+        post('/merge-photo/over',data: {
+          "id": duoSnapTask.id
+        });
         showDuoSnapCompleted(context,
           700,
           DuosnapCompleted(
+              task: duoSnapTask,
               close:(){
                 Navigator.pop(context);
               })
-        );
+        ).whenComplete((){
+          if(showCatchMore&&mounted){
+            showDuoSnapTip(context, child: CatchMore(close: (){
+              Navigator.pop(context);
+            }), dialogHeight: 361);
+            showCatchMore=false;
+          }
+        });
       },
       child: Container(
-         color: Color(0xff656565),
+         color: Color(0xff0DF892),
          height: 56,
          child: Row(
            mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +192,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
                            )
                          ),
                          child: CachedNetworkImage(
-                           imageUrl: '',
+                           imageUrl: ref.read(myProfileProvider)!.avatar??'',
                            width: 26,
                            height: 35,
                          )
@@ -143,6 +212,8 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          ),
        ),
     );
+   }else if(_generateState==GenerateState.cancel){
+     return Container();
    }else {
      return Container();
    }
@@ -151,7 +222,9 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
 }
 enum GenerateState{
   requesting,
+  fail,
   line,
   almost,
-  done
+  done,
+  cancel
 }

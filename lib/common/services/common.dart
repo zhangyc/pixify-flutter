@@ -25,12 +25,11 @@ Future<Response> fetchTravelTimeframeOptions() async {
 /// * return url
 Future<String> uploadFile({
   required Uint8List bytes,
-  required String filename
 }) async {
-  final data = await compressImage(bytes);
+  // final data = await compressImage(bytes);
   final formData = FormData.fromMap({
     'file': MultipartFile.fromBytes(
-        data.toList(growable: false),
+        bytes,
         filename: '.webp'
     )
   });

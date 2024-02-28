@@ -61,7 +61,22 @@ Future<Response> addPhoto({
     data: formData
   );
 }
+Future<Response> setAvatarPhoto({
+  required Uint8List bytes,
+}) async {
+  final data = await compressImage(bytes);
+  final formData = FormData.fromMap({
+    'file': MultipartFile.fromBytes(
+        data.toList(growable: false),
+        filename: '.webp'
+    )
+  });
 
+  return dio.post(
+      '/user/upload-avatar',
+      data: formData
+  );
+}
 Future<Response> removePhoto({
   required int photoId
 }) async {

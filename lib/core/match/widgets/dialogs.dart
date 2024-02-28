@@ -308,10 +308,12 @@ showDuoSnapTip(BuildContext context,{required Widget child,required double dialo
         child: child
       ),
     );
-  });
+  },
+  );
 }
-showDuoSnapCompleted(BuildContext context,double dialogHeight,Widget child){
-  showModalBottomSheet(context: context, builder: (b){
+Future showDuoSnapCompleted(BuildContext context,double dialogHeight,Widget child){
+ return showModalBottomSheet(context: context,
+      builder: (b){
     return Container(
       height: dialogHeight,
       decoration: BoxDecoration(
@@ -328,5 +330,7 @@ showDuoSnapCompleted(BuildContext context,double dialogHeight,Widget child){
           child: child
       ),
     );
-  });
+  },
+  isScrollControlled: true
+  );
 }

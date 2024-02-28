@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:sona/utils/global/global.dart';
 
 
@@ -33,4 +34,20 @@ set showGuideAnimation(value){
 String get recommendMode => appCommonBox.get('recommendMode',defaultValue: "WISH");
 set recommendMode(value){
   appCommonBox.put('recommendMode', value);
+}
+bool get showCatchMore => appCommonBox.get('showCatchMore',defaultValue: true);
+set showCatchMore(value){
+  appCommonBox.put('showCatchMore', value);
+}
+int get openAppCount => appCommonBox.get('openAppCount',defaultValue: 0);
+set openAppCount(value){
+  appCommonBox.put('openAppCount', value);
+}
+bool get todayIsShowedTimed => appCommonBox.get('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowedTimed',defaultValue: true);
+set todayIsShowedTimed(value){
+  appCommonBox.put('${DateFormat('yyyy.MM.dd').format(DateTime.now())}todayIsShowedTimed', value);
+}
+int get showTimeLimitedCount => appCommonBox.get('showTimeLimitedCount',defaultValue: 0);
+set showTimeLimitedCount(value){
+  appCommonBox.put('showTimeLimitedCount', value);
 }

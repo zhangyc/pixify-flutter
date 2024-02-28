@@ -2,10 +2,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 Future<bool> faceDetection(String path) async {
   final options = FaceDetectorOptions(
-      enableClassification: true,
-      enableContours: true,
-      enableLandmarks: true,
-      enableTracking: true
+      enableClassification: false,
+      enableContours: false,
+      enableLandmarks: false,
+      enableTracking: false,
+      performanceMode: FaceDetectorMode.accurate
   );
   final faceDetector = FaceDetector(options: options);
   final List<Face> faces = await faceDetector.processImage(InputImage.fromFilePath(path));

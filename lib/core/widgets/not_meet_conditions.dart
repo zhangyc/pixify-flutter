@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../generated/assets.dart';
@@ -40,19 +42,19 @@ class NotMeetConditions extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              alignment: Alignment.center,
+            GestureDetector(
+              onTap: () {
+                camera.call();
+              },
+              child: Container(
+                alignment: Alignment.center,
 
-              height: 56,
-              width: 168,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  camera.call();
-                },
+                height: 56,
+                width: 168,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
                 child: Text(
                   'Take a photo',
                   style: TextStyle(
@@ -63,20 +65,20 @@ class NotMeetConditions extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              alignment: Alignment.center,
+            GestureDetector(
+              onTap: () {
+                gallery.call();
+              },
+              child: Container(
+                alignment: Alignment.center,
 
-              height: 56,
-              width: 168,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(20.0),
-                color: Color(0xff2c2c2c)
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  gallery.call();
-                },
+                height: 56,
+                width: 168,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Color(0xff2c2c2c)
+                ),
                 child: Text(
                   'From libary',
                   style: TextStyle(

@@ -1,8 +1,10 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/core/match/widgets/duosnap_button.dart';
 
 import '../../../generated/assets.dart';
 import '../bean/match_user.dart';
@@ -73,16 +75,16 @@ class CustomBottomDialog extends StatelessWidget {
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w900),
                 ),
                 SizedBox(height: 8.0),
-                _buildOptionButton('🐉 Eastern 🐉'),
+                _buildOptionButton('🐉 Eastern 🐉',target),
                 SizedBox(height: 8.0),
 
-                _buildOptionButton('🏕️ Africa 🏕️'),
+                _buildOptionButton('🏕️ Africa 🏕️',target),
                 SizedBox(height: 8.0),
 
-                _buildOptionButton('🕶️ Trendy 🕶️'),
+                _buildOptionButton('🕶️ Trendy 🕶️',target),
                 SizedBox(height: 8.0),
 
-                _buildOptionButton('👅 Meme 👅'),
+                _buildOptionButton('👅 Meme 👅',target),
               ],
             ),
           ),
@@ -91,24 +93,7 @@ class CustomBottomDialog extends StatelessWidget {
     );
   }
   // 构建带有底部边框的按钮
-  Widget _buildOptionButton(String text) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(
-        vertical: 16
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border(
-          bottom: BorderSide(width: 2.0, color: Colors.black), // 底部边框样式
-          top: BorderSide(width: 1.0, color: Colors.black), // 底部边框样式
-          left: BorderSide(width: 1.0, color: Colors.black), // 底部边框样式
-          right: BorderSide(width: 1.0, color: Colors.black), // 底部边框样式
-        ),
-      ),
-       child: Text(text,
-         style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800),
-      ),
-    );
+  Widget _buildOptionButton(String text,MatchUserInfo targetUrl) {
+    return DuosnapButton(targetUrl,text);
   }
 }

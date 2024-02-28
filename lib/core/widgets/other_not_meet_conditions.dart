@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../generated/assets.dart';
@@ -13,7 +15,6 @@ class OtherNotMeetConditions extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             // border: Border(bottom: BorderSide(color: Colors.grey)),
           ),
@@ -45,18 +46,19 @@ class OtherNotMeetConditions extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              alignment: Alignment.center,
-              height: 56,
-              width: 168,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  gotit.call();
-                },
+            GestureDetector(
+              onTap: () {
+                gotit.call();
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: 56,
+                width: 168,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.white
+                ),
                 child: Text(
                   'Got it',
                   style: TextStyle(
@@ -67,19 +69,19 @@ class OtherNotMeetConditions extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: 56,
-              width: 168,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(20.0),
-                  color: Color(0xff2c2c2c)
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  sendDM.call();
-                },
+            GestureDetector(
+              onTap: () {
+                sendDM.call();
+              },
+              child: Container(
+                height: 56,
+                width: 168,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Color(0xff2c2c2c)
+                ),
                 child: Text(
                   'Send DM',
                   style: TextStyle(
