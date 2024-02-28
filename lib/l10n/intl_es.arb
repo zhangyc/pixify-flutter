@@ -447,5 +447,15 @@
   "buttonUnlockVipPerks": "¡Desbloquea privilegios VIP!",
   "@buttonUnlockVipPerks": {},
   "clubTerms": "Al hacer clic en \"Unirse\", se te cobrará, tu suscripción se renovará automáticamente al precio correspondiente, y puedes cancelar a través de la {storeName}. Al continuar, aceptas nuestros ",
-  "@clubTerms": {}
+  "@clubTerms": {},
+  "plusPerkDuoSnap": "10 Duo Snap / semana",
+  "@plusPerkDuoSnap": {},
+  "plusDescTitle": "Conviértete en el miembro Plus principal",
+  "@plusDescTitle": {},
+  "catchMore": "¡Atrapa más!",
+  "@catchMore": {},
+  "unmissableSpecialOfferPrices": "¡Precios de oferta especial inmejorables!",
+  "@unmissableSpecialOfferPrices": {},
+  "checkItOut": "¡Echa un vistazo!",
+  "@checkItOut": {}
 }

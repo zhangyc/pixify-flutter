@@ -87,7 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("解鎖VIP特權！"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("取消配對"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("取消訂閱"),
+        "catchMore": MessageLookupByLibrary.simpleMessage("抓更多！"),
         "chat": MessageLookupByLibrary.simpleMessage("聊天"),
+        "checkItOut": MessageLookupByLibrary.simpleMessage("去看看！"),
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("查看他們的資料"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("選擇"),
@@ -195,6 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "photos": MessageLookupByLibrary.simpleMessage("照片"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage("請檢查網路或點擊刷新重試"),
+        "plusDescTitle": MessageLookupByLibrary.simpleMessage("成為頂級Plus會員"),
         "plusFuncAIInterpretation":
             MessageLookupByLibrary.simpleMessage("每天1000條AI傳譯"),
         "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("每週5次DM"),
@@ -206,6 +209,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("解鎖查看誰喜歡你"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3個心願"),
+        "plusPerkDuoSnap":
+            MessageLookupByLibrary.simpleMessage("每週10次Duo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("偏好"),
         "privacy": MessageLookupByLibrary.simpleMessage("隱私"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("隱私政策"),
@@ -264,6 +269,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀已達到今日限額"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅你已達到本週限額"),
+        "unmissableSpecialOfferPrices":
+            MessageLookupByLibrary.simpleMessage("不容錯過的特價優惠！"),
         "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("上傳你的照片"),
         "uploadYourPhotoHint":
             MessageLookupByLibrary.simpleMessage("SONA努力提供一個真實的交流環境，請上傳你的本人照片"),

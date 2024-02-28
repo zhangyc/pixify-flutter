@@ -53,12 +53,6 @@ class Assets {
   static const String imagesGirlPortrait = 'assets/images/girl_portrait.jpeg';
   static const String imagesHumanPortrait = 'assets/images/human_portrait.png';
   static const String imagesLocationAuthorization = 'assets/images/location_authorization.png';
-  static const String imagesM1 = 'assets/images/m1.png';
-  static const String imagesM2 = 'assets/images/m2.png';
-  static const String imagesM3 = 'assets/images/m3.png';
-  static const String imagesM4 = 'assets/images/m4.png';
-  static const String imagesM5 = 'assets/images/m5.png';
-  static const String imagesM6 = 'assets/images/m6.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
   static const String imagesMatchImageBg = 'assets/images/match_image_bg.png';
   static const String imagesNoDataBg = 'assets/images/no_data_bg.png';

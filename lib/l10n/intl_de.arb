@@ -447,5 +447,15 @@
   "buttonUnlockVipPerks": "VIP-Vorteile freischalten!",
   "@buttonUnlockVipPerks": {},
   "clubTerms": "Durch Klicken auf \"Beitritt\" entstehen Kosten, Ihr Abonnement verlängert sich automatisch zum Paketpreis und kann über den {storeName} gekündigt werden. Mit dem Fortfahren stimmen Sie ",
-  "@clubTerms": {}
+  "@clubTerms": {},
+  "plusPerkDuoSnap": "10 Duo Snap / Woche",
+  "@plusPerkDuoSnap": {},
+  "plusDescTitle": "Werden Sie das führende Plus-Mitglied",
+  "@plusDescTitle": {},
+  "catchMore": "Fang mehr!",
+  "@catchMore": {},
+  "unmissableSpecialOfferPrices": "Unverpassbare Sonderangebotspreise!",
+  "@unmissableSpecialOfferPrices": {},
+  "checkItOut": "Schau es dir an!",
+  "@checkItOut": {}
 }

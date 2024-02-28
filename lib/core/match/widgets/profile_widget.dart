@@ -302,7 +302,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                     }else {
                       SonaAnalytics.log(MatchEvent.match_like_limit.name);
                       Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                        return SubscribePage(SubscribeShowType.unlockUnlimitedLikes(),fromTag: FromTag.pay_match_likelimit,);
+                        return SubscribePage(fromTag: FromTag.pay_match_likelimit,);
                       }));
                     }
                   },
@@ -356,7 +356,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                     }else {
                       SonaAnalytics.log(MatchEvent.match_like_limit.name);
                       Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                        return SubscribePage(SubscribeShowType.unlockUnlimitedLikes(),fromTag: FromTag.pay_match_likelimit,);
+                        return SubscribePage(fromTag: FromTag.pay_match_likelimit,);
                       }));
                     }
                   },
@@ -374,7 +374,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                         Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                       }else{
                         Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                          return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
+                          return SubscribePage(fromTag: FromTag.pay_match_arrow,);
                         }));
                       }
                     }

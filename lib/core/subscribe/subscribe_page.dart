@@ -14,7 +14,8 @@ import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:intl/intl.dart';
 import 'package:sona/common/env.dart';
 import 'package:sona/common/permission/permission.dart';
-import 'package:sona/core/subscribe/utils/pay_util.dart';
+import 'package:sona/common/widgets/image/icon.dart';
+import 'package:sona/core/subscribe/providers/subscriptions.dart';
 import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:uuid/uuid.dart';
@@ -26,68 +27,94 @@ import '../../utils/dialog/input.dart';
 import '../match/util/event.dart';
 import '../match/util/iap_helper.dart';
 import 'model/member.dart';
-import 'widgets/powers_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const uuid = Uuid();
-const String annually = '1_annually';
-const String month = '1_month';
-const String quarter = '1_quarter';
-const String biannually = '1_biannually';
-const clubMonthly = 'club_monthly';
-const List<String> _kProductIds = <String>[
-  month,
-  quarter,
-  biannually,
-  annually,
-];
 
 class SubscribePage extends ConsumerStatefulWidget {
-  const SubscribePage(this.showType,  {super.key,required this.fromTag,});
+  const SubscribePage({
+    super.key,
+    required this.fromTag
+  });
   final FromTag fromTag;
-  final SubscribeShowType showType;
+
   @override
   ConsumerState createState() => _SubscribePageState();
 }
 
 class _SubscribePageState extends ConsumerState<SubscribePage> {
-  //final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
-  List<String> _notFoundIds = <String>[];
-  List<ProductDetails> _products = <ProductDetails>[];
-  List<PurchaseDetails> _purchases = <PurchaseDetails>[];
-  ProductDetails? _clubProduct;
-  bool _isAvailable = false;
   bool _purchasePending = false;
-  bool _loading = true;
-  String? _queryProductError;
-  ProductDetails? _productDetails;
   ScrollController _scrollController=ScrollController();
-  var _showing = 'club';
+  late var _showing = [
+    FromTag.pay_chatlist_likedme,
+    FromTag.pay_match_arrow,
+    FromTag.club_duo_snap
+  ].contains(widget.fromTag) ? 'plus' : 'club';
 
   @override
   void initState() {
+    super.initState();
     SonaAnalytics.log(ChatEvent.pay_page_open.name,{
       "fromTag":widget.fromTag.name
     });
-    // final Stream<List<PurchaseDetails>> purchaseUpdated = _inAppPurchase.purchaseStream;
     _subscription = purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
-          _listenToPurchaseUpdated(purchaseDetailsList);
-        }, onDone: () {
-          _subscription.cancel();
-        }, onError: (Object error) {
-          if (kDebugMode) print(error);
-        });
-    initStoreInfo();
+      _listenToPurchaseUpdated(purchaseDetailsList);
+    }, onDone: () {
+      _subscription.cancel();
+    }, onError: (Object error) {
+      if (kDebugMode) print(error);
+    });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Future.delayed(Duration(milliseconds: 500),(){
+      Future.delayed(const Duration(milliseconds: 500), () {
         if(_scrollController.hasClients){
           _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
           setState(() {});
         }
       });
     });
-    super.initState();
+  }
+
+  Future _subscribeClub() async {
+    final clubDetails = ref.read(asyncSubscriptionsProvider).value!.firstWhere((sub) => sub.id == clubMonthlyId);
+    _subscribe(clubDetails);
+  }
+
+  Future _subscribePlus() async {
+    final plusDetails = ref.read(asyncSubscriptionsProvider).value!.firstWhere((sub) => sub.id == ref.read(selectedPlusSubIdProvider));
+    _subscribe(plusDetails);
+  }
+
+  Future _subscribe(ProductDetails pd) async {
+    late PurchaseParam purchaseParam;
+    if (Platform.isAndroid) {
+      // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
+      // verify the latest status of you your subscription by using server side receipt validation
+      // and update the UI accordingly. The subscription purchase status shown
+      // inside the app may not be accurate.
+      final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
+      purchaseParam = GooglePlayPurchaseParam(
+          applicationUserName: ref.read(myProfileProvider)!.id.toString(),
+          productDetails: pd,
+          changeSubscriptionParam: (oldSubscription != null)
+              ? ChangeSubscriptionParam(
+            oldPurchaseDetails: oldSubscription,
+            prorationMode: ProrationMode.immediateAndChargeFullPrice,
+          ) : null);
+    } else {
+      //InAppPurchase.instance.restorePurchases();
+      purchaseParam = AppStorePurchaseParam(
+        applicationUserName: ref.read(myProfileProvider)!.id.toString(),
+        productDetails: pd,
+      );
+    }
+    try {
+      await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+    } catch (e) {
+      inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
+    }
+    //inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+    SonaAnalytics.log(PayEvent.pay_continue.name);
   }
 
   @override
@@ -101,19 +128,18 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           if (ref.read(myProfileProvider)!.isMember) UnconstrainedBox(
             child: TextButton(
               onPressed: () async {
-                var result=await showActionButtons(
-                    context: context,
-                    title: S.of(context).buttonManage,
-                    options: {
-                      // 'Next Billing Date': '${ref.read(myProfileProvider)?.vipEndDate}',
-                      S.of(context).buttonUnsubscribe: 'Unsubscribe'});
-                if(result=='Unsubscribe'){
-                  if(Platform.isAndroid){
+                var result = await showActionButtons(
+                  context: context,
+                  title: S.of(context).buttonManage,
+                  options: {
+                    S.of(context).buttonUnsubscribe: 'manage'
+                  }
+                );
+                if (result == 'manage') {
+                  if (Platform.isAndroid) {
                     launchUrl(Uri.parse('https://play.google.com/store/account/subscriptions?package=com.planetwalk.sona'), mode: LaunchMode.externalApplication);
-
-                  }else if(Platform.isIOS){
+                  } else if (Platform.isIOS) {
                     launchUrl(Uri.parse("https://apps.apple.com/account/subscriptions"), mode: LaunchMode.externalApplication);
-
                   }
                 }
               },
@@ -122,129 +148,19 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           )
         ],
       ),
-      floatingActionButton: ref.watch(myProfileProvider)!.memberType == MemberType.none
-        || (ref.watch(myProfileProvider)!.memberType == MemberType.club && _showing == 'plus') ? Padding(
+      floatingActionButton: ref.watch(myProfileProvider)!.memberType == MemberType.none || (ref.watch(myProfileProvider)!.memberType == MemberType.club && _showing == 'plus') ? Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: OutlinedButton(onPressed: _purchasePending?null:() async{
-          late PurchaseParam purchaseParam;
-          if (_productDetails == null || _clubProduct == null) {
-            return;
-          }
-          if (Platform.isAndroid) {
-            // NOTE: If you are making a subscription purchase/upgrade/downgrade, we recommend you to
-            // verify the latest status of you your subscription by using server side receipt validation
-            // and update the UI accordingly. The subscription purchase status shown
-            // inside the app may not be accurate.
-            final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
-            purchaseParam = GooglePlayPurchaseParam(
-                applicationUserName: ref.read(myProfileProvider)!.id.toString(),
-                productDetails: _showing == 'club' ? _clubProduct! : _productDetails!,
-                changeSubscriptionParam: (oldSubscription != null)
-                    ? ChangeSubscriptionParam(
-                  oldPurchaseDetails: oldSubscription,
-                  prorationMode: ProrationMode.immediateAndChargeFullPrice,
-                ) : null);
-          } else {
-            //InAppPurchase.instance.restorePurchases();
-            purchaseParam = AppStorePurchaseParam(
-              applicationUserName: ref.read(myProfileProvider)!.id.toString(),
-              productDetails: _showing == 'club' ? _clubProduct! : _productDetails!,
-            );
-          }
-          try {
-            await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
-          } catch (e) {
-            inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
-          }
-          //inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
-          SonaAnalytics.log(PayEvent.pay_continue.name);
-        },
+        child: OutlinedButton(
+          onPressed: _purchasePending || !ref.watch(asyncSubscriptionsProvider).hasValue ? null : (_showing == 'club' ? _subscribeClub : _subscribePlus),
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.zero,
-              backgroundColor: _showing == 'club' ? Color(0xFFBEFF06) : Colors.white
+            padding: EdgeInsets.zero,
+            backgroundColor: _showing == 'club' ? Color(0xFFBEFF06) : Colors.white
           ),
           child: _purchasePending ? CircularProgressIndicator() : Text(_showing == 'club' ? S.current.buttonJoinNow : '🌟 ${S.of(context).buttonContinue} 🌟'),
         ),
-      ) : Container(),
+      ) : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: _showing == 'club' ? _buildClub() : SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildTabBar(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(widget.showType.label,
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w900
-                            )
-                        ),
-                      ),
-                      PowersWidget(),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 80),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(Assets.imagesSubBg),
-                      fit: BoxFit.fitWidth,
-                      alignment: Alignment.topCenter
-                    ),
-                    color: Colors.white
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text('SONA Plus',style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w800,
-                          color: Color(0xff2c2c2c)
-                        ),),
-                      ),
-                      Container(
-                        color: Color(0xFFBEFF06),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildProductList(),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            _buildPlusTerms(),
-                            _buildRestoreButton()
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 100)
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Positioned(child: Image.asset(widget.showType.path,width: 150,height: 150,),right: 0, top: 70),
-          ],
-        ),
-      ),
+      body: _showing == 'club' ? _buildClub() : _buildPlus()
     );
   }
 
@@ -286,7 +202,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     ),
   );
 
-  Widget _buildPlusTerms() => Padding(
+  Widget _buildPlusTerms() => Container(
+    margin: EdgeInsets.only(top: 24),
     padding: const EdgeInsets.symmetric(horizontal: 16),
     child: RichText(
       text: TextSpan(
@@ -314,7 +231,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     ),
   );
 
-  Widget _buildClubTerms() => Padding(
+  Widget _buildClubTerms() => Container(
+    margin: EdgeInsets.only(top: 24),
     padding: const EdgeInsets.symmetric(horizontal: 16),
     child: RichText(
       text: TextSpan(
@@ -343,57 +261,61 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   );
 
   Widget _buildClubFee() {
-    return _clubProduct != null ? Padding(
-      padding: EdgeInsets.only(top: 20, bottom: 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          FittedBox(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black, width: 2),
-                borderRadius: BorderRadius.circular(12)
-              ),
-              clipBehavior: Clip.antiAlias,
-              alignment: Alignment.center,
-              child: Text(S.current.clubPromotionTitle, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900),),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 12),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            alignment: Alignment.center,
-            child: Text(S.current.clubFeePrefix,
-              style: Theme.of(context).textTheme.titleLarge
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 4),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            alignment: Alignment.center,
-            child: Text('${_clubProduct!.price}/mo',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: 32
-                )
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 4),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            alignment: Alignment.center,
-            child: Text('😉 ${S.current.clubFeeJoking}',
-                style: Theme.of(context).textTheme.bodySmall
-            ),
-          ),
-        ],
-      ),
-    ) : Container(
-      height: 200,
-      alignment: Alignment.center,
-      child: const SizedBox(width: 32, height: 32, child: CircularProgressIndicator())
+    return Container(
+        height: 200,
+        alignment: Alignment.center,
+        child: ref.watch(asyncSubscriptionsProvider).when(
+            data: (subscriptions) {
+              final club = subscriptions.firstWhere((sub) => sub.id == clubMonthlyId);
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FittedBox(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black, width: 2),
+                          borderRadius: BorderRadius.circular(12)
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      alignment: Alignment.center,
+                      child: Text(S.current.clubPromotionTitle, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900),),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    alignment: Alignment.center,
+                    child: Text(S.current.clubFeePrefix,
+                        style: Theme.of(context).textTheme.titleLarge
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    alignment: Alignment.center,
+                    child: Text('${club.price}/mo',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontSize: 32
+                        )
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    alignment: Alignment.center,
+                    child: Text('😉 ${S.current.clubFeeJoking}',
+                        style: Theme.of(context).textTheme.bodySmall
+                    ),
+                  ),
+                ],
+              );
+            } ,
+            error: (_, __) => Container(),
+            loading: () => const SizedBox(width: 32, height: 32, child: CircularProgressIndicator())
+        )
     );
   }
 
@@ -404,9 +326,10 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     S.current.clubPerkSonaTip,
     S.current.clubPerkBadge
   ];
+
   Widget _buildClubDesc() {
     return Container(
-      padding: const EdgeInsets.only(top: 60, left: 16, right: 16, bottom: 16),
+      padding: const EdgeInsets.only(top: 60, left: 16, right: 16, bottom: 0),
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/white_star_bg.png'),
@@ -472,8 +395,9 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           }
         },
         style: TextButton.styleFrom(
-            maximumSize: Size(MediaQuery.of(context).size.width, 56),
-            fixedSize: Size(MediaQuery.of(context).size.width, 56)
+          backgroundColor: Colors.transparent,
+          maximumSize: Size(MediaQuery.of(context).size.width, 56),
+          fixedSize: Size(MediaQuery.of(context).size.width, 56)
         ),
         child: Text(S.of(context).buttonRestore)
       ),
@@ -505,229 +429,159 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     );
   }
 
-  ///连接检查
-  Card _buildConnectionCheckTile() {
-    if (_loading) {
-      return const Card(child: ListTile(title: Text('Trying to connect...')));
-    }
-    final Widget storeHeader = _isAvailable?Container():ListTile(
-      leading: Icon(_isAvailable ? Icons.check : Icons.block,
-          color: _isAvailable
-              ? Colors.green
-              : ThemeData.light().colorScheme.error),
-      title:
-      Text('The store is ${_isAvailable ? 'available' : 'unavailable'}.'),
-    );
-    final List<Widget> children = <Widget>[storeHeader];
-
-    if (!_isAvailable) {
-      children.addAll(<Widget>[
-        const Divider(),
-        ListTile(
-          title: Text('Not connected',
-              style: TextStyle(color: ThemeData.light().colorScheme.error)),
-          subtitle: const Text(
-              'Unable to connect to the payments processor. Has this app been configured correctly? See the example README for instructions.'),
-        ),
-      ]);
-    }
-    return Card(child: Column(children: children));
+  Widget _buildDivider() {
+    return Image.asset('assets/images/cloud_green_narrow.png', fit: BoxFit.fitWidth);
   }
-  ///产品列表
-  Widget _buildProductList() {
-    if (_loading) {
-      return const Card(
-          child: ListTile(
-              leading: CircularProgressIndicator(),
-              title: Text('Fetching products...')));
-    }
-    if (!_isAvailable) {
-      return const Card();
-    }
-    final List<Widget> productList = <Widget>[];
-    if (_notFoundIds.isNotEmpty) {
-      ///产品未找到
-      productList.add(Text('[${_notFoundIds.join(", ")}] not found',
-          style: TextStyle(color: ThemeData.light().colorScheme.error)),);
-    }
 
-    // This loading previous purchases code is just a demo. Please do not use this as it is.
-    // In your app you should always verify the purchase data using the `verificationData` inside the [PurchaseDetails] object before trusting it.
-    // We recommend that you use your own server to verify the purchase data.
-    ///标记购买的内容已交付给用户。转换一下数据类型
-    final Map<String, PurchaseDetails> purchases = Map<String, PurchaseDetails>.fromEntries(
-        _purchases.map((PurchaseDetails purchase) {
-          if (purchase.pendingCompletePurchase) {
-            inAppPurchase.completePurchase(purchase);
-          }
-          return MapEntry<String, PurchaseDetails>(purchase.productID, purchase);
-        }));
-    ///产品列表，继续转换一下数据类型
-    _products.sort((l,r)=>l.rawPrice.compareTo(r.rawPrice));
-    double monthBill;
-    try{
-      monthBill =_products.firstWhere((element) => element.id==month).rawPrice;
-    }catch(e){
-      return const Text('Error');
-    }
-    if(_products.isNotEmpty){
+  Widget _buildPlusTitle() {
+    return Container(
+      height: 100,
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Text(S.current.plusDescTitle,
+              style: Theme.of(context).textTheme.titleLarge
+            )
+          ),
+          SonaIcon(icon: SonaIcons.plus_mark, size: 100)
+        ],
+      ),
+    );
+  }
 
-      productList.addAll(_products.map(
-            (ProductDetails productDetails) {
-          ///购买前购买详情，赋值给商品。
-          return GestureDetector(
-            onTap: () async {
+  static final _plusPerks = [
+    S.current.plusPerkDuoSnap,
+    S.current.plusFuncUnlockWhoLikesU,
+    S.current.plusFuncAIInterpretation,
+    S.current.plusFuncUnlimitedLikes,
+    S.current.plusFuncDMPerWeek,
+    S.current.plusFuncSonaTips
+  ];
 
-              if(_productDetails!=productDetails){
-                _productDetails=productDetails;
-
-                setState(() {
-
-                });
-              }
-
-            },
-            child: Container(
-              width: 160,
-              height: 134,
-              margin: EdgeInsets.only(right: 11,top: 14),
-              decoration: BoxDecoration(
-                  color: _productDetails==productDetails?Color(0xff2c2c2c):Color(0xffF6F3F3),
-                  borderRadius: BorderRadius.circular(20),
-                  // gradient: _productDetails==productDetails?const LinearGradient(colors: [
-                  //   Color(0xffFFC36A),
-                  //   Color(0xffFFDF8E),
-                  // ]):null,
-                  border: Border.all(
-                      color: Color(0xff2c2c2c),
-                      width: 2
+  Widget _buildPlusDesc() {
+    return Container(
+      padding: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ..._plusPerks.map((perk) => Container(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              children: [
+                Image.asset(Assets.iconsCorrect, width: 14, height: 14, color: Colors.black),
+                const SizedBox(width: 8),
+                Text(perk,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w800
                   )
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildSubTitle(productDetails,monthBill),
-                  ],
                 ),
+              ],
+            ),
+          )),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPlus() {
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(bottom: 90),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0, 0.3],
+            colors: [
+              Colors.white,
+              Color(0xFFBEFF06)
+            ]
+          )
+        ),
+        child: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  _buildTabBar(),
+                  _buildPlusTitle(),
+                  _buildPlusDesc(),
+                  _buildDivider(),
+                ],
               ),
             ),
+            _buildPlusSubscriptionsTitle(),
+            _buildPlusSubscriptions(),
+            _buildPlusTerms(),
+            _buildRestoreButton()
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlusSubscriptionsTitle() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      alignment: Alignment.centerLeft,
+      child: Text('Sona Plus',
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontSize: 24
+          )
+      )
+    );
+  }
+
+  Widget _buildPlusSubscriptions() {
+    return Container(
+      height: 152,
+      width: MediaQuery.maybeOf(context)?.size.width,
+      child: ref.watch(asyncSubscriptionsProvider).when(
+        data: (subscriptions) {
+          final monthlyPrice = subscriptions.firstWhere((sub) => sub.id == plusMonthlyId).rawPrice;
+          return ListView(
+            controller: _scrollController,
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            children: [
+              ...(subscriptions.where((sub) => plusSubscriptionIds.contains(sub.id)).toList()..sort((a, b) => (a.rawPrice - b.rawPrice).ceil())).map<Widget>((sub) => GestureDetector(
+                onTap: () async {
+                  ref.read(selectedPlusSubIdProvider.notifier).update((state) => sub.id);
+                },
+                child: Container(
+                  width: 160,
+                  height: 134,
+                  margin: EdgeInsets.only(right: 11,top: 14),
+                  decoration: BoxDecoration(
+                      color: ref.watch(selectedPlusSubIdProvider) == sub.id ? Color(0xff2c2c2c) : Color(0xffF6F3F3),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Color(0xff2c2c2c), width: 2)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: _buildSubTitle(sub, monthlyPrice),
+                  ),
+                ),
+              ))
+            ],
           );
         },
-      ));
-    }
-    return Column(
-        children: <Widget>[
-
-          SizedBox(
-            height: 151,
-            width: MediaQuery.maybeOf(context)?.size.width,
-            child: ListView(
-              controller: _scrollController,
-              padding: EdgeInsets.symmetric(
-                  horizontal: 20
-              ),
-              scrollDirection: Axis.horizontal,
-              children: productList,
-            ),
+        error: (_, __) => Container(),
+        loading: () => Center(
+          child: SizedBox(
+            width: 32,
+            height: 32,
+            child: CircularProgressIndicator(),
           ),
-
-        ]);
+        )
+      ),
+    );
   }
 
-  ///初始化店铺信息
-  Future<void> initStoreInfo() async {
-    ///可用
-    final bool isAvailable = await inAppPurchase.isAvailable();
-    if(!isAvailable){
-      SonaAnalytics.log('inAppPurchase_unAvailable');
-    }
-
-    if (!isAvailable&&mounted ) {
-      setState(() {
-        _isAvailable = isAvailable;
-        ///产品详情
-        _products = <ProductDetails>[];
-        ///购买详情
-        _purchases = <PurchaseDetails>[];
-        ///没找到
-        _notFoundIds = <String>[];
-        ///消耗品的id集合
-        // _consumables = <String>[];
-        ///购买待定
-        _purchasePending = false;
-        ///正在载入
-        _loading = false;
-      });
-      return;
-    }
-    ///如果是苹果
-    if (Platform.isIOS) {
-      final InAppPurchaseStoreKitPlatformAddition iosPlatformAddition =
-      inAppPurchase
-          .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
-      ///设置代理
-      await iosPlatformAddition.setDelegate(IOSPaymentQueueDelegate());
-    }
-    ///产品详情响应
-    final ProductDetailsResponse productDetailResponse = await inAppPurchase.queryProductDetails(_kProductIds.toSet()..add(clubMonthly));
-    ///如果没有错误
-    if (productDetailResponse.error != null) {
-      if(mounted){
-        setState(() {
-          _queryProductError = productDetailResponse.error!.message;
-          _isAvailable = isAvailable;
-          _products = productDetailResponse.productDetails;
-
-          // for (var element in _products) {
-          //   if(element.id==month){
-          //     monthBill=element.rawPrice;
-          //   }
-          // }
-          _purchases = <PurchaseDetails>[];
-          _notFoundIds = productDetailResponse.notFoundIDs;
-          // _consumables = <String>[];
-          _purchasePending = false;
-          _loading = false;
-        });
-      }
-      return;
-    }
-    ///产品详情为空
-    if (productDetailResponse.productDetails.isEmpty) {
-      if(mounted){
-        setState(() {
-          _queryProductError = null;
-          _isAvailable = isAvailable;
-          _products = productDetailResponse.productDetails;
-          _purchases = <PurchaseDetails>[];
-          _notFoundIds = productDetailResponse.notFoundIDs;
-          // _consumables = <String>[];
-          _purchasePending = false;
-          _loading = false;
-        });
-      }
-      return;
-    }
-    if(mounted){
-      ///载入本地保存的消耗品的id
-      setState(() {
-        _isAvailable = isAvailable;
-        var clubIndex = productDetailResponse.productDetails.indexWhere((pd) => pd.id == clubMonthly);
-        _clubProduct = productDetailResponse.productDetails.removeAt(clubIndex);
-        _products = List.from(productDetailResponse.productDetails);
-        _productDetails=_products.firstWhere((element) => element.id==biannually);
-        //_productDetails=_products.last;
-        _notFoundIds = productDetailResponse.notFoundIDs;
-        // _consumables = consumables;
-        _purchasePending = false;
-        _loading = false;
-      });
-    }
-
-  }
   ///
   void handleError(IAPError error) {
     setState(() {
@@ -755,26 +609,13 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
     return dio.post('/callback/google-pay',data: map);
   }
-  ///传递
+
   Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
     SonaAnalytics.log('iap_deliver');
-
-    // IMPORTANT!! Always verify purchase details before delivering the product.
-    // if (purchaseDetails.productID == _kConsumableId) {
-    //   await ConsumableStore.save(purchaseDetails.purchaseID!);
-    //   final List<String> consumables = await ConsumableStore.load();
-    //   setState(() {
-    //     _purchasePending = false;
-    //     _consumables = consumables;
-    //   });
-    // } else {
-    //
-    // }
     initUserPermission();
-    ref.read(myProfileProvider.notifier).refresh();
+    await ref.read(myProfileProvider.notifier).refresh();
     if (mounted) {
       setState(() {
-        _purchases.add(purchaseDetails);
         _purchasePending = false;
       });
       Fluttertoast.showToast(
@@ -787,9 +628,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     }
   }
 
-  void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
-    // handle invalid purchase here if  _verifyPurchase` failed.
-  }
   ///设置挂起状态的UI
   void showPendingUI() {
     setState(() {
@@ -872,7 +710,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       await iapStoreKitPlatformAddition.showPriceConsentIfNeeded();
     }
   }
-//获取老订单
+
+  // 获取老订单
   Future<GooglePlayPurchaseDetails?> _getOldSubscription() async {
     GooglePlayPurchaseDetails? oldSubscription;
     if (Platform.isAndroid) {
@@ -888,6 +727,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
     return oldSubscription;
   }
+
   @override
   void dispose() {
     if (Platform.isIOS) {
@@ -900,91 +740,59 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     _scrollController.dispose();
     super.dispose();
   }
-  _buildSubTitle(ProductDetails details, double monthBill) {
-    String id=details.id;
-    String p='';
-    String per='';
 
-    if(id==month){
-      p=S.current.aMonth;
-      // return Container();
-    }else if(id==quarter){
-      per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/3)/monthBill).toStringAsFixed(2)))}';
-      p=S.current.threeMonths;
-    }
-    else if(id==biannually){
-      p=S.current.sixMonths;
-      per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/6)/monthBill).toStringAsFixed(2)))}';
+  Widget _buildSubTitle(ProductDetails details, double priceMonthly) {
+    final selected = ref.watch(selectedPlusSubIdProvider) == details.id;
+    final (monthCount, name) = switch(details.id) {
+      plusMonthlyId => (1, S.current.aMonth),
+      plusQuarterlyId => (3, S.current.threeMonths),
+      plusBiannuallyId => (6, S.current.sixMonths),
+      plusAnnuallyId => (12, S.current.aYear),
+      _ => throw()
+    };
 
-     // per='${detail s.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}';
-    }
-    else if(id==annually){
-      p=S.current.aYear;
-      per='Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/12)/monthBill).toStringAsFixed(2)))}';
-
-      //(details.rawPrice/12)/monthBill;
-     //per='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}';
-      // return Text();
-    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(p,style: TextStyle(
-            color: _productDetails==details?Color(0xffffffff):Color(0xff2c2c2c),
+        Text(name,
+          style: TextStyle(
+            color: selected ? Colors.white : Color(0xff2c2c2c),
             fontSize: 20,
             fontWeight: FontWeight.w800
-
         ),),
         SizedBox(
           height: 4,
         ),
-        _buildPerMonth(details),
-        SizedBox(
-          height: 4,
+        Text('${details.currencySymbol}${(details.rawPrice/monthCount).toStringAsFixed(2)}/${S.current.month}',
+          style: TextStyle(
+            color: selected ? Colors.white : Color(0xff2c2c2c),
+            fontSize: 14,
+            fontWeight: FontWeight.w400
+          )
         ),
-        details.id==month?Container():Container(
+        SizedBox(height: 4),
+        details.id==plusMonthlyId?Container():Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: _productDetails==details?Color(0xffFFE806):Color(0xff2c2c2c),
+            color: selected ? Color(0xffFFE806) : Color(0xff2c2c2c),
           ),
           width: 85,
           height: 32,
-          child: Text('${(per)}',style: TextStyle(
-              color: _productDetails==details?Color(0xff2c2c2c):Color(0xffffffff),
+          child: Text(monthCount == 1 ? '' : 'Save ${NumberFormat.percentPattern().format(double.tryParse((1-(details.rawPrice/monthCount)/priceMonthly).toStringAsFixed(2)))}',
+            style: TextStyle(
+              color: selected ? Color(0xff2c2c2c) : Color(0xffffffff),
               fontSize: 12,
-            fontWeight: FontWeight.w900
-          ),),
+              fontWeight: FontWeight.w900
+            )
+          ),
         ),
       ],
     );
   }
-  _buildPerMonth(ProductDetails details) {
-    String id=details.id;
-    String p='';
-    if(id==month){
-      p='${details.currencySymbol}${(details.rawPrice).toStringAsFixed(2)}/${S.current.month}';
-      //return Container();
-    }else if(id==quarter){
-      // return Text('${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(1)}');
-      p='${details.currencySymbol}${(details.rawPrice/3).toStringAsFixed(2)}/${S.current.month}';
-    }
-    else if(id==biannually){
-      // return Text('${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(1)}');
-      p='${details.currencySymbol}${(details.rawPrice/6).toStringAsFixed(2)}/${S.current.month}';
-    }
-    else if(id==annually){
-      p='${details.currencySymbol}${(details.rawPrice/12).toStringAsFixed(2)}/${S.current.month}';
-      // return Text();
-    }
-    return Text(p,style: TextStyle(
-      color: _productDetails==details?Color(0xffffffff):Color(0xff2c2c2c),
-      fontSize: 14,
-      fontWeight: FontWeight.w400
-    ),);
-  }
 }
+
 enum FromTag{
   pay_profile,
   pay_chatlist_likedme,
@@ -997,34 +805,8 @@ enum FromTag{
   pay_match_likelimit,
   chat_starter,
   profile_myplan,
-  travel_wish
+  travel_wish,
+  club_duo_snap // club会员的duo snap次数用完时
 }
-class SubscribeShowType{
-  String path;
-  String label;
-  SubscribeShowType(this.label,this.path);
-  ///解锁who lik eme
-  factory SubscribeShowType.unlockWhoLikeMe(){
-    return SubscribeShowType(S.current.subPageSubtitleUnlockWhoLikesU,Assets.imagesM1);
-  }
-  ///解锁无限like
-  factory SubscribeShowType.unlockUnlimitedLikes(){
-    return SubscribeShowType(S.current.subPageSubtitleUnlimitedLikes,Assets.imagesM2);
-  }
-  ///解锁DM
-  factory SubscribeShowType.unlockDM(){
-    return SubscribeShowType(S.current.subPageSubtitleDMWeekly,Assets.imagesM3);
-  }
-  ///解锁sona建议
-  factory SubscribeShowType.unlockSonaTips(){
-    return SubscribeShowType(S.current.subPageSubtitleSonaTips,Assets.imagesM4);
-  }
-  ///解锁三个愿望单
-  factory SubscribeShowType.unlockThreeWishes(){
-    return SubscribeShowType(S.current.subPageSubtitleFilterMatchingCountries,Assets.imagesM5);
-  }
-  ///解锁无限次的sona翻译
-  factory SubscribeShowType.unlockMoreAIInterpretation(){
-    return SubscribeShowType(S.current.subPageSubtitleAIInterpretationDaily,Assets.imagesM6);
-  }
-}
+
+final selectedPlusSubIdProvider = StateProvider<String>((ref) => plusBiannuallyId);

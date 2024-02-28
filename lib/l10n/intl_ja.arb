@@ -447,5 +447,15 @@
   "buttonUnlockVipPerks": "VIP特典を解除！",
   "@buttonUnlockVipPerks": {},
   "clubTerms": "「参加」をクリックすると料金が発生し、対応するパッケージの価格で自動更新されます。{storeName}でキャンセルが可能です。続行することで、私たちの",
-  "@clubTerms": {}
+  "@clubTerms": {},
+  "plusPerkDuoSnap": "週10回のDuo Snap",
+  "@plusPerkDuoSnap": {},
+  "plusDescTitle": "トッププラス会員になる",
+  "@plusDescTitle": {},
+  "catchMore": "もっと捕まえて！",
+  "@catchMore": {},
+  "unmissableSpecialOfferPrices": "見逃せない特別オファー価格！",
+  "@unmissableSpecialOfferPrices": {},
+  "checkItOut": "チェックしてみて！",
+  "@checkItOut": {}
 }

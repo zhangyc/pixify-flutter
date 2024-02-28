@@ -156,7 +156,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   child: OutlinedButton(
                     onPressed: () {
                       SonaAnalytics.log('chatlist_gopay');
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockWhoLikeMe(),fromTag: FromTag.pay_chatlist_likedme)));
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.pay_chatlist_likedme)));
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06))

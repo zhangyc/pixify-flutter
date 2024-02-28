@@ -95,7 +95,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("Deshacer match"),
         "buttonUnsubscribe":
             MessageLookupByLibrary.simpleMessage("Darse de baja"),
+        "catchMore": MessageLookupByLibrary.simpleMessage("¡Atrapa más!"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
+        "checkItOut": MessageLookupByLibrary.simpleMessage("¡Echa un vistazo!"),
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("Revisa sus perfiles"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Elegir"),
@@ -238,6 +240,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
                 "Por favor, revisa tu internet o Toca para Refrescar y prueba de nuevo"),
+        "plusDescTitle": MessageLookupByLibrary.simpleMessage(
+            "Conviértete en el miembro Plus principal"),
         "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
             "1000 interpretaciones simultáneas/día"),
         "plusFuncDMPerWeek":
@@ -251,6 +255,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
             "Desbloquear para ver quién te gusta"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 deseos"),
+        "plusPerkDuoSnap":
+            MessageLookupByLibrary.simpleMessage("10 Duo Snap / semana"),
         "preference": MessageLookupByLibrary.simpleMessage("Preferencia"),
         "privacy": MessageLookupByLibrary.simpleMessage("Privacidad"),
         "privacyPolicy":
@@ -325,6 +331,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀Has alcanzado tu límite diario"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅Has alcanzado tu límite semanal"),
+        "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
+            "¡Precios de oferta especial inmejorables!"),
         "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("Sube tu foto"),
         "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
             "SONA se esfuerza por proporcionar un ambiente de comunicación genuino, por favor, sube tu foto real"),

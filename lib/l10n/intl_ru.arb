@@ -447,5 +447,15 @@
   "buttonUnlockVipPerks": "Разблокируйте привилегии VIP!",
   "@buttonUnlockVipPerks": {},
   "clubTerms": "При нажатии \"Присоединиться\" взимается плата, подписка продлевается автоматически, Вы можете отменить через {storeName}. Продолжая, вы соглашаетесь с нашими ",
-  "@clubTerms": {}
+  "@clubTerms": {},
+  "plusPerkDuoSnap": "10 Duo Snap / неделю",
+  "@plusPerkDuoSnap": {},
+  "plusDescTitle": "Станьте лучшим членом Plus",
+  "@plusDescTitle": {},
+  "catchMore": "Лови больше!",
+  "@catchMore": {},
+  "unmissableSpecialOfferPrices": "Непропустимые специальные предложения!",
+  "@unmissableSpecialOfferPrices": {},
+  "checkItOut": "Посмотрите!",
+  "@checkItOut": {}
 }
