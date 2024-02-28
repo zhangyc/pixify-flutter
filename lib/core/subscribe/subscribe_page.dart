@@ -441,7 +441,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Text(S.current.plusDescTitle,
+            child: Text(widget.fromTag == FromTag.club_duo_snap ? S.current.plusPerkDuoSnap : S.current.plusDescTitle,
               style: Theme.of(context).textTheme.titleLarge
             )
           ),
