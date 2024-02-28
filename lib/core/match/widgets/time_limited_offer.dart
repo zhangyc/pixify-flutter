@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../generated/assets.dart';
+import '../../../utils/global/global.dart';
+import '../../subscribe/subscribe_page.dart';
 
 class TimeLimitedOffer extends StatelessWidget {
   const TimeLimitedOffer({super.key, required this.close});
@@ -45,7 +47,11 @@ class TimeLimitedOffer extends StatelessWidget {
           height: 16,
         ),
         OutlinedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+              return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+            }));
+          },
           child: Text('Check it oyt!'),
           style: OutlinedButton.styleFrom(backgroundColor: Color(0xffBEFF06)),
         )

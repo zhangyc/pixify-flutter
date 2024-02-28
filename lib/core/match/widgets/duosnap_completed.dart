@@ -63,7 +63,7 @@ class DuosnapCompleted extends StatelessWidget {
                       Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                     }else{
                       Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                        return SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.pay_match_arrow,);
+                        return SubscribePage(fromTag: FromTag.pay_match_arrow,);
                       }));
                     }
                   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../generated/assets.dart';
+import '../../../utils/global/global.dart';
+import '../../subscribe/subscribe_page.dart';
 
 class CatchMore extends StatelessWidget {
   const CatchMore({super.key, required this.close});
@@ -42,7 +44,11 @@ class CatchMore extends StatelessWidget {
           height: 12,
         ),
         OutlinedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+              return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+            }));
+          },
           child: Text('Check it oyt!'),
           style: OutlinedButton.styleFrom(backgroundColor: Color(0xffBEFF06)),
         )
