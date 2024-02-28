@@ -117,7 +117,7 @@ ThemeData get themeData {
       buttonTheme: const ButtonThemeData(
           shape: ContinuousRectangleBorder(),
           padding: EdgeInsets.zero,
-          height: 60,
+          height: 56,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
       ),
       filledButtonTheme: FilledButtonThemeData(
@@ -140,8 +140,9 @@ ThemeData get themeData {
                   )
               ),
               padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
-              minimumSize: MaterialStatePropertyAll(Size.fromHeight(0)),
-              fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+              minimumSize: MaterialStatePropertyAll(Size(20, 20)),
+              maximumSize: MaterialStatePropertyAll(Size(375, 56)),
+              fixedSize: MaterialStatePropertyAll(Size(375, 56)),
               alignment: Alignment.center
           )
       ),
@@ -169,8 +170,9 @@ ThemeData get themeData {
                   )
               ),
               padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 24)),
-              minimumSize: MaterialStatePropertyAll(Size.fromHeight(0)),
-              fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+              minimumSize: MaterialStatePropertyAll(Size(20, 20)),
+              maximumSize: MaterialStatePropertyAll(Size(375, 56)),
+              fixedSize: MaterialStatePropertyAll(Size(375, 56)),
               alignment: Alignment.center
           )
       ),
@@ -189,8 +191,9 @@ ThemeData get themeData {
                 );
               }),
               padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 24)),
-              minimumSize: MaterialStatePropertyAll(Size.fromHeight(0)),
-              fixedSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+              minimumSize: MaterialStatePropertyAll(Size(20, 20)),
+              maximumSize: MaterialStatePropertyAll(Size(375, 56)),
+              // fixedSize: MaterialStatePropertyAll(Size(375, 56)),
               alignment: Alignment.center
           )
       ),

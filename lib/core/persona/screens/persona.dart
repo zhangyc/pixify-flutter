@@ -18,6 +18,7 @@ import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 
 import '../../../generated/l10n.dart';
+import '../../subscribe/model/member.dart';
 import '../../travel_wish/providers/my_wish.dart';
 
 class PersonaScreen extends StatefulHookConsumerWidget {
@@ -195,7 +196,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                         if (asyncMyTravelWishes.value!.isEmpty || myProfile.isMember) {
                           Navigator.push(context, MaterialPageRoute(builder: (_) => TravelWishCreator()));
                         } else {
-                          showSubscription(SubscribeShowType.unlockThreeWishes(),FromTag.travel_wish);
+                          showSubscription(FromTag.travel_wish);
                         }
                       },
                       child: Container(
@@ -287,6 +288,14 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                             ),
                           ],
                         ),
+                        SizedBox(height: 4),
+                        Center(
+                          child: switch(ref.read(myProfileProvider)?.memberType) {
+                            MemberType.club => SonaIcon(icon: SonaIcons.club_mark),
+                            MemberType.plus => SonaIcon(icon: SonaIcons.plus_mark),
+                            _ => Container()
+                          },
+                        ),
                         SizedBox(height: 16),
                         FilledButton(
                           onPressed: () => Navigator.push(context, MaterialPageRoute(
@@ -305,19 +314,26 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                   ),
                   SizedBox(height: 16),
                   if (!ref.watch(myProfileProvider)!.isMember) FilledButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.profile_myplan))),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06)),
                         side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),
-                      child: Text(S.of(context).getSonaPlus, style: Theme.of(context).textTheme.titleMedium)
+                      child: Text(S.of(context).buttonUnlockVipPerks, style: Theme.of(context).textTheme.titleMedium)
                   ),
                   if (ref.watch(myProfileProvider)!.isMember) OutlinedButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(SubscribeShowType.unlockDM(),fromTag: FromTag.profile_myplan))),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
                       style: ButtonStyle(
                           side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
                       ),
-                      child: Text(S.of(context).buttonAlreadyPlus, style: Theme.of(context).textTheme.titleMedium)
+                      child: Text(
+                        switch(ref.watch(myProfileProvider)!.memberType) {
+                          MemberType.club => S.current.youAreAClubMemberNow,
+                          MemberType.plus => S.current.buttonAlreadyPlus,
+                          _ => ''
+                        },
+                        style: Theme.of(context).textTheme.titleMedium
+                      )
                   )
                 ],
               ),

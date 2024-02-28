@@ -20,21 +20,24 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh_TW';
 
-  static String m0(something) => "\"我對${something}感興趣\"";
+  static String m0(storeName) =>
+      "點擊“加入”後你會被收取費用，您的訂閱將按對應套餐價格自動續訂，您可以通過${storeName}取消，繼續代表您同意我們的";
 
-  static String m1(something) => "我對「${something}」非常感興趣！";
+  static String m1(something) => "\"我對${something}感興趣\"";
 
-  static String m2(lang) => "只需輸入${lang}";
+  static String m2(something) => "我對「${something}」非常感興趣！";
 
-  static String m3(gender) =>
+  static String m3(lang) => "只需輸入${lang}";
+
+  static String m4(gender) =>
       "你喜歡${Intl.gender(gender, female: '她', male: '他', other: '他們')}的哪個想法？";
 
-  static String m4(storeName) =>
+  static String m5(storeName) =>
       "點擊“繼續”後你會被收取費用，您的訂閱將按對應套餐價格自動續訂，您可以通過${storeName}取消，繼續代表您同意我們的";
 
-  static String m5(country) => "跳過，就${country}";
+  static String m6(country) => "跳過，就${country}";
 
-  static String m6(country) => "有計劃要去${country}嗎";
+  static String m7(country) => "有計劃要去${country}嗎";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -68,6 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonGotIt": MessageLookupByLibrary.simpleMessage("明白了"),
         "buttonHitAIInterpretationMaximumLimit":
             MessageLookupByLibrary.simpleMessage("😪SONA累了，👇點擊給她加油！"),
+        "buttonJoinNow": MessageLookupByLibrary.simpleMessage("立即加入！"),
         "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("保留帳戶"),
         "buttonManage": MessageLookupByLibrary.simpleMessage("管理"),
         "buttonNext": MessageLookupByLibrary.simpleMessage("下一步"),
@@ -79,12 +83,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonSave": MessageLookupByLibrary.simpleMessage("儲存"),
         "buttonSignOut": MessageLookupByLibrary.simpleMessage("登出"),
         "buttonSubmit": MessageLookupByLibrary.simpleMessage("提交"),
+        "buttonUnlockVipPerks":
+            MessageLookupByLibrary.simpleMessage("解鎖VIP特權！"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("取消配對"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("取消訂閱"),
+        "catchMore": MessageLookupByLibrary.simpleMessage("抓更多！"),
         "chat": MessageLookupByLibrary.simpleMessage("聊天"),
+        "checkItOut": MessageLookupByLibrary.simpleMessage("去看看！"),
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("查看他們的資料"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("選擇"),
+        "clubFeeJoking": MessageLookupByLibrary.simpleMessage("只需一杯飲料的價格"),
+        "clubFeePrefix":
+            MessageLookupByLibrary.simpleMessage("加入SONA Club，超划算"),
+        "clubPerkBadge": MessageLookupByLibrary.simpleMessage("獨家俱樂部徽章"),
+        "clubPerkDuoSnap": MessageLookupByLibrary.simpleMessage("每週3次Duo Snap"),
+        "clubPerkLike": MessageLookupByLibrary.simpleMessage("每天100個讚（免費的2倍）"),
+        "clubPerkSonaMessage":
+            MessageLookupByLibrary.simpleMessage("每天100條SONA消息（免費的3倍）"),
+        "clubPerkSonaTip": MessageLookupByLibrary.simpleMessage("每天5次SONA建議"),
+        "clubPromotionContent":
+            MessageLookupByLibrary.simpleMessage("抓住這個交易 - 加入俱樂部並大放異彩！"),
+        "clubPromotionTitle": MessageLookupByLibrary.simpleMessage("限時優惠"),
+        "clubTerms": m0,
         "commonLanguage": MessageLookupByLibrary.simpleMessage("主要語言"),
         "commonLanguageTitle": MessageLookupByLibrary.simpleMessage("常用語言"),
         "continueWithApple": MessageLookupByLibrary.simpleMessage("使用Apple繼續"),
@@ -120,14 +141,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("你覺得AI傳譯怎麼樣?"),
         "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("你的活力很有吸引力！"),
         "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("我中意你的風格！"),
-        "imInterestedSomething": m0,
-        "imVeryInterestedInSomething": m1,
+        "imInterestedSomething": m1,
+        "imVeryInterestedInSomething": m2,
         "interests": MessageLookupByLibrary.simpleMessage("興趣"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI傳譯：關"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI傳譯：開"),
         "justNow": MessageLookupByLibrary.simpleMessage("剛剛"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("就是按讚"),
-        "justTypeInYourLanguage": m2,
+        "justTypeInYourLanguage": m3,
         "letSONASayHiForYou":
             MessageLookupByLibrary.simpleMessage("讓SONA代你打招呼"),
         "likedPageMonetizeButton":
@@ -141,8 +162,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("我們需要您的位置信息來改善您的社交體驗"),
         "locationPermissionRequestTitle":
             MessageLookupByLibrary.simpleMessage("位置授權"),
-        "matchPageSelectIdeas": m3,
+        "matchPageSelectIdeas": m4,
         "me": MessageLookupByLibrary.simpleMessage("我的"),
+        "membersPerks": MessageLookupByLibrary.simpleMessage("會員特權"),
         "month": MessageLookupByLibrary.simpleMessage("月"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage("照片越多，推薦值越高"),
         "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage("照片多多魅力增！"),
@@ -175,6 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "photos": MessageLookupByLibrary.simpleMessage("照片"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage("請檢查網路或點擊刷新重試"),
+        "plusDescTitle": MessageLookupByLibrary.simpleMessage("成為頂級Plus會員"),
         "plusFuncAIInterpretation":
             MessageLookupByLibrary.simpleMessage("每天1000條AI傳譯"),
         "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("每週5次DM"),
@@ -186,6 +209,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("解鎖查看誰喜歡你"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3個心願"),
+        "plusPerkDuoSnap":
+            MessageLookupByLibrary.simpleMessage("每週10次Duo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("偏好"),
         "privacy": MessageLookupByLibrary.simpleMessage("隱私"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("隱私政策"),
@@ -231,7 +256,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("解鎖查看\n誰喜歡你"),
         "subPageTitle": MessageLookupByLibrary.simpleMessage("取得SONA Plus"),
         "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("條款"),
-        "subscriptionAgreementPrefix": m4,
+        "subscriptionAgreementPrefix": m5,
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("。"),
         "takeIt": MessageLookupByLibrary.simpleMessage("使用"),
@@ -244,6 +269,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀已達到今日限額"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅你已達到本週限額"),
+        "unmissableSpecialOfferPrices":
+            MessageLookupByLibrary.simpleMessage("不容錯過的特價優惠！"),
         "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("上傳你的照片"),
         "uploadYourPhotoHint":
             MessageLookupByLibrary.simpleMessage("SONA努力提供一個真實的交流環境，請上傳你的本人照片"),
@@ -306,7 +333,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("幫你找到小夥伴"),
         "wishActivityPickerTitle":
             MessageLookupByLibrary.simpleMessage("有什麼特別想做的事嗎？"),
-        "wishCityPickerSkipButton": m5,
+        "wishCityPickerSkipButton": m6,
         "wishCityPickerSubtitle":
             MessageLookupByLibrary.simpleMessage("如果你去那裡，你想去哪些城市？"),
         "wishCountryPickerTitle":
@@ -317,10 +344,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "wishDateOptionNotSure": MessageLookupByLibrary.simpleMessage("還不確定喲"),
         "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("近期吧，大概"),
         "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("一年內"),
-        "wishDatePickerSubtitle": m6,
+        "wishDatePickerSubtitle": m7,
         "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("何時"),
         "wishList": MessageLookupByLibrary.simpleMessage("心願單"),
         "wishes": MessageLookupByLibrary.simpleMessage("心願"),
+        "youAreAClubMemberNow":
+            MessageLookupByLibrary.simpleMessage("你現在是俱樂部會員了"),
         "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage("你可以隨時編輯"),
         "youSeemCool": MessageLookupByLibrary.simpleMessage("你看起來很酷。")
       };

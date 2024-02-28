@@ -56,10 +56,10 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
                       onTap: _switchLanguage,
                       text: S.of(context).commonLanguage,
                     ),
-                    ForwardButton(
-                      onTap: _switchGender,
-                      text: S.of(context).userGenderInputLabel,
-                    ),
+                    // ForwardButton(
+                    //   onTap: _switchGender,
+                    //   text: S.of(context).userGenderInputLabel,
+                    // ),
                     ForwardButton(
                       onTap: _deleteAccount,
                       text: S.of(context).buttonDeleteAccount,

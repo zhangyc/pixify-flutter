@@ -31,15 +31,15 @@ dependencies:
   crop_your_image: ^0.7.5
   infinite_scroll_pagination: ^4.0.0
   geolocator: ^10.1.0
-  firebase_core: ^2.24.2
-  firebase_storage: ^11.6.0
-  cloud_firestore: ^4.14.0
-  firebase_messaging: ^14.7.10
-  firebase_auth: ^4.16.0
-  firebase_analytics: ^10.8.0
-  firebase_crashlytics: ^3.4.9
-  firebase_app_check: ^0.2.1+8
-  flutter_local_notifications: ^16.3.0
+  firebase_core: ^2.25.4
+  firebase_storage: ^11.6.6
+  cloud_firestore: ^4.15.5
+  firebase_messaging: ^14.7.16
+  firebase_auth: ^4.17.5
+  firebase_analytics: ^10.8.6
+  firebase_crashlytics: ^3.4.15
+  firebase_app_check: ^0.2.1+14
+  flutter_local_notifications: ^16.3.2
   lottie:
   in_app_purchase: ^3.1.13
   stacked_page_view: ^1.1.2
@@ -51,7 +51,7 @@ dependencies:
   rxdart: ^0.27.7
   url_launcher: ^6.1.14
   package_info_plus: ^5.0.1
-  appsflyer_sdk: ^6.12.2
+#  appsflyer_sdk: ^6.12.2
   riverpod_annotation: ^2.3.3
   flutter_staggered_grid_view: ^0.7.0
   google_mlkit_face_detection: ^0.9.0

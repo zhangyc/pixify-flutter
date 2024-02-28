@@ -2149,6 +2149,196 @@ class S {
       args: [],
     );
   }
+
+  /// `Time-limited offer`
+  String get clubPromotionTitle {
+    return Intl.message(
+      'Time-limited offer',
+      name: 'clubPromotionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join the SONA Club, for Just`
+  String get clubFeePrefix {
+    return Intl.message(
+      'Join the SONA Club, for Just',
+      name: 'clubFeePrefix',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `that's the price of a coke`
+  String get clubFeeJoking {
+    return Intl.message(
+      'that\'s the price of a coke',
+      name: 'clubFeeJoking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Membership Perks`
+  String get membersPerks {
+    return Intl.message(
+      'Membership Perks',
+      name: 'membersPerks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3  Duo Snap  / week`
+  String get clubPerkDuoSnap {
+    return Intl.message(
+      '3  Duo Snap  / week',
+      name: 'clubPerkDuoSnap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `100 Likes / day (2x free)`
+  String get clubPerkLike {
+    return Intl.message(
+      '100 Likes / day (2x free)',
+      name: 'clubPerkLike',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `100 Sona messages / day  (3x free)`
+  String get clubPerkSonaMessage {
+    return Intl.message(
+      '100 Sona messages / day  (3x free)',
+      name: 'clubPerkSonaMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `5 SONA Tips / day`
+  String get clubPerkSonaTip {
+    return Intl.message(
+      '5 SONA Tips / day',
+      name: 'clubPerkSonaTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Exclusive Club badge`
+  String get clubPerkBadge {
+    return Intl.message(
+      'Exclusive Club badge',
+      name: 'clubPerkBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Snag the deal -  Join the Club & shine!`
+  String get clubPromotionContent {
+    return Intl.message(
+      'Snag the deal -  Join the Club & shine!',
+      name: 'clubPromotionContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join Now`
+  String get buttonJoinNow {
+    return Intl.message(
+      'Join Now',
+      name: 'buttonJoinNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You're a Club member now `
+  String get youAreAClubMemberNow {
+    return Intl.message(
+      'You\'re a Club member now ',
+      name: 'youAreAClubMemberNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlock VIP Perks!`
+  String get buttonUnlockVipPerks {
+    return Intl.message(
+      'Unlock VIP Perks!',
+      name: 'buttonUnlockVipPerks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By tapping Join, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via  {storeName} settings, and you agree to our `
+  String clubTerms(Object storeName) {
+    return Intl.message(
+      'By tapping Join, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via  $storeName settings, and you agree to our ',
+      name: 'clubTerms',
+      desc: '',
+      args: [storeName],
+    );
+  }
+
+  /// `10 Duo Snap  / week`
+  String get plusPerkDuoSnap {
+    return Intl.message(
+      '10 Duo Snap  / week',
+      name: 'plusPerkDuoSnap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Become the top Plus member`
+  String get plusDescTitle {
+    return Intl.message(
+      'Become the top Plus member',
+      name: 'plusDescTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Catch more!`
+  String get catchMore {
+    return Intl.message(
+      'Catch more!',
+      name: 'catchMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unmissable special offer prices!`
+  String get unmissableSpecialOfferPrices {
+    return Intl.message(
+      'Unmissable special offer prices!',
+      name: 'unmissableSpecialOfferPrices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check it out!`
+  String get checkItOut {
+    return Intl.message(
+      'Check it out!',
+      name: 'checkItOut',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

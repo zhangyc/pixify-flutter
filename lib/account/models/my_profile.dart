@@ -2,6 +2,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/account/models/hobby.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 
 class MyProfile {
   const MyProfile( {
@@ -22,7 +23,8 @@ class MyProfile {
     this.photos = const <ProfilePhoto>[],
     this.locale,
     this.cityVisibility = true,
-    required this.vipEndDate,
+    required this.memberType,
+    required this.vipEndDate
   });
 
   final int id;
@@ -42,10 +44,11 @@ class MyProfile {
   final bool pushEnabled;
   final String? locale;
   final bool cityVisibility;
+  final MemberType memberType;
   final int? vipEndDate;
 
   bool get completed => _validate();
-  bool get isMember => vipEndDate != null && vipEndDate! > DateTime.now().millisecondsSinceEpoch;
+  bool get isMember => memberType != MemberType.none;
 
   factory MyProfile.fromJson(Map<String, dynamic> json) {
     final longitudeStr = json['longitude'];
@@ -76,7 +79,8 @@ class MyProfile {
       position: pos,
       pushEnabled: json['openPush'] ?? true,
       locale: json['lang'],
-      cityVisibility: json['showCity'] ?? true
+      cityVisibility: json['showCity'] ?? true,
+      memberType: MemberType.fromString(json['vip'])
     );
   }
 
@@ -100,7 +104,8 @@ class MyProfile {
       'openPush': pushEnabled,
       'lang': locale,
       'showCity': cityVisibility,
-      'vipEndDate':vipEndDate
+      'vipEndDate':vipEndDate,
+      'vip': memberType.name
     };
   }
 

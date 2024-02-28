@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/account/models/hobby.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 
 import '../../../common/models/user.dart';
 
@@ -32,7 +33,8 @@ class MatchUserInfo extends UserInfo{
     this.wishList=const [],
     this.originNickname,
     this.currentCity,
-    this.likeActivityName
+    this.likeActivityName,
+    this.memberType
   }) : super(id: id,
     name: name,
     originNickname: originNickname,
@@ -89,6 +91,9 @@ class MatchUserInfo extends UserInfo{
   int get age => birthday!.toAge();
   @override
   final String? impression;
+
+  final MemberType? memberType;
+
   int likeMe=0;  //1 喜欢了，0 无
   List<UserHobby> interest=[];
   List<WishBean> wishList=[];
@@ -116,43 +121,45 @@ class MatchUserInfo extends UserInfo{
       wishList=_travelWish.map((e) => WishBean.fromJson(e)).toList();
     }
     return MatchUserInfo(
-        id: json['id'],
-        name: json['nickname'],
-        gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-        birthday: json['birthday'] != null ? DateTime.fromMillisecondsSinceEpoch(json['birthday']) : null,
-        locale: json['lang'],
-        countryId: json['countryId'],
-        countryCode: json['countryCode'],
-        countryName: json['countryName'],
-        countryFlag: json['countryFlag'],
-        avatar: json['avatar'],
-        bio: json['description'],
-        chatStyleId: json['chatStyleId'],
-        photos: photos,
-        allScore: json['allScore']?.toStringAsFixed(2),
-        impression:json['impression'],
-        interest: interest,
-        likeMe: json['likeMe']??0,
-        wishList: wishList,
-        originNickname:json['originNickname'],
-        currentCity:json['currentCity'],
-        likeActivityName:json['likeActivityName']
+      id: json['id'],
+      name: json['nickname'],
+      gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
+      birthday: json['birthday'] != null ? DateTime.fromMillisecondsSinceEpoch(json['birthday']) : null,
+      locale: json['lang'],
+      countryId: json['countryId'],
+      countryCode: json['countryCode'],
+      countryName: json['countryName'],
+      countryFlag: json['countryFlag'],
+      avatar: json['avatar'],
+      bio: json['description'],
+      chatStyleId: json['chatStyleId'],
+      photos: photos,
+      allScore: json['allScore']?.toStringAsFixed(2),
+      impression:json['impression'],
+      interest: interest,
+      likeMe: json['likeMe']??0,
+      wishList: wishList,
+      originNickname:json['originNickname'],
+      currentCity:json['currentCity'],
+      likeActivityName:json['likeActivityName'],
+      memberType: MemberType.fromString(json['vip'])
     );
   }
 
   factory MatchUserInfo.fromFirestore(Map<String, dynamic> json) {
     return MatchUserInfo(
-        id: json['id'],
-        name: json['originalNickname'],
-        gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-        birthday: json['birthday'] != null ? (json['birthday'] as Timestamp).toDate() : null,
-        locale: json['lang'],
-        countryId: json['countryId'],
-        countryCode: json['countryCode'],
-        countryFlag: json['countryFlag'] ?? '🇺🇸',
-        countryName: json['countryName'],
-        avatar: json['avatar'],
-        bio: json['description']
+      id: json['id'],
+      name: json['originalNickname'],
+      gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
+      birthday: json['birthday'] != null ? (json['birthday'] as Timestamp).toDate() : null,
+      locale: json['lang'],
+      countryId: json['countryId'],
+      countryCode: json['countryCode'],
+      countryFlag: json['countryFlag'] ?? '🇺🇸',
+      countryName: json['countryName'],
+      avatar: json['avatar'],
+      bio: json['description'],
+      memberType: MemberType.fromString(json['vip'])
     );
   }
 }
