@@ -16,6 +16,7 @@ import 'package:sona/core/chat/models/message_type.dart';
 import 'package:sona/core/chat/providers/message.dart';
 import 'package:sona/core/chat/widgets/inputbar/mode_provider.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
+import 'package:sona/core/match/widgets/image_preview.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../../../common/providers/entitlements.dart';
@@ -57,7 +58,7 @@ class ImageMessageWidget extends ConsumerStatefulWidget {
 class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
 
   bool _clicked = false;
-  late String url;
+  late String url='';
   @override
   void initState() {
     if(widget.message.content!=null&&widget.message.content!.isNotEmpty){
@@ -109,6 +110,11 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                           widget.onDelete(widget.message);
                         }
                       },
+                      onTap: (){
+                        showDialog(context: context, builder: (b){
+                          return ImagePreview(url: url);
+                        });
+                      },
                       child: Container(
                           constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width * 0.64,
@@ -123,7 +129,7 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                           ),
                           padding: EdgeInsets.all(12),
                           clipBehavior: Clip.antiAlias,
-                          child: CachedNetworkImage(imageUrl: url??'',width: 138,height: 184,),
+                          child: url.isNotEmpty?CachedNetworkImage(imageUrl: url??'',width: 138,height: 184,):Container(),
                       ),
                     ),
                     // SizedBox(height: 12),
