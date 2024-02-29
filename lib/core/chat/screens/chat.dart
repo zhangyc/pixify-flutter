@@ -33,6 +33,7 @@ import '../../../generated/l10n.dart';
 import '../../../utils/dialog/subsciption.dart';
 import '../models/message_type.dart';
 import '../widgets/inputbar/mode_provider.dart';
+import '../widgets/message/image_message.dart';
 import '../widgets/message/message.dart';
 
 class ChatScreen extends StatefulHookConsumerWidget {
@@ -147,7 +148,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               shrinkWrap: true,
               padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
               reverse: true,
-              itemBuilder: (BuildContext context, int index) => index != messages.length ? MessageWidget(
+              itemBuilder: (BuildContext context, int index) => index != messages.length ? (messages[index].contentType==1?MessageWidget(
                 key: ValueKey(messages[index].uuid ?? messages[index].id),
                 prevMessage: index == messages.length - 1 ? null : messages[index + 1],
                 message: messages[index],
@@ -161,7 +162,21 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 onDelete: _deleteMessage,
                 onResend: _resendMessage,
                 onAvatarTap: _showInfo,
-              ) : _startupline(messages.isNotEmpty),
+              ):ImageMessageWidget(
+                key: ValueKey(messages[index].uuid ?? messages[index].id),
+                prevMessage: index == messages.length - 1 ? null : messages[index + 1],
+                message: messages[index],
+                fromMe: mySide.id == messages[index].sender.id,
+                mySide: mySide,
+                otherSide: widget.otherSide,
+                myLocale: myLocale,
+                otherLocale: otherLocale,
+                // onPendingMessageSucceed: _onPendingMessageSucceed,
+                // onShorten: _shortenMessage,
+                onDelete: _deleteMessage,
+                onResend: _resendMessage,
+                onAvatarTap: _showInfo,
+              )) : _startupline(messages.isNotEmpty),
               itemCount: messages.length + 1,
               separatorBuilder: (_, __) => SizedBox(height: 5),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -272,6 +287,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       sender: mySide,
       receiver: widget.otherSide,
       time: DateTime.now(),
+      contentType: 1,
+      content: text
     );
     message.sendingParams = MessageSendingParams(
         uuid: message.uuid!,

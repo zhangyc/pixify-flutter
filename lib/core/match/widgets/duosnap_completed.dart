@@ -57,6 +57,7 @@ class DuosnapCompleted extends StatelessWidget {
                     //MatchApi.sendImageMsg(info.id,controller.text);
                     // next.call();
                     Navigator.pop(context);
+                    MatchApi.sendImageMsg(task.targetUserId!, task.targetPhotoUrl!);
                   }else {
                     bool isMember=ref.read(myProfileProvider)?.isMember??false;
                     if(isMember){

@@ -14,7 +14,7 @@ import 'package:sona/core/match/widgets/duosnap_completed.dart';
 import '../../account/providers/profile.dart';
 import '../../generated/assets.dart';
 
-final ValueNotifier<int> startGenerate = ValueNotifier<int>(0);
+final ValueNotifier<String> startGenerate = ValueNotifier<String>('1');
 
 class GenerateBanner extends ConsumerStatefulWidget {
   const GenerateBanner({super.key});
@@ -38,12 +38,17 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
       _initTask();
     });
     startGenerate.addListener(() {
+      _generateState=GenerateState.requesting;
+      setState(() {
+
+      });
       _initTask();
     });
     super.initState();
   }
 
   _initTask() async{
+
     HttpResult result=await post('/merge-photo/find-last');
     if(result.isSuccess){
      duoSnapTask=DuoSnapTask.fromJson(result.data);
@@ -67,6 +72,16 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
      setState(() {
 
      });
+    }else if(result.statusCode.toString()=='60010'){
+      _generateState=GenerateState.cancel;
+      setState(() {
+
+      });
+    }else {
+      _generateState=GenerateState.fail;
+      setState(() {
+
+      });
     }
   }
   @override
@@ -165,37 +180,39 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
                      angle: -15 * 3.14 / 180,
                      child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
                        return Container(
+                           width: 26,
+                           height: 35,
                          clipBehavior: Clip.antiAlias,
                          decoration: BoxDecoration(
                            borderRadius: BorderRadius.circular(8),
                              border: Border.all(
                                  color: Colors.white,
                                  width: 2
-                             )
+                             ),
+                             image: DecorationImage(image: CachedNetworkImageProvider(ref.read(myProfileProvider)!.avatar??'',),fit: BoxFit.cover,)
+
                          ),
-                           child: CachedNetworkImage(
-                             imageUrl: ref.read(myProfileProvider)!.avatar??'',
-                             width: 26,
-                             height: 35,
-                           )
                        );
                      },)), // 替换为您的左侧图片路径
                  Transform.rotate(
                      angle: 15 * 3.14 / 180,
                      child: Container(
+                       width: 26,
+                       height: 35,
                          clipBehavior: Clip.antiAlias,
                          decoration: BoxDecoration(
                              borderRadius: BorderRadius.circular(8),
                              border: Border.all(
                              color: Colors.white,
-                             width: 2
-                           )
+                             width: 2,
+                           ),
+                           image: DecorationImage(image: CachedNetworkImageProvider(duoSnapTask?.targetUserAvatar??''),fit: BoxFit.cover,)
                          ),
-                         child: CachedNetworkImage(
-                           imageUrl: duoSnapTask?.userAvatar??'',
-                           width: 26,
-                           height: 35,
-                         )
+                         // child: CachedNetworkImage(
+                         //   imageUrl: duoSnapTask?.targetPhotoUrl??'',
+                         //
+                         //   fit: BoxFit.cover,
+                         // ),
                      )
                  ), // 替换为您的右侧图片路径
                ],
@@ -212,6 +229,62 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          ),
        ),
     );
+   }else if(_generateState==GenerateState.fail){
+     return  Container(
+       color: Color(0xff797979),
+       height: 56,
+       child: Row(
+         mainAxisAlignment: MainAxisAlignment.center,
+         children: [
+           Text("❗ Issues, please retry",style: TextStyle(
+               fontSize: 14,
+               color: Colors.white,
+               fontWeight: FontWeight.w900
+           ),),
+           GestureDetector(
+             child: Container(
+                 child: Text('Retry'),
+                 width: 90,
+                 height: 30,
+               decoration: BoxDecoration(
+                 color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                 border: Border.all(
+                   color: Color(0xff2c2c2c),
+                   width: 2
+                 )
+               ),
+             ),
+             onTap: () async{
+
+               HttpResult overResponse=await post('/merge-photo/cancel',data: {
+                 'id':duoSnapTask.id
+               });
+               if(overResponse.isSuccess){
+                 await post('path',data: {
+                   {
+                     // 原图URL
+                     "photoUrl":duoSnapTask.sourcePhotoUrl,
+                     // 对方用户ID
+                     "targetUserId":duoSnapTask.targetUserId,
+                     // 模型 - 测试是任意写
+                     "modelId":duoSnapTask.modelId
+                   }
+                 });
+               }
+             },
+           ),
+           GestureDetector(
+             child: SvgPicture.asset(Assets.svgDislike),
+             onTap: (){
+               post('/merge-photo/cancel',data: {
+                 'id':duoSnapTask.id
+               });
+             },
+           )
+         ],
+       ),
+     );
    }else if(_generateState==GenerateState.cancel){
      return Container();
    }else {

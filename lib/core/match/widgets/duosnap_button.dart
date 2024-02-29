@@ -13,16 +13,18 @@ import 'dart:ui' as ui;
 import 'package:image/image.dart' as img;
 import 'package:sona/core/match/bean/match_user.dart';
 import 'package:sona/core/match/util/http_util.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/services/common.dart';
 import '../../../utils/image/image_merge.dart';
 import '../../widgets/generate_banner.dart';
+import '../providers/duo_provider.dart';
 
 class DuosnapButton extends ConsumerStatefulWidget {
-  const DuosnapButton(this.target, this.text, {super.key});
+  const DuosnapButton(this.target, this.model, {super.key});
   final MatchUserInfo target;
-  final String text;
+  final SdModel model;
   @override
   ConsumerState createState() => _DuosnapButtonState();
 }
@@ -67,12 +69,12 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
           // 对方用户ID
           "targetUserId":widget.target.id,
           // 模型 - 测试是任意写
-          "model":"11"
+          "modelId":widget.model.id
         });
         if(response.isSuccess){
 
         }
-        startGenerate.value=1;
+        startGenerate.value=uuid.v1();
       },
       child: Stack(
         children: [
@@ -90,7 +92,7 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
                 right: BorderSide(width: 1.0, color: Colors.black), // 底部边框样式
               ),
             ),
-            child: Text(widget.text,
+            child: Text(widget.model.name??'',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800),
             ),
           ),

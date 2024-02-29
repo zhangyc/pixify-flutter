@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/match/widgets/duosnap_button.dart';
 
 import '../../../generated/assets.dart';
 import '../bean/match_user.dart';
+import '../providers/duo_provider.dart';
 
 class CustomBottomDialog extends StatelessWidget {
   final String title;
@@ -57,14 +59,50 @@ class CustomBottomDialog extends StatelessWidget {
               Transform.rotate(
                   angle: -15 * 3.14 / 180,
                   child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                    return CachedNetworkImage(imageUrl: ref.read(myProfileProvider)!.avatar??'',width: 122,height: 163,);
+                    return Container(
+                        child: CachedNetworkImage(
+                          imageUrl: ref.read(myProfileProvider)!.avatar??'',
+                          width: 122,
+                          height: 163,
+                          fit: BoxFit.cover,
+                        ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xff2c2c2c),
+                          width: 2
+                        ),
+                          borderRadius: BorderRadius.circular(12)
+
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                    );
                   },)), // 替换为您的左侧图片路径
               Transform.rotate(
                   angle: 15 * 3.14 / 180,
-                  child: CachedNetworkImage(imageUrl: target.avatar??'',width: 122,height: 163,)), // 替换为您的右侧图片路径
+                  child: Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Color(0xff2c2c2c),
+                          width: 2
+                      ),
+                      borderRadius: BorderRadius.circular(12)
+                      ),
+                    child: CachedNetworkImage(
+                      imageUrl: target.avatar??'',
+                      width: 122,
+                      height: 163,
+                      fit: BoxFit.cover,
+                    ),
+
+
+                  )
+
+              ), // 替换为您的右侧图片路径
             ],
           ),
           SizedBox(height: 16.0),
+
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
@@ -74,17 +112,24 @@ class CustomBottomDialog extends StatelessWidget {
                   'Pick a style',
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w900),
                 ),
-                SizedBox(height: 8.0),
-                _buildOptionButton('🐉 Eastern 🐉',target),
-                SizedBox(height: 8.0),
+                Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  final AsyncValue<List<SdModel>> result = ref.watch(getSDModelProvider);
+                  if(result.hasValue){
+                    return Column(
+                      children: result.value!.map((e) => Column(
+                        children: [
+                          SizedBox(height: 8.0),
+                          _buildOptionButton(e,target),
+                        ],
+                      )).toList(),
+                    );
+                  }else if(result.hasError){
+                    return  const Text('Oops, something unexpected happened');
+                  }else {
+                    return SizedBox(width: 50,height: 50,child: CircularProgressIndicator(),);
+                  }
 
-                _buildOptionButton('🏕️ Africa 🏕️',target),
-                SizedBox(height: 8.0),
-
-                _buildOptionButton('🕶️ Trendy 🕶️',target),
-                SizedBox(height: 8.0),
-
-                _buildOptionButton('👅 Meme 👅',target),
+                },),
               ],
             ),
           ),
@@ -93,7 +138,7 @@ class CustomBottomDialog extends StatelessWidget {
     );
   }
   // 构建带有底部边框的按钮
-  Widget _buildOptionButton(String text,MatchUserInfo targetUrl) {
-    return DuosnapButton(targetUrl,text);
+  Widget _buildOptionButton(SdModel model,MatchUserInfo targetUrl) {
+    return DuosnapButton(targetUrl,model);
   }
 }
