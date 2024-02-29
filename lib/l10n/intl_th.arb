@@ -447,5 +447,15 @@
   "buttonUnlockVipPerks": "ปลดล็อกสิทธิพิเศษ VIP!",
   "@buttonUnlockVipPerks": {},
   "clubTerms": "เข้าร่วม คุณจะถูกเรียกเก็บเงิน การสมัครใช้งานของคุณจะถูกต่ออายุอัตโนมัติในราคาแพ็กเกจ คุณสามารถยกเลิกได้ผ่าน {storeName} การดำเนินการต่อคุณจะตกลงกับ ",
-  "@clubTerms": {}
+  "@clubTerms": {},
+  "plusPerkDuoSnap": "10 Duo Snap / สัปดาห์",
+  "@plusPerkDuoSnap": {},
+  "plusDescTitle": "เป็นสมาชิก Plus ชั้นนำ",
+  "@plusDescTitle": {},
+  "catchMore": "มากกว่านี้!",
+  "@catchMore": {},
+  "unmissableSpecialOfferPrices": "พลาดไม่ได้กับราคาโปรโมชั่นพิเศษ!",
+  "@unmissableSpecialOfferPrices": {},
+  "checkItOut": "ลองดูสิ!",
+  "@checkItOut": {}
 }

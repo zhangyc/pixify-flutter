@@ -89,7 +89,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("VIP特典を解除！"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("ペアリング解除"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("購読を解除する"),
+        "catchMore": MessageLookupByLibrary.simpleMessage("もっと捕まえて！"),
         "chat": MessageLookupByLibrary.simpleMessage("チャット"),
+        "checkItOut": MessageLookupByLibrary.simpleMessage("チェックしてみて！"),
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("あいつらのプロフチェックしよう!"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("選択"),
@@ -207,6 +209,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
                 "ネットワークを確認するか、更新ボタンを押してリトライしてくださいね~"),
+        "plusDescTitle": MessageLookupByLibrary.simpleMessage("トッププラス会員になる"),
         "plusFuncAIInterpretation":
             MessageLookupByLibrary.simpleMessage("1日に1000回のAI同期通訳"),
         "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("週に5回のDM"),
@@ -219,6 +222,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("あなたを好きな人が誰か見るために解除"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3つの願い"),
+        "plusPerkDuoSnap":
+            MessageLookupByLibrary.simpleMessage("週10回のDuo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("好み"),
         "privacy": MessageLookupByLibrary.simpleMessage("プライバシー"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("プライバシーポリシー"),
@@ -282,6 +287,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀1日の制限に達しました"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅週の制限に達しました"),
+        "unmissableSpecialOfferPrices":
+            MessageLookupByLibrary.simpleMessage("見逃せない特別オファー価格！"),
         "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("写真をアップロード"),
         "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
             "SONAは本物のコミュニケーション環境を提供する努力をしています。本人の写真をアップロードしてください"),

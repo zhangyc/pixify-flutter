@@ -447,5 +447,15 @@
   "buttonUnlockVipPerks": "Unlock VIP Perks!",
   "@buttonUnlockVipPerks": {},
   "clubTerms": "By tapping Join, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via  {storeName} settings, and you agree to our ",
-  "@clubTerms": {}
+  "@clubTerms": {},
+  "plusPerkDuoSnap": "10 Duo Snap  / week",
+  "@plusPerkDuoSnap": {},
+  "plusDescTitle": "Become the top Plus member",
+  "@plusDescTitle": {},
+  "catchMore": "Catch more!",
+  "@catchMore": {},
+  "unmissableSpecialOfferPrices": "Unmissable special offer prices!",
+  "@unmissableSpecialOfferPrices": {},
+  "checkItOut": "Check it out!",
+  "@checkItOut": {}
 }

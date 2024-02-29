@@ -447,5 +447,15 @@
   "buttonUnlockVipPerks": "解锁VIP特权！",
   "@buttonUnlockVipPerks": {},
   "clubTerms": "点击“加入”后你会被收取费用，您的订阅将按对应套餐价格自动续订，您可以通过{storeName}取消，继续代表您同意我们的",
-  "@clubTerms": {}
+  "@clubTerms": {},
+  "plusPerkDuoSnap": "每周10次Duo Snap",
+  "@plusPerkDuoSnap": {},
+  "plusDescTitle": "成为顶级Plus会员",
+  "@plusDescTitle": {},
+  "catchMore": "抓住更多！",
+  "@catchMore": {},
+  "unmissableSpecialOfferPrices": "不容错过的特价优惠！",
+  "@unmissableSpecialOfferPrices": {},
+  "checkItOut": "去看看！",
+  "@checkItOut": {}
 }

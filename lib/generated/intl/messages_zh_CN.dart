@@ -87,7 +87,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("解锁VIP特权！"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("取消匹配"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("取消订阅"),
+        "catchMore": MessageLookupByLibrary.simpleMessage("抓住更多！"),
         "chat": MessageLookupByLibrary.simpleMessage("聊天"),
+        "checkItOut": MessageLookupByLibrary.simpleMessage("去看看！"),
         "checkOutTheirProfiles": MessageLookupByLibrary.simpleMessage("看看都是谁"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("选择"),
         "clubFeeJoking": MessageLookupByLibrary.simpleMessage("只需一杯饮料的价格"),
@@ -194,6 +196,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "photos": MessageLookupByLibrary.simpleMessage("照片"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage("请检查网络或点击刷新重试"),
+        "plusDescTitle": MessageLookupByLibrary.simpleMessage("成为顶级Plus会员"),
         "plusFuncAIInterpretation":
             MessageLookupByLibrary.simpleMessage("每天1000条AI传译"),
         "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("每周5条DM"),
@@ -205,6 +208,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("解锁查看谁喜欢了你"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3个心愿"),
+        "plusPerkDuoSnap":
+            MessageLookupByLibrary.simpleMessage("每周10次Duo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("偏好"),
         "privacy": MessageLookupByLibrary.simpleMessage("隐私"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("隐私政策"),
@@ -264,6 +269,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀已达到今日限额"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅你已达到本周限额"),
+        "unmissableSpecialOfferPrices":
+            MessageLookupByLibrary.simpleMessage("不容错过的特价优惠！"),
         "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("上传你的照片"),
         "uploadYourPhotoHint":
             MessageLookupByLibrary.simpleMessage("SONA努力提供一个真实的交流环境，请上传你的本人照片"),

@@ -2289,6 +2289,56 @@ class S {
       args: [storeName],
     );
   }
+
+  /// `10 Duo Snap  / week`
+  String get plusPerkDuoSnap {
+    return Intl.message(
+      '10 Duo Snap  / week',
+      name: 'plusPerkDuoSnap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Become the top Plus member`
+  String get plusDescTitle {
+    return Intl.message(
+      'Become the top Plus member',
+      name: 'plusDescTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Catch more!`
+  String get catchMore {
+    return Intl.message(
+      'Catch more!',
+      name: 'catchMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unmissable special offer prices!`
+  String get unmissableSpecialOfferPrices {
+    return Intl.message(
+      'Unmissable special offer prices!',
+      name: 'unmissableSpecialOfferPrices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check it out!`
+  String get checkItOut {
+    return Intl.message(
+      'Check it out!',
+      name: 'checkItOut',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

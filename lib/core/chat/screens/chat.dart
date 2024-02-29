@@ -187,7 +187,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         ) : Padding(
           padding: const EdgeInsets.all(8.0),
           child: OutlinedButton(
-              onPressed: () => showSubscription(SubscribeShowType.unlockMoreAIInterpretation(), FromTag.pay_chat_sonamsg),
+              onPressed: () => showSubscription(FromTag.pay_chat_sonamsg),
               style: ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06))
               ),
@@ -315,7 +315,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       if (myProfile.isMember) {
         coolDownDaily();
       } else {
-        showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.chat_starter);
+        showSubscription(FromTag.chat_starter);
       }
     }
   }
@@ -329,7 +329,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       if (myProfile.isMember) {
         coolDownDaily();
       } else {
-        showSubscription(SubscribeShowType.unlockMoreAIInterpretation(),FromTag.pay_chat_hook);
+        showSubscription(FromTag.pay_chat_hook);
       }
     }
     SonaAnalytics.log('chat_hook');

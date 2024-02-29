@@ -28,7 +28,7 @@ class AsyncSonaTipsNotifier extends AutoDisposeFamilyAsyncNotifier<SonaTips, int
         coolDownWeekly();
         SonaAnalytics.log('sona_tips_hit_maximum_limit:plus');
       } else {
-        showSubscription(SubscribeShowType.unlockSonaTips(),FromTag.pay_chat_suggest);
+        showSubscription(FromTag.pay_chat_suggest);
         SonaAnalytics.log('sona_tips_hit_maximum_limit:non-plus');
       }
       throw Error();

@@ -88,7 +88,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("VIP 혜택 잠금 해제!"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("매치 해제"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("구독 취소"),
+        "catchMore": MessageLookupByLibrary.simpleMessage("더 많이 잡아라!"),
         "chat": MessageLookupByLibrary.simpleMessage("채팅"),
+        "checkItOut": MessageLookupByLibrary.simpleMessage("확인해보세요!"),
         "checkOutTheirProfiles":
             MessageLookupByLibrary.simpleMessage("그들의 프로필을 확인하세요"),
         "choosePlaceholder": MessageLookupByLibrary.simpleMessage("선택"),
@@ -213,6 +215,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
                 "인터넷을 확인하거나 새로 고침을 탭하여 다시 시도하세요"),
+        "plusDescTitle":
+            MessageLookupByLibrary.simpleMessage("최고의 플러스 회원이 되십시오"),
         "plusFuncAIInterpretation":
             MessageLookupByLibrary.simpleMessage("하루에 1000번 AI 동시통역"),
         "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("주당 5회 DM"),
@@ -225,6 +229,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "plusFuncUnlockWhoLikesU":
             MessageLookupByLibrary.simpleMessage("좋아하는 사람이 누구인지 보려면 잠금 해제"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3개의 소원"),
+        "plusPerkDuoSnap":
+            MessageLookupByLibrary.simpleMessage("주당 10회 Duo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("취향"),
         "privacy": MessageLookupByLibrary.simpleMessage("프라이버시"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("개인정보처리방침"),
@@ -287,6 +293,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀당신은 오늘의 한도에 도달했습니다"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅당신은 이번 주의 한도에 도달했습니다"),
+        "unmissableSpecialOfferPrices":
+            MessageLookupByLibrary.simpleMessage("놓칠 수 없는 특별 할인 가격!"),
         "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("사진을 업로드하세요"),
         "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
             "SONA는 진정한 커뮤니케이션 환경을 제공하기 위해 노력하고 있습니다. 본인의 사진을 업로드해 주세요"),
