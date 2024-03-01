@@ -96,6 +96,7 @@ flutter:
     - assets/icons/
     - assets/lottie/
     - assets/images/
+    - assets/videos/
     - assets/svg/
     - assets/apng/
 

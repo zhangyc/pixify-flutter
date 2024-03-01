@@ -61,6 +61,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
   OverlayEntry? _voiceEntry;
 
   static const enterTimesKey = 'enter_times';
+  static final recorder = AudioRecorder();
+  static const config = RecordConfig(
+      encoder: AudioEncoder.aacLc,
+      bitRate: 64000,
+      sampleRate: 8000,
+      numChannels: 1
+  );
 
   @override
   void initState() {
@@ -245,6 +252,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   behavior: HitTestBehavior.translucent,
                   onLongPressStart: (_) async {
                     _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
+
                     Overlay.of(context).insert(_voiceEntry!);
                   },
                   onLongPressEnd: (_) async {
@@ -262,7 +270,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     ),
                     padding: EdgeInsets.symmetric(vertical: 1.5),
                     alignment: Alignment.center,
-                    child: Text('Hold to speek', style: Theme.of(context).textTheme.titleMedium),
+                    child: Text('Hold to speak', style: Theme.of(context).textTheme.titleMedium),
                   ),
                 )
               ),
