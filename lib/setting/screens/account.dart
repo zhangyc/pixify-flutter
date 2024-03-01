@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
 import 'package:sona/common/widgets/button/forward.dart';
+import 'package:sona/core/match/screens/match.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/core/travel_wish/providers/my_wish.dart';
 import 'package:sona/core/travel_wish/providers/popular_country.dart';
@@ -14,7 +15,7 @@ import 'package:sona/utils/picker/gender.dart';
 
 import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
-import 'package:sona/core/match/screens/match.dart';
+
 class AccountSettingScreen extends StatefulHookConsumerWidget {
   const AccountSettingScreen({super.key});
 
