@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -14,6 +16,7 @@ import 'package:sona/account/screens/email_sign_in.dart';
 import 'package:sona/account/screens/phone_sign_in.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/widgets/image/icon.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../common/env.dart';
 import '../../common/widgets/webview.dart';
@@ -35,17 +38,32 @@ class AuthLandingScreen extends ConsumerStatefulWidget {
 
 class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
 
-  final ab = Random().nextBool();
+  late final VideoPlayerController _videoController;
 
   @override
   void initState() {
-    SonaAnalytics.log('auth_landing', {'index': ab ? 0 : 1, 'name': ab ? 'original' : 'from_daifeng'});
+    SonaAnalytics.log('auth_landing');
     super.initState();
+    _videoController = VideoPlayerController.asset('assets/videos/landing.mp4',
+      videoPlayerOptions: VideoPlayerOptions(
+        mixWithOthers: true
+      )
+    )..setLooping(true)..initialize().then((value) {
+      setState(() {});
+      _videoController.play().then((value) => _videoController.play());
+    });
+  }
+
+  @override
+  void dispose() {
+    _videoController..pause()..dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF2C2C2C),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -55,121 +73,156 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
       ),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(ab ? 'assets/images/sign_in_bg.png' : 'assets/images/sign_in_bg_b.png'),
-            fit: BoxFit.fitWidth,
-            alignment: Alignment.topCenter
-          )
-        ),
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          height: 56 * 3 + 12 * 4 + 158 + MediaQuery.of(context).padding.bottom,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/onboarding_fg.png'),
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-                scale: 2.6
-              )
+      body: Stack(
+        children: [
+          Positioned.fill(
+              child: _videoController.value.isInitialized ? VideoPlayer(
+                _videoController
+              ) : Container()
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 80),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                child: OutlinedButton.icon(
-                    onPressed: _signInWithSMS,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor),
-                      foregroundColor: MaterialStatePropertyAll(Colors.white)
-                    ),
-                    icon: SonaIcon(icon: SonaIcons.phone),
-                    label: Text(S.current.continueWithPhone)
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                child: OutlinedButton.icon(
-                    onPressed: _signInWithEmail,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.white),
-                    ),
-                    icon: SonaIcon(icon: SonaIcons.email),
-                    label: Text(S.current.continueWithEmail)
-                ),
-              ),
-              if (Platform.isAndroid) Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                child: OutlinedButton.icon(
-                  onPressed: _signInWithGoogle,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.white),
-                    ),
-                  icon: SonaIcon(icon: SonaIcons.google),
-                  label: Text(S.current.continueWithGoogle)
-                ),
-              ),
-              if (Platform.isIOS) Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                child: OutlinedButton.icon(
-                    onPressed: _signInWithApple,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.white),
-                    ),
-                    icon: SonaIcon(icon: SonaIcons.apple),
-                    label: Text(S.current.continueWithApple)
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: Text.rich(
-                  TextSpan(
-                      children: [
-                        TextSpan(
-                            text: S.current.userPhoneNumberPageTermsPrefix
-                        ),
-                        TextSpan(
-                            text: S.current.userPhoneNumberPageTermsText,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                decoration: TextDecoration.underline
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
-                                return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
-                              }))
-                        ),
-                        TextSpan(
-                            text: S.current.userPhoneNumberPageTermsAnd
-                        ),
-                        TextSpan(
-                            text: S.current.userPhoneNumberPagePrivacyText,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                decoration: TextDecoration.underline
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
-                                return WebView(url: env.privacyPolicy, title: S.of(context).privacyPolicy);
-                              }))
-                        ),
-                        TextSpan(
-                            text: S.current.userPhoneNumberPagePrivacySuffix
-                        ),
-                      ]
+          Positioned.fill(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(child: Container(
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
+                  alignment: Alignment.topCenter,
+                  child: Image.asset('assets/images/logo_coconut.png', width: 78),
+                )),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                  child: FilledButton.icon(
+                      onPressed: _signInWithSMS,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Colors.white),
+                        foregroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor)
+                      ),
+                      icon: SonaIcon(icon: SonaIcons.phone, color: Theme.of(context).primaryColor),
+                      label: Text(S.current.continueWithPhone)
                   ),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.black54
-                  ),
-                  textAlign: TextAlign.start,
                 ),
-              ),
-            ],
+                Row(
+                  children: [
+                    SizedBox(width: 16),
+                    Flexible(child: Divider(color: Colors.white.withOpacity(0.12))),
+                    Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        child: Text('OR',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Colors.white
+                            )
+                        )
+                    ),
+                    Flexible(child: Divider(color: Colors.white.withOpacity(0.12))),
+                    SizedBox(width: 16)
+                  ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(width: 16),
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+                        child: OutlinedButton.icon(
+                            onPressed: _signInWithEmail,
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.white.withOpacity(0.12),
+                              foregroundColor: Colors.white,
+                              side: BorderSide(color: Color(0xFF656565)),
+                            ),
+                            icon: SonaIcon(icon: SonaIcons.email, color: Colors.white),
+                            label: Text('E-mail')
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    if (Platform.isAndroid) Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+                        child: OutlinedButton.icon(
+                            onPressed: _signInWithGoogle,
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.white.withOpacity(0.12),
+                              foregroundColor: Colors.white,
+                              side: BorderSide(color: Color(0xFF656565)),
+                            ),
+                            icon: SonaIcon(icon: SonaIcons.google),
+                            label: Text('Google')
+                        ),
+                      ),
+                    ),
+                    if (Platform.isIOS) Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+                        child: OutlinedButton.icon(
+                            onPressed: _signInWithApple,
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.white.withOpacity(0.12),
+                              foregroundColor: Colors.white,
+                              side: BorderSide(color: Color(0xFF656565)),
+                            ),
+                            icon: SonaIcon(icon: SonaIcons.apple),
+                            label: Text('Apple ID')
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16)
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: Text.rich(
+                    TextSpan(
+                        children: [
+                          TextSpan(
+                              text: S.current.userPhoneNumberPageTermsPrefix
+                          ),
+                          TextSpan(
+                              text: S.current.userPhoneNumberPageTermsText,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.white
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
+                                  return WebView(url: env.termsOfService, title: S.of(context).termsOfService);
+                                }))
+                          ),
+                          TextSpan(
+                              text: S.current.userPhoneNumberPageTermsAnd
+                          ),
+                          TextSpan(
+                              text: S.current.userPhoneNumberPagePrivacyText,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.white
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Navigator.push(context, MaterialPageRoute(builder: (c){
+                                  return WebView(url: env.privacyPolicy, title: S.of(context).privacyPolicy);
+                                }))
+                          ),
+                          TextSpan(
+                              text: S.current.userPhoneNumberPagePrivacySuffix
+                          ),
+                        ]
+                    ),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Color(0xFFB7B7B7)
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).padding.bottom + 32)
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

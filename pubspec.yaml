@@ -63,6 +63,7 @@ dependencies:
   google_sign_in: ^6.2.1
   dotted_border: ^2.1.0
   image: ^4.1.7
+  video_player: ^2.8.2
 
 dev_dependencies:
   custom_lint: ^0.5.7
@@ -91,6 +92,7 @@ flutter:
     - assets/icons/
     - assets/lottie/
     - assets/images/
+    - assets/videos/
     - assets/svg/
     - assets/apng/
 
