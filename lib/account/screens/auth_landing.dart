@@ -86,7 +86,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(child: Container(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
+                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
                   alignment: Alignment.topCenter,
                   child: Image.asset('assets/images/logo_coconut.png', width: 78),
                 )),
