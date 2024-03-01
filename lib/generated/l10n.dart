@@ -2339,6 +2339,216 @@ class S {
       args: [],
     );
   }
+
+  /// `New Gameplay!`
+  String get newGameplay {
+    return Intl.message(
+      'New Gameplay!',
+      name: 'newGameplay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duo Snap`
+  String get duoSnap {
+    return Intl.message(
+      'Duo Snap',
+      name: 'duoSnap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI creating fun group pics!`
+  String get aiCreatingFunGroupPics {
+    return Intl.message(
+      'AI creating fun group pics!',
+      name: 'aiCreatingFunGroupPics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generating`
+  String get generating {
+    return Intl.message(
+      'Generating',
+      name: 'generating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You're in line, please hold on`
+  String get inLine {
+    return Intl.message(
+      'You\'re in line, please hold on',
+      name: 'inLine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Almost there, almost!`
+  String get almost {
+    return Intl.message(
+      'Almost there, almost!',
+      name: 'almost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Issues, please retry`
+  String get issues {
+    return Intl.message(
+      'Issues, please retry',
+      name: 'issues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message(
+      'Retry',
+      name: 'retry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duo snap is ready!`
+  String get duoSnapIsReady {
+    return Intl.message(
+      'Duo snap is ready!',
+      name: 'duoSnapIsReady',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send to Her`
+  String get sendToHer {
+    return Intl.message(
+      'Send to Her',
+      name: 'sendToHer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send to Him`
+  String get sendToHim {
+    return Intl.message(
+      'Send to Him',
+      name: 'sendToHim',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send to Them`
+  String get sendToThem {
+    return Intl.message(
+      'Send to Them',
+      name: 'sendToThem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share`
+  String get share {
+    return Intl.message(
+      'Share',
+      name: 'share',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duo snap require your real photo`
+  String get requireYourRealPhoto {
+    return Intl.message(
+      'Duo snap require your real photo',
+      name: 'requireYourRealPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The other person isn't a real photo, so we can't merge photos!`
+  String get cantMergePhotos {
+    return Intl.message(
+      'The other person isn\'t a real photo, so we can\'t merge photos!',
+      name: 'cantMergePhotos',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Got it`
+  String get gotIt {
+    return Intl.message(
+      'Got it',
+      name: 'gotIt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send DM`
+  String get sendDm {
+    return Intl.message(
+      'Send DM',
+      name: 'sendDm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wait please, only one at a time`
+  String get onlyOneAtatime {
+    return Intl.message(
+      'Wait please, only one at a time',
+      name: 'onlyOneAtatime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duo snap anyway`
+  String get duosnapAnyway {
+    return Intl.message(
+      'Duo snap anyway',
+      name: 'duosnapAnyway',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duo snap might be weird because the person's photo might not be real`
+  String get photoMightNotBeReal {
+    return Intl.message(
+      'Duo snap might be weird because the person\'s photo might not be real',
+      name: 'photoMightNotBeReal',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

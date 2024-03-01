@@ -4,12 +4,15 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../generated/assets.dart';
+import '../../generated/l10n.dart';
 
 class OtherNotMeetConditions extends StatelessWidget {
-  const OtherNotMeetConditions({super.key, required this.close, required this.gotit, required this.sendDM});
+  const OtherNotMeetConditions({super.key, required this.close, required this.gotit, required this.sendDM, required this.anyway});
   final Function close;
   final Function gotit;
   final Function sendDM;
+  final Function anyway;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +25,7 @@ class OtherNotMeetConditions extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Duo Snap',
+                S.current.duoSnap,
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900),
               ),
               IconButton(
@@ -36,7 +39,7 @@ class OtherNotMeetConditions extends StatelessWidget {
         ),
         Image.asset(Assets.imagesSnap1,width: 90,height: 90,),
         SizedBox(height: 16.0),
-        Text("The other person isn't a real photo, so we can't merge photos!",
+        Text(S.current.photoMightNotBeReal,
           style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w800
@@ -60,7 +63,7 @@ class OtherNotMeetConditions extends StatelessWidget {
                   color: Colors.white
                 ),
                 child: Text(
-                  'Got it',
+                  S.current.gotIt,
                   style: TextStyle(
                     color: Colors.black,
                       fontSize: 16,
@@ -83,7 +86,7 @@ class OtherNotMeetConditions extends StatelessWidget {
                     color: Color(0xff2c2c2c)
                 ),
                 child: Text(
-                  'Send DM',
+                  S.current.sendDm,
                   style: TextStyle(
                     color: Colors.white,
                       fontSize: 16,
@@ -93,6 +96,21 @@ class OtherNotMeetConditions extends StatelessWidget {
               ),
             )
           ],
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        TextButton(
+          onPressed: () {
+            anyway.call();
+          },
+          child: Text(
+            S.current.duosnapAnyway,
+            style: TextStyle(
+                color: Color(0xff0066FF),
+                fontWeight: FontWeight.w800,
+                fontSize: 16),
+          ),
         )
       ],
     );

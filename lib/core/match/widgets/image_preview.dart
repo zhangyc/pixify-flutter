@@ -1,10 +1,22 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gal/gal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:sona/core/subscribe/subscribe_page.dart';
 
 import '../../../common/permission/permission.dart';
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
+import 'image_loading_animation.dart';
 
 class ImagePreview extends StatelessWidget {
   const ImagePreview({super.key, required this.url});
@@ -17,16 +29,52 @@ class ImagePreview extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        CachedNetworkImage(imageUrl: url,width: 343,height: 457,),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(24), // 设置圆角半径
+          child: CachedNetworkImage(imageUrl: url,width: 343,height: 457,placeholder: (_,__){
+            return ImageLoadingAnimation();
+          },
+            fit: BoxFit.cover,
+          ),
+        ),
         SizedBox(
           height: 16,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SvgPicture.asset(Assets.svgDownload,width: 56,height: 56,),
+            GestureDetector(child: SvgPicture.asset(Assets.svgDownload,width: 56,height: 56,),
+              onTap: () async{
+                FileInfo? f=await DefaultCacheManager().getFileFromCache(url);
+                if(f!=null){
+                  final hasAccess = await Gal.hasAccess(toAlbum: true);
+                  if(hasAccess){
+                    await Gal.requestAccess(toAlbum: true);
+                    // Directory? directory=await getDownloadsDirectory();
+                    // String path='/storage/emulated/0/DCIM/${uuid.v1()}.png';
+                    // File file=File(path);
+                    // file.writeAsBytesSync(f.file.readAsBytesSync());
+                    await Gal.putImage(f.file.path,album: 'sona');
+                  }else {
+                    Fluttertoast.showToast(msg: S.current.issues);
+                  }
+                  Navigator.pop(context);
 
-            SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
+                }
+              },
+            ),
+
+            GestureDetector(child: SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
+              onTap: () async{
+                FileInfo? f=await DefaultCacheManager().getFileFromCache(url);
+                if(f!=null){
+                  XFile x=XFile(f.file.path);
+                  Share.shareXFiles([x]);
+
+                  Navigator.pop(context);
+                }
+              },
+            ),
           ],
         )
       ],

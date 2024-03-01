@@ -4,13 +4,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../generated/assets.dart';
+import '../../generated/l10n.dart';
 
 class NotMeetConditions extends StatelessWidget {
-  const NotMeetConditions({super.key, required this.close, required this.camera, required this.gallery});
+  const NotMeetConditions({super.key, required this.close, required this.camera, required this.gallery, required this.anyway});
   final Function close;
   final Function camera;
   final Function gallery;
-
+  final Function anyway;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,7 +20,7 @@ class NotMeetConditions extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Duo Snap',
+              S.current.duoSnap,
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900),
             ),
             IconButton(
@@ -32,7 +33,7 @@ class NotMeetConditions extends StatelessWidget {
         ),
         Image.asset(Assets.imagesSnap1,width: 90,height: 90,),
         SizedBox(height: 12.0),
-        Text('Duo snap require your real photo',
+        Text(S.current.requireYourRealPhoto,
           style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w800
@@ -90,6 +91,20 @@ class NotMeetConditions extends StatelessWidget {
               ),
             )
           ],
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        GestureDetector(
+          child: Text(S.current.duosnapAnyway,style: TextStyle(
+            color: Color(0xff0066FF),
+            fontWeight: FontWeight.w800,
+            fontSize: 16
+           ),
+          ),
+          onTap: (){
+             anyway.call();
+          },
         )
       ],
     );

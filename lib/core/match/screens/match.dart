@@ -298,8 +298,15 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                         Navigator.pop(context);
                                       }
                                     },
+                                    anyway: (){
+                                      if(mounted){
+                                        Navigator.pop(context);
+                                      }
+                                      showDuoSnapDialog(context,target: users[currentPage]);
+
+                                    },
                                   ),
-                                      dialogHeight: 307);
+                                      dialogHeight: 361);
                                 }else if(con1&&!con2){
                                   showDuoSnapTip(context, child: OtherNotMeetConditions(
                                     close: (){
@@ -330,9 +337,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                       if(mounted){
                                         Navigator.pop(context);
                                       }
-                                    },
+                                    }, anyway: (){
+                                    Navigator.pop(context);
 
-                                  ), dialogHeight: 331);
+                                    showDuoSnapDialog(context,target: users[currentPage]);
+
+                                  },
+
+                                  ), dialogHeight: 390);
                                 }else if(!con1&&!con2){
                                   showDuoSnapTip(context, child: NotMeetConditions(
                                     close: (){
@@ -349,8 +361,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                       if(mounted){
                                         Navigator.pop(context);
                                       }
-                                    },
-                                  ), dialogHeight: 307);
+                                    }, anyway: (){
+                                    if(mounted){
+                                      Navigator.pop(context);
+                                    }
+                                    showDuoSnapDialog(context,target: users[currentPage]);
+
+                                  },
+                                  ), dialogHeight: 361);
                                 }
                               } catch(e){
                                 detecting=false;

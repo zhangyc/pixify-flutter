@@ -13,6 +13,7 @@ import 'package:sona/core/match/widgets/duosnap_completed.dart';
 
 import '../../account/providers/profile.dart';
 import '../../generated/assets.dart';
+import '../../generated/l10n.dart';
 
 final ValueNotifier<String> startGenerate = ValueNotifier<String>('1');
 
@@ -34,15 +35,16 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
   }
   @override
   void initState() {
-    timer=Timer.periodic(Duration(seconds: 5), (timer) {
-      _initTask();
-    });
+
     startGenerate.addListener(() {
       _generateState=GenerateState.line;
       setState(() {
 
       });
       _initTask();
+      timer=Timer.periodic(Duration(seconds: 15), (timer) {
+        _initTask();
+      });
     });
     super.initState();
   }
@@ -62,6 +64,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
 
      }else if(duoSnapTask.status==3){
        _generateState=GenerateState.done;
+       timer.cancel();
      }else if(duoSnapTask.status==4){
        _generateState=GenerateState.fail;
 
@@ -73,7 +76,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
 
      });
     }else if(result.statusCode.toString()=='60010'){
-      _generateState=GenerateState.line;
+      _generateState=GenerateState.cancel;
       setState(() {
 
       });
@@ -101,7 +104,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
            SizedBox(
              width: 10,
            ),
-           Text('Generating...',style: TextStyle(
+           Text(S.current.generating,style: TextStyle(
              fontSize: 14,
              color: Colors.white,
              fontWeight: FontWeight.w900
@@ -116,7 +119,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-           Text("🚚 You're in line, please hold on...",style: TextStyle(
+           Text("🚚 ${S.current.inLine}",style: TextStyle(
                fontSize: 14,
                color: Colors.white,
                fontWeight: FontWeight.w900
@@ -205,7 +208,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
              SizedBox(
                width: 16,
              ),
-             Text("Duo snap is ready!",style: TextStyle(
+             Text(S.current.duoSnapIsReady,style: TextStyle(
                  fontSize: 14,
                  color: Colors.white,
                  fontWeight: FontWeight.w900
@@ -221,7 +224,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        child: Row(
          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
          children: [
-           Text("❗ Issues, please retry",style: TextStyle(
+           Text("❗ ${S.current.issues}",style: TextStyle(
                fontSize: 14,
                color: Colors.white,
                fontWeight: FontWeight.w900
@@ -229,7 +232,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
            GestureDetector(
              child: Container(
                  alignment: Alignment.center,
-                 child: Text('Retry'),
+                 child: Text(S.current.retry),
                  width: 90,
                  height: 30,
                decoration: BoxDecoration(

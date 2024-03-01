@@ -8,9 +8,11 @@ import 'package:sona/core/match/bean/duosnap_task.dart';
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
+import 'image_loading_animation.dart';
 
 class DuosnapCompleted extends StatelessWidget {
   const DuosnapCompleted({super.key, required this.close, required this.task});
@@ -24,7 +26,7 @@ class DuosnapCompleted extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Duo Snap',
+              S.current.duoSnap,
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900),
             ),
             IconButton(
@@ -38,7 +40,14 @@ class DuosnapCompleted extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        CachedNetworkImage(imageUrl: task.targetPhotoUrl??'',width: 343,height: 457,),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(24), // 设置圆角半径
+          child: CachedNetworkImage(imageUrl: task.targetPhotoUrl??'',width: 343,height: 457,placeholder: (_,__){
+            return ImageLoadingAnimation();
+          },
+          fit: BoxFit.cover ,
+          ),
+        ),
         SizedBox(
           height: 16,
         ),

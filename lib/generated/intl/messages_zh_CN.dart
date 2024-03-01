@@ -46,7 +46,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("关于"),
         "account": MessageLookupByLibrary.simpleMessage("账户"),
         "age": MessageLookupByLibrary.simpleMessage("年龄"),
+        "aiCreatingFunGroupPics":
+            MessageLookupByLibrary.simpleMessage("AI创造有趣的合影!"),
         "allPeople": MessageLookupByLibrary.simpleMessage("所有人"),
+        "almost": MessageLookupByLibrary.simpleMessage("差不多到了，差不多！"),
         "bio": MessageLookupByLibrary.simpleMessage("简介"),
         "block": MessageLookupByLibrary.simpleMessage("屏蔽"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -87,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("解锁VIP特权！"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("取消匹配"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("取消订阅"),
+        "cantMergePhotos":
+            MessageLookupByLibrary.simpleMessage("对方没有真实照片，暂时不能进行合影哦"),
         "catchMore": MessageLookupByLibrary.simpleMessage("抓住更多！"),
         "chat": MessageLookupByLibrary.simpleMessage("聊天"),
         "checkItOut": MessageLookupByLibrary.simpleMessage("去看看！"),
@@ -116,6 +121,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "disclaimer": MessageLookupByLibrary.simpleMessage("免责声明"),
         "displayMyCity": MessageLookupByLibrary.simpleMessage("显示我的城市"),
         "dm": MessageLookupByLibrary.simpleMessage("超级私信"),
+        "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
+        "duoSnapIsReady": MessageLookupByLibrary.simpleMessage("合影完成！"),
+        "duosnapAnyway": MessageLookupByLibrary.simpleMessage("依然Duo snap"),
         "exceptionFailedToSendTips":
             MessageLookupByLibrary.simpleMessage("发送失败，请稍后再试。"),
         "exceptionSonaContentFilterTips":
@@ -130,7 +138,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("SONA正在寻找一些潜在的朋友..."),
         "friendsIntention":
             MessageLookupByLibrary.simpleMessage("嘿，我觉得你很棒。我们聊聊怎么样？"),
+        "generating": MessageLookupByLibrary.simpleMessage("生成中"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("获取SONA Plus"),
+        "gotIt": MessageLookupByLibrary.simpleMessage("明白了"),
         "guessWhoBreakSilence":
             MessageLookupByLibrary.simpleMessage("嘿，猜猜谁会先打破沉默？"),
         "haveSonaSayHi": MessageLookupByLibrary.simpleMessage("让SONA打招呼"),
@@ -142,9 +152,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("我喜欢你的风格！"),
         "imInterestedSomething": m1,
         "imVeryInterestedInSomething": m2,
+        "inLine": MessageLookupByLibrary.simpleMessage("您在排队，请稍候"),
         "interests": MessageLookupByLibrary.simpleMessage("兴趣"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI传译：关"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI传译：开"),
+        "issues": MessageLookupByLibrary.simpleMessage("出现问题，请重试"),
         "justNow": MessageLookupByLibrary.simpleMessage("刚刚"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("就点个赞"),
         "justTypeInYourLanguage": m3,
@@ -168,6 +180,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage("照片越多，推荐值越高"),
         "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage("照片多多魅力增！"),
         "nearby": MessageLookupByLibrary.simpleMessage("附近"),
+        "newGameplay": MessageLookupByLibrary.simpleMessage("新游戏玩法！"),
         "newMatch": MessageLookupByLibrary.simpleMessage("新匹配！"),
         "nextBilingDate": MessageLookupByLibrary.simpleMessage("下次付费日"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
@@ -185,6 +198,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("减轻社交压力\n与全球有趣的人们一起放松"),
         "onboardingWish":
             MessageLookupByLibrary.simpleMessage("请完成心愿单\n获得更理想的配对"),
+        "onlyOneAtatime": MessageLookupByLibrary.simpleMessage("请等待，一次只能一个"),
         "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage("哎呀，现在没有数据"),
         "peopleFromYourWishlistGetMoreRecommendations":
             MessageLookupByLibrary.simpleMessage("更多推荐来自你心愿单的人"),
@@ -193,6 +207,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "permissionRequiredTitle": MessageLookupByLibrary.simpleMessage("需要权限"),
         "photoFromCamera": MessageLookupByLibrary.simpleMessage("拍照"),
         "photoFromGallery": MessageLookupByLibrary.simpleMessage("从图库选择"),
+        "photoMightNotBeReal":
+            MessageLookupByLibrary.simpleMessage("双人快照可能会很奇怪，因为对方的照片可能不是真的"),
         "photos": MessageLookupByLibrary.simpleMessage("照片"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage("请检查网络或点击刷新重试"),
@@ -221,14 +237,23 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("人身攻击"),
         "reportOptionPornography": MessageLookupByLibrary.simpleMessage("色情"),
         "reportOptionScam": MessageLookupByLibrary.simpleMessage("骗局"),
+        "requireYourRealPhoto":
+            MessageLookupByLibrary.simpleMessage("合影需要你的真实照片"),
+        "retry": MessageLookupByLibrary.simpleMessage("重试"),
         "runningIntoForeignersNearYou":
             MessageLookupByLibrary.simpleMessage("优先展示附近的老外"),
+        "save": MessageLookupByLibrary.simpleMessage("保存"),
         "screenshotEvidence": MessageLookupByLibrary.simpleMessage("截图证据"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("查看资料"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("看看谁喜欢你"),
         "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("国家或地区"),
+        "sendDm": MessageLookupByLibrary.simpleMessage("发送DM"),
+        "sendToHer": MessageLookupByLibrary.simpleMessage("发送给她"),
+        "sendToHim": MessageLookupByLibrary.simpleMessage("发送给他"),
+        "sendToThem": MessageLookupByLibrary.simpleMessage("发送给他们"),
         "setDefault": MessageLookupByLibrary.simpleMessage("设置默认"),
         "settings": MessageLookupByLibrary.simpleMessage("设置"),
+        "share": MessageLookupByLibrary.simpleMessage("分享"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("大声说出你的故事！"),
         "signUpLastStepPageTitle": MessageLookupByLibrary.simpleMessage("即将完成"),

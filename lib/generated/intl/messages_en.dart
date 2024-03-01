@@ -46,7 +46,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
+        "aiCreatingFunGroupPics":
+            MessageLookupByLibrary.simpleMessage("AI creating fun group pics!"),
         "allPeople": MessageLookupByLibrary.simpleMessage("All People"),
+        "almost": MessageLookupByLibrary.simpleMessage("Almost there, almost!"),
         "bio": MessageLookupByLibrary.simpleMessage("Bio"),
         "block": MessageLookupByLibrary.simpleMessage("Block"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -95,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("Unmatch"),
         "buttonUnsubscribe":
             MessageLookupByLibrary.simpleMessage("Unsubscribe"),
+        "cantMergePhotos": MessageLookupByLibrary.simpleMessage(
+            "The other person isn\'t a real photo, so we can\'t merge photos!"),
         "catchMore": MessageLookupByLibrary.simpleMessage("Catch more!"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "checkItOut": MessageLookupByLibrary.simpleMessage("Check it out!"),
@@ -138,6 +143,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "displayMyCity":
             MessageLookupByLibrary.simpleMessage("Display my city"),
         "dm": MessageLookupByLibrary.simpleMessage("DM"),
+        "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
+        "duoSnapIsReady":
+            MessageLookupByLibrary.simpleMessage("Duo snap is ready!"),
+        "duosnapAnyway":
+            MessageLookupByLibrary.simpleMessage("Duo snap anyway"),
         "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
             "Failed to send, please try again later."),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -153,7 +163,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "SONA is finding some potential friend..."),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Hey, I think you\'re pretty awesome. How about we hit it off as friends?"),
+        "generating": MessageLookupByLibrary.simpleMessage("Generating"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("Get SONA Plus"),
+        "gotIt": MessageLookupByLibrary.simpleMessage("Got it"),
         "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
             "Hey, guess who\'s gonna break the silence first?"),
         "haveSonaSayHi":
@@ -168,11 +180,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("I like your style!"),
         "imInterestedSomething": m1,
         "imVeryInterestedInSomething": m2,
+        "inLine": MessageLookupByLibrary.simpleMessage(
+            "You\'re in line, please hold on"),
         "interests": MessageLookupByLibrary.simpleMessage("Interests"),
         "interpretationOff":
             MessageLookupByLibrary.simpleMessage("AI Interpretation: Off"),
         "interpretationOn":
             MessageLookupByLibrary.simpleMessage("AI Interpretation: On"),
+        "issues": MessageLookupByLibrary.simpleMessage("Issues, please retry"),
         "justNow": MessageLookupByLibrary.simpleMessage("just now"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Just Send a Like"),
@@ -201,6 +216,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "morePhotosMoreCharm":
             MessageLookupByLibrary.simpleMessage("More photos, More charm!"),
         "nearby": MessageLookupByLibrary.simpleMessage("Nearby"),
+        "newGameplay": MessageLookupByLibrary.simpleMessage("New Gameplay!"),
         "newMatch": MessageLookupByLibrary.simpleMessage("New Matched!"),
         "nextBilingDate":
             MessageLookupByLibrary.simpleMessage("Next billing date"),
@@ -220,6 +236,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ease off the social pressure\nChill with fun souls worldwide"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "Set your wishlist for\n better matching!"),
+        "onlyOneAtatime": MessageLookupByLibrary.simpleMessage(
+            "Wait please, only one at a time"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Oops, no data right now"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -232,6 +250,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoFromCamera": MessageLookupByLibrary.simpleMessage("Take a photo"),
         "photoFromGallery":
             MessageLookupByLibrary.simpleMessage("From gallery"),
+        "photoMightNotBeReal": MessageLookupByLibrary.simpleMessage(
+            "Duo snap might be weird because the person\'s photo might not be real"),
         "photos": MessageLookupByLibrary.simpleMessage("Photos"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -266,8 +286,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "reportOptionPornography":
             MessageLookupByLibrary.simpleMessage("Pornography"),
         "reportOptionScam": MessageLookupByLibrary.simpleMessage("Scam"),
+        "requireYourRealPhoto": MessageLookupByLibrary.simpleMessage(
+            "Duo snap require your real photo"),
+        "retry": MessageLookupByLibrary.simpleMessage("Retry"),
         "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
             "Running into foreigners near you"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("Screenshot evidence"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("See profile"),
@@ -275,8 +299,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("See who likes you"),
         "selectCountryPageTitle":
             MessageLookupByLibrary.simpleMessage("Country or Region"),
+        "sendDm": MessageLookupByLibrary.simpleMessage("Send DM"),
+        "sendToHer": MessageLookupByLibrary.simpleMessage("Send to Her"),
+        "sendToHim": MessageLookupByLibrary.simpleMessage("Send to Him"),
+        "sendToThem": MessageLookupByLibrary.simpleMessage("Send to Them"),
         "setDefault": MessageLookupByLibrary.simpleMessage("Set Default"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("Show your personality"),
         "signUpLastStepPageTitle":

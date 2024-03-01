@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
+import '../../subscribe/providers/subscriptions.dart';
 import '../../subscribe/subscribe_page.dart';
 
 class TimeLimitedOffer extends StatelessWidget {
@@ -39,13 +40,34 @@ class TimeLimitedOffer extends StatelessWidget {
         Text(S.current.clubFeePrefix,
           style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w900),
         ),
-        // Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        //
-        //   return
-        // },),
-        Text("\$1.99/mo",
-          style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w900),
-        ),
+        Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          return Container(
+              alignment: Alignment.center,
+              child: ref.watch(asyncSubscriptionsProvider).when(
+                  data: (subscriptions) {
+                    final club = subscriptions.firstWhere((sub) => sub.id == clubMonthlyId);
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 4),
+                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          alignment: Alignment.center,
+                          child: Text('${club.price}/mo',
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                  fontSize: 32
+                              )
+                          ),
+                        ),
+                      ],
+                    );
+                  } ,
+                  error: (_, __) => Container(),
+                  loading: () => const SizedBox(width: 32, height: 32, child: CircularProgressIndicator())
+              )
+          );
+        },),
         Text(" 😉 ${S.current.clubFeeJoking}",
           style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
         ),
