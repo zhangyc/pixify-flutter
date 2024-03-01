@@ -296,7 +296,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                     margin: EdgeInsets.only(top: 4),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     alignment: Alignment.center,
-                    child: Text('${club.price}/mo',
+                    child: Text('${club.price}/${S.of(context).month}',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontSize: 32
                         )
@@ -312,14 +312,14 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                   ),
                 ],
               );
-            } ,
+            },
             error: (_, __) => Container(),
             loading: () => const SizedBox(width: 32, height: 32, child: CircularProgressIndicator())
         )
     );
   }
 
-  static final _clubPerks = [
+  final _clubPerks = [
     S.current.clubPerkDuoSnap,
     S.current.clubPerkLike,
     S.current.clubPerkSonaMessage,
@@ -451,7 +451,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     );
   }
 
-  static final _plusPerks = [
+  final _plusPerks = [
     S.current.plusPerkDuoSnap,
     S.current.plusFuncUnlockWhoLikesU,
     S.current.plusFuncAIInterpretation,
