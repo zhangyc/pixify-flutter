@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 
@@ -16,7 +17,7 @@ class CatchMore extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Catch more!',
+              S.current.catchMore,
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900),
             ),
             IconButton(
@@ -37,7 +38,7 @@ class CatchMore extends StatelessWidget {
         Text('Duo Snap',
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900),
         ),
-        Text('Unmissable special offer prices!',
+        Text(S.current.unmissableSpecialOfferPrices,
           style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
         ),
         SizedBox(
@@ -46,10 +47,10 @@ class CatchMore extends StatelessWidget {
         OutlinedButton(
           onPressed: () {
             Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-              return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+              return SubscribePage(fromTag: FromTag.duo_snap,);
             }));
           },
-          child: Text('Check it oyt!'),
+          child: Text(S.current.checkItOut),
           style: OutlinedButton.styleFrom(backgroundColor: Color(0xffBEFF06)),
         )
       ],

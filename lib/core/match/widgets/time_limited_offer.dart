@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 
@@ -16,7 +18,7 @@ class TimeLimitedOffer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Time-limited offer',
+              S.current.clubPromotionTitle,
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900),
             ),
             IconButton(
@@ -34,13 +36,17 @@ class TimeLimitedOffer extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        Text('Join the SONA Club, for Just',
+        Text(S.current.clubFeePrefix,
           style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w900),
         ),
-        Text("'\$1.99/mo",
+        // Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        //
+        //   return
+        // },),
+        Text("\$1.99/mo",
           style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w900),
         ),
-        Text(" 😉 that's the price of a coke",
+        Text(" 😉 ${S.current.clubFeeJoking}",
           style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
         ),
         SizedBox(
@@ -49,10 +55,10 @@ class TimeLimitedOffer extends StatelessWidget {
         OutlinedButton(
           onPressed: () {
             Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-              return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+              return SubscribePage(fromTag: FromTag.duo_snap,);
             }));
           },
-          child: Text('Check it oyt!'),
+          child: Text(S.current.checkItOut),
           style: OutlinedButton.styleFrom(backgroundColor: Color(0xffBEFF06)),
         )
 

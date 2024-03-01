@@ -38,7 +38,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
       _initTask();
     });
     startGenerate.addListener(() {
-      _generateState=GenerateState.requesting;
+      _generateState=GenerateState.line;
       setState(() {
 
       });
@@ -53,12 +53,12 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
     if(result.isSuccess){
      duoSnapTask=DuoSnapTask.fromJson(result.data);
      if(duoSnapTask.status==null){
-       _generateState=GenerateState.requesting;
+       _generateState=GenerateState.line;
      }else if(duoSnapTask.status==1){
        _generateState=GenerateState.line;
 
      }else if(duoSnapTask.status==2){
-       _generateState=GenerateState.almost;
+       _generateState=GenerateState.generating;
 
      }else if(duoSnapTask.status==3){
        _generateState=GenerateState.done;
@@ -73,7 +73,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
 
      });
     }else if(result.statusCode.toString()=='60010'){
-      _generateState=GenerateState.cancel;
+      _generateState=GenerateState.line;
       setState(() {
 
       });
@@ -90,7 +90,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
   }
 
   _buildTip() {
-   if(_generateState==GenerateState.requesting){
+   if(_generateState==GenerateState.generating){
      return Container(
        color: Color(0xff2c2c2c),
        height: 56,
@@ -124,22 +124,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          ],
        ),
      );
-   }else if(_generateState==GenerateState.almost){
-    return Container(
-       color: Color(0xff656565),
-       height: 56,
-       child: Row(
-         mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-           Text("🚚 Almost there, almost!",style: TextStyle(
-               fontSize: 14,
-               color: Colors.white,
-               fontWeight: FontWeight.w900
-           ),)
-         ],
-       ),
-     );
-   }else if(_generateState==GenerateState.done){
+   } else if(_generateState==GenerateState.done){
     return  GestureDetector(
       onTap: (){
         if(mounted){
@@ -234,7 +219,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        color: Color(0xff797979),
        height: 56,
        child: Row(
-         mainAxisAlignment: MainAxisAlignment.center,
+         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
          children: [
            Text("❗ Issues, please retry",style: TextStyle(
                fontSize: 14,
@@ -243,6 +228,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
            ),),
            GestureDetector(
              child: Container(
+                 alignment: Alignment.center,
                  child: Text('Retry'),
                  width: 90,
                  height: 30,
@@ -275,7 +261,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
              },
            ),
            GestureDetector(
-             child: SvgPicture.asset(Assets.svgDislike),
+             child: SvgPicture.asset(Assets.svgDislike,width: 20,height: 20,),
              onTap: (){
                post('/merge-photo/cancel',data: {
                  'id':duoSnapTask.id
@@ -294,10 +280,9 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
 
 }
 enum GenerateState{
-  requesting,
+  generating,
   fail,
   line,
-  almost,
   done,
   cancel
 }

@@ -34,9 +34,12 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
+
         if(mounted){
           Navigator.pop(context);
         }
+        startGenerate.value=uuid.v1();
+
         FileInfo src=await DefaultCacheManager().downloadFile(ref.read(myProfileProvider)!.avatar??'');
         FileInfo dst=await DefaultCacheManager().downloadFile(widget.target.avatar!);
         final option = ImageMergeOption(
@@ -74,7 +77,6 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
         if(response.isSuccess){
 
         }
-        startGenerate.value=uuid.v1();
       },
       child: Stack(
         children: [

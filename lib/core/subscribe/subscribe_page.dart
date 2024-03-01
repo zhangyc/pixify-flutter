@@ -806,7 +806,8 @@ enum FromTag{
   chat_starter,
   profile_myplan,
   travel_wish,
-  club_duo_snap // club会员的duo snap次数用完时
+  club_duo_snap, // club会员的duo snap次数用完时
+  duo_snap
 }
 
 final selectedPlusSubIdProvider = StateProvider<String>((ref) => plusBiannuallyId);

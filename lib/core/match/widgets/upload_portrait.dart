@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,25 +8,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/my_profile.dart';
-import 'package:sona/core/match/widgets/tuosnap_dialog.dart';
 import 'package:sona/utils/dialog/input.dart';
 
-import '../../../account/providers/interests.dart';
 import '../../../account/providers/profile.dart';
 import '../../../account/services/info.dart';
-import '../../../common/permission/permission.dart';
-import '../../../common/widgets/button/colored.dart';
-import '../../../common/widgets/tag/hobby.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/dialog/crop_image.dart';
 import '../../../utils/global/global.dart';
-import '../../subscribe/subscribe_page.dart';
-import '../bean/match_user.dart';
-import '../providers/matched.dart';
-import '../providers/update_info_provider.dart';
 import '../util/event.dart';
-import 'package:sona/core/match/widgets/avatar_animation.dart';
 class UploadPortrait extends StatelessWidget {
   const UploadPortrait({
     super.key,
