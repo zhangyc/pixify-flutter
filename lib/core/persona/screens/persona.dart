@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -250,45 +251,42 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(width: 48, height: 48),
                             UserAvatar(
                               url: myProfile.avatar!,
                               size: const Size.square(64),
                             ),
-                            SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(
-                                    '${myProfile.name}, ${myProfile.birthday!.toAge()}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: true,
-                                    style: Theme.of(context).textTheme.titleMedium
-                                  ),
-                                  if (ref.watch(profileProgressProvider) < 1) Container(
-                                    margin: EdgeInsets.only(top: 12),
-                                    child: ProfileProgressIndicator()
-                                  ),
-                                ],
-                              ),
-                            ),
+                            IconButton(
+                              iconSize: 48,
+                              onPressed: () => Navigator.push(context, MaterialPageRoute(
+                                  builder: (_) => const ProfileScreen()
+                              )),
+                              icon: SonaIcon(icon: SonaIcons.edit, color: Theme.of(context).primaryColor)
+                            )
                           ],
                         ),
-                        SizedBox(height: 4),
+                        SizedBox(height: 12),
+                        Text(
+                            '${myProfile.name}, ${myProfile.birthday!.toAge()}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.titleMedium
+                        ),
+                        SizedBox(height: 12),
                         Center(
                           child: switch(ref.read(myProfileProvider)?.memberType) {
                             MemberType.club => SonaIcon(icon: SonaIcons.club_mark),
@@ -296,45 +294,35 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                             _ => Container()
                           },
                         ),
-                        SizedBox(height: 16),
-                        FilledButton(
-                          onPressed: () => Navigator.push(context, MaterialPageRoute(
-                              builder: (_) => const ProfileScreen()
-                          )),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
-                          ),
-                          child: Text(
-                            S.of(context).buttonEditProfile,
-                            style: Theme.of(context).textTheme.titleMedium
-                          )
+                        if (ref.watch(profileProgressProvider) < 1) Container(
+                            margin: EdgeInsets.only(top: 8),
+                            child: ProfileProgressIndicator()
                         ),
+                        SizedBox(height: 10),
+                        if (!ref.watch(myProfileProvider)!.isMember) OutlinedButton(
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06)),
+                            ),
+                            child: Text(S.of(context).buttonUnlockVipPerks, style: Theme.of(context).textTheme.titleMedium)
+                        ),
+                        if (ref.watch(myProfileProvider)!.isMember) FilledButton(
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
+                            ),
+                            child: Text(
+                                switch(ref.watch(myProfileProvider)!.memberType) {
+                                  MemberType.club => S.current.youAreAClubMemberNow,
+                                  MemberType.plus => S.current.buttonAlreadyPlus,
+                                  _ => ''
+                                },
+                                style: Theme.of(context).textTheme.titleMedium
+                            )
+                        )
                       ],
                     ),
                   ),
-                  SizedBox(height: 16),
-                  if (!ref.watch(myProfileProvider)!.isMember) FilledButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06)),
-                        side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
-                      ),
-                      child: Text(S.of(context).buttonUnlockVipPerks, style: Theme.of(context).textTheme.titleMedium)
-                  ),
-                  if (ref.watch(myProfileProvider)!.isMember) OutlinedButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
-                      style: ButtonStyle(
-                          side: MaterialStatePropertyAll(BorderSide(color: Theme.of(context).primaryColor, width: 2))
-                      ),
-                      child: Text(
-                        switch(ref.watch(myProfileProvider)!.memberType) {
-                          MemberType.club => S.current.youAreAClubMemberNow,
-                          MemberType.plus => S.current.buttonAlreadyPlus,
-                          _ => ''
-                        },
-                        style: Theme.of(context).textTheme.titleMedium
-                      )
-                  )
                 ],
               ),
             ),
