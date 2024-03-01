@@ -40,6 +40,7 @@ class AsyncSubscriptionsNotifier extends AsyncNotifier<List<ProductDetails>> {
 
     final resp = await InAppPurchase.instance.queryProductDetails({...plusSubscriptionIds, ...clubSubscriptionIds});
 
+    if (resp.productDetails.isEmpty) throw();
     return resp.productDetails;
   }
 }

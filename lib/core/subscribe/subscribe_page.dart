@@ -312,7 +312,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                   ),
                 ],
               );
-            } ,
+            },
             error: (_, __) => Container(),
             loading: () => const SizedBox(width: 32, height: 32, child: CircularProgressIndicator())
         )
