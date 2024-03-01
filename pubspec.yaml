@@ -63,6 +63,7 @@ dependencies:
   google_sign_in: ^6.2.1
   dotted_border: ^2.1.0
   image: ^4.1.7
+  video_player: ^2.8.2
   record: ^5.0.4
   path_provider: ^2.1.2
   just_audio: ^0.9.36
