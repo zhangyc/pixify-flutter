@@ -274,7 +274,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                               try{
                                 detecting=true;
                                 HttpResult result=await post('/merge-photo/find-last');
-                                if(result.isSuccess&&result.statusCode.toString()=='60010') {
+                                if(result.statusCode.toString()=='60010') {
                                   setState(() {
 
                                   });

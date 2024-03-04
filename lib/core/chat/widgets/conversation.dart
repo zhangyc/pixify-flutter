@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/chat/models/conversation.dart';
+import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../common/widgets/image/user_avatar.dart';
@@ -29,15 +31,6 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
 
   @override
   Widget build(BuildContext context) {
-    String? displayMessage;
-    if (widget.conversation.lastMessageSenderId == ref.read(myProfileProvider)!.id) {
-      displayMessage = widget.conversation.lastMessageOriginalContent;
-    } else {
-      displayMessage = widget.conversation.lastMessageTranslatedContent;
-      if (displayMessage == null || displayMessage.isEmpty) {
-        displayMessage = widget.conversation.lastMessageOriginalContent;
-      }
-    }
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -72,15 +65,8 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 2),
-                      Text(
-                        displayMessage != null && displayMessage.isNotEmpty ? displayMessage : S.of(context).newMatch,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: widget.conversation.hasUnreadMessage ? Theme.of(context).primaryColor : Colors.grey,
-                        ),
-                      )
+                      _buildConversationTip(widget.conversation.contentType??1)
+
                     ],
                   ),
                 )
@@ -99,5 +85,39 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
           )
       )
     );
+  }
+
+  _buildConversationTip(int contentType) {
+    if(contentType==1){
+      String? displayMessage;
+
+      if (widget.conversation.lastMessageSenderId == ref.read(myProfileProvider)!.id) {
+        displayMessage = widget.conversation.lastMessageOriginalContent;
+      } else {
+        displayMessage = widget.conversation.lastMessageTranslatedContent;
+        if (displayMessage == null || displayMessage.isEmpty) {
+          displayMessage = widget.conversation.lastMessageOriginalContent;
+        }
+      }
+      return Text(
+        displayMessage != null && displayMessage.isNotEmpty ? displayMessage : S.of(context).newMatch,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+          fontWeight: FontWeight.w500,
+          color: widget.conversation.hasUnreadMessage ? Theme.of(context).primaryColor : Colors.grey,
+        ),
+      );
+    }else if(contentType==2){
+      return Row(
+        children: [
+          SvgPicture.asset(Assets.svgConverationDuo,width: 14,height: 14,),
+          SizedBox(
+            width: 4,
+          ),
+          Text('${S.current.duoSnap}!')
+        ],
+      );
+    }
   }
 }

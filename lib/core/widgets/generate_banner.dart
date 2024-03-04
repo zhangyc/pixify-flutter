@@ -38,7 +38,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
   void initState() {
     _initTask();
     startGenerate.addListener(() {
-      generateState.value=GenerateState.line;
+      generateState.value=GenerateState.idel;
       setState(() {
 
       });
@@ -125,6 +125,9 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
            SmallDuoSnap(task: duoSnapTask),
+           SizedBox(
+             width: 10,
+           ),
            Text("🚚 ${S.current.inLine}",style: TextStyle(
                fontSize: 14,
                color: Colors.white,
@@ -238,7 +241,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          ],
        ),
      );
-   }else if(generateState.value==GenerateState.cancel){
+   }else if(generateState.value==GenerateState.cancel||generateState.value==GenerateState.idel){
      return Container();
    }else {
      return Container();
@@ -251,7 +254,8 @@ enum GenerateState{
   fail,
   line,
   done,
-  cancel
+  cancel,
+  idel
 }
 class SmallDuoSnap extends StatelessWidget {
   const SmallDuoSnap({super.key, required this.task});

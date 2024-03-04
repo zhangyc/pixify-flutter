@@ -63,6 +63,7 @@ class Assets {
   static const String imagesGreenBg = 'assets/images/green_bg.png';
   static const String imagesHumanPortrait = 'assets/images/human_portrait.png';
   static const String imagesLocationAuthorization = 'assets/images/location_authorization.png';
+  static const String imagesLogoCoconut = 'assets/images/logo_coconut.png';
   static const String imagesMagicIndicator = 'assets/images/magic_indicator.png';
   static const String imagesMatchImageBg = 'assets/images/match_image_bg.png';
   static const String imagesNoDataBg = 'assets/images/no_data_bg.png';
@@ -102,6 +103,7 @@ class Assets {
   static const String svgArrow = 'assets/svg/arrow.svg';
   static const String svgC = 'assets/svg/c.svg';
   static const String svgCamera = 'assets/svg/camera.svg';
+  static const String svgConverationDuo = 'assets/svg/converation_duo.svg';
   static const String svgDislike = 'assets/svg/dislike.svg';
   static const String svgDislikeTag = 'assets/svg/dislike_tag.svg';
   static const String svgDownload = 'assets/svg/download.svg';
@@ -109,5 +111,6 @@ class Assets {
   static const String svgLike = 'assets/svg/like.svg';
   static const String svgLikeTag = 'assets/svg/like_tag.svg';
   static const String svgShare = 'assets/svg/share.svg';
+  static const String videosLanding = 'assets/videos/landing.mp4';
 
 }
