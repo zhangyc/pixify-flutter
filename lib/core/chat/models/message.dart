@@ -1,9 +1,8 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:sona/common/models/user.dart';
-import 'package:sona/core/chat/providers/message.dart';
-import 'package:sona/core/chat/services/chat.dart';
 
 import '../../../generated/l10n.dart';
 
@@ -80,7 +79,7 @@ class ImMessage {
       translatedContent: translatedContent ?? message.translatedContent,
       time: time ?? message.time,
       contentType: message.contentType,
-        content: message.content
+      content: message.content
     );
   }
 }

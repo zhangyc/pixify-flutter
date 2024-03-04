@@ -1,17 +1,10 @@
-import 'dart:io';
-import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gal/gal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_editor/image_editor.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:ui' as ui;
-import 'package:image/image.dart' as img;
 import 'package:sona/core/match/bean/match_user.dart';
 import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
@@ -19,7 +12,6 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import '../../../account/providers/profile.dart';
 import '../../../common/services/common.dart';
 import '../../../generated/l10n.dart';
-import '../../../utils/image/image_merge.dart';
 import '../../widgets/generate_banner.dart';
 import '../providers/duo_provider.dart';
 

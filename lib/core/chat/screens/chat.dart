@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:pinput/pinput.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/providers/entitlements.dart';
@@ -34,7 +32,7 @@ import '../../../utils/dialog/subsciption.dart';
 import '../models/message_type.dart';
 import '../widgets/inputbar/mode_provider.dart';
 import '../widgets/message/image_message.dart';
-import '../widgets/message/message.dart';
+import '../widgets/message/text_message.dart';
 
 class ChatScreen extends StatefulHookConsumerWidget {
   const ChatScreen({
@@ -148,35 +146,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               shrinkWrap: true,
               padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
               reverse: true,
-              itemBuilder: (BuildContext context, int index) => index != messages.length ? (messages[index].contentType==1?MessageWidget(
-                key: ValueKey(messages[index].uuid ?? messages[index].id),
-                prevMessage: index == messages.length - 1 ? null : messages[index + 1],
-                message: messages[index],
-                fromMe: mySide.id == messages[index].sender.id,
-                mySide: mySide,
-                otherSide: widget.otherSide,
-                myLocale: myLocale,
-                otherLocale: otherLocale,
-                // onPendingMessageSucceed: _onPendingMessageSucceed,
-                // onShorten: _shortenMessage,
-                onDelete: _deleteMessage,
-                onResend: _resendMessage,
-                onAvatarTap: _showInfo,
-              ):ImageMessageWidget(
-                key: ValueKey(messages[index].uuid ?? messages[index].id),
-                prevMessage: index == messages.length - 1 ? null : messages[index + 1],
-                message: messages[index],
-                fromMe: mySide.id == messages[index].sender.id,
-                mySide: mySide,
-                otherSide: widget.otherSide,
-                myLocale: myLocale,
-                otherLocale: otherLocale,
-                // onPendingMessageSucceed: _onPendingMessageSucceed,
-                // onShorten: _shortenMessage,
-                onDelete: _deleteMessage,
-                onResend: _resendMessage,
-                onAvatarTap: _showInfo,
-              )) : _startupline(messages.isNotEmpty),
+              itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
               itemCount: messages.length + 1,
               separatorBuilder: (_, __) => SizedBox(height: 5),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -405,6 +375,42 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       case 'toggle_aienabled':
         _toggleAIEnabled();
         return;
+    }
+  }
+
+  _buildMessage(int index,ImMessage message,List<ImMessage> messages) {
+    if(message.contentType==1){
+      return TextMessageWidget(
+        key: ValueKey(message.uuid ?? message.id),
+        prevMessage: index == messages.length - 1 ? null : messages[index + 1],
+        message: messages[index],
+        fromMe: mySide.id == messages[index].sender.id,
+        mySide: mySide,
+        otherSide: widget.otherSide,
+        myLocale: myLocale,
+        otherLocale: otherLocale,
+        // onPendingMessageSucceed: _onPendingMessageSucceed,
+        // onShorten: _shortenMessage,
+        onDelete: _deleteMessage,
+        onResend: _resendMessage,
+        onAvatarTap: _showInfo,
+      );
+    }else if(message.contentType==2){
+      return ImageMessageWidget(
+        key: ValueKey(messages[index].uuid ?? messages[index].id),
+        prevMessage: index == messages.length - 1 ? null : messages[index + 1],
+        message: messages[index],
+        fromMe: mySide.id == messages[index].sender.id,
+        mySide: mySide,
+        otherSide: widget.otherSide,
+        myLocale: myLocale,
+        otherLocale: otherLocale,
+        // onPendingMessageSucceed: _onPendingMessageSucceed,
+        // onShorten: _shortenMessage,
+        onDelete: _deleteMessage,
+        onResend: _resendMessage,
+        onAvatarTap: _showInfo,
+      );
     }
   }
 }

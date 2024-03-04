@@ -1,5 +1,5 @@
+
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,27 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
-import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
-import 'package:sona/core/chat/models/message_type.dart';
-import 'package:sona/core/chat/providers/message.dart';
-import 'package:sona/core/chat/widgets/inputbar/mode_provider.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
 import 'package:sona/core/match/widgets/image_preview.dart';
 import 'package:sona/utils/dialog/input.dart';
 
-import '../../../../common/providers/entitlements.dart';
 import '../../../../generated/l10n.dart';
-import '../../../../utils/global/global.dart';
-import '../../../../utils/toast/cooldown.dart';
-import '../../providers/chat.dart';
 
 class ImageMessageWidget extends ConsumerStatefulWidget {
   const ImageMessageWidget({
-    super.key,
+    Key? key,
     required this.prevMessage,
     required this.message,
     required this.fromMe,
@@ -57,14 +48,18 @@ class ImageMessageWidget extends ConsumerStatefulWidget {
 
 class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
 
-  bool _clicked = false;
   late String url='';
   @override
   void initState() {
-    if(widget.message.content!=null&&widget.message.content!.isNotEmpty){
-      Map map =  jsonDecode(widget.message.content!);
-      url=map['image'];
+    try{
+      if(widget.message.content!=null&&widget.message.content!.isNotEmpty){
+        Map map =  jsonDecode(widget.message.content!);
+        url=map['image'];
+      }
+    }catch(e){
+
     }
+
     super.initState();
   }
 
@@ -132,34 +127,6 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                           child: url.isNotEmpty?CachedNetworkImage(imageUrl: url??'',width: 138,height: 184,):Container(),
                       ),
                     ),
-                    // SizedBox(height: 12),
-                    // GestureDetector(
-                    //   behavior: HitTestBehavior.translucent,
-                    //   onTap: () {
-                    //     setState(() {
-                    //       _clicked = !_clicked;
-                    //     });
-                    //   },
-                    //   onLongPress: () async {
-                    //     final action = await showActionButtons(
-                    //         context: context,
-                    //         options: {
-                    //           S.of(context).buttonCopy: 'copy',
-                    //         }
-                    //     );
-                    //     if (action == 'copy') {
-                    //       Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-                    //     }
-                    //   },
-                    //   child: Container(
-                    //     constraints: BoxConstraints(
-                    //       maxWidth: MediaQuery.of(context).size.width * 0.64,
-                    //     ),
-                    //     padding: EdgeInsets.all(12),
-                    //     alignment: widget.fromMe ? Alignment.centerRight : Alignment.centerLeft,
-                    //     child: CachedNetworkImage(imageUrl: widget.message.originalContent??'',width: 138,height: 184,),
-                    //   ),
-                    // )
                   ],
                 ),
               ),

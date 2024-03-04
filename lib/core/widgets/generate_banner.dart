@@ -266,6 +266,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
            GestureDetector(
              child: SvgPicture.asset(Assets.svgDislike,width: 20,height: 20,),
              onTap: (){
+               _generateState=GenerateState.cancel;
                post('/merge-photo/cancel',data: {
                  'id':duoSnapTask.id
                });
