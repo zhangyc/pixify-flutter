@@ -116,7 +116,8 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                           ),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
+                              color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent,
+                              image: DecorationImage(image: CachedNetworkImageProvider(url??''),fit: BoxFit.cover,)
                           ),
                           foregroundDecoration: widget.fromMe ? null : BoxDecoration(
                               border: Border.all(width: 2),
@@ -124,7 +125,9 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                           ),
                           padding: EdgeInsets.all(12),
                           clipBehavior: Clip.antiAlias,
-                          child: url.isNotEmpty?CachedNetworkImage(imageUrl: url??'',width: 138,height: 184,):Container(),
+                          width: 138,
+                          height: 184,
+                          // child: url.isNotEmpty?CachedNetworkImage(imageUrl: url??'',width: 138,height: 184,fit: BoxFit.cover,):Container(),
                       ),
                     ),
                   ],

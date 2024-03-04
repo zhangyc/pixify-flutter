@@ -16,6 +16,7 @@ import '../../generated/assets.dart';
 import '../../generated/l10n.dart';
 
 final ValueNotifier<String> startGenerate = ValueNotifier<String>('1');
+final ValueNotifier<GenerateState> generateState = ValueNotifier<GenerateState>(GenerateState.line);
 
 class GenerateBanner extends ConsumerStatefulWidget {
   const GenerateBanner({super.key});
@@ -25,7 +26,7 @@ class GenerateBanner extends ConsumerStatefulWidget {
 }
 
 class _GenerateBannerState extends ConsumerState<GenerateBanner> {
-  GenerateState _generateState=GenerateState.cancel;
+  // GenerateState _generateState=GenerateState.cancel;
   late Timer timer;
   DuoSnapTask duoSnapTask=DuoSnapTask();
   @override
@@ -37,7 +38,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
   void initState() {
     _initTask();
     startGenerate.addListener(() {
-      _generateState=GenerateState.line;
+      generateState.value=GenerateState.line;
       setState(() {
 
       });
@@ -55,33 +56,33 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
     if(result.isSuccess){
      duoSnapTask=DuoSnapTask.fromJson(result.data);
      if(duoSnapTask.status==null){
-       _generateState=GenerateState.line;
+       generateState.value=GenerateState.line;
      }else if(duoSnapTask.status==1){
-       _generateState=GenerateState.line;
+       generateState.value=GenerateState.line;
 
      }else if(duoSnapTask.status==2){
-       _generateState=GenerateState.generating;
+       generateState.value=GenerateState.generating;
 
      }else if(duoSnapTask.status==3){
-       _generateState=GenerateState.done;
+       generateState.value=GenerateState.done;
        timer.cancel();
      }else if(duoSnapTask.status==4){
-       _generateState=GenerateState.fail;
+       generateState.value=GenerateState.fail;
 
      }else if(duoSnapTask.status==5){
-       _generateState=GenerateState.cancel;
+       generateState.value=GenerateState.cancel;
 
      }
      setState(() {
 
      });
     }else if(result.statusCode.toString()=='60010'){
-      _generateState=GenerateState.cancel;
+      generateState.value=GenerateState.cancel;
       setState(() {
 
       });
     }else {
-      _generateState=GenerateState.fail;
+      generateState.value=GenerateState.fail;
       setState(() {
 
       });
@@ -93,7 +94,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
   }
 
   _buildTip() {
-   if(_generateState==GenerateState.generating){
+   if(generateState.value==GenerateState.generating){
      return Container(
        color: Color(0xff2c2c2c),
        height: 56,
@@ -116,7 +117,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          ],
        ),
      );
-   }else if(_generateState==GenerateState.line){
+   }else if(generateState.value==GenerateState.line){
     return Container(
        color: Color(0xff656565),
        height: 56,
@@ -132,7 +133,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          ],
        ),
      );
-   } else if(_generateState==GenerateState.done){
+   } else if(generateState.value==GenerateState.done){
     return  GestureDetector(
       onTap: (){
         if(mounted){
@@ -140,7 +141,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
 
           });
         }
-        _generateState=GenerateState.cancel;
+        generateState.value=GenerateState.cancel;
         post('/merge-photo/over',data: {
           "id": duoSnapTask.id
         });
@@ -179,7 +180,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          ),
        ),
     );
-   }else if(_generateState==GenerateState.fail){
+   }else if(generateState.value==GenerateState.fail){
      return  Container(
        color: Color(0xff797979),
        height: 56,
@@ -228,7 +229,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
            GestureDetector(
              child: SvgPicture.asset(Assets.svgDislike,width: 20,height: 20,),
              onTap: (){
-               _generateState=GenerateState.cancel;
+               generateState.value=GenerateState.cancel;
                post('/merge-photo/cancel',data: {
                  'id':duoSnapTask.id
                });
@@ -237,7 +238,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          ],
        ),
      );
-   }else if(_generateState==GenerateState.cancel){
+   }else if(generateState.value==GenerateState.cancel){
      return Container();
    }else {
      return Container();
