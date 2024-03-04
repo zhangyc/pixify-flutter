@@ -21,6 +21,10 @@ int get like => appCommonBox.get('like',defaultValue: 0);
 set like(value){
   appCommonBox.put('like', value);
 }
+int get duosnap => appCommonBox.get('duosnap',defaultValue: 0);
+set duosnap(value){
+  appCommonBox.put('duosnap', value);
+}
 bool get showTags => appCommonBox.get('showTags',defaultValue: false);
 set showTags(value){
   appCommonBox.put('showTags', value);
@@ -30,6 +34,7 @@ bool get canArrow =>arrow>0;
 bool get canSona =>sona>0;
 bool get canSuggest =>suggest>0;
 bool get canLike =>like>0||like==-1;
+bool get canDuoSnap =>duosnap>0;
 
 ///初始化用户权限数据
 void initUserPermission() async{
@@ -40,6 +45,7 @@ void initUserPermission() async{
     sona=result.data['sona'];
     suggest=result.data['suggest'];
     like=result.data['like'];
+    duosnap=result.data['duoSnap'];
 
   }
 }

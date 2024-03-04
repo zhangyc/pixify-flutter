@@ -35,7 +35,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
   }
   @override
   void initState() {
-
+    _initTask();
     startGenerate.addListener(() {
       _generateState=GenerateState.line;
       setState(() {
@@ -100,6 +100,10 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
+           SmallDuoSnap(task: duoSnapTask),
+           SizedBox(
+             width: 10,
+           ),
            SvgPicture.asset(Assets.svgCamera,width: 24,height: 24,),
            SizedBox(
              width: 10,
@@ -119,6 +123,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
+           SmallDuoSnap(task: duoSnapTask),
            Text("🚚 ${S.current.inLine}",style: TextStyle(
                fontSize: 14,
                color: Colors.white,
@@ -161,50 +166,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          child: Row(
            mainAxisAlignment: MainAxisAlignment.center,
            children: [
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-               children: [
-                 Transform.rotate(
-                     angle: -15 * 3.14 / 180,
-                     child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                       return Container(
-                           width: 26,
-                           height: 35,
-                         clipBehavior: Clip.antiAlias,
-                         decoration: BoxDecoration(
-                           borderRadius: BorderRadius.circular(8),
-                             border: Border.all(
-                                 color: Colors.white,
-                                 width: 2
-                             ),
-                             image: DecorationImage(image: CachedNetworkImageProvider(ref.read(myProfileProvider)!.avatar??'',),fit: BoxFit.cover,)
-
-                         ),
-                       );
-                     },)), // 替换为您的左侧图片路径
-                 Transform.rotate(
-                     angle: 15 * 3.14 / 180,
-                     child: Container(
-                       width: 26,
-                       height: 35,
-                         clipBehavior: Clip.antiAlias,
-                         decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(8),
-                             border: Border.all(
-                             color: Colors.white,
-                             width: 2,
-                           ),
-                           image: DecorationImage(image: CachedNetworkImageProvider(duoSnapTask?.targetUserAvatar??''),fit: BoxFit.cover,)
-                         ),
-                         // child: CachedNetworkImage(
-                         //   imageUrl: duoSnapTask?.targetPhotoUrl??'',
-                         //
-                         //   fit: BoxFit.cover,
-                         // ),
-                     )
-                 ), // 替换为您的右侧图片路径
-               ],
-             ),
+             SmallDuoSnap(task: duoSnapTask),
              SizedBox(
                width: 16,
              ),
@@ -289,4 +251,50 @@ enum GenerateState{
   line,
   done,
   cancel
+}
+class SmallDuoSnap extends StatelessWidget {
+  const SmallDuoSnap({super.key, required this.task});
+  final DuoSnapTask task;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Transform.rotate(
+            angle: -15 * 3.14 / 180,
+            child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+              return Container(
+                width: 26,
+                height: 35,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                        color: Colors.white,
+                        width: 2
+                    ),
+                    image: DecorationImage(image: CachedNetworkImageProvider(ref.read(myProfileProvider)!.avatar??'',),fit: BoxFit.cover,)
+
+                ),
+              );
+            },)), // 替换为您的左侧图片路径
+        Transform.rotate(
+            angle: 15 * 3.14 / 180,
+            child: Container(
+              width: 26,
+              height: 35,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2,
+                  ),
+                  image: DecorationImage(image: CachedNetworkImageProvider(task.targetUserAvatar??''),fit: BoxFit.cover,)
+              ),
+            )
+        ), // 替换为您的右侧图片路径
+      ],
+    );
+  }
 }
