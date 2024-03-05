@@ -124,7 +124,7 @@ class CustomBottomDialog extends StatelessWidget {
                   }else if(result.hasError){
                     return  const Text('Oops, something unexpected happened');
                   }else {
-                    return SizedBox(width: 50,height: 50,child: CircularProgressIndicator(),);
+                    return Center(child: SizedBox(width: 32,height: 32,child: CircularProgressIndicator(),));
                   }
 
                 },),

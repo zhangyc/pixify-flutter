@@ -338,7 +338,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                                 Fluttertoast.showToast(msg: 'Arrow on cool down this week');
                                               }else{
                                                 Navigator.push(context, MaterialPageRoute(builder:(c){
-                                                  return SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                                                  return SubscribePage(fromTag: FromTag.duo_snap,);
                                                 }));
                                               }
                                             }
