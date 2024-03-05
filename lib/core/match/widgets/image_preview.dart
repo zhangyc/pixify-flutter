@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gal/gal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 
@@ -32,7 +33,7 @@ class ImagePreview extends StatelessWidget {
           height: 16,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Transform.rotate(
                 angle: -15 * 3.14 / 180,
@@ -94,11 +95,8 @@ class ImagePreview extends StatelessWidget {
                   final hasAccess = await Gal.hasAccess(toAlbum: true);
                   if(hasAccess){
                     await Gal.requestAccess(toAlbum: true);
-                    // Directory? directory=await getDownloadsDirectory();
-                    // String path='/storage/emulated/0/DCIM/${uuid.v1()}.png';
-                    // File file=File(path);
-                    // file.writeAsBytesSync(f.file.readAsBytesSync());
-                    await Gal.putImage(f.file.path,album: 'sona');
+                    await Gal.putImageBytes(f.file.readAsBytesSync(),album: 'sona');
+                    Fluttertoast.showToast(msg: 'Done');
                   }else {
                     Fluttertoast.showToast(msg: S.current.issues);
                   }
