@@ -11,7 +11,6 @@ class MatchUserInfo extends UserInfo{
   bool arrowed=false;
   bool matched=false;
   bool skipped=false;
-
   MatchUserInfo({
     required this.id,
     required this.name,

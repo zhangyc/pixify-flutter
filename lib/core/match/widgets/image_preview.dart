@@ -13,19 +13,63 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 
+import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import 'image_loading_animation.dart';
 
 class ImagePreview extends StatelessWidget {
-  const ImagePreview({super.key, required this.url});
+  const ImagePreview({super.key, required this.url,required this.targetUrl});
   final String url;
+  final String targetUrl;
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Transform.rotate(
+                angle: -15 * 3.14 / 180,
+                child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  return Container(
+                    width: 26,
+                    height: 35,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                            color: Colors.white,
+                            width: 2
+                        ),
+                        image: DecorationImage(image: CachedNetworkImageProvider(ref.read(myProfileProvider)!.avatar??'',),fit: BoxFit.cover,)
+
+                    ),
+                  );
+                },)), // 替换为您的左侧图片路径
+            Transform.rotate(
+                angle: 15 * 3.14 / 180,
+                child: Container(
+                  width: 26,
+                  height: 35,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
+                      ),
+                      image: DecorationImage(image: CachedNetworkImageProvider(targetUrl),fit: BoxFit.cover,)
+                  ),
+                )
+            ), // 替换为您的右侧图片路径
+          ],
+        ),
         SizedBox(
           height: 16,
         ),

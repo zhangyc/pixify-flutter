@@ -65,14 +65,14 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     }, onError: (Object error) {
       if (kDebugMode) print(error);
     });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if(_scrollController.hasClients){
-          _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
-          setState(() {});
-        }
-      });
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   Future.delayed(const Duration(milliseconds: 500), () {
+    //     if(_scrollController.hasClients){
+    //       _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
+    //       setState(() {});
+    //     }
+    //   });
+    // });
   }
 
   Future _subscribeClub() async {
@@ -810,4 +810,4 @@ enum FromTag{
   duo_snap
 }
 
-final selectedPlusSubIdProvider = StateProvider<String>((ref) => plusBiannuallyId);
+final selectedPlusSubIdProvider = StateProvider<String>((ref) => plusQuarterlyId);

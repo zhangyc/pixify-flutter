@@ -10,7 +10,8 @@ class DuoSnapTask {
   int? times;
   String? userAvatar;
   String? targetUserAvatar;
-
+  String? targetUserNickname;
+  int? targetUserGender;
   DuoSnapTask(
       {this.id,
         this.userId,
@@ -22,7 +23,8 @@ class DuoSnapTask {
         this.failMsg,
         this.times,
         this.userAvatar,
-        this.targetUserAvatar
+        this.targetUserAvatar,
+        this.targetUserGender
       });
 
   DuoSnapTask.fromJson(Map<String, dynamic> json) {
@@ -37,6 +39,9 @@ class DuoSnapTask {
     times = json['times'];
     userAvatar = json['userAvatar'];
     targetUserAvatar = json['targetUserAvatar'];
+    targetUserNickname = json['targetUserNickname'];
+    targetUserGender = json['targetUserGender'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +57,8 @@ class DuoSnapTask {
     data['times'] = this.times;
     data['userAvatar'] = this.userAvatar;
     data['targetUserAvatar'] = this.targetUserAvatar;
+    data['targetUserNickname'] = this.targetUserNickname;
+    data['targetUserGender'] = this.targetUserGender;
 
     return data;
   }

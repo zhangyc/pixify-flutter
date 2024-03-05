@@ -14,9 +14,10 @@ import 'package:sona/core/match/widgets/duosnap_completed.dart';
 import '../../account/providers/profile.dart';
 import '../../generated/assets.dart';
 import '../../generated/l10n.dart';
+import '../match/widgets/small_duo.dart';
 
 final ValueNotifier<String> startGenerate = ValueNotifier<String>('1');
-final ValueNotifier<GenerateState> generateState = ValueNotifier<GenerateState>(GenerateState.line);
+final ValueNotifier<GenerateState> generateState = ValueNotifier<GenerateState>(GenerateState.idel);
 
 class GenerateBanner extends ConsumerStatefulWidget {
   const GenerateBanner({super.key});
@@ -38,7 +39,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
   void initState() {
     _initTask();
     startGenerate.addListener(() {
-      generateState.value=GenerateState.idel;
+      generateState.value=GenerateState.line;
       setState(() {
 
       });
@@ -176,7 +177,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
              ),
              Text(S.current.duoSnapIsReady,style: TextStyle(
                  fontSize: 14,
-                 color: Colors.white,
+                 color: Color(0xff2c2c2c),
                  fontWeight: FontWeight.w900
              ),)
            ],
@@ -256,50 +257,4 @@ enum GenerateState{
   done,
   cancel,
   idel
-}
-class SmallDuoSnap extends StatelessWidget {
-  const SmallDuoSnap({super.key, required this.task});
-  final DuoSnapTask task;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Transform.rotate(
-            angle: -15 * 3.14 / 180,
-            child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
-              return Container(
-                width: 26,
-                height: 35,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                        color: Colors.white,
-                        width: 2
-                    ),
-                    image: DecorationImage(image: CachedNetworkImageProvider(ref.read(myProfileProvider)!.avatar??'',),fit: BoxFit.cover,)
-
-                ),
-              );
-            },)), // 替换为您的左侧图片路径
-        Transform.rotate(
-            angle: 15 * 3.14 / 180,
-            child: Container(
-              width: 26,
-              height: 35,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 2,
-                  ),
-                  image: DecorationImage(image: CachedNetworkImageProvider(task.targetUserAvatar??''),fit: BoxFit.cover,)
-              ),
-            )
-        ), // 替换为您的右侧图片路径
-      ],
-    );
-  }
 }

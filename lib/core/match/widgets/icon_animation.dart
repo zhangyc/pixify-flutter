@@ -18,7 +18,7 @@ class _IconAnimationState extends ConsumerState<IconAnimation> {
   @override
   Widget build(BuildContext context) {
 
-    final co = ref.watch(pageControllerProvider);
+    final co =pageControllerProvider;
 
     return co.hasClients?ValueListenableBuilder<TransformStatus>(
       valueListenable: matchAnimation,

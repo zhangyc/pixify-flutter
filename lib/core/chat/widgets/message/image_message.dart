@@ -107,7 +107,7 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                       },
                       onTap: (){
                         showDialog(context: context, builder: (b){
-                          return ImagePreview(url: url);
+                          return ImagePreview(url: url,targetUrl: widget.otherSide.avatar??'',);
                         });
                       },
                       child: Container(

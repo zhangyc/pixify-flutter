@@ -13,6 +13,7 @@ import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
 import 'image_loading_animation.dart';
+import 'small_duo.dart';
 
 class DuosnapCompleted extends StatelessWidget {
   const DuosnapCompleted({super.key, required this.close, required this.task});
@@ -26,7 +27,7 @@ class DuosnapCompleted extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              S.current.duoSnap,
+              'Me and ${task.targetUserNickname??''}',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900),
             ),
             IconButton(
@@ -37,6 +38,7 @@ class DuosnapCompleted extends StatelessWidget {
             ),
           ],
         ),
+        SmallDuoSnap(task: task),
         SizedBox(
           height: 16,
         ),
@@ -66,7 +68,11 @@ class DuosnapCompleted extends StatelessWidget {
                     //MatchApi.sendImageMsg(info.id,controller.text);
                     // next.call();
                     Navigator.pop(context);
-                    MatchApi.sendImageMsg(task.targetUserId!, task.targetPhotoUrl!);
+                    MatchApi.sendImageMsg(task.targetUserId!, task.targetPhotoUrl!).then((value){
+                      if(value.isSuccess){
+                        Fluttertoast.showToast(msg: 'done');
+                      }
+                    });
                   }else {
                     bool isMember=ref.read(myProfileProvider)?.isMember??false;
                     if(isMember){
@@ -80,7 +86,7 @@ class DuosnapCompleted extends StatelessWidget {
                  },
                     child: Container(
                         alignment: Alignment.center,
-                        child: Text('Send to Her'),
+                        child: _buildSendButton(context,task),
                         width: 199,
                         height: 56,
                         decoration: BoxDecoration(
@@ -98,5 +104,17 @@ class DuosnapCompleted extends StatelessWidget {
         )
       ],
     );
+  }
+
+  _buildSendButton(BuildContext context,DuoSnapTask task) {
+      if(task.targetUserGender==null){
+        return Text('Send to Them',style: Theme.of(context).textTheme.bodyLarge,);
+      }else if(task.targetUserGender==1){
+        return Text('Send to Him',style: Theme.of(context).textTheme.bodyLarge,);
+      }else if(task.targetUserGender==2){
+        return Text('Send to her',style: Theme.of(context).textTheme.bodyLarge,);
+      }else if(task.targetUserGender==3){
+        return Text('Send to Them',style: Theme.of(context).textTheme.bodyLarge,);
+      }
   }
 }

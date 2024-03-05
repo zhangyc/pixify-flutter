@@ -91,13 +91,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     super.dispose();
   }
   int currentPage=0;
-  late TransformerPageController controller;
+  late TransformerPageController controller=pageControllerProvider;
   bool detecting=false;
   @override
   Widget build(BuildContext context) {
     String? bgImage=ref.watch(backgroundImageProvider);
-    controller = ref.watch(pageControllerProvider);
-
     super.build(context);
     return Stack(
       children: [
@@ -288,7 +286,9 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
                                     });
                                     if(con1&&con2){
-                                      showDuoSnapDialog(context,target: users[currentPage]);
+                                     await showDuoSnapDialog(context,target: users[currentPage]);
+                                     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+
                                     }else if(!con1&&con2){
                                       showDuoSnapTip(context, child: NotMeetConditions(
                                         close: (){
@@ -306,11 +306,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                             Navigator.pop(context);
                                           }
                                         },
-                                        anyway: (){
+                                        anyway: () async{
                                           if(mounted){
                                             Navigator.pop(context);
                                           }
-                                          showDuoSnapDialog(context,target: users[currentPage]);
+                                          await showDuoSnapDialog(context,target: users[currentPage]);
+                                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
 
                                         },
                                       ),
@@ -345,10 +346,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                           if(mounted){
                                             Navigator.pop(context);
                                           }
-                                        }, anyway: (){
+                                        }, anyway: () async{
                                         Navigator.pop(context);
 
-                                        showDuoSnapDialog(context,target: users[currentPage]);
+                                        await showDuoSnapDialog(context,target: users[currentPage]);
+                                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
 
                                       },
 
@@ -369,11 +371,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                           if(mounted){
                                             Navigator.pop(context);
                                           }
-                                        }, anyway: (){
+                                        }, anyway: ()async{
                                         if(mounted){
                                           Navigator.pop(context);
                                         }
-                                        showDuoSnapDialog(context,target: users[currentPage]);
+                                        await showDuoSnapDialog(context,target: users[currentPage]);
+                                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
 
                                       },
                                       ), dialogHeight: 361);

@@ -275,8 +275,8 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
   });
 }
 
-showDuoSnapDialog(BuildContext context,{required MatchUserInfo target}){
-  showModalBottomSheet(
+Future showDuoSnapDialog(BuildContext context,{required MatchUserInfo target}){
+ return showModalBottomSheet(
     context: context,
     isScrollControlled:true,
     builder: (BuildContext context) {
