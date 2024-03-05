@@ -24,7 +24,9 @@ class ProfileProgressIndicator extends ConsumerWidget {
           SizedBox(width: 12),
           Text(
               '${(ref.watch(profileProgressProvider) * 100).toInt()}%',
-            style: Theme.of(context).textTheme.titleSmall,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w800
+            )
           )
         ],
       ),
