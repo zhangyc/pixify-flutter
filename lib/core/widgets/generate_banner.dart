@@ -10,6 +10,7 @@ import 'package:sona/core/match/util/local_data.dart';
 import 'package:sona/core/match/widgets/catch_more.dart';
 import 'package:sona/core/match/widgets/dialogs.dart';
 import 'package:sona/core/match/widgets/duosnap_completed.dart';
+import 'package:sona/core/match/widgets/loading_button.dart';
 
 import '../../account/providers/profile.dart';
 import '../../generated/assets.dart';
@@ -196,49 +197,43 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
                color: Colors.white,
                fontWeight: FontWeight.w900
            ),),
-           GestureDetector(
-             child: Container(
-                 alignment: Alignment.center,
-                 child: Text(S.current.retry),
-                 width: 90,
-                 height: 30,
-               decoration: BoxDecoration(
-                 color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                 border: Border.all(
-                   color: Color(0xff2c2c2c),
-                   width: 2
-                 )
-               ),
-             ),
-             onTap: () async{
+           LoadingButton(onPressed: () async{
+             HttpResult overResponse=await post('/merge-photo/cancel',data: {
+               'id':duoSnapTask.id
+             });
+             if(overResponse.isSuccess){
 
-               HttpResult overResponse=await post('/merge-photo/cancel',data: {
-                 'id':duoSnapTask.id
+               await post('/merge-photo/create',data: {
+                 {
+                   // 原图URL
+                   "photoUrl":duoSnapTask.sourcePhotoUrl,
+                   // 对方用户ID
+                   "targetUserId":duoSnapTask.targetUserId,
+                   // 模型 - 测试是任意写
+                   "modelId":duoSnapTask.modelId
+                 }
                });
-               if(overResponse.isSuccess){
-                 await post('path',data: {
-                   {
-                     // 原图URL
-                     "photoUrl":duoSnapTask.sourcePhotoUrl,
-                     // 对方用户ID
-                     "targetUserId":duoSnapTask.targetUserId,
-                     // 模型 - 测试是任意写
-                     "modelId":duoSnapTask.modelId
-                   }
-                 });
-               }
-             },
-           ),
-           GestureDetector(
-             child: SvgPicture.asset(Assets.svgDislike,width: 20,height: 20,),
-             onTap: (){
-               generateState.value=GenerateState.cancel;
-               post('/merge-photo/cancel',data: {
-                 'id':duoSnapTask.id
-               });
-             },
-           )
+             }
+            }, child: Container(
+             alignment: Alignment.center,
+             child: Text(S.current.retry),
+             width: 90,
+             height: 30,
+             decoration: BoxDecoration(
+                 color: Colors.white,
+                 borderRadius: BorderRadius.circular(20),
+                 border: Border.all(
+                     color: Color(0xff2c2c2c),
+                     width: 2
+                 )
+             ),
+           )),
+           LoadingButton(onPressed: () async{
+             generateState.value=GenerateState.cancel;
+             await post('/merge-photo/cancel',data: {
+               'id':duoSnapTask.id
+             });
+           }, child: SvgPicture.asset(Assets.svgDislike,width: 20,height: 20,),)
          ],
        ),
      );

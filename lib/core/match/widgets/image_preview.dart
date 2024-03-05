@@ -39,8 +39,8 @@ class ImagePreview extends StatelessWidget {
                 angle: -15 * 3.14 / 180,
                 child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
                   return Container(
-                    width: 26,
-                    height: 35,
+                    width: 50,
+                    height: 65,
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
@@ -56,8 +56,8 @@ class ImagePreview extends StatelessWidget {
             Transform.rotate(
                 angle: 15 * 3.14 / 180,
                 child: Container(
-                  width: 26,
-                  height: 35,
+                  width: 50,
+                  height: 65,
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),

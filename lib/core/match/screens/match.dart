@@ -15,6 +15,7 @@ import 'package:sona/core/match/util/image_util.dart';
 import 'package:sona/core/match/widgets/button_animations.dart';
 import 'package:sona/core/match/widgets/catch_more.dart';
 import 'package:sona/core/match/widgets/custom_pageview/src/skip_transformer.dart';
+import 'package:sona/core/match/widgets/icon_animation.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_location.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
@@ -83,18 +84,23 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       }
     });
     super.initState();
+    controller.addListener(() {
+      pageControllerProgress.value=controller.page??0.0;
+    });
   }
   List<MatchUserInfo> users =[];
 
   @override
   void dispose() {
+    controller.dispose();
     super.dispose();
   }
   int currentPage=0;
-  late TransformerPageController controller=pageControllerProvider;
+  late TransformerPageController controller=TransformerPageController();
   bool detecting=false;
   @override
   Widget build(BuildContext context) {
+    // pageControllerProvider=controller;
     String? bgImage=ref.watch(backgroundImageProvider);
     super.build(context);
     return Stack(

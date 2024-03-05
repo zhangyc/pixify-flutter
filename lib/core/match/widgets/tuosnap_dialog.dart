@@ -33,9 +33,9 @@ class CustomBottomDialog extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: Colors.grey)),
-            ),
+            // decoration: BoxDecoration(
+            //   border: Border(bottom: BorderSide(color: Colors.grey)),
+            // ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
