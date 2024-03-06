@@ -95,7 +95,7 @@ class ImagePreview extends StatelessWidget {
                   final hasAccess = await Gal.hasAccess(toAlbum: true);
                   if(hasAccess){
                     await Gal.requestAccess(toAlbum: true);
-                    await Gal.putImageBytes(f.file.readAsBytesSync(),album: 'sona');
+                    await Gal.putImageBytes(f.file.readAsBytesSync(),album: 'sona',name: 'sona_${uuid.v1()}');
                     Fluttertoast.showToast(msg: 'Done');
                   }else {
                     Fluttertoast.showToast(msg: S.current.issues);
@@ -108,11 +108,13 @@ class ImagePreview extends StatelessWidget {
 
             GestureDetector(child: SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
               onTap: () async{
-                FileInfo? f=await DefaultCacheManager().getFileFromCache(url);
+                String cache=(await getApplicationCacheDirectory()).path;
+                File? f=await DefaultCacheManager().getSingleFile(url);
+                File file=File('$cache/tmp.png');
+                file.writeAsBytesSync(f.readAsBytesSync());
                 if(f!=null){
-                  XFile x=XFile(f.file.path);
+                  XFile x=XFile(file.path);
                   Share.shareXFiles([x]);
-
                   Navigator.pop(context);
                 }
               },
