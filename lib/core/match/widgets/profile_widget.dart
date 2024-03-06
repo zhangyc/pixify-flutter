@@ -271,7 +271,6 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                     // });
                     ///是否能like
                     if(canLike){
-
                       if(like>0){
                         like=like-1;
                       }
@@ -315,7 +314,6 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                   onTap: (){
                     widget.next.call();
                     MatchApi.skip(info.id);
-
                   },
                 ),
                 GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
