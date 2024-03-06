@@ -10,12 +10,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gal/gal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 
 import '../../../account/providers/profile.dart';
-import '../../../common/permission/permission.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import 'image_loading_animation.dart';
