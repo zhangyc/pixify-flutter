@@ -12,45 +12,35 @@ import 'package:sona/utils/global/global.dart';
 import '../../../account/providers/profile.dart';
 import '../../../common/env.dart';
 
-// final likeMeStreamProvider = StreamProvider((ref) {
-//   final streamController = StreamController<List<SocialUser>>.broadcast();
-//   fetchData([_]) async {
-//     fetchLikedMeList().then((resp) => (resp.data as List).map<SocialUser>(
-//       (m) => SocialUser.fromJson(m)
-//     ).toList()).then((list) => streamController.add(list)).catchError((_) {});
-//   }
-//   Timer.periodic(const Duration(seconds: 30), fetchData);
-//   fetchData();
-//
-//   return streamController.stream;
-// });
+
 const _lastCheckTimeKey = 'like_me_last_check_time';
 
 final likeMeStreamProvider = StreamProvider<List<SocialUser>>((ref) async* {
-  final userId = ref.read(myProfileProvider)!.id;
-  final stream = FirebaseFirestore.instance
-      .collection('${env.firestorePrefix}_users').doc('$userId')
-      .collection('like_me').limit(100)
-      .snapshots();
+  final userId = ref.read(myProfileProvider)?.id;
+  if (userId != null) {
+    final stream = FirebaseFirestore.instance
+        .collection('${env.firestorePrefix}_users').doc('$userId')
+        .collection('like_me').limit(100)
+        .snapshots();
 
-  Future<List<SocialUser>> fetchData(Iterable<int> ids) {
-    // return fetchUserInfoList(ids).then<List<SocialUser>>((resp) => (resp.data as List).map<SocialUser>(
-    //   (m) => SocialUser.fromJson(m)
-    // ).toList());
-    return fetchLikedMeList().then((resp) => (resp.data as List).map<SocialUser>(
-      (m) => SocialUser.fromJson(m)
-    ).toList());
-  }
-
-  await for (var snapshot in stream) {
-    var ids = snapshot.docs.map<int>((doc) => int.parse(doc.id));
-    try {
-      final users = await fetchData(ids);
-      yield users;
-    } catch (e) {
-      //
-      rethrow;
+    Future<List<SocialUser>> fetchData(Iterable<int> ids) {
+      return fetchLikedMeList().then((resp) => (resp.data as List).map<SocialUser>(
+              (m) => SocialUser.fromJson(m)
+      ).toList());
     }
+
+    await for (var snapshot in stream) {
+      var ids = snapshot.docs.map<int>((doc) => int.parse(doc.id));
+      try {
+        final users = await fetchData(ids);
+        yield users;
+      } catch (e) {
+        //
+        rethrow;
+      }
+    }
+  } else {
+    yield [];
   }
 });
 

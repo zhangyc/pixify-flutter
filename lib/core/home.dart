@@ -24,6 +24,7 @@ import 'package:sona/utils/location/location.dart';
 import '../common/permission/permission.dart';
 import '../firebase/sona_firebase.dart';
 import '../generated/l10n.dart';
+import 'chat/providers/chat.dart';
 import 'match/screens/match.dart';
 import 'match/util/local_data.dart';
 
@@ -45,7 +46,9 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     initUserPermission();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _handlerNotification();
-      ref.read(asyncMyTravelWishesProvider);
+      ref.refresh(asyncMyTravelWishesProvider);
+      ref.refresh(conversationStreamProvider);
+      ref.refresh(likeMeStreamProvider);
     });
     super.initState();
   }

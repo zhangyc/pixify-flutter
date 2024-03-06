@@ -9,14 +9,18 @@ import '../models/conversation.dart';
 import '../models/message.dart';
 
 final conversationStreamProvider = StreamProvider<List<ImConversation>>((ref) async* {
-  final userId = ref.read(myProfileProvider)!.id;
-  final stream = FirebaseFirestore.instance
-      .collection('${env.firestorePrefix}_users').doc('$userId')
-      .collection('rooms').orderBy('createDate', descending: true).limit(100)
-      .snapshots();
-  await for (var snapshot in stream) {
-    var conversations = snapshot.docs.map<ImConversation>((doc) => ImConversation.fromJson(doc.data())).toList();
-    yield conversations;
+  final userId = ref.read(myProfileProvider)?.id;
+  if (userId != null) {
+    final stream = FirebaseFirestore.instance
+        .collection('${env.firestorePrefix}_users').doc('$userId')
+        .collection('rooms').orderBy('createDate', descending: true).limit(100)
+        .snapshots();
+    await for (var snapshot in stream) {
+      var conversations = snapshot.docs.map<ImConversation>((doc) => ImConversation.fromJson(doc.data())).toList();
+      yield conversations;
+    }
+  } else {
+    yield [];
   }
 });
 
