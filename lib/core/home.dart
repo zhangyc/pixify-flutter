@@ -48,7 +48,6 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       ref.read(asyncMyTravelWishesProvider);
     });
     super.initState();
-    Permission.photos.request();
   }
 
   void _determinePosition() async {
