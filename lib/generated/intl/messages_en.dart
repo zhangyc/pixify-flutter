@@ -415,6 +415,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Caution"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "After unmatching, all your chat history will be deleted."),
+        "weeklyLimitReached":
+            MessageLookupByLibrary.simpleMessage("Weekly limit reached"),
         "whatsYourEmail":
             MessageLookupByLibrary.simpleMessage("What’s your E-Mail?"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Who likes you"),

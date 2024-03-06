@@ -426,6 +426,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Prudence"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "Après annulation de l\'appariement, tout l\'historique du chat sera supprimé."),
+        "weeklyLimitReached":
+            MessageLookupByLibrary.simpleMessage("Limite hebdomadaire atteint"),
         "whatsYourEmail":
             MessageLookupByLibrary.simpleMessage("Entrez l\'email"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Qui t\'aime"),

@@ -408,6 +408,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("ระวัง"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "หลังจากยกเลิกการจับคู่ ข้อความสนทนาทั้งหมดจะถูกลบออก"),
+        "weeklyLimitReached": MessageLookupByLibrary.simpleMessage(
+            "จำนวนครั้งในสัปดาห์นี้ใช้หมดแล้ว"),
         "whatsYourEmail": MessageLookupByLibrary.simpleMessage("ป้อนอีเมล"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("ใครที่ชอบคุณ"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("ใครที่ชอบคุณ"),

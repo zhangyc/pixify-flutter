@@ -23,28 +23,69 @@ class DuosnapCompleted extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Me and ${task.targetUserNickname??''}',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900),
+              ),
+              IconButton(
+                icon: SvgPicture.asset(Assets.svgDislike,width: 40,height: 40,),
+                onPressed: (){
+                  close.call();
+                },
+              ),
+            ],
+          ),
+        ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Me and ${task.targetUserNickname??''}',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w900),
-            ),
-            IconButton(
-              icon: SvgPicture.asset(Assets.svgDislike,width: 40,height: 40,),
-              onPressed: (){
-                close.call();
-              },
-            ),
+            Transform.rotate(
+                angle: -15 * 3.14 / 180,
+                child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  return Container(
+                    width: 50,
+                    height: 66,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                            color: Colors.white,
+                            width: 2
+                        ),
+                        image: DecorationImage(image: CachedNetworkImageProvider(ref.read(myProfileProvider)!.avatar??'',),fit: BoxFit.cover,)
+
+                    ),
+                  );
+                },)), // 替换为您的左侧图片路径
+            Transform.rotate(
+                angle: 15 * 3.14 / 180,
+                child: Container(
+                  width: 50,
+                  height: 66,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 2,
+                      ),
+                      image: DecorationImage(image: CachedNetworkImageProvider(task.targetUserAvatar??''),fit: BoxFit.cover,)
+                  ),
+                )
+            ), // 替换为您的右侧图片路径
           ],
         ),
-        SmallDuoSnap(task: task),
         SizedBox(
           height: 16,
         ),
         ClipRRect(
-          borderRadius: BorderRadius.circular(24), // 设置圆角半径
-          child: CachedNetworkImage(imageUrl: task.targetPhotoUrl??'',width: 343,height: 457,placeholder: (_,__){
+          // borderRadius: BorderRadius.circular(24), // 设置圆角半径
+          child: CachedNetworkImage(imageUrl: task.targetPhotoUrl??'',width: MediaQuery.of(context).size.width,placeholder: (_,__){
             return ImageLoadingAnimation();
           },
           fit: BoxFit.cover ,

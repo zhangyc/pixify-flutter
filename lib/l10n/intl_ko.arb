@@ -499,5 +499,7 @@
   "duosnapAnyway": "여전히 Duo snap",
   "@duosnapAnyway": {},
   "photoMightNotBeReal": "듀오 스냅은 상대방의 사진이 실제가 아닐 수 있기 때문에 이상할 수 있습니다",
-  "@photoMightNotBeReal": {}
+  "@photoMightNotBeReal": {},
+  "weeklyLimitReached": "이번 주 사용 횟수가 모두 소진되었습니다",
+  "@weeklyLimitReached": {}
 }

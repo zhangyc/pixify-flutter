@@ -2549,6 +2549,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Weekly limit reached`
+  String get weeklyLimitReached {
+    return Intl.message(
+      'Weekly limit reached',
+      name: 'weeklyLimitReached',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

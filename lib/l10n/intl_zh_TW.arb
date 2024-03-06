@@ -499,5 +499,7 @@
   "duosnapAnyway": "依然Duo snap",
   "@duosnapAnyway": {},
   "photoMightNotBeReal": "雙人快照可能會很奇怪，因為對方的照片可能不是真的",
-  "@photoMightNotBeReal": {}
+  "@photoMightNotBeReal": {},
+  "weeklyLimitReached": "本周次数已用完",
+  "@weeklyLimitReached": {}
 }

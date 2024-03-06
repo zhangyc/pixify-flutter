@@ -377,6 +377,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("주의"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "페어링 해제 후, 서로의 채팅 내용이 모두 삭제됩니다."),
+        "weeklyLimitReached":
+            MessageLookupByLibrary.simpleMessage("이번 주 사용 횟수가 모두 소진되었습니다"),
         "whatsYourEmail": MessageLookupByLibrary.simpleMessage("이메일 입력"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("너를 좋아하는 사람"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("너를 좋아하는 사람"),

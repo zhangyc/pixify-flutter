@@ -326,7 +326,7 @@ Future showDuoSnapCompleted(BuildContext context,double dialogHeight,Widget chil
           )
       ),
       child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.symmetric(vertical: 16.0),
           child: child
       ),
     );

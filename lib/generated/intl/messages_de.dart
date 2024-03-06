@@ -424,6 +424,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Vorsicht"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "Nach dem Aufheben der Paarung wird der gesamte Chatverlauf gelöscht."),
+        "weeklyLimitReached":
+            MessageLookupByLibrary.simpleMessage("Wochenlimit erreicht"),
         "whatsYourEmail":
             MessageLookupByLibrary.simpleMessage("E-Mail eingeben"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Wer mag dich"),

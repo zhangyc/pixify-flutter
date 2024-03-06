@@ -499,5 +499,7 @@
   "duosnapAnyway": "Всё ещё Duo snap",
   "@duosnapAnyway": {},
   "photoMightNotBeReal": "Дуэтный снимок может быть странным, потому что фотография человека может быть не настоящей",
-  "@photoMightNotBeReal": {}
+  "@photoMightNotBeReal": {},
+  "weeklyLimitReached": "Лимит на эту неделю исчерпан",
+  "@weeklyLimitReached": {}
 }

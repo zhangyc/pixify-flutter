@@ -426,6 +426,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Осторожно"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "После отмены сопряжения весь история чата будет удалена."),
+        "weeklyLimitReached": MessageLookupByLibrary.simpleMessage(
+            "Лимит на эту неделю исчерпан"),
         "whatsYourEmail": MessageLookupByLibrary.simpleMessage("Введите email"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Кто тебя любит"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("Кто тебя любит"),

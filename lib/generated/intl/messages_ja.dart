@@ -370,6 +370,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("注意"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "ペアリング解除後、お互いのチャット内容が全て消去されます。"),
+        "weeklyLimitReached":
+            MessageLookupByLibrary.simpleMessage("今週の回数が使い切れました"),
         "whatsYourEmail": MessageLookupByLibrary.simpleMessage("メールアドレスを入力"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("あなたを好きな人は"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("あなたを好きな人は"),

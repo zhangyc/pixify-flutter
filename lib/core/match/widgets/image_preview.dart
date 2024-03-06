@@ -75,8 +75,8 @@ class ImagePreview extends StatelessWidget {
           height: 16,
         ),
         ClipRRect(
-          borderRadius: BorderRadius.circular(24), // 设置圆角半径
-          child: CachedNetworkImage(imageUrl: url,width: 343,height: 457,placeholder: (_,__){
+          // borderRadius: BorderRadius.circular(24), // 设置圆角半径
+          child: CachedNetworkImage(imageUrl: url,width: MediaQuery.of(context).size.width,placeholder: (_,__){
             return ImageLoadingAnimation();
           },
             fit: BoxFit.cover,

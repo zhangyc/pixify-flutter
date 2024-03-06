@@ -21,6 +21,7 @@ import 'package:sona/core/match/widgets/no_location.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 import 'package:sona/core/match/widgets/time_limited_offer.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 import 'package:sona/core/widgets/generate_banner.dart';
 import 'package:sona/core/widgets/not_meet_conditions.dart';
 import 'package:sona/core/widgets/other_not_meet_conditions.dart';
@@ -204,7 +205,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                           child: SvgPicture.asset(Assets.svgDislike,width: 56,height: 56,)
                       ),
                       ScaleAnimation(child: SvgPicture.asset(Assets.svgLike,width: 64,height: 64,), onTap: (){
-                        if(currentPage==users.length-1){
+                          if(currentPage==users.length-1){
                                   return;
                                 }
                           if(canLike){
@@ -270,9 +271,17 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                   return;
                                }
                               if(!canDuoSnap){
-                                Navigator.push(context, MaterialPageRoute(builder:(c){
-                                  return SubscribePage(fromTag: FromTag.duo_snap,);
-                                }));
+                                if(ref.read(myProfileProvider)!.memberType==MemberType.none){
+                                  Navigator.push(context, MaterialPageRoute(builder:(c){
+                                    return const SubscribePage(fromTag: FromTag.duo_snap,);
+                                  }));
+                                }else if(ref.read(myProfileProvider)!.memberType==MemberType.club){
+                                  Navigator.push(context, MaterialPageRoute(builder:(c){
+                                    return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                                  }));
+                                }else if(ref.read(myProfileProvider)!.memberType==MemberType.plus){
+                                  Fluttertoast.showToast(msg: S.current.weeklyLimitReached);
+                                }
                                 return;
                               }
                               try{

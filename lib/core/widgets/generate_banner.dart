@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/bean/duosnap_task.dart';
 import 'package:sona/core/match/util/http_util.dart';
@@ -41,9 +42,11 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
     _initTask();
     startGenerate.addListener(() {
       generateState.value=GenerateState.line;
-      setState(() {
+      if(mounted){
+        setState(() {
 
-      });
+        });
+      }
       _initTask();
       timer=Timer.periodic(Duration(seconds: 15), (timer) {
         _initTask();
@@ -198,23 +201,50 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
                fontWeight: FontWeight.w900
            ),),
            LoadingButton(onPressed: () async{
-             HttpResult overResponse=await post('/merge-photo/cancel',data: {
-               'id':duoSnapTask.id
-             });
-             if(overResponse.isSuccess){
 
-               await post('/merge-photo/create',data: {
-                 {
-                   // 原图URL
-                   "photoUrl":duoSnapTask.sourcePhotoUrl,
-                   // 对方用户ID
-                   "targetUserId":duoSnapTask.targetUserId,
-                   // 模型 - 测试是任意写
-                   "modelId":duoSnapTask.modelId
-                 }
+             try{
+               HttpResult response=await post('/merge-photo/retry',data: {
+                 'id':duoSnapTask.id
                });
+               if(response.isSuccess){
+                 if(mounted){
+                   setState(() {
+                     generateState.value=GenerateState.line;
+                   });
+                 }
+               }else {
+                 Fluttertoast.showToast(msg: S.current.issues);
+                 if(mounted){
+                   setState(() {
+                     generateState.value=GenerateState.fail;
+                   });
+                 }
+               }
+             }catch(e){
+               Fluttertoast.showToast(msg: S.current.issues);
+               if(mounted){
+                 setState(() {
+                   generateState.value=GenerateState.fail;
+                 });
+               }
              }
-            }, child: Container(
+
+            },
+            placeholder: Container(
+              alignment: Alignment.center,
+              child: SizedBox(child: CircularProgressIndicator(),width: 20,height: 20,),
+              width: 90,
+              height: 30,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                      color: Color(0xff2c2c2c),
+                      width: 2
+                  )
+              ),
+            ),
+            child: Container(
              alignment: Alignment.center,
              child: Text(S.current.retry),
              width: 90,
@@ -227,13 +257,25 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
                      width: 2
                  )
              ),
-           )),
+            )
+           ),
            LoadingButton(onPressed: () async{
-             generateState.value=GenerateState.cancel;
+
              await post('/merge-photo/cancel',data: {
                'id':duoSnapTask.id
              });
-           }, child: SvgPicture.asset(Assets.svgDislike,width: 20,height: 20,),)
+             generateState.value=GenerateState.cancel;
+             if(mounted){
+               setState(() {
+
+               });
+             }
+            }, placeholder: SizedBox(
+             width: 20,
+             height: 20,
+             child: CircularProgressIndicator(),
+           ),
+           child: SvgPicture.asset(Assets.svgDislike,width: 20,height: 20,),)
          ],
        ),
      );
