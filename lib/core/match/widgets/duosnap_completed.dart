@@ -1,8 +1,17 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gal/gal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sona/core/match/bean/duosnap_task.dart';
 
 import '../../../account/providers/profile.dart';
@@ -97,9 +106,37 @@ class DuosnapCompleted extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SvgPicture.asset(Assets.svgDownload,width: 56,height: 56,),
+            GestureDetector(child: SvgPicture.asset(Assets.svgDownload,width: 56,height: 56,),
+              onTap: () async{
+                FileInfo? f=await DefaultCacheManager().getFileFromCache(task.targetPhotoUrl??'');
+                if(f!=null){
+                  final hasAccess = await Gal.hasAccess(toAlbum: true);
+                  if(hasAccess){
+                    await Gal.requestAccess(toAlbum: true);
+                    await Gal.putImageBytes(f.file.readAsBytesSync(),album: 'sona',name: 'sona_${uuid.v1()}');
+                    Fluttertoast.showToast(msg: 'Done');
+                  }else {
+                    Fluttertoast.showToast(msg: S.current.issues);
+                  }
+                  Navigator.pop(context);
 
-            SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
+                }
+              },
+            ),
+
+            GestureDetector(child: SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
+              onTap: () async{
+                String cache=(await getApplicationCacheDirectory()).path;
+                File? f=await DefaultCacheManager().getSingleFile(task.targetPhotoUrl??'');
+                File file=File('$cache/tmp.png');
+                file.writeAsBytesSync(f.readAsBytesSync());
+                if(f!=null){
+                  XFile x=XFile(file.path);
+                  Share.shareXFiles([x]);
+                  Navigator.pop(context);
+                }
+              },
+            ),
 
             Consumer(
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
