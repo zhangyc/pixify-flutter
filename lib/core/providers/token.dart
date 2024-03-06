@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/chat/providers/chat.dart';
@@ -21,12 +26,11 @@ final tokenProvider = StateProvider<String?>(
           ref.invalidate(currentHomeTapIndexProvider);
           ref.invalidate(myProfileProvider);
           ref.invalidate(likeMeStreamProvider);
-          ref.invalidate(asyncPersonaProvider);
           ref.invalidate(conversationStreamProvider);
-          // ref.invalidate(asyncChatStylesProvider);
           ref.invalidate(asyncMyTravelWishesProvider);
           ref.invalidate(travelWishParamsProvider);
         });
+        FirebaseAnalytics.instance.setUserId(id: null);
         FirebaseMessaging.instance.deleteToken();
       }
     });

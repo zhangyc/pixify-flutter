@@ -301,6 +301,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
             _completeRequiredInfo(name: params['name']);
             return;
           }
+          await Future.delayed(const Duration(milliseconds: 200));
           if (mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         } else {
           Fluttertoast.showToast(msg: 'Failed to get profile, try again later');
