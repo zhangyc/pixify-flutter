@@ -6,6 +6,7 @@ import 'package:sona/utils/global/global.dart';
 
 import 'const.dart';
 
+
 ThemeData get themeData {
   final isCJK = RegExp(r'^(zh|ja|ko|yue)').hasMatch(profile?.locale ?? Platform.localeName);
   return ThemeData(

@@ -19,8 +19,8 @@ class BackgroundColorController extends StateNotifier<String?> {
   }
 }
 ValueNotifier<TransformStatus> matchAnimation=ValueNotifier<TransformStatus>(TransformStatus.idle);
-final pageControllerProvider = Provider((ref) => TransformerPageController());
-
+// final pageControllerProvider = Provider((ref) => TransformerPageController());
+TransformerPageController? pageControllerProvider;
 
 
 List whiteTable=[

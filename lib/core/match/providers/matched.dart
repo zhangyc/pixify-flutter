@@ -35,6 +35,17 @@ class MatchApi{
  static Future<HttpResult> arrow(int id) {
     return _action(id, MatchAction.arrow);
   }
+ static  Future<HttpResult> sendImageMsg(int id,String imageUrl) {
+   return post(
+       '/message/send',
+       data: {
+      "userId": id, // 消息接收人
+      // 请求参数同，PropmType ，目前应该只有 SUGGEST 需要用到次接口，其他消息都不需要
+      "messageType": "MANUAL",
+      "message": imageUrl, // 发送内容，
+      "contentType": 2 // 消息内容的类型：必填
+    });
+ }
  static  Future<HttpResult> customSend(int id,String text) {
     return post(
         '/prompt/common',

@@ -46,7 +46,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("О"),
         "account": MessageLookupByLibrary.simpleMessage("Аккаунт"),
         "age": MessageLookupByLibrary.simpleMessage("Возраст"),
+        "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
+            "ИИ создает веселые групповые фото!"),
         "allPeople": MessageLookupByLibrary.simpleMessage("Все"),
+        "almost": MessageLookupByLibrary.simpleMessage("Почти там, почти!"),
         "bio": MessageLookupByLibrary.simpleMessage("Введение"),
         "block": MessageLookupByLibrary.simpleMessage("Блокировать"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -97,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonUnmatch":
             MessageLookupByLibrary.simpleMessage("Отменить совпадение"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("Отписаться"),
+        "cantMergePhotos": MessageLookupByLibrary.simpleMessage(
+            "У другой стороны нет настоящего фото, сейчас нельзя сделать групповое фото"),
         "catchMore": MessageLookupByLibrary.simpleMessage("Лови больше!"),
         "chat": MessageLookupByLibrary.simpleMessage("Чат"),
         "checkItOut": MessageLookupByLibrary.simpleMessage("Посмотрите!"),
@@ -140,6 +145,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "displayMyCity":
             MessageLookupByLibrary.simpleMessage("Показать мой город"),
         "dm": MessageLookupByLibrary.simpleMessage("DM"),
+        "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
+        "duoSnapIsReady":
+            MessageLookupByLibrary.simpleMessage("Групповое фото завершено!"),
+        "duosnapAnyway":
+            MessageLookupByLibrary.simpleMessage("Всё ещё Duo snap"),
         "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
             "Ошибка отправки, пожалуйста, попробуйте позже."),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -155,8 +165,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "SONA ищет потенциальных друзей..."),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Привет, я думаю, ты потрясающий. Давай подружимся?"),
+        "generating": MessageLookupByLibrary.simpleMessage("Генерация"),
         "getSonaPlus":
             MessageLookupByLibrary.simpleMessage("Получить SONA Plus"),
+        "gotIt": MessageLookupByLibrary.simpleMessage("Понял"),
         "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
             "Эй, угадай, кто первым нарушит молчание?"),
         "haveSonaSayHi":
@@ -171,11 +183,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Мне нравится твой стиль!"),
         "imInterestedSomething": m1,
         "imVeryInterestedInSomething": m2,
+        "inLine": MessageLookupByLibrary.simpleMessage(
+            "Вы в очереди, пожалуйста, подождите"),
         "interests": MessageLookupByLibrary.simpleMessage("Интересы"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "Синхронный перевод ИИ: Выключен"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
             "Синхронный перевод ИИ: Включен"),
+        "issues": MessageLookupByLibrary.simpleMessage(
+            "Проблемы, пожалуйста, попробуйте снова"),
         "justNow": MessageLookupByLibrary.simpleMessage("только что"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Просто отправьте лайк"),
@@ -197,12 +213,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "me": MessageLookupByLibrary.simpleMessage("Я"),
         "membersPerks":
             MessageLookupByLibrary.simpleMessage("Привилегии участника"),
-        "month": MessageLookupByLibrary.simpleMessage("Месяц"),
+        "month": MessageLookupByLibrary.simpleMessage("mo"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "Чем больше фотографий, тем выше рекомендация"),
         "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage(
             "Больше фото, Больше очарования!"),
         "nearby": MessageLookupByLibrary.simpleMessage("Рядом"),
+        "newGameplay": MessageLookupByLibrary.simpleMessage("Новый геймплей!"),
         "newMatch": MessageLookupByLibrary.simpleMessage("Новое совпадение!"),
         "nextBilingDate":
             MessageLookupByLibrary.simpleMessage("Следующая дата оплаты"),
@@ -222,6 +239,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ослабь социальное давление.\nОтдохни с веселыми душами по всему миру"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "Заполните список желаний\nдля лучшего совпадения"),
+        "onlyOneAtatime": MessageLookupByLibrary.simpleMessage(
+            "Пожалуйста, подождите, по одному за раз"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Ой, сейчас нет данных"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -235,6 +254,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Сфотографировать"),
         "photoFromGallery":
             MessageLookupByLibrary.simpleMessage("Из галереи выбрать"),
+        "photoMightNotBeReal": MessageLookupByLibrary.simpleMessage(
+            "Дуэтный снимок может быть странным, потому что фотография человека может быть не настоящей"),
         "photos": MessageLookupByLibrary.simpleMessage("Фотографии"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -271,8 +292,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Порнография"),
         "reportOptionScam":
             MessageLookupByLibrary.simpleMessage("Мошенничество"),
+        "requireYourRealPhoto": MessageLookupByLibrary.simpleMessage(
+            "Групповое фото требует вашего настоящего фото"),
+        "retry": MessageLookupByLibrary.simpleMessage("Повторить"),
         "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
             "Встреча с иностранцами рядом с вами"),
+        "save": MessageLookupByLibrary.simpleMessage("Сохранить"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("Скриншот доказательства"),
         "seeProfile":
@@ -281,9 +306,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Смотрите, кто вас любит"),
         "selectCountryPageTitle":
             MessageLookupByLibrary.simpleMessage("Страна или регион"),
+        "sendDm": MessageLookupByLibrary.simpleMessage("Отправить ЛС"),
+        "sendToHer": MessageLookupByLibrary.simpleMessage("Отправить Ей"),
+        "sendToHim": MessageLookupByLibrary.simpleMessage("Отправить Ему"),
+        "sendToThem": MessageLookupByLibrary.simpleMessage("Отправить Им"),
         "setDefault":
             MessageLookupByLibrary.simpleMessage("Установить по умолчанию"),
         "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
+        "share": MessageLookupByLibrary.simpleMessage("Поделиться"),
         "showYourPersonality": MessageLookupByLibrary.simpleMessage(
             "Покажите вашу индивидуальность"),
         "signUpLastStepPageTitle":

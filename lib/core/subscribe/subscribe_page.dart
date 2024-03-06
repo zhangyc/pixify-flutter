@@ -65,14 +65,14 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     }, onError: (Object error) {
       if (kDebugMode) print(error);
     });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if(_scrollController.hasClients){
-          _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
-          setState(() {});
-        }
-      });
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   Future.delayed(const Duration(milliseconds: 500), () {
+    //     if(_scrollController.hasClients){
+    //       _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
+    //       setState(() {});
+    //     }
+    //   });
+    // });
   }
 
   Future _subscribeClub() async {
@@ -590,6 +590,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   }
 
   Future<Response> _verifyPurchase(PurchaseDetails purchaseDetails) async{
+
     Map<String,dynamic> map={};
     if(Platform.isAndroid){
       map={
@@ -666,7 +667,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               unawaited(deliverProduct(purchaseDetails));
             } else {
               SonaAnalytics.log('iap_verify_failed');
-
               Fluttertoast.showToast(msg: 'Failed to verify the purchase.');
               // if (resp.statusCode == 40030) {
               //   // 已绑定在其他账号
@@ -806,7 +806,8 @@ enum FromTag{
   chat_starter,
   profile_myplan,
   travel_wish,
-  club_duo_snap // club会员的duo snap次数用完时
+  club_duo_snap, // club会员的duo snap次数用完时
+  duo_snap
 }
 
-final selectedPlusSubIdProvider = StateProvider<String>((ref) => plusBiannuallyId);
+final selectedPlusSubIdProvider = StateProvider<String>((ref) => plusQuarterlyId);

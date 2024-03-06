@@ -32,7 +32,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
     this.autofocus = false,
     required this.sameLanguage,
     required this.onSuggestionTap,
-    required this.onHookTap
+    required this.onHookTap,
   }) : super(key: key);
 
   final int chatId;
@@ -48,7 +48,6 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   final bool sameLanguage;
   final Future Function() onHookTap;
   final Future Function() onSuggestionTap;
-
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatInstructionInputState();
 }

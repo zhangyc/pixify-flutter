@@ -1,9 +1,8 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:sona/common/models/user.dart';
-import 'package:sona/core/chat/providers/message.dart';
-import 'package:sona/core/chat/services/chat.dart';
 
 import '../../../generated/l10n.dart';
 
@@ -17,6 +16,8 @@ class ImMessage {
     required this.originalContent,
     required this.translatedContent,
     required this.time,
+    required this.contentType,
+    required this.content
   });
 
   int? id;
@@ -28,7 +29,17 @@ class ImMessage {
   final UserInfo receiver;
   final DateTime time;
   String? sendingParams;
+  String? content;
 
+  ///1
+  // 纯文本
+  // 2
+  // 图片
+  // 3
+  // 声音
+  // 4
+  // 视频
+  int? contentType;
   factory ImMessage.fromJson(Map<String, dynamic> json) {
     return ImMessage(
       id: json['id'],
@@ -39,6 +50,9 @@ class ImMessage {
       originalContent: json['originalContent'],
       translatedContent: json['translatedContent'],
       time: (json['createDate'] as Timestamp).toDate(),
+      contentType: json['contentType'],
+      content: json['content'],
+
     );
   }
 
@@ -51,6 +65,9 @@ class ImMessage {
     UserInfo? sender,
     UserInfo? receiver,
     DateTime? time,
+    int? contentType,
+    String? content,
+
   }) {
     return ImMessage(
       id: id ?? message.id,
@@ -61,6 +78,8 @@ class ImMessage {
       originalContent: originalContent ?? message.originalContent,
       translatedContent: translatedContent ?? message.translatedContent,
       time: time ?? message.time,
+      contentType: message.contentType,
+      content: message.content
     );
   }
 }

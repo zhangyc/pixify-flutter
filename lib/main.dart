@@ -54,6 +54,7 @@ void main() async {
   countryMapList = (jsonDecode(await rootBundle.loadString('assets/i18n/countries.json')) as List)
     .map((d) => d as Map<String, dynamic>)
     .toList(growable: false);
+
   runApp(
     ProviderScope(
       child: const SonaApp()

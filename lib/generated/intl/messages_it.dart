@@ -46,7 +46,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("Su"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "age": MessageLookupByLibrary.simpleMessage("Età"),
+        "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
+            "L\'IA crea foto di gruppo divertenti!"),
         "allPeople": MessageLookupByLibrary.simpleMessage("Tutto"),
+        "almost": MessageLookupByLibrary.simpleMessage("Quasi lì, quasi!"),
         "bio": MessageLookupByLibrary.simpleMessage("Introduzione"),
         "block": MessageLookupByLibrary.simpleMessage("Bloccare"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -95,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Annulla il match"),
         "buttonUnsubscribe":
             MessageLookupByLibrary.simpleMessage("Disiscriviti"),
+        "cantMergePhotos": MessageLookupByLibrary.simpleMessage(
+            "L\'altra parte non ha una foto reale, per ora non è possibile fare foto di gruppo"),
         "catchMore": MessageLookupByLibrary.simpleMessage("Cattura di più!"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "checkItOut": MessageLookupByLibrary.simpleMessage("Dai un\'occhiata!"),
@@ -138,6 +143,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "displayMyCity":
             MessageLookupByLibrary.simpleMessage("Mostra la mia città"),
         "dm": MessageLookupByLibrary.simpleMessage("DM"),
+        "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
+        "duoSnapIsReady":
+            MessageLookupByLibrary.simpleMessage("Foto di gruppo completata!"),
+        "duosnapAnyway":
+            MessageLookupByLibrary.simpleMessage("Ancora Duo snap"),
         "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
             "Invio fallito, per favore riprova più tardi."),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -153,8 +163,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "SONA sta trovando alcuni amici potenziali..."),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Ehi, penso che tu sia fantastico. Che ne dici di diventare amici?"),
+        "generating": MessageLookupByLibrary.simpleMessage("Generando"),
         "getSonaPlus":
             MessageLookupByLibrary.simpleMessage("Ottenere SONA Plus"),
+        "gotIt": MessageLookupByLibrary.simpleMessage("Capito"),
         "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
             "Ehi, indovina chi romperà il silenzio per primo?"),
         "haveSonaSayHi":
@@ -169,11 +181,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mi piace il tuo stile!"),
         "imInterestedSomething": m1,
         "imVeryInterestedInSomething": m2,
+        "inLine": MessageLookupByLibrary.simpleMessage(
+            "Sei in coda, per favore aspetta"),
         "interests": MessageLookupByLibrary.simpleMessage("Interessi"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "Interpretazione Sincrona AI: Disattiva"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
             "Interpretazione Sincrona AI: Attiva"),
+        "issues": MessageLookupByLibrary.simpleMessage(
+            "Problemi, per favore riprova"),
         "justNow": MessageLookupByLibrary.simpleMessage("proprio ora"),
         "justSendALike":
             MessageLookupByLibrary.simpleMessage("Invia solo un Mi Piace"),
@@ -195,12 +211,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "me": MessageLookupByLibrary.simpleMessage("Io"),
         "membersPerks":
             MessageLookupByLibrary.simpleMessage("Vantaggi per i Membri"),
-        "month": MessageLookupByLibrary.simpleMessage("Mese"),
+        "month": MessageLookupByLibrary.simpleMessage("mo"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "Più foto ci sono, più alta è la raccomandazione"),
         "morePhotosMoreCharm":
             MessageLookupByLibrary.simpleMessage("Più foto, Più fascino!"),
         "nearby": MessageLookupByLibrary.simpleMessage("Vicino"),
+        "newGameplay": MessageLookupByLibrary.simpleMessage("Nuovo Gameplay!"),
         "newMatch": MessageLookupByLibrary.simpleMessage("Nuova partita!"),
         "nextBilingDate":
             MessageLookupByLibrary.simpleMessage("Prossima data di pagamento"),
@@ -220,6 +237,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Alleggerisci la pressione sociale.\nRilassati con anime divertenti in tutto il mondo"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "Perfavore, completa la tua lista dei\ndesideri per un abbinamento migliore"),
+        "onlyOneAtatime": MessageLookupByLibrary.simpleMessage(
+            "Per favore, aspetta, solo uno alla volta"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("Ops, nessun dato al momento"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -233,6 +252,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Scattare una foto"),
         "photoFromGallery":
             MessageLookupByLibrary.simpleMessage("Selezionare dalla galleria"),
+        "photoMightNotBeReal": MessageLookupByLibrary.simpleMessage(
+            "Il duo snap potrebbe essere strano perché la foto della persona potrebbe non essere reale"),
         "photos": MessageLookupByLibrary.simpleMessage("Foto"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -268,8 +289,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "reportOptionPornography":
             MessageLookupByLibrary.simpleMessage("Pornografia"),
         "reportOptionScam": MessageLookupByLibrary.simpleMessage("Truffa"),
+        "requireYourRealPhoto": MessageLookupByLibrary.simpleMessage(
+            "La foto di gruppo richiede la tua foto reale"),
+        "retry": MessageLookupByLibrary.simpleMessage("Riprova"),
         "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
             "Incontrare stranieri vicino a te"),
+        "save": MessageLookupByLibrary.simpleMessage("Salvare"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("Prova dello screenshot"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("Vedi profilo"),
@@ -277,9 +302,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Vedi chi ti piace"),
         "selectCountryPageTitle":
             MessageLookupByLibrary.simpleMessage("Paese o Regione"),
+        "sendDm": MessageLookupByLibrary.simpleMessage("Invia DM"),
+        "sendToHer": MessageLookupByLibrary.simpleMessage("Inviare a Lei"),
+        "sendToHim": MessageLookupByLibrary.simpleMessage("Invia a Lui"),
+        "sendToThem": MessageLookupByLibrary.simpleMessage("Inviare a Loro"),
         "setDefault":
             MessageLookupByLibrary.simpleMessage("Imposta come predefinito"),
         "settings": MessageLookupByLibrary.simpleMessage("Impostazioni"),
+        "share": MessageLookupByLibrary.simpleMessage("Condividere"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("Mostra la tua personalità"),
         "signUpLastStepPageTitle":

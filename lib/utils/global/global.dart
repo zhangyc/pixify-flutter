@@ -14,6 +14,7 @@ import 'package:sona/common/env.dart';
 import 'package:sona/utils/security/jwt_decoder.dart';
 
 import '../../account/models/my_profile.dart';
+import '../../core/match/util/local_data.dart';
 import '../http/interceptors/base.dart';
 
 part './kv_store.dart';
@@ -28,4 +29,5 @@ Future<void> init() async {
   kvStore = await SharedPreferences.getInstance();
   await Hive.initFlutter();
   appCommonBox=await Hive.openBox('setting-box');
+  openAppCount+=1;
 }

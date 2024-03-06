@@ -46,7 +46,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("เกี่ยวกับ"),
         "account": MessageLookupByLibrary.simpleMessage("บัญชี"),
         "age": MessageLookupByLibrary.simpleMessage("อายุ"),
+        "aiCreatingFunGroupPics":
+            MessageLookupByLibrary.simpleMessage("AI สร้างภาพถ่ายกลุ่มสนุก ๆ!"),
         "allPeople": MessageLookupByLibrary.simpleMessage("ทั้งหมด"),
+        "almost": MessageLookupByLibrary.simpleMessage("เกือบถึงแล้ว เกือบ!"),
         "bio": MessageLookupByLibrary.simpleMessage("บทนำ"),
         "block": MessageLookupByLibrary.simpleMessage("บล็อก"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -94,6 +97,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ยกเลิกการจับคู่"),
         "buttonUnsubscribe":
             MessageLookupByLibrary.simpleMessage("ยกเลิกการสมัครสมาชิก"),
+        "cantMergePhotos": MessageLookupByLibrary.simpleMessage(
+            "อีกฝ่ายไม่มีรูปถ่ายจริง ไม่สามารถถ่ายภาพหมู่ได้ในขณะนี้"),
         "catchMore": MessageLookupByLibrary.simpleMessage("มากกว่านี้!"),
         "chat": MessageLookupByLibrary.simpleMessage("แชท"),
         "checkItOut": MessageLookupByLibrary.simpleMessage("ลองดูสิ!"),
@@ -135,6 +140,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "displayMyCity":
             MessageLookupByLibrary.simpleMessage("แสดงเมืองของฉัน"),
         "dm": MessageLookupByLibrary.simpleMessage("DM"),
+        "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
+        "duoSnapIsReady":
+            MessageLookupByLibrary.simpleMessage("รูปกลุ่มเสร็จแล้ว!"),
+        "duosnapAnyway": MessageLookupByLibrary.simpleMessage("ยังคง Duo snap"),
         "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
             "ส่งไม่สำเร็จ กรุณาลองใหม่ภายหลัง"),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -150,7 +159,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "SONAกำลังหาเพื่อนที่มีศักยภาพ..."),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "เฮ้ย ฉันว่านายน่าทึ่งมาก มาเป็นเพื่อนกันไหม?"),
+        "generating": MessageLookupByLibrary.simpleMessage("กำลังสร้าง"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("รับ SONA Plus"),
+        "gotIt": MessageLookupByLibrary.simpleMessage("เข้าใจแล้ว"),
         "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
             "เฮ้ย ลองทายสิว่าใครจะเป็นคนพูดก่อน?"),
         "haveSonaSayHi":
@@ -165,11 +176,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ฉันชอบสไตล์ของคุณ!"),
         "imInterestedSomething": m1,
         "imVeryInterestedInSomething": m2,
+        "inLine": MessageLookupByLibrary.simpleMessage(
+            "คุณกำลังอยู่ในคิว โปรดรอสักครู่"),
         "interests": MessageLookupByLibrary.simpleMessage("ความสนใจ"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage(
             "AI การแปลภาษาแบบพร้อมเพรียง: ปิด"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage(
             "AI การแปลภาษาแบบพร้อมเพรียง: เปิด"),
+        "issues": MessageLookupByLibrary.simpleMessage("มีปัญหา กรุณาลองใหม่"),
         "justNow": MessageLookupByLibrary.simpleMessage("เมื่อสักครู่"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("เพียงส่งไลค์"),
         "justTypeInYourLanguage": m3,
@@ -190,12 +204,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "me": MessageLookupByLibrary.simpleMessage("ฉัน"),
         "membersPerks":
             MessageLookupByLibrary.simpleMessage("สิทธิพิเศษสมาชิก"),
-        "month": MessageLookupByLibrary.simpleMessage("เดือน"),
+        "month": MessageLookupByLibrary.simpleMessage("mo"),
         "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
             "ยิ่งมีรูปภาพมากเท่าไร ค่าแนะนำก็ยิ่งสูงขึ้น"),
         "morePhotosMoreCharm":
             MessageLookupByLibrary.simpleMessage("รูปเยอะ, เสน่ห์เยอะ!"),
         "nearby": MessageLookupByLibrary.simpleMessage("ใกล้ๆ"),
+        "newGameplay": MessageLookupByLibrary.simpleMessage("เกมเพลย์ใหม่!"),
         "newMatch": MessageLookupByLibrary.simpleMessage("จับคู่ใหม่!"),
         "nextBilingDate":
             MessageLookupByLibrary.simpleMessage("วันชำระเงินครั้งต่อไป"),
@@ -215,6 +230,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "ลดความกดดันทางสังคม \nผ่อนคลายกับวิญญาณที่สนุกสนานทั่วโลก"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "กรุณาทำตามรายการสิ่งที่ปรารถนาเ\nพื่อการจับคู่ที่เหมาะสมยิ่งขึ้น"),
+        "onlyOneAtatime": MessageLookupByLibrary.simpleMessage(
+            "กรุณารอสักครู่ คนละครั้งละหนึ่งคน"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("อุ๊ปส์ ไม่มีข้อมูลในตอนนี้"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -227,6 +244,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoFromCamera": MessageLookupByLibrary.simpleMessage("ถ่ายภาพ"),
         "photoFromGallery":
             MessageLookupByLibrary.simpleMessage("จากแกลเลอรีเลือก"),
+        "photoMightNotBeReal": MessageLookupByLibrary.simpleMessage(
+            "ดูโอสแนปอาจจะแปลกเพราะภาพถ่ายของคนอาจไม่ใช่ของจริง"),
         "photos": MessageLookupByLibrary.simpleMessage("รูปภาพ"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -261,17 +280,26 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("การโจมตีส่วนบุคคล"),
         "reportOptionPornography": MessageLookupByLibrary.simpleMessage("โป๊"),
         "reportOptionScam": MessageLookupByLibrary.simpleMessage("การหลอกลวง"),
+        "requireYourRealPhoto": MessageLookupByLibrary.simpleMessage(
+            "ภาพหมู่ต้องการรูปถ่ายจริงของคุณ"),
+        "retry": MessageLookupByLibrary.simpleMessage("ลองใหม่"),
         "runningIntoForeignersNearYou":
             MessageLookupByLibrary.simpleMessage("พบชาวต่างชาติที่อยู่ใกล้คุณ"),
+        "save": MessageLookupByLibrary.simpleMessage("บันทึก"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("หลักฐานภาพหน้าจอ"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("ดูโปรไฟล์"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("ดูว่าใครชอบคุณ"),
         "selectCountryPageTitle":
             MessageLookupByLibrary.simpleMessage("ประเทศหรือภูมิภาค"),
+        "sendDm": MessageLookupByLibrary.simpleMessage("ส่ง DM"),
+        "sendToHer": MessageLookupByLibrary.simpleMessage("ส่งให้เธอ"),
+        "sendToHim": MessageLookupByLibrary.simpleMessage("ส่งให้เขา"),
+        "sendToThem": MessageLookupByLibrary.simpleMessage("ส่งให้พวกเขา"),
         "setDefault":
             MessageLookupByLibrary.simpleMessage("ตั้งค่าเป็นค่าเริ่มต้น"),
         "settings": MessageLookupByLibrary.simpleMessage("การตั้งค่า"),
+        "share": MessageLookupByLibrary.simpleMessage("แชร์"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("แสดงบุคลิกของคุณ"),
         "signUpLastStepPageTitle":

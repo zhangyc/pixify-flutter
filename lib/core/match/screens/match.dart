@@ -6,25 +6,37 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
+import 'package:sona/core/match/util/image_util.dart';
 import 'package:sona/core/match/widgets/button_animations.dart';
+import 'package:sona/core/match/widgets/catch_more.dart';
 import 'package:sona/core/match/widgets/custom_pageview/src/skip_transformer.dart';
+import 'package:sona/core/match/widgets/icon_animation.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_location.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
+import 'package:sona/core/match/widgets/time_limited_offer.dart';
+import 'package:sona/core/widgets/generate_banner.dart';
+import 'package:sona/core/widgets/not_meet_conditions.dart';
+import 'package:sona/core/widgets/other_not_meet_conditions.dart';
 import 'package:sona/generated/assets.dart';
+import 'package:sona/utils/face_detection/detection.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:system_settings/system_settings.dart';
 
 import '../../../account/providers/profile.dart';
+import '../../../account/services/info.dart';
 import '../../../common/permission/permission.dart';
 import '../../../common/screens/profile.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/dialog/common.dart';
+import '../../../utils/dialog/crop_image.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
@@ -62,22 +74,34 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     languageNotifier.addListener(() {
       _initData();
     });
-
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if(openAppCount==2&&todayIsShowedTimed&&showTimeLimitedCount<3){
+        showDuoSnapTip(context, child: TimeLimitedOffer(close: (){
+          Navigator.pop(context);
+        }), dialogHeight: 427);
+        todayIsShowedTimed=false;
+        showTimeLimitedCount+=1;
+      }
+    });
     super.initState();
+    controller.addListener(() {
+      pageControllerProgress.value=controller.page??0.0;
+    });
   }
   List<MatchUserInfo> users =[];
 
   @override
   void dispose() {
+    controller.dispose();
     super.dispose();
   }
   int currentPage=0;
-  late TransformerPageController controller;
+  late TransformerPageController controller=TransformerPageController();
+  bool detecting=false;
   @override
   Widget build(BuildContext context) {
+    // pageControllerProvider=controller;
     String? bgImage=ref.watch(backgroundImageProvider);
-    controller = ref.watch(pageControllerProvider);
-
     super.build(context);
     return Stack(
       children: [
@@ -136,7 +160,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           body: Stack(
             children: [
               Positioned.fill(
-                child: _buildMatch()
+                child: Column(
+                  children: [
+                    GenerateBanner(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Expanded(child: _buildMatch())
+
+                  ],
+                )
               ),
               (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading||_state==PageState.notLocation?Container():
               Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
@@ -152,7 +185,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     MatchApi.like(users[currentPage].id,);
                     SonaAnalytics.log(MatchEvent.match_like_justlike.name);
 
-                  }, child: Text('${S.of(context).justSendALike} >',style: TextStyle(
+                   }, child: Text('${S.of(context).justSendALike} >',style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
                   ),)):Row(
@@ -221,28 +254,155 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                             }));
                           }
                       }),
-                      ScaleAnimation(child: SvgPicture.asset(Assets.svgArrow,width: 56,height: 56,), onTap: (){
+                      detecting?Container(width: 56,height: 56,decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Color(0xff2c2c2c),
+                          width: 2
+                        )
+                      ),child: SizedBox(child: CircularProgressIndicator(),width: 30,height: 30,),
+                        alignment: Alignment.center,
+
+                      ):
+                      ScaleAnimation(child: SvgPicture.asset(Assets.svgDuosnap,width: 56,height: 56,), onTap: () async {
                               if(currentPage==users.length-1){
                                   return;
                                }
-                              Future.delayed(Duration(milliseconds: 200),(){
-                                matchAnimation.value=TransformStatus.rightRotate;
-                                 if(canArrow){
-                                 showDm(context, users[currentPage],(){
-                                 controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                              //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
-                            });
-                          }else {
-                            bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                            if(isMember){
-                              Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                            }else{
-                              Navigator.push(context, MaterialPageRoute(builder:(c){
-                                return SubscribePage(fromTag: FromTag.pay_match_arrow,);
-                              }));
-                            }
-                          }
-                          });
+                              if(!canDuoSnap){
+                                Navigator.push(context, MaterialPageRoute(builder:(c){
+                                  return SubscribePage(fromTag: FromTag.duo_snap,);
+                                }));
+                                return;
+                              }
+                              try{
+                                detecting=true;
+                                HttpResult result=await post('/merge-photo/find-last');
+                                if(result.statusCode.toString()=='60010') {
+                                  setState(() {
+
+                                  });
+                                    FileInfo file=await DefaultCacheManager().downloadFile(ref.read(myProfileProvider)!.photos.first.url);
+                                    FileInfo file2=await DefaultCacheManager().downloadFile(users[currentPage].photos.first);
+
+                                    bool con1=await faceDetection(file.file.path);
+                                    bool con2=await faceDetection(file2.file.path);
+                                    detecting=false;
+                                    setState(() {
+
+                                    });
+                                    if(con1&&con2){
+                                     await showDuoSnapDialog(context,target: users[currentPage]);
+                                     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+
+                                    }else if(!con1&&con2){
+                                      showDuoSnapTip(context, child: NotMeetConditions(
+                                        close: (){
+                                          Navigator.pop(context);
+                                        },
+                                        camera: () async {
+                                          setUserAvatarPhoto(ImageSource.camera, ref);
+                                          if(mounted){
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                        gallery: () async {
+                                          setUserAvatarPhoto(ImageSource.gallery, ref);
+                                          if(mounted){
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                        anyway: () async{
+                                          if(mounted){
+                                            Navigator.pop(context);
+                                          }
+                                          await showDuoSnapDialog(context,target: users[currentPage]);
+                                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+
+                                        },
+                                      ),
+                                          dialogHeight: 361);
+                                    }else if(con1&&!con2){
+                                      showDuoSnapTip(context, child: OtherNotMeetConditions(
+                                        close: (){
+                                          Navigator.pop(context);
+                                        },
+                                        gotit: (){
+                                          Navigator.pop(context);
+                                        },
+                                        sendDM: (){
+                                          Future.delayed(Duration(milliseconds: 200),(){
+                                            matchAnimation.value=TransformStatus.rightRotate;
+                                            if(canArrow){
+                                              showDm(context, users[currentPage],(){
+                                                controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                                //pageController.nextPage(duration: Duration(milliseconds: 2000), curve:  Curves.linearToEaseOut);
+                                              });
+                                            }else {
+                                              bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                                              if(isMember){
+                                                Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                                              }else{
+                                                Navigator.push(context, MaterialPageRoute(builder:(c){
+                                                  return SubscribePage(fromTag: FromTag.duo_snap,);
+                                                }));
+                                              }
+                                            }
+                                          });
+                                          if(mounted){
+                                            Navigator.pop(context);
+                                          }
+                                        }, anyway: () async{
+                                        Navigator.pop(context);
+
+                                        await showDuoSnapDialog(context,target: users[currentPage]);
+                                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+
+                                      },
+
+                                      ), dialogHeight: 390);
+                                    }else if(!con1&&!con2){
+                                      showDuoSnapTip(context, child: NotMeetConditions(
+                                        close: (){
+                                          Navigator.pop(context);
+                                        },
+                                        camera: () async {
+                                          setUserAvatarPhoto(ImageSource.camera, ref);
+                                          if(mounted){
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                        gallery: () async {
+                                          setUserAvatarPhoto(ImageSource.gallery, ref);
+                                          if(mounted){
+                                            Navigator.pop(context);
+                                          }
+                                        }, anyway: ()async{
+                                        if(mounted){
+                                          Navigator.pop(context);
+                                        }
+                                        await showDuoSnapDialog(context,target: users[currentPage]);
+                                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+
+                                      },
+                                      ), dialogHeight: 361);
+                                    }
+
+                                }else {
+                                  Fluttertoast.showToast(msg: S.current.onlyOneAtatime);
+                                  detecting=false;
+                                  setState(() {
+
+                                  });
+                                }
+                              }catch(e){
+                                detecting=false;
+                                setState(() {
+
+                                });
+                              }
+
+
 
                       })
                     ],

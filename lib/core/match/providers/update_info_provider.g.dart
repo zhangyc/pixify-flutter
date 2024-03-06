@@ -6,7 +6,7 @@ part of 'update_info_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateProfileBioHash() => r'fa30c0f1132eb3f02a3ca5a7d663c7093789ebe0';
+String _$updateProfileBioHash() => r'0a06a9b7200d9b7dfbd8dbcc18b278aa964f92c8';
 
 /// See also [updateProfileBio].
 @ProviderFor(updateProfileBio)

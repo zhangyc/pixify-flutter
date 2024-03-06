@@ -2,7 +2,7 @@ name: sona
 description: an AI persona dating app.
 publish_to: 'none'
 
-version: 1.0.5+28
+version: 1.0.5+31
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -69,6 +69,10 @@ dependencies:
   just_audio: ^0.9.36
   speech_to_text: ^6.6.0
 
+  gal:
+  path_provider:
+  image_editor: ^1.3.0
+  share_plus: ^7.2.2
 dev_dependencies:
   custom_lint: ^0.5.7
   flutter_lints: ^2.0.0

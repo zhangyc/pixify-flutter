@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,6 +17,7 @@ import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/home_provider.dart';
 import 'package:sona/core/providers/notice.dart';
 import 'package:sona/core/travel_wish/providers/my_wish.dart';
+import 'package:sona/core/widgets/generate_banner.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/location/location.dart';
 
@@ -46,6 +48,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       ref.read(asyncMyTravelWishesProvider);
     });
     super.initState();
+    Permission.photos.request();
   }
 
   void _determinePosition() async {
@@ -69,13 +72,13 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
           MatchScreen(),
           LikeMeScreen(),
           ConversationScreen(
-            onShowLikeMe: () {
-              _pageController.animateToPage(
-                  1,
-                  duration: const Duration(milliseconds: 2),
-                  curve: Curves.ease
-              );
-            }
+              onShowLikeMe: () {
+                _pageController.animateToPage(
+                    1,
+                    duration: const Duration(milliseconds: 2),
+                    curve: Curves.ease
+                );
+              }
           ),
           PersonaScreen(),
         ],
@@ -132,6 +135,10 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   }
 
   void _onPageChange(int index) {
+    _currentIndex=index;
+    setState(() {
+
+    });
     if (index == 1) {
       ref.read(likeMeLastCheckTimeProvider.notifier).update((state) => DateTime.now());
     } else if(index == 2) {

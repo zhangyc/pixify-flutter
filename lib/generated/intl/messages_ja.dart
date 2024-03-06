@@ -46,7 +46,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "about": MessageLookupByLibrary.simpleMessage("約"),
         "account": MessageLookupByLibrary.simpleMessage("アカウント"),
         "age": MessageLookupByLibrary.simpleMessage("年齢"),
+        "aiCreatingFunGroupPics":
+            MessageLookupByLibrary.simpleMessage("AIが楽しい集合写真を作ります！"),
         "allPeople": MessageLookupByLibrary.simpleMessage("全部"),
+        "almost": MessageLookupByLibrary.simpleMessage("もう少しで、もう少し！"),
         "bio": MessageLookupByLibrary.simpleMessage("アバウトミー"),
         "block": MessageLookupByLibrary.simpleMessage("ブロック"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -89,6 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("VIP特典を解除！"),
         "buttonUnmatch": MessageLookupByLibrary.simpleMessage("ペアリング解除"),
         "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("購読を解除する"),
+        "cantMergePhotos": MessageLookupByLibrary.simpleMessage(
+            "相手には実際の写真がなく、今はグループ写真を撮ることができません"),
         "catchMore": MessageLookupByLibrary.simpleMessage("もっと捕まえて！"),
         "chat": MessageLookupByLibrary.simpleMessage("チャット"),
         "checkItOut": MessageLookupByLibrary.simpleMessage("チェックしてみて！"),
@@ -120,6 +125,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "disclaimer": MessageLookupByLibrary.simpleMessage("免責事項"),
         "displayMyCity": MessageLookupByLibrary.simpleMessage("私の都市を表示"),
         "dm": MessageLookupByLibrary.simpleMessage("ディーエム"),
+        "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
+        "duoSnapIsReady": MessageLookupByLibrary.simpleMessage("集合写真完成！"),
+        "duosnapAnyway": MessageLookupByLibrary.simpleMessage("依然Duo snap"),
         "exceptionFailedToSendTips":
             MessageLookupByLibrary.simpleMessage("送信に失敗しました、後で再試行してください。"),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -134,7 +142,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("SONAは潜在的な友人を探しています..."),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "こんにちは!面白そうな人だね。ちょっと話してみませんか？"),
+        "generating": MessageLookupByLibrary.simpleMessage("生成中"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plusを入手"),
+        "gotIt": MessageLookupByLibrary.simpleMessage("分かった"),
         "guessWhoBreakSilence":
             MessageLookupByLibrary.simpleMessage("ねえ、誰が最初に沈黙を破ると思う？"),
         "haveSonaSayHi": MessageLookupByLibrary.simpleMessage("SONAに挨拶させて"),
@@ -148,9 +158,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("スタイルがすごくかわいいわね!"),
         "imInterestedSomething": m1,
         "imVeryInterestedInSomething": m2,
+        "inLine": MessageLookupByLibrary.simpleMessage("順番待ちです、お待ちください"),
         "interests": MessageLookupByLibrary.simpleMessage("興味"),
         "interpretationOff": MessageLookupByLibrary.simpleMessage("AI同期通訳：オフ"),
         "interpretationOn": MessageLookupByLibrary.simpleMessage("AI同期通訳：オン"),
+        "issues": MessageLookupByLibrary.simpleMessage("問題があります、再試行してください"),
         "justNow": MessageLookupByLibrary.simpleMessage("たった今"),
         "justSendALike": MessageLookupByLibrary.simpleMessage("いいねを送るだけ"),
         "justTypeInYourLanguage": m3,
@@ -176,6 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "morePhotosMoreCharm":
             MessageLookupByLibrary.simpleMessage("写真増えて、魅力もね♪"),
         "nearby": MessageLookupByLibrary.simpleMessage("近くに"),
+        "newGameplay": MessageLookupByLibrary.simpleMessage("新しいゲームプレイ！"),
         "newMatch": MessageLookupByLibrary.simpleMessage("新しいマッチ！"),
         "nextBilingDate": MessageLookupByLibrary.simpleMessage("次の請求日"),
         "noMessageTips": MessageLookupByLibrary.simpleMessage(
@@ -194,6 +207,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "社会的なプレッシャーを和らげてください\n世界中の楽しい魂とリラックスしましょう"),
         "onboardingWish": MessageLookupByLibrary.simpleMessage(
             "願いリストを完成させて、\nより理想的なマッチを得ましょう"),
+        "onlyOneAtatime":
+            MessageLookupByLibrary.simpleMessage("お待ちください、一度に一つだけです"),
         "oopsNoDataRightNow":
             MessageLookupByLibrary.simpleMessage("おっと、今はデータがありません"),
         "peopleFromYourWishlistGetMoreRecommendations":
@@ -205,6 +220,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("許可が必要です"),
         "photoFromCamera": MessageLookupByLibrary.simpleMessage("写真を撮る"),
         "photoFromGallery": MessageLookupByLibrary.simpleMessage("ギャラリーから選択"),
+        "photoMightNotBeReal": MessageLookupByLibrary.simpleMessage(
+            "デュオスナップは、相手の写真が本物ではない可能性があるため、奇妙かもしれません"),
         "photos": MessageLookupByLibrary.simpleMessage("写真"),
         "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
             MessageLookupByLibrary.simpleMessage(
@@ -235,8 +252,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("人身攻撃"),
         "reportOptionPornography": MessageLookupByLibrary.simpleMessage("ポルノ"),
         "reportOptionScam": MessageLookupByLibrary.simpleMessage("詐欺"),
+        "requireYourRealPhoto":
+            MessageLookupByLibrary.simpleMessage("グループ写真にはあなたの実際の写真が必要です"),
+        "retry": MessageLookupByLibrary.simpleMessage("再試"),
         "runningIntoForeignersNearYou":
             MessageLookupByLibrary.simpleMessage("あなたの近くの外国人に出会う"),
+        "save": MessageLookupByLibrary.simpleMessage("保存"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("スクリーンショットの証拠"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("プロフィールを見る"),
@@ -244,8 +265,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("誰があなたを好きになったか見てみて"),
         "selectCountryPageTitle":
             MessageLookupByLibrary.simpleMessage("国または地域"),
+        "sendDm": MessageLookupByLibrary.simpleMessage("DMを送信"),
+        "sendToHer": MessageLookupByLibrary.simpleMessage("彼女に送る"),
+        "sendToHim": MessageLookupByLibrary.simpleMessage("彼に送る"),
+        "sendToThem": MessageLookupByLibrary.simpleMessage("彼らに送る"),
         "setDefault": MessageLookupByLibrary.simpleMessage("デフォルトに設定"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
+        "share": MessageLookupByLibrary.simpleMessage("共有"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("あなたの世界観や個性を表現してみてね ♪"),
         "signUpLastStepPageTitle":

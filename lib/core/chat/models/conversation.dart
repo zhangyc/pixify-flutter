@@ -4,7 +4,7 @@ import 'package:sona/utils/global/global.dart' as global;
 import 'package:sona/common/models/user.dart';
 
 class ImConversation {
-  ImConversation._({
+  ImConversation._( {
     required this.convoId,
     required this.otherSide,
     required this.dateTime,
@@ -13,6 +13,7 @@ class ImConversation {
     required this.lastMessageOriginalContent,
     required this.lastMessageTranslatedContent,
     required this.lastMessageSenderId,
+    required this.contentType,
   });
 
   final int convoId;
@@ -23,6 +24,7 @@ class ImConversation {
   final String? lastMessageOriginalContent;
   final String? lastMessageTranslatedContent;
   final int? lastMessageSenderId;
+  final int? contentType;
 
   DateTime? _checkTime;
   DateTime? get checkTime {
@@ -55,6 +57,7 @@ class ImConversation {
       lastMessageOriginalContent: json['originalContent'],
       lastMessageTranslatedContent: json['translatedContent'],
       lastMessageSenderId: json['sendUserId'],
+      contentType: json['contentType']
       // inputMode: InputMode.values[json['inputMode'] ?? 0],
       // chatStyleId: json['chatStyleId']
     );
