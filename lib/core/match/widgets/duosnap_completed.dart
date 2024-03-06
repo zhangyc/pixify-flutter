@@ -104,26 +104,32 @@ class DuosnapCompleted extends StatelessWidget {
             Consumer(
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
                 return GestureDetector(onTap: (){
-                  if(canArrow){
-                    arrow=arrow-1;
-                    //MatchApi.sendImageMsg(info.id,controller.text);
-                    // next.call();
-                    Navigator.pop(context);
-                    MatchApi.sendImageMsg(task.targetUserId!, task.targetPhotoUrl!).then((value){
-                      if(value.isSuccess){
-                        Fluttertoast.showToast(msg: 'done');
-                      }
-                    });
-                  }else {
-                    bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                    if(isMember){
-                      Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                    }else{
-                      Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
-                        return SubscribePage(fromTag: FromTag.duo_snap,);
-                      }));
+                  Navigator.pop(context);
+                  MatchApi.sendImageMsg(task.targetUserId!, task.targetPhotoUrl!).then((value){
+                    if(value.isSuccess){
+                      Fluttertoast.showToast(msg: 'done');
                     }
-                  }
+                  });
+                  // if(canArrow){
+                  //   arrow=arrow-1;
+                  //   //MatchApi.sendImageMsg(info.id,controller.text);
+                  //   // next.call();
+                  //   Navigator.pop(context);
+                  //   MatchApi.sendImageMsg(task.targetUserId!, task.targetPhotoUrl!).then((value){
+                  //     if(value.isSuccess){
+                  //       Fluttertoast.showToast(msg: 'done');
+                  //     }
+                  //   });
+                  // }else {
+                  //   bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                  //   if(isMember){
+                  //     Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                  //   }else{
+                  //     Navigator.push(navigatorKey.currentContext!, MaterialPageRoute(builder:(c){
+                  //       return SubscribePage(fromTag: FromTag.duo_snap,);
+                  //     }));
+                  //   }
+                  // }
                  },
                     child: Container(
                         alignment: Alignment.center,
