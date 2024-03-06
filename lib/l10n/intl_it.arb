@@ -499,5 +499,7 @@
   "duosnapAnyway": "Ancora Duo snap",
   "@duosnapAnyway": {},
   "photoMightNotBeReal": "Il duo snap potrebbe essere strano perché la foto della persona potrebbe non essere reale",
-  "@photoMightNotBeReal": {}
+  "@photoMightNotBeReal": {},
+  "weeklyLimitReached": "Limite settimanale raggiunto",
+  "@weeklyLimitReached": {}
 }

@@ -10,12 +10,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gal/gal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 
 import '../../../account/providers/profile.dart';
-import '../../../common/permission/permission.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import 'image_loading_animation.dart';
@@ -75,8 +73,8 @@ class ImagePreview extends StatelessWidget {
           height: 16,
         ),
         ClipRRect(
-          borderRadius: BorderRadius.circular(24), // 设置圆角半径
-          child: CachedNetworkImage(imageUrl: url,width: 343,height: 457,placeholder: (_,__){
+          // borderRadius: BorderRadius.circular(24), // 设置圆角半径
+          child: CachedNetworkImage(imageUrl: url,width: MediaQuery.of(context).size.width,placeholder: (_,__){
             return ImageLoadingAnimation();
           },
             fit: BoxFit.cover,
@@ -95,7 +93,7 @@ class ImagePreview extends StatelessWidget {
                   final hasAccess = await Gal.hasAccess(toAlbum: true);
                   if(hasAccess){
                     await Gal.requestAccess(toAlbum: true);
-                    await Gal.putImageBytes(f.file.readAsBytesSync(),album: 'sona');
+                    await Gal.putImageBytes(f.file.readAsBytesSync(),album: 'sona',name: 'sona_${uuid.v1()}');
                     Fluttertoast.showToast(msg: 'Done');
                   }else {
                     Fluttertoast.showToast(msg: S.current.issues);
@@ -108,11 +106,13 @@ class ImagePreview extends StatelessWidget {
 
             GestureDetector(child: SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
               onTap: () async{
-                FileInfo? f=await DefaultCacheManager().getFileFromCache(url);
+                String cache=(await getApplicationCacheDirectory()).path;
+                File? f=await DefaultCacheManager().getSingleFile(url);
+                File file=File('$cache/tmp.png');
+                file.writeAsBytesSync(f.readAsBytesSync());
                 if(f!=null){
-                  XFile x=XFile(f.file.path);
+                  XFile x=XFile(file.path);
                   Share.shareXFiles([x]);
-
                   Navigator.pop(context);
                 }
               },

@@ -499,5 +499,7 @@
   "duosnapAnyway": "依然Duo snap",
   "@duosnapAnyway": {},
   "photoMightNotBeReal": "デュオスナップは、相手の写真が本物ではない可能性があるため、奇妙かもしれません",
-  "@photoMightNotBeReal": {}
+  "@photoMightNotBeReal": {},
+  "weeklyLimitReached": "今週の回数が使い切れました",
+  "@weeklyLimitReached": {}
 }

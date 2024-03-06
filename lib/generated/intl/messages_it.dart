@@ -423,6 +423,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Attenzione"),
         "warningUnmatching": MessageLookupByLibrary.simpleMessage(
             "Dopo lo sganciamento, tutta la cronologia della chat verrà cancellata."),
+        "weeklyLimitReached": MessageLookupByLibrary.simpleMessage(
+            "Limite settimanale raggiunto"),
         "whatsYourEmail":
             MessageLookupByLibrary.simpleMessage("Inserisci email"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Chi ti piace"),

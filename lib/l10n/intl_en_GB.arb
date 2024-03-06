@@ -499,5 +499,7 @@
   "duosnapAnyway": "Duo snap anyway",
   "@duosnapAnyway": {},
   "photoMightNotBeReal": "Duo snap might be weird because the person's photo might not be real",
-  "@photoMightNotBeReal": {}
+  "@photoMightNotBeReal": {},
+  "weeklyLimitReached": "Weekly limit reached",
+  "@weeklyLimitReached": {}
 }

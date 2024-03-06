@@ -350,6 +350,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "warningTitleCaution": MessageLookupByLibrary.simpleMessage("注意"),
         "warningUnmatching":
             MessageLookupByLibrary.simpleMessage("取消配對後，你們之間的聊天內容都將被清除。"),
+        "weeklyLimitReached": MessageLookupByLibrary.simpleMessage("本周次数已用完"),
         "whatsYourEmail": MessageLookupByLibrary.simpleMessage("輸入郵箱"),
         "whoLIkesYou": MessageLookupByLibrary.simpleMessage("誰喜歡你"),
         "whoLikesU": MessageLookupByLibrary.simpleMessage("誰喜歡你"),
