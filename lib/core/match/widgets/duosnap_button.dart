@@ -89,7 +89,7 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
 
           });
           if(mounted){
-            Navigator.pop(context);
+            Navigator.pop(context,widget.model);
           }
         }catch(e){
           Fluttertoast.showToast(msg:S.current.issues);

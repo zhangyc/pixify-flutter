@@ -11,6 +11,7 @@ import 'package:gal/gal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:sona/core/match/widgets/duosnap_loading.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 
 import '../../../account/providers/profile.dart';
@@ -77,7 +78,7 @@ class ImagePreview extends StatelessWidget {
         ClipRRect(
           // borderRadius: BorderRadius.circular(24), // 设置圆角半径
           child: CachedNetworkImage(imageUrl: url,width: MediaQuery.of(context).size.width,placeholder: (_,__){
-            return ImageLoadingAnimation();
+            return DuosnapLoading();
           },
             fit: BoxFit.cover,
           ),

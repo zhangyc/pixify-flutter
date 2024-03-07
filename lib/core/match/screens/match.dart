@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/common/app_config.dart';
+import 'package:sona/core/match/providers/duo_provider.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
@@ -280,6 +281,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                }
                               SonaAnalytics.log(DuoSnapEvent.click_duo.name);
                               if(!canDuoSnap){
+
                                 duosnap-=1;
                                 if(ref.read(myProfileProvider)!.memberType==MemberType.none){
                                   SonaAnalytics.log(DuoSnapEvent.Duo_click_pay.name);
@@ -316,8 +318,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
                                     });
                                     if(con1&&con2){
-                                     await showDuoSnapDialog(context,target: users[currentPage]);
-                                     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                     SdModel? sdModel=await showDuoSnapDialog(context,target: users[currentPage]);
+                                     if(sdModel!=null){
+                                       controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                     }
 
                                     }else if(!con1&&con2){
                                       SonaAnalytics.log(DuoSnapEvent.notreal_self.name);
@@ -342,8 +346,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                           if(mounted){
                                             Navigator.pop(context);
                                           }
-                                          await showDuoSnapDialog(context,target: users[currentPage]);
-                                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                          SdModel? sdModel=await showDuoSnapDialog(context,target: users[currentPage]);
+                                          if(sdModel!=null){
+                                            controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                          }
 
                                         },
                                       ),
@@ -383,8 +389,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                         }, anyway: () async{
                                         Navigator.pop(context);
 
-                                        await showDuoSnapDialog(context,target: users[currentPage]);
-                                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                        SdModel? sdModel=await showDuoSnapDialog(context,target: users[currentPage]);
+                                        if(sdModel!=null){
+                                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                        }
 
                                       },
 
@@ -409,8 +417,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                         if(mounted){
                                           Navigator.pop(context);
                                         }
-                                        await showDuoSnapDialog(context,target: users[currentPage]);
-                                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                        SdModel? sdModel=await showDuoSnapDialog(context,target: users[currentPage]);
+                                        if(sdModel!=null){
+                                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                        }
 
                                       },
                                       ), dialogHeight: 361);

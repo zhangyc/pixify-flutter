@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/my_profile.dart';
+import 'package:sona/core/match/providers/duo_provider.dart';
 import 'package:sona/core/match/widgets/tuosnap_dialog.dart';
 import 'package:sona/utils/dialog/input.dart';
 
@@ -275,8 +276,8 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
   });
 }
 
-Future showDuoSnapDialog(BuildContext context,{required MatchUserInfo target}){
- return showModalBottomSheet(
+Future<SdModel?> showDuoSnapDialog(BuildContext context,{required MatchUserInfo target}){
+ return showModalBottomSheet<SdModel?>(
     context: context,
     isScrollControlled:true,
     builder: (BuildContext context) {
