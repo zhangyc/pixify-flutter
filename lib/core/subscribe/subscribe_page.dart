@@ -76,8 +76,11 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   }
 
   Future _subscribeClub() async {
+
     final clubDetails = ref.read(asyncSubscriptionsProvider).value!.firstWhere((sub) => sub.id == clubMonthlyId);
     _subscribe(clubDetails);
+    SonaAnalytics.log(DuoSnapEvent.club_click_pay.name);
+
   }
 
   Future _subscribePlus() async {
@@ -111,10 +114,14 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     try {
       await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
     } catch (e) {
+      if(pd.id==clubMonthlyId){
+        SonaAnalytics.log(DuoSnapEvent.club_pay_fail.name);
+      }
       inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
     }
     //inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
     SonaAnalytics.log(PayEvent.pay_continue.name);
+
   }
 
   @override

@@ -270,16 +270,22 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                               if(currentPage==users.length-1){
                                   return;
                                }
+                              SonaAnalytics.log(DuoSnapEvent.click_duo.name);
                               if(!canDuoSnap){
                                 if(ref.read(myProfileProvider)!.memberType==MemberType.none){
+                                  SonaAnalytics.log(DuoSnapEvent.Duo_click_pay.name);
                                   Navigator.push(context, MaterialPageRoute(builder:(c){
                                     return const SubscribePage(fromTag: FromTag.duo_snap,);
                                   }));
                                 }else if(ref.read(myProfileProvider)!.memberType==MemberType.club){
+                                  SonaAnalytics.log(DuoSnapEvent.plus_duo_limit.name);
+
                                   Navigator.push(context, MaterialPageRoute(builder:(c){
                                     return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
                                   }));
                                 }else if(ref.read(myProfileProvider)!.memberType==MemberType.plus){
+                                  SonaAnalytics.log(DuoSnapEvent.club_clickduo_payplus.name);
+
                                   Fluttertoast.showToast(msg: S.current.weeklyLimitReached);
                                 }
                                 return;
@@ -305,6 +311,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                      controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
 
                                     }else if(!con1&&con2){
+                                      SonaAnalytics.log(DuoSnapEvent.notreal_self.name);
+
                                       showDuoSnapTip(context, child: NotMeetConditions(
                                         close: (){
                                           Navigator.pop(context);
@@ -332,6 +340,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                       ),
                                           dialogHeight: 361);
                                     }else if(con1&&!con2){
+                                      SonaAnalytics.log(DuoSnapEvent.notreal_other.name);
+
                                       showDuoSnapTip(context, child: OtherNotMeetConditions(
                                         close: (){
                                           Navigator.pop(context);

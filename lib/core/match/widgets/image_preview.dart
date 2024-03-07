@@ -16,6 +16,8 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import '../../../account/providers/profile.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
+import '../../../utils/global/global.dart';
+import '../util/event.dart';
 import 'image_loading_animation.dart';
 
 class ImagePreview extends StatelessWidget {
@@ -88,6 +90,8 @@ class ImagePreview extends StatelessWidget {
           children: [
             GestureDetector(child: SvgPicture.asset(Assets.svgDownload,width: 56,height: 56,),
               onTap: () async{
+                SonaAnalytics.log(DuoSnapEvent.chat_duo_download.name);
+
                 FileInfo? f=await DefaultCacheManager().getFileFromCache(url);
                 if(f!=null){
                   final hasAccess = await Gal.hasAccess(toAlbum: true);
@@ -106,6 +110,8 @@ class ImagePreview extends StatelessWidget {
 
             GestureDetector(child: SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
               onTap: () async{
+                SonaAnalytics.log(DuoSnapEvent.chat_duo_share.name);
+
                 String cache=(await getApplicationCacheDirectory()).path;
                 File? f=await DefaultCacheManager().getSingleFile(url);
                 File file=File('$cache/tmp.png');

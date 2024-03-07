@@ -21,6 +21,7 @@ import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
+import '../util/event.dart';
 import 'image_loading_animation.dart';
 import 'small_duo.dart';
 
@@ -108,6 +109,8 @@ class DuosnapCompleted extends StatelessWidget {
           children: [
             GestureDetector(child: SvgPicture.asset(Assets.svgDownload,width: 56,height: 56,),
               onTap: () async{
+                SonaAnalytics.log(DuoSnapEvent.duo_download.name);
+
                 FileInfo? f=await DefaultCacheManager().getFileFromCache(task.targetPhotoUrl??'');
                 if(f!=null){
                   final hasAccess = await Gal.hasAccess(toAlbum: true);
@@ -126,6 +129,8 @@ class DuosnapCompleted extends StatelessWidget {
 
             GestureDetector(child: SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
               onTap: () async{
+                SonaAnalytics.log(DuoSnapEvent.duo_share.name);
+
                 String cache=(await getApplicationCacheDirectory()).path;
                 File? f=await DefaultCacheManager().getSingleFile(task.targetPhotoUrl??'');
                 File file=File('$cache/tmp.png');
@@ -141,6 +146,7 @@ class DuosnapCompleted extends StatelessWidget {
             Consumer(
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
                 return GestureDetector(onTap: (){
+                  SonaAnalytics.log(DuoSnapEvent.duo_send.name);
                   Navigator.pop(context);
                   MatchApi.sendImageMsg(task.targetUserId!, task.targetPhotoUrl!).then((value){
                     if(value.isSuccess){

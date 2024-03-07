@@ -12,8 +12,10 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import '../../../account/providers/profile.dart';
 import '../../../common/services/common.dart';
 import '../../../generated/l10n.dart';
+import '../../../utils/global/global.dart';
 import '../../widgets/generate_banner.dart';
 import '../providers/duo_provider.dart';
+import '../util/event.dart';
 
 class DuosnapButton extends ConsumerStatefulWidget {
   const DuosnapButton(this.target, this.model, {super.key});
@@ -29,6 +31,12 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
+        SonaAnalytics.log(DuoSnapEvent.style.name,
+            {'item_str_id':widget.model.name,
+             'item_int_id':widget.model.id,
+            }
+            );
+
         isLoading=true;
         setState(() {
 

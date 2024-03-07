@@ -40,3 +40,28 @@ enum PayEvent{
   pay_manage,
   pay_cancel
 }
+enum DuoSnapEvent{
+  style,
+  click_duo,
+  style_interesting,
+  style_trendy,
+  style_africa,
+  style_east,
+  duo_done,
+  click_duo_done,
+  duo_send,
+  duo_download,
+  duo_share,
+  duo_fail,
+  duo_retry,
+  notreal_self,
+  notreal_other,
+  Duo_click_pay,
+  club_clickduo_payplus,
+  plus_duo_limit,
+  chat_click_duo,
+  chat_duo_download,
+  chat_duo_share,
+  club_click_pay,
+  club_pay_fail,
+}
