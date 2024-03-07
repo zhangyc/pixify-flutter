@@ -20,7 +20,7 @@ import '../../../../utils/toast/cooldown.dart';
 
 class TextMessageWidget extends ConsumerStatefulWidget {
   const TextMessageWidget({
-    Key? key,
+    super.key,
     required this.prevMessage,
     required this.message,
     required this.fromMe,

@@ -2,9 +2,7 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
@@ -20,7 +18,7 @@ import '../../../match/util/event.dart';
 
 class ImageMessageWidget extends ConsumerStatefulWidget {
   const ImageMessageWidget({
-    Key? key,
+    super.key,
     required this.prevMessage,
     required this.message,
     required this.fromMe,
