@@ -51,7 +51,6 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       ref.refresh(likeMeStreamProvider);
     });
     super.initState();
-    Permission.photos.request();
   }
 
   void _determinePosition() async {

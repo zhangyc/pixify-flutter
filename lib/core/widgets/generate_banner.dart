@@ -30,11 +30,11 @@ class GenerateBanner extends ConsumerStatefulWidget {
 
 class _GenerateBannerState extends ConsumerState<GenerateBanner> {
   // GenerateState _generateState=GenerateState.cancel;
-  late Timer timer;
+  Timer? timer;
   DuoSnapTask duoSnapTask=DuoSnapTask();
   @override
   void dispose() {
-    timer.cancel();
+    timer?.cancel();
     super.dispose();
   }
   @override
@@ -70,7 +70,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
 
      }else if(duoSnapTask.status==3){
        generateState.value=GenerateState.done;
-       timer.cancel();
+       timer?.cancel();
      }else if(duoSnapTask.status==4){
        generateState.value=GenerateState.fail;
 

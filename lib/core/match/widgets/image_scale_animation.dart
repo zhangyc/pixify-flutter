@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/match/bean/match_user.dart';
 import 'package:sona/core/match/widgets/icon_animation.dart';
@@ -72,44 +74,21 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
                     ),
                       maxLines: 1,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Wrap(
+                      // alignment: WrapAlignment.center, // 水平居中
+                      crossAxisAlignment: WrapCrossAlignment.center, // 垂直居中
                       children: [
-                        Expanded(
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: '${widget.info.name??''}, ${widget.info.age} '
-                                ),
-                                WidgetSpan(child: switch(widget.info.memberType) {
-                                  MemberType.club => FittedBox(
-                                    child: Container(
-                                        height: 42,
-                                        alignment: Alignment.centerLeft,
-                                        child: SonaIcon(icon: SonaIcons.club_mark, size: 24)
-                                    ),
-                                  ),
-                                  MemberType.plus => FittedBox(
-                                    child: Container(
-                                        height: 42,
-                                        alignment: Alignment.centerLeft,
-                                        child: SonaIcon(icon: SonaIcons.plus_mark, size: 24)
-                                    ),
-                                  ),
-                                  _ => Container(height: 42),
-                                })
-                              ]
-                            ),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                              fontWeight: FontWeight.w800,
-                              height: 1.5,
-                            ),
-                            maxLines: 2,
-                          ),
+                        Text('${widget.info.name??''}, ${widget.info.age} ',style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w800,
+                            height: 1.5,
+                         ),
+                          maxLines: 2,
                         ),
+                        widget.info.memberType==MemberType.none?Container():
+                            widget.info.memberType==MemberType.club?SonaIcon(icon: SonaIcons.club_mark, size: 24):
+                            SonaIcon(icon: SonaIcons.plus_mark, size: 24)
                       ],
                     ),
                     Row(
