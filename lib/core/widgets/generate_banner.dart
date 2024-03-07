@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/common/app_config.dart';
 import 'package:sona/core/match/bean/duosnap_task.dart';
 import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/match/util/local_data.dart';
@@ -73,6 +74,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
      }else if(duoSnapTask.status==3){
        SonaAnalytics.log(DuoSnapEvent.duo_done.name);
        generateState.value=GenerateState.done;
+       isDuoSnapSuccess=true;
        timer?.cancel();
      }else if(duoSnapTask.status==4){
        SonaAnalytics.log(DuoSnapEvent.duo_fail.name);

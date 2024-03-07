@@ -107,6 +107,7 @@ class Assets {
   static const String svgDislike = 'assets/svg/dislike.svg';
   static const String svgDislikeTag = 'assets/svg/dislike_tag.svg';
   static const String svgDownload = 'assets/svg/download.svg';
+  static const String svgDuoSnapGuide = 'assets/svg/duo_snap_guide.svg';
   static const String svgDuosnap = 'assets/svg/duosnap.svg';
   static const String svgLike = 'assets/svg/like.svg';
   static const String svgLikeTag = 'assets/svg/like_tag.svg';

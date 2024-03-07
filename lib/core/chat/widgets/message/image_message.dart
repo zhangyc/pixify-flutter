@@ -95,7 +95,6 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                         final action = await showActionButtons(
                             context: context,
                             options: {
-                              S.of(context).buttonCopy: 'copy',
                               if (widget.fromMe) S.of(context).buttonDelete: 'delete'
                             }
                         );
