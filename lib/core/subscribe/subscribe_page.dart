@@ -97,7 +97,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       // inside the app may not be accurate.
       final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
       purchaseParam = GooglePlayPurchaseParam(
-          applicationUserName: ref.read(myProfileProvider)!.id.toString(),
+          // applicationUserName: ref.read(myProfileProvider)!.id.toString(),
           productDetails: pd,
           changeSubscriptionParam: (oldSubscription != null)
               ? ChangeSubscriptionParam(
