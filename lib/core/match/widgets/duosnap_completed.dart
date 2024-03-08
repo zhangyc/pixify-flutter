@@ -122,7 +122,6 @@ class DuosnapCompleted extends StatelessWidget {
                   }else {
                     Fluttertoast.showToast(msg: S.current.issues);
                   }
-                  Navigator.pop(context);
 
                 }
               },
@@ -139,7 +138,6 @@ class DuosnapCompleted extends StatelessWidget {
                 if(f!=null){
                   XFile x=XFile(file.path);
                   Share.shareXFiles([x]);
-                  Navigator.pop(context);
                 }
               },
             ),
