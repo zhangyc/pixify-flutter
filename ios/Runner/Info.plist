@@ -25,12 +25,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			        <key>CFBundleURLName</key>
-                    <string>sona</string>
-                    <key>CFBundleURLSchemes</key>
-                    <array>
-                        <string>sona</string>
-                    </array>
+      <key>CFBundleURLName</key>
+        <string>sona</string>
+      <key>CFBundleURLSchemes</key>
+      <array>
+          <string>sona</string>
+          <string>fb357454540279529</string>
+      </array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
@@ -74,6 +75,12 @@
 	<false/>
 	<key>FirebaseMessagingAutoInitEnabled</key>
 	<true/>
+	<key>FacebookAppID</key>
+  <string>357454540279529</string>
+  <key>FacebookClientToken</key>
+  <string>05a5b4f17e6f876e110ef9df3945a657</string>
+  <key>FacebookDisplayName</key>
+  <string>Sona</string>
     <!-- gal: Required -->
     	<key>NSPhotoLibraryAddUsageDescription</key>
     	<string>We need add only access to save medias</string>

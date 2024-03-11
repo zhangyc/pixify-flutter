@@ -122,6 +122,7 @@ class Dm_dialog_content extends StatelessWidget {
                               arrow=arrow-1;
                               MatchApi.customSend(info.id,controller.text);
                               SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                              SonaAnalytics.logFacebookEvent(MatchEvent.match_arrow_send.name);
                               next.call();
                               Navigator.pop(context);
                             }else {
@@ -147,6 +148,7 @@ class Dm_dialog_content extends StatelessWidget {
                           arrow=arrow-1;
                           MatchApi.sayHi(info.id,'dm');
                           SonaAnalytics.log(MatchEvent.match_arrow_send.name);
+                          SonaAnalytics.logFacebookEvent(MatchEvent.match_arrow_send.name);
                           next.call();
                           Navigator.pop(context);
                           //arrowController.reset();
