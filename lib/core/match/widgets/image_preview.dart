@@ -16,6 +16,7 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import '../../../account/providers/profile.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
+import '../../../utils/uuid.dart';
 import 'image_loading_animation.dart';
 
 class ImagePreview extends StatelessWidget {

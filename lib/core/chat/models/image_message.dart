@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sona/core/chat/models/message.dart';
 
 import '../../../common/models/user.dart';
@@ -9,55 +10,47 @@ class ImageMessage extends ImMessage{
   ImageMessage({
     required super.id,
     required super.uuid,
-    required super.type,
     required super.sender,
     required super.receiver,
-    required super.originalContent,
-    required super.translatedContent,
     required super.time,
-    required super.contentType,
-    required super.content});
+    required super.content,
+    required this.url,
+    this.width,
+    this.height
+  });
+
+  final String url;
+  final int? width;
+  final int? height;
 
   factory ImageMessage.fromJson(Map<String, dynamic> json) {
+    var contentJson = json['content'];
+    Map<String, dynamic> content = {};
+    if (contentJson != null && contentJson.isNotEmpty) {
+      try {
+        content = jsonDecode(contentJson);
+      } catch(e) {
+        if (kDebugMode) print(e);
+      }
+    }
+    content['type'] = json['contentType'];
+
     return ImageMessage(
       id: json['id'],
       uuid: json['uuid'],
-      type: json['messageType'],
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
-      originalContent: json['originalContent'],
-      translatedContent: json['translatedContent'],
       time: (json['createDate'] as Timestamp).toDate(),
-      contentType: json['contentType'],
-      content: jsonDecode(json['content']),
-
+      content: content,
+      url: content['image'] ?? '',
+      width: content['width'],
+      height: content['height']
     );
   }
 
-  factory ImageMessage.copyWith(ImMessage message, {
-    int? id,
-    String? uuid,
-    int? type,
-    String? originalContent,
-    String? translatedContent,
-    UserInfo? sender,
-    UserInfo? receiver,
-    DateTime? time,
-    int? contentType,
-    String? content,
-
-  }) {
-    return ImageMessage(
-        id: id ?? message.id,
-        uuid: uuid ?? message.uuid,
-        type: type ?? message.type,
-        sender: sender ?? message.sender,
-        receiver: receiver ?? message.receiver,
-        originalContent: originalContent ?? message.originalContent,
-        translatedContent: translatedContent ?? message.translatedContent,
-        time: time ?? message.time,
-        contentType: message.contentType,
-        content: message.content
-    );
-  }
+  Map<String, dynamic> contentMap() => <String, dynamic>{
+    'image': url,
+    'width': width,
+    'height': height
+  };
 }

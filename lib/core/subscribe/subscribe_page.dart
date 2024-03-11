@@ -29,8 +29,6 @@ import '../match/util/iap_helper.dart';
 import 'model/member.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const uuid = Uuid();
-
 class SubscribePage extends ConsumerStatefulWidget {
   const SubscribePage({
     super.key,

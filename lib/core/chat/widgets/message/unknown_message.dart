@@ -1,23 +1,25 @@
+import 'dart:io';
 
-import 'dart:convert';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
+import 'package:sona/core/chat/providers/message.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
-import 'package:sona/core/match/widgets/image_preview.dart';
 import 'package:sona/utils/dialog/input.dart';
 
+import '../../../../common/providers/entitlements.dart';
 import '../../../../generated/l10n.dart';
+import '../../../../utils/toast/cooldown.dart';
 
-class ImageMessageWidget extends ConsumerStatefulWidget {
-  const ImageMessageWidget({
+class UnknownMessageWidget extends ConsumerStatefulWidget {
+  const UnknownMessageWidget({
     super.key,
     required this.prevMessage,
     required this.message,
@@ -43,25 +45,10 @@ class ImageMessageWidget extends ConsumerStatefulWidget {
   final Function()? onAvatarTap;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MessageWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _UnknownMessageWidgetState();
 }
 
-class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
-
-  late String url='';
-  @override
-  void initState() {
-    try {
-      if (widget.message.content.isNotEmpty){
-        Map map = widget.message.content;
-        url=map['image'];
-      }
-    } catch(e) {
-      //
-    }
-
-    super.initState();
-  }
+class _UnknownMessageWidgetState extends ConsumerState<UnknownMessageWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -95,20 +82,12 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                         final action = await showActionButtons(
                             context: context,
                             options: {
-                              S.of(context).buttonCopy: 'copy',
                               if (widget.fromMe) S.of(context).buttonDelete: 'delete'
                             }
                         );
-                        if (action == 'copy') {
-                          Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-                        } else if (action == 'delete') {
+                        if (action == 'delete') {
                           widget.onDelete(widget.message);
                         }
-                      },
-                      onTap: (){
-                        showDialog(context: context, builder: (b){
-                          return ImagePreview(url: url,targetUrl: widget.otherSide.avatar??'',);
-                        });
                       },
                       child: Container(
                           constraints: BoxConstraints(
@@ -116,8 +95,7 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                           ),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent,
-                              image: DecorationImage(image: CachedNetworkImageProvider(url??''),fit: BoxFit.cover,)
+                              color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
                           ),
                           foregroundDecoration: widget.fromMe ? null : BoxDecoration(
                               border: Border.all(width: 2),
@@ -125,9 +103,17 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                           ),
                           padding: EdgeInsets.all(12),
                           clipBehavior: Clip.antiAlias,
-                          width: 138,
-                          height: 184,
-                          // child: url.isNotEmpty?CachedNetworkImage(imageUrl: url??'',width: 138,height: 184,fit: BoxFit.cover,):Container(),
+                          child: Text(
+                              'Unknown message, please update the App',
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
+                                  height: 1.5,
+                                  fontFamilyFallback: [
+                                    if (Platform.isAndroid) 'Source Han Sans',
+                                  ],
+                                  locale: widget.myLocale
+                              )
+                          )
                       ),
                     ),
                   ],

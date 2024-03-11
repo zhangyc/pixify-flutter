@@ -8,28 +8,34 @@ import '../../../common/models/user.dart';
 import 'package:sona/utils/uuid.dart' as u;
 
 
-class TextMessage extends ImMessage{
-  TextMessage({
+class AudioMessage extends ImMessage {
+  AudioMessage({
     required super.id,
     required super.uuid,
     required super.sender,
     required super.receiver,
     required super.time,
     required super.content,
-    required this.originalText,
+    required this.url,
+    required this.duration,
+    required this.recognizedText,
     required this.translatedText,
     required this.sourceLocale,
-    required this.targetLocale
+    required this.targetLocale,
+    required this.words
   });
 
-  final String originalText;
+  final String url;
+  final double? duration;
+  final String? recognizedText;
   final String? translatedText;
   final String? sourceLocale;
   final String? targetLocale;
+  final List<double>? words;
 
-  factory TextMessage.fromJson(Map<String, dynamic> json) {
+  factory AudioMessage.fromJson(Map<String, dynamic> json) {
     var contentJson = json['content'];
-    Map<String, dynamic>? content;
+    Map<String, dynamic> content = {};
     if (contentJson != null && contentJson.isNotEmpty) {
       try {
         content = jsonDecode(contentJson);
@@ -37,57 +43,50 @@ class TextMessage extends ImMessage{
         if (kDebugMode) print(e);
       }
     }
-    if (content == null || content.isEmpty) {
-      content = {
-        'type': ImMessageContentType.text,
-        'originalText': json['originalContent'],
-        'translatedText': json['translatedContent'],
-      };
-    } else {
-      content['type'] = json['contentType'];
-    }
-    return TextMessage(
+    content['type'] = json['contentType'];
+    final duration = content['duration'];
+
+    return AudioMessage(
       id: json['id'],
       uuid: json['uuid'],
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
       time: (json['createDate'] as Timestamp).toDate(),
       content: content,
-      originalText: content['originalText'],
+      url: content['url'] ?? '',
+      duration: (duration is int) ? duration.toDouble() : duration,
+      recognizedText: content['recognizedText'],
       translatedText: content['translatedText'],
       sourceLocale: content['sourceLocale'],
-      targetLocale: content['targetLocale']
+      targetLocale: content['targetLocale'],
+      words: json['words']
     );
   }
 
-  factory TextMessage.fromContent({
+  factory AudioMessage.fromContent({
     required Map<String, dynamic> content,
     required UserInfo sender,
     required UserInfo receiver,
   }) {
-    return TextMessage(
+    return AudioMessage(
       id: null,
       uuid: u.uuid.v4(),
       sender: sender,
       receiver: receiver,
       time: DateTime.now(),
       content: content,
-      originalText: content['originalText'],
+      url: content['url'] ?? '',
+      duration: content['duration'],
+      recognizedText: null,
       translatedText: null,
       sourceLocale: null,
-      targetLocale: null
+      targetLocale: null,
+      words: null
     );
   }
 
-  static Map<String, dynamic> buildContent(String text, bool needsTranslation) {
-    return {
-      'type': ImMessageContentType.text,
-      'originalText': text,
-      'localExtension': {'needsTranslation': needsTranslation}
-    };
-  }
-
   Map<String, dynamic> contentMap() => <String, dynamic>{
-    'originalText': originalText,
+    'url': url,
+    'duration': duration,
   };
 }

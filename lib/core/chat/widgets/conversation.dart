@@ -66,7 +66,6 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                       ),
                       SizedBox(height: 2),
                       _buildConversationTip(widget.conversation.contentType??1)
-
                     ],
                   ),
                 )
@@ -118,6 +117,8 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
           Text('${S.current.duoSnap}!')
         ],
       );
+    } else {
+      return Container();
     }
   }
 }

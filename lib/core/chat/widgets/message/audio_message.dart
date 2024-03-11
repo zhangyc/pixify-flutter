@@ -1,28 +1,27 @@
+
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/models/user.dart';
-import 'package:sona/common/widgets/button/colored.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
-import 'package:sona/core/chat/providers/message.dart';
+import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
 import 'package:sona/utils/dialog/input.dart';
 
-import '../../../../common/providers/entitlements.dart';
 import '../../../../generated/l10n.dart';
-import '../../../../utils/toast/cooldown.dart';
 
-class TextMessageWidget extends ConsumerStatefulWidget {
-  const TextMessageWidget({
+class AudioMessageWidget extends ConsumerStatefulWidget {
+  const AudioMessageWidget({
     super.key,
     required this.prevMessage,
     required this.message,
+    required this.fromMe,
     required this.mySide,
     required this.otherSide,
     required this.myLocale,
@@ -34,6 +33,7 @@ class TextMessageWidget extends ConsumerStatefulWidget {
 
   final ImMessage? prevMessage;
   final ImMessage message;
+  final bool fromMe;
   final UserInfo mySide;
   final UserInfo otherSide;
   final Locale? myLocale;
@@ -43,62 +43,52 @@ class TextMessageWidget extends ConsumerStatefulWidget {
   final Function()? onAvatarTap;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MessageWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AudioMessageWidgetState();
 }
 
-class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
+class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
 
-  bool get _fromMe => widget.message.sender.id == widget.mySide.id;
-  bool _clicked = false;
+  var _clicked = true;
+
+  var _loading = true;
+  var _hasError = false;
+  bool get _hasData => !_loading && !_hasError;
+
+  Duration? duration;
+  String? url;
+  String? localPath;
+  String? text;
+  String? translatedText;
+  List<Map<String, dynamic>>? words;
+
+  static final messageAudioCacheManager = CacheManager(
+      Config('audio_message')
+  );
 
   @override
   void initState() {
-    // if (widget.message.id == null) {
-    //   ref.read(asyncMessageSendingProvider(widget.message.sendingParams!)).whenData((data) async {
-    //     if (data.success) {
-    //       if (data.data is int) {
-    //         widget.message.id = data.data;
-    //       } else {
-    //         widget.message.id = data.data['id'];
-    //         widget.message.translatedContent = data.data['txt'];
-    //       }
-    //       // await Future.delayed(const Duration(seconds: 0));
-    //       // ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => List.from(state));
-    //     } else {
-    //       if (data.error == MessageSendingError.maximumLimit) {
-    //         if (ref.read(myProfileProvider)!.isMember) {
-    //           coolDownDaily();
-    //         } else {
-    //           ref.read(entitlementsProvider.notifier).limit(interpretation: 0);
-    //         }
-    //       }
-    //     }
-    //   });
-    // }
+    try {
+      Map map =  widget.message.content;
+      url = map['url'];
+      localPath = map['localExtension']?['path'];
+      duration = Duration(milliseconds: (map['duration'] * 1000.0).toInt());
+      text = map['recognizedText'];
+      translatedText = map['translatedText'];
+      words = map['words'];
+    } catch(e) {
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _hasError = true;
+        });
+      }
+    }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    String? upperMessage;
-    String? lowerMessage;
-    Locale? upperLocale;
-    Locale? lowerLocale;
-
-    upperLocale = widget.myLocale;
-    lowerLocale = widget.otherLocale;
-    if (_fromMe) {
-      upperMessage = widget.message.content['originalText'];
-      lowerMessage = widget.message.content['translatedText'];
-    } else {
-      upperMessage = widget.message.content['translatedText'];
-      lowerMessage = widget.message.content['originalText'];
-    }
-    if (upperMessage == null || upperMessage.isEmpty) {
-      upperMessage = lowerMessage;
-      lowerMessage = null;
-    }
-
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -108,10 +98,10 @@ class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
             MessageTime(time: widget.message.time),
           SizedBox(height: 12),
           Row(
-            mainAxisAlignment: _fromMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: widget.fromMe ? MainAxisAlignment.end : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!_fromMe) Padding(
+              if (!widget.fromMe) Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: GestureDetector(
                     onTap: widget.onAvatarTap,
@@ -121,20 +111,56 @@ class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
               Flexible(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: _fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                  crossAxisAlignment: widget.fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
+                    if (localPath != null) AudioMessageControls(
+                      chatId: widget.otherSide.id ,
+                      message: widget.message,
+                      fromMe: widget.fromMe,
+                      file: File(localPath!),
+                      duration: duration!,
+                    )
+                    else FutureBuilder(
+                      future: messageAudioCacheManager.getSingleFile(url!),
+                      builder: (_, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(child: SizedBox(width: 32, height: 32, child: CircularProgressIndicator()));
+                        }
+                        if (snapshot.hasError) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(vertical: 4),
+                            child: const Text('some error happens'),
+                          );
+                        }
+                        if (snapshot.hasData) {
+                          localPath = snapshot.data!.path;
+                          widget.message.content['localExtension'] = {'path': localPath};
+                          return AudioMessageControls(
+                            chatId: widget.otherSide.id,
+                            message: widget.message,
+                            fromMe: widget.fromMe,
+                            file: snapshot.data!,
+                            duration: duration!,
+                          );
+                        }
+                        return Container(
+                          padding: EdgeInsets.symmetric(vertical: 4),
+                          child: const Text('some error happens'),
+                        );
+                      }
+                    ),
+                    if (text != null && text!.isNotEmpty) GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onLongPress: () async {
                         final action = await showActionButtons(
                             context: context,
                             options: {
                               S.of(context).buttonCopy: 'copy',
-                              if (_fromMe) S.of(context).buttonDelete: 'delete'
+                              if (widget.fromMe) S.of(context).buttonDelete: 'delete'
                             }
                         );
                         if (action == 'copy') {
-                          Clipboard.setData(ClipboardData(text: upperMessage!));
+                          Clipboard.setData(ClipboardData(text: text!));
                           Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
                         } else if (action == 'delete') {
                           widget.onDelete(widget.message);
@@ -146,23 +172,23 @@ class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
                           ),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: _fromMe ? Theme.of(context).primaryColor : Colors.transparent
+                              color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
                           ),
-                          foregroundDecoration: _fromMe ? null : BoxDecoration(
+                          foregroundDecoration: widget.fromMe ? null : BoxDecoration(
                               border: Border.all(width: 2),
                               borderRadius: BorderRadius.circular(20)
                           ),
                           padding: EdgeInsets.all(12),
                           clipBehavior: Clip.antiAlias,
                           child: Text(
-                              upperMessage!,
+                              text!,
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: _fromMe ? Colors.white : Theme.of(context).primaryColor,
+                                  color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
                                   height: 1.5,
                                   fontFamilyFallback: [
                                     if (Platform.isAndroid) 'Source Han Sans',
-                                    if (Platform.isIOS && upperLocale?.languageCode.startsWith('zh') == true) 'PingFang SC',
-                                    if (Platform.isIOS && upperLocale?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                                    // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                                    // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
                                   ],
                                   locale: widget.myLocale
                               )
@@ -170,7 +196,7 @@ class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
                       ),
                     ),
                     // SizedBox(height: 12),
-                    if (lowerMessage != null && lowerMessage.isNotEmpty) GestureDetector(
+                    if (translatedText != null && translatedText!.isNotEmpty) GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
                         setState(() {
@@ -185,7 +211,7 @@ class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
                             }
                         );
                         if (action == 'copy') {
-                          Clipboard.setData(ClipboardData(text: lowerMessage!));
+                          Clipboard.setData(ClipboardData(text: translatedText!));
                           Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
                         }
                       },
@@ -194,9 +220,9 @@ class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
                           maxWidth: MediaQuery.of(context).size.width * 0.64,
                         ),
                         padding: EdgeInsets.all(12),
-                        alignment: _fromMe ? Alignment.centerRight : Alignment.centerLeft,
+                        alignment: widget.fromMe ? Alignment.centerRight : Alignment.centerLeft,
                         child: Text(
-                          lowerMessage,
+                          translatedText!,
                           maxLines: _clicked ? null : 1,
                           overflow: _clicked ? TextOverflow.clip : TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -204,8 +230,8 @@ class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
                               height: 1.5,
                               fontFamilyFallback: [
                                 if (Platform.isAndroid) 'Source Han Sans',
-                                if (Platform.isIOS && lowerLocale?.languageCode.startsWith('zh') == true) 'PingFang SC',
-                                if (Platform.isIOS && lowerLocale?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                                // if (Platform.isIOS && translatedText?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                                // if (Platform.isIOS && translatedText?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
                               ],
                               locale: widget.otherLocale
                           ),
@@ -215,7 +241,7 @@ class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
                   ],
                 ),
               ),
-              if (_fromMe) Padding(
+              if (widget.fromMe) Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: UserAvatar(url: widget.mySide.avatar!, size: Size.square(40)),
               ),

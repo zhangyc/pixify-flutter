@@ -4,57 +4,42 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
+import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/image/icon.dart';
+import 'package:sona/core/chat/models/message.dart';
+import 'package:sona/core/chat/models/text_message.dart';
 import 'package:sona/core/chat/widgets/voice_message_recorder.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../../generated/l10n.dart';
+import '../../../../utils/dialog/common.dart';
 import '../../../../utils/locale/locale.dart';
+import '../tips_dialog.dart';
 import 'mode_provider.dart';
 
 class ChatInstructionInput extends ConsumerStatefulWidget {
   const ChatInstructionInput({
     Key? key,
     required this.chatId,
-    this.controller,
-    this.height,
-    this.initialText,
-    this.keyboardType = TextInputType.multiline,
-    this.onInputChange,
-    this.onSubmit,
-    this.maxLength = 160,
-    this.focusNode,
-    this.autofocus = false,
     required this.sameLanguage,
-    required this.onSuggestionTap,
-    required this.onHookTap,
+    required this.onSendMessage
   }) : super(key: key);
 
   final int chatId;
-  final TextEditingController? controller;
-  final double? height;
-  final String? initialText;
-  final TextInputType keyboardType;
-  final Function(String)? onInputChange;
-  final void Function(String text)? onSubmit;
-  final int maxLength;
-  final FocusNode? focusNode;
-  final bool autofocus;
   final bool sameLanguage;
-  final Future Function() onHookTap;
-  final Future Function() onSuggestionTap;
+  final Future Function(Map<String, dynamic>) onSendMessage;
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatInstructionInputState();
 }
 
 class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware {
   late final TextEditingController _controller;
-  late final _focusNode = widget.focusNode ?? FocusNode();
+  late final FocusNode _focusNode;
   final _sonaKey = GlobalKey();
   final _suggKey = GlobalKey();
   OverlayEntry? _voiceEntry;
@@ -70,10 +55,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
 
   @override
   void initState() {
-    _controller = widget.controller ?? TextEditingController()
-      ..text = widget.initialText ?? ''
-      ..addListener(_onInputChange);
-    _focusNode.addListener(_focusChangeListener);
+    _controller = TextEditingController()..addListener(_onInputChange);
+    _focusNode = FocusNode()..addListener(_focusChangeListener);
     super.initState();
     kvStore.setInt(enterTimesKey, (kvStore.getInt(enterTimesKey) ?? 0) + 1);
     //_addOverlay();
@@ -167,7 +150,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: widget.onSuggestionTap,
+                onTap: _onTipsTap,
                 child: Container(
                   key: _sonaKey,
                   // width: 24,
@@ -202,10 +185,10 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     textAlignVertical: TextAlignVertical.center,
                     maxLines: 5,
                     minLines: 1,
-                    maxLength: widget.maxLength,
+                    maxLength: 160,
                     buildCounter: (BuildContext _, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
                     keyboardAppearance: Brightness.dark,
-                    keyboardType: widget.keyboardType,
+                    keyboardType: TextInputType.multiline,
                     textInputAction: TextInputAction.newline,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: 14,
@@ -234,15 +217,14 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                         fontWeight: FontWeight.w500
                       )
                     ),
-                    onChanged: (text) {
-                      if (widget.onInputChange != null) widget.onInputChange!(text);
-                    },
                     onSubmitted: (String text) {
-                      if (text.isEmpty) return;
-                      onSubmit(text);
-                      _controller.text = '';
+                      final trimmedText = text.trim();
+                      if (trimmedText.isEmpty) return;
+                      final needsTranslation = ref.read(inputModeProvider(widget.chatId)) == InputMode.sona;
+                      widget.onSendMessage(TextMessage.buildContent(trimmedText, needsTranslation));
+                      _controller.clear();
                     },
-                    autofocus: widget.autofocus,
+                    autofocus: false,
                   ),
                 ),
               )
@@ -251,14 +233,19 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   behavior: HitTestBehavior.translucent,
                   onLongPressStart: (_) async {
                     _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
-
+                    recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
                     Overlay.of(context).insert(_voiceEntry!);
                   },
                   onLongPressEnd: (_) async {
-                    // _voicePath = await recorder.stop();
-                    // print('voice len: ${(await File(_voicePath!).length()) / 1024}');
-                    // player.setFilePath(_voicePath!);
-                    // await player.play();
+                    final _voicePath = await recorder.stop();
+                    if (_voicePath == null) return;
+                    widget.onSendMessage({
+                      'type': ImMessageContentType.audio,
+                      'duration': 2.5,
+                      'localExtension': {
+                        'path': _voicePath,
+                      }
+                    });
                     _voiceEntry?.remove();
                   },
                   child: Container(
@@ -275,25 +262,22 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
               ),
               SizedBox(width: 4),
               if (ref.watch(currentInputEmptyProvider(widget.chatId))) Container(
+                width: 56,
+                height: 56,
                 margin: EdgeInsets.all(1),
-                child: IconButton(
-                    iconSize: 56,
-                    padding: EdgeInsets.all(14),
-                    onPressed: () {
+                padding: EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                child: GestureDetector(
+                    onTap: () {
                       ref.watch(inputMethodProvider(widget.chatId).notifier)
                         .update((state) => state == InputMethod.voice
                           ? InputMethod.keyboard
                           : InputMethod.voice);
                     },
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(
-                            Theme.of(context).primaryColor
-                        ),
-                        shape: MaterialStatePropertyAll(
-                            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
-                        )
-                    ),
-                    icon: Icon(ref.read(inputMethodProvider(widget.chatId)) == InputMethod.keyboard ? Icons.keyboard_voice : Icons.keyboard_alt, size: 28, color: Colors.white)
+                    child: Icon(ref.read(inputMethodProvider(widget.chatId)) == InputMethod.keyboard ? Icons.keyboard_voice : Icons.keyboard_alt, size: 28, color: Colors.white)
                 ),
               )
               else Container(
@@ -302,9 +286,11 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   iconSize: 56,
                   padding: EdgeInsets.all(14),
                   onPressed: () {
-                    if (_controller.text.isEmpty) return;
-                    onSubmit(_controller.text);
-                    _controller.text = '';
+                    final trimmedText = _controller.text.trim();
+                    if (trimmedText.isEmpty) return;
+                    final needsTranslation = ref.read(inputModeProvider(widget.chatId)) == InputMode.sona;
+                    widget.onSendMessage(TextMessage.buildContent(trimmedText, needsTranslation));
+                    _controller.clear();
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(
@@ -376,6 +362,17 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     Overlay.of(context).insert(_suggIndicatorEntry!);
   }
 
+  Future _onTipsTap() async {
+    showCommonBottomSheet(
+        context: context,
+        title: 'SONA Tips',
+        actions: [
+          SonaTipsDialog(userId: widget.chatId)
+        ]
+    );
+    SonaAnalytics.log('chat_suggest');
+  }
+
   void _toggleMode() {
     ref.read(inputModeProvider(widget.chatId).notifier).update((state) {
       var newMode = state == InputMode.sona ? InputMode.manual : InputMode.sona;
@@ -401,19 +398,5 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
       return !state;
     });
     SonaAnalytics.log('chat_style');
-  }
-
-  void _setChatStyle(int id) {
-    // ref.read(currentChatStyleProvider(widget.chatId).notifier)
-    //     .update((state) => ref.read(asyncChatStylesProvider)
-    //     .value!
-    //     .firstWhere((style) => style.id == id));
-    // _toggleChatStyles();
-  }
-
-  void onSubmit(String text) async {
-    if (widget.onSubmit != null) {
-      widget.onSubmit!(text);
-    }
   }
 }

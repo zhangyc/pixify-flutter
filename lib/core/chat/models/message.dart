@@ -1,87 +1,50 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:sona/common/models/user.dart';
+import 'package:sona/core/chat/models/text_message.dart';
 
 import '../../../generated/l10n.dart';
+import 'audio_message.dart';
+import 'image_message.dart';
 
 class ImMessage {
   ImMessage({
     required this.id,
     required this.uuid,
-    required this.type,
     required this.sender,
     required this.receiver,
-    required this.originalContent,
-    required this.translatedContent,
     required this.time,
-    required this.contentType,
     required this.content
   });
 
   int? id;
   final String? uuid;
-  final int? type;
-  final String? originalContent;
-  String? translatedContent;
   final UserInfo sender;
   final UserInfo receiver;
   final DateTime time;
-  String? sendingParams;
-  String? content;
+  final Map<String, dynamic> content;
+  Map? localExtension;
 
-  ///1
-  // 纯文本
-  // 2
-  // 图片
-  // 3
-  // 声音
-  // 4
-  // 视频
-  int? contentType;
   factory ImMessage.fromJson(Map<String, dynamic> json) {
-    return ImMessage(
-      id: json['id'],
-      uuid: json['uuid'],
-      type: json['messageType'],
-      sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
-      receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
-      originalContent: json['originalContent'],
-      translatedContent: json['translatedContent'],
-      time: (json['createDate'] as Timestamp).toDate(),
-      contentType: json['contentType'],
-      content: json['content'],
-
-    );
+    return switch(json['contentType']) {
+      ImMessageContentType.text => TextMessage.fromJson(json),
+      ImMessageContentType.image => ImageMessage.fromJson(json),
+      ImMessageContentType.audio => AudioMessage.fromJson(json),
+      _ => TextMessage.fromJson(json),
+    };
   }
 
-  factory ImMessage.copyWith(ImMessage message, {
-    int? id,
-    String? uuid,
-    int? type,
-    String? originalContent,
-    String? translatedContent,
-    UserInfo? sender,
-    UserInfo? receiver,
-    DateTime? time,
-    int? contentType,
-    String? content,
-
-  }) {
-    return ImMessage(
-      id: id ?? message.id,
-      uuid: uuid ?? message.uuid,
-      type: type ?? message.type,
-      sender: sender ?? message.sender,
-      receiver: receiver ?? message.receiver,
-      originalContent: originalContent ?? message.originalContent,
-      translatedContent: translatedContent ?? message.translatedContent,
-      time: time ?? message.time,
-      contentType: message.contentType,
-      content: message.content
-    );
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other)
+        || (other is ImMessage && uuid == other.uuid);
   }
+
+  @override
+  int get hashCode => super.hashCode;
 }
 
 enum CallSonaType {
@@ -125,20 +88,22 @@ extension DateTimeExt on DateTime {
   }
 }
 
-String _getMonthShort(int index) {
-  return switch (index) {
-    1 => 'Jan',
-    2 => 'Feb',
-    3 => 'Mar',
-    4 => 'Apr',
-    5 => 'May',
-    6 => 'Jun',
-    7 => 'Jul',
-    8 => 'Aug',
-    9 => 'Sep',
-    10 => 'Oct',
-    11 => 'Nov',
-    12 => 'Dec',
-    _ => 'Unknown'
-  };
+class SendingMessage {
+  SendingMessage({
+    required this.target,
+    required this.type,
+    required this.content
+  });
+  final int target;
+  final int type;
+  final Map<String, dynamic> content;
+}
+
+class ImMessageContentType {
+  static const unknown = 0;
+  static const text = 1;
+  static const image = 2;
+  static const audio = 3;
+
+  static const all = [text, text, image, audio];
 }
