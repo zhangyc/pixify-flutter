@@ -41,7 +41,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
 
   @override
   void initState() {
-    SonaAnalytics.init();
+    SonaAnalytics.setUserId();
     _determinePosition();
     initUserPermission();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

@@ -6,9 +6,19 @@ class SonaAnalytics {
 
   static final _facebook = FacebookAppEvents();
 
-  static init() {
+  static init() async {
+    final p = await Permission.appTrackingTransparency.request();
+    if (p.isGranted) {
+      _facebook.setAdvertiserTracking(enabled: true);
+    } else {
+      _facebook.setAdvertiserTracking(enabled: false);
+    }
+  }
+
+  static setUserId() {
     final id = userId;
     if (id == null) return;
+    _facebook.setUserID(id.toString());
     FirebaseAnalytics.instance.setUserId(id: id.toString());
   }
 
