@@ -103,12 +103,14 @@ class Assets {
   static const String svgArrow = 'assets/svg/arrow.svg';
   static const String svgC = 'assets/svg/c.svg';
   static const String svgCamera = 'assets/svg/camera.svg';
+  static const String svgChatDuosnap = 'assets/svg/chat_duosnap.svg';
   static const String svgConverationDuo = 'assets/svg/converation_duo.svg';
   static const String svgDislike = 'assets/svg/dislike.svg';
   static const String svgDislikeTag = 'assets/svg/dislike_tag.svg';
   static const String svgDownload = 'assets/svg/download.svg';
   static const String svgDuoSnapGuide = 'assets/svg/duo_snap_guide.svg';
   static const String svgDuosnap = 'assets/svg/duosnap.svg';
+  static const String svgExtend = 'assets/svg/extend.svg';
   static const String svgLike = 'assets/svg/like.svg';
   static const String svgLikeTag = 'assets/svg/like_tag.svg';
   static const String svgShare = 'assets/svg/share.svg';

@@ -8,3 +8,7 @@ bool get isDuoSnapSuccess => appCommonBox.get('isDuoSnapSuccess',defaultValue: f
 set isDuoSnapSuccess(value){
   appCommonBox.put('isDuoSnapSuccess', value);
 }
+double get viewInsetsBottom => appCommonBox.get('viewInsetsBottom',defaultValue: 282.0);
+set viewInsetsBottom(value){
+  appCommonBox.put('viewInsetsBottom', value);
+}

@@ -161,6 +161,21 @@ class MatchUserInfo extends UserInfo{
       memberType: MemberType.fromString(json['vip'])
     );
   }
+  factory MatchUserInfo.fromUserInfoInstance(UserInfo userInfo) {
+    return MatchUserInfo(
+        id: userInfo.id,
+        name: userInfo.originNickname,
+        gender: userInfo.gender,
+        birthday: userInfo.birthday,
+        locale: userInfo.locale,
+        countryId: userInfo.countryId,
+        countryCode: userInfo.countryCode,
+        countryFlag: userInfo.countryFlag ?? '🇺🇸',
+        countryName: userInfo.countryName,
+        avatar: userInfo.avatar,
+        bio: userInfo.bio,
+    );
+  }
 }
 
 class WishBean {

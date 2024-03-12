@@ -20,6 +20,7 @@ import 'package:sona/core/chat/widgets/tips_dialog.dart';
 import 'package:sona/core/match/providers/match_info.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/core/widgets/generate_banner.dart';
 import 'package:sona/utils/dialog/common.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
@@ -80,6 +81,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final messages = ref.watch(messagesProvider(widget.otherSide.id));
     return Scaffold(
       backgroundColor: Colors.white,
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -128,31 +130,37 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         //     statusBarIconBrightness: Brightness.dark
         // )
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/chat_bg.png'),
-            fit: BoxFit.cover
-          ),
-        ),
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
-          child: Container(
-            alignment: Alignment.topCenter,
-            child: ListView.separated(
-              shrinkWrap: true,
-              padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
-              reverse: true,
-              itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
-              itemCount: messages.length + 1,
-              separatorBuilder: (_, __) => SizedBox(height: 5),
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      body: Stack(
+        children: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: (){
+              FocusManager.instance.primaryFocus?.unfocus();
+              tapBlank.value=uuid.v1();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/chat_bg.png'),
+                  fit: BoxFit.cover
+                ),
+              ),
+              child: Container(
+                alignment: Alignment.topCenter,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
+                  reverse: true,
+                  itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
+                  itemCount: messages.length + 1,
+                  separatorBuilder: (_, __) => SizedBox(height: 5),
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                ),
+              ),
             ),
           ),
-        ),
+          Positioned(child: GenerateBanner(),)
+        ],
       ),
       floatingActionButton: Container(
         padding: const EdgeInsets.only(
@@ -168,7 +176,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           onSubmit: _onSend,
           onSuggestionTap: _onSuggestionTap,
           onHookTap: _onHookTap,
-          autofocus: false
+          autofocus: false,
+          targetUser: widget.otherSide,
         ) : Padding(
           padding: const EdgeInsets.all(8.0),
           child: OutlinedButton(
@@ -183,7 +192,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-
   var _startupSent = false;
   Widget _startupline(bool hasMsg) {
     return Container(
