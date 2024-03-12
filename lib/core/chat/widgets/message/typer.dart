@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sona/core/chat/models/audio_message.dart';
 
 class TypeWriter extends StatefulWidget {
-  const TypeWriter({super.key, required this.text});
-  final String text;
+  const TypeWriter({super.key, required this.message, this.style});
+  final AudioMessage message;
+  final TextStyle? style;
 
   @override
   State<StatefulWidget> createState() => _TypeWriterState();
@@ -11,10 +13,12 @@ class TypeWriter extends StatefulWidget {
 class _TypeWriterState extends State<TypeWriter> {
   @override
   Widget build(BuildContext context) {
-    return Text.rich(TextSpan(
+    return widget.message.recognizedText != null ? Text.rich(TextSpan(
       children: [
-        TextSpan()
+        ...widget.message.recognizedText!.split(' ').map((token) => TextSpan(
+            text: ' $token '
+        ))
       ]
-    ));
+    ), style: widget.style) : Container();
   }
 }

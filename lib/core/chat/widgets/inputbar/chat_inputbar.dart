@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -43,14 +44,17 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
   final _sonaKey = GlobalKey();
   final _suggKey = GlobalKey();
   OverlayEntry? _voiceEntry;
+  final _stopwatch = Stopwatch();
+  Timer? _timer;
 
   static const enterTimesKey = 'enter_times';
   static final recorder = AudioRecorder();
   static const config = RecordConfig(
-      encoder: AudioEncoder.aacLc,
-      bitRate: 64000,
-      sampleRate: 8000,
-      numChannels: 1
+    encoder: AudioEncoder.aacLc,
+    bitRate: 64000,
+    sampleRate: 8000,
+    numChannels: 1,
+    noiseSuppress: true
   );
 
   @override
@@ -70,6 +74,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
 
   @override
   void dispose() {
+    _stopwatch.stop();
+    _timer?.cancel();
     routeObserver.unsubscribe(this);
     _controller
       ..removeListener(_onInputChange)
@@ -232,21 +238,39 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                 child: GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onLongPressStart: (_) async {
-                    _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
+                    _stopwatch.reset();
+                    _stopwatch.start();
+                    _timer = Timer(const Duration(seconds: 60), () async {
+                      _stopwatch.stop();
+                      final _voicePath = await recorder.stop();
+                      if (_voicePath == null) return;
+                      widget.onSendMessage({
+                        'type': ImMessageContentType.audio,
+                        'duration': 60.0,
+                        'localExtension': {
+                          'path': _voicePath,
+                        }
+                      });
+                      _voiceEntry?.remove();
+                    });
                     recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
+                    _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
                     Overlay.of(context).insert(_voiceEntry!);
                   },
                   onLongPressEnd: (_) async {
+                    _voiceEntry?.remove();
+                    _stopwatch.stop();
+                    _timer?.cancel();
+                    if (_stopwatch.elapsedMilliseconds < 500) return;
                     final _voicePath = await recorder.stop();
                     if (_voicePath == null) return;
                     widget.onSendMessage({
                       'type': ImMessageContentType.audio,
-                      'duration': 2.5,
+                      'duration': _stopwatch.elapsedMilliseconds / 1000.0,
                       'localExtension': {
                         'path': _voicePath,
                       }
                     });
-                    _voiceEntry?.remove();
                   },
                   child: Container(
                     height: 56,

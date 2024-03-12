@@ -9,9 +9,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
+import 'package:sona/core/chat/models/audio_message.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
+import 'package:sona/core/chat/widgets/message/typer.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../../../generated/l10n.dart';
@@ -32,7 +34,7 @@ class AudioMessageWidget extends ConsumerStatefulWidget {
   });
 
   final ImMessage? prevMessage;
-  final ImMessage message;
+  final AudioMessage message;
   final bool fromMe;
   final UserInfo mySide;
   final UserInfo otherSide;
@@ -180,8 +182,8 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
                           ),
                           padding: EdgeInsets.all(12),
                           clipBehavior: Clip.antiAlias,
-                          child: Text(
-                              text!,
+                          child: TypeWriter(
+                              message: widget.message,
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                   color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
                                   height: 1.5,

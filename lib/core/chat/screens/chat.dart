@@ -362,7 +362,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       AudioMessage => AudioMessageWidget(
         key: ValueKey(messages[index].uuid ?? messages[index].id),
         prevMessage: index == messages.length - 1 ? null : messages[index + 1],
-        message: messages[index],
+        message: messages[index] as AudioMessage,
         fromMe: mySide.id == messages[index].sender.id,
         mySide: mySide,
         otherSide: widget.otherSide,
