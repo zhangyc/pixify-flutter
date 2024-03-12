@@ -442,7 +442,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
 
 
-                      })
+                       }
+                      )
                     ],
                   ),
                 ),

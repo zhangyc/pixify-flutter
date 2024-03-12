@@ -69,6 +69,7 @@ dependencies:
   path_provider:
   image_editor: ^1.3.0
   share_plus: ^7.2.2
+  flutter_keyboard_visibility: ^6.0.0
 dev_dependencies:
   custom_lint: ^0.5.7
   flutter_lints: ^2.0.0
@@ -99,6 +100,7 @@ flutter:
     - assets/videos/
     - assets/svg/
     - assets/apng/
+    - assets/fonts/
 
 # dart run arb_generator
 arb_generator:

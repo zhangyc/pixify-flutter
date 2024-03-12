@@ -2,16 +2,38 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
+import 'package:sona/common/models/user.dart';
 import 'package:sona/common/widgets/image/icon.dart';
+import 'package:sona/core/match/bean/match_user.dart';
+import 'package:sona/core/match/widgets/loading_button.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../../../common/app_config.dart';
+import '../../../../common/permission/permission.dart';
+import '../../../../generated/assets.dart';
 import '../../../../generated/l10n.dart';
+import '../../../../utils/face_detection/detection.dart';
 import '../../../../utils/locale/locale.dart';
+import '../../../match/providers/duo_provider.dart';
+import '../../../match/util/event.dart';
+import '../../../match/util/http_util.dart';
+import '../../../match/util/image_util.dart';
+import '../../../match/widgets/dialogs.dart';
+import '../../../subscribe/model/member.dart';
+import '../../../subscribe/subscribe_page.dart';
+import '../../../widgets/not_meet_conditions.dart';
+import '../../../widgets/other_not_meet_conditions.dart';
 import 'mode_provider.dart';
-
+ValueNotifier tapBlank=ValueNotifier<String>('');
 class ChatInstructionInput extends ConsumerStatefulWidget {
   const ChatInstructionInput({
     Key? key,
@@ -28,6 +50,7 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
     required this.sameLanguage,
     required this.onSuggestionTap,
     required this.onHookTap,
+    required this.targetUser,
   }) : super(key: key);
 
   final int chatId;
@@ -43,16 +66,19 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   final bool sameLanguage;
   final Future Function() onHookTap;
   final Future Function() onSuggestionTap;
+  final UserInfo targetUser;
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatInstructionInputState();
 }
 
-class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware {
+class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware,WidgetsBindingObserver {
   late final TextEditingController _controller;
   late final _focusNode = widget.focusNode ?? FocusNode();
   late final _height = widget.height ?? 56;
   final _sonaKey = GlobalKey();
   final _suggKey = GlobalKey();
+  bool keyboardVisible = false;
+  bool openExtend = false;
 
   static const enterTimesKey = 'enter_times';
 
@@ -64,6 +90,14 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     _focusNode.addListener(_focusChangeListener);
     super.initState();
     kvStore.setInt(enterTimesKey, (kvStore.getInt(enterTimesKey) ?? 0) + 1);
+    WidgetsBinding.instance.addObserver(this);
+    tapBlank.addListener(() {
+      if(mounted){
+        setState(() {
+          openExtend = false;
+        });
+      }
+    });
     //_addOverlay();
   }
 
@@ -74,7 +108,27 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
   }
 
   @override
+  void didChangeMetrics() {
+    if(mounted){
+      final bottomInset = View.of(context).viewInsets.bottom;
+      if(bottomInset>0){
+        viewInsetsBottom=MediaQuery.of(context).viewInsets.bottom;
+      }
+      setState(() {
+        keyboardVisible = bottomInset > 0;
+
+        // if (isKeyboardVisible) {
+        //   openExtend = false; // Hide options when keyboard is visible
+        // }
+
+      });
+    }
+
+    super.didChangeMetrics();
+  }
+  @override
   void dispose() {
+    WidgetsBinding.instance.addObserver(this);
     routeObserver.unsubscribe(this);
     _controller
       ..removeListener(_onInputChange)
@@ -122,6 +176,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
       _removeOverlay();
       ref.read(chatStylesVisibleProvider(widget.chatId).notifier).update((state) => false);
     }
+    if(_focusNode.hasFocus){
+      if(mounted){
+        setState(() {
+          keyboardVisible=false;
+        });
+      }
+    }
   }
 
   void _onInputChange() {
@@ -132,6 +193,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
       ref.read(manualInputProvider(widget.chatId).notifier).update((state) => _controller.text);
     }
   }
+  bool detecting=false;
 
   @override
   Widget build(BuildContext context) {
@@ -144,6 +206,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
         : ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona
             ? S.of(context).justTypeInYourLanguage(myL.displayName)
             : S.of(context).sonaInterpretationOff;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -151,114 +214,334 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
         Container(
           width: MediaQuery.of(context).size.width,
           // height: _height,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          child: Column(
             children: [
-              GestureDetector(
-                onTap: widget.onSuggestionTap,
-                child: Container(
-                  key: _sonaKey,
-                  // width: 24,
-                  // height: 24,
-                  margin: EdgeInsets.only(top: 18, bottom: 18, right: 8),
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    border: Border(right: BorderSide(color: Color(0xFFE8E6E6), width: 1))
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+
+                  GestureDetector(
+                      onTap:(){
+                        ///点击
+                        if(keyboardVisible){
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        }
+                        if(mounted){
+                          setState(() {
+                            openExtend=true;
+                          });
+                        }
+                        // isKeyboardVisible=false;
+
+                      },
+                      child:  SvgPicture.asset(Assets.svgExtend,width: 56,height: 56,)
                   ),
-                  clipBehavior: Clip.antiAlias,
-                  alignment: Alignment.center,
-                  child: SonaIcon(
-                    icon: SonaIcons.sona_message,
-                    size: 24,
-                  )
-                )
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    child: Container(
+                      // width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 1.5),
+                      child: TextField(
+                        onTapOutside: (cv){
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          setState(() {
+                            openExtend=false;
+                          });
+                        },
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        textAlign: TextAlign.left,
+                        textAlignVertical: TextAlignVertical.center,
+                        maxLines: 5,
+                        minLines: 1,
+                        maxLength: widget.maxLength,
+                        buildCounter: (BuildContext _, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
+                        keyboardAppearance: Brightness.dark,
+                        keyboardType: widget.keyboardType,
+                        textInputAction: TextInputAction.newline,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: 14,
+                          locale: myLocale
+                        ),
+                        autocorrect: true,
+                        cursorWidth: 1.8,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(width: 1.6),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 1.6),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                          isDense: true,
+                          filled: true,
+                          fillColor: Colors.white,
+                          focusColor: Color(0xFF6D91F4),
+                          hintText: hintText,
+                          hintStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            fontSize: 14,
+                            color: Theme.of(context).hintColor,
+                            fontWeight: FontWeight.w500
+                          )
+                        ),
+                        onChanged: (text) {
+                          if (widget.onInputChange != null) widget.onInputChange!(text);
+                        },
+                        onSubmitted: (String text) {
+                          if (text.isEmpty) return;
+                          onSubmit(text);
+                          _controller.text = '';
+                        },
+                        autofocus: widget.autofocus,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 4),
+                  Visibility(
+                    visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
+                    child: Container(
+                      margin: EdgeInsets.all(1),
+                      child: IconButton(
+                        iconSize: 56,
+                        padding: EdgeInsets.all(14),
+                        onPressed: () {
+                          if (_controller.text.isEmpty) return;
+                          onSubmit(_controller.text);
+                          _controller.text = '';
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                              Theme.of(context).primaryColor
+                          ),
+                          shape: MaterialStatePropertyAll(
+                            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
+                          )
+                        ),
+                        icon: SonaIcon(icon: SonaIcons.chat_send)
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: Container(
-                  // width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 1.5),
-                  child: TextField(
-                    onTapOutside: (cv){
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
-                    controller: _controller,
-                    focusNode: _focusNode,
-                    textAlign: TextAlign.left,
-                    textAlignVertical: TextAlignVertical.center,
-                    maxLines: 5,
-                    minLines: 1,
-                    maxLength: widget.maxLength,
-                    buildCounter: (BuildContext _, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
-                    keyboardAppearance: Brightness.dark,
-                    keyboardType: widget.keyboardType,
-                    textInputAction: TextInputAction.newline,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: 14,
-                      locale: myLocale
-                    ),
-                    autocorrect: true,
-                    cursorWidth: 1.8,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.6),
-                        borderRadius: BorderRadius.circular(20),
+              keyboardVisible?Container():Visibility(
+                visible: openExtend,
+                child: Padding(padding: EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Expanded(child: GestureDetector(
+                        onTap: widget.onSuggestionTap,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xffF6F3F3),
+                              borderRadius: BorderRadius.circular(24)
+                          ),
+                          height: 242,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(Assets.iconsSonaMessage,height: 48,width: 48,),
+                              Text('Give me advice',style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xff2c2c2c),
+                                  fontWeight: FontWeight.w900
+                              ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )),
+                      SizedBox(
+                        width: 8,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.6),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                      isDense: true,
-                      filled: true,
-                      fillColor: Colors.white,
-                      focusColor: Color(0xFF6D91F4),
-                      hintText: hintText,
-                      hintStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                        fontWeight: FontWeight.w500
-                      )
-                    ),
-                    onChanged: (text) {
-                      if (widget.onInputChange != null) widget.onInputChange!(text);
-                    },
-                    onSubmitted: (String text) {
-                      if (text.isEmpty) return;
-                      onSubmit(text);
-                      _controller.text = '';
-                    },
-                    autofocus: widget.autofocus,
+                      Expanded(child: GestureDetector(
+                        child: detecting?Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Color(0xffF6F3F3),
+                                borderRadius: BorderRadius.circular(24)
+                            ),
+                            height: 242,
+                            child: SizedBox(
+                              height: 32,
+                              width: 32,
+                              child: CircularProgressIndicator(),
+                            )
+                        ):Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xffF6F3F3),
+                              borderRadius: BorderRadius.circular(24)
+                          ),
+                          height: 242,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(Assets.svgChatDuosnap,height: 48,width: 48,),
+                              Text(S.current.duoSnap,style: const TextStyle(
+                                  color: Color(0xff2c2c2c),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w900
+                              ),)
+                            ],
+                          ),
+                        ),
+                        onTap: ()async{
+                          if(!canDuoSnap){
+
+                            duosnap-=1;
+                            if(ref.read(myProfileProvider)!.memberType==MemberType.none){
+                              SonaAnalytics.log(DuoSnapEvent.Duo_click_pay.name);
+                              Navigator.push(context, MaterialPageRoute(builder:(c){
+                                return const SubscribePage(fromTag: FromTag.duo_snap,);
+                              }));
+                            }else if(ref.read(myProfileProvider)!.memberType==MemberType.club){
+                              SonaAnalytics.log(DuoSnapEvent.plus_duo_limit.name);
+
+                              Navigator.push(context, MaterialPageRoute(builder:(c){
+                                return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                              }));
+                            }else if(ref.read(myProfileProvider)!.memberType==MemberType.plus){
+                              SonaAnalytics.log(DuoSnapEvent.club_clickduo_payplus.name);
+
+                              Fluttertoast.showToast(msg: S.current.weeklyLimitReached);
+                            }
+                            return;
+                          }
+                          try{
+                            detecting=true;
+                            HttpResult result=await post('/merge-photo/find-last');
+                            if(result.statusCode.toString()=='60010') {
+                              setState(() {
+
+                              });
+                              FileInfo file=await DefaultCacheManager().downloadFile(ref.read(myProfileProvider)!.photos.first.url);
+                              FileInfo file2=await DefaultCacheManager().downloadFile(widget.targetUser.avatar??'');
+
+                              bool con1=await faceDetection(file.file.path);
+                              bool con2=await faceDetection(file2.file.path);
+                              detecting=false;
+                              setState(() {
+
+                              });
+                              if(con1&&con2){
+                                SdModel? sdModel=await showDuoSnapDialog(context,target:MatchUserInfo.fromUserInfoInstance(widget.targetUser));
+
+                              }else if(!con1&&con2){
+                                SonaAnalytics.log(DuoSnapEvent.notreal_self.name);
+
+                                showDuoSnapTip(context, child: NotMeetConditions(
+                                  close: (){
+                                    Navigator.pop(context);
+                                  },
+                                  camera: () async {
+                                    setUserAvatarPhoto(ImageSource.camera, ref);
+                                    if(mounted){
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  gallery: () async {
+                                    setUserAvatarPhoto(ImageSource.gallery, ref);
+                                    if(mounted){
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  anyway: () async{
+                                    if(mounted){
+                                      Navigator.pop(context);
+                                    }
+                                    SdModel? sdModel=await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.targetUser));
+
+                                  },
+                                ),
+                                    dialogHeight: 361);
+                              }else if(con1&&!con2){
+                                SonaAnalytics.log(DuoSnapEvent.notreal_other.name);
+
+                                showDuoSnapTip(context, child: OtherNotMeetConditions(
+                                  close: (){
+                                    Navigator.pop(context);
+                                  },
+                                  gotit: (){
+                                    Navigator.pop(context);
+                                  },
+                                  sendDM: (){
+                                    Future.delayed(Duration(milliseconds: 200),(){
+                                      if(canArrow){
+                                        showDm(context, MatchUserInfo.fromUserInfoInstance(widget.targetUser),(){});
+                                      }else {
+                                        bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                                        if(isMember){
+                                          Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                                        }else{
+                                          Navigator.push(context, MaterialPageRoute(builder:(c){
+                                            return SubscribePage(fromTag: FromTag.duo_snap,);
+                                          }));
+                                        }
+                                      }
+                                    });
+                                    if(mounted){
+                                      Navigator.pop(context);
+                                    }
+                                  }, anyway: () async{
+                                  Navigator.pop(context);
+
+                                  SdModel? sdModel=await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.targetUser));
+
+                                },
+
+                                ), dialogHeight: 390);
+                              }else if(!con1&&!con2){
+                                showDuoSnapTip(context, child: NotMeetConditions(
+                                  close: (){
+                                    Navigator.pop(context);
+                                  },
+                                  camera: () async {
+                                    setUserAvatarPhoto(ImageSource.camera, ref);
+                                    if(mounted){
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  gallery: () async {
+                                    setUserAvatarPhoto(ImageSource.gallery, ref);
+                                    if(mounted){
+                                      Navigator.pop(context);
+                                    }
+                                  }, anyway: ()async{
+                                  if(mounted){
+                                    Navigator.pop(context);
+                                  }
+                                  SdModel? sdModel=await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.targetUser));
+
+                                },
+                                ), dialogHeight: 361);
+                              }
+
+                            }else {
+                              Fluttertoast.showToast(msg: S.current.onlyOneAtatime);
+                              detecting=false;
+                              setState(() {
+
+                              });
+                            }
+                          }catch(e){
+                            detecting=false;
+                            setState(() {
+
+                            });
+                          }
+                        }
+
+                      ))
+                    ],
                   ),
                 ),
-              ),
-              SizedBox(width: 4),
-              Visibility(
-                visible: !ref.watch(currentInputEmptyProvider(widget.chatId)),
-                child: Container(
-                  margin: EdgeInsets.all(1),
-                  child: IconButton(
-                    iconSize: 56,
-                    padding: EdgeInsets.all(14),
-                    onPressed: () {
-                      if (_controller.text.isEmpty) return;
-                      onSubmit(_controller.text);
-                      _controller.text = '';
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                          Theme.of(context).primaryColor
-                      ),
-                      shape: MaterialStatePropertyAll(
-                        ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
-                      )
-                    ),
-                    icon: SonaIcon(icon: SonaIcons.chat_send)
-                  ),
-                ),
-              ),
+              )
             ],
           ),
         ),
@@ -358,4 +641,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
       widget.onSubmit!(text);
     }
   }
+}
+enum KeyBoardType{
+  extend,
+  system
 }
