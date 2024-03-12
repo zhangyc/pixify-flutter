@@ -103,6 +103,7 @@ class Assets {
   static const String svgArrow = 'assets/svg/arrow.svg';
   static const String svgC = 'assets/svg/c.svg';
   static const String svgCamera = 'assets/svg/camera.svg';
+  static const String svgChatClose = 'assets/svg/chat_close.svg';
   static const String svgChatDuosnap = 'assets/svg/chat_duosnap.svg';
   static const String svgConverationDuo = 'assets/svg/converation_duo.svg';
   static const String svgDislike = 'assets/svg/dislike.svg';

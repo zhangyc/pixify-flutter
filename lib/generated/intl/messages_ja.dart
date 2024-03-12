@@ -240,7 +240,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("あなたを好きな人が誰か見るために解除"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3つの願い"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("週10回のDuo Snap"),
+            MessageLookupByLibrary.simpleMessage("週20回のDuo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("好み"),
         "privacy": MessageLookupByLibrary.simpleMessage("プライバシー"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("プライバシーポリシー"),

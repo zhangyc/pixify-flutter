@@ -278,7 +278,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Débloquer pour voir qui vous aime"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 souhaits"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("10 Duo Snap / semana"),
+            MessageLookupByLibrary.simpleMessage("20 Duo Snap / semana"),
         "preference": MessageLookupByLibrary.simpleMessage("Préférence"),
         "privacy": MessageLookupByLibrary.simpleMessage("Confidentialité"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage(
