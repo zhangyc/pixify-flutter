@@ -146,6 +146,7 @@ class DuosnapCompleted extends StatelessWidget {
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
                 return GestureDetector(onTap: (){
                   SonaAnalytics.log(DuoSnapEvent.duo_send.name);
+                  SonaAnalytics.logFacebookEvent(DuoSnapEvent.duo_send.name);
                   Navigator.pop(context);
                   MatchApi.sendImageMsg(task.targetUserId!, task.targetPhotoUrl!).then((value){
                     if(value.isSuccess){

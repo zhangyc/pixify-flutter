@@ -671,7 +671,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             final resp = await _verifyPurchase(purchaseDetails);
             if (resp.statusCode == 0) {
               SonaAnalytics.log('iap_verified');
-
+              SonaAnalytics.logFacebookEvent('iap_verified', {'product_id': purchaseDetails.productID});
               unawaited(deliverProduct(purchaseDetails));
             } else {
               SonaAnalytics.log('iap_verify_failed');

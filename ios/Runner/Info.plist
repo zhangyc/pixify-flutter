@@ -25,12 +25,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			        <key>CFBundleURLName</key>
-                    <string>sona</string>
-                    <key>CFBundleURLSchemes</key>
-                    <array>
-                        <string>sona</string>
-                    </array>
+      <key>CFBundleURLName</key>
+        <string>sona</string>
+      <key>CFBundleURLSchemes</key>
+      <array>
+          <string>sona</string>
+          <string>fb357454540279529</string>
+      </array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
@@ -53,6 +54,8 @@
 	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
+	<key>NSUserTrackingUsageDescription</key>
+  <string>To evaluate the effectiveness of our advertising campaigns and optimize our ad delivery strategies, we need to access your Identifier for Advertisers (IDFA). Your IDFA may be shared with our advertising partners, but it will not be associated with any other personal information.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -74,6 +77,12 @@
 	<false/>
 	<key>FirebaseMessagingAutoInitEnabled</key>
 	<true/>
+	<key>FacebookAppID</key>
+  <string>357454540279529</string>
+  <key>FacebookClientToken</key>
+  <string>05a5b4f17e6f876e110ef9df3945a657</string>
+  <key>FacebookDisplayName</key>
+  <string>Sona</string>
     <!-- gal: Required -->
     	<key>NSPhotoLibraryAddUsageDescription</key>
     	<string>We need add only access to save medias</string>

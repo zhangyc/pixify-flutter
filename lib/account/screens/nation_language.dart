@@ -213,8 +213,6 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
       if (kDebugMode) print('upload avatar error: $e');
       Fluttertoast.showToast(msg: 'Failed to upload avatar');
       EasyLoading.dismiss();
-    } finally {
-      SonaAnalytics.log('reg_confirm');
     }
   }
 
@@ -231,7 +229,9 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
       );
       if (result && mounted) {
         await Future.delayed(const Duration(milliseconds: 500));
-        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);;
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        SonaAnalytics.logFacebookEvent('reg_confirm');
+        SonaAnalytics.log('reg_confirm');
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Network error, please try again later');
