@@ -266,7 +266,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ปลดล็อกเพื่อดูว่าใครชอบคุณ"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 คำอธิษฐาน"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("10 Duo Snap / สัปดาห์"),
+            MessageLookupByLibrary.simpleMessage("20 Duo Snap / สัปดาห์"),
         "preference": MessageLookupByLibrary.simpleMessage("การตั้งค่า"),
         "privacy": MessageLookupByLibrary.simpleMessage("ความเป็นส่วนตัว"),
         "privacyPolicy":

@@ -228,13 +228,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                         }
                         if(mounted){
                           setState(() {
-                            openExtend=true;
+                            openExtend=!openExtend;
                           });
                         }
                         // isKeyboardVisible=false;
 
                       },
-                      child:  SvgPicture.asset(Assets.svgExtend,width: 56,height: 56,)
+                      child:  SvgPicture.asset(!openExtend?Assets.svgExtend:Assets.svgChatClose,width: 56,height: 56,)
                   ),
                   SizedBox(
                     width: 8,

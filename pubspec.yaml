@@ -101,6 +101,7 @@ flutter:
     - assets/videos/
     - assets/svg/
     - assets/apng/
+    - assets/fonts/
 
 # dart run arb_generator
 arb_generator:
