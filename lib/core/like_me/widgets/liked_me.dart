@@ -9,6 +9,7 @@ import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/global/global.dart';
 
@@ -30,6 +31,7 @@ class LikedMeListView extends StatefulHookConsumerWidget {
 class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
   @override
   Widget build(BuildContext context) {
+    final isPlus = ref.watch(myProfileProvider)?.memberType == MemberType.plus;
     return ref.watch(likeMeStreamProvider).when<Widget>(
       data: (likedMeUsers) {
         return likedMeUsers.isEmpty ? Container() : Container(
@@ -100,7 +102,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            if (!ref.watch(myProfileProvider)!.isMember) Positioned.fill(
+                            if (!isPlus) Positioned.fill(
                               child: ImageFiltered(
                                 imageFilter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
                                 child: UserAvatar(
@@ -109,7 +111,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                                 )
                               ),
                             ),
-                            if (ref.watch(myProfileProvider)!.isMember) Positioned.fill(
+                            if (isPlus) Positioned.fill(
                               child: UserAvatar(
                                 url: u.avatar!,
                                 size: Size(84, 113),
@@ -150,7 +152,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                   itemCount: likedMeUsers.length > 16 ? 17 : likedMeUsers.length,
                 ),
               ),
-              if (!ref.read(myProfileProvider)!.isMember) Container(
+              if (!isPlus) Container(
                   margin: EdgeInsets.only(top: 18, left: 16, right: 16),
                   alignment: Alignment.center,
                   child: OutlinedButton(
@@ -170,7 +172,7 @@ class _LikedMeListViewState extends ConsumerState<LikedMeListView> {
                     ),
                   )
               ),
-              if (ref.read(myProfileProvider)!.isMember) Container(
+              if (isPlus) Container(
                 margin: EdgeInsets.only(top: 18, left: 16, right: 16),
                 alignment: Alignment.center,
                 child: FilledButton.tonal(

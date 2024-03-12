@@ -49,7 +49,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   late var _showing = [
     FromTag.pay_chatlist_likedme,
     FromTag.pay_match_arrow,
-    FromTag.club_duo_snap
+    FromTag.club_duo_snap,
+    FromTag.pay_chatlist_blur
   ].contains(widget.fromTag) ? 'plus' : 'club';
 
   @override
