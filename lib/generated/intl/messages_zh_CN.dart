@@ -225,7 +225,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("解锁查看谁喜欢了你"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3个心愿"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("每周10次Duo Snap"),
+            MessageLookupByLibrary.simpleMessage("每周20次Duo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("偏好"),
         "privacy": MessageLookupByLibrary.simpleMessage("隐私"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("隐私政策"),

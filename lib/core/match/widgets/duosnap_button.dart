@@ -12,9 +12,10 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import '../../../account/providers/profile.dart';
 import '../../../common/services/common.dart';
 import '../../../generated/l10n.dart';
-import '../../../utils/uuid.dart';
+import '../../../utils/global/global.dart';
 import '../../widgets/generate_banner.dart';
 import '../providers/duo_provider.dart';
+import '../util/event.dart';
 
 class DuosnapButton extends ConsumerStatefulWidget {
   const DuosnapButton(this.target, this.model, {super.key});
@@ -30,6 +31,12 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
+        SonaAnalytics.log(DuoSnapEvent.style.name,
+            {'item_str_id':widget.model.name,
+             'item_int_id':widget.model.id,
+            }
+            );
+
         isLoading=true;
         setState(() {
 
@@ -60,7 +67,7 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
             ),
           );
           final result = await ImageMerger.mergeToMemory(option: option);
-          final s =await uploadImage(bytes: result!);
+          final s =await uploadFile(bytes: result!);
           final response=await post('/merge-photo/create',data: {
             // 原图URL
             "photoUrl":s,
@@ -82,7 +89,7 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
 
           });
           if(mounted){
-            Navigator.pop(context);
+            Navigator.pop(context,widget.model);
           }
         }catch(e){
           Fluttertoast.showToast(msg:S.current.issues);

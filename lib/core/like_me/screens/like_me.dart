@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/screens/profile.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 
@@ -22,7 +23,7 @@ class LikeMeScreen extends StatefulHookConsumerWidget {
 
 class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepAliveClientMixin {
 
-  late bool isMember;
+  late bool isPlus;
   late double itemWidth;
   late double itemHeight;
 
@@ -36,7 +37,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    isMember = ref.watch(myProfileProvider)!.isMember;
+    isPlus = ref.watch(myProfileProvider)!.memberType == MemberType.plus;
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).whoLikesU, style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -104,7 +105,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
                     // ),
                     alignment: Alignment.center,
                     clipBehavior: Clip.antiAlias,
-                    child: isMember ? GestureDetector(
+                    child: isPlus ? GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: u.id,relation: Relation.likeMe,))),
                       child: AspectRatio(
@@ -160,7 +161,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen> with AutomaticKeepA
               ],
             ),
           ),
-          if (isMember) Padding(
+          if (isPlus) Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
               u.name!,

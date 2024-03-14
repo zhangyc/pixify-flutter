@@ -90,4 +90,5 @@ class UserInfo {
         bio: json['description']
     );
   }
+
 }

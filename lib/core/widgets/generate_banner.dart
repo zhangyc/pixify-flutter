@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/common/app_config.dart';
 import 'package:sona/core/match/bean/duosnap_task.dart';
 import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/match/util/local_data.dart';
@@ -16,6 +17,8 @@ import 'package:sona/core/match/widgets/loading_button.dart';
 import '../../account/providers/profile.dart';
 import '../../generated/assets.dart';
 import '../../generated/l10n.dart';
+import '../../utils/global/global.dart';
+import '../match/util/event.dart';
 import '../match/widgets/small_duo.dart';
 
 final ValueNotifier<String> startGenerate = ValueNotifier<String>('1');
@@ -69,9 +72,12 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        generateState.value=GenerateState.generating;
 
      }else if(duoSnapTask.status==3){
+       SonaAnalytics.log(DuoSnapEvent.duo_done.name);
        generateState.value=GenerateState.done;
+       isDuoSnapSuccess=true;
        timer?.cancel();
      }else if(duoSnapTask.status==4){
+       SonaAnalytics.log(DuoSnapEvent.duo_fail.name);
        generateState.value=GenerateState.fail;
 
      }else if(duoSnapTask.status==5){
@@ -149,6 +155,8 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
 
           });
         }
+        SonaAnalytics.log(DuoSnapEvent.click_duo_done.name);
+
         generateState.value=GenerateState.cancel;
         post('/merge-photo/over',data: {
           "id": duoSnapTask.id
@@ -201,7 +209,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
                fontWeight: FontWeight.w900
            ),),
            LoadingButton(onPressed: () async{
-
+             SonaAnalytics.log(DuoSnapEvent.duo_retry.name);
              try{
                HttpResult response=await post('/merge-photo/retry',data: {
                  'id':duoSnapTask.id

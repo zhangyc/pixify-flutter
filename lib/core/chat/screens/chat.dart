@@ -22,6 +22,7 @@ import 'package:sona/core/chat/widgets/tips_dialog.dart';
 import 'package:sona/core/match/providers/match_info.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/core/widgets/generate_banner.dart';
 import 'package:sona/utils/dialog/common.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
@@ -134,31 +135,37 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         //     statusBarIconBrightness: Brightness.dark
         // )
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/chat_bg.png'),
-            fit: BoxFit.cover
-          ),
-        ),
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
-          child: Container(
-            alignment: Alignment.topCenter,
-            child: ListView.separated(
-              shrinkWrap: true,
-              padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
-              reverse: true,
-              itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
-              itemCount: messages.length + 1,
-              separatorBuilder: (_, __) => SizedBox(height: 5),
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      body: Stack(
+        children: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: (){
+              FocusManager.instance.primaryFocus?.unfocus();
+              tapBlank.value=uuid.v1();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/chat_bg.png'),
+                  fit: BoxFit.cover
+                ),
+              ),
+              child: Container(
+                alignment: Alignment.topCenter,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
+                  reverse: true,
+                  itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
+                  itemCount: messages.length + 1,
+                  separatorBuilder: (_, __) => SizedBox(height: 5),
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                ),
+              ),
             ),
           ),
-        ),
+          Positioned(child: GenerateBanner(),)
+        ],
       ),
       floatingActionButton: Container(
         padding: const EdgeInsets.only(
@@ -247,13 +254,38 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
   }
 
-  Future _sendMessage(Map<String, dynamic> content) async {
-    return _messageController.send(content);
+  Future _onSend(String? text) async {
+    if (text == null || text.trim().isEmpty) return;
+
+    final mode = ref.read(inputModeProvider(widget.otherSide.id));
+    final message = ImMessage(
+      id: null,
+      uuid: uuid.v4(),
+      type: mode == InputMode.sona ? CallSonaType.INPUT.index + 1 : ImMessageType.manual.index,
+      originalContent: text,
+      translatedContent: null,
+      sender: mySide,
+      receiver: widget.otherSide,
+      time: DateTime.now(),
+      contentType: 1,
+      content: text
+    );
+    message.sendingParams = MessageSendingParams(
+        uuid: message.uuid!,
+        userId: widget.otherSide.id,
+        mode: mode,
+        content: text,
+        dateTime: message.time
+    ).toJsonString();
+
+    ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
   }
 
   Future _resendMessage(ImMessage message) {
-    return _messageController.resend(message);
+    ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
+    return _onSend(message.originalContent);
   }
+
 
   Future _deleteMessage(ImMessage message) {
     return deleteMessage(

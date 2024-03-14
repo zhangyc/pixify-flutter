@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sona/core/match/bean/duosnap_task.dart';
+import 'package:sona/core/match/widgets/duosnap_loading.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
@@ -22,6 +23,7 @@ import '../../../utils/global/global.dart';
 import '../../../utils/uuid.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
+import '../util/event.dart';
 import 'image_loading_animation.dart';
 import 'small_duo.dart';
 
@@ -96,7 +98,7 @@ class DuosnapCompleted extends StatelessWidget {
         ClipRRect(
           // borderRadius: BorderRadius.circular(24), // 设置圆角半径
           child: CachedNetworkImage(imageUrl: task.targetPhotoUrl??'',width: MediaQuery.of(context).size.width,placeholder: (_,__){
-            return ImageLoadingAnimation();
+            return DuosnapLoading();
           },
           fit: BoxFit.cover ,
           ),
@@ -109,6 +111,8 @@ class DuosnapCompleted extends StatelessWidget {
           children: [
             GestureDetector(child: SvgPicture.asset(Assets.svgDownload,width: 56,height: 56,),
               onTap: () async{
+                SonaAnalytics.log(DuoSnapEvent.duo_download.name);
+
                 FileInfo? f=await DefaultCacheManager().getFileFromCache(task.targetPhotoUrl??'');
                 if(f!=null){
                   final hasAccess = await Gal.hasAccess(toAlbum: true);
@@ -119,7 +123,6 @@ class DuosnapCompleted extends StatelessWidget {
                   }else {
                     Fluttertoast.showToast(msg: S.current.issues);
                   }
-                  Navigator.pop(context);
 
                 }
               },
@@ -127,6 +130,8 @@ class DuosnapCompleted extends StatelessWidget {
 
             GestureDetector(child: SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
               onTap: () async{
+                SonaAnalytics.log(DuoSnapEvent.duo_share.name);
+
                 String cache=(await getApplicationCacheDirectory()).path;
                 File? f=await DefaultCacheManager().getSingleFile(task.targetPhotoUrl??'');
                 File file=File('$cache/tmp.png');
@@ -134,7 +139,6 @@ class DuosnapCompleted extends StatelessWidget {
                 if(f!=null){
                   XFile x=XFile(file.path);
                   Share.shareXFiles([x]);
-                  Navigator.pop(context);
                 }
               },
             ),
@@ -142,6 +146,8 @@ class DuosnapCompleted extends StatelessWidget {
             Consumer(
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
                 return GestureDetector(onTap: (){
+                  SonaAnalytics.log(DuoSnapEvent.duo_send.name);
+                  SonaAnalytics.logFacebookEvent(DuoSnapEvent.duo_send.name);
                   Navigator.pop(context);
                   MatchApi.sendImageMsg(task.targetUserId!, task.targetPhotoUrl!).then((value){
                     if(value.isSuccess){

@@ -2290,10 +2290,10 @@ class S {
     );
   }
 
-  /// `10 Duo Snap  / week`
+  /// `20 Duo Snap  / week`
   String get plusPerkDuoSnap {
     return Intl.message(
-      '10 Duo Snap  / week',
+      '20 Duo Snap  / week',
       name: 'plusPerkDuoSnap',
       desc: '',
       args: [],

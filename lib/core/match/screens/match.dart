@@ -8,6 +8,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/my_profile.dart';
+import 'package:sona/common/app_config.dart';
+import 'package:sona/core/match/providers/duo_provider.dart';
 import 'package:sona/core/match/providers/match_provider.dart';
 import 'package:sona/core/match/providers/setting.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
@@ -15,6 +17,7 @@ import 'package:sona/core/match/util/image_util.dart';
 import 'package:sona/core/match/widgets/button_animations.dart';
 import 'package:sona/core/match/widgets/catch_more.dart';
 import 'package:sona/core/match/widgets/custom_pageview/src/skip_transformer.dart';
+import 'package:sona/core/match/widgets/duosnap_guide.dart';
 import 'package:sona/core/match/widgets/icon_animation.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_location.dart';
@@ -76,6 +79,12 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       _initData();
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if(!isShowDuoSnapGuide){
+        isShowDuoSnapGuide=true;
+        showDuoSnapTip(context, child:  DuosnapGuide(close: (){
+          Navigator.pop(context);
+        },), dialogHeight: 361);
+      }
       if(openAppCount==2&&todayIsShowedTimed&&showTimeLimitedCount<3){
         showDuoSnapTip(context, child: TimeLimitedOffer(close: (){
           Navigator.pop(context);
@@ -266,20 +275,28 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                         alignment: Alignment.center,
 
                       ):
-                      ScaleAnimation(child: SvgPicture.asset(Assets.svgDuosnap,width: 56,height: 56,), onTap: () async {
+                      ScaleAnimation(child: SvgPicture.asset(isDuoSnapSuccess?Assets.svgDuosnap:Assets.svgDuoSnapGuide,width: 56,height: 56,), onTap: () async {
                               if(currentPage==users.length-1){
                                   return;
                                }
+                              SonaAnalytics.log(DuoSnapEvent.click_duo.name);
                               if(!canDuoSnap){
+
+                                duosnap-=1;
                                 if(ref.read(myProfileProvider)!.memberType==MemberType.none){
+                                  SonaAnalytics.log(DuoSnapEvent.Duo_click_pay.name);
                                   Navigator.push(context, MaterialPageRoute(builder:(c){
                                     return const SubscribePage(fromTag: FromTag.duo_snap,);
                                   }));
                                 }else if(ref.read(myProfileProvider)!.memberType==MemberType.club){
+                                  SonaAnalytics.log(DuoSnapEvent.plus_duo_limit.name);
+
                                   Navigator.push(context, MaterialPageRoute(builder:(c){
                                     return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
                                   }));
                                 }else if(ref.read(myProfileProvider)!.memberType==MemberType.plus){
+                                  SonaAnalytics.log(DuoSnapEvent.club_clickduo_payplus.name);
+
                                   Fluttertoast.showToast(msg: S.current.weeklyLimitReached);
                                 }
                                 return;
@@ -301,10 +318,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
                                     });
                                     if(con1&&con2){
-                                     await showDuoSnapDialog(context,target: users[currentPage]);
-                                     controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                     SdModel? sdModel=await showDuoSnapDialog(context,target: users[currentPage]);
+                                     if(sdModel!=null){
+                                       controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                     }
 
                                     }else if(!con1&&con2){
+                                      SonaAnalytics.log(DuoSnapEvent.notreal_self.name);
+
                                       showDuoSnapTip(context, child: NotMeetConditions(
                                         close: (){
                                           Navigator.pop(context);
@@ -325,13 +346,17 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                           if(mounted){
                                             Navigator.pop(context);
                                           }
-                                          await showDuoSnapDialog(context,target: users[currentPage]);
-                                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                          SdModel? sdModel=await showDuoSnapDialog(context,target: users[currentPage]);
+                                          if(sdModel!=null){
+                                            controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                          }
 
                                         },
                                       ),
                                           dialogHeight: 361);
                                     }else if(con1&&!con2){
+                                      SonaAnalytics.log(DuoSnapEvent.notreal_other.name);
+
                                       showDuoSnapTip(context, child: OtherNotMeetConditions(
                                         close: (){
                                           Navigator.pop(context);
@@ -364,8 +389,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                         }, anyway: () async{
                                         Navigator.pop(context);
 
-                                        await showDuoSnapDialog(context,target: users[currentPage]);
-                                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                        SdModel? sdModel=await showDuoSnapDialog(context,target: users[currentPage]);
+                                        if(sdModel!=null){
+                                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                        }
 
                                       },
 
@@ -390,8 +417,10 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                         if(mounted){
                                           Navigator.pop(context);
                                         }
-                                        await showDuoSnapDialog(context,target: users[currentPage]);
-                                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                        SdModel? sdModel=await showDuoSnapDialog(context,target: users[currentPage]);
+                                        if(sdModel!=null){
+                                          controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
+                                        }
 
                                       },
                                       ), dialogHeight: 361);
@@ -413,7 +442,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
 
 
-                      })
+                       }
+                      )
                     ],
                   ),
                 ),

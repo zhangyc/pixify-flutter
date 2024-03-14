@@ -2,9 +2,7 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/common/models/user.dart';
@@ -15,6 +13,8 @@ import 'package:sona/core/match/widgets/image_preview.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../../../generated/l10n.dart';
+import '../../../../utils/global/global.dart';
+import '../../../match/util/event.dart';
 
 class ImageMessageWidget extends ConsumerStatefulWidget {
   const ImageMessageWidget({
@@ -95,7 +95,6 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                         final action = await showActionButtons(
                             context: context,
                             options: {
-                              S.of(context).buttonCopy: 'copy',
                               if (widget.fromMe) S.of(context).buttonDelete: 'delete'
                             }
                         );
@@ -106,6 +105,9 @@ class _MessageWidgetState extends ConsumerState<ImageMessageWidget> {
                         }
                       },
                       onTap: (){
+                        if(!widget.fromMe){
+                          SonaAnalytics.log(DuoSnapEvent.chat_click_duo.name);
+                        }
                         showDialog(context: context, builder: (b){
                           return ImagePreview(url: url,targetUrl: widget.otherSide.avatar??'',);
                         });

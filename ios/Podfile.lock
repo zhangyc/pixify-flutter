@@ -648,6 +648,17 @@ PODS:
     - firebase_core
     - Flutter
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - facebook_app_events (0.0.1):
+    - FBAudienceNetwork (~> 6.12)
+    - FBSDKCoreKit (~> 16.0)
+    - Flutter
+  - FBAEMKit (16.3.1):
+    - FBSDKCoreKit_Basics (= 16.3.1)
+  - FBAudienceNetwork (6.14.0)
+  - FBSDKCoreKit (16.3.1):
+    - FBAEMKit (= 16.3.1)
+    - FBSDKCoreKit_Basics (= 16.3.1)
+  - FBSDKCoreKit_Basics (16.3.1)
   - Firebase/Analytics (10.20.0):
     - Firebase/Core
   - Firebase/Auth (10.20.0):
@@ -809,6 +820,9 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - gal (1.0.0):
+    - Flutter
+    - FlutterMacOS
   - geolocator_apple (1.2.0):
     - Flutter
   - google_mlkit_commons (0.6.1):
@@ -953,6 +967,8 @@ PODS:
     - AppAuth/Core (~> 1.6)
     - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (2.3.0)
+  - image_editor_common (1.0.0):
+    - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
   - in_app_purchase_storekit (0.0.1):
@@ -1014,6 +1030,8 @@ PODS:
   - SDWebImageWebPCoder (0.14.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.17)
+  - share_plus (0.0.1):
+    - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -1029,11 +1047,15 @@ PODS:
   - Toast (4.1.0)
   - url_launcher_ios (0.0.1):
     - Flutter
+  - video_player_avfoundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - facebook_app_events (from `.symlinks/plugins/facebook_app_events/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_app_check (from `.symlinks/plugins/firebase_app_check/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
@@ -1045,21 +1067,25 @@ DEPENDENCIES:
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - gal (from `.symlinks/plugins/gal/darwin`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
   - google_mlkit_face_detection (from `.symlinks/plugins/google_mlkit_face_detection/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
+  - image_editor_common (from `.symlinks/plugins/image_editor_common/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - smart_auth (from `.symlinks/plugins/smart_auth/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - system_settings (from `.symlinks/plugins/system_settings/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
@@ -1068,6 +1094,10 @@ SPEC REPOS:
     - AppAuth
     - AppCheckCore
     - BoringSSL-GRPC
+    - FBAEMKit
+    - FBAudienceNetwork
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
     - Firebase
     - FirebaseAnalytics
     - FirebaseAppCheck
@@ -1115,6 +1145,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  facebook_app_events:
+    :path: ".symlinks/plugins/facebook_app_events/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_app_check:
@@ -1137,6 +1169,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  gal:
+    :path: ".symlinks/plugins/gal/darwin"
   geolocator_apple:
     :path: ".symlinks/plugins/geolocator_apple/ios"
   google_mlkit_commons:
@@ -1145,6 +1179,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_face_detection/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/darwin"
+  image_editor_common:
+    :path: ".symlinks/plugins/image_editor_common/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   in_app_purchase_storekit:
@@ -1155,6 +1191,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sign_in_with_apple:
@@ -1167,6 +1205,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/system_settings/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
+  video_player_avfoundation:
+    :path: ".symlinks/plugins/video_player_avfoundation/darwin"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
@@ -1176,6 +1216,11 @@ SPEC CHECKSUMS:
   AppCheckCore: d0d4bcb6f90fd9f69958da5350467b79026b38c7
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   cloud_firestore: ecf08badc10198974885617f14819201d9a42575
+  facebook_app_events: deb163f1f7fa13213192532bbc84ff0b0d798bc2
+  FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
+  FBAudienceNetwork: 4d6223a9a88a22e9dca8c9e6c1829a8745b86228
+  FBSDKCoreKit: 5e4dd478947ab1bcc887e8cfadeae0727af1a942
+  FBSDKCoreKit_Basics: cd7b5f5d1e8868c26706917919d058999ca672c3
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
   firebase_analytics: 9c600045bfb4d16dd78593d18f32c99bb77e5001
   firebase_app_check: fead92294498c0e49c78237edd7b116157aab089
@@ -1205,6 +1250,7 @@ SPEC CHECKSUMS:
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  gal: 61e868295d28fe67ffa297fae6dacebf56fd53e1
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   google_mlkit_commons: 3857c1e9f23ca02073f8dd34a7a3580feb814cef
   google_mlkit_face_detection: 52f7e4c15a7c49b98940fa32af4c2b10fd8608fc
@@ -1220,6 +1266,7 @@ SPEC CHECKSUMS:
   gRPC-Core: a21a60aefc08c68c247b439a9ef97174b0c54f96
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
+  image_editor_common: d6f6644ae4a6de80481e89fe6d0a8c49e30b4b43
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
   leveldb-library: e74c27d8fbd22854db7cb467968a0b8aa1db7126
@@ -1238,6 +1285,7 @@ SPEC CHECKSUMS:
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   SDWebImage: 981fd7e860af070920f249fd092420006014c3eb
   SDWebImageWebPCoder: c94f09adbca681822edad9e532ac752db713eabf
+  share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2
@@ -1245,8 +1293,9 @@ SPEC CHECKSUMS:
   system_settings: 8f5cdbfa72c677fc8d665b863bcc20d393d87e9d
   Toast: ec33c32b8688982cecc6348adeae667c1b9938da
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
+  video_player_avfoundation: 02011213dab73ae3687df27ce441fbbcc82b5579
   webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
 
-PODFILE CHECKSUM: e47f34964e1757bcae7af56dd8c0dcab61d521b1
+PODFILE CHECKSUM: 119344870cdfc51125d2305eab77d8ec82dd7e72
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.14.3

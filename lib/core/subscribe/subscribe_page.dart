@@ -47,7 +47,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   late var _showing = [
     FromTag.pay_chatlist_likedme,
     FromTag.pay_match_arrow,
-    FromTag.club_duo_snap
+    FromTag.club_duo_snap,
+    FromTag.pay_chatlist_blur
   ].contains(widget.fromTag) ? 'plus' : 'club';
 
   @override
@@ -74,8 +75,11 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   }
 
   Future _subscribeClub() async {
+
     final clubDetails = ref.read(asyncSubscriptionsProvider).value!.firstWhere((sub) => sub.id == clubMonthlyId);
     _subscribe(clubDetails);
+    SonaAnalytics.log(DuoSnapEvent.club_click_pay.name);
+
   }
 
   Future _subscribePlus() async {
@@ -92,7 +96,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       // inside the app may not be accurate.
       final GooglePlayPurchaseDetails? oldSubscription = await  _getOldSubscription();
       purchaseParam = GooglePlayPurchaseParam(
-          applicationUserName: ref.read(myProfileProvider)!.id.toString(),
+          // applicationUserName: ref.read(myProfileProvider)!.id.toString(),
           productDetails: pd,
           changeSubscriptionParam: (oldSubscription != null)
               ? ChangeSubscriptionParam(
@@ -109,10 +113,14 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     try {
       await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
     } catch (e) {
+      if(pd.id==clubMonthlyId){
+        SonaAnalytics.log(DuoSnapEvent.club_pay_fail.name);
+      }
       inAppPurchase.restorePurchases(applicationUserName: ref.read(myProfileProvider)!.id.toString());
     }
     //inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
     SonaAnalytics.log(PayEvent.pay_continue.name);
+
   }
 
   @override
@@ -661,7 +669,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             final resp = await _verifyPurchase(purchaseDetails);
             if (resp.statusCode == 0) {
               SonaAnalytics.log('iap_verified');
-
+              SonaAnalytics.logFacebookEvent('iap_verified', {'product_id': purchaseDetails.productID});
               unawaited(deliverProduct(purchaseDetails));
             } else {
               SonaAnalytics.log('iap_verify_failed');

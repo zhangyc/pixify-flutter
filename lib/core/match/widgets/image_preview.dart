@@ -11,12 +11,14 @@ import 'package:gal/gal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:sona/core/match/widgets/duosnap_loading.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
-import '../../../utils/uuid.dart';
+import '../../../utils/global/global.dart';
+import '../util/event.dart';
 import 'image_loading_animation.dart';
 
 class ImagePreview extends StatelessWidget {
@@ -76,7 +78,7 @@ class ImagePreview extends StatelessWidget {
         ClipRRect(
           // borderRadius: BorderRadius.circular(24), // 设置圆角半径
           child: CachedNetworkImage(imageUrl: url,width: MediaQuery.of(context).size.width,placeholder: (_,__){
-            return ImageLoadingAnimation();
+            return DuosnapLoading();
           },
             fit: BoxFit.cover,
           ),
@@ -89,6 +91,8 @@ class ImagePreview extends StatelessWidget {
           children: [
             GestureDetector(child: SvgPicture.asset(Assets.svgDownload,width: 56,height: 56,),
               onTap: () async{
+                SonaAnalytics.log(DuoSnapEvent.chat_duo_download.name);
+
                 FileInfo? f=await DefaultCacheManager().getFileFromCache(url);
                 if(f!=null){
                   final hasAccess = await Gal.hasAccess(toAlbum: true);
@@ -107,6 +111,8 @@ class ImagePreview extends StatelessWidget {
 
             GestureDetector(child: SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
               onTap: () async{
+                SonaAnalytics.log(DuoSnapEvent.chat_duo_share.name);
+
                 String cache=(await getApplicationCacheDirectory()).path;
                 File? f=await DefaultCacheManager().getSingleFile(url);
                 File file=File('$cache/tmp.png');

@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:sona/firebase/sona_firebase.dart';
+import 'package:sona/utils/global/global.dart';
 
 import 'app.dart';
 import 'core/match/util/iap_helper.dart';
@@ -49,6 +50,7 @@ void main() async {
     initFireBaseService(firebase);
   }
   await global.init();
+  SonaAnalytics.init();
   // unawaited(_initAttribution());
   // 先放这，以后整理
   countryMapList = (jsonDecode(await rootBundle.loadString('assets/i18n/countries.json')) as List)

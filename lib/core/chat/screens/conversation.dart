@@ -8,6 +8,7 @@ import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/conversation.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
@@ -57,7 +58,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
             child: LikedMeListView(
               onShowAll: widget.onShowLikeMe,
               onTap: ([UserInfo? u]) {
-                if (ref.read(myProfileProvider)!.isMember) {
+                if (ref.read(myProfileProvider)?.memberType == MemberType.plus) {
                   if (u == null) {
                     // SonaAnalytics.log('chatlist_golikedme');
                     // Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
