@@ -13,7 +13,7 @@ import 'package:sona/core/chat/models/audio_message.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
 import 'package:sona/core/chat/widgets/message/time.dart';
-import 'package:sona/core/chat/widgets/message/typer.dart';
+import 'package:sona/core/chat/widgets/message/type_writer.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../../../generated/l10n.dart';
@@ -156,102 +156,39 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
                         );
                       }
                     ),
-                    if (text != null && text!.length > 1 && ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onLongPress: () async {
-                        final action = await showActionButtons(
-                            context: context,
-                            options: {
-                              S.of(context).buttonCopy: 'copy',
-                              if (widget.fromMe) S.of(context).buttonDelete: 'delete'
-                            }
-                        );
-                        if (action == 'copy') {
-                          Clipboard.setData(ClipboardData(text: text!));
-                          Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-                        } else if (action == 'delete') {
-                          widget.onDelete(widget.message);
-                        }
-                      },
-                      child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width * 0.64,
-                          ),
-                          // decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(20),
-                          //     color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
-                          // ),
-                          // foregroundDecoration: widget.fromMe ? null : BoxDecoration(
-                          //     border: Border.all(width: 2),
-                          //     borderRadius: BorderRadius.circular(20)
-                          // ),
-                          padding: EdgeInsets.all(12),
-                          // clipBehavior: Clip.antiAlias,
-                          child: StreamBuilder<Duration>(
-                            stream: ref.read(audioPlayerProvider(widget.otherSide.id)).onPositionChanged,
-                            builder: (context, snapshot) {
-                              if (!snapshot.hasData) return Container();
-                              return TypeWriter(
-                                message: widget.message,
-                                duration: snapshot.data!,
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                    height: 1.5,
-                                    fontFamilyFallback: [
-                                      if (Platform.isAndroid) 'Source Han Sans',
-                                      // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
-                                      // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
-                                    ],
-                                    locale: widget.myLocale
-                                )
-                              );
-                            }
-                          )
+                    if (ref.watch(playedAudioMessageUuidsProvider(widget.message.chatId)).contains(widget.message.uuid)) Container(
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.6
                       ),
-                    ),
-                    // SizedBox(height: 12),
-                    if (translatedText != null && translatedText!.isNotEmpty) GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        setState(() {
-                          _clicked = !_clicked;
-                        });
-                      },
-                      onLongPress: () async {
-                        final action = await showActionButtons(
-                            context: context,
-                            options: {
-                              S.of(context).buttonCopy: 'copy',
-                            }
-                        );
-                        if (action == 'copy') {
-                          Clipboard.setData(ClipboardData(text: translatedText!));
-                          Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-                        }
-                      },
-                      child: Container(
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.64,
-                        ),
-                        padding: EdgeInsets.all(12),
-                        alignment: widget.fromMe ? Alignment.centerRight : Alignment.centerLeft,
-                        child: Text(
-                          translatedText!,
-                          maxLines: _clicked ? null : 1,
-                          overflow: _clicked ? TextOverflow.clip : TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Color(0xFFB7B7B7),
-                              height: 1.5,
-                              fontFamilyFallback: [
-                                if (Platform.isAndroid) 'Source Han Sans',
-                                // if (Platform.isIOS && translatedText?.languageCode.startsWith('zh') == true) 'PingFang SC',
-                                // if (Platform.isIOS && translatedText?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
-                              ],
-                              locale: widget.otherLocale
-                          ),
-                        ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: widget.message.chatId == widget.message.receiver.id ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                        children: [
+                          if (widget.message.recognizedText != null) Text(widget.message.recognizedText!,
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                height: 1.5,
+                                fontFamilyFallback: [
+                                  if (Platform.isAndroid) 'Source Han Sans',
+                                  // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                                  // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                                ],
+                              )),
+                          if (widget.message.translatedText != null) Divider(),
+                          if (widget.message.translatedText != null) Text(widget.message.translatedText!,
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                height: 1.5,
+                                fontFamilyFallback: [
+                                  if (Platform.isAndroid) 'Source Han Sans',
+                                  // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                                  // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                                ],
+                              )),
+                        ],
                       ),
                     )
+                    else if (ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) TypeWriter(key: ValueKey(widget.message.translatedText), message: widget.message)
                   ],
                 ),
               ),

@@ -110,7 +110,7 @@ class MessageController {
       };
 
       if (result.success) {
-        SonaAnalytics.log(msg.content['needsTranslation'] ? 'chat_sona' : 'chat_manual');
+        // SonaAnalytics.log(msg.content['needsTranslation'] == true ? 'chat_sona' : 'chat_manual');
       } else {
         switch (result.error) {
           case MessageSendingError.maximumLimit:

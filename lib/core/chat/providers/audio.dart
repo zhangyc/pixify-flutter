@@ -3,14 +3,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
 
 final audioPlayerProvider = StateProvider.family<AudioPlayer, int>((ref, arg) {
-  print('player id: $arg');
   final player = AudioPlayer();
   player.onPlayerComplete.listen((event) {
+    ref.read(playedAudioMessageUuidsProvider(arg).notifier).update((state) => {
+      ...state,
+      ref.read(currentPlayingAudioMessageIdProvider)! // 当前播放的，播完后记下uuid
+    });
     ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
   });
-  // ref.onDispose(() {
-  //   if (player.playing) player.stop();
-  //   player.dispose();
-  // });
   return player;
 });
+
+final playedAudioMessageUuidsProvider = StateProvider.family<Set<String>, int>((ref, arg) => {});

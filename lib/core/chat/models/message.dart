@@ -12,6 +12,7 @@ import 'image_message.dart';
 
 class ImMessage {
   ImMessage({
+    required this.chatId,
     required this.id,
     required this.uuid,
     required this.sender,
@@ -20,6 +21,7 @@ class ImMessage {
     required this.content
   });
 
+  final int chatId;
   int? id;
   final String? uuid;
   final UserInfo sender;

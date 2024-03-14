@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sona/core/chat/models/message.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../common/models/user.dart';
 import 'package:sona/utils/uuid.dart' as u;
@@ -10,6 +11,7 @@ import 'package:sona/utils/uuid.dart' as u;
 
 class TextMessage extends ImMessage{
   TextMessage({
+    required super.chatId,
     required super.id,
     required super.uuid,
     required super.sender,
@@ -47,6 +49,7 @@ class TextMessage extends ImMessage{
       content['type'] = json['contentType'];
     }
     return TextMessage(
+      chatId: json['sendUserId'] == profile!.id ? json['receiveUserId'] : json['sendUserId'],
       id: json['id'],
       uuid: json['uuid'],
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
@@ -66,6 +69,7 @@ class TextMessage extends ImMessage{
     required UserInfo receiver,
   }) {
     return TextMessage(
+      chatId: receiver.id,
       id: null,
       uuid: u.uuid.v4(),
       sender: sender,

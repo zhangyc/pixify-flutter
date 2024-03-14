@@ -7,9 +7,12 @@ import 'package:sona/core/chat/models/message.dart';
 import '../../../common/models/user.dart';
 import 'package:sona/utils/uuid.dart' as u;
 
+import '../../../utils/global/global.dart';
+
 
 class AudioMessage extends ImMessage {
   AudioMessage({
+    required super.chatId,
     required super.id,
     required super.uuid,
     required super.sender,
@@ -47,6 +50,7 @@ class AudioMessage extends ImMessage {
     final duration = content['duration'];
 
     return AudioMessage(
+      chatId: json['sendUserId'] == profile!.id ? json['receiveUserId'] : json['sendUserId'],
       id: json['id'],
       uuid: json['uuid'],
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
@@ -69,6 +73,7 @@ class AudioMessage extends ImMessage {
     required UserInfo receiver,
   }) {
     return AudioMessage(
+      chatId: receiver.id,
       id: null,
       uuid: u.uuid.v4(),
       sender: sender,

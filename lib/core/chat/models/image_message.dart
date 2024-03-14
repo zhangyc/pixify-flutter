@@ -5,9 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:sona/core/chat/models/message.dart';
 
 import '../../../common/models/user.dart';
+import '../../../utils/global/global.dart';
+import 'package:sona/utils/uuid.dart' as u;
 
 class ImageMessage extends ImMessage{
   ImageMessage({
+    required super.chatId,
     required super.id,
     required super.uuid,
     required super.sender,
@@ -36,6 +39,7 @@ class ImageMessage extends ImMessage{
     content['type'] = json['contentType'];
 
     return ImageMessage(
+      chatId: json['sendUserId'] == profile!.id ? json['receiveUserId'] : json['sendUserId'],
       id: json['id'],
       uuid: json['uuid'],
       sender: UserInfo.fromJson({'id': json['sendUserId'], 'nickname': json['senderName']}),
@@ -45,6 +49,23 @@ class ImageMessage extends ImMessage{
       url: content['image'] ?? '',
       width: content['width'],
       height: content['height']
+    );
+  }
+
+  factory ImageMessage.fromContent({
+    required Map<String, dynamic> content,
+    required UserInfo sender,
+    required UserInfo receiver,
+  }) {
+    return ImageMessage(
+      chatId: receiver.id,
+      id: null,
+      uuid: u.uuid.v4(),
+      sender: sender,
+      receiver: receiver,
+      time: DateTime.now(),
+      content: content,
+      url: content['image']!,
     );
   }
 
