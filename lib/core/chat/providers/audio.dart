@@ -15,3 +15,11 @@ final audioPlayerProvider = StateProvider.family<AudioPlayer, int>((ref, arg) {
 });
 
 final playedAudioMessageUuidsProvider = StateProvider.family<Set<String>, int>((ref, arg) => {});
+
+final audioMessagePlaySpeedProvider = StateProvider.family<double, int>((ref, arg) {
+  var speed = 1.0;
+  ref.listenSelf((previous, next) {
+    ref.read(audioPlayerProvider(arg)).setPlaybackRate(next);
+  });
+  return speed;
+});
