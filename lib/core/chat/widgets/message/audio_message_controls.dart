@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/chat/models/audio_message.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/providers/audio.dart';
 
@@ -16,7 +17,7 @@ class AudioMessageControls extends ConsumerStatefulWidget {
     required this.duration,
   });
   final int chatId;
-  final ImMessage message;
+  final AudioMessage message;
   final bool fromMe;
   final File file;
   final Duration duration;
@@ -46,7 +47,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
       ),
       child: Row(
         children: [
-          if (player.state == PlayerState.playing) Icon(Icons.multitrack_audio_outlined, size: 24),
+          Icon(Icons.multitrack_audio_outlined, size: 24),
           SizedBox(width: 12),
           Text('${widget.duration.inSeconds.toString()}s'),
           Expanded(child: Container()),
@@ -72,12 +73,15 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
               }
           ),
           if (!isCurrent) IconButton(
-              iconSize: 24,
-              onPressed: () async {
-                ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => widget.message.uuid);
-                player.play(DeviceFileSource(widget.file.path));
-              },
-              icon: Icon(Icons.play_arrow)
+            iconSize: 24,
+            onPressed: () async {
+              ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => widget.message.uuid);
+              player.play(DeviceFileSource(widget.file.path), position: Duration(milliseconds: 0));
+              // player.onPositionChanged.listen((event) {
+              //   print('posi changed: $event');
+              // });
+            },
+            icon: Icon(Icons.play_arrow)
           )
         ],
       ),

@@ -89,4 +89,12 @@ class AudioMessage extends ImMessage {
     'url': url,
     'duration': duration,
   };
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || (other is AudioMessage && other.uuid == uuid);
+  }
+
+  @override
+  int get hashCode => super.hashCode;
 }

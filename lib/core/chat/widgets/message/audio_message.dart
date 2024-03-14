@@ -17,6 +17,7 @@ import 'package:sona/core/chat/widgets/message/typer.dart';
 import 'package:sona/utils/dialog/input.dart';
 
 import '../../../../generated/l10n.dart';
+import '../../providers/audio.dart';
 
 class AudioMessageWidget extends ConsumerStatefulWidget {
   const AudioMessageWidget({
@@ -136,7 +137,11 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
                         }
                         if (snapshot.hasData) {
                           localPath = snapshot.data!.path;
-                          widget.message.content['localExtension'] = {'path': localPath};
+                          if (widget.message.content['localExtension'] == null) {
+                            widget.message.content['localExtension'] = {'path': localPath};
+                          } else {
+                            widget.message.content['localExtension']['path'] = localPath;
+                          }
                           return AudioMessageControls(
                             chatId: widget.otherSide.id,
                             message: widget.message,
@@ -151,7 +156,7 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
                         );
                       }
                     ),
-                    if (text != null && text!.isNotEmpty) GestureDetector(
+                    if (text != null && text!.length > 1 && ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onLongPress: () async {
                         final action = await showActionButtons(
@@ -172,28 +177,35 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
                           constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width * 0.64,
                           ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
-                          ),
-                          foregroundDecoration: widget.fromMe ? null : BoxDecoration(
-                              border: Border.all(width: 2),
-                              borderRadius: BorderRadius.circular(20)
-                          ),
+                          // decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(20),
+                          //     color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
+                          // ),
+                          // foregroundDecoration: widget.fromMe ? null : BoxDecoration(
+                          //     border: Border.all(width: 2),
+                          //     borderRadius: BorderRadius.circular(20)
+                          // ),
                           padding: EdgeInsets.all(12),
-                          clipBehavior: Clip.antiAlias,
-                          child: TypeWriter(
-                              message: widget.message,
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
-                                  height: 1.5,
-                                  fontFamilyFallback: [
-                                    if (Platform.isAndroid) 'Source Han Sans',
-                                    // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
-                                    // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
-                                  ],
-                                  locale: widget.myLocale
-                              )
+                          // clipBehavior: Clip.antiAlias,
+                          child: StreamBuilder<Duration>(
+                            stream: ref.read(audioPlayerProvider(widget.otherSide.id)).onPositionChanged,
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) return Container();
+                              return TypeWriter(
+                                message: widget.message,
+                                duration: snapshot.data!,
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                    height: 1.5,
+                                    fontFamilyFallback: [
+                                      if (Platform.isAndroid) 'Source Han Sans',
+                                      // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                                      // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                                    ],
+                                    locale: widget.myLocale
+                                )
+                              );
+                            }
                           )
                       ),
                     ),

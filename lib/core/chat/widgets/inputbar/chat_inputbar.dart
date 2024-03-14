@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
@@ -54,7 +56,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     bitRate: 64000,
     sampleRate: 8000,
     numChannels: 1,
-    noiseSuppress: true
   );
 
   @override
@@ -238,22 +239,27 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                 child: GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onLongPressStart: (_) async {
-                    _stopwatch.reset();
-                    _stopwatch.start();
-                    _timer = Timer(const Duration(seconds: 60), () async {
-                      _stopwatch.stop();
-                      final _voicePath = await recorder.stop();
-                      if (_voicePath == null) return;
-                      widget.onSendMessage({
-                        'type': ImMessageContentType.audio,
-                        'duration': 60.0,
-                        'localExtension': {
-                          'path': _voicePath,
-                        }
+                    if (await Permission.microphone.request().isGranted) {
+                      _stopwatch.reset();
+                      _stopwatch.start();
+                      _timer = Timer(const Duration(seconds: 60), () async {
+                        _stopwatch.stop();
+                        final _voicePath = await recorder.stop();
+                        if (_voicePath == null) return;
+                        widget.onSendMessage({
+                          'type': ImMessageContentType.audio,
+                          'duration': 60.0,
+                          'localExtension': {
+                            'path': _voicePath,
+                          }
+                        });
+                        _voiceEntry?.remove();
                       });
-                      _voiceEntry?.remove();
-                    });
-                    recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
+                      recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
+                    } else {
+                      Fluttertoast.showToast(msg: 'Permission is required!');
+                      return;
+                    }
                     _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
                     Overlay.of(context).insert(_voiceEntry!);
                   },
