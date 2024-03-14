@@ -13,6 +13,7 @@ import '../../../account/providers/profile.dart';
 import '../../../common/services/common.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
+import '../../../utils/uuid.dart';
 import '../../widgets/generate_banner.dart';
 import '../providers/duo_provider.dart';
 import '../util/event.dart';
@@ -67,7 +68,7 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
             ),
           );
           final result = await ImageMerger.mergeToMemory(option: option);
-          final s =await uploadFile(bytes: result!);
+          final s =await uploadImage(bytes: result!);
           final response=await post('/merge-photo/create',data: {
             // 原图URL
             "photoUrl":s,

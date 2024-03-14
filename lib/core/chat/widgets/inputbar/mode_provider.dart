@@ -16,13 +16,6 @@ final inputModeProvider = StateProvider.family<InputMode, int>((ref, arg) {
   return enabled ? InputMode.sona : InputMode.manual;
 }, dependencies: [conversationStreamProvider]);
 
-final chatStylesVisibleProvider = StateProvider.family.autoDispose<bool, int>((ref, arg) {
-  if (ref.watch(inputModeProvider(arg)) == InputMode.manual) {
-    return false;
-  }
-  return false;
-}, dependencies: [inputModeProvider]);
-
 final inputMethodProvider = StateProvider.family<InputMethod, int>((ref, arg) {
   return InputMethod.keyboard;
 });

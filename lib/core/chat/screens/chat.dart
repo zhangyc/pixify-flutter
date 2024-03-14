@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,7 +23,6 @@ import 'package:sona/core/chat/widgets/tips_dialog.dart';
 import 'package:sona/core/match/providers/match_info.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
-import 'package:sona/core/widgets/generate_banner.dart';
 import 'package:sona/utils/dialog/common.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
@@ -135,62 +135,57 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         //     statusBarIconBrightness: Brightness.dark
         // )
       ),
-      body: Stack(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: (){
-              FocusManager.instance.primaryFocus?.unfocus();
-              tapBlank.value=uuid.v1();
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/chat_bg.png'),
-                  fit: BoxFit.cover
-                ),
-              ),
-              child: Container(
-                alignment: Alignment.topCenter,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
-                  reverse: true,
-                  itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
-                  itemCount: messages.length + 1,
-                  separatorBuilder: (_, __) => SizedBox(height: 5),
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/chat_bg.png'),
+            fit: BoxFit.cover
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(left: 2, right: 2, bottom: 32),
+                    reverse: true,
+                    itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
+                    itemCount: messages.length + 1,
+                    separatorBuilder: (_, __) => SizedBox(height: 5),
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(child: GenerateBanner(),)
-        ],
-      ),
-      floatingActionButton: Container(
-        padding: const EdgeInsets.only(
-          left: 8,
-          top: 8,
-          right: 8,
-          bottom: 8
-        ),
-        color: Colors.white,
-        child: ref.watch(entitlementsProvider).interpretation > 0 || ref.watch(inputModeProvider(widget.otherSide.id)) == InputMode.manual ? ChatInstructionInput(
-          chatId: widget.otherSide.id,
-          sameLanguage: myLocale == otherLocale,
-          onSendMessage: _sendMessage,
-        ) : Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: OutlinedButton(
-              onPressed: () => showSubscription(FromTag.pay_chat_sonamsg),
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06))
-              ),
-              child: Text(S.of(context).buttonHitAIInterpretationMaximumLimit)
-          ),
+            Container(
+              color: Colors.white,
+              child: ref.watch(entitlementsProvider).interpretation > 0 || ref.watch(inputModeProvider(widget.otherSide.id)) == InputMode.manual ? ChatInstructionInput(
+                chatId: widget.otherSide.id,
+                otherInfo: widget.otherSide,
+                sameLanguage: myLocale == otherLocale,
+                onSendMessage: _sendMessage,
+              ) : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton(
+                    onPressed: () => showSubscription(FromTag.pay_chat_sonamsg),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06))
+                    ),
+                    child: Text(S.of(context).buttonHitAIInterpretationMaximumLimit)
+                ),
+              )
+            )
+          ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -254,38 +249,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
   }
 
-  Future _onSend(String? text) async {
-    if (text == null || text.trim().isEmpty) return;
-
-    final mode = ref.read(inputModeProvider(widget.otherSide.id));
-    final message = ImMessage(
-      id: null,
-      uuid: uuid.v4(),
-      type: mode == InputMode.sona ? CallSonaType.INPUT.index + 1 : ImMessageType.manual.index,
-      originalContent: text,
-      translatedContent: null,
-      sender: mySide,
-      receiver: widget.otherSide,
-      time: DateTime.now(),
-      contentType: 1,
-      content: text
-    );
-    message.sendingParams = MessageSendingParams(
-        uuid: message.uuid!,
-        userId: widget.otherSide.id,
-        mode: mode,
-        content: text,
-        dateTime: message.time
-    ).toJsonString();
-
-    ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
+  Future _sendMessage(Map<String, dynamic> content) async {
+    return _messageController.send(content);
   }
 
   Future _resendMessage(ImMessage message) {
-    ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
-    return _onSend(message.originalContent);
+    return _messageController.resend(message);
   }
-
 
   Future _deleteMessage(ImMessage message) {
     return deleteMessage(

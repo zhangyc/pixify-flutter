@@ -1,26 +1,38 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:sona/account/providers/profile.dart';
-import 'package:sona/common/env.dart';
-import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/models/text_message.dart';
 import 'package:sona/core/chat/widgets/voice_message_recorder.dart';
 import 'package:sona/utils/global/global.dart';
 
+import '../../../../common/models/user.dart';
+import '../../../../common/permission/permission.dart';
+import '../../../../generated/assets.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../utils/dialog/common.dart';
+import '../../../../utils/face_detection/detection.dart';
 import '../../../../utils/locale/locale.dart';
+import '../../../match/bean/match_user.dart';
+import '../../../match/util/event.dart';
+import '../../../match/util/http_util.dart';
+import '../../../match/util/image_util.dart';
+import '../../../match/widgets/dialogs.dart';
+import '../../../subscribe/model/member.dart';
+import '../../../subscribe/subscribe_page.dart';
+import '../../../widgets/not_meet_conditions.dart';
+import '../../../widgets/other_not_meet_conditions.dart';
 import '../tips_dialog.dart';
 import 'mode_provider.dart';
 
@@ -28,11 +40,13 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   const ChatInstructionInput({
     Key? key,
     required this.chatId,
+    required this.otherInfo,
     required this.sameLanguage,
     required this.onSendMessage
   }) : super(key: key);
 
   final int chatId;
+  final UserInfo otherInfo;
   final bool sameLanguage;
   final Future Function(Map<String, dynamic>) onSendMessage;
 
@@ -40,14 +54,13 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatInstructionInputState();
 }
 
-class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware {
+class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
-  final _sonaKey = GlobalKey();
-  final _suggKey = GlobalKey();
   OverlayEntry? _voiceEntry;
   final _stopwatch = Stopwatch();
   Timer? _timer;
+  bool detecting = false;
 
   static const enterTimesKey = 'enter_times';
   static final recorder = AudioRecorder();
@@ -61,69 +74,19 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
   @override
   void initState() {
     _controller = TextEditingController()..addListener(_onInputChange);
-    _focusNode = FocusNode()..addListener(_focusChangeListener);
+    _focusNode = FocusNode()..addListener(_focusListener);
     super.initState();
     kvStore.setInt(enterTimesKey, (kvStore.getInt(enterTimesKey) ?? 0) + 1);
-    //_addOverlay();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
   @override
   void dispose() {
     _stopwatch.stop();
     _timer?.cancel();
-    routeObserver.unsubscribe(this);
     _controller
       ..removeListener(_onInputChange)
       ..dispose();
-    _focusNode
-      ..removeListener(_focusChangeListener)
-      ..unfocus();
     super.dispose();
-  }
-
-  @override
-  void didPop() {
-    _removeOverlay();
-    super.didPopNext();
-  }
-
-  @override
-  void didPushNext() {
-    _removeOverlay();
-    super.didPushNext();
-  }
-
-  void _addOverlay() {
-    final enterTimes = kvStore.getInt(enterTimesKey);
-    if (enterTimes == 1) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        _showSonaIndicator();
-      });
-    } else if (enterTimes == 2) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        _showSuggIndicator();
-      });
-    }
-  }
-
-  void _removeOverlay() {
-    _sonaIndicatorEntry?.remove();
-    _sonaIndicatorEntry = null;
-    _suggIndicatorEntry?.remove();
-    _suggIndicatorEntry = null;
-  }
-
-  void _focusChangeListener() {
-    if (_focusNode.hasFocus) {
-      _removeOverlay();
-      ref.read(chatStylesVisibleProvider(widget.chatId).notifier).update((state) => false);
-    }
   }
 
   void _onInputChange() {
@@ -132,6 +95,16 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
       ref.read(sonaInputProvider(widget.chatId).notifier).update((state) => _controller.text);
     } else {
       ref.read(manualInputProvider(widget.chatId).notifier).update((state) => _controller.text);
+    }
+  }
+
+  void _focusListener() {
+    if (_focusNode.hasFocus) {
+      ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => true);
+      Future.delayed(const Duration(milliseconds: 500),
+          () => ref.read(softKeyboardHeightProvider.notifier)
+              .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom - MediaQuery.of(context).padding.bottom))
+      );
     }
   }
 
@@ -152,30 +125,38 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          // height: _height,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: _onTipsTap,
+                onTap: () {
+                  ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) {
+                    if (!state) {
+                      // _focusNode.requestFocus();
+                    } else {
+                      _focusNode.unfocus();
+                    }
+                    return !state;
+                  });
+                },
                 child: Container(
-                  key: _sonaKey,
-                  // width: 24,
-                  // height: 24,
-                  margin: EdgeInsets.only(top: 18, bottom: 18, right: 8),
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  width: 54,
+                  height: 54,
+                  margin: EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    border: Border(right: BorderSide(color: Color(0xFFE8E6E6), width: 1))
+                    border: Border.all(width: 1.5, color: Theme.of(context).primaryColor),
+                    borderRadius: BorderRadius.circular(12)
                   ),
                   clipBehavior: Clip.antiAlias,
                   alignment: Alignment.center,
-                  child: SonaIcon(
-                    icon: SonaIcons.sona_message,
+                  child: ref.read(keyboardExtensionVisibilityProvider) ? SonaIcon(
+                    icon: SonaIcons.close,
                     size: 24,
-                  )
+                  ) : Icon(Icons.add, size: 24)
                 )
               ),
-              if (ref.watch(inputMethodProvider(widget.chatId)) == InputMethod.keyboard) Expanded(
+              SizedBox(width: 4),
+              Expanded(
                 child: Container(
                   // width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
                   decoration: BoxDecoration(
@@ -183,9 +164,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   ),
                   padding: EdgeInsets.symmetric(vertical: 1.5),
                   child: TextField(
-                    onTapOutside: (cv){
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
                     controller: _controller,
                     focusNode: _focusNode,
                     textAlign: TextAlign.left,
@@ -201,6 +179,9 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                       fontSize: 14,
                       locale: myLocale
                     ),
+                    onTapOutside: (_) {
+                      if (_focusNode.hasFocus) _focusNode.unfocus();
+                    },
                     autocorrect: true,
                     cursorWidth: 1.8,
                     decoration: InputDecoration(
@@ -234,65 +215,10 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     autofocus: false,
                   ),
                 ),
-              )
-              else Expanded(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onLongPressStart: (_) async {
-                    if (await Permission.microphone.request().isGranted) {
-                      _stopwatch.reset();
-                      _stopwatch.start();
-                      _timer = Timer(const Duration(seconds: 60), () async {
-                        _stopwatch.stop();
-                        final _voicePath = await recorder.stop();
-                        if (_voicePath == null) return;
-                        widget.onSendMessage({
-                          'type': ImMessageContentType.audio,
-                          'duration': 60.0,
-                          'localExtension': {
-                            'path': _voicePath,
-                          }
-                        });
-                        _voiceEntry?.remove();
-                      });
-                      recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
-                    } else {
-                      Fluttertoast.showToast(msg: 'Permission is required!');
-                      return;
-                    }
-                    _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
-                    Overlay.of(context).insert(_voiceEntry!);
-                  },
-                  onLongPressEnd: (_) async {
-                    _voiceEntry?.remove();
-                    _stopwatch.stop();
-                    _timer?.cancel();
-                    if (_stopwatch.elapsedMilliseconds < 500) return;
-                    final _voicePath = await recorder.stop();
-                    if (_voicePath == null) return;
-                    widget.onSendMessage({
-                      'type': ImMessageContentType.audio,
-                      'duration': _stopwatch.elapsedMilliseconds / 1000.0,
-                      'localExtension': {
-                        'path': _voicePath,
-                      }
-                    });
-                  },
-                  child: Container(
-                    height: 56,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(width: 1.5)
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 1.5),
-                    alignment: Alignment.center,
-                    child: Text('Hold to speak', style: Theme.of(context).textTheme.titleMedium),
-                  ),
-                )
               ),
               SizedBox(width: 4),
               if (ref.watch(currentInputEmptyProvider(widget.chatId))) Container(
-                width: 56,
+                width: 76,
                 height: 56,
                 margin: EdgeInsets.all(1),
                 padding: EdgeInsets.all(14),
@@ -301,16 +227,51 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   borderRadius: BorderRadius.circular(20)
                 ),
                 child: GestureDetector(
-                    onTap: () {
-                      ref.watch(inputMethodProvider(widget.chatId).notifier)
-                        .update((state) => state == InputMethod.voice
-                          ? InputMethod.keyboard
-                          : InputMethod.voice);
+                    onLongPressStart: (_) async {
+                      if (await Permission.microphone.request().isGranted) {
+                        _stopwatch.reset();
+                        _stopwatch.start();
+                        _timer = Timer(const Duration(seconds: 60), () async {
+                          _stopwatch.stop();
+                          final _voicePath = await recorder.stop();
+                          if (_voicePath == null) return;
+                          widget.onSendMessage({
+                            'type': ImMessageContentType.audio,
+                            'duration': 60.0,
+                            'localExtension': {
+                              'path': _voicePath,
+                            }
+                          });
+                          _voiceEntry?.remove();
+                        });
+                        recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
+                      } else {
+                        Fluttertoast.showToast(msg: 'Permission is required!');
+                        return;
+                      }
+                      _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
+                      Overlay.of(context).insert(_voiceEntry!);
                     },
-                    child: Icon(ref.read(inputMethodProvider(widget.chatId)) == InputMethod.keyboard ? Icons.keyboard_voice : Icons.keyboard_alt, size: 28, color: Colors.white)
+                    onLongPressEnd: (_) async {
+                      _voiceEntry?.remove();
+                      _stopwatch.stop();
+                      _timer?.cancel();
+                      if (_stopwatch.elapsedMilliseconds < 500) return;
+                      final _voicePath = await recorder.stop();
+                      if (_voicePath == null) return;
+                      widget.onSendMessage({
+                        'type': ImMessageContentType.audio,
+                        'duration': _stopwatch.elapsedMilliseconds / 1000.0,
+                        'localExtension': {
+                          'path': _voicePath,
+                        }
+                      });
+                    },
+                    child: Icon(Icons.keyboard_voice, size: 28, color: Colors.white)
                 ),
               )
               else Container(
+                width: 76,
                 margin: EdgeInsets.all(1),
                 child: IconButton(
                   iconSize: 56,
@@ -327,7 +288,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                         Theme.of(context).primaryColor
                     ),
                     shape: MaterialStatePropertyAll(
-                      ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))
+                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
                     )
                   ),
                   icon: SonaIcon(icon: SonaIcons.chat_send, size: 28)
@@ -336,60 +297,226 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
             ],
           ),
         ),
+        AnimatedContainer(
+          duration: Duration(milliseconds: 250),
+          curve: Curves.ease,
+          height: ref.watch(keyboardExtensionVisibilityProvider) ? ref.watch(softKeyboardHeightProvider) : 0,
+          child: Container(
+            child: Padding(padding: EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: _onTipsTap,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xffF6F3F3),
+                            borderRadius: BorderRadius.circular(24)
+                        ),
+                        height: 242,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(Assets.iconsSonaMessage,height: 48,width: 48,),
+                            Text('Give me advice',style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff2c2c2c),
+                                fontWeight: FontWeight.w900
+                            ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(child: GestureDetector(
+                      child: detecting?Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Color(0xffF6F3F3),
+                              borderRadius: BorderRadius.circular(24)
+                          ),
+                          height: 242,
+                          child: SizedBox(
+                            height: 32,
+                            width: 32,
+                            child: CircularProgressIndicator(),
+                          )
+                      ):Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xffF6F3F3),
+                            borderRadius: BorderRadius.circular(24)
+                        ),
+                        height: 242,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(Assets.svgChatDuosnap,height: 48,width: 48,),
+                            Text(S.current.duoSnap,style: const TextStyle(
+                                color: Color(0xff2c2c2c),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w900
+                            ),)
+                          ],
+                        ),
+                      ),
+                      onTap: ()async{
+                        if (!canDuoSnap){
+                          duosnap -=1 ;
+                          switch(ref.read(myProfileProvider)!.memberType) {
+                            case MemberType.none:
+                              SonaAnalytics.log(
+                                  DuoSnapEvent.Duo_click_pay.name);
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (c) {
+                                return const SubscribePage(
+                                  fromTag: FromTag.duo_snap,);
+                              }));
+                              break;
+                            case MemberType.club:
+                              SonaAnalytics.log(
+                                  DuoSnapEvent.plus_duo_limit.name);
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (c) {
+                                return const SubscribePage(
+                                  fromTag: FromTag.pay_match_arrow,);
+                              }));
+                              break;
+                            case MemberType.plus:
+                              SonaAnalytics.log(
+                                  DuoSnapEvent.club_clickduo_payplus.name);
+                              Fluttertoast.showToast(
+                                  msg: S.current.weeklyLimitReached);
+                              break;
+                          }
+                          return;
+                        }
+                        try {
+                          detecting = true;
+                          HttpResult result = await post('/merge-photo/find-last');
+                          if (result.statusCode.toString() == '60010') {
+                            if (mounted) setState(() {});
+                            final file=await DefaultCacheManager().downloadFile(ref.read(myProfileProvider)!.photos.first.url);
+                            final file2=await DefaultCacheManager().downloadFile(widget.otherInfo.avatar??'');
+
+                            bool isHumanFace1 = await faceDetection(file.file.path);
+                            bool isHumanFace2 = await faceDetection(file2.file.path);
+                            detecting = false;
+                            if (mounted) setState(() {});
+                            if (isHumanFace1 && isHumanFace2) {
+                              final sdModel=await showDuoSnapDialog(context, target:MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
+                            } else if (!isHumanFace1&&isHumanFace2) {
+                              SonaAnalytics.log(DuoSnapEvent.notreal_self.name);
+                              if (!mounted) return;
+                              showDuoSnapTip(context, child: NotMeetConditions(
+                                close: (){
+                                  Navigator.pop(context);
+                                },
+                                camera: () async {
+                                  setUserAvatarPhoto(ImageSource.camera, ref);
+                                  if(mounted){
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                gallery: () async {
+                                  setUserAvatarPhoto(ImageSource.gallery, ref);
+                                  if(mounted){
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                anyway: () async{
+                                  if (mounted) {
+                                    Navigator.pop(context);
+                                  }
+                                  final sdModel = await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
+                                },
+                              ),
+                              dialogHeight: 361
+                              );
+                            } else if (isHumanFace1 && !isHumanFace2){
+                              SonaAnalytics.log(DuoSnapEvent.notreal_other.name);
+                              showDuoSnapTip(context, child: OtherNotMeetConditions(
+                                close: (){
+                                  Navigator.pop(context);
+                                },
+                                gotit: (){
+                                  Navigator.pop(context);
+                                },
+                                sendDM: (){
+                                  Future.delayed(Duration(milliseconds: 200),(){
+                                    if (canArrow){
+                                      showDm(context, MatchUserInfo.fromUserInfoInstance(widget.otherInfo),(){});
+                                    }else {
+                                      bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                                      if(isMember){
+                                        Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                                      }else{
+                                        Navigator.push(context, MaterialPageRoute(builder:(c){
+                                          return SubscribePage(fromTag: FromTag.duo_snap,);
+                                        }));
+                                      }
+                                    }
+                                  });
+                                  if(mounted){
+                                    Navigator.pop(context);
+                                  }
+                                }, anyway: () async{
+                                Navigator.pop(context);
+                                final sdModel=await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
+                              },
+
+                              ),
+                              dialogHeight: 390
+                              );
+                            } else if (!isHumanFace1&&!isHumanFace2){
+                              showDuoSnapTip(context, child: NotMeetConditions(
+                                close: () {
+                                  Navigator.pop(context);
+                                },
+                                camera: () async {
+                                  setUserAvatarPhoto(ImageSource.camera, ref);
+                                  if(mounted){
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                gallery: () async {
+                                  setUserAvatarPhoto(ImageSource.gallery, ref);
+                                  if(mounted){
+                                    Navigator.pop(context);
+                                  }
+                                }, anyway: ()async{
+                                if(mounted){
+                                  Navigator.pop(context);
+                                }
+                                final sdModel=await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
+                              },
+                              ), dialogHeight: 361);
+                            }
+
+                          } else {
+                            Fluttertoast.showToast(msg: S.current.onlyOneAtatime);
+                            setState(() {
+                              detecting = false;
+                            });
+                          }
+                        } catch(e) {
+                          detecting = false;
+                          setState(() {
+                          });
+                        }
+                      }
+
+                  ))
+                ],
+              ),
+            ),
+          ),
+        )
       ],
     );
-  }
-
-  OverlayEntry? _sonaIndicatorEntry;
-  void _showSonaIndicator() {
-    final renderBox = _sonaKey.currentContext!.findRenderObject() as RenderBox?;
-    Offset offset = renderBox!.localToGlobal(Offset.zero);
-    _sonaIndicatorEntry = OverlayEntry(builder: (_) => Positioned(
-      top: offset.dy - 46,
-      left: 16,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Sona Mode: Sona will spice up your messages!',
-            style: TextStyle(fontSize: 10, color: Theme.of(context).primaryColor),
-          ),
-          SizedBox(height: 6),
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Image.asset('assets/images/magic_indicator.png', height: 30),
-          ),
-        ],
-      )
-    ));
-    Overlay.of(context).insert(_sonaIndicatorEntry!);
-  }
-
-  OverlayEntry? _suggIndicatorEntry;
-  void _showSuggIndicator() {
-    final renderBox = _suggKey.currentContext!.findRenderObject() as RenderBox?;
-    Offset offset = renderBox!.localToGlobal(Offset.zero);
-    _suggIndicatorEntry = OverlayEntry(builder: (_) => Positioned(
-        top: offset.dy - 54,
-        right: 28,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              'Get stuck? Sona got some good ideas!',
-              style: TextStyle(fontSize: 10, color: Theme.of(context).primaryColor),
-            ),
-            SizedBox(height: 6),
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Image.asset('assets/images/magic_indicator.png', height: 30),
-            ),
-          ],
-        )
-    ));
-    Overlay.of(context).insert(_suggIndicatorEntry!);
   }
 
   Future _onTipsTap() async {
@@ -402,31 +529,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     );
     SonaAnalytics.log('chat_suggest');
   }
-
-  void _toggleMode() {
-    ref.read(inputModeProvider(widget.chatId).notifier).update((state) {
-      var newMode = state == InputMode.sona ? InputMode.manual : InputMode.sona;
-      _controller.clear();
-      FirebaseFirestore.instance.collection('${env.firestorePrefix}_users')
-          .doc(ref.read(myProfileProvider)!.id.toString())
-          .collection('rooms').doc(widget.chatId.toString())
-          .set({'inputMode': newMode})
-          .catchError((_) {});
-      return newMode;
-    });
-    _sonaIndicatorEntry?.remove();
-    _sonaIndicatorEntry = null;
-  }
-
-  void _toggleChatStyles() {
-    ref.read(chatStylesVisibleProvider(widget.chatId).notifier).update((state) {
-      if (!state) {
-        _focusNode.unfocus();
-      } else {
-        _focusNode.requestFocus();
-      }
-      return !state;
-    });
-    SonaAnalytics.log('chat_style');
-  }
 }
+
+final keyboardExtensionVisibilityProvider = StateProvider<bool>((ref) => false);

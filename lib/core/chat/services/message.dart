@@ -50,7 +50,7 @@ class MessageController {
         throw();
     }
     ref.read(localMessagesProvider(chatId).notifier).update((state) {
-      return [...state, message];
+      return [message, ...state];
     });
     final result = await _send(message);
     ref.read(localMessagesProvider(chatId).notifier).update((state) {
