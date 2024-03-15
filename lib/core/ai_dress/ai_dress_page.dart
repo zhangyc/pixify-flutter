@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/ai_dress/bean/sd_template.dart';
 import 'package:sona/core/ai_dress/data/template_provider.dart';
@@ -9,7 +10,14 @@ import 'package:sona/core/ai_dress/dislogs.dart';
 import 'package:sona/core/ai_dress/records_page.dart';
 import 'package:sona/core/match/util/http_util.dart';
 
+import '../../account/providers/profile.dart';
+import '../../common/permission/permission.dart';
 import '../../generated/l10n.dart';
+import '../../utils/global/global.dart';
+import '../match/util/event.dart';
+import '../subscribe/model/member.dart';
+import '../subscribe/subscribe_page.dart';
+import 'ai_dress_event.dart';
 
 class AiDressPage extends StatefulWidget {
   const AiDressPage({super.key});
@@ -56,6 +64,9 @@ class _AiDressPageState extends State<AiDressPage> {
                   child: currentTap==0?SelectedButton(text: S.current.soloLabel):IdleButton(text:  S.current.soloLabel),
                   onTap: (){
                     currentTap=0;
+                    SonaAnalytics.log(AiDressEvent.Dress_duo_tab.name,{
+                      'item_int_id':0
+                    });
                     pageController.jumpToPage(0);
                     setState(() {
 
@@ -69,6 +80,9 @@ class _AiDressPageState extends State<AiDressPage> {
                   child: currentTap==1?SelectedButton(text: S.current.duoSnap):IdleButton(text: S.current.duoSnap),
                   onTap: (){
                     currentTap=1;
+                    SonaAnalytics.log(AiDressEvent.Dress_duo_tab.name,{
+                      'item_int_id':1
+                    });
                     pageController.jumpToPage(1);
                     setState(() {
 
@@ -121,9 +135,30 @@ class _AiDressPageState extends State<AiDressPage> {
                                 clipBehavior: Clip.antiAlias,
                               ),
                               onTap: () async{
+                                if(!canDuoSnap){
+                                  duosnap-=1;
+                                  if(ref.read(myProfileProvider)!.memberType==MemberType.none){
+                                    Navigator.push(context, MaterialPageRoute(builder:(c){
+                                      return const SubscribePage(fromTag: FromTag.duo_snap,);
+                                    }));
+                                  }else if(ref.read(myProfileProvider)!.memberType==MemberType.club){
+                                    SonaAnalytics.log(AiDressEvent.Dress_gopay.name);
+
+                                    Navigator.push(context, MaterialPageRoute(builder:(c){
+                                      return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                                    }));
+                                  }else if(ref.read(myProfileProvider)!.memberType==MemberType.plus){
+                                    SonaAnalytics.log(AiDressEvent.Dress_gopay.name);
+
+                                    Fluttertoast.showToast(msg: S.current.weeklyLimitReached);
+                                  }
+                                  return;
+                                }
+                                 SonaAnalytics.log(AiDressEvent.Dress_solo_model.name);
 
                                  Uint8List? p=await showSelectPhoto(context,template);
-                                 if(p!=null){
+                                SonaAnalytics.log(AiDressEvent.Dress_solo_upphoto.name);
+                                if(p!=null){
                                    Navigator.pop(context);
                                    showYourPortrait(context, p, template);
                                  }
@@ -174,6 +209,27 @@ class _AiDressPageState extends State<AiDressPage> {
                                 clipBehavior: Clip.antiAlias,
                               ),
                               onTap: (){
+                                if(!canDuoSnap){
+                                  duosnap-=1;
+                                  if(ref.read(myProfileProvider)!.memberType==MemberType.none){
+                                    Navigator.push(context, MaterialPageRoute(builder:(c){
+                                      return const SubscribePage(fromTag: FromTag.duo_snap,);
+                                    }));
+                                  }else if(ref.read(myProfileProvider)!.memberType==MemberType.club){
+                                    SonaAnalytics.log(AiDressEvent.Dress_gopay.name);
+
+                                    Navigator.push(context, MaterialPageRoute(builder:(c){
+                                      return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
+                                    }));
+                                  }else if(ref.read(myProfileProvider)!.memberType==MemberType.plus){
+                                    SonaAnalytics.log(AiDressEvent.Dress_gopay.name);
+
+                                    Fluttertoast.showToast(msg: S.current.weeklyLimitReached);
+                                  }
+                                  return;
+                                }
+                                SonaAnalytics.log(AiDressEvent.Dress_duo_model.name);
+
                                 Navigator.pop(context);
 
                                 showDuoSnapSelectPhoto(context,template);

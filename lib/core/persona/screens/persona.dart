@@ -12,6 +12,7 @@ import 'package:sona/account/screens/profile.dart';
 import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
+import 'package:sona/core/ai_dress/ai_dress_event.dart';
 import 'package:sona/core/ai_dress/ai_dress_page.dart';
 import 'package:sona/core/persona/providers/profile_progress.dart';
 import 'package:sona/core/persona/widgets/profile_progress_indicator.dart';
@@ -22,6 +23,7 @@ import 'package:sona/core/widgets/generate_banner.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
@@ -347,6 +349,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                             ),
                             FilledButton(
                                 onPressed: () {
+                                  SonaAnalytics.log(AiDressEvent.Me_AIdress.name);
                                   Navigator.push(context, MaterialPageRoute(builder: (b){
                                     return AiDressPage();
                                   }));

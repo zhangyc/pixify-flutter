@@ -19,6 +19,7 @@ import '../../account/providers/profile.dart';
 import '../../generated/assets.dart';
 import '../../generated/l10n.dart';
 import '../../utils/global/global.dart';
+import '../ai_dress/ai_dress_event.dart';
 import '../match/util/event.dart';
 import '../match/widgets/small_duo.dart';
 
@@ -119,7 +120,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-           duoSnapTask.scene==GenerateType.profile.name?Container():SmallDuoSnap(task: duoSnapTask),
+           (duoSnapTask.scene==GenerateType.profile_one.name||duoSnapTask.scene==GenerateType.profile_two.name)?Container():SmallDuoSnap(task: duoSnapTask),
            SizedBox(
              width: 10,
            ),
@@ -142,7 +143,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-           duoSnapTask.scene==GenerateType.profile.name?Container():SmallDuoSnap(task: duoSnapTask),
+           (duoSnapTask.scene==GenerateType.profile_one.name||duoSnapTask.scene==GenerateType.profile_two.name)?Container():SmallDuoSnap(task: duoSnapTask),
            SizedBox(
              width: 10,
            ),
@@ -168,7 +169,14 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
         post('/merge-photo/over',data: {
           "id": duoSnapTask.id
         });
-        if(duoSnapTask.scene==GenerateType.profile.name){
+        if((duoSnapTask.scene==GenerateType.profile_one.name||duoSnapTask.scene==GenerateType.profile_two.name)){
+          if(duoSnapTask.scene==GenerateType.profile_one.name){
+            SonaAnalytics.log(AiDressEvent.Dress_solo_watch.name);
+          }else if(duoSnapTask.scene==GenerateType.profile_two.name){
+            SonaAnalytics.log(AiDressEvent.Dress_duo_watch.name);
+
+          }
+
           showDialog(context: context, builder: (b){
             return ProfileDuosnapCompleted(url: duoSnapTask.targetPhotoUrl!);
           });
@@ -197,7 +205,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          child: Row(
            mainAxisAlignment: MainAxisAlignment.center,
            children: [
-             duoSnapTask.scene==GenerateType.profile.name?Container():SmallDuoSnap(task: duoSnapTask),
+             (duoSnapTask.scene==GenerateType.profile_one.name||duoSnapTask.scene==GenerateType.profile_two.name)?Container():SmallDuoSnap(task: duoSnapTask),
              SizedBox(
                width: 16,
              ),
@@ -320,5 +328,7 @@ enum GenerateState{
 enum GenerateType{
   match,
   chat,
-  profile,
+  profile_one,
+  profile_two,
+
 }

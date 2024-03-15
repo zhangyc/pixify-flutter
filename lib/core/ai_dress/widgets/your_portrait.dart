@@ -23,6 +23,7 @@ import '../../persona/screens/persona.dart';
 import '../../subscribe/model/member.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../../widgets/generate_banner.dart';
+import '../ai_dress_event.dart';
 
 class YourPortrait extends StatelessWidget {
   const YourPortrait({super.key, required this.image, required this.template});
@@ -68,33 +69,15 @@ class YourPortrait extends StatelessWidget {
         ),
         Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
           return LoadingButton(onPressed: ()async{
-            if(!canDuoSnap){
-              duosnap-=1;
-              if(ref.read(myProfileProvider)!.memberType==MemberType.none){
-                SonaAnalytics.log(DuoSnapEvent.Duo_click_pay.name);
-                Navigator.push(context, MaterialPageRoute(builder:(c){
-                  return const SubscribePage(fromTag: FromTag.duo_snap,);
-                }));
-              }else if(ref.read(myProfileProvider)!.memberType==MemberType.club){
-                SonaAnalytics.log(DuoSnapEvent.plus_duo_limit.name);
+            SonaAnalytics.log(AiDressEvent.Dress_solo_gen.name,);
 
-                Navigator.push(context, MaterialPageRoute(builder:(c){
-                  return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
-                }));
-              }else if(ref.read(myProfileProvider)!.memberType==MemberType.plus){
-                SonaAnalytics.log(DuoSnapEvent.club_clickduo_payplus.name);
-
-                Fluttertoast.showToast(msg: S.current.weeklyLimitReached);
-              }
-              return;
-            }
             final s =await uploadFile(bytes: image);
             final response=await post('/merge-photo/create',data: {
               // 原图URL
               "photoUrl":s,
               // 模型 - 测试是任意写
               "modelId":template.id,
-              "scene":GenerateType.profile.name
+              "scene":GenerateType.profile_one.name
             });
             if(response.isSuccess){
               Future.delayed(Duration(milliseconds: 300),(){

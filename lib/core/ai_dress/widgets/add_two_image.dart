@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_editor/image_editor.dart';
+import 'package:sona/core/ai_dress/ai_dress_event.dart';
 import 'package:sona/core/ai_dress/dislogs.dart';
 import 'package:sona/core/ai_dress/widgets/base_dialog_container.dart';
 
@@ -133,7 +134,11 @@ class _AddTwoImageState extends State<AddTwoImage> {
                   ),
                 ),
                 onTap: () async{
+
                    Uint8List? u=await showSelectPhoto(context, widget.template);
+                   SonaAnalytics.log(AiDressEvent.Dress_duo_upphoto.name,{
+                     'item_str_id':'left'
+                   });
                    if(u!=null){
                      left=u;
                      setState(() {
@@ -148,6 +153,9 @@ class _AddTwoImageState extends State<AddTwoImage> {
               Expanded(child: GestureDetector(
                 onTap: () async{
                   Uint8List? u=await showSelectPhoto(context, widget.template);
+                  SonaAnalytics.log(AiDressEvent.Dress_duo_upphoto.name,{
+                    'item_str_id':'right'
+                  });
                   if(u!=null){
                     right=u;
                     setState(() {
@@ -180,26 +188,8 @@ class _AddTwoImageState extends State<AddTwoImage> {
               if(left==null||right==null){
                 return;
               }
-              if(!canDuoSnap){
-                duosnap-=1;
-                if(ref.read(myProfileProvider)!.memberType==MemberType.none){
-                  SonaAnalytics.log(DuoSnapEvent.Duo_click_pay.name);
-                  Navigator.push(context, MaterialPageRoute(builder:(c){
-                    return const SubscribePage(fromTag: FromTag.duo_snap,);
-                  }));
-                }else if(ref.read(myProfileProvider)!.memberType==MemberType.club){
-                  SonaAnalytics.log(DuoSnapEvent.plus_duo_limit.name);
+              SonaAnalytics.log(AiDressEvent.Dress_duo_gen.name);
 
-                  Navigator.push(context, MaterialPageRoute(builder:(c){
-                    return const SubscribePage(fromTag: FromTag.pay_match_arrow,);
-                  }));
-                }else if(ref.read(myProfileProvider)!.memberType==MemberType.plus){
-                  SonaAnalytics.log(DuoSnapEvent.club_clickduo_payplus.name);
-
-                  Fluttertoast.showToast(msg: S.current.weeklyLimitReached);
-                }
-                return;
-              }
               try{
                 HttpResult result=await post('/merge-photo/find-last');
                 if(result.statusCode.toString()=='60010') {
@@ -232,7 +222,7 @@ class _AddTwoImageState extends State<AddTwoImage> {
                     "photoUrl":s,
                     // 模型 - 测试是任意写
                     "modelId":widget.template.id,
-                    "scene":GenerateType.profile.name
+                    "scene":GenerateType.profile_two.name
                   });
                   if(response.isSuccess){
                     Fluttertoast.showToast(msg:'done');

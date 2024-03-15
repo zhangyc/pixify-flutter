@@ -7,8 +7,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sona/core/ai_dress/ai_dress_event.dart';
 import 'package:sona/core/ai_dress/dislogs.dart';
 import 'package:sona/core/ai_dress/widgets/base_dialog_container.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
@@ -67,6 +69,7 @@ class SelectPhoto extends StatelessWidget {
                 Uint8List? bytes = await file.readAsBytes();
                 bytes = await cropImage(bytes);
                 if (bytes == null) return;
+
                 Navigator.pop(context,bytes);
                 // await  showYourPortrait(context, bytes,template);
 

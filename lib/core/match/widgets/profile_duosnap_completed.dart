@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gal/gal.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:sona/core/ai_dress/ai_dress_event.dart';
 import 'package:sona/core/match/widgets/duosnap_loading.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 
@@ -45,7 +46,7 @@ class ProfileDuosnapCompleted extends StatelessWidget {
           children: [
             GestureDetector(child: SvgPicture.asset(Assets.svgDownload,width: 56,height: 56,),
               onTap: () async{
-                SonaAnalytics.log(DuoSnapEvent.chat_duo_download.name);
+                SonaAnalytics.log(AiDressEvent.Dress_photo_download.name);
 
                 FileInfo? f=await DefaultCacheManager().getFileFromCache(url);
                 if(f!=null){
@@ -65,7 +66,7 @@ class ProfileDuosnapCompleted extends StatelessWidget {
 
             GestureDetector(child: SvgPicture.asset(Assets.svgShare,width: 56,height: 56,),
               onTap: () async{
-                SonaAnalytics.log(DuoSnapEvent.chat_duo_share.name);
+                SonaAnalytics.log(AiDressEvent.Dress_photo_share.name);
 
                 String cache=(await getApplicationCacheDirectory()).path;
                 File? f=await DefaultCacheManager().getSingleFile(url);
