@@ -16,6 +16,11 @@ class Assets {
   static const String iconsDoneArrow = 'assets/icons/done_arrow.png';
   static const String iconsEdit = 'assets/icons/edit.png';
   static const String iconsEmail = 'assets/icons/email.png';
+  static const String iconsEmoji0 = 'assets/icons/emoji0.png';
+  static const String iconsEmoji1 = 'assets/icons/emoji1.png';
+  static const String iconsEmoji2 = 'assets/icons/emoji2.png';
+  static const String iconsEmoji3 = 'assets/icons/emoji3.png';
+  static const String iconsEmoji4 = 'assets/icons/emoji4.png';
   static const String iconsFliter = 'assets/icons/fliter.png';
   static const String iconsForward = 'assets/icons/forward.png';
   static const String iconsGoogle = 'assets/icons/google.png';

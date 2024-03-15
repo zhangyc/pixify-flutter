@@ -98,7 +98,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
         });
       }
     }else {
-      generateState.value=GenerateState.fail;
+      generateState.value=GenerateState.idel;
       if(mounted){
         setState(() {
 

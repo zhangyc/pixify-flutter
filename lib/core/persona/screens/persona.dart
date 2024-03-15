@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -311,9 +313,18 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                   backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06)),
                                 ),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(S.of(context).buttonUnlockVipPerks, style: Theme.of(context).textTheme.titleMedium),
-
+                                    Row(
+                                      children: [
+                                        Image.asset('assets/icons/emoji${Random().nextInt(5)}.png'),
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        Text(S.of(context).buttonUnlockVipPerks, style: Theme.of(context).textTheme.titleMedium),
+                                      ],
+                                    ),
+                                    Icon(Icons.arrow_forward_ios_rounded,color: Color(0xff2c2c2c),size: 20,)
                                   ],
                                 )
                             ),
@@ -361,21 +372,23 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                     Row(
                                       children: [
                                         Container(
+                                          alignment: Alignment.center,
+                                          width: 43,
+                                          height: 24,
                                           decoration: BoxDecoration(
                                             color: Color(0xff2c2c2c),
                                             borderRadius: BorderRadius.circular(8)
                                           ),
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 2,
-                                            horizontal: 6
-                                          ),
+                                          // padding: EdgeInsets.symmetric(
+                                          //   vertical: 2,
+                                          //   horizontal: 6
+                                          // ),
                                           child: Text(S.current.freeLabel,),
                                         ),
                                         SizedBox(
                                           width: 4,
                                         ),
                                         Icon(Icons.arrow_forward_ios_rounded,color: Color(0xff2c2c2c),size: 20,)
-
                                       ],
                                     )
                                   ],
