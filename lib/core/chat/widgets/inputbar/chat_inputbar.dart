@@ -131,12 +131,15 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
               GestureDetector(
                 onTap: () {
                   ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) {
-                    if (!state) {
-                      // _focusNode.requestFocus();
+                    if (state) {
+                      if (_focusNode.hasFocus) {
+                        _focusNode.unfocus();
+                        return true;
+                      }
+                      return false;
                     } else {
-                      _focusNode.unfocus();
+                      return true;
                     }
-                    return !state;
                   });
                 },
                 child: Container(
@@ -181,6 +184,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                     ),
                     onTapOutside: (_) {
                       if (_focusNode.hasFocus) _focusNode.unfocus();
+                      ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
                     },
                     autocorrect: true,
                     cursorWidth: 1.8,
@@ -304,6 +308,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
           child: Container(
             child: Padding(padding: EdgeInsets.all(16),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
                     child: GestureDetector(
@@ -313,7 +318,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                             color: Color(0xffF6F3F3),
                             borderRadius: BorderRadius.circular(24)
                         ),
-                        height: 242,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -339,7 +343,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                               color: Color(0xffF6F3F3),
                               borderRadius: BorderRadius.circular(24)
                           ),
-                          height: 242,
                           child: SizedBox(
                             height: 32,
                             width: 32,
@@ -350,7 +353,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                             color: Color(0xffF6F3F3),
                             borderRadius: BorderRadius.circular(24)
                         ),
-                        height: 242,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
