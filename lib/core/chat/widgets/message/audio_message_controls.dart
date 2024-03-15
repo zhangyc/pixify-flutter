@@ -58,7 +58,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
           children: [
             if (widget.fromMe) GestureDetector(
               onTap: () {
-                ref.read(audioMessagePlaySpeedProvider(widget.chatId).notifier).update((state) => state == 1.0 ? 1.5 : 1.0);
+                ref.read(audioMessagePlaySpeedProvider(widget.chatId).notifier).update((state) => state == 1.0 ? 0.5 : 1.0);
               },
               child: Container(
                 width: 40,
@@ -69,7 +69,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
                     borderRadius: BorderRadius.circular(12)
                 ),
                 alignment: Alignment.center,
-                child: Text('x${ref.watch(audioMessagePlaySpeedProvider(widget.chatId)) == 1.0 ? '1' : '1.5'}',
+                child: Text('x${ref.watch(audioMessagePlaySpeedProvider(widget.chatId)) == 1.0 ? '1' : '0.5'}',
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w800
