@@ -74,7 +74,8 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
             // 对方用户ID
             "targetUserId":widget.target.id,
             // 模型 - 测试是任意写
-            "modelId":widget.model.id
+            "modelId":widget.model.id,
+            "scene":GenerateType.match.name
           });
           if(response.isSuccess){
             Future.delayed(Duration(milliseconds: 300),(){

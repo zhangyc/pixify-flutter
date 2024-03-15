@@ -12,6 +12,7 @@ class DuoSnapTask {
   String? targetUserAvatar;
   String? targetUserNickname;
   int? targetUserGender;
+  String? scene;
   DuoSnapTask(
       {this.id,
         this.userId,
@@ -24,7 +25,8 @@ class DuoSnapTask {
         this.times,
         this.userAvatar,
         this.targetUserAvatar,
-        this.targetUserGender
+        this.targetUserGender,
+        this.scene
       });
 
   DuoSnapTask.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class DuoSnapTask {
     targetUserAvatar = json['targetUserAvatar'];
     targetUserNickname = json['targetUserNickname'];
     targetUserGender = json['targetUserGender'];
+    scene = json['scene'];
 
   }
 
@@ -59,7 +62,7 @@ class DuoSnapTask {
     data['targetUserAvatar'] = this.targetUserAvatar;
     data['targetUserNickname'] = this.targetUserNickname;
     data['targetUserGender'] = this.targetUserGender;
-
+    data['scene'] = this.scene;
     return data;
   }
 }

@@ -13,6 +13,7 @@ import 'package:sona/core/match/widgets/catch_more.dart';
 import 'package:sona/core/match/widgets/dialogs.dart';
 import 'package:sona/core/match/widgets/duosnap_completed.dart';
 import 'package:sona/core/match/widgets/loading_button.dart';
+import 'package:sona/core/match/widgets/profile_duosnap_completed.dart';
 
 import '../../account/providers/profile.dart';
 import '../../generated/assets.dart';
@@ -26,7 +27,6 @@ final ValueNotifier<GenerateState> generateState = ValueNotifier<GenerateState>(
 
 class GenerateBanner extends ConsumerStatefulWidget {
   const GenerateBanner({super.key});
-
   @override
   ConsumerState createState() => _GenerateBannerState();
 }
@@ -84,19 +84,26 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        generateState.value=GenerateState.cancel;
 
      }
-     setState(() {
+     if(mounted){
+       setState(() {
 
-     });
+       });
+     }
+
     }else if(result.statusCode.toString()=='60010'){
       generateState.value=GenerateState.cancel;
-      setState(() {
+      if(mounted){
+        setState(() {
 
-      });
+        });
+      }
     }else {
       generateState.value=GenerateState.fail;
-      setState(() {
+      if(mounted){
+        setState(() {
 
-      });
+        });
+      }
     }
   }
   @override
@@ -112,7 +119,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-           SmallDuoSnap(task: duoSnapTask),
+           duoSnapTask.scene==GenerateType.profile.name?Container():SmallDuoSnap(task: duoSnapTask),
            SizedBox(
              width: 10,
            ),
@@ -135,7 +142,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
        child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-           SmallDuoSnap(task: duoSnapTask),
+           duoSnapTask.scene==GenerateType.profile.name?Container():SmallDuoSnap(task: duoSnapTask),
            SizedBox(
              width: 10,
            ),
@@ -161,21 +168,28 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
         post('/merge-photo/over',data: {
           "id": duoSnapTask.id
         });
-        showDuoSnapCompleted(context,
-          700,
-          DuosnapCompleted(
-              task: duoSnapTask,
-              close:(){
+        if(duoSnapTask.scene==GenerateType.profile.name){
+          showDialog(context: context, builder: (b){
+            return ProfileDuosnapCompleted(url: duoSnapTask.targetPhotoUrl!);
+          });
+        }else {
+          showDuoSnapCompleted(context,
+              700,
+              DuosnapCompleted(
+                  task: duoSnapTask,
+                  close:(){
+                    Navigator.pop(context);
+                  })
+          ).whenComplete((){
+            if(showCatchMore&&mounted){
+              showDuoSnapTip(context, child: CatchMore(close: (){
                 Navigator.pop(context);
-              })
-        ).whenComplete((){
-          if(showCatchMore&&mounted){
-            showDuoSnapTip(context, child: CatchMore(close: (){
-              Navigator.pop(context);
-            }), dialogHeight: 361);
-            showCatchMore=false;
-          }
-        });
+              }), dialogHeight: 361);
+              showCatchMore=false;
+            }
+          });
+        }
+
       },
       child: Container(
          color: Color(0xff0DF892),
@@ -183,7 +197,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
          child: Row(
            mainAxisAlignment: MainAxisAlignment.center,
            children: [
-             SmallDuoSnap(task: duoSnapTask),
+             duoSnapTask.scene==GenerateType.profile.name?Container():SmallDuoSnap(task: duoSnapTask),
              SizedBox(
                width: 16,
              ),
@@ -302,4 +316,9 @@ enum GenerateState{
   done,
   cancel,
   idel
+}
+enum GenerateType{
+  match,
+  chat,
+  profile,
 }

@@ -106,7 +106,7 @@ class CustomBottomDialog extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                Text( 
                   'Pick a style',
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w900),
                 ),

@@ -100,6 +100,7 @@ class Assets {
   static const String mPlusRounded1cMPLUSRounded1cMedium = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Medium.ttf';
   static const String mPlusRounded1cMPLUSRounded1cRegular = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Regular.ttf';
   static const String mPlusRounded1cMPLUSRounded1cThin = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Thin.ttf';
+  static const String svgAiDress = 'assets/svg/ai_dress.svg';
   static const String svgArrow = 'assets/svg/arrow.svg';
   static const String svgC = 'assets/svg/c.svg';
   static const String svgCamera = 'assets/svg/camera.svg';
