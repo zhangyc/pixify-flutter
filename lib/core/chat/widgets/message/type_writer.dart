@@ -44,7 +44,56 @@ class _TypeWriterState extends ConsumerState<TypeWriter> {
     return StreamBuilder<Duration>(
       stream: ref.read(audioPlayerProvider(widget.message.chatId)).onPositionChanged,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return Container();
+        if (!snapshot.hasData) {
+          return Container(
+            constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.6
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: widget.message.chatId == widget.message.receiver.id ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              children: [
+                if (recognizedTokens != null && recognizedGap != null) Text.rich(TextSpan(
+                    children: [
+                      ...recognizedTokens!.asMap().keys.map((index) => TextSpan(
+                          text: '${recognizedTokens![index]}',
+                          style: TextStyle(
+                              color: Colors.transparent
+                          )
+                      ))
+                    ]
+                ), style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).primaryColor,
+                  height: 1.5,
+                  fontFamilyFallback: [
+                    if (Platform.isAndroid) 'Source Han Sans',
+                    // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                    // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                  ],
+                )),
+                if (translatedTokens != null && translatedGap != null) Divider(color: Colors.black.withOpacity(0.03)),
+                if (translatedTokens != null && translatedGap != null) Text.rich(TextSpan(
+                    children: [
+                      ...translatedTokens!.asMap().keys.map((index) => TextSpan(
+                          text: '${translatedTokens![index]}',
+                          style: TextStyle(
+                              color: Colors.transparent
+                          )
+                      ))
+                    ]
+                ), style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Colors.transparent,
+                  height: 1.5,
+                  fontFamilyFallback: [
+                    if (Platform.isAndroid) 'Source Han Sans',
+                    // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                    // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                  ],
+                ))
+              ],
+            ),
+          );
+        }
         return Container(
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width * 0.6
@@ -71,7 +120,7 @@ class _TypeWriterState extends ConsumerState<TypeWriter> {
                     // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
                   ],
               )),
-              if (translatedTokens != null && translatedGap != null) Divider(),
+              if (translatedTokens != null && translatedGap != null) Divider(color: Colors.black.withOpacity(0.03)),
               if (translatedTokens != null && translatedGap != null) Text.rich(TextSpan(
                 children: [
                   ...translatedTokens!.asMap().keys.map((index) => TextSpan(

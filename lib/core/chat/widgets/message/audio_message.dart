@@ -156,7 +156,8 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
                         );
                       }
                     ),
-                    if (ref.watch(playedAudioMessageUuidsProvider(widget.message.chatId)).contains(widget.message.uuid)) Container(
+                    SizedBox(height: 6),
+                    if (ref.watch(playedAudioMessageUuidsProvider(widget.message.chatId)).contains(widget.message.uuid) && ref.watch(currentPlayingAudioMessageIdProvider) != widget.message.uuid) Container(
                       constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.6
                       ),
@@ -174,8 +175,8 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
                                   // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
                                 ],
                               )),
-                          if (widget.message.translatedText != null) Divider(),
-                          if (widget.message.translatedText != null) Text(widget.message.translatedText!,
+                          if (widget.message.translatedText != null && widget.message.translatedText!.isNotEmpty) Divider(color: Colors.black.withOpacity(0.03)),
+                          if (widget.message.translatedText != null && widget.message.translatedText!.isNotEmpty) Text(widget.message.translatedText!,
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: Theme.of(context).primaryColor,
                                 height: 1.5,
