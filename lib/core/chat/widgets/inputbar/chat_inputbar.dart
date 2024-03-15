@@ -128,18 +128,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              GestureDetector(
+              if (ref.watch(keyboardExtensionVisibilityProvider)) GestureDetector(
                 onTap: () {
                   ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) {
-                    if (state) {
-                      if (_focusNode.hasFocus) {
-                        _focusNode.unfocus();
-                        return true;
-                      }
-                      return false;
-                    } else {
-                      return true;
+                    if (_focusNode.hasFocus) {
+                      _focusNode.unfocus();
                     }
+                    return false;
                   });
                 },
                 child: Container(
@@ -152,11 +147,30 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   ),
                   clipBehavior: Clip.antiAlias,
                   alignment: Alignment.center,
-                  child: ref.read(keyboardExtensionVisibilityProvider) ? SonaIcon(
+                  child: SonaIcon(
                     icon: SonaIcons.close,
                     size: 24,
-                  ) : Icon(Icons.add, size: 24)
+                  )
                 )
+              )
+              else GestureDetector(
+                  onTap: () {
+                    ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) {
+                        return true;
+                    });
+                  },
+                  child: Container(
+                      width: 54,
+                      height: 54,
+                      margin: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: Theme.of(context).primaryColor),
+                          borderRadius: BorderRadius.circular(12)
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      alignment: Alignment.center,
+                      child: Icon(Icons.add, size: 24)
+                  )
               ),
               SizedBox(width: 4),
               Expanded(

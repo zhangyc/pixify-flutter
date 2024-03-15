@@ -110,29 +110,17 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
 
   List<Widget> _controlsWidgets() {
     return [
-      Icon(Icons.multitrack_audio_outlined, size: 24),
+      Icon(CupertinoIcons.waveform, size: 24),
       SizedBox(width: 12),
-      Text('${widget.duration.inSeconds.toString()}s'),
+      Text('${widget.duration.inSeconds.toString()}s', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
       Expanded(child: Container()),
       if (ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) StreamBuilder<PlayerState>(
           stream: player.onPlayerStateChanged,
           builder: (_, snapshot) {
             if (snapshot.data == PlayerState.paused) {
-              return IconButton(
-                iconSize: 24,
-                onPressed: () async {
-                  await player.resume();
-                },
-                icon: Icon(Icons.play_arrow)
-              );
+              return Icon(CupertinoIcons.play);
             }
-            return IconButton(
-              iconSize: 24,
-              onPressed: () async {
-                await player.pause();
-              },
-              icon: Icon(Icons.pause_circle_outline)
-            );
+            return Icon(CupertinoIcons.pause);
           }
       ),
     ];
