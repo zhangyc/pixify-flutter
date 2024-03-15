@@ -45,11 +45,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "aYear": MessageLookupByLibrary.simpleMessage("1 год"),
         "about": MessageLookupByLibrary.simpleMessage("О"),
         "account": MessageLookupByLibrary.simpleMessage("Аккаунт"),
+        "addTwoSoloPhotosMessage": MessageLookupByLibrary.simpleMessage(
+            "Добавить две соло фотографии"),
         "age": MessageLookupByLibrary.simpleMessage("Возраст"),
         "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
             "ИИ создает веселые групповые фото!"),
+        "aiDressUpLabel":
+            MessageLookupByLibrary.simpleMessage("Смена костюма AI"),
         "allPeople": MessageLookupByLibrary.simpleMessage("Все"),
         "almost": MessageLookupByLibrary.simpleMessage("Почти там, почти!"),
+        "betterQualityMessage": MessageLookupByLibrary.simpleMessage(
+            "Четкие портреты могут сделать результаты генерации лучше"),
         "bio": MessageLookupByLibrary.simpleMessage("Введение"),
         "block": MessageLookupByLibrary.simpleMessage("Блокировать"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -150,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Групповое фото завершено!"),
         "duosnapAnyway":
             MessageLookupByLibrary.simpleMessage("Всё ещё Duo snap"),
+        "exampleLabel": MessageLookupByLibrary.simpleMessage("Пример"),
         "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
             "Ошибка отправки, пожалуйста, попробуйте позже."),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -161,10 +168,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "findingFolksWhoShareYourInterests":
             MessageLookupByLibrary.simpleMessage(
                 "Находить людей, которые разделяют ваши интересы"),
+        "firstLabel": MessageLookupByLibrary.simpleMessage("Первая"),
         "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
             "SONA ищет потенциальных друзей..."),
+        "freeLabel": MessageLookupByLibrary.simpleMessage("Бесплатно"),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Привет, я думаю, ты потрясающий. Давай подружимся?"),
+        "generateButtonLabel":
+            MessageLookupByLibrary.simpleMessage("Генерировать"),
         "generating": MessageLookupByLibrary.simpleMessage("Генерация"),
         "getSonaPlus":
             MessageLookupByLibrary.simpleMessage("Получить SONA Plus"),
@@ -276,13 +287,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Разблокировать, чтобы увидеть, кто вас любит"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 желания"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("20 Duo Snap / неделю"),
+            MessageLookupByLibrary.simpleMessage("10 Duo Snap / неделю"),
         "preference": MessageLookupByLibrary.simpleMessage("Предпочтение"),
         "privacy": MessageLookupByLibrary.simpleMessage("Конфиденциальность"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Политика конфиденциальности"),
         "pushNotifications":
             MessageLookupByLibrary.simpleMessage("Пуш-уведомления"),
+        "recordsLabel": MessageLookupByLibrary.simpleMessage("Записи"),
         "report": MessageLookupByLibrary.simpleMessage("Сообщить"),
         "reportOptionGore": MessageLookupByLibrary.simpleMessage("Жестокость"),
         "reportOptionOther": MessageLookupByLibrary.simpleMessage("Другое"),
@@ -300,6 +312,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("Сохранить"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("Скриншот доказательства"),
+        "secondLabel": MessageLookupByLibrary.simpleMessage("Вторая"),
         "seeProfile":
             MessageLookupByLibrary.simpleMessage("Посмотреть профиль"),
         "seeWhoLikeU":
@@ -314,11 +327,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Установить по умолчанию"),
         "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
         "share": MessageLookupByLibrary.simpleMessage("Поделиться"),
+        "shareForMoreTriesMessage": MessageLookupByLibrary.simpleMessage(
+            "Поделитесь, чтобы получить больше попыток с AI Dress!👇"),
         "showYourPersonality": MessageLookupByLibrary.simpleMessage(
             "Покажите вашу индивидуальность"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("Скоро будет готово"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6 месяцев"),
+        "soloLabel": MessageLookupByLibrary.simpleMessage("Соло"),
         "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
             "⭕ SONA Interpretazione disattivata"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
@@ -351,6 +367,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("."),
         "takeIt": MessageLookupByLibrary.simpleMessage("Использовать"),
+        "tenWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage("10 переодеваний AI в неделю"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Условия обслуживания"),
         "theKeyIsBalance":
@@ -362,6 +380,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀достигли своего дневного лимита"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅достигли своего недельного лимита"),
+        "twentyWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage(
+                "20 переодеваний AI в неделю (Специальные права для дам)"),
         "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
             "Непропустимые специальные предложения!"),
         "uploadYourPhoto":

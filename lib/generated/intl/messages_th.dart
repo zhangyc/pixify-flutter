@@ -45,11 +45,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "aYear": MessageLookupByLibrary.simpleMessage("1 ปี"),
         "about": MessageLookupByLibrary.simpleMessage("เกี่ยวกับ"),
         "account": MessageLookupByLibrary.simpleMessage("บัญชี"),
+        "addTwoSoloPhotosMessage":
+            MessageLookupByLibrary.simpleMessage("เพิ่มรูปเดี่ยวสองภาพ"),
         "age": MessageLookupByLibrary.simpleMessage("อายุ"),
         "aiCreatingFunGroupPics":
             MessageLookupByLibrary.simpleMessage("AI สร้างภาพถ่ายกลุ่มสนุก ๆ!"),
+        "aiDressUpLabel":
+            MessageLookupByLibrary.simpleMessage("การเปลี่ยนชุด AI"),
         "allPeople": MessageLookupByLibrary.simpleMessage("ทั้งหมด"),
         "almost": MessageLookupByLibrary.simpleMessage("เกือบถึงแล้ว เกือบ!"),
+        "betterQualityMessage": MessageLookupByLibrary.simpleMessage(
+            "ภาพที่ชัดเจนของบุคคลสามารถทำให้ผลลัพธ์ที่สร้างขึ้นดีขึ้น"),
         "bio": MessageLookupByLibrary.simpleMessage("บทนำ"),
         "block": MessageLookupByLibrary.simpleMessage("บล็อก"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -144,6 +150,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "duoSnapIsReady":
             MessageLookupByLibrary.simpleMessage("รูปกลุ่มเสร็จแล้ว!"),
         "duosnapAnyway": MessageLookupByLibrary.simpleMessage("ยังคง Duo snap"),
+        "exampleLabel": MessageLookupByLibrary.simpleMessage("ตัวอย่าง"),
         "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
             "ส่งไม่สำเร็จ กรุณาลองใหม่ภายหลัง"),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -155,10 +162,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "findingFolksWhoShareYourInterests":
             MessageLookupByLibrary.simpleMessage(
                 "การหาคนที่มีความสนใจร่วมกันกับคุณ"),
+        "firstLabel": MessageLookupByLibrary.simpleMessage("ภาพแรก"),
         "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
             "SONAกำลังหาเพื่อนที่มีศักยภาพ..."),
+        "freeLabel": MessageLookupByLibrary.simpleMessage("ฟรี"),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "เฮ้ย ฉันว่านายน่าทึ่งมาก มาเป็นเพื่อนกันไหม?"),
+        "generateButtonLabel": MessageLookupByLibrary.simpleMessage("สร้าง"),
         "generating": MessageLookupByLibrary.simpleMessage("กำลังสร้าง"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("รับ SONA Plus"),
         "gotIt": MessageLookupByLibrary.simpleMessage("เข้าใจแล้ว"),
@@ -266,13 +276,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ปลดล็อกเพื่อดูว่าใครชอบคุณ"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 คำอธิษฐาน"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("20 Duo Snap / สัปดาห์"),
+            MessageLookupByLibrary.simpleMessage("10 Duo Snap / สัปดาห์"),
         "preference": MessageLookupByLibrary.simpleMessage("การตั้งค่า"),
         "privacy": MessageLookupByLibrary.simpleMessage("ความเป็นส่วนตัว"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("นโยบายความเป็นส่วนตัว"),
         "pushNotifications":
             MessageLookupByLibrary.simpleMessage("การแจ้งเตือนแบบพุช"),
+        "recordsLabel": MessageLookupByLibrary.simpleMessage("บันทึก"),
         "report": MessageLookupByLibrary.simpleMessage("รายงาน"),
         "reportOptionGore": MessageLookupByLibrary.simpleMessage("โหดร้าย"),
         "reportOptionOther": MessageLookupByLibrary.simpleMessage("อื่นๆ"),
@@ -288,6 +299,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("บันทึก"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("หลักฐานภาพหน้าจอ"),
+        "secondLabel": MessageLookupByLibrary.simpleMessage("ภาพที่สอง"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("ดูโปรไฟล์"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("ดูว่าใครชอบคุณ"),
         "selectCountryPageTitle":
@@ -300,11 +312,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ตั้งค่าเป็นค่าเริ่มต้น"),
         "settings": MessageLookupByLibrary.simpleMessage("การตั้งค่า"),
         "share": MessageLookupByLibrary.simpleMessage("แชร์"),
+        "shareForMoreTriesMessage": MessageLookupByLibrary.simpleMessage(
+            "แชร์เพื่อลองใช้ AI Dress เพิ่มเติม!👇"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("แสดงบุคลิกของคุณ"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("ใกล้จะเสร็จแล้ว"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6 เดือน"),
+        "soloLabel": MessageLookupByLibrary.simpleMessage("โซโล"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA การแปลภาษาถูกปิดแล้ว"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
@@ -335,6 +350,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage(" ของเรา"),
         "takeIt": MessageLookupByLibrary.simpleMessage("ใช้"),
+        "tenWeeklyDressUpRightsMessage": MessageLookupByLibrary.simpleMessage(
+            "10 ชุด AI Dress up / สัปดาห์"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("ข้อกำหนดในการให้บริการ"),
         "theKeyIsBalance":
@@ -346,6 +363,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀คุณได้ถึงขีดจำกัดประจำวันแล้ว"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅คุณได้ถึงขีดจำกัดประจำสัปดาห์แล้ว"),
+        "twentyWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage(
+                "สิทธิพิเศษสำหรับสตรี 20 AI Dress up / สัปดาห์"),
         "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
             "พลาดไม่ได้กับราคาโปรโมชั่นพิเศษ!"),
         "uploadYourPhoto":

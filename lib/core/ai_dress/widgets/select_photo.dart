@@ -11,6 +11,7 @@ import 'package:sona/core/ai_dress/dislogs.dart';
 import 'package:sona/core/ai_dress/widgets/base_dialog_container.dart';
 
 import '../../../generated/assets.dart';
+import '../../../generated/l10n.dart';
 import '../../../utils/dialog/crop_image.dart';
 import '../bean/sd_template.dart';
 
@@ -45,7 +46,7 @@ class SelectPhoto extends StatelessWidget {
             SizedBox(
               height: 12,
             ),
-            Text('Clear portrait photos lead to better quality',style: TextStyle(
+            Text(S.current.betterQualityMessage,style: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: 14,
               color: Color(0xff2c2c2c)

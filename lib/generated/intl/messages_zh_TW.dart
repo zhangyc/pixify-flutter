@@ -45,11 +45,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "aYear": MessageLookupByLibrary.simpleMessage("1年"),
         "about": MessageLookupByLibrary.simpleMessage("關於"),
         "account": MessageLookupByLibrary.simpleMessage("帳戶"),
+        "addTwoSoloPhotosMessage":
+            MessageLookupByLibrary.simpleMessage("添加两张单人照片"),
         "age": MessageLookupByLibrary.simpleMessage("年齡"),
         "aiCreatingFunGroupPics":
             MessageLookupByLibrary.simpleMessage("AI創造有趣的合影!"),
+        "aiDressUpLabel": MessageLookupByLibrary.simpleMessage("AI换装"),
         "allPeople": MessageLookupByLibrary.simpleMessage("所有人"),
         "almost": MessageLookupByLibrary.simpleMessage("差不多到了，差不多！"),
+        "betterQualityMessage":
+            MessageLookupByLibrary.simpleMessage("人像清晰可以让生成效果更好哟"),
         "bio": MessageLookupByLibrary.simpleMessage("簡介"),
         "block": MessageLookupByLibrary.simpleMessage("屏蔽"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -125,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
         "duoSnapIsReady": MessageLookupByLibrary.simpleMessage("合影完成！"),
         "duosnapAnyway": MessageLookupByLibrary.simpleMessage("依然Duo snap"),
+        "exampleLabel": MessageLookupByLibrary.simpleMessage("範例"),
         "exceptionFailedToSendTips":
             MessageLookupByLibrary.simpleMessage("傳送失敗，請稍後再試。"),
         "exceptionSonaContentFilterTips":
@@ -135,10 +141,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "filter": MessageLookupByLibrary.simpleMessage("過濾器"),
         "findingFolksWhoShareYourInterests":
             MessageLookupByLibrary.simpleMessage("找到與你有共同興趣的人"),
+        "firstLabel": MessageLookupByLibrary.simpleMessage("第一张"),
         "firstLandingLoadingTitle":
             MessageLookupByLibrary.simpleMessage("SONA正在尋找一些潜在的朋友..."),
+        "freeLabel": MessageLookupByLibrary.simpleMessage("免费"),
         "friendsIntention":
             MessageLookupByLibrary.simpleMessage("嘿，我覺得你很棒。我們成為朋友怎麼樣？"),
+        "generateButtonLabel": MessageLookupByLibrary.simpleMessage("生成"),
         "generating": MessageLookupByLibrary.simpleMessage("產生中"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("取得SONA Plus"),
         "gotIt": MessageLookupByLibrary.simpleMessage("明白了"),
@@ -226,11 +235,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("解鎖查看誰喜歡你"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3個心願"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("每週20次Duo Snap"),
+            MessageLookupByLibrary.simpleMessage("每週10次Duo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("偏好"),
         "privacy": MessageLookupByLibrary.simpleMessage("隱私"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("隱私政策"),
         "pushNotifications": MessageLookupByLibrary.simpleMessage("推送通知"),
+        "recordsLabel": MessageLookupByLibrary.simpleMessage("紀錄"),
         "report": MessageLookupByLibrary.simpleMessage("舉報"),
         "reportOptionGore": MessageLookupByLibrary.simpleMessage("血腥"),
         "reportOptionOther": MessageLookupByLibrary.simpleMessage("其他"),
@@ -245,6 +255,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("優先展示附近的外國人"),
         "save": MessageLookupByLibrary.simpleMessage("保存"),
         "screenshotEvidence": MessageLookupByLibrary.simpleMessage("截圖證據"),
+        "secondLabel": MessageLookupByLibrary.simpleMessage("第二张"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("查看個人資料"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("看看誰喜歡你"),
         "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("國家或地區"),
@@ -255,9 +266,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "setDefault": MessageLookupByLibrary.simpleMessage("設定預設"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
         "share": MessageLookupByLibrary.simpleMessage("分享"),
+        "shareForMoreTriesMessage":
+            MessageLookupByLibrary.simpleMessage("分享以獲得更多AI換裝嘗試！👇"),
         "showYourPersonality": MessageLookupByLibrary.simpleMessage("展現你的個性"),
         "signUpLastStepPageTitle": MessageLookupByLibrary.simpleMessage("即將完成"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6個月"),
+        "soloLabel": MessageLookupByLibrary.simpleMessage("單人"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA傳譯已關閉"),
         "sonaRecommendationCooldown":
@@ -285,6 +299,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("。"),
         "takeIt": MessageLookupByLibrary.simpleMessage("使用"),
+        "tenWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage("每週10次AI換裝"),
         "termsOfService": MessageLookupByLibrary.simpleMessage("服務條款"),
         "theKeyIsBalance": MessageLookupByLibrary.simpleMessage("關鍵是平衡"),
         "theyAreWaitingForYourReply":
@@ -294,6 +310,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀已達到今日限額"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅你已達到本週限額"),
+        "twentyWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage("每週20次AI換裝（女士專屬權利）"),
         "unmissableSpecialOfferPrices":
             MessageLookupByLibrary.simpleMessage("不容錯過的特價優惠！"),
         "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("上傳你的照片"),

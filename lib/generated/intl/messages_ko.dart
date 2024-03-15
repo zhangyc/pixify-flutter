@@ -45,11 +45,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "aYear": MessageLookupByLibrary.simpleMessage("1년"),
         "about": MessageLookupByLibrary.simpleMessage("정보"),
         "account": MessageLookupByLibrary.simpleMessage("계정"),
+        "addTwoSoloPhotosMessage":
+            MessageLookupByLibrary.simpleMessage("두 장의 솔로 사진 추가"),
         "age": MessageLookupByLibrary.simpleMessage("나이"),
         "aiCreatingFunGroupPics":
             MessageLookupByLibrary.simpleMessage("AI가 재미있는 단체 사진을 만듭니다!"),
+        "aiDressUpLabel": MessageLookupByLibrary.simpleMessage("AI 의상 변경"),
         "allPeople": MessageLookupByLibrary.simpleMessage("전부"),
         "almost": MessageLookupByLibrary.simpleMessage("거의 다 왔어, 거의!"),
+        "betterQualityMessage":
+            MessageLookupByLibrary.simpleMessage("인물이 선명하면 생성 결과가 더 좋아집니다"),
         "bio": MessageLookupByLibrary.simpleMessage("소개"),
         "block": MessageLookupByLibrary.simpleMessage("차단"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -132,6 +137,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
         "duoSnapIsReady": MessageLookupByLibrary.simpleMessage("단체 사진 완료!"),
         "duosnapAnyway": MessageLookupByLibrary.simpleMessage("여전히 Duo snap"),
+        "exampleLabel": MessageLookupByLibrary.simpleMessage("예시"),
         "exceptionFailedToSendTips":
             MessageLookupByLibrary.simpleMessage("전송 실패, 나중에 다시 시도해주세요."),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -142,10 +148,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "filter": MessageLookupByLibrary.simpleMessage("필터"),
         "findingFolksWhoShareYourInterests":
             MessageLookupByLibrary.simpleMessage("같은 관심사를 가진 사람들 찾기"),
+        "firstLabel": MessageLookupByLibrary.simpleMessage("첫 번째"),
         "firstLandingLoadingTitle":
             MessageLookupByLibrary.simpleMessage("SONA가 잠재적인 친구를 찾고 있습니다..."),
+        "freeLabel": MessageLookupByLibrary.simpleMessage("무료"),
         "friendsIntention":
             MessageLookupByLibrary.simpleMessage("헤이, 너 정말 멋진 것 같아. 친구가 되어볼래?"),
+        "generateButtonLabel": MessageLookupByLibrary.simpleMessage("생성"),
         "generating": MessageLookupByLibrary.simpleMessage("생성 중"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plus받기"),
         "gotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
@@ -247,11 +256,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("좋아하는 사람이 누구인지 보려면 잠금 해제"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3개의 소원"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("주당 20회 Duo Snap"),
+            MessageLookupByLibrary.simpleMessage("주당 10회 Duo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("취향"),
         "privacy": MessageLookupByLibrary.simpleMessage("프라이버시"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("개인정보처리방침"),
         "pushNotifications": MessageLookupByLibrary.simpleMessage("푸시 알림"),
+        "recordsLabel": MessageLookupByLibrary.simpleMessage("기록"),
         "report": MessageLookupByLibrary.simpleMessage("신고"),
         "reportOptionGore": MessageLookupByLibrary.simpleMessage("잔인함"),
         "reportOptionOther": MessageLookupByLibrary.simpleMessage("기타"),
@@ -266,6 +276,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("당신 근처에서 외국인을 만나다"),
         "save": MessageLookupByLibrary.simpleMessage("저장"),
         "screenshotEvidence": MessageLookupByLibrary.simpleMessage("스크린샷 증거"),
+        "secondLabel": MessageLookupByLibrary.simpleMessage("두 번째"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("프로필 보기"),
         "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("당신을 좋아하는 사람들 보기"),
         "selectCountryPageTitle":
@@ -277,11 +288,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "setDefault": MessageLookupByLibrary.simpleMessage("기본으로 설정"),
         "settings": MessageLookupByLibrary.simpleMessage("설정"),
         "share": MessageLookupByLibrary.simpleMessage("공유하기"),
+        "shareForMoreTriesMessage": MessageLookupByLibrary.simpleMessage(
+            "AI 드레스를 더 많이 시도하기 위해 공유하세요!👇"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("당신의 개성을 보여주세요"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("곧 완성됩니다"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6개월"),
+        "soloLabel": MessageLookupByLibrary.simpleMessage("솔로"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA 동시 통역이 꺼졌습니다"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
@@ -310,6 +324,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("에 동의하는 것입니다."),
         "takeIt": MessageLookupByLibrary.simpleMessage("사용하다"),
+        "tenWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage("주당 AI 드레스업 10회"),
         "termsOfService": MessageLookupByLibrary.simpleMessage("이용 약관"),
         "theKeyIsBalance": MessageLookupByLibrary.simpleMessage("균형이 관건이다"),
         "theyAreWaitingForYourReply":
@@ -319,6 +335,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀당신은 오늘의 한도에 도달했습니다"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅당신은 이번 주의 한도에 도달했습니다"),
+        "twentyWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage("주당 20회 AI 드레스업(여성 전용 권리)"),
         "unmissableSpecialOfferPrices":
             MessageLookupByLibrary.simpleMessage("놓칠 수 없는 특별 할인 가격!"),
         "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("사진을 업로드하세요"),

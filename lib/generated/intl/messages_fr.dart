@@ -45,11 +45,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "aYear": MessageLookupByLibrary.simpleMessage("1 an"),
         "about": MessageLookupByLibrary.simpleMessage("À propos"),
         "account": MessageLookupByLibrary.simpleMessage("Compte"),
+        "addTwoSoloPhotosMessage":
+            MessageLookupByLibrary.simpleMessage("Ajouter deux photos solo"),
         "age": MessageLookupByLibrary.simpleMessage("Âge"),
         "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
             "L\'IA crée des photos de groupe amusantes !"),
+        "aiDressUpLabel":
+            MessageLookupByLibrary.simpleMessage("Changement de tenue AI"),
         "allPeople": MessageLookupByLibrary.simpleMessage("Tout"),
         "almost": MessageLookupByLibrary.simpleMessage("Presque là, presque !"),
+        "betterQualityMessage": MessageLookupByLibrary.simpleMessage(
+            "Des portraits clairs peuvent améliorer les résultats générés"),
         "bio": MessageLookupByLibrary.simpleMessage("Introduction"),
         "block": MessageLookupByLibrary.simpleMessage("Bloquer"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -150,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Photo de groupe complète !"),
         "duosnapAnyway":
             MessageLookupByLibrary.simpleMessage("Toujours Duo snap"),
+        "exampleLabel": MessageLookupByLibrary.simpleMessage("Exemple"),
         "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
             "Échec de l\'envoi, veuillez réessayer plus tard."),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -161,10 +168,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "findingFolksWhoShareYourInterests":
             MessageLookupByLibrary.simpleMessage(
                 "Trouver des personnes qui partagent vos intérêts"),
+        "firstLabel": MessageLookupByLibrary.simpleMessage("La première"),
         "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
             "SONA recherche des amis potentiels..."),
+        "freeLabel": MessageLookupByLibrary.simpleMessage("Gratuit"),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Hé, je pense que tu es génial. Ça te dirait qu\'on devienne amis ?"),
+        "generateButtonLabel": MessageLookupByLibrary.simpleMessage("Générer"),
         "generating": MessageLookupByLibrary.simpleMessage("Générant"),
         "getSonaPlus":
             MessageLookupByLibrary.simpleMessage("Obtenir SONA Plus"),
@@ -278,13 +288,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Débloquer pour voir qui vous aime"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 souhaits"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("20 Duo Snap / semana"),
+            MessageLookupByLibrary.simpleMessage("10 Duo Snap / semana"),
         "preference": MessageLookupByLibrary.simpleMessage("Préférence"),
         "privacy": MessageLookupByLibrary.simpleMessage("Confidentialité"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage(
             "Politique de confidentialité"),
         "pushNotifications":
             MessageLookupByLibrary.simpleMessage("Notifications push"),
+        "recordsLabel": MessageLookupByLibrary.simpleMessage("Enregistrements"),
         "report": MessageLookupByLibrary.simpleMessage("Signaler"),
         "reportOptionGore": MessageLookupByLibrary.simpleMessage("Gore"),
         "reportOptionOther": MessageLookupByLibrary.simpleMessage("Autre"),
@@ -301,6 +312,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("Sauver"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("Preuve par capture d\'écran"),
+        "secondLabel": MessageLookupByLibrary.simpleMessage("La deuxième"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("Voir le profil"),
         "seeWhoLikeU":
             MessageLookupByLibrary.simpleMessage("Voir qui vous aime"),
@@ -314,11 +326,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Définir par défaut"),
         "settings": MessageLookupByLibrary.simpleMessage("Paramètres"),
         "share": MessageLookupByLibrary.simpleMessage("Partager"),
+        "shareForMoreTriesMessage": MessageLookupByLibrary.simpleMessage(
+            "Partagez pour obtenir plus d\'essais de AI Dress!👇"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("Montre ta personnalité"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("Presque fini"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6 mois"),
+        "soloLabel": MessageLookupByLibrary.simpleMessage("Solo"),
         "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
             "⭕ SONA Interprétation désactivée"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
@@ -351,6 +366,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage(" ."),
         "takeIt": MessageLookupByLibrary.simpleMessage("Utiliser"),
+        "tenWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage("10 tenues AI par semaine"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Conditions de Service"),
         "theKeyIsBalance":
@@ -362,6 +379,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀Tu as atteint ta limite quotidienne"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅Tu as atteint ta limite hebdomadaire"),
+        "twentyWeeklyDressUpRightsMessage": MessageLookupByLibrary.simpleMessage(
+            "20 changements de tenue AI par semaine (Droits spécifiques aux dames)"),
         "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
             "Prix spéciaux incontournables !"),
         "uploadYourPhoto":

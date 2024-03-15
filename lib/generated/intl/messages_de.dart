@@ -45,11 +45,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "aYear": MessageLookupByLibrary.simpleMessage("1 Jahr"),
         "about": MessageLookupByLibrary.simpleMessage("Über"),
         "account": MessageLookupByLibrary.simpleMessage("Konto"),
+        "addTwoSoloPhotosMessage":
+            MessageLookupByLibrary.simpleMessage("Zwei Solo-Fotos hinzufügen"),
         "age": MessageLookupByLibrary.simpleMessage("Alter"),
         "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
             "KI erstellt lustige Gruppenfotos!"),
+        "aiDressUpLabel": MessageLookupByLibrary.simpleMessage("AI Umkleiden"),
         "allPeople": MessageLookupByLibrary.simpleMessage("Alles"),
         "almost": MessageLookupByLibrary.simpleMessage("Fast da, fast!"),
+        "betterQualityMessage": MessageLookupByLibrary.simpleMessage(
+            "Klare Porträts können die erzeugten Ergebnisse verbessern"),
         "bio": MessageLookupByLibrary.simpleMessage("Einführung"),
         "block": MessageLookupByLibrary.simpleMessage("Blockieren"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -150,6 +155,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Gruppenfoto fertig!"),
         "duosnapAnyway":
             MessageLookupByLibrary.simpleMessage("Immer noch Duo snap"),
+        "exampleLabel": MessageLookupByLibrary.simpleMessage("Beispiel"),
         "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
             "Senden fehlgeschlagen, bitte versuchen Sie es später noch einmal."),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -161,10 +167,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "findingFolksWhoShareYourInterests":
             MessageLookupByLibrary.simpleMessage(
                 "Menschen finden, die deine Interessen teilen"),
+        "firstLabel": MessageLookupByLibrary.simpleMessage("Das erste"),
         "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
             "SONA sucht nach potenziellen Freunden..."),
+        "freeLabel": MessageLookupByLibrary.simpleMessage("Kostenlos"),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Hey, ich finde dich echt toll. Wie wäre es, wenn wir Freunde werden?"),
+        "generateButtonLabel":
+            MessageLookupByLibrary.simpleMessage("Generieren"),
         "generating": MessageLookupByLibrary.simpleMessage("Generieren"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plus holen"),
         "gotIt": MessageLookupByLibrary.simpleMessage("Verstanden"),
@@ -276,13 +286,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Entsperren, um zu sehen, wer dich mag"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 Wünsche"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("20 Duo Snap / Woche"),
+            MessageLookupByLibrary.simpleMessage("10 Duo Snap / Woche"),
         "preference": MessageLookupByLibrary.simpleMessage("Präferenz"),
         "privacy": MessageLookupByLibrary.simpleMessage("Datenschutz"),
         "privacyPolicy":
             MessageLookupByLibrary.simpleMessage("Datenschutzrichtlinie"),
         "pushNotifications":
             MessageLookupByLibrary.simpleMessage("Push-Benachrichtigungen"),
+        "recordsLabel": MessageLookupByLibrary.simpleMessage("Aufzeichnungen"),
         "report": MessageLookupByLibrary.simpleMessage("Melden"),
         "reportOptionGore": MessageLookupByLibrary.simpleMessage("Blut"),
         "reportOptionOther": MessageLookupByLibrary.simpleMessage("Andere"),
@@ -299,6 +310,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("Speichern"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("Beweis-Screenshot"),
+        "secondLabel": MessageLookupByLibrary.simpleMessage("Das zweite"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("Profil ansehen"),
         "seeWhoLikeU":
             MessageLookupByLibrary.simpleMessage("Sehen, wer dich mag"),
@@ -312,11 +324,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Als Standard festlegen"),
         "settings": MessageLookupByLibrary.simpleMessage("Einstellungen"),
         "share": MessageLookupByLibrary.simpleMessage("Teilen"),
+        "shareForMoreTriesMessage": MessageLookupByLibrary.simpleMessage(
+            "Teilen, um mehr AI Dress Versuche zu bekommen!👇"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("Zeige deine Persönlichkeit"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("Bald fertig"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6 Monate"),
+        "soloLabel": MessageLookupByLibrary.simpleMessage("Solo"),
         "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
             "⭕ SONA Simultanübersetzung deaktiviert"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
@@ -348,6 +363,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage(" zu."),
         "takeIt": MessageLookupByLibrary.simpleMessage("Benutzen"),
+        "tenWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage("10 AI-Kleider pro Woche"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Dienstleistungsbedingungen"),
         "theKeyIsBalance": MessageLookupByLibrary.simpleMessage(
@@ -359,6 +376,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "👀Du hast dein Tageslimit erreicht"),
         "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
             "👅Du hast dein Wochenlimit erreicht"),
+        "twentyWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage(
+                "20 AI-Kleider pro Woche (Spezifische Rechte für Damen)"),
         "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
             "Unverpassbare Sonderangebotspreise!"),
         "uploadYourPhoto":

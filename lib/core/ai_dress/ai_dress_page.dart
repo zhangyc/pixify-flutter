@@ -34,13 +34,13 @@ class _AiDressPageState extends State<AiDressPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AI Dress'),
+        title: Text(S.current.aiDressUpLabel),
         actions: [
           TextButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (c){
               return RecordsPage();
             }));
-          }, child: Text('Records'))
+          }, child: Text(S.current.recordsLabel))
         ],
       ),
       body: Padding(
@@ -53,7 +53,7 @@ class _AiDressPageState extends State<AiDressPage> {
               children: [
                 ///
                 GestureDetector(
-                  child: currentTap==0?SelectedButton(text: 'Solo'):IdleButton(text: 'Solo'),
+                  child: currentTap==0?SelectedButton(text: S.current.soloLabel):IdleButton(text:  S.current.soloLabel),
                   onTap: (){
                     currentTap=0;
                     pageController.jumpToPage(0);

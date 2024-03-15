@@ -45,11 +45,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "aYear": MessageLookupByLibrary.simpleMessage("1年"),
         "about": MessageLookupByLibrary.simpleMessage("約"),
         "account": MessageLookupByLibrary.simpleMessage("アカウント"),
+        "addTwoSoloPhotosMessage":
+            MessageLookupByLibrary.simpleMessage("二枚のソロ写真を追加"),
         "age": MessageLookupByLibrary.simpleMessage("年齢"),
         "aiCreatingFunGroupPics":
             MessageLookupByLibrary.simpleMessage("AIが楽しい集合写真を作ります！"),
+        "aiDressUpLabel": MessageLookupByLibrary.simpleMessage("AI試着室"),
         "allPeople": MessageLookupByLibrary.simpleMessage("全部"),
         "almost": MessageLookupByLibrary.simpleMessage("もう少しで、もう少し！"),
+        "betterQualityMessage":
+            MessageLookupByLibrary.simpleMessage("人物がクリアに写ると、生成される効果がより良くなります"),
         "bio": MessageLookupByLibrary.simpleMessage("アバウトミー"),
         "block": MessageLookupByLibrary.simpleMessage("ブロック"),
         "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -128,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
         "duoSnapIsReady": MessageLookupByLibrary.simpleMessage("集合写真完成！"),
         "duosnapAnyway": MessageLookupByLibrary.simpleMessage("依然Duo snap"),
+        "exampleLabel": MessageLookupByLibrary.simpleMessage("例"),
         "exceptionFailedToSendTips":
             MessageLookupByLibrary.simpleMessage("送信に失敗しました、後で再試行してください。"),
         "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
@@ -138,10 +144,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "filter": MessageLookupByLibrary.simpleMessage("フィルター"),
         "findingFolksWhoShareYourInterests":
             MessageLookupByLibrary.simpleMessage("同じ趣味を持つ人を見つける"),
+        "firstLabel": MessageLookupByLibrary.simpleMessage("一枚目"),
         "firstLandingLoadingTitle":
             MessageLookupByLibrary.simpleMessage("SONAは潜在的な友人を探しています..."),
+        "freeLabel": MessageLookupByLibrary.simpleMessage("無料"),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "こんにちは!面白そうな人だね。ちょっと話してみませんか？"),
+        "generateButtonLabel": MessageLookupByLibrary.simpleMessage("生成する"),
         "generating": MessageLookupByLibrary.simpleMessage("生成中"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plusを入手"),
         "gotIt": MessageLookupByLibrary.simpleMessage("分かった"),
@@ -240,11 +249,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("あなたを好きな人が誰か見るために解除"),
         "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3つの願い"),
         "plusPerkDuoSnap":
-            MessageLookupByLibrary.simpleMessage("週20回のDuo Snap"),
+            MessageLookupByLibrary.simpleMessage("週10回のDuo Snap"),
         "preference": MessageLookupByLibrary.simpleMessage("好み"),
         "privacy": MessageLookupByLibrary.simpleMessage("プライバシー"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("プライバシーポリシー"),
         "pushNotifications": MessageLookupByLibrary.simpleMessage("プッシュ通知"),
+        "recordsLabel": MessageLookupByLibrary.simpleMessage("記録"),
         "report": MessageLookupByLibrary.simpleMessage("報告する"),
         "reportOptionGore": MessageLookupByLibrary.simpleMessage("グロテスク"),
         "reportOptionOther": MessageLookupByLibrary.simpleMessage("その他"),
@@ -260,6 +270,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("保存"),
         "screenshotEvidence":
             MessageLookupByLibrary.simpleMessage("スクリーンショットの証拠"),
+        "secondLabel": MessageLookupByLibrary.simpleMessage("二枚目"),
         "seeProfile": MessageLookupByLibrary.simpleMessage("プロフィールを見る"),
         "seeWhoLikeU":
             MessageLookupByLibrary.simpleMessage("誰があなたを好きになったか見てみて"),
@@ -272,11 +283,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "setDefault": MessageLookupByLibrary.simpleMessage("デフォルトに設定"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
         "share": MessageLookupByLibrary.simpleMessage("共有"),
+        "shareForMoreTriesMessage":
+            MessageLookupByLibrary.simpleMessage("AIドレスをもっと試すために共有してください！👇"),
         "showYourPersonality":
             MessageLookupByLibrary.simpleMessage("あなたの世界観や個性を表現してみてね ♪"),
         "signUpLastStepPageTitle":
             MessageLookupByLibrary.simpleMessage("もうすぐ完成です"),
         "sixMonths": MessageLookupByLibrary.simpleMessage("6ヶ月"),
+        "soloLabel": MessageLookupByLibrary.simpleMessage("ソロ"),
         "sonaInterpretationOff":
             MessageLookupByLibrary.simpleMessage("⭕ SONA同期通訳はオフになりました"),
         "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
@@ -304,6 +318,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionAgreementSuffix":
             MessageLookupByLibrary.simpleMessage("に同意したことになります。"),
         "takeIt": MessageLookupByLibrary.simpleMessage("使用する"),
+        "tenWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage("週にAI試着室10回"),
         "termsOfService": MessageLookupByLibrary.simpleMessage("利用規約"),
         "theKeyIsBalance": MessageLookupByLibrary.simpleMessage("バランスが鍵です"),
         "theyAreWaitingForYourReply":
@@ -313,6 +329,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("👀1日の制限に達しました"),
         "toastHitWeeklyMaximumLimit":
             MessageLookupByLibrary.simpleMessage("👅週の制限に達しました"),
+        "twentyWeeklyDressUpRightsMessage":
+            MessageLookupByLibrary.simpleMessage("週に20回のAI試着室（女性専用の権利）"),
         "unmissableSpecialOfferPrices":
             MessageLookupByLibrary.simpleMessage("見逃せない特別オファー価格！"),
         "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("写真をアップロード"),

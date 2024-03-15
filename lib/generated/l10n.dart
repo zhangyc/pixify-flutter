@@ -2290,10 +2290,10 @@ class S {
     );
   }
 
-  /// `20 Duo Snap  / week`
+  /// `10 Duo Snap  / week`
   String get plusPerkDuoSnap {
     return Intl.message(
-      '20 Duo Snap  / week',
+      '10 Duo Snap  / week',
       name: 'plusPerkDuoSnap',
       desc: '',
       args: [],
@@ -2555,6 +2555,136 @@ class S {
     return Intl.message(
       'Weekly limit reached',
       name: 'weeklyLimitReached',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear portrait photos lead to better quality`
+  String get betterQualityMessage {
+    return Intl.message(
+      'Clear portrait photos lead to better quality',
+      name: 'betterQualityMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Records`
+  String get recordsLabel {
+    return Intl.message(
+      'Records',
+      name: 'recordsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Solo`
+  String get soloLabel {
+    return Intl.message(
+      'Solo',
+      name: 'soloLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share to get more AI Dress tries!👇`
+  String get shareForMoreTriesMessage {
+    return Intl.message(
+      'Share to get more AI Dress tries!👇',
+      name: 'shareForMoreTriesMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI Dress up`
+  String get aiDressUpLabel {
+    return Intl.message(
+      'AI Dress up',
+      name: 'aiDressUpLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Free`
+  String get freeLabel {
+    return Intl.message(
+      'Free',
+      name: 'freeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add 2 solo photos`
+  String get addTwoSoloPhotosMessage {
+    return Intl.message(
+      'Add 2 solo photos',
+      name: 'addTwoSoloPhotosMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Example`
+  String get exampleLabel {
+    return Intl.message(
+      'Example',
+      name: 'exampleLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generate`
+  String get generateButtonLabel {
+    return Intl.message(
+      'Generate',
+      name: 'generateButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First`
+  String get firstLabel {
+    return Intl.message(
+      'First',
+      name: 'firstLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Second`
+  String get secondLabel {
+    return Intl.message(
+      'Second',
+      name: 'secondLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `20 AI Dress up / week (Ladies-specific rights)`
+  String get twentyWeeklyDressUpRightsMessage {
+    return Intl.message(
+      '20 AI Dress up / week (Ladies-specific rights)',
+      name: 'twentyWeeklyDressUpRightsMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `10 AI Dress up / week`
+  String get tenWeeklyDressUpRightsMessage {
+    return Intl.message(
+      '10 AI Dress up / week',
+      name: 'tenWeeklyDressUpRightsMessage',
       desc: '',
       args: [],
     );

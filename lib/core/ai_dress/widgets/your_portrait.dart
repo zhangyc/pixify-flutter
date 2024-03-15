@@ -108,7 +108,7 @@ class YourPortrait extends StatelessWidget {
             alignment: Alignment.center,
             width: 343,
             height: 56,
-            child: Text('Generate',style: TextStyle(
+            child: Text(S.current.generateButtonLabel,style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: 16,
                 color: Colors.white
