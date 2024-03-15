@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/chat/models/audio_message.dart';
 import 'package:sona/core/chat/providers/audio.dart';
@@ -28,7 +27,10 @@ class AudioMessageControls extends ConsumerStatefulWidget {
 }
 
 class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
-  final _bgColor = Color(0xFFF6F3F3);
+  late final _width = widget.duration.inSeconds / 2 + 165;
+  late final _bgColor = widget.fromMe ? Theme.of(context).primaryColor : const Color(0xFFF6F3F3);
+  late final _playProgressColor = widget.fromMe ? const Color(0xFF454545) : const Color(0xFFE8E6E6);
+  late final _contentColor = widget.fromMe ? Colors.white : Theme.of(context).primaryColor;
   late final player = ref.read(audioPlayerProvider(widget.chatId));
 
   @override
@@ -48,32 +50,16 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
           player.play(DeviceFileSource(widget.file.path), position: Duration(milliseconds: 0));
         }
       },
-      child: Container(
-        constraints: BoxConstraints(
-          minWidth: 128,
-          maxWidth: MediaQuery.of(context).size.width * 0.6
-        ),
-        child: Row(
-          children: [
-            if (widget.fromMe) _speedButton(),
-            Expanded(
-              child: StreamBuilder<Duration>(
-                stream: player.onPositionChanged,
-                builder: (context, snapshot) {
-                  if (snapshot.data == null) {
-                    return Container(
-                      height: 48,
-                      padding: EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: _bgColor,
-                        border: Border.all(color: Color(0xFF2C2C2C), width: 1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                          children: !widget.fromMe ? _controlsWidgets() : _controlsWidgets().reversed.toList()
-                      ),
-                    );
-                  }
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (widget.fromMe && isCurrent) _speedButton(),
+          SizedBox(
+            width: _width,
+            child: StreamBuilder<Duration>(
+              stream: player.onPositionChanged,
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
                   return Container(
                     height: 48,
                     padding: EdgeInsets.symmetric(horizontal: 12),
@@ -81,46 +67,58 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
                       color: _bgColor,
                       border: Border.all(color: Color(0xFF2C2C2C), width: 1),
                       borderRadius: BorderRadius.circular(20),
-                      gradient: isCurrent ? LinearGradient(
-                        begin: !widget.fromMe ? Alignment.centerLeft : Alignment.centerRight,
-                        end: !widget.fromMe ? Alignment.centerRight : Alignment.centerLeft,
-                        stops: [
-                          snapshot.data!.inMilliseconds / widget.duration.inMilliseconds,
-                          snapshot.data!.inMilliseconds / widget.duration.inMilliseconds,
-                        ],
-                        colors: [
-                          Color(0xFFE8E6E6),
-                          _bgColor
-                        ]
-                      ) : null
                     ),
                     child: Row(
-                      children: !widget.fromMe ? _controlsWidgets() : _controlsWidgets().reversed.toList()
+                        children: !widget.fromMe ? _controlsWidgets() : _controlsWidgets().reversed.toList()
                     ),
                   );
                 }
-              ),
+                return Container(
+                  height: 48,
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: _bgColor,
+                    border: Border.all(color: Color(0xFF2C2C2C), width: 1),
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: isCurrent ? LinearGradient(
+                      stops: [
+                        snapshot.data!.inMilliseconds / widget.duration.inMilliseconds,
+                        snapshot.data!.inMilliseconds / widget.duration.inMilliseconds,
+                      ],
+                      colors: [
+                        _playProgressColor,
+                        _bgColor
+                      ]
+                    ) : null
+                  ),
+                  child: Row(
+                    children: !widget.fromMe ? _controlsWidgets() : _controlsWidgets().reversed.toList()
+                  ),
+                );
+              }
             ),
-            if (!widget.fromMe) _speedButton()
-          ],
-        ),
+          ),
+          if (!widget.fromMe && isCurrent) _speedButton()
+        ],
       ),
     );
   }
 
   List<Widget> _controlsWidgets() {
     return [
-      Icon(CupertinoIcons.waveform, size: 24),
+      Icon(CupertinoIcons.waveform, size: 24, color: _contentColor),
       SizedBox(width: 12),
-      Text('${(widget.duration.inMilliseconds / 1000).ceil().toString()}s', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
+      Text('${(widget.duration.inMilliseconds / 1000).ceil().toString()}s',
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: _contentColor)
+      ),
       Expanded(child: Container()),
       if (ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) StreamBuilder<PlayerState>(
           stream: player.onPlayerStateChanged,
           builder: (_, snapshot) {
             if (snapshot.data == PlayerState.paused) {
-              return Icon(CupertinoIcons.play);
+              return Icon(CupertinoIcons.play, color: _contentColor,);
             }
-            return Icon(CupertinoIcons.pause);
+            return Icon(CupertinoIcons.pause, color: _contentColor,);
           }
       ),
     ];
@@ -143,7 +141,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
         child: Text('x${ref.watch(audioMessagePlaySpeedProvider(widget.chatId)) == 1.0 ? '1' : '0.5'}',
           style: TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w800
+              fontWeight: FontWeight.w800,
           ),
         ),
       ),

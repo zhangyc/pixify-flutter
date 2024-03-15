@@ -126,6 +126,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

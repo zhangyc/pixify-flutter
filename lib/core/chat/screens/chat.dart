@@ -39,6 +39,7 @@ import '../models/text_message.dart';
 import '../widgets/inputbar/mode_provider.dart';
 import '../widgets/message/audio_message.dart';
 import '../widgets/message/image_message.dart';
+import '../widgets/message/message.dart';
 import '../widgets/message/text_message.dart';
 
 class ChatScreen extends StatefulHookConsumerWidget {
@@ -173,7 +174,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 sameLanguage: myLocale == otherLocale,
                 onSendMessage: _sendMessage,
               ) : Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: OutlinedButton(
                     onPressed: () => showSubscription(FromTag.pay_chat_sonamsg),
                     style: ButtonStyle(
@@ -333,64 +334,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   _buildMessage(int index,ImMessage message,List<ImMessage> messages) {
-    return switch(message.runtimeType) {
-      TextMessage => TextMessageWidget(
-        key: ValueKey(message.uuid ?? message.id),
-        prevMessage: index == messages.length - 1 ? null : messages[index + 1],
-        message: messages[index],
-        mySide: mySide,
-        otherSide: widget.otherSide,
-        myLocale: myLocale,
-        otherLocale: otherLocale,
-        onDelete: _deleteMessage,
-        onResend: _resendMessage,
-        onAvatarTap: _showInfo,
-      ),
-      ImageMessage => ImageMessageWidget(
-        key: ValueKey(messages[index].uuid ?? messages[index].id),
-        prevMessage: index == messages.length - 1 ? null : messages[index + 1],
-        message: messages[index],
-        fromMe: mySide.id == messages[index].sender.id,
-        mySide: mySide,
-        otherSide: widget.otherSide,
-        myLocale: myLocale,
-        otherLocale: otherLocale,
-        // onPendingMessageSucceed: _onPendingMessageSucceed,
-        // onShorten: _shortenMessage,
-        onDelete: _deleteMessage,
-        onResend: _resendMessage,
-        onAvatarTap: _showInfo,
-      ),
-      AudioMessage => AudioMessageWidget(
-        key: ValueKey(messages[index].uuid ?? messages[index].id),
-        prevMessage: index == messages.length - 1 ? null : messages[index + 1],
-        message: messages[index] as AudioMessage,
-        fromMe: mySide.id == messages[index].sender.id,
-        mySide: mySide,
-        otherSide: widget.otherSide,
-        myLocale: myLocale,
-        otherLocale: otherLocale,
-        // onPendingMessageSucceed: _onPendingMessageSucceed,
-        // onShorten: _shortenMessage,
-        onDelete: _deleteMessage,
-        onResend: _resendMessage,
-        onAvatarTap: _showInfo,
-      ),
-      _ => UnknownMessageWidget(
-        key: ValueKey(messages[index].uuid ?? messages[index].id),
-        prevMessage: index == messages.length - 1 ? null : messages[index + 1],
-        message: messages[index],
-        fromMe: mySide.id == messages[index].sender.id,
-        mySide: mySide,
-        otherSide: widget.otherSide,
-        myLocale: myLocale,
-        otherLocale: otherLocale,
-        // onPendingMessageSucceed: _onPendingMessageSucceed,
-        // onShorten: _shortenMessage,
-        onDelete: _deleteMessage,
-        onAvatarTap: _showInfo,
-      )
-    };
+    return ImMessageWidget(
+      key: ValueKey(message.uuid ?? message.id),
+      prevMessage: index == messages.length - 1 ? null : messages[index + 1],
+      message: messages[index],
+      mySide: mySide,
+      otherSide: widget.otherSide,
+      myLocale: myLocale,
+      otherLocale: otherLocale,
+      onDelete: _deleteMessage,
+      onResend: _resendMessage,
+      onAvatarTap: _showInfo,
+    );
   }
 }
 

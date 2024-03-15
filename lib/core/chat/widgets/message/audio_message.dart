@@ -24,26 +24,18 @@ class AudioMessageWidget extends ConsumerStatefulWidget {
     super.key,
     required this.prevMessage,
     required this.message,
-    required this.fromMe,
     required this.mySide,
     required this.otherSide,
     required this.myLocale,
     required this.otherLocale,
-    required this.onDelete,
-    this.onResend,
-    this.onAvatarTap
   });
 
   final ImMessage? prevMessage;
   final AudioMessage message;
-  final bool fromMe;
   final UserInfo mySide;
   final UserInfo otherSide;
   final Locale? myLocale;
   final Locale? otherLocale;
-  final Future Function(ImMessage) onDelete;
-  final Future Function(ImMessage)? onResend;
-  final Function()? onAvatarTap;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AudioMessageWidgetState();
@@ -51,11 +43,9 @@ class AudioMessageWidget extends ConsumerStatefulWidget {
 
 class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
 
-  var _clicked = true;
-
+  bool get _fromMe => widget.message.sender.id == widget.mySide.id;
   var _loading = true;
   var _hasError = false;
-  bool get _hasData => !_loading && !_hasError;
 
   Duration? duration;
   String? url;
@@ -74,7 +64,7 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
       Map map =  widget.message.content;
       url = map['url'];
       localPath = map['localExtension']?['path'];
-      duration = Duration(milliseconds: (map['duration'] * 1000.0).toInt());
+      duration = Duration(milliseconds: (widget.message.duration! * 1000.0).toInt());
       text = map['recognizedText'];
       translatedText = map['translatedText'];
       words = map['words'];
@@ -92,142 +82,81 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
+    return Flexible(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: _fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          if (widget.prevMessage == null || widget.prevMessage!.time.add(const Duration(minutes: 5)).isBefore(widget.message.time))
-            MessageTime(time: widget.message.time),
-          SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: widget.fromMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (!widget.fromMe) Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: GestureDetector(
-                    onTap: widget.onAvatarTap,
-                    child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(40))
-                ),
-              ),
-              Flexible(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: widget.fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                  children: [
-                    if (localPath != null) AudioMessageControls(
-                      chatId: widget.otherSide.id ,
-                      message: widget.message,
-                      fromMe: widget.fromMe,
-                      file: File(localPath!),
-                      duration: duration!,
-                    )
-                    else FutureBuilder(
-                      future: messageAudioCacheManager.getSingleFile(url!),
-                      builder: (_, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: SizedBox(width: 32, height: 32, child: CircularProgressIndicator()));
-                        }
-                        if (snapshot.hasError) {
-                          return Container(
-                            padding: EdgeInsets.symmetric(vertical: 4),
-                            child: const Text('some error happens'),
-                          );
-                        }
-                        if (snapshot.hasData) {
-                          localPath = snapshot.data!.path;
-                          if (widget.message.content['localExtension'] == null) {
-                            widget.message.content['localExtension'] = {'path': localPath};
-                          } else {
-                            widget.message.content['localExtension']['path'] = localPath;
-                          }
-                          return AudioMessageControls(
-                            chatId: widget.otherSide.id,
-                            message: widget.message,
-                            fromMe: widget.fromMe,
-                            file: snapshot.data!,
-                            duration: duration!,
-                          );
-                        }
-                        return Container(
-                          padding: EdgeInsets.symmetric(vertical: 4),
-                          child: const Text('some error happens'),
-                        );
-                      }
-                    ),
-                    SizedBox(height: 6),
-                    if (ref.watch(playedAudioMessageUuidsProvider(widget.message.chatId)).contains(widget.message.uuid) && ref.watch(currentPlayingAudioMessageIdProvider) != widget.message.uuid) Container(
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.6
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: widget.message.chatId == widget.message.receiver.id ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                        children: [
-                          if (widget.message.recognizedText != null) Text(widget.message.recognizedText!,
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).primaryColor,
-                                height: 1.5,
-                                fontFamilyFallback: [
-                                  if (Platform.isAndroid) 'Source Han Sans',
-                                  // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
-                                  // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
-                                ],
-                              )),
-                          if (widget.message.translatedText != null && widget.message.translatedText!.isNotEmpty) Divider(color: Colors.black.withOpacity(0.03)),
-                          if (widget.message.translatedText != null && widget.message.translatedText!.isNotEmpty) Text(widget.message.translatedText!,
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).primaryColor,
-                                height: 1.5,
-                                fontFamilyFallback: [
-                                  if (Platform.isAndroid) 'Source Han Sans',
-                                  // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
-                                  // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
-                                ],
-                              )),
-                        ],
-                      ),
-                    )
-                    else if (ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) TypeWriter(key: ValueKey(widget.message.translatedText), message: widget.message)
-                  ],
-                ),
-              ),
-              if (widget.fromMe) Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: UserAvatar(url: widget.mySide.avatar!, size: Size.square(40)),
-              ),
-            ],
+          if (localPath != null) AudioMessageControls(
+            chatId: widget.otherSide.id ,
+            message: widget.message,
+            fromMe: _fromMe,
+            file: File(localPath!),
+            duration: duration!,
+          )
+          else FutureBuilder(
+            future: messageAudioCacheManager.getSingleFile(url!),
+            builder: (_, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: SizedBox(width: 32, height: 32, child: CircularProgressIndicator()));
+              }
+              if (snapshot.hasError) {
+                return Container(
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: const Text('some error happens'),
+                );
+              }
+              if (snapshot.hasData) {
+                localPath = snapshot.data!.path;
+                if (widget.message.content['localExtension'] == null) {
+                  widget.message.content['localExtension'] = {'path': localPath};
+                } else {
+                  widget.message.content['localExtension']['path'] = localPath;
+                }
+                return AudioMessageControls(
+                  chatId: widget.otherSide.id,
+                  message: widget.message,
+                  fromMe: _fromMe,
+                  file: snapshot.data!,
+                  duration: duration!,
+                );
+              }
+              return Container(
+                padding: EdgeInsets.symmetric(vertical: 4),
+                child: const Text('some error happens'),
+              );
+            }
           ),
-          // if (widget.message.sendingParams != null) ref.watch(asyncMessageSendingProvider(widget.message.sendingParams!)).when(
-          //     data: (data) {
-          //       if (data.success) {
-          //         return Container();
-          //       } else {
-          //         return switch (data.error) {
-          //           MessageSendingError.maximumLimit => Container(),
-          //           MessageSendingError.contentFilter => Container(),
-          //           _ => Row(
-          //             mainAxisSize: MainAxisSize.min,
-          //             mainAxisAlignment: MainAxisAlignment.center,
-          //             children: [
-          //               ColoredButton(
-          //                   onTap: () {
-          //                     widget.onResend!(widget.message);
-          //                   },
-          //                   color: Color(0xFFF6F3F3),
-          //                   fontColor: Theme.of(context).primaryColor,
-          //                   borderColor: Colors.transparent,
-          //                   text: S.current.buttonResend
-          //               ),
-          //             ],
-          //           )
-          //         };
-          //       }
-          //     },
-          //     error: (_, __) => Container(),
-          //     loading: () => Container()
-          // )
+          SizedBox(height: 6),
+          if (ref.watch(playedAudioMessageUuidsProvider(widget.message.chatId)).contains(widget.message.uuid) && ref.watch(currentPlayingAudioMessageIdProvider) != widget.message.uuid) Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (widget.message.recognizedText != null) Text(widget.message.recognizedText!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).primaryColor,
+                      height: 1.5,
+                      fontFamilyFallback: [
+                        if (Platform.isAndroid) 'Source Han Sans',
+                        // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                        // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                      ],
+                    )),
+                if (widget.message.translatedText != null && widget.message.translatedText!.isNotEmpty) Text(widget.message.translatedText!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).primaryColor,
+                      height: 1.5,
+                      fontFamilyFallback: [
+                        if (Platform.isAndroid) 'Source Han Sans',
+                        // if (Platform.isIOS && text?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                        // if (Platform.isIOS && text?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                      ],
+                    )),
+              ],
+            ),
+          )
+          else if (ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) TypeWriter(key: ValueKey(widget.message.translatedText), message: widget.message)
         ],
       ),
     );

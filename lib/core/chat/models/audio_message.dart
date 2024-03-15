@@ -48,6 +48,8 @@ class AudioMessage extends ImMessage {
     }
     content['type'] = json['contentType'];
     final duration = content['duration'];
+    double dur = (duration is int) ? duration.toDouble() : duration;
+    if (dur < 1.0) dur = 1.0;
 
     return AudioMessage(
       chatId: json['sendUserId'] == profile!.id ? json['receiveUserId'] : json['sendUserId'],
@@ -58,7 +60,7 @@ class AudioMessage extends ImMessage {
       time: (json['createDate'] as Timestamp).toDate(),
       content: content,
       url: content['url'] ?? '',
-      duration: (duration is int) ? duration.toDouble() : duration,
+      duration: dur,
       recognizedText: content['recognizedText'],
       translatedText: content['translatedText'],
       sourceLocale: content['sourceLocale'],
