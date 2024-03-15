@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
@@ -285,7 +286,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                         }
                       });
                     },
-                    child: Icon(Icons.keyboard_voice, size: 28, color: Colors.white)
+                    child: Icon(CupertinoIcons.mic, size: 28, color: Colors.white)
                 ),
               )
               else Container(

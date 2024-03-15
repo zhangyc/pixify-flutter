@@ -112,7 +112,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
     return [
       Icon(CupertinoIcons.waveform, size: 24),
       SizedBox(width: 12),
-      Text('${widget.duration.inSeconds.toString()}s', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
+      Text('${(widget.duration.inMilliseconds / 1000).ceil().toString()}s', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
       Expanded(child: Container()),
       if (ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) StreamBuilder<PlayerState>(
           stream: player.onPlayerStateChanged,
