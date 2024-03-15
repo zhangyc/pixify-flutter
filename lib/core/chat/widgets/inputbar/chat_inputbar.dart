@@ -144,7 +144,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   height: 54,
                   margin: EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1.5, color: Theme.of(context).primaryColor),
+                    border: Border.all(width: 2, color: Theme.of(context).primaryColor),
                     borderRadius: BorderRadius.circular(12)
                   ),
                   clipBehavior: Clip.antiAlias,
@@ -186,11 +186,11 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                     cursorWidth: 1.8,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.6),
+                        borderSide: BorderSide(width: 2),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.6),
+                        borderSide: BorderSide(width: 2),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
