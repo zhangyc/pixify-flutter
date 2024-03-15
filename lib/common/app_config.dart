@@ -12,3 +12,8 @@ double get viewInsetsBottom => appCommonBox.get('viewInsetsBottom',defaultValue:
 set viewInsetsBottom(value){
   appCommonBox.put('viewInsetsBottom', value);
 }
+
+bool get firstShare => appCommonBox.get('firstShare',defaultValue: false);
+set firstShare(value){
+  appCommonBox.put('firstShare', value);
+}

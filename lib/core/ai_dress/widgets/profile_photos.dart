@@ -65,11 +65,9 @@ class ProfilePhotos extends StatelessWidget {
                        clipBehavior: Clip.antiAlias,
                      ),
                      onTap: () async{
-                       // Navigator.pop(context);
                        File? file=await DefaultCacheManager().getSingleFile(p.url);
                        if(file!=null){
                          Navigator.pop(context,file.readAsBytesSync());
-                         // showYourPortrait(context, file.readAsBytesSync(),template);
                        }
                      },
                    );

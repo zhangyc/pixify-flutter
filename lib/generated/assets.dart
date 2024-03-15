@@ -121,6 +121,7 @@ class Assets {
   static const String svgLike = 'assets/svg/like.svg';
   static const String svgLikeTag = 'assets/svg/like_tag.svg';
   static const String svgShare = 'assets/svg/share.svg';
+  static const String svgTooltip = 'assets/svg/tooltip.svg';
   static const String videosLanding = 'assets/videos/landing.mp4';
 
 }
