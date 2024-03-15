@@ -310,7 +310,12 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06)),
                                 ),
-                                child: Text(S.of(context).buttonUnlockVipPerks, style: Theme.of(context).textTheme.titleMedium)
+                                child: Row(
+                                  children: [
+                                    Text(S.of(context).buttonUnlockVipPerks, style: Theme.of(context).textTheme.titleMedium),
+
+                                  ],
+                                )
                             ),
                             if (ref.watch(myProfileProvider)!.isMember) FilledButton(
                                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SubscribePage(fromTag: FromTag.profile_myplan))),
@@ -348,7 +353,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                           width: 4,
                                         ),
                                         Text(
-                                            'AI dress',
+                                            S.current.aiDressUpLabel,
                                             style: Theme.of(context).textTheme.titleMedium
                                         ),
                                       ],
@@ -364,7 +369,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                             vertical: 2,
                                             horizontal: 6
                                           ),
-                                          child: Text('FREE',),
+                                          child: Text(S.current.freeLabel,),
                                         ),
                                         SizedBox(
                                           width: 4,
@@ -373,7 +378,6 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
 
                                       ],
                                     )
-
                                   ],
                                 )
                             ),
