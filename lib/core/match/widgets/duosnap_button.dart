@@ -5,6 +5,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_editor/image_editor.dart';
+import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/match/bean/match_user.dart';
 import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
@@ -48,24 +49,46 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
             canvasSize: Size(600*2, 800),
             format: OutputFormat.png(),
           );
-          option.addImage(
-            MergeImageConfig(
-              image: MemoryImageSource(src.file.readAsBytesSync()),
-              position: ImagePosition(
-                Offset(0, 0),
-                Size(600,800),
+          if(widget.target.gender==Gender.male){
+            option.addImage(
+              MergeImageConfig(
+                image: MemoryImageSource(src.file.readAsBytesSync()),
+                position: ImagePosition(
+                  Offset(0, 0),
+                  Size(600,800),
+                ),
               ),
-            ),
-          );
-          option.addImage(
-            MergeImageConfig(
-              image: MemoryImageSource(dst.file.readAsBytesSync()),
-              position: ImagePosition(
-                Offset(600, 0),
-                Size(600,800),
+            );
+            option.addImage(
+              MergeImageConfig(
+                image: MemoryImageSource(dst.file.readAsBytesSync()),
+                position: ImagePosition(
+                  Offset(600, 0),
+                  Size(600,800),
+                ),
               ),
-            ),
-          );
+            );
+          }else {
+            option.addImage(
+              MergeImageConfig(
+                image: MemoryImageSource(dst.file.readAsBytesSync()),
+                position: ImagePosition(
+                  Offset(0, 0),
+                  Size(600,800),
+                ),
+              ),
+            );
+            option.addImage(
+              MergeImageConfig(
+                image: MemoryImageSource(src.file.readAsBytesSync()),
+                position: ImagePosition(
+                  Offset(600, 0),
+                  Size(600,800),
+                ),
+              ),
+            );
+          }
+
           final result = await ImageMerger.mergeToMemory(option: option);
           final s =await uploadFile(bytes: result!);
           final response=await post('/merge-photo/create',data: {
