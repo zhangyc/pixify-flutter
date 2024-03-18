@@ -154,6 +154,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "freeLabel": MessageLookupByLibrary.simpleMessage("무료"),
         "friendsIntention":
             MessageLookupByLibrary.simpleMessage("헤이, 너 정말 멋진 것 같아. 친구가 되어볼래?"),
+        "fromLibrary": MessageLookupByLibrary.simpleMessage("앨범"),
+        "fromProfile": MessageLookupByLibrary.simpleMessage("프로필"),
+        "fromTakeAPhoto": MessageLookupByLibrary.simpleMessage("사진 찍기"),
         "generateButtonLabel": MessageLookupByLibrary.simpleMessage("생성"),
         "generating": MessageLookupByLibrary.simpleMessage("생성 중"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plus받기"),

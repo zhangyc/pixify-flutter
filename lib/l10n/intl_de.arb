@@ -527,5 +527,11 @@
   "twentyWeeklyDressUpRightsMessage": "20 AI-Kleider pro Woche (Spezifische Rechte für Damen)",
   "@twentyWeeklyDressUpRightsMessage": {},
   "tenWeeklyDressUpRightsMessage": "10 AI-Kleider pro Woche",
-  "@tenWeeklyDressUpRightsMessage": {}
+  "@tenWeeklyDressUpRightsMessage": {},
+  "fromLibrary": "Album",
+  "@fromLibrary": {},
+  "fromProfile": "Profil",
+  "@fromProfile": {},
+  "fromTakeAPhoto": "Ein Foto machen",
+  "@fromTakeAPhoto": {}
 }

@@ -527,5 +527,11 @@
   "twentyWeeklyDressUpRightsMessage": "週に20回のAI試着室（女性専用の権利）",
   "@twentyWeeklyDressUpRightsMessage": {},
   "tenWeeklyDressUpRightsMessage": "週にAI試着室10回",
-  "@tenWeeklyDressUpRightsMessage": {}
+  "@tenWeeklyDressUpRightsMessage": {},
+  "fromLibrary": "アルバム",
+  "@fromLibrary": {},
+  "fromProfile": "プロフィール",
+  "@fromProfile": {},
+  "fromTakeAPhoto": "写真を撮る",
+  "@fromTakeAPhoto": {}
 }

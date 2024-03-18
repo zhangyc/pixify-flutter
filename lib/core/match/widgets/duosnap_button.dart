@@ -49,7 +49,7 @@ class _DuosnapButtonState extends ConsumerState<DuosnapButton> {
             canvasSize: Size(600*2, 800),
             format: OutputFormat.png(),
           );
-          if(widget.target.gender==Gender.male){
+          if(ref.read(myProfileProvider)?.gender==Gender.male){
             option.addImage(
               MergeImageConfig(
                 image: MemoryImageSource(src.file.readAsBytesSync()),

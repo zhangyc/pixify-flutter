@@ -527,5 +527,11 @@
   "twentyWeeklyDressUpRightsMessage": "每週20次AI換裝（女士專屬權利）",
   "@twentyWeeklyDressUpRightsMessage": {},
   "tenWeeklyDressUpRightsMessage": "每週10次AI換裝",
-  "@tenWeeklyDressUpRightsMessage": {}
+  "@tenWeeklyDressUpRightsMessage": {},
+  "fromLibrary": "相册",
+  "@fromLibrary": {},
+  "fromProfile": "个人资料",
+  "@fromProfile": {},
+  "fromTakeAPhoto": "拍照",
+  "@fromTakeAPhoto": {}
 }

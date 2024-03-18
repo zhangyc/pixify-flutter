@@ -527,5 +527,11 @@
   "twentyWeeklyDressUpRightsMessage": "สิทธิพิเศษสำหรับสตรี 20 AI Dress up / สัปดาห์",
   "@twentyWeeklyDressUpRightsMessage": {},
   "tenWeeklyDressUpRightsMessage": "10 ชุด AI Dress up / สัปดาห์",
-  "@tenWeeklyDressUpRightsMessage": {}
+  "@tenWeeklyDressUpRightsMessage": {},
+  "fromLibrary": "อัลบั้ม",
+  "@fromLibrary": {},
+  "fromProfile": "ข้อมูลส่วนตัว",
+  "@fromProfile": {},
+  "fromTakeAPhoto": "ถ่ายรูป",
+  "@fromTakeAPhoto": {}
 }

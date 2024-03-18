@@ -2689,6 +2689,36 @@ class S {
       args: [],
     );
   }
+
+  /// `From libary`
+  String get fromLibrary {
+    return Intl.message(
+      'From libary',
+      name: 'fromLibrary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From profile`
+  String get fromProfile {
+    return Intl.message(
+      'From profile',
+      name: 'fromProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take a photo`
+  String get fromTakeAPhoto {
+    return Intl.message(
+      'Take a photo',
+      name: 'fromTakeAPhoto',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

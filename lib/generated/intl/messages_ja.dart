@@ -150,6 +150,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "freeLabel": MessageLookupByLibrary.simpleMessage("無料"),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "こんにちは!面白そうな人だね。ちょっと話してみませんか？"),
+        "fromLibrary": MessageLookupByLibrary.simpleMessage("アルバム"),
+        "fromProfile": MessageLookupByLibrary.simpleMessage("プロフィール"),
+        "fromTakeAPhoto": MessageLookupByLibrary.simpleMessage("写真を撮る"),
         "generateButtonLabel": MessageLookupByLibrary.simpleMessage("生成する"),
         "generating": MessageLookupByLibrary.simpleMessage("生成中"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("SONA Plusを入手"),

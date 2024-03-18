@@ -174,6 +174,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "freeLabel": MessageLookupByLibrary.simpleMessage("Бесплатно"),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Привет, я думаю, ты потрясающий. Давай подружимся?"),
+        "fromLibrary": MessageLookupByLibrary.simpleMessage("Альбом"),
+        "fromProfile": MessageLookupByLibrary.simpleMessage("Профиль"),
+        "fromTakeAPhoto": MessageLookupByLibrary.simpleMessage("Сделать фото"),
         "generateButtonLabel":
             MessageLookupByLibrary.simpleMessage("Генерировать"),
         "generating": MessageLookupByLibrary.simpleMessage("Генерация"),

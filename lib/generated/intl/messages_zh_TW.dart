@@ -147,6 +147,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "freeLabel": MessageLookupByLibrary.simpleMessage("免费"),
         "friendsIntention":
             MessageLookupByLibrary.simpleMessage("嘿，我覺得你很棒。我們成為朋友怎麼樣？"),
+        "fromLibrary": MessageLookupByLibrary.simpleMessage("相册"),
+        "fromProfile": MessageLookupByLibrary.simpleMessage("个人资料"),
+        "fromTakeAPhoto": MessageLookupByLibrary.simpleMessage("拍照"),
         "generateButtonLabel": MessageLookupByLibrary.simpleMessage("生成"),
         "generating": MessageLookupByLibrary.simpleMessage("產生中"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("取得SONA Plus"),

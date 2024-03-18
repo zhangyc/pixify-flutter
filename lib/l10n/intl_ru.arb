@@ -527,5 +527,11 @@
   "twentyWeeklyDressUpRightsMessage": "20 переодеваний AI в неделю (Специальные права для дам)",
   "@twentyWeeklyDressUpRightsMessage": {},
   "tenWeeklyDressUpRightsMessage": "10 переодеваний AI в неделю",
-  "@tenWeeklyDressUpRightsMessage": {}
+  "@tenWeeklyDressUpRightsMessage": {},
+  "fromLibrary": "Альбом",
+  "@fromLibrary": {},
+  "fromProfile": "Профиль",
+  "@fromProfile": {},
+  "fromTakeAPhoto": "Сделать фото",
+  "@fromTakeAPhoto": {}
 }

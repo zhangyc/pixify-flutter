@@ -527,5 +527,11 @@
   "twentyWeeklyDressUpRightsMessage": "20 AI Dress up / week (Ladies-specific rights)",
   "@twentyWeeklyDressUpRightsMessage": {},
   "tenWeeklyDressUpRightsMessage": "10 AI Dress up / week",
-  "@tenWeeklyDressUpRightsMessage": {}
+  "@tenWeeklyDressUpRightsMessage": {},
+  "fromLibrary": "From libary",
+  "@fromLibrary": {},
+  "fromProfile": "From profile",
+  "@fromProfile": {},
+  "fromTakeAPhoto": "Take a photo",
+  "@fromTakeAPhoto": {}
 }

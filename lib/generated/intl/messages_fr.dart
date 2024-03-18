@@ -174,6 +174,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "freeLabel": MessageLookupByLibrary.simpleMessage("Gratuit"),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "Hé, je pense que tu es génial. Ça te dirait qu\'on devienne amis ?"),
+        "fromLibrary": MessageLookupByLibrary.simpleMessage("Album"),
+        "fromProfile": MessageLookupByLibrary.simpleMessage("Profil"),
+        "fromTakeAPhoto":
+            MessageLookupByLibrary.simpleMessage("Prendre une photo"),
         "generateButtonLabel": MessageLookupByLibrary.simpleMessage("Générer"),
         "generating": MessageLookupByLibrary.simpleMessage("Générant"),
         "getSonaPlus":

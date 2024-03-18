@@ -527,5 +527,11 @@
   "twentyWeeklyDressUpRightsMessage": "20 Mudanças de roupa AI por semana (Direitos específicos para senhoras)",
   "@twentyWeeklyDressUpRightsMessage": {},
   "tenWeeklyDressUpRightsMessage": "10 trocas de roupa AI por semana",
-  "@tenWeeklyDressUpRightsMessage": {}
+  "@tenWeeklyDressUpRightsMessage": {},
+  "fromLibrary": "Álbum",
+  "@fromLibrary": {},
+  "fromProfile": "Perfil",
+  "@fromProfile": {},
+  "fromTakeAPhoto": "Tirar uma foto",
+  "@fromTakeAPhoto": {}
 }

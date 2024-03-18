@@ -168,6 +168,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "freeLabel": MessageLookupByLibrary.simpleMessage("ฟรี"),
         "friendsIntention": MessageLookupByLibrary.simpleMessage(
             "เฮ้ย ฉันว่านายน่าทึ่งมาก มาเป็นเพื่อนกันไหม?"),
+        "fromLibrary": MessageLookupByLibrary.simpleMessage("อัลบั้ม"),
+        "fromProfile": MessageLookupByLibrary.simpleMessage("ข้อมูลส่วนตัว"),
+        "fromTakeAPhoto": MessageLookupByLibrary.simpleMessage("ถ่ายรูป"),
         "generateButtonLabel": MessageLookupByLibrary.simpleMessage("สร้าง"),
         "generating": MessageLookupByLibrary.simpleMessage("กำลังสร้าง"),
         "getSonaPlus": MessageLookupByLibrary.simpleMessage("รับ SONA Plus"),

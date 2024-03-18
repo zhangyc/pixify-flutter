@@ -527,5 +527,11 @@
   "twentyWeeklyDressUpRightsMessage": "주당 20회 AI 드레스업(여성 전용 권리)",
   "@twentyWeeklyDressUpRightsMessage": {},
   "tenWeeklyDressUpRightsMessage": "주당 AI 드레스업 10회",
-  "@tenWeeklyDressUpRightsMessage": {}
+  "@tenWeeklyDressUpRightsMessage": {},
+  "fromLibrary": "앨범",
+  "@fromLibrary": {},
+  "fromProfile": "프로필",
+  "@fromProfile": {},
+  "fromTakeAPhoto": "사진 찍기",
+  "@fromTakeAPhoto": {}
 }
