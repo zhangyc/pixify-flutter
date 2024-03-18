@@ -17,3 +17,7 @@ bool get firstShare => appCommonBox.get('firstShare',defaultValue: false);
 set firstShare(value){
   appCommonBox.put('firstShare', value);
 }
+bool get freeTag => appCommonBox.get('freeTag',defaultValue: true);
+set freeTag(value){
+  appCommonBox.put('freeTag', value);
+}

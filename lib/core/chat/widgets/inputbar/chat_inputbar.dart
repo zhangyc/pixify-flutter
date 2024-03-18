@@ -393,8 +393,6 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                         ),
                         onTap: ()async{
                           if(!canDuoSnap){
-
-                            duosnap-=1;
                             if(ref.read(myProfileProvider)!.memberType==MemberType.none){
                               SonaAnalytics.log(DuoSnapEvent.Duo_click_pay.name);
                               Navigator.push(context, MaterialPageRoute(builder:(c){

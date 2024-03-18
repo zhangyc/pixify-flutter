@@ -5,16 +5,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/profile.dart';
+import 'package:sona/common/app_config.dart';
 import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/ai_dress/ai_dress_event.dart';
 import 'package:sona/core/ai_dress/ai_dress_page.dart';
 import 'package:sona/core/persona/providers/profile_progress.dart';
+import 'package:sona/core/persona/widgets/profile_banner.dart';
 import 'package:sona/core/persona/widgets/profile_progress_indicator.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/core/travel_wish/screens/travel_wish_creator.dart';
@@ -377,19 +380,23 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                     ),
                                     Row(
                                       children: [
-                                        Container(
-                                          alignment: Alignment.center,
-                                          width: 43,
-                                          height: 24,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff2c2c2c),
-                                            borderRadius: BorderRadius.circular(8)
-                                          ),
-                                          // padding: EdgeInsets.symmetric(
-                                          //   vertical: 2,
-                                          //   horizontal: 6
-                                          // ),
-                                          child: Text(S.current.freeLabel,),
+                                        ValueListenableBuilder(valueListenable: appCommonBox.listenable(keys: ['freeTag']), builder: (BuildContext context, Box<dynamic> value, Widget? child) {
+                                          bool free=freeTag;
+                                          return free?Container(
+                                            alignment: Alignment.center,
+                                            width: 43,
+                                            height: 24,
+                                            decoration: BoxDecoration(
+                                                color: Color(0xff2c2c2c),
+                                                borderRadius: BorderRadius.circular(8)
+                                            ),
+                                            // padding: EdgeInsets.symmetric(
+                                            //   vertical: 2,
+                                            //   horizontal: 6
+                                            // ),
+                                            child: Text(S.current.freeLabel,),
+                                          ):Container();
+                                         },
                                         ),
                                         SizedBox(
                                           width: 4,
@@ -415,7 +422,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
               ],
             ),
           ),
-          GenerateBanner()
+          ProfileBanner()
         ],
       ),
     );

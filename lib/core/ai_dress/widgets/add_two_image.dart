@@ -13,6 +13,7 @@ import 'package:sona/core/ai_dress/dislogs.dart';
 import 'package:sona/core/ai_dress/widgets/base_dialog_container.dart';
 
 import '../../../account/providers/profile.dart';
+import '../../../common/app_config.dart';
 import '../../../common/permission/permission.dart';
 import '../../../common/services/common.dart';
 import '../../../generated/assets.dart';
@@ -24,6 +25,7 @@ import '../../match/util/event.dart';
 import '../../match/util/http_util.dart';
 import '../../match/widgets/dialogs.dart';
 import '../../match/widgets/loading_button.dart';
+import '../../persona/widgets/profile_banner.dart';
 import '../../subscribe/model/member.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../../widgets/generate_banner.dart';
@@ -191,7 +193,7 @@ class _AddTwoImageState extends State<AddTwoImage> {
               SonaAnalytics.log(AiDressEvent.Dress_duo_gen.name);
 
               try{
-                HttpResult result=await post('/merge-photo/find-last');
+                HttpResult result=await post('/merge-photo/create-ai-dress');
                 if(result.statusCode.toString()=='60010') {
                   final option = ImageMergeOption(
                     canvasSize: Size(600*2, 800),
@@ -227,7 +229,7 @@ class _AddTwoImageState extends State<AddTwoImage> {
                   if(response.isSuccess){
                     Fluttertoast.showToast(msg:'done');
                     Future.delayed(Duration(milliseconds: 300),(){
-                      startGenerate.value=uuid.v1();
+                      startProfileGenerate.value=uuid.v1();
                     });
                   }else {
                     Fluttertoast.showToast(msg:S.current.issues);
@@ -239,7 +241,7 @@ class _AddTwoImageState extends State<AddTwoImage> {
                 Fluttertoast.showToast(msg:S.current.issues);
               }
               Navigator.pop(context);
-
+              freeTag=false;
             }, child: Container(
               alignment: Alignment.center,
               width: 343,

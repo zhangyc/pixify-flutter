@@ -135,8 +135,8 @@ class _AiDressPageState extends State<AiDressPage> {
                                 clipBehavior: Clip.antiAlias,
                               ),
                               onTap: () async{
-                                if(!canDuoSnap){
-                                  duosnap-=1;
+                                if(!canAiDress){
+                                  aiDress-=1;
                                   if(ref.read(myProfileProvider)!.memberType==MemberType.none){
                                     Navigator.push(context, MaterialPageRoute(builder:(c){
                                       return const SubscribePage(fromTag: FromTag.duo_snap,);
@@ -209,8 +209,8 @@ class _AiDressPageState extends State<AiDressPage> {
                                 clipBehavior: Clip.antiAlias,
                               ),
                               onTap: (){
-                                if(!canDuoSnap){
-                                  duosnap-=1;
+                                if(!canAiDress){
+                                  aiDress-=1;
                                   if(ref.read(myProfileProvider)!.memberType==MemberType.none){
                                     Navigator.push(context, MaterialPageRoute(builder:(c){
                                       return const SubscribePage(fromTag: FromTag.duo_snap,);

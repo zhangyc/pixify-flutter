@@ -281,8 +281,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                }
                               SonaAnalytics.log(DuoSnapEvent.click_duo.name);
                               if(!canDuoSnap){
-
-                                duosnap-=1;
                                 if(ref.read(myProfileProvider)!.memberType==MemberType.none){
                                   SonaAnalytics.log(DuoSnapEvent.Duo_click_pay.name);
                                   Navigator.push(context, MaterialPageRoute(builder:(c){
@@ -301,6 +299,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                 }
                                 return;
                               }
+
                               try{
                                 detecting=true;
                                 HttpResult result=await post('/merge-photo/find-last');

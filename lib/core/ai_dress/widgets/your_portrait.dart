@@ -12,6 +12,7 @@ import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/match/widgets/loading_button.dart';
 
 import '../../../account/providers/profile.dart';
+import '../../../common/app_config.dart';
 import '../../../common/permission/permission.dart';
 import '../../../common/services/common.dart';
 import '../../../generated/assets.dart';
@@ -20,6 +21,7 @@ import '../../../utils/global/global.dart';
 import '../../match/util/event.dart';
 import '../../match/util/http_util.dart';
 import '../../persona/screens/persona.dart';
+import '../../persona/widgets/profile_banner.dart';
 import '../../subscribe/model/member.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../../widgets/generate_banner.dart';
@@ -72,7 +74,7 @@ class YourPortrait extends StatelessWidget {
             SonaAnalytics.log(AiDressEvent.Dress_solo_gen.name,);
 
             final s =await uploadFile(bytes: image);
-            final response=await post('/merge-photo/create',data: {
+            final response=await post('/merge-photo/create-ai-dress',data: {
               // 原图URL
               "photoUrl":s,
               // 模型 - 测试是任意写
@@ -81,11 +83,12 @@ class YourPortrait extends StatelessWidget {
             });
             if(response.isSuccess){
               Future.delayed(Duration(milliseconds: 300),(){
-                startGenerate.value=uuid.v1();
+                startProfileGenerate.value=uuid.v1();
               });
             }else {
               Fluttertoast.showToast(msg:S.current.issues);
             }
+            freeTag=false;
             Navigator.pop(context);
           }, child: Container(
             alignment: Alignment.center,
