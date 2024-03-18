@@ -2719,6 +2719,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Your picture is ready!`
+  String get yourPictureIsReady {
+    return Intl.message(
+      'Your picture is ready!',
+      name: 'yourPictureIsReady',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

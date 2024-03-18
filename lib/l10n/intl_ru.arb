@@ -533,5 +533,7 @@
   "fromProfile": "Профиль",
   "@fromProfile": {},
   "fromTakeAPhoto": "Сделать фото",
-  "@fromTakeAPhoto": {}
+  "@fromTakeAPhoto": {},
+  "yourPictureIsReady": "Изображение создано!",
+  "@yourPictureIsReady": {}
 }

@@ -209,7 +209,7 @@ class _GenerateBannerState extends ConsumerState<GenerateBanner> {
              SizedBox(
                width: 16,
              ),
-             Text(S.current.duoSnapIsReady,style: TextStyle(
+             Text((duoSnapTask.scene==GenerateType.profile_one.name||duoSnapTask.scene==GenerateType.profile_two.name)?S.current.yourPictureIsReady:S.current.duoSnapIsReady,style: TextStyle(
                  fontSize: 14,
                  color: Color(0xff2c2c2c),
                  fontWeight: FontWeight.w900

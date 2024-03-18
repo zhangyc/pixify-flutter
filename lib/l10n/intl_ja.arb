@@ -533,5 +533,7 @@
   "fromProfile": "プロフィール",
   "@fromProfile": {},
   "fromTakeAPhoto": "写真を撮る",
-  "@fromTakeAPhoto": {}
+  "@fromTakeAPhoto": {},
+  "yourPictureIsReady": "画像が生成されました！",
+  "@yourPictureIsReady": {}
 }

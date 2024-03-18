@@ -119,7 +119,7 @@ class SelectPhoto extends StatelessWidget {
                     right: BorderSide(width: 1.0, color: Colors.black), // 底部边框样式
                   ),
                 ),
-                child: Text(S.current.fromLibrary,
+                child: Text(S.current.fromProfile,
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w800),
                 ),
               ),

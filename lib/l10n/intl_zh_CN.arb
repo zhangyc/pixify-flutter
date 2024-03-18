@@ -533,5 +533,7 @@
   "fromProfile": "个人资料",
   "@fromProfile": {},
   "fromTakeAPhoto": "拍照",
-  "@fromTakeAPhoto": {}
+  "@fromTakeAPhoto": {},
+  "yourPictureIsReady": "图像已生成!",
+  "@yourPictureIsReady": {}
 }

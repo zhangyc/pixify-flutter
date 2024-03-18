@@ -480,6 +480,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sei ora un membro del Club"),
         "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage(
             "Puoi modificarlo in qualsiasi momento"),
-        "youSeemCool": MessageLookupByLibrary.simpleMessage("Sembri figo")
+        "youSeemCool": MessageLookupByLibrary.simpleMessage("Sembri figo"),
+        "yourPictureIsReady": MessageLookupByLibrary.simpleMessage(
+            "L\'immagine è stata generata!")
       };
 }

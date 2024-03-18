@@ -533,5 +533,7 @@
   "fromProfile": "프로필",
   "@fromProfile": {},
   "fromTakeAPhoto": "사진 찍기",
-  "@fromTakeAPhoto": {}
+  "@fromTakeAPhoto": {},
+  "yourPictureIsReady": "이미지가 생성되었습니다!",
+  "@yourPictureIsReady": {}
 }

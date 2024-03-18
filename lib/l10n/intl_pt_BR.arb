@@ -533,5 +533,7 @@
   "fromProfile": "Perfil",
   "@fromProfile": {},
   "fromTakeAPhoto": "Tirar uma foto",
-  "@fromTakeAPhoto": {}
+  "@fromTakeAPhoto": {},
+  "yourPictureIsReady": "A imagem foi gerada!",
+  "@yourPictureIsReady": {}
 }

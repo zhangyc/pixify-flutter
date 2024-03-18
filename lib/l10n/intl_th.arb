@@ -533,5 +533,7 @@
   "fromProfile": "ข้อมูลส่วนตัว",
   "@fromProfile": {},
   "fromTakeAPhoto": "ถ่ายรูป",
-  "@fromTakeAPhoto": {}
+  "@fromTakeAPhoto": {},
+  "yourPictureIsReady": "ภาพถูกสร้างแล้ว!",
+  "@yourPictureIsReady": {}
 }

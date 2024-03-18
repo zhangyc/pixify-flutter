@@ -533,5 +533,7 @@
   "fromProfile": "From profile",
   "@fromProfile": {},
   "fromTakeAPhoto": "Take a photo",
-  "@fromTakeAPhoto": {}
+  "@fromTakeAPhoto": {},
+  "yourPictureIsReady": "Your picture is ready!",
+  "@yourPictureIsReady": {}
 }

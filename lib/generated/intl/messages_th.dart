@@ -466,6 +466,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("คุณเป็นสมาชิกของคลับแล้ว"),
         "youCanEditItAnytime":
             MessageLookupByLibrary.simpleMessage("คุณสามารถแก้ไขได้ตลอดเวลา"),
-        "youSeemCool": MessageLookupByLibrary.simpleMessage("คุณดูเท่ห์นะ")
+        "youSeemCool": MessageLookupByLibrary.simpleMessage("คุณดูเท่ห์นะ"),
+        "yourPictureIsReady":
+            MessageLookupByLibrary.simpleMessage("ภาพถูกสร้างแล้ว!")
       };
 }

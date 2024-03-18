@@ -398,6 +398,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "youAreAClubMemberNow":
             MessageLookupByLibrary.simpleMessage("你现在是俱乐部会员了"),
         "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage("你可以随时编辑"),
-        "youSeemCool": MessageLookupByLibrary.simpleMessage("你看起来很酷。")
+        "youSeemCool": MessageLookupByLibrary.simpleMessage("你看起来很酷。"),
+        "yourPictureIsReady": MessageLookupByLibrary.simpleMessage("图像已生成!")
       };
 }
