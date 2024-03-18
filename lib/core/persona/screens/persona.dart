@@ -335,13 +335,16 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
                                 ),
-                                child: Text(
-                                    switch(ref.watch(myProfileProvider)!.memberType) {
-                                      MemberType.club => S.current.youAreAClubMemberNow,
-                                      MemberType.plus => S.current.buttonAlreadyPlus,
-                                      _ => ''
-                                    },
-                                    style: Theme.of(context).textTheme.titleMedium
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                      switch(ref.watch(myProfileProvider)!.memberType) {
+                                        MemberType.club => S.current.youAreAClubMemberNow,
+                                        MemberType.plus => S.current.buttonAlreadyPlus,
+                                        _ => ''
+                                      },
+                                      style: Theme.of(context).textTheme.titleMedium
+                                  ),
                                 )
                             ),
                             SizedBox(

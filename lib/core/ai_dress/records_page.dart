@@ -21,54 +21,57 @@ class _RecordsPageState extends State<RecordsPage> {
       appBar: AppBar(
         title: Text('Records'),
       ),
-      body: Consumer(
-        builder: (context, ref, _) {
-          final asyncValue = ref.watch(recordProvider);
-          return asyncValue.when(
-            data: (data) {
-              List duoSnapTemplates=data;
-              // 当 Future 成功完成时调用该回调函数
-              return GridView.builder(
-                itemCount: duoSnapTemplates.length, // 子项数量
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.75,
-                  crossAxisCount: 2, // 每行显示的子项数量
-                  mainAxisSpacing: 10.0, // 主轴方向（垂直方向）的间距
-                  crossAxisSpacing: 10.0, // 交叉轴方向（水平方向）的间距
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  DuoSnapTask template=duoSnapTemplates[index];
-                  return GestureDetector(
-                    child:template.targetPhotoUrl ==null?Container():Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(image: CachedNetworkImageProvider(template.targetPhotoUrl!),fit: BoxFit.cover),
-                          border: Border.all(
-                              color: Color(0xff2c2c2c),
-                              width: 2
-                          ),
-                          borderRadius: BorderRadius.circular(24)
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Consumer(
+          builder: (context, ref, _) {
+            final asyncValue = ref.watch(recordProvider);
+            return asyncValue.when(
+              data: (data) {
+                List duoSnapTemplates=data;
+                // 当 Future 成功完成时调用该回调函数
+                return GridView.builder(
+                  itemCount: duoSnapTemplates.length, // 子项数量
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 0.75,
+                    crossAxisCount: 2, // 每行显示的子项数量
+                    mainAxisSpacing: 10.0, // 主轴方向（垂直方向）的间距
+                    crossAxisSpacing: 10.0, // 交叉轴方向（水平方向）的间距
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    DuoSnapTask template=duoSnapTemplates[index];
+                    return GestureDetector(
+                      child:template.targetPhotoUrl ==null?Container():Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(image: CachedNetworkImageProvider(template.targetPhotoUrl!),fit: BoxFit.cover),
+                            border: Border.all(
+                                color: Color(0xff2c2c2c),
+                                width: 2
+                            ),
+                            borderRadius: BorderRadius.circular(24)
+                        ),
+                        clipBehavior: Clip.antiAlias,
                       ),
-                      clipBehavior: Clip.antiAlias,
-                    ),
-                    onTap: (){
-                      showDialog(context: context, builder: (b){
-                        return ProfileDuosnapCompleted(url: template.targetPhotoUrl!);
-                      });
-                    },
-                  );
-                },
-              );
-            },
-            loading: () {
-              // 当 Future 正在加载时调用该回调函数
-              return Center(child: SizedBox(child: CircularProgressIndicator(),width: 32,height: 32,));
-            },
-            error: (error, stackTrace) {
-              // 当 Future 发生错误时调用该回调函数
-              return Text('Error loading data: $error');
-            },
-          );
-        },
+                      onTap: (){
+                        showDialog(context: context, builder: (b){
+                          return ProfileDuosnapCompleted(url: template.targetPhotoUrl!);
+                        });
+                      },
+                    );
+                  },
+                );
+              },
+              loading: () {
+                // 当 Future 正在加载时调用该回调函数
+                return Center(child: SizedBox(child: CircularProgressIndicator(),width: 32,height: 32,));
+              },
+              error: (error, stackTrace) {
+                // 当 Future 发生错误时调用该回调函数
+                return Text('Error loading data: $error');
+              },
+            );
+          },
+        ),
       ),
     );
   }
