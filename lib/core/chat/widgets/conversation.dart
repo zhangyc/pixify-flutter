@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -115,6 +116,16 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
             width: 4,
           ),
           Text('${S.current.duoSnap}!')
+        ],
+      );
+    } else if (contentType == 3) {
+      return Row(
+        children: [
+          Icon(CupertinoIcons.mic, size: 14),
+          SizedBox(
+            width: 4,
+          ),
+          Text('Voice Message')
         ],
       );
     } else {

@@ -7,6 +7,7 @@ import 'package:sona/utils/global/global.dart';
 import '../../../../account/providers/profile.dart';
 
 final softKeyboardHeightProvider = StateProvider<double>((ref) => 300);
+final paddingBottomHeightProvider = StateProvider<double>((ref) => 30);
 
 final inputModeProvider = StateProvider.family<InputMode, int>((ref, arg) {
   ref.listenSelf((previous, next) {

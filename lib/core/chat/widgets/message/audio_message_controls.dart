@@ -13,13 +13,13 @@ class AudioMessageControls extends ConsumerStatefulWidget {
     required this.chatId,
     required this.message,
     required this.fromMe,
-    required this.file,
+    required this.filePath,
     required this.duration,
   });
   final int chatId;
   final AudioMessage message;
   final bool fromMe;
-  final File file;
+  final String? filePath;
   final Duration duration;
 
   @override
@@ -39,6 +39,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
+        if (widget.filePath == null) return;
         if (isCurrent) {
           if (player.state == PlayerState.paused) {
             player.resume();
@@ -46,8 +47,8 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
             player.pause();
           }
         } else {
+          player.play(DeviceFileSource(widget.filePath!), position: Duration(milliseconds: 0));
           ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => widget.message.uuid);
-          player.play(DeviceFileSource(widget.file.path), position: Duration(milliseconds: 0));
         }
       },
       child: Row(

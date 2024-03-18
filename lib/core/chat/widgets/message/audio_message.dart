@@ -55,7 +55,10 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
   List<Map<String, dynamic>>? words;
 
   static final messageAudioCacheManager = CacheManager(
-      Config('audio_message')
+      Config('audio_message',
+        maxNrOfCacheObjects: 1000,
+        stalePeriod: Duration(days: 7)
+      )
   );
 
   @override
@@ -80,6 +83,15 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
     super.initState();
   }
 
+  Future<File> _downloadAudioFile(String url) {
+    // return messageAudioCacheManager.getSingleFile(url);
+    if (Platform.isIOS) {
+      return messageAudioCacheManager.getSingleFile(url).then((file) => file.rename(file.path.replaceAll('.bin', '.m4a')));
+    } else {
+      return messageAudioCacheManager.getSingleFile(url);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -91,39 +103,27 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
             chatId: widget.otherSide.id ,
             message: widget.message,
             fromMe: _fromMe,
-            file: File(localPath!),
+            filePath: localPath,
             duration: duration!,
           )
           else FutureBuilder(
-            future: messageAudioCacheManager.getSingleFile(url!),
-            builder: (_, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: SizedBox(width: 32, height: 32, child: CircularProgressIndicator()));
-              }
-              if (snapshot.hasError) {
-                return Container(
-                  padding: EdgeInsets.symmetric(vertical: 4),
-                  child: const Text('some error happens'),
-                );
-              }
-              if (snapshot.hasData) {
-                localPath = snapshot.data!.path;
+            future: _downloadAudioFile(url!),
+            builder: (_, c) {
+              if (c.hasData) {
+                localPath = c.data!.path;
                 if (widget.message.content['localExtension'] == null) {
                   widget.message.content['localExtension'] = {'path': localPath};
                 } else {
                   widget.message.content['localExtension']['path'] = localPath;
                 }
-                return AudioMessageControls(
-                  chatId: widget.otherSide.id,
-                  message: widget.message,
-                  fromMe: _fromMe,
-                  file: snapshot.data!,
-                  duration: duration!,
-                );
               }
-              return Container(
-                padding: EdgeInsets.symmetric(vertical: 4),
-                child: const Text('some error happens'),
+              return AudioMessageControls(
+                key: ValueKey(widget.message.content['localExtension']?['path']),
+                chatId: widget.otherSide.id,
+                message: widget.message,
+                fromMe: _fromMe,
+                filePath: localPath,
+                duration: duration!,
               );
             }
           ),

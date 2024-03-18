@@ -67,9 +67,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
   static final recorder = AudioRecorder();
   static const config = RecordConfig(
     encoder: AudioEncoder.aacLc,
-    bitRate: 64000,
-    sampleRate: 8000,
+    bitRate: 32000,
+    sampleRate: 16000,
     numChannels: 1,
+    device: null,
+    autoGain: false,
+    echoCancel: false,
+    noiseSuppress: true
   );
 
   @override
@@ -104,7 +108,16 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
       ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => true);
       Future.delayed(const Duration(milliseconds: 500),
           () => ref.read(softKeyboardHeightProvider.notifier)
-              .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom - MediaQuery.of(context).padding.bottom))
+              .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom))
+      );
+      Future.delayed(const Duration(milliseconds: 1000),
+              () => ref.read(softKeyboardHeightProvider.notifier)
+              .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom))
+      );
+    } else {
+      Future.delayed(const Duration(milliseconds: 500),
+              () => ref.read(paddingBottomHeightProvider.notifier)
+              .update((state) => max(state, MediaQuery.of(context).padding.bottom))
       );
     }
   }
@@ -198,10 +211,10 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                       fontSize: 14,
                       locale: myLocale
                     ),
-                    onTapOutside: (_) {
-                      if (_focusNode.hasFocus) _focusNode.unfocus();
-                      ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
-                    },
+                    // onTapOutside: (_) {
+                    //   if (_focusNode.hasFocus) _focusNode.unfocus();
+                    //   ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
+                    // },
                     autocorrect: true,
                     cursorWidth: 1.8,
                     decoration: InputDecoration(
@@ -247,47 +260,48 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   borderRadius: BorderRadius.circular(20)
                 ),
                 child: GestureDetector(
-                    onLongPressStart: (_) async {
-                      if (await Permission.microphone.request().isGranted) {
-                        _stopwatch.reset();
-                        _stopwatch.start();
-                        _timer = Timer(const Duration(seconds: 60), () async {
-                          _stopwatch.stop();
-                          final _voicePath = await recorder.stop();
-                          if (_voicePath == null) return;
-                          widget.onSendMessage({
-                            'type': ImMessageContentType.audio,
-                            'duration': 60.0,
-                            'localExtension': {
-                              'path': _voicePath,
-                            }
-                          });
-                          _voiceEntry?.remove();
+                  behavior: HitTestBehavior.opaque,
+                  onLongPressStart: (_) async {
+                    if (await Permission.microphone.request().isGranted) {
+                      _stopwatch.reset();
+                      _stopwatch.start();
+                      _timer = Timer(const Duration(seconds: 60), () async {
+                        _stopwatch.stop();
+                        final _voicePath = await recorder.stop();
+                        if (_voicePath == null) return;
+                        widget.onSendMessage({
+                          'type': ImMessageContentType.audio,
+                          'duration': 60.0,
+                          'localExtension': {
+                            'path': _voicePath,
+                          }
                         });
-                        recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
-                      } else {
-                        Fluttertoast.showToast(msg: 'Permission is required!');
-                        return;
-                      }
-                      _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
-                      Overlay.of(context).insert(_voiceEntry!);
-                    },
-                    onLongPressEnd: (_) async {
-                      _voiceEntry?.remove();
-                      _stopwatch.stop();
-                      _timer?.cancel();
-                      if (_stopwatch.elapsedMilliseconds < 500) return;
-                      final _voicePath = await recorder.stop();
-                      if (_voicePath == null) return;
-                      widget.onSendMessage({
-                        'type': ImMessageContentType.audio,
-                        'duration': _stopwatch.elapsedMilliseconds / 1000.0,
-                        'localExtension': {
-                          'path': _voicePath,
-                        }
+                        _voiceEntry?.remove();
                       });
-                    },
-                    child: Icon(CupertinoIcons.mic, size: 28, color: Colors.white)
+                      recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
+                    } else {
+                      Fluttertoast.showToast(msg: 'Microphone permission is required!');
+                      return;
+                    }
+                    _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
+                    Overlay.of(context).insert(_voiceEntry!);
+                  },
+                  onLongPressEnd: (_) async {
+                    _voiceEntry?.remove();
+                    _stopwatch.stop();
+                    _timer?.cancel();
+                    if (_stopwatch.elapsedMilliseconds < 500) return;
+                    final path = await recorder.stop();
+                    if (path == null) return;
+                    widget.onSendMessage({
+                      'type': ImMessageContentType.audio,
+                      'duration': _stopwatch.elapsedMilliseconds / 1000.0,
+                      'localExtension': {
+                        'path': path,
+                      }
+                    });
+                  },
+                  child: Icon(CupertinoIcons.mic, size: 28, color: Colors.white)
                 ),
               )
               else Container(
@@ -320,8 +334,13 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
         AnimatedContainer(
           duration: Duration(milliseconds: 250),
           curve: Curves.ease,
-          height: ref.watch(keyboardExtensionVisibilityProvider) ? ref.watch(softKeyboardHeightProvider) : 0,
+          height: ref.watch(keyboardExtensionVisibilityProvider) ? ref.watch(softKeyboardHeightProvider) : ref.watch(paddingBottomHeightProvider),
           child: Container(
+            clipBehavior: Clip.antiAlias,
+            foregroundDecoration: BoxDecoration(
+              color: ref.watch(keyboardExtensionVisibilityProvider) ? Colors.transparent : Colors.white
+            ),
+            decoration: BoxDecoration(),
             child: Padding(padding: EdgeInsets.all(16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
