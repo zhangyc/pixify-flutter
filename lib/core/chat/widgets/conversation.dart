@@ -118,6 +118,18 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
           Text('${S.current.duoSnap}!')
         ],
       );
+    }else if(contentType==3){
+      return const Row(
+        children: [
+          Icon(Icons.keyboard_voice,size: 15,),
+          SizedBox(
+            width: 4,
+          ),
+          Text('New voice!')
+        ],
+      );
+    }else {
+      return Text('New message!');
     }
   }
 }
