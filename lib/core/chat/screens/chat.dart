@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +13,7 @@ import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
+import 'package:sona/core/chat/providers/audio.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/providers/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
@@ -59,7 +61,7 @@ class ChatScreen extends StatefulHookConsumerWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends ConsumerState<ChatScreen> {
+class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
 
   late final _messageController = MessageController(ref: ref, chatId: widget.otherSide.id, otherInfo: widget.otherSide);
 
@@ -70,6 +72,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   void didChangeDependencies() {
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
     myProfile = ref.read(myProfileProvider)!;
     mySide = myProfile.toUser();
     if (mySide.locale != null) {
@@ -81,6 +84,35 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       otherLocale = Locale.fromSubtags(languageCode: otherL.languageCode, scriptCode: otherL.scriptCode, countryCode: otherL.countryCode);
     }
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPop() {
+    _stopAudio();
+    super.didPop();
+  }
+
+  @override
+  void didPushNext() {
+    _stopAudio();
+    super.didPushNext();
+  }
+
+  void _stopAudio() {
+    try {
+      final player = ref.read(audioPlayerProvider(widget.otherSide.id));
+      if (player.state == PlayerState.playing || player.state == PlayerState.paused) {
+        player.stop();
+      }
+    } catch(e) {
+      //
+    }
   }
 
   @override
