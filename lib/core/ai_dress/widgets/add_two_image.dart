@@ -1,9 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,21 +10,14 @@ import 'package:sona/core/ai_dress/ai_dress_event.dart';
 import 'package:sona/core/ai_dress/dislogs.dart';
 import 'package:sona/core/ai_dress/widgets/base_dialog_container.dart';
 
-import '../../../account/providers/profile.dart';
 import '../../../common/app_config.dart';
-import '../../../common/permission/permission.dart';
 import '../../../common/services/common.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
-import '../../../utils/face_detection/detection.dart';
 import '../../../utils/global/global.dart';
-import '../../match/providers/duo_provider.dart';
-import '../../match/util/event.dart';
 import '../../match/util/http_util.dart';
-import '../../match/widgets/dialogs.dart';
 import '../../match/widgets/loading_button.dart';
 import '../../persona/widgets/profile_banner.dart';
-import '../../subscribe/model/member.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../../widgets/generate_banner.dart';
 import '../bean/sd_template.dart';
