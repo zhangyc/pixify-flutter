@@ -15,6 +15,8 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/models/text_message.dart';
+import 'package:sona/core/chat/providers/audio.dart';
+import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
 import 'package:sona/core/chat/widgets/voice_message_recorder.dart';
 import 'package:sona/utils/global/global.dart';
 
@@ -293,9 +295,16 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                     if (_stopwatch.elapsedMilliseconds < 500) return;
                     final path = await recorder.stop();
                     if (path == null) return;
+
+                    final player = ref.read(audioPlayerProvider(widget.chatId));
+                    ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
+                    await player.setSourceDeviceFile(path);
+                    var duration = await player.getDuration();
+                    await player.release();
+                    duration ??= _stopwatch.elapsed;
                     widget.onSendMessage({
                       'type': ImMessageContentType.audio,
-                      'duration': _stopwatch.elapsedMilliseconds / 1000.0,
+                      'duration': duration.inMilliseconds / 1000.0,
                       'localExtension': {
                         'path': path,
                       }

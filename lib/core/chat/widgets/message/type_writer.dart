@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,6 +27,17 @@ class _TypeWriterState extends ConsumerState<TypeWriter> {
 
   @override
   void initState() {
+    init();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant TypeWriter oldWidget) {
+    init();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void init() {
     if (widget.message.duration != null) {
       if (widget.message.recognizedText != null && widget.message.recognizedText!.isNotEmpty) {
         recognizedTokens = widget.message.recognizedText!.split('');
@@ -44,7 +56,6 @@ class _TypeWriterState extends ConsumerState<TypeWriter> {
         }
       }
     }
-    super.initState();
   }
 
   @override
@@ -59,12 +70,7 @@ class _TypeWriterState extends ConsumerState<TypeWriter> {
             children: [
               if (recognizedTokens != null && recognizedGap != null) Text.rich(TextSpan(
                   children: [
-                    ...recognizedTokens!.asMap().keys.map((index) => TextSpan(
-                        text: '${recognizedTokens![index]}',
-                        style: TextStyle(
-                            color: Colors.transparent
-                        )
-                    ))
+                    TextSpan(text: '')
                   ]
               ), style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(context).primaryColor,
@@ -77,12 +83,7 @@ class _TypeWriterState extends ConsumerState<TypeWriter> {
               )),
               if (translatedTokens != null && translatedGap != null) Text.rich(TextSpan(
                   children: [
-                    ...translatedTokens!.asMap().keys.map((index) => TextSpan(
-                        text: '${translatedTokens![index]}',
-                        style: TextStyle(
-                            color: Colors.transparent
-                        )
-                    ))
+                    TextSpan(text: '')
                   ]
               ), style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Colors.transparent,
@@ -96,16 +97,19 @@ class _TypeWriterState extends ConsumerState<TypeWriter> {
             ],
           );
         }
+        final seed = snapshot.data!.inMilliseconds;
+        final recognizedIndex = seed < 200 ? 0 : ((seed - 200) / (recognizedGap ?? 10)).floor() + 1;
+        final translatedIndex = seed < 200 ? 0 : ((seed - 200) / (translatedGap ?? 10)).floor() + 1;
         return Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (recognizedTokens != null && recognizedGap != null) Text.rich(TextSpan(
               children: [
-                ...recognizedTokens!.asMap().keys.map((index) => TextSpan(
-                  text: '${recognizedTokens![index]}',
+                ...recognizedTokens!.sublist(0, min(recognizedTokens!.length, recognizedIndex)).map((t) => TextSpan(
+                  text: t,
                   style: TextStyle(
-                    color: snapshot.data!.inMilliseconds > (200 + (index * recognizedGap!)) ? Theme.of(context).primaryColor : Colors.transparent
+                    color: Theme.of(context).primaryColor
                   )
                 ))
               ]
@@ -120,10 +124,10 @@ class _TypeWriterState extends ConsumerState<TypeWriter> {
             )),
             if (translatedTokens != null && translatedGap != null) Text.rich(TextSpan(
               children: [
-                ...translatedTokens!.asMap().keys.map((index) => TextSpan(
-                    text: '${translatedTokens![index]}',
+                ...translatedTokens!.sublist(0, min(translatedTokens!.length, translatedIndex)).map((t) => TextSpan(
+                    text: t,
                     style: TextStyle(
-                        color: snapshot.data!.inMilliseconds > (200 + (index * translatedGap!)) ? Theme.of(context).primaryColor : Colors.transparent
+                        color: Theme.of(context).primaryColor
                     )
                 ))
               ]

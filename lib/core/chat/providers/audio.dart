@@ -19,7 +19,7 @@ final audioPlayerProvider = StateProvider.family<AudioPlayer, int>((ref, arg) {
       shutdown = true;
       await player.pause();
     }
-    if (next) {
+    if (player.state == PlayerState.playing && next) {
       player.setAudioContext(AudioContext(
         android: AudioContextAndroid(
           isSpeakerphoneOn: false, // 关闭扬声器
@@ -59,7 +59,7 @@ final audioPlayerProvider = StateProvider.family<AudioPlayer, int>((ref, arg) {
   return player;
 }, dependencies: [earpieceModeProvider]);
 
-final playedAudioMessageUuidsProvider = StateProvider.family<Set<String>, int>((ref, arg) => {});
+final playedAudioMessageUuidsProvider = StateProvider.autoDispose.family<Set<String>, int>((ref, arg) => {});
 
 final audioMessagePlaySpeedProvider = StateProvider.family<double, int>((ref, arg) {
   var speed = 1.0;
@@ -80,3 +80,4 @@ final proximityStreamProvider = StreamProvider<bool>((ref) {
 final earpieceModeProvider = StateProvider<bool>((ref) {
   return ref.watch(proximityStreamProvider).when(data: (d) => d, error: (_, __) => false, loading: () => false);
 }, dependencies: [proximityStreamProvider]);
+

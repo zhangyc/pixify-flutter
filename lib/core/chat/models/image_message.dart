@@ -17,6 +17,7 @@ class ImageMessage extends ImMessage{
     required super.receiver,
     required super.time,
     required super.content,
+    super.read = false,
     required this.url,
     this.width,
     this.height
@@ -46,6 +47,7 @@ class ImageMessage extends ImMessage{
       receiver: UserInfo.fromJson({'id': json['receiveUserId']}),
       time: (json['createDate'] as Timestamp).toDate(),
       content: content,
+      read: json['read'] ?? false,
       url: content['image'] ?? '',
       width: content['width'],
       height: content['height']

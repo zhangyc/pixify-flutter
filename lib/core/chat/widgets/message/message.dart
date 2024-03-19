@@ -60,66 +60,68 @@ class _ImMessageWidgetState extends ConsumerState<ImMessageWidget> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
-      padding: EdgeInsets.only(
-        left: _fromMe ? 80 : 0,
-        right: !_fromMe ? 80 : 0
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (widget.prevMessage == null || widget.prevMessage!.time.add(const Duration(minutes: 5)).isBefore(widget.message.time))
             MessageTime(time: widget.message.time),
           SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: _fromMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (!_fromMe) Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: GestureDetector(
-                    onTap: widget.onAvatarTap,
-                    child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(40))
+          Container(
+            padding: EdgeInsets.only(
+                left: _fromMe ? 80 : 0,
+                right: !_fromMe ? 80 : 0
+            ),
+            child: Row(
+              mainAxisAlignment: _fromMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (!_fromMe) Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: GestureDetector(
+                      onTap: widget.onAvatarTap,
+                      child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(40))
+                  ),
                 ),
-              ),
-              switch(widget.message.runtimeType) {
-                TextMessage => TextMessageWidget(
-                  prevMessage: widget.prevMessage,
-                  message: widget.message,
-                  mySide: widget.mySide,
-                  otherSide: widget.otherSide,
-                  myLocale: widget.myLocale,
-                  otherLocale: widget.otherLocale
+                switch(widget.message.runtimeType) {
+                  TextMessage => TextMessageWidget(
+                    prevMessage: widget.prevMessage,
+                    message: widget.message,
+                    mySide: widget.mySide,
+                    otherSide: widget.otherSide,
+                    myLocale: widget.myLocale,
+                    otherLocale: widget.otherLocale
+                  ),
+                  ImageMessage => ImageMessageWidget(
+                    prevMessage: widget.prevMessage,
+                    message: widget.message,
+                    mySide: widget.mySide,
+                    otherSide: widget.otherSide,
+                    myLocale: widget.myLocale,
+                    otherLocale: widget.otherLocale
+                  ),
+                  AudioMessage => AudioMessageWidget(
+                    prevMessage: widget.prevMessage,
+                    message: widget.message as AudioMessage,
+                    mySide: widget.mySide,
+                    otherSide: widget.otherSide,
+                    myLocale: widget.myLocale,
+                    otherLocale: widget.otherLocale
+                  ),
+                  _ => UnknownMessageWidget(
+                    prevMessage: widget.prevMessage,
+                    message: widget.message,
+                    mySide: widget.mySide,
+                    otherSide: widget.otherSide,
+                    myLocale: widget.myLocale,
+                    otherLocale: widget.otherLocale
+                  )
+                },
+                if (_fromMe) Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: UserAvatar(url: widget.mySide.avatar!, size: Size.square(40)),
                 ),
-                ImageMessage => ImageMessageWidget(
-                  prevMessage: widget.prevMessage,
-                  message: widget.message,
-                  mySide: widget.mySide,
-                  otherSide: widget.otherSide,
-                  myLocale: widget.myLocale,
-                  otherLocale: widget.otherLocale
-                ),
-                AudioMessage => AudioMessageWidget(
-                  prevMessage: widget.prevMessage,
-                  message: widget.message as AudioMessage,
-                  mySide: widget.mySide,
-                  otherSide: widget.otherSide,
-                  myLocale: widget.myLocale,
-                  otherLocale: widget.otherLocale
-                ),
-                _ => UnknownMessageWidget(
-                  prevMessage: widget.prevMessage,
-                  message: widget.message,
-                  mySide: widget.mySide,
-                  otherSide: widget.otherSide,
-                  myLocale: widget.myLocale,
-                  otherLocale: widget.otherLocale
-                )
-              },
-              if (_fromMe) Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: UserAvatar(url: widget.mySide.avatar!, size: Size.square(40)),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

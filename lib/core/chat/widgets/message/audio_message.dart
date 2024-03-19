@@ -56,8 +56,8 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
 
   static final messageAudioCacheManager = CacheManager(
       Config('audio_message',
-        maxNrOfCacheObjects: 1000,
-        stalePeriod: Duration(days: 7)
+        maxNrOfCacheObjects: 2000,
+        stalePeriod: Duration(days: 30)
       )
   );
 
@@ -129,6 +129,7 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
           ),
           SizedBox(height: 6),
           if (ref.watch(playedAudioMessageUuidsProvider(widget.message.chatId)).contains(widget.message.uuid) && ref.watch(currentPlayingAudioMessageIdProvider) != widget.message.uuid) Container(
+            width: duration!.inSeconds / 2 + 165,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -156,7 +157,13 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
               ],
             ),
           )
-          else if (ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) TypeWriter(key: ValueKey(widget.message.translatedText), message: widget.message)
+          else if (ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) Container(
+              width: duration!.inSeconds / 2 + 165,
+              child: TypeWriter(
+                  key: ValueKey(widget.message.translatedText),
+                  message: widget.message
+              )
+          )
         ],
       ),
     );

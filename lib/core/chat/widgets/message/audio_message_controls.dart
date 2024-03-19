@@ -38,7 +38,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
     final isCurrent = ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid;
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () {
+      onTap: () async {
         if (widget.filePath == null) return;
         if (isCurrent) {
           if (player.state == PlayerState.paused) {
@@ -47,8 +47,9 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
             player.pause();
           }
         } else {
-          player.play(DeviceFileSource(widget.filePath!), position: Duration(milliseconds: 0));
+          await player.play(DeviceFileSource(widget.filePath!), position: Duration(milliseconds: 0));
           ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => widget.message.uuid);
+          if (!widget.message.read) widget.message.markAsRead();
         }
       },
       child: Row(
@@ -97,6 +98,16 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
                   ),
                 );
               }
+            ),
+          ),
+          if (!widget.message.read && !isCurrent && !widget.fromMe) Container(
+            margin: EdgeInsets.symmetric(horizontal: 6),
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(
+                color: Color(0xFFBEFF06),
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: Colors.white.withOpacity(0.2), width: 1)
             ),
           ),
           if (!widget.fromMe && isCurrent) _speedButton()

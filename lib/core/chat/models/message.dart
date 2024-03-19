@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
+import 'package:sona/common/env.dart';
 import 'package:sona/common/models/user.dart';
 import 'package:sona/core/chat/models/text_message.dart';
+import 'package:sona/utils/global/global.dart';
 
 import '../../../generated/l10n.dart';
 import 'audio_message.dart';
@@ -18,7 +20,8 @@ class ImMessage {
     required this.sender,
     required this.receiver,
     required this.time,
-    required this.content
+    required this.content,
+    required this.read
   });
 
   final int chatId;
@@ -28,6 +31,7 @@ class ImMessage {
   final UserInfo receiver;
   final DateTime time;
   final Map<String, dynamic> content;
+  final bool read;
   Map? localExtension;
 
   factory ImMessage.fromJson(Map<String, dynamic> json) {
@@ -37,6 +41,17 @@ class ImMessage {
       ImMessageContentType.audio => AudioMessage.fromJson(json),
       _ => TextMessage.fromJson(json),
     };
+  }
+
+  void markAsRead() {
+    FirebaseFirestore.instance
+        .collection('${env.firestorePrefix}_users')
+        .doc(profile!.id.toString())
+        .collection('rooms')
+        .doc(chatId.toString())
+        .collection('msgs')
+        .doc(id.toString())
+        .set({'read': true}, SetOptions(merge: true));
   }
 
   @override
