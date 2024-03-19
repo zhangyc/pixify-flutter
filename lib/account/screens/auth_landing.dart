@@ -24,6 +24,7 @@ import '../../core/providers/token.dart';
 import '../../core/travel_wish/models/country.dart';
 import '../../generated/l10n.dart';
 import '../../utils/global/global.dart';
+import '../event/account_event.dart';
 import '../models/my_profile.dart';
 import '../providers/profile.dart';
 import '../services/info.dart';
@@ -289,6 +290,14 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
         //userToken=token;
         // 未注册
         if (resp.statusCode == 2) {
+          if(source=='APPLE'){
+            SonaAnalytics.log(AccountEvent.reg_click_apple.name);
+
+          }else if(source=='GOOGLE'){
+            SonaAnalytics.log(AccountEvent.reg_click_google.name);
+
+          }
+
           _completeRequiredInfo(name: params['name']);
           return;
         }
@@ -302,6 +311,14 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
             return;
           }
           await Future.delayed(const Duration(milliseconds: 200));
+          if(source=='APPLE'){
+            SonaAnalytics.log(AccountEvent.reg_apple_login.name);
+
+          }else if(source=='GOOGLE'){
+            SonaAnalytics.log(AccountEvent.reg_google_login.name);
+
+          }
+
           if (mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         } else {
           Fluttertoast.showToast(msg: 'Failed to get profile, try again later');

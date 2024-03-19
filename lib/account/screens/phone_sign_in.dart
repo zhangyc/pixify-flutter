@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/helpers.dart';
 import 'package:intl_phone_field/phone_number.dart';
+import 'package:sona/account/event/account_event.dart';
 import 'package:sona/account/screens/phone_pin.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/env.dart';
@@ -42,7 +43,7 @@ class _SignInWithPhoneNumberScreenState extends ConsumerState<SignInWithPhoneNum
     final initialCountryCode = findMatchedSonaLocale(Platform.localeName).locale.countryCode;
     _country = findCountryByCode(initialCountryCode);
     super.initState();
-    SonaAnalytics.log('reg_show_phone');
+    SonaAnalytics.log(AccountEvent.reg_click_phone.name);
   }
 
   @override
@@ -232,11 +233,12 @@ class _SignInWithPhoneNumberScreenState extends ConsumerState<SignInWithPhoneNum
     try {
       final pn = PhoneNumber(countryISOCode: _country.code, countryCode: _country.dialCode, number: _phoneController.text);
       if (_validator(_phoneController.text)==null) {
+        SonaAnalytics.log(AccountEvent.reg_phone_next.name);
+
         final result = await _sendPin();
         if (!result) return;
         if (mounted) setState(() {});
         Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPinScreen(phoneNumber: pn)));
-        SonaAnalytics.log('reg_phone');
       } else {
         setState(() {
           _validate = false;

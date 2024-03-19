@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:sona/account/event/account_event.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/dialog/common.dart';
@@ -146,7 +147,7 @@ class _LocationScreenState extends State<LocationScreen> with WidgetsBindingObse
           location: location,
           country: widget.country
       )));
-      SonaAnalytics.log('reg_location');
     }
+    SonaAnalytics.log(AccountEvent.reg_location_next.name);
   }
 }

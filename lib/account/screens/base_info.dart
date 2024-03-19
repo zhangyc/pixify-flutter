@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sona/account/event/account_event.dart';
 import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
@@ -233,6 +234,7 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
 
   void _next() {
     if (_disabled) return;
+
     Navigator.push(context, MaterialPageRoute(
         builder: (_) => AvatarScreen(
           name: _nameController.text.trim(),
@@ -241,6 +243,6 @@ class _BaseInfoScreenState extends State<BaseInfoScreen> {
           country: widget.country
         ))
     );
-    SonaAnalytics.log('reg_base_info');
+    SonaAnalytics.log(AccountEvent.reg_profile_next.name);
   }
 }

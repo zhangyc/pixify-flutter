@@ -54,7 +54,7 @@ class _RecordsPageState extends State<RecordsPage> {
                       ),
                       onTap: (){
                         showDialog(context: context, builder: (b){
-                          return ProfileDuosnapCompleted(url: template.targetPhotoUrl!);
+                          return ProfileDuosnapCompleted(url: template.targetPhotoUrl!,id: template.id,);
                         });
                       },
                     );

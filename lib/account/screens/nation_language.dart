@@ -19,6 +19,7 @@ import 'package:sona/utils/picker/country/country.dart';
 
 import '../../generated/l10n.dart';
 import '../../utils/global/global.dart';
+import '../event/account_event.dart';
 import '../models/gender.dart';
 
 
@@ -204,6 +205,7 @@ class _NationAndLanguageScreenState extends ConsumerState<NationAndLanguageScree
 
   Future<void> _next() async {
     if (_nation == null || _language == null) return;
+    SonaAnalytics.log(AccountEvent.reg_done.name);
     String? url;
     try {
       EasyLoading.show();

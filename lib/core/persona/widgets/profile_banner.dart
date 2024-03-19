@@ -177,7 +177,7 @@ class _GenerateBannerState extends ConsumerState<ProfileBanner> {
               SonaAnalytics.log(AiDressEvent.Dress_duo_watch.name);
             }
             showDialog(context: context, builder: (b){
-              return ProfileDuosnapCompleted(url: duoSnapTask.targetPhotoUrl!);
+              return ProfileDuosnapCompleted(url: duoSnapTask.targetPhotoUrl!,id: duoSnapTask.id,);
             });
           }else {
             showDuoSnapCompleted(context,

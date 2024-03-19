@@ -14,6 +14,7 @@ import 'package:sona/utils/global/global.dart';
 
 import '../../generated/l10n.dart';
 import '../../utils/dialog/crop_image.dart';
+import '../event/account_event.dart';
 import 'location.dart';
 
 
@@ -141,23 +142,17 @@ class _AvatarScreenState extends State<AvatarScreen> {
 
 
   void _getPhotoAndUpload(ImageSource source) async {
+    if(source==ImageSource.camera){
+      SonaAnalytics.log(AccountEvent.reg_photo_take.name);
+
+    }else if(source==ImageSource.gallery){
+      SonaAnalytics.log(AccountEvent.reg_photo_album.name);
+    }
     try {
       final picker = ImagePicker();
       final file = await picker.pickImage(source: source);
 
       if (file == null) throw Exception('No file');
-      ///todo 人脸检测
-      faceDetection(file.path).then((value){
-        if(value){
-           SonaAnalytics.log('reg_faceDetection',{
-             "result":1
-           });
-        }else {
-          SonaAnalytics.log('reg_faceDetection',{
-            "result":0
-          });
-        }
-      });
       if (file.name.toLowerCase().endsWith('.gif')) {
         Fluttertoast.showToast(msg: 'GIF is not allowed');
         throw Error();
@@ -176,7 +171,6 @@ class _AvatarScreenState extends State<AvatarScreen> {
       //
       if (kDebugMode) print(e);
     } finally {
-      SonaAnalytics.log(source == ImageSource.camera ? 'reg_album' : 'reg_camera');
     }
   }
 
@@ -195,5 +189,7 @@ class _AvatarScreenState extends State<AvatarScreen> {
       avatar: _avatar!,
       country: widget.country
     )));
+    SonaAnalytics.log(AccountEvent.reg_photo_next.name);
+
   }
 }

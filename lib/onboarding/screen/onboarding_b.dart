@@ -21,7 +21,6 @@ class _OnboardingScreenState extends State<OnboardingScreenB> {
   void initState() {
     _controller = PageController();
     super.initState();
-    SonaAnalytics.log('reg_intro_v2');
   }
 
   @override
@@ -140,7 +139,6 @@ class _OnboardingScreenState extends State<OnboardingScreenB> {
   void _onSkip() {
     kvStore.setBool('onboarding', true);
     Navigator.pushReplacementNamed(context, 'login');
-    SonaAnalytics.log('reg_intro_v2go');
   }
 
   void _onNext() {

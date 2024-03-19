@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:pinput/pinput.dart';
+import 'package:sona/account/event/account_event.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/screens/base_info.dart';
 import 'package:sona/account/services/auth.dart';
@@ -182,6 +183,8 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
     if (_pinKey.currentState!.validate()) {
       try {
         EasyLoading.show();
+        SonaAnalytics.log(AccountEvent.reg_phonecode_next.name);
+
         final resp = await signInWithPhone(
             countryCode: _pn.countryCode,
             phoneNumber: _pn.number,
@@ -189,12 +192,12 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
         );
 
         if (resp.statusCode == 0 || resp.statusCode == 2) {
-          SonaAnalytics.log('reg_code');
           final token = resp.data['token'];
           ref.read(tokenProvider.notifier).state = token;
           //userToken=token;
           // 未注册
           if (resp.statusCode == 2) {
+
             _completeRequiredInfo();
             return;
           }
@@ -207,6 +210,7 @@ class _LoginScreenState extends ConsumerState<LoginPinScreen> {
               _completeRequiredInfo();
               return;
             }
+            SonaAnalytics.log(AccountEvent.reg_phone_login.name);
             await Future.delayed(const Duration(milliseconds: 200));
             if (mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
           } else {

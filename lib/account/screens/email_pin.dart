@@ -16,6 +16,7 @@ import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../generated/l10n.dart';
+import '../event/account_event.dart';
 import '../models/my_profile.dart';
 
 
@@ -206,6 +207,8 @@ class _EmailPinScreenState extends ConsumerState<EmailPinScreen> {
               return;
             }
             await Future.delayed(const Duration(milliseconds: 200));
+            SonaAnalytics.log(AccountEvent.reg_email_login.name);
+
             if (mounted) Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
           } else {
             Fluttertoast.showToast(msg: 'Failed to get profile, try again later');

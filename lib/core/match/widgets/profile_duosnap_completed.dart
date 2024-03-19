@@ -22,8 +22,9 @@ import '../../../utils/global/global.dart';
 import '../util/event.dart';
 
 class ProfileDuosnapCompleted extends StatelessWidget {
-  const ProfileDuosnapCompleted({super.key, required this.url});
+  ProfileDuosnapCompleted({super.key, required this.url, this.id});
   final String url;
+  final int? id;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -145,7 +146,9 @@ class ProfileDuosnapCompleted extends StatelessWidget {
                     onTap: () async{
                       SonaAnalytics.log(AiDressEvent.Dress_photo_share.name);
                       firstShare=true;
-                      post('/merge-photo/share-award');
+                      post('/merge-photo/share-award',data:{
+                        'id': id
+                      });
                       String cache=(await getApplicationCacheDirectory()).path;
                       File? f=await DefaultCacheManager().getSingleFile(url);
                       File file=File('$cache/tmp.png');

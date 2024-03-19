@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/account/event/account_event.dart';
 import 'package:sona/account/screens/email_pin.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/env.dart';
@@ -31,7 +32,7 @@ class _SignInWithEmailScreenState extends ConsumerState<SignInWithEmailScreen> {
   @override
   void initState() {
     super.initState();
-    SonaAnalytics.log('reg_show_email');
+    SonaAnalytics.log(AccountEvent.reg_click_email.name);
   }
 
   @override
@@ -192,7 +193,7 @@ class _SignInWithEmailScreenState extends ConsumerState<SignInWithEmailScreen> {
         if (!result) return;
         if (mounted) setState(() {});
         Navigator.push(context, MaterialPageRoute(builder: (_) => EmailPinScreen(email: email)));
-        SonaAnalytics.log('reg_email');
+        SonaAnalytics.log(AccountEvent.reg_email_next.name);
       } else {
         setState(() {
           _validate = false;
