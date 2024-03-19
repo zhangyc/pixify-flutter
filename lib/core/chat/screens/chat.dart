@@ -94,12 +94,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
 
   @override
   void didPop() {
+    ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
     _stopAudio();
     super.didPop();
   }
 
   @override
   void didPushNext() {
+    ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
     _stopAudio();
     super.didPushNext();
   }
