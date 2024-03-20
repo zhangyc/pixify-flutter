@@ -125,13 +125,13 @@ class _ImMessageWidgetState extends ConsumerState<ImMessageWidget> {
               ],
             ),
           ),
-          if (widget.message.localExtension?['sendFuture'] != null) FutureBuilder(
+          if (widget.message.localExtension?['sendFuture'] != null) FutureBuilder<MessageSendingResult>(
               future: widget.message.localExtension?['sendFuture'],
               builder: (_, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Container();
-                } else if (snapshot.hasData) {
-                  return switch (snapshot.data) {
+                } else if (snapshot.hasData && snapshot.data?.error != null) {
+                  return switch (snapshot.data!.error) {
                     MessageSendingError.maximumLimit => Container(),
                     MessageSendingError.contentFilter => Container(),
                     _ => Row(

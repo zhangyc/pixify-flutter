@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/my_profile.dart';
@@ -25,6 +26,7 @@ import 'package:sona/core/chat/widgets/tips_dialog.dart';
 import 'package:sona/core/match/providers/match_info.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/core/widgets/generate_banner.dart';
 import 'package:sona/utils/dialog/common.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/global/global.dart';
@@ -180,6 +182,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
         ),
         child: Column(
           children: [
+            GenerateBanner(),
             Expanded(
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
