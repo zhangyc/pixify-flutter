@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
@@ -113,6 +114,10 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
               .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom))
       );
       Future.delayed(const Duration(milliseconds: 1000),
+              () => ref.read(softKeyboardHeightProvider.notifier)
+              .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom))
+      );
+      Future.delayed(const Duration(milliseconds: 3000),
               () => ref.read(softKeyboardHeightProvider.notifier)
               .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom))
       );
@@ -549,6 +554,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                             });
                           }
                         } catch(e) {
+                          if (kDebugMode) print('snap error: $e');
                           detecting = false;
                           setState(() {
                           });

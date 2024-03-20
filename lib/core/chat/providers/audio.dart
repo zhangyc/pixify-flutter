@@ -5,13 +5,27 @@ import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
 
 final audioPlayerProvider = StateProvider.family<AudioPlayer, int>((ref, arg) {
   final player = AudioPlayer();
-  player.onPlayerComplete.listen((event) {
-    ref.read(playedAudioMessageUuidsProvider(arg).notifier).update((state) => {
-      ...state,
-      ref.read(currentPlayingAudioMessageIdProvider)! // 当前播放的，播完后记下uuid
-    });
-    ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
-    ref.read(subProvider.notifier).update((state) => null);
+  player.onPlayerStateChanged.listen((event) {
+    if (event == PlayerState.completed) {
+      ref.read(playedAudioMessageUuidsProvider(arg).notifier).update((state) => {
+        ...state,
+        ref.read(currentPlayingAudioMessageIdProvider)! // 当前播放的，播完后记下uuid
+      });
+      ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
+      ref.read(subProvider.notifier).update((state) {
+        if (state != null) {
+          state.close();
+        }
+        return null;
+      });
+    } else if (event == PlayerState.paused) {
+      ref.read(subProvider.notifier).update((state) {
+        if (state != null) {
+          state.close();
+        }
+        return null;
+      });
+    }
   });
 
   return player;

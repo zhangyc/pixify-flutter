@@ -188,6 +188,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
                   FocusManager.instance.primaryFocus?.unfocus();
+                  if (ref.read(keyboardExtensionVisibilityProvider)) {
+                    ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
+                  }
                 },
                 child: Container(
                   alignment: Alignment.topCenter,
@@ -198,7 +201,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
                     itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
                     itemCount: messages.length + 1,
                     separatorBuilder: (_, __) => SizedBox(height: 5),
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   ),
                 ),
               ),
