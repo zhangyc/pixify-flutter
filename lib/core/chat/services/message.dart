@@ -49,24 +49,20 @@ class MessageController {
       default:
         throw();
     }
+    final sendFuture = _send(message);
+    if (message.localExtension == null) {
+      message.localExtension = {'sendFuture': sendFuture};
+    } else {
+      message.localExtension!['sendFuture'] = sendFuture;
+    }
     ref.read(localMessagesProvider(chatId).notifier).update((state) {
       return [message, ...state];
-    });
-    final result = await _send(message);
-    ref.read(localMessagesProvider(chatId).notifier).update((state) {
-      final index = state.indexWhere((m) => m.uuid == message.uuid);
-      if (index == -1) return state;
-      return [...state..[index].localExtension = {'result': result}];
     });
   }
 
   Future resend(ImMessage message) async {
-    final result = await _send(message);
-    ref.read(localMessagesProvider(chatId).notifier).update((state) {
-      final index = state.indexWhere((m) => m.uuid == message.uuid);
-      if (index == -1) return state;
-      return [...state..[index].localExtension = {'result': result}];
-    });
+    final sendFuture = _send(message);
+    message.localExtension!['sendFuture'] = sendFuture;
   }
 
   Future<MessageSendingResult> _send(ImMessage msg) async {

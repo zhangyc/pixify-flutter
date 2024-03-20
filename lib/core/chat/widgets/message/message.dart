@@ -18,10 +18,12 @@ import 'package:sona/core/chat/widgets/message/type_writer.dart';
 import 'package:sona/core/chat/widgets/message/unknown_message.dart';
 import 'package:sona/utils/dialog/input.dart';
 
+import '../../../../common/widgets/button/colored.dart';
 import '../../../../generated/l10n.dart';
 import '../../models/image_message.dart';
 import '../../models/text_message.dart';
 import '../../providers/audio.dart';
+import '../../providers/message.dart';
 import 'audio_message.dart';
 import 'image_message.dart';
 
@@ -123,6 +125,39 @@ class _ImMessageWidgetState extends ConsumerState<ImMessageWidget> {
               ],
             ),
           ),
+          if (widget.message.localExtension?['sendFuture'] != null) FutureBuilder(
+              future: widget.message.localExtension?['sendFuture'],
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Container();
+                } else if (snapshot.hasData) {
+                  return switch (snapshot.data) {
+                    MessageSendingError.maximumLimit => Container(),
+                    MessageSendingError.contentFilter => Container(),
+                    _ => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ColoredButton(
+                          onTap: () {
+                            widget.onResend!(widget.message);
+                            setState(() {
+
+                            });
+                          },
+                          color: Color(0xFFF6F3F3),
+                          fontColor: Theme.of(context).primaryColor,
+                          borderColor: Colors.transparent,
+                          text: S.current.buttonResend
+                        ),
+                      ],
+                    )
+                  };
+                } else {
+                  return Container();
+                }
+              }
+          )
         ],
       ),
     );
