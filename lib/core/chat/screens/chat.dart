@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:proximity_sensor/proximity_sensor.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/providers/entitlements.dart';
@@ -21,6 +22,7 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/services/message.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
 import 'package:sona/core/chat/widgets/message/unknown_message.dart';
 import 'package:sona/core/chat/widgets/tips_dialog.dart';
 import 'package:sona/core/match/providers/match_info.dart';
@@ -97,6 +99,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
 
   @override
   void didPop() {
+    ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
     ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
     _stopAudio();
     _inputGlobeKey.currentState!.cancelRecord();
@@ -105,6 +108,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
 
   @override
   void didPushNext() {
+    ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
     ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
     _stopAudio();
     _inputGlobeKey.currentState!.cancelRecord();
@@ -120,6 +124,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
     } catch(e) {
       //
     }
+    ref.read(proximitySubscriptionProvider.notifier).update((state) => null);
   }
 
   @override

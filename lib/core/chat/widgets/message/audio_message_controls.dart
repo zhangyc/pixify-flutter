@@ -174,48 +174,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
     if (!widget.fromMe && !widget.message.read) widget.message.markAsRead();
 
     bool shutdown = false;
-    ref.read(subProvider.notifier).update((state) => ref.listenManual(earpieceModeProvider, (prev, next) async {
-      if (player.state == PlayerState.playing) {
-        shutdown = true;
-        await player.pause();
-      }
-      if (player.state == PlayerState.playing && next) {
-        player.setAudioContext(AudioContext(
-            android: AudioContextAndroid(
-              isSpeakerphoneOn: false, // 关闭扬声器
-              audioMode: AndroidAudioMode.inCommunication, // 通话模式
-              contentType: AndroidContentType.speech, // 语音内容类型
-              usageType: AndroidUsageType.voiceCommunication, // 语音通信用途
-              audioFocus: AndroidAudioFocus.gainTransient, // 获取临时音频焦点
-            ),
-            iOS: AudioContextIOS(
-              category: AVAudioSessionCategory.playAndRecord, // 播放和录音类别
-              options: [
-                AVAudioSessionOptions.allowBluetooth, // 允许蓝牙设备
-              ],
-            )
-        ));
-      } else {
-        player.setAudioContext(AudioContext(
-            android: AudioContextAndroid(
-              isSpeakerphoneOn: true, // 打开扬声器
-              audioMode: AndroidAudioMode.normal, // 普通模式
-              contentType: AndroidContentType.music, // 音乐内容类型
-              usageType: AndroidUsageType.media, // 媒体用途
-              audioFocus: AndroidAudioFocus.gainTransient, // 获取临时音频焦点
-            ),
-            iOS: AudioContextIOS(
-              category: AVAudioSessionCategory.playback, // 播放类别
-              options: [
-                // AVAudioSessionOptions.defaultToSpeaker, // 默认使用扬声器
-              ],
-            )
-        ));
-      }
-      if (player.state == PlayerState.paused && shutdown) {
-        await player.resume();
-      }
-    }));
+
   }
 }
 
