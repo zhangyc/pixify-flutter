@@ -27,7 +27,7 @@ class AudioMessageControls extends ConsumerStatefulWidget {
 }
 
 class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
-  late final _width = widget.duration.inSeconds / 2 + 165;
+  late final _width = widget.duration.inSeconds / 2 + 144;
   late final _bgColor = widget.fromMe ? Theme.of(context).primaryColor : const Color(0xFFF6F3F3);
   late final _playProgressColor = widget.fromMe ? const Color(0xFF454545) : const Color(0xFFE8E6E6);
   late final _contentColor = widget.fromMe ? Colors.white : Theme.of(context).primaryColor;
