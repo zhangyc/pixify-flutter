@@ -158,7 +158,7 @@ class _AudioMessageWidgetState extends ConsumerState<AudioMessageWidget> {
             ),
           )
           else if (ref.watch(currentPlayingAudioMessageIdProvider) == widget.message.uuid) Container(
-              width: duration!.inSeconds / 2 + 165,
+              width: duration!.inSeconds / 2 + 144,
               child: TypeWriter(
                   key: ValueKey('${widget.message.recognizedText}-${widget.message.translatedText}'),
                   message: widget.message
