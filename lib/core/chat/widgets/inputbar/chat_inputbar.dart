@@ -55,10 +55,10 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   final Future Function(Map<String, dynamic>) onSendMessage;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ChatInstructionInputState();
+  ConsumerState<ConsumerStatefulWidget> createState() => ChatInstructionInputState();
 }
 
-class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with SingleTickerProviderStateMixin {
+class ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware, SingleTickerProviderStateMixin {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
   // OverlayEntry? _voiceEntry;
@@ -195,7 +195,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   )
               )
               else GestureDetector(
-                onTap: _cancelRecord,
+                onTap: cancelRecord,
                 child: Container(
                   width: 54,
                   height: 54,
@@ -326,7 +326,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                     final dx = details.localOffsetFromOrigin.dx;
                     if (dx < 0) ref.read(recordButtonDeltaProvider.notifier).update(dx.abs());
                     if (dx < -150) {
-                      _cancelRecord();
+                      cancelRecord();
                     }
                   },
                   onLongPressEnd: (_) async {
@@ -631,7 +631,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
     );
   }
 
-  void _cancelRecord() {
+  void cancelRecord() {
     ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
     ref.read(recordButtonDeltaProvider.notifier).reset();
     // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();

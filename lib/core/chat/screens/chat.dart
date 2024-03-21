@@ -65,6 +65,7 @@ class ChatScreen extends StatefulHookConsumerWidget {
 
 class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
 
+  final _inputGlobeKey = GlobalKey<ChatInstructionInputState>(debugLabel: 'chat_input_key');
   late final _messageController = MessageController(ref: ref, chatId: widget.otherSide.id, otherInfo: widget.otherSide);
 
   late MyProfile myProfile;
@@ -98,6 +99,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
   void didPop() {
     ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
     _stopAudio();
+    _inputGlobeKey.currentState!.cancelRecord();
     super.didPop();
   }
 
@@ -105,6 +107,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
   void didPushNext() {
     ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
     _stopAudio();
+    _inputGlobeKey.currentState!.cancelRecord();
     super.didPushNext();
   }
 
@@ -209,6 +212,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
             Container(
               color: Colors.white,
               child: ref.watch(entitlementsProvider).interpretation > 0 || ref.watch(inputModeProvider(widget.otherSide.id)) == InputMode.manual ? ChatInstructionInput(
+                key: _inputGlobeKey,
                 chatId: widget.otherSide.id,
                 otherInfo: widget.otherSide,
                 sameLanguage: myLocale == otherLocale,
