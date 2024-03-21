@@ -58,10 +58,10 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatInstructionInputState();
 }
 
-class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
+class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with SingleTickerProviderStateMixin {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
-  OverlayEntry? _voiceEntry;
+  // OverlayEntry? _voiceEntry;
   final _stopwatch = Stopwatch();
   Timer? _timer;
   bool detecting = false;
@@ -165,7 +165,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   margin: EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.circular(12)
+                    borderRadius: BorderRadius.circular(20)
                   ),
                   clipBehavior: Clip.antiAlias,
                   alignment: Alignment.center,
@@ -175,7 +175,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   )
                 )
               )
-              else GestureDetector(
+              else if (!ref.watch(recordButtonLongPressedProvider)) GestureDetector(
                   onTap: () {
                     ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) {
                         return true;
@@ -187,15 +187,31 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                       margin: EdgeInsets.all(2),
                       decoration: BoxDecoration(
                           border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-                          borderRadius: BorderRadius.circular(12)
+                          borderRadius: BorderRadius.circular(20)
                       ),
                       clipBehavior: Clip.antiAlias,
                       alignment: Alignment.center,
                       child: Icon(Icons.add, size: 24)
                   )
+              )
+              else GestureDetector(
+                onTap: _cancelRecord,
+                child: Container(
+                  width: 54,
+                  height: 54,
+                  margin: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    // border: Border.all(width: 2, color: Theme.of(context).primaryColor),
+                    borderRadius: BorderRadius.circular(20),
+                    color: ref.watch(recordButtonDeltaProvider) < 100 ? Color(0xFFFDEDE7) : Colors.red
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  alignment: Alignment.center,
+                  child: Icon(CupertinoIcons.delete, size: 24, color: ref.watch(recordButtonDeltaProvider) < 100 ? Colors.red : Colors.white)
+                ),
               ),
               SizedBox(width: 4),
-              Expanded(
+              if (!ref.watch(recordButtonLongPressedProvider)) Expanded(
                 child: Container(
                   // width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
                   decoration: BoxDecoration(
@@ -255,20 +271,33 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                     autofocus: false,
                   ),
                 ),
+              )
+              else if (ref.watch(recordButtonDeltaProvider) < 150) Expanded(
+                  child: Container(
+                    height: 56,
+                    padding: EdgeInsets.symmetric(horizontal: 6),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(CupertinoIcons.waveform, color: Colors.white),
+                        SizedBox(width: 6),
+                        RecordDurationWidget(stopwatch: _stopwatch)
+                      ],
+                    ),
+                  )
               ),
               SizedBox(width: 4),
-              if (ref.watch(currentInputEmptyProvider(widget.chatId))) Container(
-                width: 76,
-                height: 56,
-                margin: EdgeInsets.all(1),
-                padding: EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(20)
-                ),
-                child: GestureDetector(
+              if (ref.watch(currentInputEmptyProvider(widget.chatId))) GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onLongPressStart: (_) async {
+                    ref.read(recordButtonLongPressedProvider.notifier).update((state) => true);
+                    // ref.read(recordButtonDeltaProvider.notifier).update(0);
                     if (await Permission.microphone.request().isGranted) {
                       _stopwatch.reset();
                       _stopwatch.start();
@@ -283,21 +312,32 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                             'path': _voicePath,
                           }
                         });
-                        _voiceEntry?.remove();
+                        // _voiceEntry?.remove();
                       });
                       recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
                     } else {
                       Fluttertoast.showToast(msg: 'Microphone permission is required!');
                       return;
                     }
-                    _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder());
-                    Overlay.of(context).insert(_voiceEntry!);
+                    // _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder(onCancel: _cancelRecord));
+                    // if (mounted) Overlay.of(context).insert(_voiceEntry!);
+                  },
+                  onLongPressMoveUpdate: (details) {
+                    final dx = details.localOffsetFromOrigin.dx;
+                    if (dx < 0) ref.read(recordButtonDeltaProvider.notifier).update(dx.abs());
+                    if (dx < -150) {
+                      _cancelRecord();
+                    }
                   },
                   onLongPressEnd: (_) async {
-                    _voiceEntry?.remove();
-                    _stopwatch.stop();
-                    _timer?.cancel();
-                    if (_stopwatch.elapsedMilliseconds < 500) return;
+                    ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
+                    // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();
+                    if (_stopwatch.isRunning) _stopwatch.stop();
+                    if (_timer?.isActive == true) _timer?.cancel();
+                    if (_stopwatch.elapsedMilliseconds < 1000) {
+                      await recorder.stop();
+                      return;
+                    }
                     final path = await recorder.stop();
                     if (path == null) return;
 
@@ -315,8 +355,19 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                       }
                     });
                   },
-                  child: Icon(CupertinoIcons.mic, size: 28, color: Colors.white)
-                ),
+                  child: Container(
+                      width: 72,
+                      height: 54,
+                      margin: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 2, color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(20),
+                        color: ref.watch(recordButtonLongPressedProvider) ? Color(0xFFBEFF06) : Theme.of(context).primaryColor
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      alignment: Alignment.center,
+                      child: Icon(CupertinoIcons.mic, size: 24, color: Colors.white)
+                  )
               )
               else Container(
                 width: 76,
@@ -342,6 +393,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   icon: SonaIcon(icon: SonaIcons.chat_send, size: 28)
                 ),
               ),
+              if (ref.watch(recordButtonLongPressedProvider)) SizedBox(width: ref.watch(recordButtonDeltaProvider))
             ],
           ),
         ),
@@ -355,7 +407,8 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
               color: ref.watch(keyboardExtensionVisibilityProvider) ? Colors.transparent : Colors.white
             ),
             decoration: BoxDecoration(),
-            child: Padding(padding: EdgeInsets.all(16),
+            child: Padding(
+              padding: EdgeInsets.all(16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -367,15 +420,18 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                             color: Color(0xffF6F3F3),
                             borderRadius: BorderRadius.circular(24)
                         ),
+                        clipBehavior: Clip.antiAlias,
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(Assets.iconsSonaMessage,height: 48,width: 48,),
-                            Text('Give me advice',style: TextStyle(
+                            Text('Give me advice',
+                              style: TextStyle(
                                 fontSize: 14,
                                 color: Color(0xff2c2c2c),
                                 fontWeight: FontWeight.w900
-                            ),
+                              ),
                             )
                           ],
                         ),
@@ -385,24 +441,28 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
                   SizedBox(
                     width: 8,
                   ),
-                  Expanded(child: GestureDetector(
-                      child: detecting?Container(
+                  Expanded(
+                    child: GestureDetector(
+                      child: detecting ? Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: Color(0xffF6F3F3),
                               borderRadius: BorderRadius.circular(24)
                           ),
+                          clipBehavior: Clip.antiAlias,
                           child: SizedBox(
                             height: 32,
                             width: 32,
                             child: CircularProgressIndicator(),
                           )
-                      ):Container(
+                      ) : Container(
                         decoration: BoxDecoration(
                             color: Color(0xffF6F3F3),
                             borderRadius: BorderRadius.circular(24)
                         ),
+                        clipBehavior: Clip.antiAlias,
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SvgPicture.asset(Assets.svgChatDuosnap,height: 48,width: 48,),
@@ -571,6 +631,15 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
     );
   }
 
+  void _cancelRecord() {
+    ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
+    ref.read(recordButtonDeltaProvider.notifier).reset();
+    // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();
+    if (_stopwatch.isRunning) _stopwatch.stop();
+    if (_timer?.isActive == true) _timer?.cancel();
+    recorder.stop();
+  }
+
   Future _onTipsTap() async {
     showCommonBottomSheet(
         context: context,
@@ -583,4 +652,76 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> {
   }
 }
 
+class RecordDurationWidget extends StatefulWidget {
+  const RecordDurationWidget({
+    super.key,
+    required this.stopwatch,
+  });
+  final Stopwatch stopwatch;
+
+  @override
+  State<StatefulWidget> createState() => _RecordDurationState();
+}
+
+class _RecordDurationState extends State<RecordDurationWidget> {
+
+  late Timer? timer;
+
+  @override
+  void initState() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    timer = null;
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final elapsed = widget.stopwatch.elapsed.inSeconds;
+    if (elapsed < 1) {
+      return Text('  ');
+    }
+    return Text('${widget.stopwatch.elapsed.inSeconds.toString()}s',
+      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+        color: Colors.white
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+}
+
+final recordButtonLongPressedProvider = StateProvider<bool>((ref) {
+  ref.listenSelf((previous, next) {
+    if (!next) {
+      ref.read(recordButtonDeltaProvider.notifier).update(0);
+    }
+  });
+  return false;
+});
+
 final keyboardExtensionVisibilityProvider = StateProvider<bool>((ref) => false);
+
+class RecordButtonDeltaHorizontalNotifier extends StateNotifier<double> {
+  RecordButtonDeltaHorizontalNotifier(super.state);
+
+  void update(double value) {
+    state = value;
+  }
+
+  void reset() {
+    state = 0;
+  }
+}
+
+final recordButtonDeltaProvider = StateNotifierProvider<
+  RecordButtonDeltaHorizontalNotifier,
+  double
+>((ref) => RecordButtonDeltaHorizontalNotifier(0));

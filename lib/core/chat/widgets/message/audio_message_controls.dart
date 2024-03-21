@@ -118,7 +118,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
     return [
       Icon(CupertinoIcons.waveform, size: 24, color: _contentColor),
       SizedBox(width: 12),
-      Text('${(widget.duration.inMilliseconds / 1000).ceil().toString()}s',
+      Text('${(widget.duration.inMilliseconds / 1000).floor().toString()}s',
           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: _contentColor)
       ),
       Expanded(child: Container()),
@@ -171,7 +171,7 @@ class _AudioMessageControlsState extends ConsumerState<AudioMessageControls> {
   Future _play() async {
     await player.play(DeviceFileSource(widget.filePath!), position: const Duration(milliseconds: 0));
     ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => widget.message.uuid);
-    if (!widget.message.read) widget.message.markAsRead();
+    if (!widget.fromMe && !widget.message.read) widget.message.markAsRead();
 
     bool shutdown = false;
     ref.read(subProvider.notifier).update((state) => ref.listenManual(earpieceModeProvider, (prev, next) async {
