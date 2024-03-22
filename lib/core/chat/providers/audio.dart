@@ -10,10 +10,8 @@ import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
 final audioPlayerProvider = StateProvider.family<AudioPlayer, int>((ref, arg) {
   final player = AudioPlayer();
   player.onPlayerStateChanged.listen((playStateEvent) async {
-    print('play event: $playStateEvent');
     if (playStateEvent == PlayerState.playing) {
       ref.read(proximitySubscriptionProvider.notifier).update((state) => ProximitySensor.events.throttleTime(const Duration(milliseconds: 500)).listen((proximityEvent) async {
-        print('proximity event: $proximityEvent');
         if (player.state == PlayerState.playing) {
           await player.pause();
           if (proximityEvent == 1) {
