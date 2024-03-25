@@ -20,6 +20,7 @@ import '../../../common/permission/permission.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
+import '../../../utils/uuid.dart';
 import '../../subscribe/subscribe_page.dart';
 import '../providers/matched.dart';
 import '../util/event.dart';

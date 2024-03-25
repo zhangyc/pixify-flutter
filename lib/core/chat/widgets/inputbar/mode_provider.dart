@@ -6,7 +6,8 @@ import 'package:sona/utils/global/global.dart';
 
 import '../../../../account/providers/profile.dart';
 
-final softKeyboardHeightProvider = StateProvider<double>((ref) => 300);
+final softKeyboardHeightProvider = StateProvider<double>((ref) => 100);
+final paddingBottomHeightProvider = StateProvider<double>((ref) => 20);
 
 final inputModeProvider = StateProvider.family<InputMode, int>((ref, arg) {
   ref.listenSelf((previous, next) {
@@ -16,12 +17,9 @@ final inputModeProvider = StateProvider.family<InputMode, int>((ref, arg) {
   return enabled ? InputMode.sona : InputMode.manual;
 }, dependencies: [conversationStreamProvider]);
 
-final chatStylesVisibleProvider = StateProvider.family.autoDispose<bool, int>((ref, arg) {
-  if (ref.watch(inputModeProvider(arg)) == InputMode.manual) {
-    return false;
-  }
-  return false;
-}, dependencies: [inputModeProvider]);
+final inputMethodProvider = StateProvider.family<InputMethod, int>((ref, arg) {
+  return InputMethod.keyboard;
+});
 
 final sonaInputProvider = StateProvider.autoDispose.family<String, int>((ref, arg) => '');
 final manualInputProvider = StateProvider.autoDispose.family<String, int>((ref, arg) => '');
@@ -37,4 +35,9 @@ final currentInputEmptyProvider = StateProvider.autoDispose.family<bool, int>((r
 enum InputMode {
   sona,
   manual
+}
+
+enum InputMethod {
+  keyboard,
+  voice
 }

@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/my_profile.dart';
@@ -11,11 +14,14 @@ import 'package:sona/common/screens/profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/core/chat/models/message.dart';
+import 'package:sona/core/chat/providers/audio.dart';
 import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/providers/message.dart';
 import 'package:sona/core/chat/services/chat.dart';
+import 'package:sona/core/chat/services/message.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/core/chat/widgets/message/unknown_message.dart';
 import 'package:sona/core/chat/widgets/tips_dialog.dart';
 import 'package:sona/core/match/providers/match_info.dart';
 import 'package:sona/core/match/providers/matched.dart';
@@ -30,9 +36,14 @@ import 'package:sona/utils/toast/cooldown.dart';
 import '../../../common/models/user.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/dialog/subsciption.dart';
+import '../models/audio_message.dart';
+import '../models/image_message.dart';
 import '../models/message_type.dart';
+import '../models/text_message.dart';
 import '../widgets/inputbar/mode_provider.dart';
+import '../widgets/message/audio_message.dart';
 import '../widgets/message/image_message.dart';
+import '../widgets/message/message.dart';
 import '../widgets/message/text_message.dart';
 
 class ChatScreen extends StatefulHookConsumerWidget {
@@ -52,9 +63,9 @@ class ChatScreen extends StatefulHookConsumerWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends ConsumerState<ChatScreen> {
+class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
 
-  static int _lastLocalId = -99999;
+  late final _messageController = MessageController(ref: ref, chatId: widget.otherSide.id, otherInfo: widget.otherSide);
 
   late MyProfile myProfile;
   late UserInfo mySide;
@@ -63,6 +74,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   void didChangeDependencies() {
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
     myProfile = ref.read(myProfileProvider)!;
     mySide = myProfile.toUser();
     if (mySide.locale != null) {
@@ -77,11 +89,41 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPop() {
+    ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
+    _stopAudio();
+    super.didPop();
+  }
+
+  @override
+  void didPushNext() {
+    ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
+    _stopAudio();
+    super.didPushNext();
+  }
+
+  void _stopAudio() {
+    try {
+      final player = ref.read(audioPlayerProvider(widget.otherSide.id));
+      if (player.state == PlayerState.playing || player.state == PlayerState.paused) {
+        player.stop();
+      }
+    } catch(e) {
+      //
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final messages = ref.watch(messagesProvider(widget.otherSide.id));
     return Scaffold(
       backgroundColor: Colors.white,
-      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -130,68 +172,64 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         //     statusBarIconBrightness: Brightness.dark
         // )
       ),
-      body: Stack(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: (){
-              FocusManager.instance.primaryFocus?.unfocus();
-              tapBlank.value=uuid.v1();
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/chat_bg.png'),
-                  fit: BoxFit.cover
-                ),
-              ),
-              child: Container(
-                alignment: Alignment.topCenter,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 2, right: 2, bottom: 120),
-                  reverse: true,
-                  itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
-                  itemCount: messages.length + 1,
-                  separatorBuilder: (_, __) => SizedBox(height: 5),
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/chat_bg.png'),
+            fit: BoxFit.cover
+          ),
+        ),
+        child: Column(
+          children: [
+            GenerateBanner(),
+            Expanded(
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  if (ref.read(keyboardExtensionVisibilityProvider)) {
+                    ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
+                  }
+                },
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(left: 2, right: 2, bottom: 32),
+                    reverse: true,
+                    itemBuilder: (BuildContext context, int index) => index != messages.length ?_buildMessage(index,messages[index],messages): _startupline(messages.isNotEmpty),
+                    itemCount: messages.length + 1,
+                    separatorBuilder: (_, __) => SizedBox(height: 5),
+                    // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(child: GenerateBanner(),)
-        ],
-      ),
-      floatingActionButton: Container(
-        padding: const EdgeInsets.only(
-          left: 8,
-          top: 8,
-          right: 8,
-          bottom: 8
-        ),
-        color: Colors.white,
-        child: ref.watch(entitlementsProvider).interpretation > 0 || ref.watch(inputModeProvider(widget.otherSide.id)) == InputMode.manual ? ChatInstructionInput(
-          chatId: widget.otherSide.id,
-          sameLanguage: myLocale == otherLocale,
-          onSubmit: _onSend,
-          onSuggestionTap: _onSuggestionTap,
-          onHookTap: _onHookTap,
-          autofocus: false,
-          targetUser: widget.otherSide,
-        ) : Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: OutlinedButton(
-              onPressed: () => showSubscription(FromTag.pay_chat_sonamsg),
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06))
-              ),
-              child: Text(S.of(context).buttonHitAIInterpretationMaximumLimit)
-          ),
+            Container(
+              color: Colors.white,
+              child: ref.watch(entitlementsProvider).interpretation > 0 || ref.watch(inputModeProvider(widget.otherSide.id)) == InputMode.manual ? ChatInstructionInput(
+                chatId: widget.otherSide.id,
+                otherInfo: widget.otherSide,
+                sameLanguage: myLocale == otherLocale,
+                onSendMessage: _sendMessage,
+              ) : Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: OutlinedButton(
+                    onPressed: () => showSubscription(FromTag.pay_chat_sonamsg),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Color(0xFFBEFF06))
+                    ),
+                    child: Text(S.of(context).buttonHitAIInterpretationMaximumLimit)
+                ),
+              )
+            )
+          ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+
   var _startupSent = false;
   Widget _startupline(bool hasMsg) {
     return Container(
@@ -252,38 +290,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     );
   }
 
-  Future _onSend(String? text) async {
-    if (text == null || text.trim().isEmpty) return;
-
-    final mode = ref.read(inputModeProvider(widget.otherSide.id));
-    final message = ImMessage(
-      id: null,
-      uuid: uuid.v4(),
-      type: mode == InputMode.sona ? CallSonaType.INPUT.index + 1 : ImMessageType.manual.index,
-      originalContent: text,
-      translatedContent: null,
-      sender: mySide,
-      receiver: widget.otherSide,
-      time: DateTime.now(),
-      contentType: 1,
-      content: text
-    );
-    message.sendingParams = MessageSendingParams(
-        uuid: message.uuid!,
-        userId: widget.otherSide.id,
-        mode: mode,
-        content: text,
-        dateTime: message.time
-    ).toJsonString();
-
-    ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => [...state, message]);
+  Future _sendMessage(Map<String, dynamic> content) async {
+    return _messageController.send(content);
   }
 
   Future _resendMessage(ImMessage message) {
-    ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => state..remove(message));
-    return _onSend(message.originalContent);
+    return _messageController.resend(message);
   }
-
 
   Future _deleteMessage(ImMessage message) {
     return deleteMessage(
@@ -315,32 +328,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     }
   }
 
-  Future _onHookTap() async {
-    final resp = await callSona(
-      userId: widget.otherSide.id,
-      type: CallSonaType.HOOK
-    );
-    if (resp.statusCode == 10150) {
-      if (myProfile.isMember) {
-        coolDownDaily();
-      } else {
-        showSubscription(FromTag.pay_chat_hook);
-      }
-    }
-    SonaAnalytics.log('chat_hook');
-  }
-
-  Future _onSuggestionTap() async {
-    showCommonBottomSheet(
-      context: context,
-      title: 'SONA Tips',
-      actions: [
-        SonaTipsDialog(userId: widget.otherSide.id)
-      ]
-    );
-    SonaAnalytics.log('chat_suggest');
-  }
-
   void _showUnmatchConfirm() async {
     final result = await showConfirm(
         context: context,
@@ -366,12 +353,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       aiEnabledStatusDescription = S.of(context).speakSameLanguage;
     }
     final action = await showActionButtons(
-        context: context,
-        options: {
-          S.of(context).seeProfile: 'see_profile',
-          S.of(context).buttonUnmatch: 'unmatch',
-          aiEnabledStatusDescription: 'toggle_aienabled'
-        }
+      context: context,
+      options: {
+        S.of(context).seeProfile: 'see_profile',
+        S.of(context).buttonUnmatch: 'unmatch',
+        aiEnabledStatusDescription: 'toggle_aienabled'
+      }
     );
     switch(action) {
       case 'see_profile':
@@ -387,39 +374,18 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   _buildMessage(int index,ImMessage message,List<ImMessage> messages) {
-    if(message.contentType==1){
-      return TextMessageWidget(
-        key: ValueKey(message.uuid ?? message.id),
-        prevMessage: index == messages.length - 1 ? null : messages[index + 1],
-        message: messages[index],
-        fromMe: mySide.id == messages[index].sender.id,
-        mySide: mySide,
-        otherSide: widget.otherSide,
-        myLocale: myLocale,
-        otherLocale: otherLocale,
-        // onPendingMessageSucceed: _onPendingMessageSucceed,
-        // onShorten: _shortenMessage,
-        onDelete: _deleteMessage,
-        onResend: _resendMessage,
-        onAvatarTap: _showInfo,
-      );
-    }else if(message.contentType==2){
-      return ImageMessageWidget(
-        key: ValueKey(messages[index].uuid ?? messages[index].id),
-        prevMessage: index == messages.length - 1 ? null : messages[index + 1],
-        message: messages[index],
-        fromMe: mySide.id == messages[index].sender.id,
-        mySide: mySide,
-        otherSide: widget.otherSide,
-        myLocale: myLocale,
-        otherLocale: otherLocale,
-        // onPendingMessageSucceed: _onPendingMessageSucceed,
-        // onShorten: _shortenMessage,
-        onDelete: _deleteMessage,
-        onResend: _resendMessage,
-        onAvatarTap: _showInfo,
-      );
-    }
+    return ImMessageWidget(
+      key: ValueKey(message.uuid ?? message.id),
+      prevMessage: index == messages.length - 1 ? null : messages[index + 1],
+      message: messages[index],
+      mySide: mySide,
+      otherSide: widget.otherSide,
+      myLocale: myLocale,
+      otherLocale: otherLocale,
+      onDelete: _deleteMessage,
+      onResend: _resendMessage,
+      onAvatarTap: _showInfo,
+    );
   }
 }
 

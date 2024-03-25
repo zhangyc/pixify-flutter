@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -66,7 +67,6 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                       ),
                       SizedBox(height: 2),
                       _buildConversationTip(widget.conversation.contentType??1)
-
                     ],
                   ),
                 )
@@ -118,18 +118,18 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
           Text('${S.current.duoSnap}!')
         ],
       );
-    }else if(contentType==3){
-      return const Row(
+    } else if (contentType == 3) {
+      return Row(
         children: [
-          Icon(Icons.keyboard_voice,size: 15,),
+          Icon(CupertinoIcons.mic, size: 14),
           SizedBox(
             width: 4,
           ),
-          Text('New voice!')
+          Text('Voice Message')
         ],
       );
-    }else {
-      return Text('New message!');
+    } else {
+      return Container();
     }
   }
 }

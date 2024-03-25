@@ -23,26 +23,18 @@ class TextMessageWidget extends ConsumerStatefulWidget {
     super.key,
     required this.prevMessage,
     required this.message,
-    required this.fromMe,
     required this.mySide,
     required this.otherSide,
     required this.myLocale,
     required this.otherLocale,
-    required this.onDelete,
-    this.onResend,
-    this.onAvatarTap
   });
 
   final ImMessage? prevMessage;
   final ImMessage message;
-  final bool fromMe;
   final UserInfo mySide;
   final UserInfo otherSide;
   final Locale? myLocale;
   final Locale? otherLocale;
-  final Future Function(ImMessage) onDelete;
-  final Future Function(ImMessage)? onResend;
-  final Function()? onAvatarTap;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MessageWidgetState();
@@ -50,34 +42,8 @@ class TextMessageWidget extends ConsumerStatefulWidget {
 
 class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
 
+  bool get _fromMe => widget.message.sender.id == widget.mySide.id;
   bool _clicked = false;
-
-  @override
-  void initState() {
-    if (widget.message.id == null) {
-      ref.read(asyncMessageSendingProvider(widget.message.sendingParams!)).whenData((data) async {
-        if (data.success) {
-          if (data.data is int) {
-            widget.message.id = data.data;
-          } else {
-            widget.message.id = data.data['id'];
-            widget.message.translatedContent = data.data['txt'];
-          }
-          // await Future.delayed(const Duration(seconds: 0));
-          // ref.read(localMessagesProvider(widget.otherSide.id).notifier).update((state) => List.from(state));
-        } else {
-          if (data.error == MessageSendingError.maximumLimit) {
-            if (ref.read(myProfileProvider)!.isMember) {
-              coolDownDaily();
-            } else {
-              ref.read(entitlementsProvider.notifier).limit(interpretation: 0);
-            }
-          }
-        }
-      });
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,192 +52,95 @@ class _MessageWidgetState extends ConsumerState<TextMessageWidget> {
     Locale? upperLocale;
     Locale? lowerLocale;
 
-    if (widget.fromMe) {
-      upperLocale = widget.myLocale;
-      if (widget.message.sendingParams != null) {
-        upperMessage = widget.message.originalContent;
-        lowerMessage = ref.watch(asyncMessageSendingProvider(widget.message.sendingParams!)).when(
-            data: (data) {
-              if (data.success) {
-                return (data.data is int) ? null : data.data?['txt'] ?? '';
-              } else {
-                switch (data.error) {
-                  case MessageSendingError.maximumLimit:
-                    return S.current.toastHitDailyMaximumLimit;
-                  case MessageSendingError.contentFilter:
-                    return S.current.exceptionSonaContentFilterTips;
-                  default:
-                    return S.current.exceptionFailedToSendTips;
-                }
-              }
-            },
-            error: (_, __) => S.current.exceptionFailedToSendTips,
-            loading: () => '...'
-        );
-      } else {
-        upperMessage = widget.message.originalContent;
-        lowerMessage = widget.message.translatedContent;
-      }
+    upperLocale = widget.myLocale;
+    lowerLocale = widget.otherLocale;
+    if (_fromMe) {
+      upperMessage = widget.message.content['originalText'];
+      lowerMessage = widget.message.content['translatedText'];
     } else {
-      lowerLocale = widget.otherLocale;
-      upperMessage = widget.message.translatedContent;
-      lowerMessage = widget.message.originalContent;
+      upperMessage = widget.message.content['translatedText'];
+      lowerMessage = widget.message.content['originalText'];
     }
     if (upperMessage == null || upperMessage.isEmpty) {
       upperMessage = lowerMessage;
       lowerMessage = null;
     }
 
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
+    return Flexible(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: _fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          if (widget.prevMessage == null || widget.prevMessage!.time.add(const Duration(minutes: 5)).isBefore(widget.message.time))
-            MessageTime(time: widget.message.time),
-          SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: widget.fromMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (!widget.fromMe) Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: GestureDetector(
-                    onTap: widget.onAvatarTap,
-                    child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(40))
-                ),
-              ),
-              Flexible(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: widget.fromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onLongPress: () async {
-                        final action = await showActionButtons(
-                            context: context,
-                            options: {
-                              S.of(context).buttonCopy: 'copy',
-                              if (widget.fromMe) S.of(context).buttonDelete: 'delete'
-                            }
-                        );
-                        if (action == 'copy') {
-                          Clipboard.setData(ClipboardData(text: upperMessage!));
-                          Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-                        } else if (action == 'delete') {
-                          widget.onDelete(widget.message);
-                        }
-                      },
-                      child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width * 0.64,
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: widget.fromMe ? Theme.of(context).primaryColor : Colors.transparent
-                          ),
-                          foregroundDecoration: widget.fromMe ? null : BoxDecoration(
-                              border: Border.all(width: 2),
-                              borderRadius: BorderRadius.circular(20)
-                          ),
-                          padding: EdgeInsets.all(12),
-                          clipBehavior: Clip.antiAlias,
-                          child: Text(
-                              upperMessage!,
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: widget.fromMe ? Colors.white : Theme.of(context).primaryColor,
-                                  height: 1.5,
-                                  fontFamilyFallback: [
-                                    if (Platform.isAndroid) 'Source Han Sans',
-                                    if (Platform.isIOS && upperLocale?.languageCode.startsWith('zh') == true) 'PingFang SC',
-                                    if (Platform.isIOS && upperLocale?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
-                                  ],
-                                  locale: widget.myLocale
-                              )
-                          )
-                      ),
-                    ),
-                    // SizedBox(height: 12),
-                    if (lowerMessage != null && lowerMessage.isNotEmpty) GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        setState(() {
-                          _clicked = !_clicked;
-                        });
-                      },
-                      onLongPress: () async {
-                        final action = await showActionButtons(
-                            context: context,
-                            options: {
-                              S.of(context).buttonCopy: 'copy',
-                            }
-                        );
-                        if (action == 'copy') {
-                          Clipboard.setData(ClipboardData(text: lowerMessage!));
-                          Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
-                        }
-                      },
-                      child: Container(
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.64,
-                        ),
-                        padding: EdgeInsets.all(12),
-                        alignment: widget.fromMe ? Alignment.centerRight : Alignment.centerLeft,
-                        child: Text(
-                          lowerMessage,
-                          maxLines: _clicked ? null : 1,
-                          overflow: _clicked ? TextOverflow.clip : TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Color(0xFFB7B7B7),
-                              height: 1.5,
-                              fontFamilyFallback: [
-                                if (Platform.isAndroid) 'Source Han Sans',
-                                if (Platform.isIOS && lowerLocale?.languageCode.startsWith('zh') == true) 'PingFang SC',
-                                if (Platform.isIOS && lowerLocale?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
-                              ],
-                              locale: widget.otherLocale
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              if (widget.fromMe) Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: UserAvatar(url: widget.mySide.avatar!, size: Size.square(40)),
-              ),
-            ],
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.64,
+            ),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: _fromMe ? Theme.of(context).primaryColor : Colors.transparent
+            ),
+            foregroundDecoration: _fromMe ? null : BoxDecoration(
+                border: Border.all(width: 2),
+                borderRadius: BorderRadius.circular(20)
+            ),
+            padding: EdgeInsets.all(12),
+            clipBehavior: Clip.antiAlias,
+            child: Text(
+                upperMessage!,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: _fromMe ? Colors.white : Theme.of(context).primaryColor,
+                    height: 1.5,
+                    fontFamilyFallback: [
+                      if (Platform.isAndroid) 'Source Han Sans',
+                      if (Platform.isIOS && upperLocale?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                      if (Platform.isIOS && upperLocale?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                    ],
+                    locale: widget.myLocale
+                )
+            ),
           ),
-          if (widget.message.sendingParams != null) ref.watch(asyncMessageSendingProvider(widget.message.sendingParams!)).when(
-              data: (data) {
-                if (data.success) {
-                  return Container();
-                } else {
-                  return switch (data.error) {
-                    MessageSendingError.maximumLimit => Container(),
-                    MessageSendingError.contentFilter => Container(),
-                    _ => Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ColoredButton(
-                            onTap: () {
-                              widget.onResend!(widget.message);
-                            },
-                            color: Color(0xFFF6F3F3),
-                            fontColor: Theme.of(context).primaryColor,
-                            borderColor: Colors.transparent,
-                            text: S.current.buttonResend
-                        ),
-                      ],
-                    )
-                  };
-                }
-              },
-              error: (_, __) => Container(),
-              loading: () => Container()
+          // SizedBox(height: 12),
+          if (lowerMessage != null && lowerMessage.isNotEmpty) GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              setState(() {
+                _clicked = !_clicked;
+              });
+            },
+            onLongPress: () async {
+              final action = await showActionButtons(
+                  context: context,
+                  options: {
+                    S.of(context).buttonCopy: 'copy',
+                  }
+              );
+              if (action == 'copy') {
+                Clipboard.setData(ClipboardData(text: lowerMessage!));
+                Fluttertoast.showToast(msg: 'Message has been copied to Clipboard');
+              }
+            },
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.64,
+              ),
+              padding: EdgeInsets.all(12),
+              alignment: _fromMe ? Alignment.centerRight : Alignment.centerLeft,
+              child: Text(
+                lowerMessage,
+                maxLines: _clicked ? null : 1,
+                overflow: _clicked ? TextOverflow.clip : TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Color(0xFFB7B7B7),
+                    height: 1.5,
+                    fontFamilyFallback: [
+                      if (Platform.isAndroid) 'Source Han Sans',
+                      if (Platform.isIOS && lowerLocale?.languageCode.startsWith('zh') == true) 'PingFang SC',
+                      if (Platform.isIOS && lowerLocale?.languageCode.startsWith('ja') == true) 'Hiragino Sans',
+                    ],
+                    locale: widget.otherLocale
+                ),
+              ),
+            ),
           )
         ],
       ),

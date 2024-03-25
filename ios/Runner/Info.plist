@@ -54,6 +54,10 @@
 	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
+	<key>NSMicrophoneUsageDescription</key>
+  <string>Allow Sona to access your microphone to record voice message.</string>
+  <key>NSSpeechRecognitionUsageDescription</key>
+  <string>Allow Sona to access your speech recognition to transform your voice message to text.</string>
 	<key>NSUserTrackingUsageDescription</key>
   <string>To evaluate the effectiveness of our advertising campaigns and optimize our ad delivery strategies, we need to access your Identifier for Advertisers (IDFA). Your IDFA may be shared with our advertising partners, but it will not be associated with any other personal information.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

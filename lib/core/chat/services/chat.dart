@@ -48,17 +48,19 @@ Future<Response> callSona({
 Future<Response> sendMessage({
   required String uuid,
   required int userId,
-  required ImMessageType type,
-  required String content,
+  ImMessageType? type,
+  required Map<String, dynamic> content,
 }) async {
   return dio.post(
       '/message/send',
       data: {
         'uuid': uuid,
         'userId': userId,
-        'message': content,
-        'messageType': type.name
-      }
+        'messageType': type?.name,
+        'contentType': content['type'],
+        'message': content['url'],
+        ...content
+      }..removeWhere((key, value) => value == null || key == 'localExtension')
   );
 }
 
