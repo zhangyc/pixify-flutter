@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/utils/global/global.dart';
@@ -16,6 +17,7 @@ class BaseInterceptor extends Interceptor {
       'token': token,
       'locale': profile?.locale
     });
+    debugPrint(token);
     if (options.method.toUpperCase() == 'POST') {
       if (options.data is FormData) {
         options.headers.addAll({HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType});
@@ -24,7 +26,6 @@ class BaseInterceptor extends Interceptor {
       }
     }
     return handler.next(options);
-    // super.onRequest(options, handler);
   }
 
   @override
@@ -37,7 +38,6 @@ class BaseInterceptor extends Interceptor {
       response.data = response.data['data'];
     }
     return handler.next(response);
-    //super.onResponse(response, handler);
   }
 
   void _onTokenInvalid() {
