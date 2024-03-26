@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -55,10 +56,10 @@ class ChatInstructionInput extends ConsumerStatefulWidget {
   final Future Function(Map<String, dynamic>) onSendMessage;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ChatInstructionInputState();
+  ConsumerState<ConsumerStatefulWidget> createState() => ChatInstructionInputState();
 }
 
-class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with SingleTickerProviderStateMixin {
+class ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware, SingleTickerProviderStateMixin {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
   // OverlayEntry? _voiceEntry;
@@ -195,7 +196,7 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   )
               )
               else GestureDetector(
-                onTap: _cancelRecord,
+                onTap: cancelRecord,
                 child: Container(
                   width: 54,
                   height: 54,
@@ -293,83 +294,83 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
                   )
               ),
               SizedBox(width: 4),
-              // if (ref.watch(currentInputEmptyProvider(widget.chatId))) GestureDetector(
-              //     behavior: HitTestBehavior.opaque,
-              //     onLongPressStart: (_) async {
-              //       ref.read(recordButtonLongPressedProvider.notifier).update((state) => true);
-              //       // ref.read(recordButtonDeltaProvider.notifier).update(0);
-              //       if (await Permission.microphone.request().isGranted) {
-              //         _stopwatch.reset();
-              //         _stopwatch.start();
-              //         _timer = Timer(const Duration(seconds: 60), () async {
-              //           _stopwatch.stop();
-              //           final _voicePath = await recorder.stop();
-              //           if (_voicePath == null) return;
-              //           widget.onSendMessage({
-              //             'type': ImMessageContentType.audio,
-              //             'duration': 60.0,
-              //             'localExtension': {
-              //               'path': _voicePath,
-              //             }
-              //           });
-              //           // _voiceEntry?.remove();
-              //         });
-              //         recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
-              //       } else {
-              //         Fluttertoast.showToast(msg: 'Microphone permission is required!');
-              //         return;
-              //       }
-              //       // _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder(onCancel: _cancelRecord));
-              //       // if (mounted) Overlay.of(context).insert(_voiceEntry!);
-              //     },
-              //     onLongPressMoveUpdate: (details) {
-              //       final dx = details.localOffsetFromOrigin.dx;
-              //       if (dx < 0) ref.read(recordButtonDeltaProvider.notifier).update(dx.abs());
-              //       if (dx < -150) {
-              //         _cancelRecord();
-              //       }
-              //     },
-              //     onLongPressEnd: (_) async {
-              //       ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
-              //       // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();
-              //       if (_stopwatch.isRunning) _stopwatch.stop();
-              //       if (_timer?.isActive == true) _timer?.cancel();
-              //       if (_stopwatch.elapsedMilliseconds < 1000) {
-              //         await recorder.stop();
-              //         return;
-              //       }
-              //       final path = await recorder.stop();
-              //       if (path == null) return;
-              //
-              //       final player = ref.read(audioPlayerProvider(widget.chatId));
-              //       ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
-              //       await player.setSourceDeviceFile(path);
-              //       var duration = await player.getDuration();
-              //       await player.release();
-              //       duration ??= _stopwatch.elapsed;
-              //       widget.onSendMessage({
-              //         'type': ImMessageContentType.audio,
-              //         'duration': duration.inMilliseconds / 1000.0,
-              //         'localExtension': {
-              //           'path': path,
-              //         }
-              //       });
-              //     },
-              //     child: Container(
-              //         width: 72,
-              //         height: 54,
-              //         margin: EdgeInsets.all(2),
-              //         decoration: BoxDecoration(
-              //           border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-              //           borderRadius: BorderRadius.circular(20),
-              //           color: ref.watch(recordButtonLongPressedProvider) ? Color(0xFFBEFF06) : Theme.of(context).primaryColor
-              //         ),
-              //         clipBehavior: Clip.antiAlias,
-              //         alignment: Alignment.center,
-              //         child: Icon(CupertinoIcons.mic, size: 24, color: Colors.white)
-              //     )
-              // )
-              if (!ref.watch(currentInputEmptyProvider(widget.chatId))) Container(
+              if (ref.watch(currentInputEmptyProvider(widget.chatId))) GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onLongPressStart: (_) async {
+                    ref.read(recordButtonLongPressedProvider.notifier).update((state) => true);
+                    // ref.read(recordButtonDeltaProvider.notifier).update(0);
+                    if (await Permission.microphone.request().isGranted) {
+                      _stopwatch.reset();
+                      _stopwatch.start();
+                      _timer = Timer(const Duration(seconds: 60), () async {
+                        _stopwatch.stop();
+                        final _voicePath = await recorder.stop();
+                        if (_voicePath == null) return;
+                        widget.onSendMessage({
+                          'type': ImMessageContentType.audio,
+                          'duration': 60.0,
+                          'localExtension': {
+                            'path': _voicePath,
+                          }
+                        });
+                        // _voiceEntry?.remove();
+                      });
+                      recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
+                    } else {
+                      Fluttertoast.showToast(msg: 'Microphone permission is required!');
+                      return;
+                    }
+                    // _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder(onCancel: _cancelRecord));
+                    // if (mounted) Overlay.of(context).insert(_voiceEntry!);
+                  },
+                  onLongPressMoveUpdate: (details) {
+                    final dx = details.localOffsetFromOrigin.dx;
+                    if (dx < 0) ref.read(recordButtonDeltaProvider.notifier).update(dx.abs());
+                    if (dx < -150) {
+                      cancelRecord();
+                    }
+                  },
+                  onLongPressEnd: (_) async {
+                    ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
+                    // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();
+                    if (_stopwatch.isRunning) _stopwatch.stop();
+                    if (_timer?.isActive == true) _timer?.cancel();
+                    if (_stopwatch.elapsedMilliseconds < 1000) {
+                      await recorder.stop();
+                      return;
+                    }
+                    final path = await recorder.stop();
+                    if (path == null) return;
+
+                    final player = ref.read(audioPlayerProvider(widget.chatId));
+                    ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
+                    await player.setSourceDeviceFile(path);
+                    var duration = await player.getDuration();
+                    await player.release();
+                    duration ??= _stopwatch.elapsed;
+                    widget.onSendMessage({
+                      'type': ImMessageContentType.audio,
+                      'duration': duration.inMilliseconds / 1000.0,
+                      'localExtension': {
+                        'path': path,
+                      }
+                    });
+                  },
+                  child: Container(
+                      width: 72,
+                      height: 54,
+                      margin: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 2, color: Theme.of(context).primaryColor),
+                        borderRadius: BorderRadius.circular(20),
+                        color: ref.watch(recordButtonLongPressedProvider) ? Color(0xFFBEFF06) : Theme.of(context).primaryColor
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      alignment: Alignment.center,
+                      child: Icon(CupertinoIcons.mic, size: 24, color: Colors.white)
+                  )
+              )
+              else Container(
                 width: 76,
                 margin: EdgeInsets.all(1),
                 child: IconButton(
@@ -398,240 +399,240 @@ class _ChatInstructionInputState extends ConsumerState<ChatInstructionInput> wit
           ),
         ),
         AnimatedContainer(
-          duration: Duration(milliseconds: 250),
+          duration: const Duration(milliseconds: 250),
           curve: Curves.ease,
           height: ref.watch(keyboardExtensionVisibilityProvider) ? ref.watch(softKeyboardHeightProvider) : ref.watch(paddingBottomHeightProvider),
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            foregroundDecoration: BoxDecoration(
-              color: ref.watch(keyboardExtensionVisibilityProvider) ? Colors.transparent : Colors.white
-            ),
-            decoration: BoxDecoration(),
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: _onTipsTap,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xffF6F3F3),
-                            borderRadius: BorderRadius.circular(24)
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(Assets.iconsSonaMessage,height: 48,width: 48,),
-                            Text('Give me advice',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff2c2c2c),
-                                fontWeight: FontWeight.w900
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      child: detecting ? Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: Color(0xffF6F3F3),
-                              borderRadius: BorderRadius.circular(24)
+          padding: EdgeInsets.all(16),
+          clipBehavior: Clip.antiAlias,
+          foregroundDecoration: BoxDecoration(
+            color: ref.watch(keyboardExtensionVisibilityProvider) ? Colors.transparent : Colors.white
+          ),
+          decoration: BoxDecoration(),
+          child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: _onTipsTap,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Color(0xffF6F3F3),
+                        borderRadius: BorderRadius.circular(24)
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(Assets.iconsSonaMessage,height: 48,width: 48,),
+                        Text('Give me advice',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff2c2c2c),
+                            fontWeight: FontWeight.w900
                           ),
-                          clipBehavior: Clip.antiAlias,
-                          child: SizedBox(
-                            height: 32,
-                            width: 32,
-                            child: CircularProgressIndicator(),
-                          )
-                      ) : Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xffF6F3F3),
-                            borderRadius: BorderRadius.circular(24)
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(Assets.svgChatDuosnap,height: 48,width: 48,),
-                            Text(S.current.duoSnap,style: const TextStyle(
-                                color: Color(0xff2c2c2c),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w900
-                            ),)
-                          ],
-                        ),
-                      ),
-                      onTap: ()async{
-                        if (!canDuoSnap){
-                          duosnap -=1 ;
-                          switch(ref.read(myProfileProvider)!.memberType) {
-                            case MemberType.none:
-                              SonaAnalytics.log(
-                                  DuoSnapEvent.Duo_click_pay.name);
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: (c) {
-                                return const SubscribePage(
-                                  fromTag: FromTag.duo_snap,);
-                              }));
-                              break;
-                            case MemberType.club:
-                              SonaAnalytics.log(
-                                  DuoSnapEvent.plus_duo_limit.name);
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: (c) {
-                                return const SubscribePage(
-                                  fromTag: FromTag.pay_match_arrow,);
-                              }));
-                              break;
-                            case MemberType.plus:
-                              SonaAnalytics.log(
-                                  DuoSnapEvent.club_clickduo_payplus.name);
-                              Fluttertoast.showToast(
-                                  msg: S.current.weeklyLimitReached);
-                              break;
-                          }
-                          return;
-                        }
-                        try {
-                          detecting = true;
-                          HttpResult result = await post('/merge-photo/find-last');
-                          if (result.statusCode.toString() == '60010') {
-                            if (mounted) setState(() {});
-                            final file=await DefaultCacheManager().downloadFile(ref.read(myProfileProvider)!.photos.first.url);
-                            final file2=await DefaultCacheManager().downloadFile(widget.otherInfo.avatar??'');
-
-                            bool isHumanFace1 = await faceDetection(file.file.path);
-                            bool isHumanFace2 = await faceDetection(file2.file.path);
-                            detecting = false;
-                            if (mounted) setState(() {});
-                            if (isHumanFace1 && isHumanFace2) {
-                              final sdModel=await showDuoSnapDialog(context, target:MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
-                            } else if (!isHumanFace1&&isHumanFace2) {
-                              SonaAnalytics.log(DuoSnapEvent.notreal_self.name);
-                              if (!mounted) return;
-                              showDuoSnapTip(context, child: NotMeetConditions(
-                                close: (){
-                                  Navigator.pop(context);
-                                },
-                                camera: () async {
-                                  setUserAvatarPhoto(ImageSource.camera, ref);
-                                  if(mounted){
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                gallery: () async {
-                                  setUserAvatarPhoto(ImageSource.gallery, ref);
-                                  if(mounted){
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                anyway: () async{
-                                  if (mounted) {
-                                    Navigator.pop(context);
-                                  }
-                                  final sdModel = await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
-                                },
-                              ),
-                              dialogHeight: 361
-                              );
-                            } else if (isHumanFace1 && !isHumanFace2){
-                              SonaAnalytics.log(DuoSnapEvent.notreal_other.name);
-                              showDuoSnapTip(context, child: OtherNotMeetConditions(
-                                close: (){
-                                  Navigator.pop(context);
-                                },
-                                gotit: (){
-                                  Navigator.pop(context);
-                                },
-                                sendDM: (){
-                                  Future.delayed(Duration(milliseconds: 200),(){
-                                    if (canArrow){
-                                      showDm(context, MatchUserInfo.fromUserInfoInstance(widget.otherInfo),(){});
-                                    }else {
-                                      bool isMember=ref.read(myProfileProvider)?.isMember??false;
-                                      if(isMember){
-                                        Fluttertoast.showToast(msg: 'Arrow on cool down this week');
-                                      }else{
-                                        Navigator.push(context, MaterialPageRoute(builder:(c){
-                                          return SubscribePage(fromTag: FromTag.duo_snap,);
-                                        }));
-                                      }
-                                    }
-                                  });
-                                  if(mounted){
-                                    Navigator.pop(context);
-                                  }
-                                }, anyway: () async{
-                                Navigator.pop(context);
-                                final sdModel=await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
-                              },
-
-                              ),
-                              dialogHeight: 390
-                              );
-                            } else if (!isHumanFace1&&!isHumanFace2){
-                              showDuoSnapTip(context, child: NotMeetConditions(
-                                close: () {
-                                  Navigator.pop(context);
-                                },
-                                camera: () async {
-                                  setUserAvatarPhoto(ImageSource.camera, ref);
-                                  if(mounted){
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                gallery: () async {
-                                  setUserAvatarPhoto(ImageSource.gallery, ref);
-                                  if(mounted){
-                                    Navigator.pop(context);
-                                  }
-                                }, anyway: ()async{
-                                if(mounted){
-                                  Navigator.pop(context);
-                                }
-                                final sdModel=await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
-                              },
-                              ), dialogHeight: 361);
-                            }
-
-                          } else {
-                            Fluttertoast.showToast(msg: S.current.onlyOneAtatime);
-                            setState(() {
-                              detecting = false;
-                            });
-                          }
-                        } catch(e) {
-                          if (kDebugMode) print('snap error: $e');
-                          detecting = false;
-                          setState(() {
-                          });
-                        }
-                      }
-
-                  ))
-                ],
+                        )
+                      ],
+                    ),
+                  ),
+                )
               ),
-            ),
+              SizedBox(
+                width: 8,
+              ),
+              Expanded(
+                child: GestureDetector(
+                  child: detecting ? Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Color(0xffF6F3F3),
+                          borderRadius: BorderRadius.circular(24)
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: SizedBox(
+                        height: 32,
+                        width: 32,
+                        child: CircularProgressIndicator(),
+                      )
+                  ) : Container(
+                    decoration: BoxDecoration(
+                        color: Color(0xffF6F3F3),
+                        borderRadius: BorderRadius.circular(24)
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(Assets.svgChatDuosnap, height: 48, width: 48),
+                        Text(S.current.duoSnap,
+                          style: const TextStyle(
+                            color: Color(0xff2c2c2c),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w900
+                          )
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: _onDuoSnap
+                )
+              )
+            ],
           ),
         )
       ],
     );
   }
 
-  void _cancelRecord() {
+  Future _onDuoSnap() async {
+    if (!canDuoSnap){
+      duosnap -=1 ;
+      switch(ref.read(myProfileProvider)!.memberType) {
+        case MemberType.none:
+          SonaAnalytics.log(
+              DuoSnapEvent.Duo_click_pay.name);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (c) {
+            return const SubscribePage(
+              fromTag: FromTag.duo_snap,);
+          }));
+          break;
+        case MemberType.club:
+          SonaAnalytics.log(
+              DuoSnapEvent.plus_duo_limit.name);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (c) {
+            return const SubscribePage(
+              fromTag: FromTag.pay_match_arrow,);
+          }));
+          break;
+        case MemberType.plus:
+          SonaAnalytics.log(
+              DuoSnapEvent.club_clickduo_payplus.name);
+          Fluttertoast.showToast(
+              msg: S.current.weeklyLimitReached);
+          break;
+      }
+      return;
+    }
+    try {
+      detecting = true;
+      HttpResult result = await post('/merge-photo/find-last');
+      if (result.statusCode.toString() == '60010') {
+        if (mounted) setState(() {});
+        final file=await DefaultCacheManager().downloadFile(ref.read(myProfileProvider)!.photos.first.url);
+        final file2=await DefaultCacheManager().downloadFile(widget.otherInfo.avatar??'');
+
+        bool isHumanFace1 = await faceDetection(file.file.path);
+        bool isHumanFace2 = await faceDetection(file2.file.path);
+        detecting = false;
+        if (mounted) setState(() {});
+        if (isHumanFace1 && isHumanFace2) {
+          final sdModel=await showDuoSnapDialog(context, target:MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
+        } else if (!isHumanFace1&&isHumanFace2) {
+          SonaAnalytics.log(DuoSnapEvent.notreal_self.name);
+          if (!mounted) return;
+          showDuoSnapTip(context, child: NotMeetConditions(
+            close: (){
+              Navigator.pop(context);
+            },
+            camera: () async {
+              setUserAvatarPhoto(ImageSource.camera, ref);
+              if(mounted){
+                Navigator.pop(context);
+              }
+            },
+            gallery: () async {
+              setUserAvatarPhoto(ImageSource.gallery, ref);
+              if(mounted){
+                Navigator.pop(context);
+              }
+            },
+            anyway: () async{
+              if (mounted) {
+                Navigator.pop(context);
+              }
+              final sdModel = await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
+            },
+          ),
+              dialogHeight: 361
+          );
+        } else if (isHumanFace1 && !isHumanFace2){
+          SonaAnalytics.log(DuoSnapEvent.notreal_other.name);
+          showDuoSnapTip(context, child: OtherNotMeetConditions(
+            close: (){
+              Navigator.pop(context);
+            },
+            gotit: (){
+              Navigator.pop(context);
+            },
+            sendDM: (){
+              Future.delayed(Duration(milliseconds: 200),(){
+                if (canArrow){
+                  showDm(context, MatchUserInfo.fromUserInfoInstance(widget.otherInfo),(){});
+                }else {
+                  bool isMember=ref.read(myProfileProvider)?.isMember??false;
+                  if(isMember){
+                    Fluttertoast.showToast(msg: 'Arrow on cool down this week');
+                  }else{
+                    Navigator.push(context, MaterialPageRoute(builder:(c){
+                      return SubscribePage(fromTag: FromTag.duo_snap,);
+                    }));
+                  }
+                }
+              });
+              if(mounted){
+                Navigator.pop(context);
+              }
+            }, anyway: () async{
+            Navigator.pop(context);
+            final sdModel=await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
+          },
+
+          ),
+              dialogHeight: 390
+          );
+        } else if (!isHumanFace1&&!isHumanFace2){
+          showDuoSnapTip(context, child: NotMeetConditions(
+            close: () {
+              Navigator.pop(context);
+            },
+            camera: () async {
+              setUserAvatarPhoto(ImageSource.camera, ref);
+              if(mounted){
+                Navigator.pop(context);
+              }
+            },
+            gallery: () async {
+              setUserAvatarPhoto(ImageSource.gallery, ref);
+              if(mounted){
+                Navigator.pop(context);
+              }
+            }, anyway: ()async{
+            if(mounted){
+              Navigator.pop(context);
+            }
+            final sdModel=await showDuoSnapDialog(context,target: MatchUserInfo.fromUserInfoInstance(widget.otherInfo));
+          },
+          ), dialogHeight: 361);
+        }
+
+      } else {
+        Fluttertoast.showToast(msg: S.current.onlyOneAtatime);
+        setState(() {
+          detecting = false;
+        });
+      }
+    } catch(e) {
+      if (kDebugMode) print('snap error: $e');
+      detecting = false;
+      setState(() {
+      });
+    }
+  }
+
+  void cancelRecord() {
     ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
     ref.read(recordButtonDeltaProvider.notifier).reset();
     // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();

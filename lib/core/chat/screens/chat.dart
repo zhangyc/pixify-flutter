@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:proximity_sensor/proximity_sensor.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/providers/entitlements.dart';
@@ -21,6 +22,7 @@ import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/services/message.dart';
 import 'package:sona/core/chat/widgets/inputbar/chat_inputbar.dart';
 import 'package:sona/common/widgets/button/colored.dart';
+import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
 import 'package:sona/core/chat/widgets/message/unknown_message.dart';
 import 'package:sona/core/chat/widgets/tips_dialog.dart';
 import 'package:sona/core/match/providers/match_info.dart';
@@ -65,6 +67,7 @@ class ChatScreen extends StatefulHookConsumerWidget {
 
 class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
 
+  final _inputGlobeKey = GlobalKey<ChatInstructionInputState>(debugLabel: 'chat_input_key');
   late final _messageController = MessageController(ref: ref, chatId: widget.otherSide.id, otherInfo: widget.otherSide);
 
   late MyProfile myProfile;
@@ -96,15 +99,19 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
 
   @override
   void didPop() {
+    ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
     ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
     _stopAudio();
+    _inputGlobeKey.currentState!.cancelRecord();
     super.didPop();
   }
 
   @override
   void didPushNext() {
+    ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
     ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
     _stopAudio();
+    _inputGlobeKey.currentState!.cancelRecord();
     super.didPushNext();
   }
 
@@ -117,6 +124,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
     } catch(e) {
       //
     }
+    ref.read(proximitySubscriptionProvider.notifier).update((state) => null);
   }
 
   @override
@@ -209,6 +217,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
             Container(
               color: Colors.white,
               child: ref.watch(entitlementsProvider).interpretation > 0 || ref.watch(inputModeProvider(widget.otherSide.id)) == InputMode.manual ? ChatInstructionInput(
+                key: _inputGlobeKey,
                 chatId: widget.otherSide.id,
                 otherInfo: widget.otherSide,
                 sameLanguage: myLocale == otherLocale,
