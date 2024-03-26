@@ -31,8 +31,8 @@ class _LoadingButtonState extends State<LoadingButton> {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: _isLoading ? null : _handlePressed,
+    return GestureDetector(
+      onTap: _isLoading ? null : _handlePressed,
       child: _isLoading
           ? widget.placeholder // Replace with your custom loading widget
           : widget.child,

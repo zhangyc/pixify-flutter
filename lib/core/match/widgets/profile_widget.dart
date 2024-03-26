@@ -265,7 +265,10 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                     MatchApi.skip(info.id);
                   }
 
-                }, child: Image.asset(Assets.iconsSkip,width: 56,height: 56,), placeholder: CircularProgressIndicator()),
+                }, child: Image.asset(Assets.iconsSkip,width: 56,height: 56,), placeholder: Container(
+                     width: 56,height: 56,
+                    alignment: Alignment.center,
+                    child: SizedBox(child: CircularProgressIndicator(),width: 32,height: 32,))),
                 SizedBox(
                   width: 48,
                 ),
