@@ -58,18 +58,15 @@ class CustomBottomDialog extends StatelessWidget {
                   angle: -15 * 3.14 / 180,
                   child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
                     return Container(
-                        child: CachedNetworkImage(
-                          imageUrl: ref.read(myProfileProvider)!.avatar??'',
-                          width: 122,
-                          height: 163,
-                          fit: BoxFit.cover,
-                        ),
+                      width: 122,
+                      height: 163,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Color(0xff2c2c2c),
                           width: 2
                         ),
-                          borderRadius: BorderRadius.circular(12)
+                          borderRadius: BorderRadius.circular(12),
+                        image: DecorationImage(image: CachedNetworkImageProvider(ref.read(myProfileProvider)!.avatar??''),fit: BoxFit.cover,)
 
                       ),
                       clipBehavior: Clip.antiAlias,
@@ -78,21 +75,17 @@ class CustomBottomDialog extends StatelessWidget {
               Transform.rotate(
                   angle: 15 * 3.14 / 180,
                   child: Container(
+                    width: 122,
+                    height: 163,
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
+                      image: DecorationImage(image: CachedNetworkImageProvider(target.avatar??''),fit: BoxFit.cover,),
                       border: Border.all(
                           color: Color(0xff2c2c2c),
                           width: 2
                       ),
                       borderRadius: BorderRadius.circular(12)
                       ),
-                    child: CachedNetworkImage(
-                      imageUrl: target.avatar??'',
-                      width: 122,
-                      height: 163,
-                      fit: BoxFit.cover,
-                    ),
-
 
                   )
 
@@ -113,13 +106,17 @@ class CustomBottomDialog extends StatelessWidget {
                 Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
                   final AsyncValue<List<SdModel>> result = ref.watch(getSDModelProvider);
                   if(result.hasValue){
-                    return Column(
-                      children: result.value!.map((e) => Column(
-                        children: [
-                          SizedBox(height: 8.0),
-                          _buildOptionButton(e,target),
-                        ],
-                      )).toList(),
+                    return SizedBox(
+                      height: 250,
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: result.value!.map((e) => Column(
+                          children: [
+                            SizedBox(height: 8.0),
+                            _buildOptionButton(e,target),
+                          ],
+                        )).toList(),
+                      ),
                     );
                   }else if(result.hasError){
                     return  Center(child: const Text('Oops, something unexpected happened'));
