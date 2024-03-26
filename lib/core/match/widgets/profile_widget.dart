@@ -258,7 +258,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
               children: [
                 LoadingButton(onPressed: ()async{
                   if(widget.relation==Relation.likeMe){
-                    await post('/user/friend/remove-like');
+                    await post('/user/friend/remove-like',data: {'id':info.id},);
                     Navigator.pop(context);
                   }else {
                     widget.next.call();
@@ -317,7 +317,7 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
               children: [
                 LoadingButton(onPressed: ()async{
                   if(widget.relation==Relation.likeMe){
-                    await post('/user/friend/remove-like');
+                    await post('/user/friend/remove-like',data: {'id':info.id},);
                     Navigator.pop(context);
                   }else {
                    widget.next.call();
