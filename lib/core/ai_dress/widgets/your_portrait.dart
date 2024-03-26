@@ -73,21 +73,23 @@ class YourPortrait extends StatelessWidget {
         Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
           return LoadingButton(onPressed: ()async{
             SonaAnalytics.log(AiDressEvent.Dress_solo_gen.name,);
-
-            final s =await uploadImage(bytes: image);
-            final response=await post('/merge-photo/create-ai-dress',data: {
-              // 原图URL
-              "photoUrl":s,
-              // 模型 - 测试是任意写
-              "modelId":template.id,
-              "scene":GenerateType.profile_one.name
-            });
-            if(response.isSuccess){
-              Future.delayed(Duration(milliseconds: 300),(){
-                startProfileGenerate.value=uuid.v1();
+            HttpResult result=await post('/merge-photo/find-last-ai-dress');
+            if(result.statusCode.toString()=='60010'){
+              final s =await uploadImage(bytes: image);
+              final response=await post('/merge-photo/create-ai-dress',data: {
+                // 原图URL
+                "photoUrl":s,
+                // 模型 - 测试是任意写
+                "modelId":template.id,
+                "scene":GenerateType.profile_one.name
               });
-            }else {
-              Fluttertoast.showToast(msg:S.current.issues);
+              if(response.isSuccess){
+                Future.delayed(Duration(milliseconds: 300),(){
+                  startProfileGenerate.value=uuid.v1();
+                });
+              }else {
+                Fluttertoast.showToast(msg:S.current.issues);
+              }
             }
             freeTag=false;
             Navigator.pop(context);

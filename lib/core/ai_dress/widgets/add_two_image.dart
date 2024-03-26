@@ -185,7 +185,7 @@ class _AddTwoImageState extends State<AddTwoImage> {
               SonaAnalytics.log(AiDressEvent.Dress_duo_gen.name);
 
               try{
-                HttpResult result=await post('/merge-photo/create-ai-dress');
+                HttpResult result=await post('/merge-photo/find-last-ai-dress');
                 if(result.statusCode.toString()=='60010') {
                   final option = ImageMergeOption(
                     canvasSize: Size(600*2, 800),
