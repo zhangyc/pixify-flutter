@@ -211,7 +211,7 @@ class _AddTwoImageState extends State<AddTwoImage> {
                   );
                   final result = await ImageMerger.mergeToMemory(option: option);
                   final s =await uploadImage(bytes: result!,);
-                  final response=await post('/merge-photo/create',data: {
+                  final response=await post('/merge-photo/create-ai-dress',data: {
                     // 原图URL
                     "photoUrl":s,
                     // 模型 - 测试是任意写

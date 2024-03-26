@@ -816,6 +816,8 @@ PODS:
     - SDWebImageWebPCoder
   - flutter_local_notifications (0.0.1):
     - Flutter
+  - flutter_tts (0.0.1):
+    - Flutter
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
@@ -1074,6 +1076,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_tts (from `.symlinks/plugins/flutter_tts/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - gal (from `.symlinks/plugins/gal/darwin`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
@@ -1179,6 +1182,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_image_compress_common/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_tts:
+    :path: ".symlinks/plugins/flutter_tts/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   gal:
@@ -1235,7 +1240,7 @@ SPEC CHECKSUMS:
   cloud_firestore: ecf08badc10198974885617f14819201d9a42575
   facebook_app_events: deb163f1f7fa13213192532bbc84ff0b0d798bc2
   FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
-  FBAudienceNetwork: 03e273f66b70756be7d060927111af97b7641b06
+  FBAudienceNetwork: 4d6223a9a88a22e9dca8c9e6c1829a8745b86228
   FBSDKCoreKit: 5e4dd478947ab1bcc887e8cfadeae0727af1a942
   FBSDKCoreKit_Basics: cd7b5f5d1e8868c26706917919d058999ca672c3
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
@@ -1265,6 +1270,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
+  flutter_tts: 0f492aab6accf87059b72354fcb4ba934304771d
   fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   gal: 61e868295d28fe67ffa297fae6dacebf56fd53e1
@@ -1317,4 +1323,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d6dca7818854190b89f08149300fe1e4c02286f7
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.14.3
