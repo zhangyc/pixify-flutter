@@ -294,83 +294,83 @@ class ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with
                   )
               ),
               SizedBox(width: 4),
-              if (ref.watch(currentInputEmptyProvider(widget.chatId))) GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onLongPressStart: (_) async {
-                    ref.read(recordButtonLongPressedProvider.notifier).update((state) => true);
-                    // ref.read(recordButtonDeltaProvider.notifier).update(0);
-                    if (await Permission.microphone.request().isGranted) {
-                      _stopwatch.reset();
-                      _stopwatch.start();
-                      _timer = Timer(const Duration(seconds: 60), () async {
-                        _stopwatch.stop();
-                        final _voicePath = await recorder.stop();
-                        if (_voicePath == null) return;
-                        widget.onSendMessage({
-                          'type': ImMessageContentType.audio,
-                          'duration': 60.0,
-                          'localExtension': {
-                            'path': _voicePath,
-                          }
-                        });
-                        // _voiceEntry?.remove();
-                      });
-                      recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
-                    } else {
-                      Fluttertoast.showToast(msg: 'Microphone permission is required!');
-                      return;
-                    }
-                    // _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder(onCancel: _cancelRecord));
-                    // if (mounted) Overlay.of(context).insert(_voiceEntry!);
-                  },
-                  onLongPressMoveUpdate: (details) {
-                    final dx = details.localOffsetFromOrigin.dx;
-                    if (dx < 0) ref.read(recordButtonDeltaProvider.notifier).update(dx.abs());
-                    if (dx < -150) {
-                      cancelRecord();
-                    }
-                  },
-                  onLongPressEnd: (_) async {
-                    ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
-                    // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();
-                    if (_stopwatch.isRunning) _stopwatch.stop();
-                    if (_timer?.isActive == true) _timer?.cancel();
-                    if (_stopwatch.elapsedMilliseconds < 1000) {
-                      await recorder.stop();
-                      return;
-                    }
-                    final path = await recorder.stop();
-                    if (path == null) return;
-
-                    final player = ref.read(audioPlayerProvider(widget.chatId));
-                    ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
-                    await player.setSourceDeviceFile(path);
-                    var duration = await player.getDuration();
-                    await player.release();
-                    duration ??= _stopwatch.elapsed;
-                    widget.onSendMessage({
-                      'type': ImMessageContentType.audio,
-                      'duration': duration.inMilliseconds / 1000.0,
-                      'localExtension': {
-                        'path': path,
-                      }
-                    });
-                  },
-                  child: Container(
-                      width: 72,
-                      height: 54,
-                      margin: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-                        borderRadius: BorderRadius.circular(20),
-                        color: ref.watch(recordButtonLongPressedProvider) ? Color(0xFFBEFF06) : Theme.of(context).primaryColor
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      alignment: Alignment.center,
-                      child: Icon(CupertinoIcons.mic, size: 24, color: Colors.white)
-                  )
-              )
-              else Container(
+              // if (ref.watch(currentInputEmptyProvider(widget.chatId))) GestureDetector(
+              //     behavior: HitTestBehavior.opaque,
+              //     onLongPressStart: (_) async {
+              //       ref.read(recordButtonLongPressedProvider.notifier).update((state) => true);
+              //       // ref.read(recordButtonDeltaProvider.notifier).update(0);
+              //       if (await Permission.microphone.request().isGranted) {
+              //         _stopwatch.reset();
+              //         _stopwatch.start();
+              //         _timer = Timer(const Duration(seconds: 60), () async {
+              //           _stopwatch.stop();
+              //           final _voicePath = await recorder.stop();
+              //           if (_voicePath == null) return;
+              //           widget.onSendMessage({
+              //             'type': ImMessageContentType.audio,
+              //             'duration': 60.0,
+              //             'localExtension': {
+              //               'path': _voicePath,
+              //             }
+              //           });
+              //           // _voiceEntry?.remove();
+              //         });
+              //         recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
+              //       } else {
+              //         Fluttertoast.showToast(msg: 'Microphone permission is required!');
+              //         return;
+              //       }
+              //       // _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder(onCancel: _cancelRecord));
+              //       // if (mounted) Overlay.of(context).insert(_voiceEntry!);
+              //     },
+              //     onLongPressMoveUpdate: (details) {
+              //       final dx = details.localOffsetFromOrigin.dx;
+              //       if (dx < 0) ref.read(recordButtonDeltaProvider.notifier).update(dx.abs());
+              //       if (dx < -150) {
+              //         cancelRecord();
+              //       }
+              //     },
+              //     onLongPressEnd: (_) async {
+              //       ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
+              //       // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();
+              //       if (_stopwatch.isRunning) _stopwatch.stop();
+              //       if (_timer?.isActive == true) _timer?.cancel();
+              //       if (_stopwatch.elapsedMilliseconds < 1000) {
+              //         await recorder.stop();
+              //         return;
+              //       }
+              //       final path = await recorder.stop();
+              //       if (path == null) return;
+              //
+              //       final player = ref.read(audioPlayerProvider(widget.chatId));
+              //       ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
+              //       await player.setSourceDeviceFile(path);
+              //       var duration = await player.getDuration();
+              //       await player.release();
+              //       duration ??= _stopwatch.elapsed;
+              //       widget.onSendMessage({
+              //         'type': ImMessageContentType.audio,
+              //         'duration': duration.inMilliseconds / 1000.0,
+              //         'localExtension': {
+              //           'path': path,
+              //         }
+              //       });
+              //     },
+              //     child: Container(
+              //         width: 72,
+              //         height: 54,
+              //         margin: EdgeInsets.all(2),
+              //         decoration: BoxDecoration(
+              //           border: Border.all(width: 2, color: Theme.of(context).primaryColor),
+              //           borderRadius: BorderRadius.circular(20),
+              //           color: ref.watch(recordButtonLongPressedProvider) ? Color(0xFFBEFF06) : Theme.of(context).primaryColor
+              //         ),
+              //         clipBehavior: Clip.antiAlias,
+              //         alignment: Alignment.center,
+              //         child: Icon(CupertinoIcons.mic, size: 24, color: Colors.white)
+              //     )
+              // )
+              if (!ref.watch(currentInputEmptyProvider(widget.chatId))) Container(
                 width: 76,
                 margin: EdgeInsets.all(1),
                 child: IconButton(
