@@ -40,7 +40,10 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
         data: (user) => ProfileWidget(
           relation: widget.relation,
           info: user.data, next: (){
-        },onMatch: (v){},),
+
+        },onMatch: (v){
+
+        },),
         error: (err, stack) => NoData(
           onRefresh: () => ref.refresh(getProfileByIdProvider(widget.userId)),
         ),

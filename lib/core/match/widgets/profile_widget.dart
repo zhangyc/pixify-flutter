@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/bean/match_user.dart';
+import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/core/match/widgets/image_scale_animation.dart';
+import 'package:sona/core/match/widgets/loading_button.dart';
 import 'package:sona/utils/dialog/input.dart';
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
@@ -254,13 +256,16 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
             child: (widget.relation==Relation.likeMe)?Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
-                  onTap: (){
+                LoadingButton(onPressed: ()async{
+                  if(widget.relation==Relation.likeMe){
+                    await post('/user/friend/remove-like');
+                    Navigator.pop(context);
+                  }else {
                     widget.next.call();
                     MatchApi.skip(info.id);
+                  }
 
-                  },
-                ),
+                }, child: Image.asset(Assets.iconsSkip,width: 56,height: 56,), placeholder: CircularProgressIndicator()),
                 SizedBox(
                   width: 48,
                 ),
@@ -310,12 +315,16 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
             ):Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(child: Image.asset(Assets.iconsSkip,width: 56,height: 56,),
-                  onTap: (){
-                    widget.next.call();
-                    MatchApi.skip(info.id);
-                  },
-                ),
+                LoadingButton(onPressed: ()async{
+                  if(widget.relation==Relation.likeMe){
+                    await post('/user/friend/remove-like');
+                    Navigator.pop(context);
+                  }else {
+                   widget.next.call();
+                   MatchApi.skip(info.id);
+                  }
+
+                 }, child: Image.asset(Assets.iconsSkip,width: 56,height: 56,), placeholder: CircularProgressIndicator()),
                 GestureDetector(child: Image.asset(Assets.iconsLike,width: 64,height: 64,),
                   onTap: (){
                     // showMatched(context,target: info,next: (){
