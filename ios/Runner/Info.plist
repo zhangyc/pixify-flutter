@@ -60,6 +60,8 @@
   <string>Allow Sona to access your speech recognition to transform your voice message to text.</string>
 	<key>NSUserTrackingUsageDescription</key>
   <string>To evaluate the effectiveness of our advertising campaigns and optimize our ad delivery strategies, we need to access your Identifier for Advertisers (IDFA). Your IDFA may be shared with our advertising partners, but it will not be associated with any other personal information.</string>
+	<key>NSAppleMusicUsageDescription</key>
+  <string>Sona needs access to your music usage data to process voice message playback.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
