@@ -29,7 +29,6 @@ Future<HttpResult> post(String path,{Object? data, Map<String, dynamic>? queryPa
     Response resp=await dio.post(path,data: data,queryParameters: queryParameters,cancelToken: cancelToken);
     return Future.value(HttpResult(resp));
   } catch(e){
-    log(e.toString());
     return Future.value(HttpResult.error(e));
 
   }
