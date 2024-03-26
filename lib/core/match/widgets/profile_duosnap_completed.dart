@@ -19,6 +19,7 @@ import 'package:sona/core/subscribe/subscribe_page.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
+import '../../../utils/uuid.dart';
 import '../util/event.dart';
 
 class ProfileDuosnapCompleted extends StatelessWidget {

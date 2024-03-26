@@ -26,7 +26,11 @@
             <action android:name="android.speech.RecognitionService" />
         </intent>
     </queries>
-
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
     <application
         android:requestLegacyExternalStorage="true"
         android:label="Sona"

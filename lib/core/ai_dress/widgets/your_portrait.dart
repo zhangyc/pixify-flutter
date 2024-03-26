@@ -18,6 +18,7 @@ import '../../../common/services/common.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/global/global.dart';
+import '../../../utils/uuid.dart';
 import '../../match/util/event.dart';
 import '../../match/util/http_util.dart';
 import '../../persona/screens/persona.dart';
@@ -73,7 +74,7 @@ class YourPortrait extends StatelessWidget {
           return LoadingButton(onPressed: ()async{
             SonaAnalytics.log(AiDressEvent.Dress_solo_gen.name,);
 
-            final s =await uploadFile(bytes: image);
+            final s =await uploadImage(bytes: image);
             final response=await post('/merge-photo/create-ai-dress',data: {
               // 原图URL
               "photoUrl":s,

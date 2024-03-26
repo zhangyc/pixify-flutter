@@ -1,10 +1,18 @@
+import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sona/core/match/widgets/loading_button.dart';
+import 'package:sona/utils/locale/locale.dart';
+import 'package:sona/utils/uuid.dart';
+
+import '../utils/dialog/input.dart';
 
 
 void main(){
@@ -32,15 +40,171 @@ class _DemoChatState extends State<DemoChat> {
   TextEditingController controller=TextEditingController();
   List<MetaToken> tokens=[];
   List<MetaToken> answer=[];
+  late FlutterTts flutterTts;
+  String? engine;
+  double volume = 0.5;
+  double pitch = 1.0;
+  double rate = 0.6;
+  bool isCurrentLanguageInstalled = false;
 
+  String? _newVoiceText;
+  int? _inputLength;
   SonaTask? task;
+  TtsState ttsState = TtsState.stopped;
+
+  bool get isPlaying => ttsState == TtsState.playing;
+  bool get isStopped => ttsState == TtsState.stopped;
+  bool get isPaused => ttsState == TtsState.paused;
+  bool get isContinued => ttsState == TtsState.continued;
+
+  bool get isIOS => !kIsWeb && Platform.isIOS;
+  bool get isAndroid => !kIsWeb && Platform.isAndroid;
+  bool get isWindows => !kIsWeb && Platform.isWindows;
+  bool get isWeb => kIsWeb;
   @override
   void initState() {
     super.initState();
+    initTts();
   }
+  dynamic initTts() {
+    flutterTts = FlutterTts();
+
+    _setAwaitOptions();
+
+    if (isAndroid) {
+      _getDefaultEngine();
+      _getDefaultVoice();
+    }
+
+    flutterTts.setStartHandler(() {
+      setState(() {
+        print("Playing");
+        ttsState = TtsState.playing;
+      });
+    });
+
+    flutterTts.setCompletionHandler(() {
+      setState(() {
+        print("Complete");
+        ttsState = TtsState.stopped;
+      });
+    });
+
+    flutterTts.setCancelHandler(() {
+      setState(() {
+        print("Cancel");
+        ttsState = TtsState.stopped;
+      });
+    });
+
+    flutterTts.setPauseHandler(() {
+      setState(() {
+        print("Paused");
+        ttsState = TtsState.paused;
+      });
+    });
+
+    flutterTts.setContinueHandler(() {
+      setState(() {
+        print("Continued");
+        ttsState = TtsState.continued;
+      });
+    });
+
+    flutterTts.setErrorHandler((msg) {
+      setState(() {
+        print("error: $msg");
+        ttsState = TtsState.stopped;
+      });
+    });
+  }
+  Future<dynamic> _getLanguages() async => await flutterTts.getLanguages;
+
+  Future<dynamic> _getEngines() async => await flutterTts.getEngines;
+
+  Future<void> _getDefaultEngine() async {
+    final e=await flutterTts.getEngines;
+    var engine = await flutterTts.getDefaultEngine;
+    if (engine != null) {
+      print(engine);
+    }
+  }
+
+  Future<void> _getDefaultVoice() async {
+    var voice = await flutterTts.getDefaultVoice;
+    if (voice != null) {
+      print(voice);
+    }
+  }
+
+  Future<void> _speak() async {
+    await flutterTts.setVolume(volume);
+    await flutterTts.setSpeechRate(rate);
+    await flutterTts.setPitch(pitch);
+
+    if(targetLanguage!=null){
+     bool available= await flutterTts.isLanguageAvailable(targetLanguage!.code);
+     bool installed= await flutterTts.isLanguageInstalled(targetLanguage!.code);
+     if(available&&installed){
+       flutterTts.setLanguage(targetLanguage!.code);
+       dynamic m=await getDeviceLanguageInfo();
+       await flutterTts.setVoice(m);
+       if (_newVoiceText != null) {
+         if (_newVoiceText!.isNotEmpty) {
+           await flutterTts.speak(_newVoiceText!);
+         }
+       }
+     }else{
+       Fluttertoast.showToast(msg: '您要使用该功能需要去设置页面下载对应的语言包资源,${targetLanguage!.label}');
+       return;
+       if (_newVoiceText != null) {
+         if (_newVoiceText!.isNotEmpty) {
+           await flutterTts.speak(_newVoiceText!);
+         }
+       }
+     }
+    }
+
+  }
+
+  Future<void> _setAwaitOptions() async {
+    await flutterTts.awaitSpeakCompletion(true);
+  }
+
+  Future<void> _stop() async {
+    var result = await flutterTts.stop();
+    if (result == 1) setState(() => ttsState = TtsState.stopped);
+  }
+  Future getDeviceLanguageInfo() async{
+    if(targetLanguage==null){
+      throw "TargetLanguage is required";
+    }
+    List voices=await flutterTts.getVoices;
+    return  Map<String,String>.from(voices.firstWhere((element) => element['locale']==targetLanguage!.code!));
+  }
+  Future<void> _pause() async {
+    var result = await flutterTts.pause();
+    if (result == 1) setState(() => ttsState = TtsState.paused);
+  }
+  Language? targetLanguage;
+  List<String> correctAnswer=[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Text('${targetLanguage?.label}'),
+          IconButton(onPressed: () async{
+            var value = await _showLanguageSelectionDialog(context,);
+            targetLanguage=value;
+
+
+            setState(() {
+
+            });
+          }, icon: Icon(Icons.language))
+        ],
+      ),
       body: Stack(
         children: [
           CustomScrollView(
@@ -79,7 +243,8 @@ class _DemoChatState extends State<DemoChat> {
           ),
 
           Positioned(
-            child: SizedBox(
+            child: Container(
+              color: Colors.white,
               child: Column(
                 children: [
                   Wrap(
@@ -96,9 +261,12 @@ class _DemoChatState extends State<DemoChat> {
                         child: Text(e.text),
                       ),
                       onTap: (){
+                        _newVoiceText=e.text;
+                        _speak();
                         e.selectState=!e.selectState;
                         if(e.selectState){
                           answer.add(e);
+
                         }else {
                           answer.removeWhere((element) => element==e);
                         }
@@ -118,6 +286,23 @@ class _DemoChatState extends State<DemoChat> {
                     runSpacing: 8,
                     spacing: 8,
                   ),
+                  TextButton(onPressed: (){
+                    List<String> userAnswers=answer.map((e) => e.text).toList();
+                    if(userAnswers.join()==correctAnswer.join()){
+                      _newVoiceText='恭喜你，你答对了';
+                      messages.add(IMMessage.textMessage(messageId: uuid.v1(), senderId: uuid.v1(), receiverId: uuid.v1(), text: task!.sentence??''));
+                      setState(() {
+
+                      });
+                      _speak();
+                      Fluttertoast.showToast(msg: '恭喜你，你答对了');
+                    }else {
+                      _newVoiceText='看起来有点问题';
+                      _speak();
+                      Fluttertoast.showToast(msg: '看起来有点问题');
+                    }
+
+                  }, child: Text('Next')),
                   TextField(
                     controller: controller,
 
@@ -126,16 +311,28 @@ class _DemoChatState extends State<DemoChat> {
                         if(controller.text.isEmpty){
                           return;
                         }
+                        if(targetLanguage==null){
+                          Fluttertoast.showToast(msg: '必须选择一个目标语言');
+                          return;
+                        }
                         try{
                           Response result=await post('/word/split',data: {
-                            "txt":controller.text
+                            "txt":controller.text,
+                            "language":targetLanguage?.code, // 目标语言
                           });
                           if(result.statusCode==200&&result.data['code']=="0"){
                             task=SonaTask.fromJson(result.data['data']);
                             if(task!.word!.isEmpty){
                               return;
                             }
-                            tokens=task!.word!.map((e) => MetaToken(e, false)).toList();
+                            correctAnswer=List.from(task!.word!);
+                            print('正确答案${correctAnswer}');
+                            List<String> s=task!.word??[]..shuffle(Random(DateTime.now().millisecondsSinceEpoch));
+                            print('选项${s}');
+                            print('正确答案2${correctAnswer}');
+
+                            tokens=s.map((e) => MetaToken(e, false)).toList();
+                            answer.clear();
                             setState(() {
 
                             });
@@ -263,8 +460,78 @@ BaseOptions options=BaseOptions(connectTimeout: const Duration(milliseconds: 150
       'device': Platform.operatingSystem,
       'version': 'v1.0.0',
       'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyODkiLCJpYXQiOjE3MTA3NDMxNDEsImV4cCI6MTAzNTA3NDMxNDF9.FqLGBtRkXgvxUyeaHZ4J31jOYgEM2ISxCB7Gb5ZNmbc',
-      'locale': 'en'
+      'locale': 'zh-CN'
     });
 Future<Response> post(String path,{required dynamic data}) async{
  return await _dio.post(path,data: data);
+}
+enum TtsState { playing, stopped, paused, continued }
+Future<Language?> _showLanguageSelectionDialog(BuildContext context) {
+ return showDialog<Language?>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Select Your Language'),
+        content: SingleChildScrollView(
+          child: Column(
+            children: languages.map((language) {
+              return LanguageButton(language: language);
+            }).toList(),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancel'),
+          ),
+        ],
+      );
+    },
+  );
+}
+class LanguageButton extends StatelessWidget {
+  final Language language;
+
+  const LanguageButton({Key? key, required this.language}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: () {
+          // Handle language selection here
+          print('Selected language: ${language.code}');
+          Navigator.of(context).pop(language); // Close the dialog after selection
+        },
+        child: Text(language.label),
+      ),
+    );
+  }
+}
+final List<Language> languages = [
+  Language(code: 'en-US', label: 'English (US)'),
+  Language(code: 'en-GB', label: 'English (UK)'),
+  Language(code: 'ja-JP', label: 'Japanese'),
+  Language(code: 'zh-CN', label: 'Simplified Chinese'),
+  Language(code: 'zh-TW', label: 'Chinese Traditional'),
+  Language(code: 'ko-KR', label: 'Korean'),
+  Language(code: 'th-TH', label: 'Thai'),
+  Language(code: 'pt-PT', label: 'Portuguese'),
+  Language(code: 'pt-BR', label: 'Portuguese (Brasil)'),
+  Language(code: 'es-ES', label: 'Spanish'),
+  Language(code: 'de-DE', label: 'German'),
+  Language(code: 'ru-RU', label: 'Russian'),
+  Language(code: 'fr-FR', label: 'French'),
+  Language(code: 'yue', label: 'Cantonese'),
+  Language(code: 'it-IT', label: 'Italian'),
+  // Add more languages here as needed
+];
+class Language {
+  final String code;
+  final String label;
+
+  Language({required this.code, required this.label});
 }

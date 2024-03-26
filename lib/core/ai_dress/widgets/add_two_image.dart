@@ -9,6 +9,7 @@ import 'package:image_editor/image_editor.dart';
 import 'package:sona/core/ai_dress/ai_dress_event.dart';
 import 'package:sona/core/ai_dress/dislogs.dart';
 import 'package:sona/core/ai_dress/widgets/base_dialog_container.dart';
+import 'package:sona/utils/uuid.dart';
 
 import '../../../common/app_config.dart';
 import '../../../common/services/common.dart';
@@ -209,7 +210,7 @@ class _AddTwoImageState extends State<AddTwoImage> {
                     ),
                   );
                   final result = await ImageMerger.mergeToMemory(option: option);
-                  final s =await uploadFile(bytes: result!);
+                  final s =await uploadImage(bytes: result!,);
                   final response=await post('/merge-photo/create',data: {
                     // 原图URL
                     "photoUrl":s,
