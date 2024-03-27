@@ -338,6 +338,7 @@ class _DemoChatState extends State<DemoChat> {
                             });
                           }
                         }catch(e){
+                          Fluttertoast.showToast(msg: '接口错误，稍等再试');
                           print(e.toString());
                         }
 
