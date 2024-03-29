@@ -13,6 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
+import 'package:sona/utils/http/interceptors/server_health_interceptor.dart';
 import 'package:sona/utils/security/jwt_decoder.dart';
 
 import '../../account/models/my_profile.dart';

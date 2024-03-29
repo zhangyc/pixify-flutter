@@ -13,7 +13,10 @@ Dio _createDioInstance() {
       }
   );
   final dio = Dio(options);
-
+  ///线上环境，增加一个服务端健康检查机制
+  if(env.env=='prod'){
+    dio.interceptors.add(ServerHealthInterceptor());
+  }
   if (kDebugMode) {
     dio.interceptors.add(LogInterceptor(
         requestHeader: true,
