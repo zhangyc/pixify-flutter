@@ -66,7 +66,7 @@ class _CountrySelectorState extends ConsumerState<TimeframeSelector> {
                               style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
                                 backgroundColor: MaterialStatePropertyAll(ref.watch(travelWishParamsProvider).timeframe == option.value ? Color(0xFFBEFF06) : null),
                                 foregroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColor),
-                                minimumSize: MaterialStatePropertyAll(Size.fromHeight(56)),
+                                minimumSize: MaterialStatePropertyAll(Size(128, 56)),
                                 side: MaterialStatePropertyAll(BorderSide(width: 2)),
                               )
                           ),
