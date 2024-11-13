@@ -2,7 +2,7 @@ name: sona
 description: an AI persona dating app.
 publish_to: 'none'
 
-version: 1.1.2+39
+version: 1.1.3+52
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.18.1
+  intl: ^0.19.0
   cupertino_icons: ^1.0.2
   hooks_riverpod: ^2.3.6
   flutter_hooks: ^0.18.6
@@ -39,7 +39,7 @@ dependencies:
   firebase_analytics: ^10.8.6
   firebase_crashlytics: ^3.4.15
   firebase_app_check: ^0.2.1+14
-  flutter_local_notifications: ^16.3.2
+  flutter_local_notifications: ^18.0.1
   lottie:
   in_app_purchase: ^3.1.13
   stacked_page_view: ^1.1.2
@@ -54,10 +54,11 @@ dependencies:
 #  appsflyer_sdk: ^6.12.2
   riverpod_annotation: ^2.3.3
   flutter_staggered_grid_view: ^0.7.0
-  google_mlkit_face_detection: ^0.9.0
+#  google_mlkit_face_detection: ^0.9.0
   flutter_svg: ^2.0.9
   smooth_page_indicator: ^1.1.0
-  system_settings: ^2.1.0
+  system_settings:
+    path: "../system_settings"
   uuid: ^4.2.2
   sign_in_with_apple: ^5.0.0
   google_sign_in: ^6.2.1
@@ -70,7 +71,10 @@ dependencies:
   gal:
   image_editor: ^1.3.0
   share_plus: ^7.2.2
-  facebook_app_events: ^0.19.0
+  facebook_app_events:
+    git:
+      url: https://github.com/oddbit/flutter_facebook_app_events
+      ref: 3e4e062ded3eb92b37e43c274ee84da4a21edfa2
   proximity_sensor: ^1.0.4
   flutter_tts: ^4.0.2
 dev_dependencies:
