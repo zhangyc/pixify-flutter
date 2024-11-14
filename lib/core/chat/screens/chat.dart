@@ -190,7 +190,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
         ),
         child: Column(
           children: [
-            GenerateBanner(),
+            // GenerateBanner(),
             Expanded(
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,

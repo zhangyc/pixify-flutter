@@ -14,8 +14,6 @@ import 'package:sona/common/app_config.dart';
 import 'package:sona/common/widgets/button/icon.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
-import 'package:sona/core/ai_dress/ai_dress_event.dart';
-import 'package:sona/core/ai_dress/ai_dress_page.dart';
 import 'package:sona/core/persona/providers/profile_progress.dart';
 import 'package:sona/core/persona/widgets/profile_banner.dart';
 import 'package:sona/core/persona/widgets/profile_progress_indicator.dart';
@@ -350,63 +348,63 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                                   ),
                                 )
                             ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            FilledButton(
-                                onPressed: () {
-                                  SonaAnalytics.log(AiDressEvent.Me_AIdress.name);
-                                  Navigator.push(context, MaterialPageRoute(builder: (b){
-                                    return AiDressPage();
-                                  }));
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(Assets.svgAiDress,width: 20,height: 20,),
-                                        SizedBox(
-                                          width: 4,
-                                        ),
-                                        Text(
-                                            S.current.aiDressUpLabel,
-                                            style: Theme.of(context).textTheme.titleMedium
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        ValueListenableBuilder(valueListenable: appCommonBox.listenable(keys: ['freeTag']), builder: (BuildContext context, Box<dynamic> value, Widget? child) {
-                                          bool free=freeTag;
-                                          return free?Container(
-                                            alignment: Alignment.center,
-                                            width: 43,
-                                            height: 24,
-                                            decoration: BoxDecoration(
-                                                color: Color(0xff2c2c2c),
-                                                borderRadius: BorderRadius.circular(8)
-                                            ),
-                                            // padding: EdgeInsets.symmetric(
-                                            //   vertical: 2,
-                                            //   horizontal: 6
-                                            // ),
-                                            child: Text(S.current.freeLabel,),
-                                          ):Container();
-                                         },
-                                        ),
-                                        SizedBox(
-                                          width: 4,
-                                        ),
-                                        Icon(Icons.arrow_forward_ios_rounded,color: Color(0xff2c2c2c),size: 20,)
-                                      ],
-                                    )
-                                  ],
-                                )
-                            ),
+                            // SizedBox(
+                            //   height: 12,
+                            // ),
+                            // FilledButton(
+                            //     onPressed: () {
+                            //       SonaAnalytics.log(AiDressEvent.Me_AIdress.name);
+                            //       Navigator.push(context, MaterialPageRoute(builder: (b){
+                            //         return AiDressPage();
+                            //       }));
+                            //     },
+                            //     style: ButtonStyle(
+                            //       backgroundColor: MaterialStatePropertyAll(Color(0xFFF6F3F3)),
+                            //     ),
+                            //     child: Row(
+                            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //       children: [
+                            //         Row(
+                            //           children: [
+                            //             SvgPicture.asset(Assets.svgAiDress,width: 20,height: 20,),
+                            //             SizedBox(
+                            //               width: 4,
+                            //             ),
+                            //             Text(
+                            //                 S.current.aiDressUpLabel,
+                            //                 style: Theme.of(context).textTheme.titleMedium
+                            //             ),
+                            //           ],
+                            //         ),
+                            //         Row(
+                            //           children: [
+                            //             ValueListenableBuilder(valueListenable: appCommonBox.listenable(keys: ['freeTag']), builder: (BuildContext context, Box<dynamic> value, Widget? child) {
+                            //               bool free=freeTag;
+                            //               return free?Container(
+                            //                 alignment: Alignment.center,
+                            //                 width: 43,
+                            //                 height: 24,
+                            //                 decoration: BoxDecoration(
+                            //                     color: Color(0xff2c2c2c),
+                            //                     borderRadius: BorderRadius.circular(8)
+                            //                 ),
+                            //                 // padding: EdgeInsets.symmetric(
+                            //                 //   vertical: 2,
+                            //                 //   horizontal: 6
+                            //                 // ),
+                            //                 child: Text(S.current.freeLabel,),
+                            //               ):Container();
+                            //              },
+                            //             ),
+                            //             SizedBox(
+                            //               width: 4,
+                            //             ),
+                            //             Icon(Icons.arrow_forward_ios_rounded,color: Color(0xff2c2c2c),size: 20,)
+                            //           ],
+                            //         )
+                            //       ],
+                            //     )
+                            // ),
                             SizedBox(
                               height: 12,
                             )
@@ -422,7 +420,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
               ],
             ),
           ),
-          ProfileBanner()
+          // ProfileBanner()
         ],
       ),
     );

@@ -276,21 +276,21 @@ void showMatched(BuildContext context,{required MatchUserInfo target,required Vo
   });
 }
 
-Future<SdModel?> showDuoSnapDialog(BuildContext context,{required MatchUserInfo target}){
- return showModalBottomSheet<SdModel?>(
-    context: context,
-    isScrollControlled:true,
-    builder: (BuildContext context) {
-      return CustomBottomDialog(
-        title: 'Duo Snap',
-        target: target,
-        onClosePressed: () {
-          Navigator.of(context).pop(); // 关闭 BottomDialog
-        },
-      );
-    },
-  );
-}
+// Future<SdModel?> showDuoSnapDialog(BuildContext context,{required MatchUserInfo target}){
+//  return showModalBottomSheet<SdModel?>(
+//     context: context,
+//     isScrollControlled:true,
+//     builder: (BuildContext context) {
+//       return CustomBottomDialog(
+//         title: 'Duo Snap',
+//         target: target,
+//         onClosePressed: () {
+//           Navigator.of(context).pop(); // 关闭 BottomDialog
+//         },
+//       );
+//     },
+//   );
+// }
 showDuoSnapTip(BuildContext context,{required Widget child,required double dialogHeight}){
   showModalBottomSheet(context: context, builder: (b){
     return Container(

@@ -7,14 +7,13 @@ import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
-
-const plusAnnuallyId = '1_annually';
-const plusBiannuallyId = '1_biannually';
-const plusQuarterlyId = '1_quarter';
-const plusMonthlyId = '1_month';
-const plusSubscriptionIds = [plusMonthlyId, plusQuarterlyId, plusBiannuallyId, plusAnnuallyId];
-const clubMonthlyId = 'club_monthly';
-const clubSubscriptionIds = [clubMonthlyId];
+var plusAnnuallyId = Platform.isIOS?'ios_1_annually':'1_annually';
+var plusBiannuallyId =Platform.isIOS? 'ios_1_biannually':'1_biannually';
+var plusQuarterlyId =Platform.isIOS? 'ios_1_quarter':'1_quarter';
+var plusMonthlyId = Platform.isIOS?'ios_1_month':'1_month';
+var clubMonthlyId = Platform.isIOS?'ios_club_monthly':'club_monthly';
+var plusSubscriptionIds = [plusMonthlyId, plusQuarterlyId, plusBiannuallyId, plusAnnuallyId];
+var clubSubscriptionIds = [clubMonthlyId];
 
 class IOSPaymentQueueDelegate implements SKPaymentQueueDelegateWrapper {
   @override

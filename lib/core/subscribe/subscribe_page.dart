@@ -272,7 +272,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         alignment: Alignment.center,
         child: ref.watch(asyncSubscriptionsProvider).when(
             data: (subscriptions) {
-              final club = subscriptions.firstWhere((sub) => sub.id == clubMonthlyId);
+              print(subscriptions);
+              final club = subscriptions.firstWhere((sub) => sub.id == clubMonthlyId,orElse:() =>throw Exception('ex'));
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -749,13 +750,23 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
   Widget _buildSubTitle(ProductDetails details, double priceMonthly) {
     final selected = ref.watch(selectedPlusSubIdProvider) == details.id;
-    final (monthCount, name) = switch(details.id) {
-      plusMonthlyId => (1, S.current.aMonth),
-      plusQuarterlyId => (3, S.current.threeMonths),
-      plusBiannuallyId => (6, S.current.sixMonths),
-      plusAnnuallyId => (12, S.current.aYear),
-      _ => throw()
-    };
+    int monthCount;
+    String name;
+    if (details.id == plusMonthlyId) {
+      monthCount = 1;
+      name = S.current.aMonth;
+    } else if (details.id == plusQuarterlyId) {
+      monthCount = 3;
+      name = S.current.threeMonths;
+    } else if (details.id == plusBiannuallyId) {
+      monthCount = 6;
+      name = S.current.sixMonths;
+    } else if (details.id == plusAnnuallyId) {
+      monthCount = 12;
+      name = S.current.aYear;
+    } else {
+      throw();
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
