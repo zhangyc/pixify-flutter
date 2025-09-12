@@ -208,7 +208,7 @@ ThemeData get themeData {
           elevation: 0,
           modalBarrierColor: Colors.white.withOpacity(0.7)
       ),
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
           elevation: 0
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
