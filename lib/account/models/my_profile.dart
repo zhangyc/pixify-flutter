@@ -65,7 +65,7 @@ class MyProfile {
       id: json['id'],
       name: json['nickname'],
       gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-      birthday: json['birthday'] != null ? DateTime.tryParse(json['birthday']) : null,
+      birthday: json['birthday'] != null ? DateTime.tryParse(json['birthday'].toString()) : null,
       countryId: json['countryId'],
       countryCode: json['countryCode'],
       countryFlag: json['countryFlag'],

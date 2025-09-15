@@ -2,7 +2,8 @@
 //
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:sona/utils/toast/flutter_toast.dart';
+
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
 // import 'package:sona/common/app_config.dart';
 // import 'package:sona/common/permission/permission.dart';

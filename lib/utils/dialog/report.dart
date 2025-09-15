@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/common/widgets/image/upload_field.dart';

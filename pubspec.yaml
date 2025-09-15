@@ -21,25 +21,24 @@ dependencies:
   shared_preferences: ^2.2.0
   dio: ^5.3.0
   intl_phone_field: ^3.2.0
-  pinput: ^2.2.31
+  pinput: ^5.0.2
   appinio_swiper: ^2.1.0
-  fluttertoast: ^8.2.2
   flutter_easyloading: ^3.0.5
   permission_handler: ^11.0.1
   image_picker: ^1.0.2
   cached_network_image: ^3.2.3
   crop_your_image: ^0.7.5
   infinite_scroll_pagination: ^4.0.0
-  geolocator: ^10.1.0
-  firebase_core: ^2.25.4
-  firebase_storage: ^11.6.6
-  cloud_firestore: ^4.15.5
-  firebase_messaging: ^14.7.16
-  firebase_auth: ^4.17.5
-  firebase_analytics: ^10.8.6
-  firebase_crashlytics: ^3.4.15
-  firebase_app_check: ^0.2.1+14
-  flutter_local_notifications: ^18.0.1
+  geolocator: ^14.0.2
+  firebase_core: ^4.1.0
+  firebase_storage: ^13.0.1
+  cloud_firestore: ^6.0.1
+  firebase_messaging: ^16.0.1
+  firebase_auth: ^6.0.2
+  firebase_analytics: ^12.0.1
+  firebase_crashlytics: ^5.0.1
+  firebase_app_check: ^0.4.0+1
+  flutter_local_notifications: ^19.4.2
   lottie:
   in_app_purchase: ^3.1.13
   stacked_page_view: ^1.1.2
@@ -50,31 +49,33 @@ dependencies:
   flutter_cache_manager: ^3.3.1
   rxdart: ^0.27.7
   url_launcher: ^6.1.14
-  package_info_plus: ^5.0.1
-#  appsflyer_sdk: ^6.12.2
+  package_info_plus: ^9.0.0
+  #  appsflyer_sdk: ^6.12.2
   riverpod_annotation: ^2.3.3
   flutter_staggered_grid_view: ^0.7.0
 #  google_mlkit_face_detection: ^0.9.0
   flutter_svg: ^2.0.9
   smooth_page_indicator: ^1.1.0
-  system_settings:
-    path: "../system_settings"
+#  system_settings: ^2.1.0
+#  system_settings:
+#    path: "../system_settings"
   uuid: ^4.2.2
-  sign_in_with_apple: ^5.0.0
+  sign_in_with_apple: ^7.0.1
   google_sign_in: ^6.2.1
   dotted_border: ^2.1.0
   image: ^4.1.7
   video_player: ^2.8.2
-  record: ^5.0.4
+  record: ^6.0.0
   path_provider: ^2.1.2
   audioplayers: ^5.2.1
   gal:
   image_editor: ^1.3.0
   share_plus: ^7.2.2
-  facebook_app_events:
-    git:
-      url: https://github.com/oddbit/flutter_facebook_app_events
-      ref: 3e4e062ded3eb92b37e43c274ee84da4a21edfa2
+  facebook_app_events: ^0.20.1
+#  facebook_app_events:
+#    git:
+#      url: https://github.com/oddbit/flutter_facebook_app_events
+#      ref: 3e4e062ded3eb92b37e43c274ee84da4a21edfa2
   proximity_sensor: ^1.0.4
   flutter_tts: ^4.0.2
 dev_dependencies:
@@ -87,7 +88,8 @@ dev_dependencies:
 
 dependency_overrides:
   record_darwin: ^1.0.1-beta.1
-
+  smart_auth: ^3.2.0
+  package_info_plus: ^9.0.0
 flutter:
   uses-material-design: true
   fonts:

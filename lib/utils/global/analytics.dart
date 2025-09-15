@@ -22,7 +22,7 @@ class SonaAnalytics {
     FirebaseAnalytics.instance.setUserId(id: id.toString());
   }
 
-  static log(String name, [Map<String, dynamic>? parameters]) {
+  static log(String name, [Map<String, Object>? parameters]) {
     if (kDebugMode) return;
     try {
       FirebaseAnalytics.instance.logEvent(name: name, parameters: parameters);

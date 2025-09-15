@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -16,6 +15,7 @@ import 'package:sona/account/screens/email_sign_in.dart';
 import 'package:sona/account/screens/phone_sign_in.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/widgets/image/icon.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../common/env.dart';
@@ -57,7 +57,8 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
 
   @override
   void dispose() {
-    _videoController..pause()..dispose();
+
+    _videoController..dispose();
     super.dispose();
   }
 
@@ -76,11 +77,11 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
-          Positioned.fill(
-              child: _videoController.value.isInitialized ? VideoPlayer(
-                _videoController
-              ) : Container()
-          ),
+          // Positioned.fill(
+          //     child: _videoController.value.isInitialized ? VideoPlayer(
+          //       _videoController
+          //     ) : Container()
+          // ),
           Positioned.fill(
             child: Column(
               mainAxisSize: MainAxisSize.min,

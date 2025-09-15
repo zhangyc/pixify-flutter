@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,7 +32,6 @@ import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/face_detection/detection.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:system_settings/system_settings.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../account/services/info.dart';
@@ -490,7 +489,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             FilledButton(
                 onPressed: () async {
                   Navigator.pop(context);
-                  await SystemSettings.app();
+                  //await SystemSettings.app();
                 },
                 child: Text(S.current.buttonGo)
             )

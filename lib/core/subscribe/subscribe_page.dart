@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
@@ -101,7 +101,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           changeSubscriptionParam: (oldSubscription != null)
               ? ChangeSubscriptionParam(
             oldPurchaseDetails: oldSubscription,
-            prorationMode: ProrationMode.immediateAndChargeFullPrice,
+            replacementMode: ReplacementMode.chargeFullPrice,
           ) : null);
     } else {
       //InAppPurchase.instance.restorePurchases();

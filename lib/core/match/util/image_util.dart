@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../account/providers/profile.dart';

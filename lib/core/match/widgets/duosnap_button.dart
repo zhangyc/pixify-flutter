@@ -2,7 +2,7 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:sona/utils/toast/flutter_toast.dart';
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
 // import 'package:image_editor/image_editor.dart';
 // import 'package:sona/account/models/gender.dart';
