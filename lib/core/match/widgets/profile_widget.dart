@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/bean/match_user.dart';
 import 'package:sona/core/match/util/http_util.dart';

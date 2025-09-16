@@ -87,7 +87,7 @@ class MatchUserInfo extends UserInfo{
   @override
   DateTime? likeDate;
   @override
-  int get age => birthday!.toAge();
+  int get age => birthday?.toAge()??0;
   @override
   final String? impression;
 

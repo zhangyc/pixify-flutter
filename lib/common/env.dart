@@ -6,7 +6,7 @@ import 'package:sona/utils/locale/locale.dart';
 const _env = String.fromEnvironment('ENV', defaultValue: 'prod');
 const _apiServer = _env == 'prod'
   ? 'https://sona.chatbeat.app/api'
-  : 'http://test-new.sona.ninja/api';
+  : 'https://867b4d975c07.ngrok-free.app';
 const _firestorePrefix = _env == 'prod'
   ? 'prod'
   : 'test';

@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:sona/core/match/widgets/loading_button.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:sona/utils/uuid.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,7 +32,6 @@ import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/face_detection/detection.dart';
 import 'package:sona/utils/locale/locale.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:system_settings/system_settings.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../account/services/info.dart';
@@ -52,7 +51,8 @@ import '../widgets/custom_pageview/src/transformer_page_view.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/match_init_animation.dart';
 
-var languageNotifier = ValueNotifier<SonaLocale>(SonaLocale.fromLanguageTag('en', 'English (US)'));
+var languageNotifier =
+    ValueNotifier<SonaLocale>(SonaLocale.fromLanguageTag('en', 'English (US)'));
 
 class MatchScreen extends StatefulHookConsumerWidget {
   const MatchScreen({super.key});
@@ -66,77 +66,86 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      longitude=ref.read(myProfileProvider)!.position?.longitude;
-      latitude=ref.read(myProfileProvider)!.position?.latitude;
-      if(longitude==null||latitude==null){
-        _state=PageState.notLocation;
-      }else {
+      longitude = ref.read(myProfileProvider)!.position?.longitude;
+      latitude = ref.read(myProfileProvider)!.position?.latitude;
+      if (longitude == null || latitude == null) {
+        _state = PageState.notLocation;
+      } else {
         _initData();
       }
+
       ///直接获取用户信息里的经纬度。
     });
     languageNotifier.addListener(() {
       _initData();
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if(!isShowDuoSnapGuide){
-        isShowDuoSnapGuide=true;
-        showDuoSnapTip(context, child:  DuosnapGuide(close: (){
-          Navigator.pop(context);
-        },), dialogHeight: 361);
+      if (!isShowDuoSnapGuide) {
+        isShowDuoSnapGuide = true;
+        showDuoSnapTip(context, child: DuosnapGuide(
+          close: () {
+            Navigator.pop(context);
+          },
+        ), dialogHeight: 361);
       }
-      if(openAppCount==2&&todayIsShowedTimed&&showTimeLimitedCount<3){
-        showDuoSnapTip(context, child: TimeLimitedOffer(close: (){
+      if (openAppCount == 2 && todayIsShowedTimed && showTimeLimitedCount < 3) {
+        showDuoSnapTip(context, child: TimeLimitedOffer(close: () {
           Navigator.pop(context);
         }), dialogHeight: 427);
-        todayIsShowedTimed=false;
-        showTimeLimitedCount+=1;
+        todayIsShowedTimed = false;
+        showTimeLimitedCount += 1;
       }
     });
     super.initState();
     controller.addListener(() {
-      pageControllerProgress.value=controller.page??0.0;
+      pageControllerProgress.value = controller.page ?? 0.0;
     });
   }
-  List<MatchUserInfo> users =[];
+
+  List<MatchUserInfo> users = [];
 
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
-  int currentPage=0;
-  late TransformerPageController controller=TransformerPageController();
-  bool detecting=false;
+
+  int currentPage = 0;
+  late TransformerPageController controller = TransformerPageController();
+  bool detecting = false;
   @override
   Widget build(BuildContext context) {
     // pageControllerProvider=controller;
-    String? bgImage=ref.watch(backgroundImageProvider);
+    String? bgImage = ref.watch(backgroundImageProvider);
     super.build(context);
     return Stack(
       children: [
-        Positioned.fill(child: bgImage==null?Container():Container(
-          height: MediaQuery.of(context).size.height,
-          alignment: Alignment.topCenter,
-          color: Colors.white,
-          child: ShaderMask(
-            shaderCallback: (Rect bounds) {
-              return const LinearGradient(
-                begin:Alignment.bottomCenter,
-                end:Alignment.topCenter  ,
-                colors: [Colors.transparent, Colors.black],
-                stops: [0.0, 0.8], // 调整渐变的范围
-              ).createShader(bounds);
-            },
-            blendMode: BlendMode.dstIn,
-            child: CachedNetworkImage(imageUrl: bgImage,
-              fit: BoxFit.cover,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
-
-            ),
-          ),
-        ),),
+        Positioned.fill(
+          child: bgImage == null
+              ? Container()
+              : Container(
+                  height: MediaQuery.of(context).size.height,
+                  alignment: Alignment.topCenter,
+                  color: Colors.white,
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return const LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [Colors.transparent, Colors.black],
+                        stops: [0.0, 0.8], // 调整渐变的范围
+                      ).createShader(bounds);
+                    },
+                    blendMode: BlendMode.dstIn,
+                    child: CachedNetworkImage(
+                      imageUrl: bgImage,
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width,
+                    ),
+                  ),
+                ),
+        ),
         Scaffold(
           extendBodyBehindAppBar: false,
           backgroundColor: Colors.transparent,
@@ -144,21 +153,27 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset(Assets.iconsSona,width: 96,height: 24 ,),
+                Image.asset(
+                  Assets.iconsSona,
+                  width: 96,
+                  height: 24,
+                ),
                 Row(
                   children: [
-                    GestureDetector(child: Image.asset(Assets.iconsFliter,width: 48,height: 48,),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (c){
+                    GestureDetector(
+                      child: Image.asset(
+                        Assets.iconsFliter,
+                        width: 48,
+                        height: 48,
+                      ),
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (c) {
                           return FilterPage();
-                        })).then((value){
+                        })).then((value) {
                           _initData();
-                          if(mounted){
-                            setState(() {
-
-                            });
+                          if (mounted) {
+                            setState(() {});
                           }
-
                         });
                       },
                     ),
@@ -170,103 +185,167 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           body: Stack(
             children: [
               Positioned.fill(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Expanded(child: _buildMatch())
-
-                  ],
-                )
-              ),
-              (users.isNotEmpty&&users[currentPage].id==-1)||_state==PageState.fail||_state==PageState.noData||_state==PageState.loading||_state==PageState.notLocation?Container():
-              Positioned(bottom: 8+MediaQuery.of(context).padding.bottom,
-                width: MediaQuery.of(context).size.width,child: Padding(
-                  padding:EdgeInsets.symmetric(
-                    horizontal: 68
+                  child: Column(
+                children: [
+                  SizedBox(
+                    height: 16,
                   ),
-                  child: (users.isNotEmpty&&users[currentPage].wishList.isNotEmpty&&users[currentPage].matched)?
-                  TextButton(onPressed: (){
-                    //widget.next.call();
-                    controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                    ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-                    MatchApi.like(users[currentPage].id,);
-                    SonaAnalytics.log(MatchEvent.match_like_justlike.name);
+                  Expanded(child: _buildMatch())
+                ],
+              )),
+              (users.isNotEmpty && users[currentPage].id == -1) ||
+                      _state == PageState.fail ||
+                      _state == PageState.noData ||
+                      _state == PageState.loading ||
+                      _state == PageState.notLocation
+                  ? Container()
+                  : Positioned(
+                      bottom: 8 + MediaQuery.of(context).padding.bottom,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 68),
+                        child: (users.isNotEmpty &&
+                                users[currentPage].wishList.isNotEmpty &&
+                                users[currentPage].matched)
+                            ? TextButton(
+                                onPressed: () {
+                                  //widget.next.call();
+                                  controller.nextPage(
+                                      duration: Duration(milliseconds: 2000),
+                                      curve: Curves.linearToEaseOut);
+                                  ref
+                                      .read(backgroundImageProvider.notifier)
+                                      .updateBgImage(null);
+                                  MatchApi.like(
+                                    users[currentPage].id,
+                                  );
+                                  SonaAnalytics.log(
+                                      MatchEvent.match_like_justlike.name);
+                                },
+                                child: Text(
+                                  '${S.of(context).justSendALike} >',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16,
+                                  ),
+                                ))
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  ScaleAnimation(
+                                      onTap: () {
+                                        if (currentPage == users.length - 1) {
+                                          return;
+                                        }
+                                        matchAnimation.value =
+                                            TransformStatus.leftRotate;
+                                        SonaAnalytics.log(
+                                            MatchEvent.match_dislike.name);
+                                        // status=PageAnimStatus.dislike;
+                                        controller.nextPage(
+                                            duration:
+                                                Duration(milliseconds: 2000),
+                                            curve: Curves.linearToEaseOut);
+                                        MatchApi.skip(users[currentPage].id);
+                                      },
+                                      child: SvgPicture.asset(
+                                        Assets.svgDislike,
+                                        width: 56,
+                                        height: 56,
+                                      )),
+                                  ScaleAnimation(
+                                      child: SvgPicture.asset(
+                                        Assets.svgLike,
+                                        width: 64,
+                                        height: 64,
+                                      ),
+                                      onTap: () {
+                                        if (currentPage == users.length - 1) {
+                                          return;
+                                        }
+                                        if (true) {
+                                          matchAnimation.value =
+                                              TransformStatus.rightRotate;
 
-                   }, child: Text('${S.of(context).justSendALike} >',style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 16,
-                  ),)):Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ScaleAnimation(onTap: (){
-                        if(currentPage==users.length-1){
-                          return;
-                        }
-                        matchAnimation.value=TransformStatus.leftRotate;
-                        SonaAnalytics.log(MatchEvent.match_dislike.name);
-                        // status=PageAnimStatus.dislike;
-                        controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                        MatchApi.skip(users[currentPage].id);
-                      },
-                          child: SvgPicture.asset(Assets.svgDislike,width: 56,height: 56,)
+                                          if (like > 0) {
+                                            like = like - 1;
+                                          }
+                                          //currentPage=index;
+                                          ///如果对方喜欢我。
+                                          if (users[currentPage].likeMe == 1) {
+                                            SonaAnalytics.log(
+                                                MatchEvent.match_matched.name);
+
+                                            MatchApi.like(
+                                                users[currentPage].id);
+
+                                            ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
+                                            showMatched(context,
+                                                target: users[currentPage],
+                                                next: () {
+                                              controller.nextPage(
+                                                  duration: Duration(
+                                                      milliseconds: 2000),
+                                                  curve:
+                                                      Curves.linearToEaseOut);
+                                            });
+                                          } else {
+                                            ///
+                                            if (users[currentPage]
+                                                .wishList
+                                                .isEmpty) {
+                                              MatchApi.like(
+                                                  users[currentPage].id);
+                                              ref
+                                                  .read(backgroundImageProvider
+                                                      .notifier)
+                                                  .updateBgImage(null);
+
+                                              controller.nextPage(
+                                                  duration: Duration(
+                                                      milliseconds: 2000),
+                                                  curve:
+                                                      Curves.linearToEaseOut);
+                                            } else {
+                                              users[currentPage].matched = true;
+                                              if (users[currentPage].matched &&
+                                                  users[currentPage]
+                                                      .wishList
+                                                      .isNotEmpty) {
+                                                ref
+                                                    .read(
+                                                        backgroundImageProvider
+                                                            .notifier)
+                                                    .updateBgImage(
+                                                        users[currentPage]
+                                                            .wishList
+                                                            .first
+                                                            .pic!);
+                                              }
+                                              setState(() {});
+                                            }
+                                          }
+
+                                          setState(() {});
+                                          SonaAnalytics.log(
+                                              MatchEvent.match_like.name);
+                                        } else {
+                                          SonaAnalytics.log(
+                                              MatchEvent.match_like_limit.name);
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (c) {
+                                            return SubscribePage(
+                                              fromTag:
+                                                  FromTag.pay_match_likelimit,
+                                            );
+                                          }));
+                                        }
+                                      }),
+                                ],
+                              ),
                       ),
-                      ScaleAnimation(child: SvgPicture.asset(Assets.svgLike,width: 64,height: 64,), onTap: (){
-                          if(currentPage==users.length-1){
-                                  return;
-                                }
-                          if(canLike){
-                            matchAnimation.value=TransformStatus.rightRotate;
-
-                            if(like>0){
-                              like=like-1;
-                            }
-                            //currentPage=index;
-                            ///如果对方喜欢我。
-                            if(users[currentPage].likeMe==1){
-                              SonaAnalytics.log(MatchEvent.match_matched.name);
-
-                              MatchApi.like(users[currentPage].id);
-                              ///显示匹配成功，匹配成功可以发送消息（自定义消息和sayhi）。点击发送以后，切换下一个人
-                              showMatched(context,target: users[currentPage],next: (){
-
-                                controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                              });
-                            }else{
-                              ///
-                              if(users[currentPage].wishList.isEmpty){
-                                MatchApi.like(users[currentPage].id);
-                                ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-
-                                controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                              }else {
-                                users[currentPage].matched=true;
-                                if(users[currentPage].matched&&users[currentPage].wishList.isNotEmpty){
-                                  ref.read(backgroundImageProvider.notifier).updateBgImage(users[currentPage].wishList.first.pic!);
-                                }
-                                setState(() {
-
-                                });
-                              }
-                            }
-
-                            setState(() {
-
-                            });
-                            SonaAnalytics.log(MatchEvent.match_like.name);
-
-                          }else {
-                            SonaAnalytics.log(MatchEvent.match_like_limit.name);
-                            Navigator.push(context, MaterialPageRoute(builder:(c){
-                              return SubscribePage(fromTag: FromTag.pay_match_likelimit,);
-                            }));
-                          }
-                      }),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
             ],
           ),
         ),
@@ -276,157 +355,149 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
 
   @override
   bool get wantKeepAlive => true;
-  int current=1;
+  int current = 1;
 
-  void _initData() async{
-    longitude=ref.read(myProfileProvider)!.position?.longitude;
-    latitude=ref.read(myProfileProvider)!.position?.latitude;
-    _state=PageState.loading;
-    if(mounted){
-      setState(() {
-
-      });
+  void _initData() async {
+    longitude = ref.read(myProfileProvider)!.position?.longitude;
+    latitude = ref.read(myProfileProvider)!.position?.latitude;
+    _state = PageState.loading;
+    if (mounted) {
+      setState(() {});
     }
-    current=1;
-    currentPage=0;
-    try{
-      final resp=await post('/user/match-v2',data: {
+    current = 1;
+    currentPage = 0;
+    try {
+      final resp = await post('/user/match-v2', data: {
         'gender': currentFilterGender,
         'minAge': currentFilterMinAge,
         'maxAge': currentFilterMaxAge,
         'longitude': longitude,
         'latitude': latitude,
-        "page":current,    // 页码
-        "pageSize":30, // 每页数量
-        "recommendMode":recommendMode
+        "page": current, // 页码
+        "pageSize": 30, // 每页数量
+        "recommendMode": recommendMode
       });
-      if(resp.isSuccess){
-        List list= resp.data;
-        if(list.isEmpty){
-          _state=PageState.noData;
-        }else {
-          _state=PageState.success;
+      if (resp.isSuccess) {
+        List list = resp.data;
+        if (list.isEmpty) {
+          _state = PageState.noData;
+        } else {
+          _state = PageState.success;
         }
 
-        List<MatchUserInfo> users1=list.map((e) => MatchUserInfo.fromJson(e)).toList();
-        users=users1;
-        if(users.every((element) => element.id!=-1)&&users.length<=30){
-          users.add(MatchUserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+        List<MatchUserInfo> users1 =
+            list.map((e) => MatchUserInfo.fromJson(e)).toList();
+        users = users1;
+        if (users.every((element) => element.id != -1) && users.length <= 30) {
+          users.add(MatchUserInfo(
+              id: -1, name: '', gender: null, birthday: null, avatar: null));
         }
         for (var element in users1) {
-          if(element.avatar!=null){
+          if (element.avatar != null) {
             DefaultCacheManager().downloadFile(element.avatar!);
           }
         }
-        setState(() {
-
-        });
-      }else {
-        _state=PageState.fail;
-        setState(() {
-
-        });
+        setState(() {});
+      } else {
+        _state = PageState.fail;
+        setState(() {});
       }
-
-    }catch(e){
+    } catch (e) {
       if (kDebugMode) print(e);
-      if(mounted){
-        _state=PageState.fail;
-        setState(() {
-
-        });
+      if (mounted) {
+        _state = PageState.fail;
+        setState(() {});
       }
     }
   }
-  void _loadMore() async{
-    try{
-      final resp=await post('/user/match-v2',data: {
+
+  void _loadMore() async {
+    try {
+      final resp = await post('/user/match-v2', data: {
         'gender': currentFilterGender,
         'minAge': currentFilterMinAge,
         'maxAge': currentFilterMaxAge,
         'longitude': longitude,
         'latitude': latitude,
-        "page":current,    // 页码
-        "pageSize":30, // 每页数量,
-        "recommendMode":recommendMode
+        "page": current, // 页码
+        "pageSize": 30, // 每页数量,
+        "recommendMode": recommendMode
       });
-      if(resp.isSuccess){
-        List list= resp.data;
+      if (resp.isSuccess) {
+        List list = resp.data;
 
-        if(list.isEmpty){
+        if (list.isEmpty) {
           //_state=PageState.noData;
-        }else {
-          _state=PageState.success;
+        } else {
+          _state = PageState.success;
         }
-        List<MatchUserInfo> users1=list.map((e) => MatchUserInfo.fromJson(e)).toList();
+        List<MatchUserInfo> users1 =
+            list.map((e) => MatchUserInfo.fromJson(e)).toList();
         // users=[...users,...users1,...[UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null)]];
 
-
         users.addAll(users1);
-        if(users.every((element) => element.id!=-1)){
-          users.add(MatchUserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
-        }else {
-          users.removeWhere((element) => element.id==-1);
-          users.add(MatchUserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null));
+        if (users.every((element) => element.id != -1)) {
+          users.add(MatchUserInfo(
+              id: -1, name: '', gender: null, birthday: null, avatar: null));
+        } else {
+          users.removeWhere((element) => element.id == -1);
+          users.add(MatchUserInfo(
+              id: -1, name: '', gender: null, birthday: null, avatar: null));
         }
         for (var element in users1) {
-          if(element.avatar!=null){
+          if (element.avatar != null) {
             DefaultCacheManager().downloadFile(element.avatar!);
           }
         }
-        setState(() {
-
-        });
-      }else {
-        _state=PageState.fail;
-        setState(() {
-
-        });
+        setState(() {});
+      } else {
+        _state = PageState.fail;
+        setState(() {});
       }
-
-    }catch(e){
+    } catch (e) {
       if (kDebugMode) print(e);
-      if(mounted){
-        _state=PageState.fail;
-        setState(() {
-
-        });
+      if (mounted) {
+        _state = PageState.fail;
+        setState(() {});
       }
     }
   }
 
-  PageState _state= PageState.loading;
+  PageState _state = PageState.loading;
   _buildMatch() {
-    if(_state==PageState.loading){
-     return Container(color: Colors.black,child: Center(child: MatchInitAnimation()),);
-    }else if(_state==PageState.fail){
-      return NoDataWidget(onTap: (){
-        _initData();
-        setState(() {
-
-        });
-      },);
-    } else if(_state==PageState.success){
+    if (_state == PageState.loading) {
+      return Container(
+        color: Colors.black,
+        child: Center(child: MatchInitAnimation()),
+      );
+    } else if (_state == PageState.fail) {
+      return NoDataWidget(
+        onTap: () {
+          _initData();
+          setState(() {});
+        },
+      );
+    } else if (_state == PageState.success) {
       return TransformerPageView(
-          itemBuilder: (c,index) {
-            MatchUserInfo info=users[index];
-            if(info.id==-1){
+          itemBuilder: (c, index) {
+            MatchUserInfo info = users[index];
+            if (info.id == -1) {
               return NoMoreWidget(
-                onTap: (){
+                onTap: () {
                   _initData();
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
               );
             }
             return ProfileWidget(
               relation: Relation.normal,
-              info:info,
-              next:(){
-                  controller.nextPage(duration: Duration(milliseconds: 2000), curve: Curves.linearToEaseOut);
-                  },
-              onMatch: (v){},
+              info: info,
+              next: () {
+                controller.nextPage(
+                    duration: Duration(milliseconds: 2000),
+                    curve: Curves.linearToEaseOut);
+              },
+              onMatch: (v) {},
             );
           },
           pageController: controller,
@@ -439,78 +510,68 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           duration: const Duration(milliseconds: 2000),
           physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (value) async {
-            currentPage=value!;
-            if(value==4&&!todayIsShowedInterest){
+            currentPage = value!;
+            if (value == 4 && !todayIsShowedInterest) {
               SonaAnalytics.log(MatchEvent.match_interests_pop.name);
 
-              if(ref.watch(myProfileProvider)!.interests.isEmpty&&ref.watch(myProfileProvider)!.bio==null){
-                if(mounted){
+              if (ref.watch(myProfileProvider)!.interests.isEmpty &&
+                  ref.watch(myProfileProvider)!.bio == null) {
+                if (mounted) {
                   showChooseHobbies(context);
-                  todayIsShowedInterest=true;
+                  todayIsShowedInterest = true;
                 }
               }
-            }else if(value==10&&!todayIsShowedPhoto){
+            } else if (value == 10 && !todayIsShowedPhoto) {
               SonaAnalytics.log(MatchEvent.match_avatar_pop.name);
 
-              if(ref.watch(myProfileProvider)!.photos.length<3&&!todayIsShowedPhoto){
-                if(mounted){
+              if (ref.watch(myProfileProvider)!.photos.length < 3 &&
+                  !todayIsShowedPhoto) {
+                if (mounted) {
                   showUploadPortrait(context);
-                  todayIsShowedPhoto=true;
+                  todayIsShowedPhoto = true;
                 }
               }
             }
-            setState(() {
-
-            });
-            if (value != 0 && value % 25 == 0 ) {
+            setState(() {});
+            if (value != 0 && value % 25 == 0) {
               ///判断当天的次数为null
               current++;
               _loadMore();
             }
-          }
+          });
+    } else if (_state == PageState.noData) {
+      return NoMoreWidget(
+        onTap: () {
+          _initData();
+          setState(() {});
+        },
       );
-
-    }else if(_state==PageState.noData){
-      return NoMoreWidget(onTap: (){
-        _initData();
-        setState(() {
-
-        });
-      },);
-    }else if(_state==PageState.notLocation){
-      return NoLocation(onTap: ()async{
-        var permission = await Geolocator.checkPermission();
-        if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
-          if (!mounted) return;
-          await showCommonBottomSheet(
-          context: context,
-          title: S.current.permissionRequiredTitle,
-          content: S.current.permissionRequiredContent,
-          actions: [
-            FilledButton(
-                onPressed: () async {
-                  Navigator.pop(context);
-                  await SystemSettings.app();
-                },
-                child: Text(S.current.buttonGo)
-            )
-          ]
-          );
-        }
-      },);
+    } else if (_state == PageState.notLocation) {
+      return NoLocation(
+        onTap: () async {
+          var permission = await Geolocator.checkPermission();
+          if (permission == LocationPermission.denied ||
+              permission == LocationPermission.deniedForever) {
+            if (!mounted) return;
+            await showCommonBottomSheet(
+                context: context,
+                title: S.current.permissionRequiredTitle,
+                content: S.current.permissionRequiredContent,
+                actions: [
+                  FilledButton(
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        //await SystemSettings.app();
+                      },
+                      child: Text(S.current.buttonGo))
+                ]);
+          }
+        },
+      );
     }
   }
 }
 
-enum PageState{
-  loading,
-  noData,
-  success,
-  fail,
-  notLocation
-}
-enum PageAnimStatus {
-  dislike,
-  like,
-  dm
-}
+enum PageState { loading, noData, success, fail, notLocation }
+
+enum PageAnimStatus { dislike, like, dm }

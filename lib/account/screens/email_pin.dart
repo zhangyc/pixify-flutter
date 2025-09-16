@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:pinput/pinput.dart';
@@ -110,7 +110,6 @@ class _EmailPinScreenState extends ConsumerState<EmailPinScreen> {
                     defaultPinTheme: defaultPinTheme,
                     focusedPinTheme: focusedPinTheme,
                     submittedPinTheme: submittedPinTheme,
-                    androidSmsAutofillMethod:  AndroidSmsAutofillMethod.smsUserConsentApi,
                     validator: (s) {
                       final regex = RegExp(r'^\d{6}$');
                       return s != null && regex.hasMatch(s) ? null : 'invalid pin';

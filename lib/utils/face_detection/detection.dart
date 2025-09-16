@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:path_provider/path_provider.dart';
 Future<bool> faceDetection(String path) async {
   return true;

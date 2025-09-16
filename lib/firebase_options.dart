@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBVmRgXOuFgxcy2htwFIvtR1mtNUPjQj4U',
-    appId: '1:686212353505:android:f4f29f6ccf9703360716a0',
-    messagingSenderId: '686212353505',
-    projectId: 'sona-dating',
-    storageBucket: 'sona-dating.appspot.com',
+    apiKey: 'AIzaSyBql2oMbAwxcBTPgAMK5SMZenhQEpyxXA8',
+    appId: '1:972955903429:android:fb314ecd7d7275ea7b17ac',
+    messagingSenderId: '972955903429',
+    projectId: 'pixify-rp',
+    storageBucket: 'pixify-rp.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBn59myt9_WiQIC-NT5mTgPmhP3QBe7KoM',
-    appId: '1:686212353505:ios:125079e0cb7782b40716a0',
-    messagingSenderId: '686212353505',
-    projectId: 'sona-dating',
-    storageBucket: 'sona-dating.appspot.com',
-    iosClientId: '686212353505-eu1iv85e1sr2lqfkq6mlmsnefvefteaf.apps.googleusercontent.com',
-    iosBundleId: 'com.planetwalk.sona',
+    apiKey: 'AIzaSyAVIjI324uBqPHTvhXyVuMa0SxxKdkH7gE',
+    appId: '1:972955903429:ios:eb86ba124658f2867b17ac',
+    messagingSenderId: '972955903429',
+    projectId: 'pixify-rp',
+    storageBucket: 'pixify-rp.appspot.com',
+    iosBundleId: 'com.solararrow.pixify',
   );
+
 }

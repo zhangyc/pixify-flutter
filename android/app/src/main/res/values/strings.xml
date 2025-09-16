@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="app_name">AstroLink</string>
   <string name="facebook_app_id">357454540279529</string>
   <string name="facebook_client_token">05a5b4f17e6f876e110ef9df3945a657</string>
 </resources>

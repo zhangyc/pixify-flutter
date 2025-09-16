@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/age.dart';
@@ -291,7 +291,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                             ),
                             SizedBox(height: 12),
                             Text(
-                                '${myProfile.name}, ${myProfile.birthday!.toAge()}',
+                                '${myProfile.name}, ${myProfile.birthday?.toAge()}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: true,

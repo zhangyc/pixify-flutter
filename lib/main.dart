@@ -21,22 +21,22 @@ import 'firebase_options.dart';
 import 'utils/global/global.dart' as global;
 import 'utils/providers/app_lifecycle.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler); ///后台消息处理
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  ///后台消息处理
   initHelper();
   final firebase = await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-    name: 'sona'
-  );
+      options: DefaultFirebaseOptions.currentPlatform, name: 'sona');
   await FirebaseAppCheck.instance.activate(
-    androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
-    appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttest,
+    androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.debug,
+    appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.debug,
   );
   purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
     purchaseDetailsList.forEach((p) {
-      if(p.status==PurchaseStatus.purchased||p.status==PurchaseStatus.restored){
+      if (p.status == PurchaseStatus.purchased ||
+          p.status == PurchaseStatus.restored) {
         InAppPurchase.instance.completePurchase(p);
       }
     });
@@ -45,30 +45,29 @@ void main() async {
   }, onError: (Object error) {
     // if (kDebugMode) print(error);
   });
+
   ///成功初始化firebase app。
-  if(firebase.name=='sona'){
+  if (firebase.name == 'sona') {
     initFireBaseService(firebase);
   }
   await global.init();
   SonaAnalytics.init();
   // unawaited(_initAttribution());
   // 先放这，以后整理
-  countryMapList = (jsonDecode(await rootBundle.loadString('assets/i18n/countries.json')) as List)
-    .map((d) => d as Map<String, dynamic>)
-    .toList(growable: false);
+  countryMapList =
+      (jsonDecode(await rootBundle.loadString('assets/i18n/countries.json'))
+              as List)
+          .map((d) => d as Map<String, dynamic>)
+          .toList(growable: false);
 
-  runApp(
-    ProviderScope(
-      child: const SonaApp()
-    )
-  );
+  runApp(ProviderScope(child: const SonaApp()));
 }
 
 // Future<void> _initAttribution() async {
 //   if (kDebugMode) return;
 //   AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
 //       afDevKey: 'pjgPTCev87vC2WK6dGhg3n',
-//       appId: Platform.isIOS ? '6464375495' : 'com.planetwalk.sona',
+//       appId: Platform.isIOS ? '6464375495' : 'com.solararrow.pixify',
 //       showDebug: kDebugMode,
 //       timeToWaitForATTUserAuthorization: 50, // for iOS 14.5
 //       disableAdvertisingIdentifier: Platform.isIOS,

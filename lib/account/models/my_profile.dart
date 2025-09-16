@@ -5,27 +5,26 @@ import 'package:sona/common/models/user.dart';
 import 'package:sona/core/subscribe/model/member.dart';
 
 class MyProfile {
-  const MyProfile( {
-    required this.id,
-    required this.name,
-    required this.gender,
-    required this.birthday,
-    required this.countryId,
-    this.countryCode,
-    this.countryFlag,
-    required this.avatar,
-    this.interests = const <UserHobby>[],
-    required this.position,
-    this.pushEnabled = true,
-    this.bio,
-    this.impression,
-    this.chatStyleId,
-    this.photos = const <ProfilePhoto>[],
-    this.locale,
-    this.cityVisibility = true,
-    required this.memberType,
-    required this.vipEndDate
-  });
+  const MyProfile(
+      {required this.id,
+      required this.name,
+      required this.gender,
+      required this.birthday,
+      required this.countryId,
+      this.countryCode,
+      this.countryFlag,
+      required this.avatar,
+      this.interests = const <UserHobby>[],
+      required this.position,
+      this.pushEnabled = true,
+      this.bio,
+      this.impression,
+      this.chatStyleId,
+      this.photos = const <ProfilePhoto>[],
+      this.locale,
+      this.cityVisibility = true,
+      required this.memberType,
+      required this.vipEndDate});
 
   final int id;
   final String? name;
@@ -58,30 +57,41 @@ class MyProfile {
       pos = Position.fromMap({
         'longitude': double.tryParse(longitudeStr),
         'latitude': double.tryParse(latitudeStr),
-        'timestamp': json['modifyDate'] ?? json['createDate'] ?? DateTime.now().millisecondsSinceEpoch
+        'timestamp': json['modifyDate'] ??
+            json['createDate'] ??
+            DateTime.now().millisecondsSinceEpoch
       });
     }
     return MyProfile(
-      id: json['id'],
-      name: json['nickname'],
-      gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-      birthday: json['birthday'] != null ? DateTime.tryParse(json['birthday']) : null,
-      countryId: json['countryId'],
-      countryCode: json['countryCode'],
-      countryFlag: json['countryFlag'],
-      avatar: json['avatar'],
-      bio: json['description'],
-      impression: json['impression'],
-      chatStyleId: json['chatStyleId'],
-      vipEndDate: json['vipEndDate'],
-      interests: json['interestList'] != null ? (json['interestList'] as List).map<UserHobby>((json) => UserHobby.fromJson(json)).toList() : [],
-      photos: json['images'] != null ? (json['images'] as List).map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo)).toList() : <ProfilePhoto>[],
-      position: pos,
-      pushEnabled: json['openPush'] ?? true,
-      locale: json['lang'],
-      cityVisibility: json['showCity'] ?? true,
-      memberType: MemberType.fromString(json['vip'])
-    );
+        id: json['id'],
+        name: json['nickname'],
+        gender:
+            json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
+        birthday: json['birthday'] != null ? DateTime.tryParse(json['birthday']) : null,
+
+        countryId: json['countryId'],
+        countryCode: json['countryCode'],
+        countryFlag: json['countryFlag'],
+        avatar: json['avatar'],
+        bio: json['description'],
+        impression: json['impression'],
+        chatStyleId: json['chatStyleId'],
+        vipEndDate: json['vipEndDate'],
+        interests: json['interestList'] != null
+            ? (json['interestList'] as List)
+                .map<UserHobby>((json) => UserHobby.fromJson(json))
+                .toList()
+            : [],
+        photos: json['images'] != null
+            ? (json['images'] as List)
+                .map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo))
+                .toList()
+            : <ProfilePhoto>[],
+        position: pos,
+        pushEnabled: json['openPush'] ?? true,
+        locale: json['lang'],
+        cityVisibility: json['showCity'] ?? true,
+        memberType: MemberType.fromString(json['vip']));
   }
 
   Map<String, dynamic> toJson() {
@@ -98,77 +108,88 @@ class MyProfile {
       'impression': impression,
       'chatStyleId': chatStyleId,
       'interestList': interests.map((hb) => hb.toJson()).toList(),
-      'images': photos.map<Map<String, dynamic>>((photo) => photo.toJson()).toList(),
+      'images':
+          photos.map<Map<String, dynamic>>((photo) => photo.toJson()).toList(),
       'longitude': position?.longitude.toString(),
       'latitude': position?.latitude.toString(),
       'openPush': pushEnabled,
       'lang': locale,
       'showCity': cityVisibility,
-      'vipEndDate':vipEndDate,
+      'vipEndDate': vipEndDate,
       'vip': memberType.name
     };
   }
 
+  static DateTime? _parseBirthday(dynamic birthday) {
+    if (birthday == null) return null;
+
+    if (birthday is int) {
+      // 如果是整数，判断是秒还是毫秒
+      if (birthday > 1000000000000) {
+        return DateTime.fromMillisecondsSinceEpoch(birthday);
+      } else {
+        return DateTime.fromMillisecondsSinceEpoch(birthday * 1000);
+      }
+    } else if (birthday is String) {
+      // 如果是字符串，先尝试解析为整数
+      final timestamp = int.tryParse(birthday);
+      if (timestamp != null) {
+        if (timestamp > 1000000000000) {
+          return DateTime.fromMillisecondsSinceEpoch(timestamp);
+        } else {
+          return DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+        }
+      }
+      // 如果不是数字，尝试直接解析日期
+      return DateTime.tryParse(birthday);
+    }
+
+    return null;
+  }
+
   bool _validate() {
-    return name != null
-        && gender != null
-        && birthday != null
-        && (avatar != null && avatar!.isNotEmpty)
-        && locale != null;
-        // && countryId != null;
+    return name != null &&
+        gender != null &&
+        birthday != null &&
+        (avatar != null && avatar!.isNotEmpty) &&
+        locale != null;
+    // && countryId != null;
   }
 
   UserInfo toUser() {
     return UserInfo(
-      id: id,
-      name: name,
-      avatar: avatar,
-      birthday: birthday,
-      countryId: countryId,
-      countryCode: countryCode,
-      countryFlag: countryFlag,
-      locale: locale,
-      gender: gender,
-      bio: bio,
-      photos: photos.map((photo) => photo.url).toList()
-    );
+        id: id,
+        name: name,
+        avatar: avatar,
+        birthday: birthday,
+        countryId: countryId,
+        countryCode: countryCode,
+        countryFlag: countryFlag,
+        locale: locale,
+        gender: gender,
+        bio: bio,
+        photos: photos.map((photo) => photo.url).toList());
   }
 
-  MyProfile copyWith({
-    bool? pushEnabled,
-    bool? cityVisibility
-  }) {
+  MyProfile copyWith({bool? pushEnabled, bool? cityVisibility}) {
     final json = toJson();
-    return MyProfile.fromJson(
-      json
-        ..['openPush'] = pushEnabled ?? json['openPush']
-        ..['showCity'] = cityVisibility ?? json['showCity']
-    );
+    return MyProfile.fromJson(json
+      ..['openPush'] = pushEnabled ?? json['openPush']
+      ..['showCity'] = cityVisibility ?? json['showCity']);
   }
 }
 
 class ProfilePhoto {
-  const ProfilePhoto({
-    required this.id,
-    required this.url
-  });
+  const ProfilePhoto({required this.id, required this.url});
   final int id;
   final String url;
-  factory ProfilePhoto.idle(int id,String url) {
-    return ProfilePhoto(
-        id: id,
-        url: url
-    );
+  factory ProfilePhoto.idle(int id, String url) {
+    return ProfilePhoto(id: id, url: url);
   }
   factory ProfilePhoto.fromJson(Map<String, dynamic> json) {
-    return ProfilePhoto(
-      id: json['id'],
-      url: json['attachmentUrl']
-    );
+    return ProfilePhoto(id: json['id'], url: json['attachmentUrl']);
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-    'id': id,
-    'attachmentUrl': url
-  };
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{'id': id, 'attachmentUrl': url};
 }

@@ -12,7 +12,7 @@ final conversationStreamProvider = StreamProvider<List<ImConversation>>((ref) as
   final userId = ref.read(myProfileProvider)?.id;
   if (userId != null) {
     final stream = FirebaseFirestore.instance
-        .collection('${env.firestorePrefix}_users').doc('$userId')
+        .collection('${env.firestorePrefix}_v2_users').doc('$userId')
         .collection('rooms').orderBy('createDate', descending: true).limit(100)
         .snapshots();
     await for (var snapshot in stream) {
@@ -33,7 +33,7 @@ final remoteMessageStreamProvider = StreamProvider.family.autoDispose<List<ImMes
     List<ImMessage> messages = [];
     final userId = ref.read(myProfileProvider)!.id;
     final stream = FirebaseFirestore.instance
-        .collection('${env.firestorePrefix}_users').doc('$userId')
+        .collection('${env.firestorePrefix}_v2_users').doc('$userId')
         .collection('rooms').doc('$roomId')
         .collection('msgs').orderBy('id', descending: true)
         .snapshots();
@@ -55,7 +55,7 @@ final messagesProvider = StateProvider.autoDispose.family<List<ImMessage>, int>(
 
 final futureUserProvider = FutureProvider.family<UserInfo, int>((ref, arg) {
   return FirebaseFirestore.instance
-      .collection('${env.firestorePrefix}_users')
+      .collection('${env.firestorePrefix}_v2_users')
       .doc(arg.toString())
       .get()
       .then((snapshot) => UserInfo.fromFirestore(snapshot.data()!))

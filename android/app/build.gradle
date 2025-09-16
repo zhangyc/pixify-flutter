@@ -28,7 +28,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    namespace "com.planetwalk.sona"
+    namespace "com.solararrow.pixify"
     compileSdk 34
 
     compileOptions {
@@ -55,7 +55,7 @@ android {
     }
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.planetwalk.sona"
+        applicationId "com.solararrow.pixify"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 24
@@ -90,7 +90,7 @@ flutter {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.23"
     implementation 'com.google.android.gms:play-services-base:18.4.0'
