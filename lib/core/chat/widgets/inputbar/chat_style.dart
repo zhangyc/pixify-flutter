@@ -70,7 +70,7 @@ class AsyncChatStylesNotifier extends AsyncNotifier<List<ChatStyle>> {
 // final currentChatStyleProvider = StateProvider.family<ChatStyle?, int>(
 //   (ref, arg) {
 //     ref.listenSelf((previous, next) {
-//       FirebaseFirestore.instance.collection('${env.firestorePrefix}_users')
+//       FirebaseFirestore.instance.collection('${env.firestorePrefix}_v2_users')
 //           .doc(ref.read(myProfileProvider)!.id.toString())
 //           .collection('rooms').doc(arg.toString())
 //           .set({'chatStyleId': next?.id}, SetOptions(merge: true))

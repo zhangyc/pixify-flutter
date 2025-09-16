@@ -53,30 +53,29 @@ class SonaApp extends HookConsumerWidget {
     //   }
     // }
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      key: ValueKey(token),
-      navigatorKey: navigatorKey,
-      builder: EasyLoading.init(),
-      theme: themeData,
-      initialRoute: initialRoute,
-      navigatorObservers: [routeObserver],
-      // routes: _routes,
-      onGenerateRoute: _onGenerateRoute,
-      supportedLocales: supportedLocales,
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      locale: ref.watch(localeProvider),
-      localeResolutionCallback: (_, __) {
-        if (profile?.locale == 'yue') {
-          return const Locale('zh', 'TW');
-        }
-        return null;
-      }
-    );
+        debugShowCheckedModeBanner: false,
+        key: ValueKey(token),
+        navigatorKey: navigatorKey,
+        builder: EasyLoading.init(),
+        theme: themeData,
+        initialRoute: initialRoute,
+        navigatorObservers: [routeObserver],
+        // routes: _routes,
+        onGenerateRoute: _onGenerateRoute,
+        supportedLocales: supportedLocales,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: ref.watch(localeProvider),
+        localeResolutionCallback: (_, __) {
+          if (profile?.locale == 'yue') {
+            return const Locale('zh', 'TW');
+          }
+          return null;
+        });
   }
 }
 
@@ -86,7 +85,7 @@ final _routes = <String, WidgetBuilder>{
   '/': (_) => const SonaHome(),
   'login': (_) => const AuthLandingScreen(),
   'setting': (_) => const SettingScreen(),
-  'lib/core/chat/screens/conversation_list':(_) => const SettingScreen(),
+  'lib/core/chat/screens/conversation_list': (_) => const SettingScreen(),
 };
 
 Route<dynamic>? _onGenerateRoute(RouteSettings settings) {

@@ -291,7 +291,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen> with AutomaticKee
                             ),
                             SizedBox(height: 12),
                             Text(
-                                '${myProfile.name}, ${myProfile.birthday!.toAge()}',
+                                '${myProfile.name}, ${myProfile.birthday?.toAge()}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: true,

@@ -33,7 +33,7 @@
     </queries>
     <application
         android:requestLegacyExternalStorage="true"
-        android:label="Sona"
+        android:label="AstroLink"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true" >
@@ -73,8 +73,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with https://YOUR_HOST -->
                 <data
-                    android:scheme="sona"
-                    android:host="www.sona.com" />
+                    android:scheme="astrolink"
+                    android:host="www.astrolink.com" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

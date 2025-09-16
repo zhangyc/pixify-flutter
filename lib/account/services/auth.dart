@@ -32,7 +32,7 @@ Future<Response> signInWithPhone({
   required String pinCode
 }) async {
   return dio.post(
-      '/v2/auth/login-phone-code',
+      '/auth/login-phone-code',
       data: {
         'phonePrefix': countryCode,
         'phone': phoneNumber,

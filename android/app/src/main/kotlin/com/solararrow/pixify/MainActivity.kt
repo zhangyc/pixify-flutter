@@ -1,4 +1,4 @@
-package com.planetwalk.sona
+package com.solararrow.pixify
 
 import android.os.Build
 import android.os.Bundle

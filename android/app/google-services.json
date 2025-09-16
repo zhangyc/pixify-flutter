@@ -1,60 +1,26 @@
 {
   "project_info": {
-    "project_number": "686212353505",
-    "project_id": "sona-dating",
-    "storage_bucket": "sona-dating.appspot.com"
+    "project_number": "972955903429",
+    "project_id": "pixify-rp",
+    "storage_bucket": "pixify-rp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:686212353505:android:f4f29f6ccf9703360716a0",
+        "mobilesdk_app_id": "1:972955903429:android:fb314ecd7d7275ea7b17ac",
         "android_client_info": {
-          "package_name": "com.planetwalk.sona"
+          "package_name": "com.solararrow.pixify"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "686212353505-fkt32lmsr79ihv3l2kqsu7tfqucevm1g.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.planetwalk.sona",
-            "certificate_hash": "6cd5161a8507c7f6d8240344570ce7dee4c32241"
-          }
-        },
-        {
-          "client_id": "686212353505-onpd170hl82t2iub6tf8a2f0n0c5ocn8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.planetwalk.sona",
-            "certificate_hash": "8c636edd1c4ac744f4d9a32cb77d8a3bee68a6f3"
-          }
-        },
-        {
-          "client_id": "686212353505-v9d9r7njc9099f0c3t0vjo3i81eorjq9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.planetwalk.sona",
-            "certificate_hash": "c5470c3484424a2301ec9efbe59dc66f870134ed"
-          }
-        },
-        {
-          "client_id": "686212353505-3lsdsp2snbq2m9r3st54ls0d7jv5psse.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBVmRgXOuFgxcy2htwFIvtR1mtNUPjQj4U"
+          "current_key": "AIzaSyBql2oMbAwxcBTPgAMK5SMZenhQEpyxXA8"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "686212353505-3lsdsp2snbq2m9r3st54ls0d7jv5psse.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

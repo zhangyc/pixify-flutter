@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Sona</string>
+	<string>AstroLink</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>sona</string>
+	<string>AstroLink</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,10 +26,10 @@
 	<array>
 		<dict>
       <key>CFBundleURLName</key>
-        <string>sona</string>
+        <string>AstroLink</string>
       <key>CFBundleURLSchemes</key>
       <array>
-          <string>sona</string>
+          <string>astrolink</string>
           <string>fb357454540279529</string>
       </array>
 		</dict>
@@ -45,23 +45,23 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow Sona to access your camera to capture photos to showcase yourself, which will be uploaded to your match profile.</string>
+	<string>Allow AstroLink to access your camera to capture photos to showcase yourself, which will be uploaded to your match profile.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Allow Sona to access your location at all times for recommending people nearby.</string>
+	<string>Allow AstroLink to access your location at all times for recommending people nearby.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Sona to access your location while using the app for recommending people nearby.</string>
+	<string>Allow AstroLink to access your location while using the app for recommending people nearby.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
+	<string>Allow AstroLink to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow Sona to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
+	<string>Allow AstroLink to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
 	<key>NSMicrophoneUsageDescription</key>
-  <string>Allow Sona to access your microphone to record voice message.</string>
+  <string>Allow AstroLink to access your microphone to record voice message.</string>
   <key>NSSpeechRecognitionUsageDescription</key>
-  <string>Allow Sona to access your speech recognition to transform your voice message to text.</string>
+  <string>Allow AstroLink to access your speech recognition to transform your voice message to text.</string>
 	<key>NSUserTrackingUsageDescription</key>
   <string>To evaluate the effectiveness of our advertising campaigns and optimize our ad delivery strategies, we need to access your Identifier for Advertisers (IDFA). Your IDFA may be shared with our advertising partners, but it will not be associated with any other personal information.</string>
 	<key>NSAppleMusicUsageDescription</key>
-  <string>Sona needs access to your music usage data to process voice message playback.</string>
+  <string>AstroLink needs access to your music usage data to process voice message playback.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -88,7 +88,7 @@
   <key>FacebookClientToken</key>
   <string>05a5b4f17e6f876e110ef9df3945a657</string>
   <key>FacebookDisplayName</key>
-  <string>Sona</string>
+  <string>AstroLink</string>
     <!-- gal: Required -->
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>We need add only access to save medias</string>
