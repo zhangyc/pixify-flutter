@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:sona/utils/toast/flutter_toast.dart';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +19,7 @@ import 'package:sona/utils/picker/country/country.dart';
 
 import '../../generated/l10n.dart';
 import '../../utils/global/global.dart';
+import '../../utils/toast/flutter_toast.dart';
 import '../event/account_event.dart';
 import '../models/gender.dart';
 

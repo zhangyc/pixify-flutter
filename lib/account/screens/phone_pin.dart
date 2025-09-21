@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:sona/utils/toast/flutter_toast.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:pinput/pinput.dart';
@@ -17,6 +17,7 @@ import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../generated/l10n.dart';
+import '../../utils/toast/flutter_toast.dart';
 import '../models/my_profile.dart';
 
 

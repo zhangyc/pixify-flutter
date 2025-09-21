@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.window.SplashScreenView
 import androidx.core.view.WindowCompat
-import com.google.android.gms.common.GoogleApiAvailability
 import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity: FlutterActivity() {

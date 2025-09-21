@@ -19,4 +19,5 @@ flutter build appbundle --obfuscate --split-debug-info=build/app/outputs/bundle/
 flutter build ipa --dart-define=ENV=prod
 
 
-### 关于使用fastlane 打包并自动上传蒲公英
+### 代码生成
+dart run build_runner build -d

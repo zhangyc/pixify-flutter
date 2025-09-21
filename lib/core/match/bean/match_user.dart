@@ -6,52 +6,54 @@ import 'package:sona/core/subscribe/model/member.dart';
 
 import '../../../common/models/user.dart';
 
-class MatchUserInfo extends UserInfo{
-  int index=0;
-  bool arrowed=false;
-  bool matched=false;
-  bool skipped=false;
-  MatchUserInfo({
-    required this.id,
-    required this.name,
-    required this.gender,
-    required this.birthday,
-    this.countryId,
-    this.countryCode,
-    this.countryName,
-    this.countryFlag,
-    this.locale,
-    required this.avatar,
-    this.bio,
-    this.chatStyleId,
-    this.photos = const <String>[],
-    this.allScore,
-    this.impression,
-    this.interest=const [],
-    this.likeMe=0,
-    this.wishList=const [],
-    this.originNickname,
-    this.currentCity,
-    this.likeActivityName,
-    this.memberType
-  }) : super(id: id,
-    name: name,
-    originNickname: originNickname,
-    gender: gender,
-    birthday: birthday,
-    countryId: countryId,
-    countryCode: countryCode,
-    countryName: countryName,
-    countryFlag: countryFlag,
-    locale: locale,
-    avatar: avatar,
-    bio: bio,
-    chatStyleId: chatStyleId,
-    photos: photos,
-    allScore: allScore,
-    currentCity: currentCity,
-    impression: impression,
-  );
+class MatchUserInfo extends UserInfo {
+  int index = 0;
+  bool arrowed = false;
+  bool matched = false;
+  bool skipped = false;
+  double? distance;
+  MatchUserInfo(
+      {required this.id,
+      required this.name,
+      required this.gender,
+      required this.birthday,
+      this.countryId,
+      this.countryCode,
+      this.countryName,
+      this.countryFlag,
+      this.locale,
+      required this.avatar,
+      this.bio,
+      this.chatStyleId,
+      this.photos = const <String>[],
+      this.allScore,
+      this.impression,
+      this.interest = const [],
+      this.likeMe = 0,
+      this.wishList = const [],
+      this.originNickname,
+      this.currentCity,
+      this.likeActivityName,
+      this.memberType})
+      : super(
+          id: id,
+          name: name,
+          originNickname: originNickname,
+          gender: gender,
+          birthday: birthday,
+          countryId: countryId,
+          countryCode: countryCode,
+          countryName: countryName,
+          countryFlag: countryFlag,
+          locale: locale,
+          avatar: avatar,
+          bio: bio,
+          chatStyleId: chatStyleId,
+          photos: photos,
+          allScore: allScore,
+          currentCity: currentCity,
+          impression: impression,
+        );
   @override
   final int id;
   @override
@@ -87,15 +89,15 @@ class MatchUserInfo extends UserInfo{
   @override
   DateTime? likeDate;
   @override
-  int get age => birthday?.toAge()??0;
+  int get age => birthday?.toAge() ?? 0;
   @override
   final String? impression;
 
   final MemberType? memberType;
 
-  int likeMe=0;  //1 喜欢了，0 无
-  List<UserHobby> interest=[];
-  List<WishBean> wishList=[];
+  int likeMe = 0; //1 喜欢了，0 无
+  List<UserHobby> interest = [];
+  List<WishBean> wishList = [];
   String? likeActivityName; // 喜欢的原因，点击喜欢时选中的活动名称
   factory MatchUserInfo.fromJson(Map<String, dynamic> json) {
     final images = json['images'];
@@ -113,67 +115,71 @@ class MatchUserInfo extends UserInfo{
         photos = images.map<String>((i) => i['attachmentUrl']).toList();
       }
     }
-    if(interestTag is List && interestTag.isNotEmpty){
-      interest=interestTag.map((e) => UserHobby.fromJson(e)).toList();
+    if (interestTag is List && interestTag.isNotEmpty) {
+      interest = interestTag.map((e) => UserHobby.fromJson(e)).toList();
     }
-    if(_travelWish is List && _travelWish.isNotEmpty){
-      wishList=_travelWish.map((e) => WishBean.fromJson(e)).toList();
+    if (_travelWish is List && _travelWish.isNotEmpty) {
+      wishList = _travelWish.map((e) => WishBean.fromJson(e)).toList();
     }
     return MatchUserInfo(
-      id: json['id'],
-      name: json['nickname'],
-      gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-      birthday: json['birthday'] != null ? DateTime.fromMillisecondsSinceEpoch(json['birthday']) : null,
-      locale: json['lang'],
-      countryId: json['countryId'],
-      countryCode: json['countryCode'],
-      countryName: json['countryName'],
-      countryFlag: json['countryFlag'],
-      avatar: json['avatar'],
-      bio: json['description'],
-      chatStyleId: json['chatStyleId'],
-      photos: photos,
-      allScore: json['allScore']?.toStringAsFixed(2),
-      impression:json['impression'],
-      interest: interest,
-      likeMe: json['likeMe']??0,
-      wishList: wishList,
-      originNickname:json['originNickname'],
-      currentCity:json['currentCity'],
-      likeActivityName:json['likeActivityName'],
-      memberType: MemberType.fromString(json['vip'])
-    );
+        id: json['id'],
+        name: json['nickname'],
+        gender:
+            json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
+        birthday: json['birthday'] != null
+            ? DateTime.fromMillisecondsSinceEpoch(json['birthday'])
+            : null,
+        locale: json['lang'],
+        countryId: json['countryId'],
+        countryCode: json['countryCode'],
+        countryName: json['countryName'],
+        countryFlag: json['countryFlag'],
+        avatar: json['avatar'],
+        bio: json['description'],
+        chatStyleId: json['chatStyleId'],
+        photos: photos,
+        allScore: json['allScore']?.toStringAsFixed(2),
+        impression: json['impression'],
+        interest: interest,
+        likeMe: json['likeMe'] ?? 0,
+        wishList: wishList,
+        originNickname: json['originNickname'],
+        currentCity: json['currentCity'],
+        likeActivityName: json['likeActivityName'],
+        memberType: MemberType.fromString(json['vip']));
   }
 
   factory MatchUserInfo.fromFirestore(Map<String, dynamic> json) {
     return MatchUserInfo(
-      id: json['id'],
-      name: json['originalNickname'],
-      gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-      birthday: json['birthday'] != null ? (json['birthday'] as Timestamp).toDate() : null,
-      locale: json['lang'],
-      countryId: json['countryId'],
-      countryCode: json['countryCode'],
-      countryFlag: json['countryFlag'] ?? '🇺🇸',
-      countryName: json['countryName'],
-      avatar: json['avatar'],
-      bio: json['description'],
-      memberType: MemberType.fromString(json['vip'])
-    );
+        id: json['id'],
+        name: json['originalNickname'],
+        gender:
+            json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
+        birthday: json['birthday'] != null
+            ? (json['birthday'] as Timestamp).toDate()
+            : null,
+        locale: json['lang'],
+        countryId: json['countryId'],
+        countryCode: json['countryCode'],
+        countryFlag: json['countryFlag'] ?? '🇺🇸',
+        countryName: json['countryName'],
+        avatar: json['avatar'],
+        bio: json['description'],
+        memberType: MemberType.fromString(json['vip']));
   }
   factory MatchUserInfo.fromUserInfoInstance(UserInfo userInfo) {
     return MatchUserInfo(
-        id: userInfo.id,
-        name: userInfo.originNickname,
-        gender: userInfo.gender,
-        birthday: userInfo.birthday,
-        locale: userInfo.locale,
-        countryId: userInfo.countryId,
-        countryCode: userInfo.countryCode,
-        countryFlag: userInfo.countryFlag ?? '🇺🇸',
-        countryName: userInfo.countryName,
-        avatar: userInfo.avatar,
-        bio: userInfo.bio,
+      id: userInfo.id,
+      name: userInfo.originNickname,
+      gender: userInfo.gender,
+      birthday: userInfo.birthday,
+      locale: userInfo.locale,
+      countryId: userInfo.countryId,
+      countryCode: userInfo.countryCode,
+      countryFlag: userInfo.countryFlag ?? '🇺🇸',
+      countryName: userInfo.countryName,
+      avatar: userInfo.avatar,
+      bio: userInfo.bio,
     );
   }
 }
@@ -195,26 +201,25 @@ class WishBean {
   String? activityNames;
   int? status;
   String? countryFlag;
-  List<Activity> activities=[];
+  List<Activity> activities = [];
   WishBean(
       {this.id,
-        this.createDate,
-        this.modifyDate,
-        this.userId,
-        this.title,
-        this.countryId,
-        this.countryName,
-        this.cityId,
-        this.cityName,
-        this.pic,
-        this.timeType,
-        this.endDate,
-        this.activityIds,
-        this.activityNames,
-        this.status,
-        this.countryFlag,
-        this.activities=const []
-      });
+      this.createDate,
+      this.modifyDate,
+      this.userId,
+      this.title,
+      this.countryId,
+      this.countryName,
+      this.cityId,
+      this.cityName,
+      this.pic,
+      this.timeType,
+      this.endDate,
+      this.activityIds,
+      this.activityNames,
+      this.status,
+      this.countryFlag,
+      this.activities = const []});
 
   WishBean.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -233,8 +238,8 @@ class WishBean {
     activityNames = json['activityNames'];
     status = json['status'];
     countryFlag = json['countryFlag'];
-    List t=json['activity']??[];
-    activities=t.map((e) => Activity.fromJson(e)).toList();
+    List t = json['activity'] ?? [];
+    activities = t.map((e) => Activity.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -255,16 +260,16 @@ class WishBean {
     data['activityNames'] = this.activityNames;
     data['status'] = this.status;
     data['countryFlag'] = this.countryFlag;
-    data['activity']=this.activities;
+    data['activity'] = this.activities;
 
     return data;
-
   }
 }
+
 class Activity {
   int? id;
   String? title;
-  bool selected=false;
+  bool selected = false;
   Activity({this.id, this.title});
 
   Activity.fromJson(Map<String, dynamic> json) {

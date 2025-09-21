@@ -149,7 +149,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
               children: [
                 GestureDetector(
                   onTap: _showInfo,
-                  child: UserAvatar(url: widget.otherSide.avatar!, size: Size.square(32))
+                  child: UserAvatar(url: widget.otherSide.avatar, size: Size.square(32))
                 ),
                 SizedBox(width: 8),
                 Text(widget.otherSide.name!),
@@ -253,7 +253,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           UserAvatar(
-            url: widget.otherSide.avatar!,
+            url: widget.otherSide.avatar,
             size: const Size(150, 200),
             borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
           ),
@@ -289,7 +289,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
                 size: ColoredButtonSize.large,
                 loadingWhenAsyncAction: true,
                 onTap: _startUpLine,
-                text: S.of(context).haveSonaSayHi,
+                text: S.of(context).haveAstroPairSayHi,
                 borderColor: Colors.black
               ),
             ),

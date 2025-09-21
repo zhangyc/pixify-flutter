@@ -20,24 +20,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh_CN';
 
-  static String m0(storeName) =>
-      "点击“加入”后你会被收取费用，您的订阅将按对应套餐价格自动续订，您可以通过${storeName}取消，继续代表您同意我们的";
+  static String m0(something) => "\"我对${something}感兴趣~\"";
 
-  static String m1(something) => "\"我对${something}感兴趣~\"";
+  static String m1(something) => "我对「${something}」非常感兴趣！";
 
-  static String m2(something) => "我对「${something}」非常感兴趣！";
+  static String m2(lang) => "只需输入${lang}";
 
-  static String m3(lang) => "只需输入${lang}";
-
-  static String m4(gender) =>
+  static String m3(gender) =>
       "你喜欢${Intl.gender(gender, female: '她', male: '他', other: '他们')}的哪个想法？";
 
-  static String m5(storeName) =>
+  static String m4(storeName) =>
       "点击“继续”后你会被收取费用，您的订阅将按对应套餐价格自动续订，您可以通过${storeName}取消，继续代表您同意我们的";
 
-  static String m6(country) => "跳过,就${country}";
+  static String m5(count) => "解锁查看${count}个高匹配用户 ✨";
 
-  static String m7(country) => "有计划去${country}吗";
+  static String m6(count, destinyCount) =>
+      "解锁${count}个用户，包含${destinyCount}个命定匹配 ⭐";
+
+  static String m7(country) => "跳过,就${country}";
+
+  static String m8(country) => "有计划去${country}吗";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -45,17 +47,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1年"),
     "about": MessageLookupByLibrary.simpleMessage("关于"),
     "account": MessageLookupByLibrary.simpleMessage("账户"),
-    "addTwoSoloPhotosMessage": MessageLookupByLibrary.simpleMessage("添加两张单人照片"),
     "age": MessageLookupByLibrary.simpleMessage("年龄"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
-      "AI创造有趣的合影!",
+      "AI正在创建有趣的群组照片",
     ),
-    "aiDressUpLabel": MessageLookupByLibrary.simpleMessage("AI换装"),
     "allPeople": MessageLookupByLibrary.simpleMessage("所有人"),
-    "almost": MessageLookupByLibrary.simpleMessage("差不多到了，差不多！"),
-    "betterQualityMessage": MessageLookupByLibrary.simpleMessage(
-      "人像清晰可以让生成效果更好哟",
+    "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
+      "⭕ AstroPair传译已关闭",
     ),
+    "astroPairRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
+      "AstroPair推荐：冷却中\n怎么办：等等\n建议：看看小破站？",
+    ),
+    "astroPairWillGenerateABioBasedOnInterests":
+        MessageLookupByLibrary.simpleMessage("AstroPair会根据你的兴趣生成一份简介"),
+    "astroReport": MessageLookupByLibrary.simpleMessage("合盘"),
     "bio": MessageLookupByLibrary.simpleMessage("简介"),
     "block": MessageLookupByLibrary.simpleMessage("屏蔽"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -77,11 +82,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonEdit": MessageLookupByLibrary.simpleMessage("编辑"),
     "buttonEditProfile": MessageLookupByLibrary.simpleMessage("编辑资料"),
     "buttonGenerate": MessageLookupByLibrary.simpleMessage("生成"),
-    "buttonGo": MessageLookupByLibrary.simpleMessage("前往"),
+    "buttonGo": MessageLookupByLibrary.simpleMessage("开始"),
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("明白了"),
     "buttonHitAIInterpretationMaximumLimit":
-        MessageLookupByLibrary.simpleMessage("😪SONA累了，👇点击给她加油！"),
-    "buttonJoinNow": MessageLookupByLibrary.simpleMessage("立即加入！"),
+        MessageLookupByLibrary.simpleMessage("😪AstroPair累了，👇点击给她加油！"),
+    "buttonJoinNow": MessageLookupByLibrary.simpleMessage("立即加入"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("保留账户"),
     "buttonManage": MessageLookupByLibrary.simpleMessage("管理"),
     "buttonNext": MessageLookupByLibrary.simpleMessage("下一步"),
@@ -93,100 +98,92 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonSave": MessageLookupByLibrary.simpleMessage("保存"),
     "buttonSignOut": MessageLookupByLibrary.simpleMessage("退出"),
     "buttonSubmit": MessageLookupByLibrary.simpleMessage("提交"),
-    "buttonUnlockVipPerks": MessageLookupByLibrary.simpleMessage("解锁VIP特权！"),
+    "buttonUnlockVipPerks": MessageLookupByLibrary.simpleMessage("解锁VIP特权"),
     "buttonUnmatch": MessageLookupByLibrary.simpleMessage("取消匹配"),
     "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("取消订阅"),
-    "cantMergePhotos": MessageLookupByLibrary.simpleMessage(
-      "对方没有真实照片，暂时不能进行合影哦",
-    ),
-    "catchMore": MessageLookupByLibrary.simpleMessage("抓住更多！"),
+    "catchMore": MessageLookupByLibrary.simpleMessage("抓住更多"),
+    "charmTips": MessageLookupByLibrary.simpleMessage("提升魅力小贴士"),
     "chat": MessageLookupByLibrary.simpleMessage("聊天"),
-    "checkItOut": MessageLookupByLibrary.simpleMessage("去看看！"),
+    "chatWithMatches": MessageLookupByLibrary.simpleMessage("主动与匹配的用户聊天"),
+    "checkItOut": MessageLookupByLibrary.simpleMessage("来看看"),
     "checkOutTheirProfiles": MessageLookupByLibrary.simpleMessage("看看都是谁"),
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("选择"),
-    "clubFeeJoking": MessageLookupByLibrary.simpleMessage("只需一杯饮料的价格"),
-    "clubFeePrefix": MessageLookupByLibrary.simpleMessage("加入SONA Club，超划算"),
-    "clubPerkBadge": MessageLookupByLibrary.simpleMessage("独家俱乐部徽章"),
-    "clubPerkDuoSnap": MessageLookupByLibrary.simpleMessage("每周3次Duo Snap"),
-    "clubPerkLike": MessageLookupByLibrary.simpleMessage("每天100个赞（免费的2倍）"),
-    "clubPerkSonaMessage": MessageLookupByLibrary.simpleMessage(
-      "每天100条SONA消息（免费的3倍）",
-    ),
-    "clubPerkSonaTip": MessageLookupByLibrary.simpleMessage("每天5次SONA建议"),
+    "clubFeeJoking": MessageLookupByLibrary.simpleMessage("开玩笑！免费的"),
+    "clubFeePrefix": MessageLookupByLibrary.simpleMessage("俱乐部费用：\$99/月"),
     "clubPromotionContent": MessageLookupByLibrary.simpleMessage(
-      "抓住这个交易 - 加入俱乐部并大放异彩！",
+      "加入我们的专属俱乐部享受精彩福利",
     ),
-    "clubPromotionTitle": MessageLookupByLibrary.simpleMessage("限时优惠"),
-    "clubTerms": m0,
+    "clubPromotionTitle": MessageLookupByLibrary.simpleMessage("加入俱乐部"),
     "commonLanguage": MessageLookupByLibrary.simpleMessage("主要语言"),
     "commonLanguageTitle": MessageLookupByLibrary.simpleMessage("常用语言"),
-    "continueWithApple": MessageLookupByLibrary.simpleMessage("使用Apple继续"),
-    "continueWithEmail": MessageLookupByLibrary.simpleMessage("使用电子邮件继续"),
-    "continueWithGoogle": MessageLookupByLibrary.simpleMessage("使用Google继续"),
-    "continueWithPhone": MessageLookupByLibrary.simpleMessage("使用电话继续"),
+    "completeAstroInfo": MessageLookupByLibrary.simpleMessage("完善详细的星盘信息"),
+    "completeAstroProfile": MessageLookupByLibrary.simpleMessage("完善你的星盘资料"),
+    "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
+      "完善星盘资料",
+    ),
+    "continueWithPhone": MessageLookupByLibrary.simpleMessage("使用手机继续"),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage("描述（可选）"),
+    "destinyMatch": MessageLookupByLibrary.simpleMessage("命定"),
     "disclaimer": MessageLookupByLibrary.simpleMessage("免责声明"),
     "displayMyCity": MessageLookupByLibrary.simpleMessage("显示我的城市"),
     "dm": MessageLookupByLibrary.simpleMessage("超级私信"),
-    "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
-    "duoSnapIsReady": MessageLookupByLibrary.simpleMessage("合影完成！"),
-    "duosnapAnyway": MessageLookupByLibrary.simpleMessage("依然Duo snap"),
-    "exampleLabel": MessageLookupByLibrary.simpleMessage("示例"),
+    "duoSnap": MessageLookupByLibrary.simpleMessage("双人快照"),
+    "duosnapAnyway": MessageLookupByLibrary.simpleMessage("无论如何都要双人快照"),
+    "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
+      "未发送。AstroPair不会翻译违禁词。",
+    ),
+    "exceptionAstroPairOverloadedTips": MessageLookupByLibrary.simpleMessage(
+      "AstroPair过载，请稍后再试。",
+    ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "发送失败，请稍后再试。",
-    ),
-    "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
-      "未发送。SONA不会翻译违禁词。",
-    ),
-    "exceptionSonaOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "SONA过载，请稍后再试。",
     ),
     "feedback": MessageLookupByLibrary.simpleMessage("反馈"),
     "filter": MessageLookupByLibrary.simpleMessage("筛选"),
     "findingFolksWhoShareYourInterests": MessageLookupByLibrary.simpleMessage(
       "找到与你有共同兴趣的人",
     ),
-    "firstLabel": MessageLookupByLibrary.simpleMessage("第一张"),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "SONA正在寻找一些潜在的朋友...",
+      "AstroPair正在寻找一些潜在的朋友...",
     ),
-    "freeLabel": MessageLookupByLibrary.simpleMessage("免费"),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "嘿，我觉得你很棒。我们聊聊怎么样？",
     ),
-    "fromLibrary": MessageLookupByLibrary.simpleMessage("相册"),
-    "fromProfile": MessageLookupByLibrary.simpleMessage("个人资料"),
-    "fromTakeAPhoto": MessageLookupByLibrary.simpleMessage("拍照"),
-    "generateButtonLabel": MessageLookupByLibrary.simpleMessage("生成"),
-    "generating": MessageLookupByLibrary.simpleMessage("生成中"),
-    "getSonaPlus": MessageLookupByLibrary.simpleMessage("获取SONA Plus"),
+    "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
+      "获取AstroPair Plus",
+    ),
     "gotIt": MessageLookupByLibrary.simpleMessage("明白了"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "嘿，猜猜谁会先打破沉默？",
     ),
-    "haveSonaSayHi": MessageLookupByLibrary.simpleMessage("让SONA打招呼"),
-    "hereSonaCookedUpForU": MessageLookupByLibrary.simpleMessage("这是SONA为你特制的"),
+    "haveAstroPairSayHi": MessageLookupByLibrary.simpleMessage("让AstroPair打招呼"),
+    "hereAstroPairCookedUpForU": MessageLookupByLibrary.simpleMessage(
+      "这是AstroPair为你特制的",
+    ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage("你觉得AI传译怎么样?"),
     "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("我喜欢你的活力！"),
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("我喜欢你的风格！"),
-    "imInterestedSomething": m1,
-    "imVeryInterestedInSomething": m2,
-    "inLine": MessageLookupByLibrary.simpleMessage("您在排队，请稍候"),
+    "imInterestedSomething": m0,
+    "imVeryInterestedInSomething": m1,
     "interests": MessageLookupByLibrary.simpleMessage("兴趣"),
     "interpretationOff": MessageLookupByLibrary.simpleMessage("AI传译：关"),
     "interpretationOn": MessageLookupByLibrary.simpleMessage("AI传译：开"),
-    "issues": MessageLookupByLibrary.simpleMessage("出现问题，请重试"),
+    "issues": MessageLookupByLibrary.simpleMessage("问题"),
     "justNow": MessageLookupByLibrary.simpleMessage("刚刚"),
     "justSendALike": MessageLookupByLibrary.simpleMessage("就点个赞"),
-    "justTypeInYourLanguage": m3,
-    "letSONASayHiForYou": MessageLookupByLibrary.simpleMessage("让SONA帮你打招呼"),
+    "justTypeInYourLanguage": m2,
+    "letAstroPairSayHiForYou": MessageLookupByLibrary.simpleMessage(
+      "让AstroPair帮你打招呼",
+    ),
+    "likeBack": MessageLookupByLibrary.simpleMessage("回赞"),
+    "likedBack": MessageLookupByLibrary.simpleMessage("已回赞"),
     "likedPageMonetizeButton": MessageLookupByLibrary.simpleMessage("看看都是谁"),
     "likedPageNoData": MessageLookupByLibrary.simpleMessage(
       "状态：暂时没有赞哦\n\n该做什么：采取主动\n\n建议：\n多传照片多加分\n写下简介显真诚\n选择兴趣有\n同道中人",
     ),
     "likedYou": MessageLookupByLibrary.simpleMessage("喜欢了你"),
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
-      "很抱歉，在您使用此服务之前，必须允许访问位置信息",
+      "我们需要您的位置来显示附近的人",
     ),
     "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
       "我们需要您的位置信息来改善您的社交体验",
@@ -194,22 +191,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationPermissionRequestTitle": MessageLookupByLibrary.simpleMessage(
       "位置授权",
     ),
-    "matchPageSelectIdeas": m4,
+    "matchPageSelectIdeas": m3,
     "me": MessageLookupByLibrary.simpleMessage("我的"),
-    "membersPerks": MessageLookupByLibrary.simpleMessage("会员特权"),
+    "membersPerks": MessageLookupByLibrary.simpleMessage("会员享受专属特权"),
     "month": MessageLookupByLibrary.simpleMessage("月"),
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage("照片越多，推荐值越高"),
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage("照片多多魅力增！"),
+    "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
+      "跳转到星盘资料完善页面",
+    ),
     "nearby": MessageLookupByLibrary.simpleMessage("附近"),
-    "newGameplay": MessageLookupByLibrary.simpleMessage("新游戏玩法！"),
+    "newGameplay": MessageLookupByLibrary.simpleMessage("新玩法"),
     "newMatch": MessageLookupByLibrary.simpleMessage("新匹配！"),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage("下次付费日"),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
       "状态：暂无消息\n\n该做什么：前往匹配\n\n建议：制作棒棒的个人资料",
     ),
+    "noOneFoundYourCharm": MessageLookupByLibrary.simpleMessage("还没有人发现你的魅力"),
     "noThanks": MessageLookupByLibrary.simpleMessage("不了，谢谢"),
     "notifications": MessageLookupByLibrary.simpleMessage("通知"),
-    "onboarding0": MessageLookupByLibrary.simpleMessage("SONA是世界公民的家园"),
+    "onboarding0": MessageLookupByLibrary.simpleMessage("AstroPair是世界公民的家园"),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "无论在家或是在旅途，都可以结识世界各地的朋友。并且...",
     ),
@@ -219,109 +220,174 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboarding3": MessageLookupByLibrary.simpleMessage(
       "闲话少说，开始吧！\n传奇的浪漫邂逅在等着你",
     ),
-    "onboardingB": MessageLookupByLibrary.simpleMessage("减轻社交压力\n与全球有趣的人们一起放松"),
     "onboardingWish": MessageLookupByLibrary.simpleMessage("请完成心愿单\n获得更理想的配对"),
-    "onlyOneAtatime": MessageLookupByLibrary.simpleMessage("请等待，一次只能一个"),
+    "oneLineToWin": MessageLookupByLibrary.simpleMessage("一句话打动对方"),
     "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage("哎呀，现在没有数据"),
     "peopleFromYourWishlistGetMoreRecommendations":
         MessageLookupByLibrary.simpleMessage("更多推荐来自你心愿单的人"),
     "permissionRequiredContent": MessageLookupByLibrary.simpleMessage(
-      "Sona需要您的位置信息才能正常工作。您需要在手机设置中打开位置访问权限",
+      "我们需要这个权限来为您提供最佳体验",
     ),
     "permissionRequiredTitle": MessageLookupByLibrary.simpleMessage("需要权限"),
+    "personaCompleteProfile": MessageLookupByLibrary.simpleMessage("完善基础资料"),
+    "personaCompleteProfileDesc": MessageLookupByLibrary.simpleMessage(
+      "完善姓名、生日、性别，解锁更多推荐",
+    ),
+    "personaEnableNotifications": MessageLookupByLibrary.simpleMessage(
+      "开启消息通知",
+    ),
+    "personaEnableNotificationsDesc": MessageLookupByLibrary.simpleMessage(
+      "不错过匹配和消息，及时互动",
+    ),
+    "personaForYou": MessageLookupByLibrary.simpleMessage("为你推荐"),
+    "personaShowCity": MessageLookupByLibrary.simpleMessage("展示所在城市"),
+    "personaShowCityDesc": MessageLookupByLibrary.simpleMessage("更容易被同城用户发现"),
+    "personaUploadPhotos": MessageLookupByLibrary.simpleMessage("上传你的照片"),
+    "personaUploadPhotosDesc": MessageLookupByLibrary.simpleMessage(
+      "至少添加 2 张清晰照片，提升曝光",
+    ),
     "photoFromCamera": MessageLookupByLibrary.simpleMessage("拍照"),
     "photoFromGallery": MessageLookupByLibrary.simpleMessage("从图库选择"),
-    "photoMightNotBeReal": MessageLookupByLibrary.simpleMessage(
-      "双人快照可能会很奇怪，因为对方的照片可能不是真的",
-    ),
+    "photoMightNotBeReal": MessageLookupByLibrary.simpleMessage("这张照片可能不是真实的"),
     "photos": MessageLookupByLibrary.simpleMessage("照片"),
     "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
         MessageLookupByLibrary.simpleMessage("请检查网络或点击刷新重试"),
-    "plusDescTitle": MessageLookupByLibrary.simpleMessage("成为顶级Plus会员"),
+    "plusBenefitActivityReminder": MessageLookupByLibrary.simpleMessage(
+      "对方活跃/回流提醒",
+    ),
+    "plusBenefitActivitySort": MessageLookupByLibrary.simpleMessage(
+      "最近活跃/回复率排序",
+    ),
+    "plusBenefitAdvancedFilter": MessageLookupByLibrary.simpleMessage(
+      "高级筛选：国家/语言/时区/城市",
+    ),
+    "plusBenefitAntiHarassment": MessageLookupByLibrary.simpleMessage(
+      "反骚扰优先拦截与权重保护",
+    ),
+    "plusBenefitConflictAdvice": MessageLookupByLibrary.simpleMessage(
+      "冲突与建议：矛盾点提示+相处建议",
+    ),
+    "plusBenefitDestinyPriority": MessageLookupByLibrary.simpleMessage(
+      "命定优先曝光：在推荐、喜欢我的排序靠前",
+    ),
+    "plusBenefitDestinyPush": MessageLookupByLibrary.simpleMessage("新命定到达推送"),
+    "plusBenefitDimensionBreakdown": MessageLookupByLibrary.simpleMessage(
+      "维度拆解：性格/沟通/亲密/边界4大维度",
+    ),
+    "plusBenefitHighMatchDisplay": MessageLookupByLibrary.simpleMessage(
+      "高匹配标识与百分比展示",
+    ),
+    "plusBenefitHistoryTranslation": MessageLookupByLibrary.simpleMessage(
+      "历史消息一键翻译",
+    ),
+    "plusBenefitInterestFilter": MessageLookupByLibrary.simpleMessage(
+      "兴趣与出行计划筛选",
+    ),
+    "plusBenefitLikeReminder": MessageLookupByLibrary.simpleMessage(
+      "被回赞/已读未回/回复窗口提醒",
+    ),
+    "plusBenefitMatchScore": MessageLookupByLibrary.simpleMessage(
+      "速配分数：整体匹配分可视化",
+    ),
+    "plusBenefitMessageTemplates": MessageLookupByLibrary.simpleMessage(
+      "快捷消息模板（赞美/邀约/换平台）",
+    ),
+    "plusBenefitOCRTranslation": MessageLookupByLibrary.simpleMessage(
+      "图片即时翻译/文本识别（OCR+翻译）",
+    ),
+    "plusBenefitRealTimeTranslation": MessageLookupByLibrary.simpleMessage(
+      "实时翻译与润色：多语言自动纠错与本地化语气",
+    ),
+    "plusBenefitSmartOpener": MessageLookupByLibrary.simpleMessage(
+      "智能开场白：每人3条高转化开场建议",
+    ),
+    "plusBenefitStarGreeting": MessageLookupByLibrary.simpleMessage(
+      "星语问候包：每日10次一键问候",
+    ),
+    "plusBenefitSupportChannel": MessageLookupByLibrary.simpleMessage(
+      "订阅问题处理加速通道",
+    ),
+    "plusBenefitTopicPool": MessageLookupByLibrary.simpleMessage(
+      "续聊话题池：基于对方画像动态生成",
+    ),
+    "plusBenefitUnlockLikedMe": MessageLookupByLibrary.simpleMessage(
+      "解锁喜欢我的清晰头像与标签",
+    ),
+    "plusDescTitle": MessageLookupByLibrary.simpleMessage("Plus描述"),
     "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
       "每天1000条AI传译",
+    ),
+    "plusFuncAstroPairTips": MessageLookupByLibrary.simpleMessage(
+      "AstroPair Tips - 你的聊天参谋",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("每周5条DM"),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
       "筛选配对的国家",
-    ),
-    "plusFuncSonaTips": MessageLookupByLibrary.simpleMessage(
-      "SONA Tips - 你的聊天参谋",
     ),
     "plusFuncUnlimitedLikes": MessageLookupByLibrary.simpleMessage("无限点赞"),
     "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
       "解锁查看谁喜欢了你",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3个心愿"),
-    "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("每周10次Duo Snap"),
+    "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("Plus双人快照"),
     "preference": MessageLookupByLibrary.simpleMessage("偏好"),
     "privacy": MessageLookupByLibrary.simpleMessage("隐私"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("隐私政策"),
+    "profileNotShown": MessageLookupByLibrary.simpleMessage("TA还没有展示真容"),
     "pushNotifications": MessageLookupByLibrary.simpleMessage("推送通知"),
-    "recordsLabel": MessageLookupByLibrary.simpleMessage("记录"),
     "report": MessageLookupByLibrary.simpleMessage("举报"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("血腥"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("其他"),
+    "reportOptionPerAstroPairlAttack": MessageLookupByLibrary.simpleMessage(
+      "人身攻击",
+    ),
     "reportOptionPersonalAttack": MessageLookupByLibrary.simpleMessage("人身攻击"),
     "reportOptionPornography": MessageLookupByLibrary.simpleMessage("色情"),
     "reportOptionScam": MessageLookupByLibrary.simpleMessage("骗局"),
-    "requireYourRealPhoto": MessageLookupByLibrary.simpleMessage("合影需要你的真实照片"),
-    "retry": MessageLookupByLibrary.simpleMessage("重试"),
+    "requireYourRealPhoto": MessageLookupByLibrary.simpleMessage("我们需要你的真实照片"),
     "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
       "优先展示附近的老外",
     ),
-    "save": MessageLookupByLibrary.simpleMessage("保存"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("截图证据"),
-    "secondLabel": MessageLookupByLibrary.simpleMessage("第二张"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("查看资料"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("看看谁喜欢你"),
-    "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("国家或地区"),
-    "sendDm": MessageLookupByLibrary.simpleMessage("发送DM"),
-    "sendToHer": MessageLookupByLibrary.simpleMessage("发送给她"),
-    "sendToHim": MessageLookupByLibrary.simpleMessage("发送给他"),
-    "sendToThem": MessageLookupByLibrary.simpleMessage("发送给他们"),
-    "setDefault": MessageLookupByLibrary.simpleMessage("设置默认"),
-    "settings": MessageLookupByLibrary.simpleMessage("设置"),
-    "share": MessageLookupByLibrary.simpleMessage("分享"),
-    "shareForMoreTriesMessage": MessageLookupByLibrary.simpleMessage(
-      "分享以获得更多AI换装尝试！👇",
+    "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("选择国家"),
+    "sendDm": MessageLookupByLibrary.simpleMessage("发送私信"),
+    "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
+      "💫 发送星语问候解锁相册 继续",
     ),
-    "showYourPersonality": MessageLookupByLibrary.simpleMessage("大声说出你的故事！"),
+    "setDefault": MessageLookupByLibrary.simpleMessage("设置默认"),
+    "setInterestTags": MessageLookupByLibrary.simpleMessage("设置清晰的兴趣标签"),
+    "settings": MessageLookupByLibrary.simpleMessage("设置"),
+    "showYourPerAstroPairlity": MessageLookupByLibrary.simpleMessage(
+      "大声说出你的故事！",
+    ),
+    "showYourPersonality": MessageLookupByLibrary.simpleMessage("展现你的个性"),
     "signUpLastStepPageTitle": MessageLookupByLibrary.simpleMessage("即将完成"),
     "sixMonths": MessageLookupByLibrary.simpleMessage("6个月"),
-    "soloLabel": MessageLookupByLibrary.simpleMessage("单人"),
-    "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ SONA传译已关闭",
-    ),
-    "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
-      "Sona推荐：冷却中\n怎么办：等等\n建议：看看小破站？",
-    ),
-    "sonaWillGenerateABioBasedOnInterests":
-        MessageLookupByLibrary.simpleMessage("SONA会根据你的兴趣生成一份简介"),
     "speakSameLanguage": MessageLookupByLibrary.simpleMessage("🤝 同语无需译,灵犀一点通"),
     "standard": MessageLookupByLibrary.simpleMessage("标准"),
+    "startChat": MessageLookupByLibrary.simpleMessage("开聊"),
+    "startedChat": MessageLookupByLibrary.simpleMessage("开始与聊天"),
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage("每天1000条\nAI传译"),
+    "subPageSubtitleAstroPairTips": MessageLookupByLibrary.simpleMessage(
+      "AstroPair Tips - \n你的聊天参谋",
+    ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage("每周5条DM"),
     "subPageSubtitleFilterMatchingCountries":
         MessageLookupByLibrary.simpleMessage("筛选配对的\n国家"),
-    "subPageSubtitleSonaTips": MessageLookupByLibrary.simpleMessage(
-      "SONA Tips - \n你的聊天参谋",
-    ),
     "subPageSubtitleUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "无限点赞",
     ),
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
       "解锁查看\n谁喜欢了你",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage("获取SONA Plus"),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("获取AstroPair Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("条款"),
-    "subscriptionAgreementPrefix": m5,
+    "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("。"),
     "takeIt": MessageLookupByLibrary.simpleMessage("使用"),
-    "tenWeeklyDressUpRightsMessage": MessageLookupByLibrary.simpleMessage(
-      "每周10次AI换装",
-    ),
     "termsOfService": MessageLookupByLibrary.simpleMessage("服务条款"),
     "theKeyIsBalance": MessageLookupByLibrary.simpleMessage("关键是平衡"),
     "theyAreWaitingForYourReply": MessageLookupByLibrary.simpleMessage(
@@ -334,16 +400,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
       "👅你已达到本周限额",
     ),
-    "twentyWeeklyDressUpRightsMessage": MessageLookupByLibrary.simpleMessage(
-      "每周20次AI换装（女士专属权利）",
-    ),
+    "unlockHighMatchUsers": m5,
+    "unlockUsersWithDestiny": m6,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
-      "不容错过的特价优惠！",
+      "不容错过的特价",
     ),
+    "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage("上传高质量的真实照片"),
     "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("上传你的照片"),
-    "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
-      "SONA努力提供一个真实的交流环境，请上传你的本人照片",
-    ),
+    "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage("上传你最好的照片"),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("拍照"),
     "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage("从图库选择"),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -384,6 +448,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "userPhoneNumberPageTitle": MessageLookupByLibrary.simpleMessage("请输入电话号码"),
     "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage("输入验证码"),
+    "viewAstroReport": MessageLookupByLibrary.simpleMessage("查看与的星盘合盘"),
     "wannaHollaAt": MessageLookupByLibrary.simpleMessage("打个招呼吧！"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "关闭后，你的城市不会在匹配时显示",
@@ -401,8 +466,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
       "取消匹配后，你们之间的聊天内容都将被清除。",
     ),
-    "weeklyLimitReached": MessageLookupByLibrary.simpleMessage("本周次数已用完"),
-    "whatsYourEmail": MessageLookupByLibrary.simpleMessage("输入邮箱"),
+    "whatsYourEmail": MessageLookupByLibrary.simpleMessage("你的邮箱是什么？"),
     "whoLIkesYou": MessageLookupByLibrary.simpleMessage("谁喜欢了你"),
     "whoLikesU": MessageLookupByLibrary.simpleMessage("谁喜欢了你"),
     "wishActivityAddTitle": MessageLookupByLibrary.simpleMessage("添加你的想法"),
@@ -412,7 +476,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "有啥特想做的事吗？",
     ),
-    "wishCityPickerSkipButton": m6,
+    "wishCityPickerSkipButton": m7,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "如果你去那里，你想去哪些城市？",
     ),
@@ -424,13 +488,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishDateOptionNotSure": MessageLookupByLibrary.simpleMessage("还不确定哦"),
     "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("近期吧，大概"),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("一年内"),
-    "wishDatePickerSubtitle": m7,
+    "wishDatePickerSubtitle": m8,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("何时"),
     "wishList": MessageLookupByLibrary.simpleMessage("心愿单"),
     "wishes": MessageLookupByLibrary.simpleMessage("心愿"),
+    "writeInterestingBio": MessageLookupByLibrary.simpleMessage("写一个有趣的个人简介"),
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage("你现在是俱乐部会员了"),
     "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage("你可以随时编辑"),
     "youSeemCool": MessageLookupByLibrary.simpleMessage("你看起来很酷。"),
-    "yourPictureIsReady": MessageLookupByLibrary.simpleMessage("图像已生成!"),
   };
 }

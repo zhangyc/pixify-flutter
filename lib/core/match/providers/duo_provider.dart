@@ -1,14 +1,18 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/util/http_util.dart';
-part 'duo_provider.g.dart';
-@riverpod
-Future<List<SdModel>> getSDModel(GetSDModelRef ref) async {
-  List<SdModel> sdmodels=[];
-  HttpResult result= await post('/merge-photo/find-model');
-  List list=result.data;
-  sdmodels=list.map((e) => SdModel.fromJson(e)).toList();
+
+final getSDModelProvider = FutureProvider<List<SdModel>>((ref) async {
+  return getSDModel();
+});
+
+Future<List<SdModel>> getSDModel() async {
+  List<SdModel> sdmodels = [];
+  HttpResult result = await post('/merge-photo/find-model');
+  List list = result.data;
+  sdmodels = list.map((e) => SdModel.fromJson(e)).toList();
   return sdmodels;
 }
+
 class SdModel {
   String? name;
   int? id;

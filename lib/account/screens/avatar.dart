@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/gender.dart';
@@ -13,6 +12,7 @@ import 'package:sona/utils/global/global.dart';
 
 import '../../generated/l10n.dart';
 import '../../utils/dialog/crop_image.dart';
+import '../../utils/toast/flutter_toast.dart';
 import '../event/account_event.dart';
 import 'location.dart';
 
@@ -41,7 +41,6 @@ class _AvatarScreenState extends State<AvatarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       extendBody: false,
       extendBodyBehindAppBar: true,
       body: SafeArea(

@@ -45,7 +45,7 @@ class ImMessage {
 
   void markAsRead() {
     FirebaseFirestore.instance
-        .collection('${env.firestorePrefix}_v2_users')
+        .collection('${env.firestorePrefix}_users')
         .doc(profile!.id.toString())
         .collection('rooms')
         .doc(chatId.toString())

@@ -6,9 +6,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/screens/auth_landing.dart';
 import 'package:sona/account/providers/profile.dart';
+import 'package:sona/common/services/global_notification_service.dart';
+import 'package:sona/common/widgets/overlay/global_notification_overlay.dart';
 import 'package:sona/core/providers/token.dart';
-import 'package:sona/onboarding/screen/onboarding.dart';
-import 'package:sona/onboarding/screen/onboarding_b.dart';
 import 'package:sona/setting/screens/setting.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sona/theme/theme.dart';
@@ -27,37 +27,27 @@ class SonaApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final token = ref.read(tokenProvider);
+    GlobalNotifications.init(ref);
     MyProfile? profile;
     if (token != null) {
       profile = ref.read(myProfileProvider);
     }
     final navigatorKey = global.navigatorKey;
     var initialRoute = profile == null || !profile.completed ? 'login' : '/';
-    // final onboarding = kvStore.getBool('onboarding') ?? false;
-    // if (profile == null && !onboarding) {
-    //   switch (Random().nextInt(3) % 3) {
-    //     case 0:
-    //       initialRoute = 'onboarding';
-    //       break;
-    //     case 1:
-    //       initialRoute = 'onboarding_b';
-    //       break;
-    //     case 2:
-    //       initialRoute = 'login';
-    //       kvStore.setBool('onboarding', true);
-    //       SonaAnalytics.log('reg_intro_v3go');
-    //       break;
-    //     default:
-    //       initialRoute = 'login';
-    //       break;
-    //   }
-    // }
     return MaterialApp(
+        builder: (context, child) {
+          return Stack(
+            children: [
+              child!,
+              GlobalNotificationOverlay(), // 浮动通知层
+            ],
+          );
+        },
         debugShowCheckedModeBanner: false,
         key: ValueKey(token),
         navigatorKey: navigatorKey,
-        builder: EasyLoading.init(),
-        theme: themeData,
+        // builder: EasyLoading.init(),
+        theme: nightTheme,
         initialRoute: initialRoute,
         navigatorObservers: [routeObserver],
         // routes: _routes,
@@ -80,8 +70,6 @@ class SonaApp extends HookConsumerWidget {
 }
 
 final _routes = <String, WidgetBuilder>{
-  'onboarding': (_) => const OnboardingScreen(),
-  'onboarding_b': (_) => const OnboardingScreenB(),
   '/': (_) => const SonaHome(),
   'login': (_) => const AuthLandingScreen(),
   'setting': (_) => const SettingScreen(),

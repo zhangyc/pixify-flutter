@@ -28,10 +28,6 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
   PageController pageController=PageController(viewportFraction: 0.8);
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(backgroundImageProvider.notifier).updateBgImage(widget.info.wishList.first.pic!);
-    });
-
     super.initState();
   }
   @override
@@ -75,9 +71,7 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
           child: PageView(
             onPageChanged: (value){
               _currentPage = value;
-
-              ref.read(backgroundImageProvider.notifier).updateBgImage(widget.info.wishList[value].pic!);
-            },
+              },
             controller: pageController,
             children: widget.info.wishList.map((wish) => Container(
               margin: EdgeInsets.symmetric(
@@ -127,8 +121,6 @@ class _WishCardWidgetState extends ConsumerState<WishCardWidget> {
                                     activityId: wish.activities[index2].id,
                                     travelWishId: wish.id
                                 );
-                                ref.read(backgroundImageProvider.notifier).updateBgImage(null);
-
                                 widget.next.call();
                               },),
                             )),

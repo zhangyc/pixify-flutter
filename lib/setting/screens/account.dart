@@ -11,8 +11,6 @@ import 'package:sona/core/travel_wish/providers/popular_country.dart';
 import 'package:sona/core/travel_wish/providers/timeframe.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/locale/locale.dart';
-import 'package:sona/utils/picker/gender.dart';
-import 'package:image/image.dart' as img;
 
 import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
@@ -21,18 +19,15 @@ class AccountSettingScreen extends StatefulHookConsumerWidget {
   const AccountSettingScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AccountSettingScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AccountSettingScreenState();
 }
 
 class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        backgroundColor: Color(0xFFF6F3F3),
         appBar: AppBar(
-          backgroundColor: Colors.white,
           leading: IconButton(
             icon: Icon(CupertinoIcons.back),
             onPressed: Navigator.of(context).pop,
@@ -43,36 +38,60 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white
-                ),
-                clipBehavior: Clip.antiAlias,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    ForwardButton(
-                      onTap: _switchLanguage,
-                      text: S.of(context).commonLanguage,
+                    // Language 分组
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? const Color(0xFF1C1C1E)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white.withOpacity(0.06)
+                              : Colors.black.withOpacity(0.06),
+                          width: 0.5,
+                        ),
+                      ),
+                      child: ForwardButton(
+                        onTap: _switchLanguage,
+                        text: S.of(context).commonLanguage,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                      ),
                     ),
-                    // ForwardButton(
-                    //   onTap: _switchGender,
-                    //   text: S.of(context).userGenderInputLabel,
-                    // ),
-                    ForwardButton(
-                      onTap: _deleteAccount,
-                      text: S.of(context).buttonDeleteAccount,
-                      color: Theme.of(context).disabledColor,
+                    const SizedBox(height: 12),
+                    // Danger Zone 分组
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? const Color(0xFF1C1C1E)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white.withOpacity(0.06)
+                              : Colors.black.withOpacity(0.06),
+                          width: 0.5,
+                        ),
+                      ),
+                      child: ForwardButton(
+                        onTap: _deleteAccount,
+                        text: S.of(context).buttonDeleteAccount,
+                        color: const Color(0xFFEA4710),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 
   Future _deleteAccount() async {
@@ -113,26 +132,20 @@ class _AccountSettingScreenState extends ConsumerState<AccountSettingScreen> {
         title: S.of(context).buttonDeleteAccount,
         content: S.of(context).warningCancelSubscription,
         confirmText: S.of(context).buttonGotIt,
-        cancelText: S.of(context).buttonKeepAccount
-    );
+        cancelText: S.of(context).buttonKeepAccount);
   }
 
   Future _switchLanguage() async {
     String? local = ref.read(myProfileProvider)!.locale;
     var value = await showLocalePicker(context: context, initialValue: local);
     if (value != null) {
-      languageNotifier.value=findMatchedSonaLocale(value);
-      await ref.read(myProfileProvider.notifier).updateFields(locale: findMatchedSonaLocale(value));
+      languageNotifier.value = findMatchedSonaLocale(value);
+      await ref
+          .read(myProfileProvider.notifier)
+          .updateFields(locale: findMatchedSonaLocale(value));
       ref.invalidate(asyncPopularTravelCountriesProvider);
       ref.invalidate(asyncTimeframeOptionsProvider);
       ref.invalidate(asyncMyTravelWishesProvider);
-    }
-  }
-
-  Future _switchGender() async {
-    var value = await showGenderPicker(context: context, initialValue: ref.read(myProfileProvider)!.gender);
-    if (value != null) {
-      await ref.read(myProfileProvider.notifier).updateFields(gender: value);
     }
   }
 }

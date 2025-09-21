@@ -3,6 +3,22 @@ class Assets {
   Assets._();
 
   static const String apngMatchBgAnim = 'assets/apng/match_bg_anim.png';
+  static const String appAppIcon = 'assets/app/app_icon.png';
+  static const String appAppIconSplash = 'assets/app/app_icon_splash.png';
+  static const String epheSeas18 = 'assets/ephe/seas_18.se1';
+  static const String epheSeasnam = 'assets/ephe/seasnam.txt';
+  static const String epheSefstars = 'assets/ephe/sefstars.txt';
+  static const String epheSeleapsec = 'assets/ephe/seleapsec.txt';
+  static const String epheSemo18 = 'assets/ephe/semo_18.se1';
+  static const String epheSeorbel = 'assets/ephe/seorbel.txt';
+  static const String epheSepl18 = 'assets/ephe/sepl_18.se1';
+  static const String homeChat = 'assets/home/chat.svg';
+  static const String homeDiscover = 'assets/home/discover.svg';
+  static const String homeFavorite = 'assets/home/Favorite.svg';
+  static const String homeFliter = 'assets/home/fliter.svg';
+  static const String homeUnFavorite = 'assets/home/unFavorite.svg';
+  static const String homeUnchat = 'assets/home/unchat.svg';
+  static const String homeUndiscover = 'assets/home/undiscover.svg';
   static const String i18nCountries = 'assets/i18n/countries.json';
   static const String iconsApple = 'assets/icons/apple.png';
   static const String iconsArrow = 'assets/icons/arrow.png';
@@ -105,6 +121,9 @@ class Assets {
   static const String mPlusRounded1cMPLUSRounded1cMedium = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Medium.ttf';
   static const String mPlusRounded1cMPLUSRounded1cRegular = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Regular.ttf';
   static const String mPlusRounded1cMPLUSRounded1cThin = 'assets/fonts/m_plus_rounded_1c/MPLUSRounded1c-Thin.ttf';
+  static const String matchCancel = 'assets/match/cancel.svg';
+  static const String matchLike = 'assets/match/like.svg';
+  static const String matchSend = 'assets/match/send.svg';
   static const String svgAiDress = 'assets/svg/ai_dress.svg';
   static const String svgArrow = 'assets/svg/arrow.svg';
   static const String svgC = 'assets/svg/c.svg';
@@ -122,6 +141,7 @@ class Assets {
   static const String svgLikeTag = 'assets/svg/like_tag.svg';
   static const String svgShare = 'assets/svg/share.svg';
   static const String svgTooltip = 'assets/svg/tooltip.svg';
+  static const String testPerson1 = 'assets/test/person1.jpg';
   static const String videosLanding = 'assets/videos/landing.mp4';
 
 }

@@ -15,21 +15,19 @@ import 'package:sona/utils/locale/locale.dart';
 import '../../common/widgets/button/colored.dart';
 import '../../generated/l10n.dart';
 
-Future<bool?> showInfo({
-  required BuildContext context,
-  String? title,
-  String content = '',
-  String buttonText = 'Sure'
-}) {
+Future<bool?> showInfo(
+    {required BuildContext context,
+    String? title,
+    String content = '',
+    String buttonText = 'Sure'}) {
   return showModalBottomSheet<bool>(
     context: context,
     backgroundColor: Colors.white,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(30),
-        topRight: Radius.circular(30),
-      )
-    ),
+        borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(30),
+      topRight: Radius.circular(30),
+    )),
     builder: (BuildContext context) {
       return SafeArea(
         top: false,
@@ -61,11 +59,9 @@ Future<bool?> showInfo({
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                          content,
+                      Text(content,
                           textAlign: TextAlign.start,
-                          style: Theme.of(context).textTheme.bodySmall
-                      ),
+                          style: Theme.of(context).textTheme.bodySmall),
                       SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -90,15 +86,14 @@ Future<bool?> showInfo({
   );
 }
 
-Future<bool?> showConfirm({
-  required BuildContext context,
-  String? title = 'Are you sure',
-  String confirmText = 'Sure',
-  String cancelText = 'No',
-  bool danger = false,
-  Duration? confirmDelay,
-  required String content
-}) {
+Future<bool?> showConfirm(
+    {required BuildContext context,
+    String? title = 'Are you sure',
+    String confirmText = 'Sure',
+    String cancelText = 'No',
+    bool danger = false,
+    Duration? confirmDelay,
+    required String content}) {
   return showDialog<bool>(
     context: context,
     barrierColor: Colors.white.withOpacity(0.6),
@@ -120,7 +115,6 @@ Future<bool?> showConfirm({
               margin: EdgeInsets.all(16),
               padding: const EdgeInsets.all(16),
               decoration: ShapeDecoration(
-                color: Colors.white,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
                   borderRadius: BorderRadius.circular(24),
@@ -141,13 +135,12 @@ Future<bool?> showConfirm({
                   Visibility(
                     visible: title != null,
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      child: Text(
-                        title ?? '',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      )
-                    ),
+                        margin: EdgeInsets.only(bottom: 20),
+                        child: Text(
+                          title ?? '',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        )),
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 30),
@@ -155,11 +148,9 @@ Future<bool?> showConfirm({
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          content,
-                          textAlign: TextAlign.start,
-                          style: Theme.of(context).textTheme.bodySmall
-                        ),
+                        Text(content,
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context).textTheme.bodySmall),
                         SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,17 +161,19 @@ Future<bool?> showConfirm({
                                   color: Colors.white,
                                   fontColor: Theme.of(context).primaryColor,
                                   text: cancelText,
-                                  onTap: () => Navigator.of(context).pop(false)),
+                                  onTap: () =>
+                                      Navigator.of(context).pop(false)),
                             ),
                             SizedBox(width: 5),
                             Expanded(
                               flex: 1,
                               child: ColoredButton(
                                   text: confirmText,
-                                  color: danger ? Color(0xFFEA4710) : Theme.of(context).primaryColor,
+                                  color: danger
+                                      ? Color(0xFFEA4710)
+                                      : Theme.of(context).primaryColor,
                                   confirmDelay: confirmDelay,
-                                  onTap: () => Navigator.of(context).pop(true)
-                              ),
+                                  onTap: () => Navigator.of(context).pop(true)),
                             )
                           ],
                         )
@@ -211,65 +204,65 @@ Future<String?> showNameTextField({
     useSafeArea: true,
     builder: (BuildContext context) {
       return Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom + 40, left: 12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: TextField(
-                onTapOutside: (cv){
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                controller: controller,
-                textAlign: TextAlign.left,
-                keyboardType: TextInputType.text,
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF515B24)
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom + 40, left: 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                alignment: Alignment.centerLeft,
+                child: TextField(
+                  onTapOutside: (cv) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  controller: controller,
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF515B24)),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                    hintText: 'Your Name',
                   ),
-                  hintText: 'Your Name',
+                  maxLength: 24,
+                  buildCounter: (BuildContext context,
+                          {required int currentLength,
+                          required bool isFocused,
+                          required int? maxLength}) =>
+                      null,
+                  autofocus: true,
                 ),
-                maxLength: 24,
-                buildCounter: (BuildContext context, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
-                autofocus: true,
               ),
-            ),
-            SizedBox(height: 20),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Container(
+              SizedBox(height: 20),
+              Align(
                 alignment: Alignment.centerRight,
-                padding: EdgeInsets.only(right: 20),
-                child: NextButton(
-                  size: ButtonSize.large,
-                  loadingWhenAsyncAction: true,
-                  onTap: () => Navigator.pop(context, controller.text.trim()),
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.only(right: 20),
+                  child: NextButton(
+                    size: ButtonSize.large,
+                    loadingWhenAsyncAction: true,
+                    onTap: () => Navigator.pop(context, controller.text.trim()),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 40)
-          ],
-        )
-      );
+              SizedBox(height: 40)
+            ],
+          ));
     },
   );
 }
 
-Future<String?> showSingleLineTextField({
-  required BuildContext context,
-  required String? title,
-  String? content,
-  String? hintText,
-  keyboardType = TextInputType.text,
-  int maxLen = 64
-}) {
+Future<String?> showSingleLineTextField(
+    {required BuildContext context,
+    required String? title,
+    String? content,
+    String? hintText,
+    keyboardType = TextInputType.text,
+    int maxLen = 64}) {
   final controller = TextEditingController();
   return showModalBottomSheet<String>(
     context: context,
@@ -290,7 +283,11 @@ Future<String?> showSingleLineTextField({
 
       return Container(
         margin: EdgeInsets.only(top: 16),
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).viewInsets.bottom + 16),
+        padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            top: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16),
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
@@ -323,18 +320,23 @@ Future<String?> showSingleLineTextField({
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (title != null) Container(
-                        margin: EdgeInsets.symmetric(vertical: 8),
-                        child: Text(title, style: Theme.of(context).textTheme.titleLarge),
-                      ),
-                      if (content != null) Container(
-                        margin: EdgeInsets.symmetric(vertical: 8),
-                        child: Text(content, style: Theme.of(context).textTheme.labelMedium),
-                      )
+                      if (title != null)
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 8),
+                          child: Text(title,
+                              style: Theme.of(context).textTheme.titleLarge),
+                        ),
+                      if (content != null)
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 8),
+                          child: Text(content,
+                              style: Theme.of(context).textTheme.labelMedium),
+                        )
                     ],
                   ),
                 ),
-                SIconButton.outlined(icon: SonaIcons.close, onTap: () => Navigator.pop(context))
+                SIconButton.outlined(
+                    icon: SonaIcons.close, onTap: () => Navigator.pop(context))
               ],
             ),
             SizedBox(height: 12),
@@ -348,22 +350,25 @@ Future<String?> showSingleLineTextField({
                     keyboardType: keyboardType,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 2),
-                        borderRadius: BorderRadius.circular(20)
-                      ),
+                          borderSide: BorderSide(width: 2),
+                          borderRadius: BorderRadius.circular(20)),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 2),
-                        borderRadius: BorderRadius.circular(20)
-                      ),
+                          borderSide: BorderSide(width: 2),
+                          borderRadius: BorderRadius.circular(20)),
                     ),
                     validator: validator,
                     onChanged: (String text) {
                       final len = utf8.encode(text).length;
                       if (len > maxLen) {
-                        controller.text = utf8.decode(utf8.encode(text).sublist(0, 30), allowMalformed: true);
+                        controller.text = utf8.decode(
+                            utf8.encode(text).sublist(0, 30),
+                            allowMalformed: true);
                       }
                     },
-                    buildCounter: (_, {required int currentLength, required bool isFocused, required int? maxLength}) {
+                    buildCounter: (_,
+                        {required int currentLength,
+                        required bool isFocused,
+                        required int? maxLength}) {
                       final currLen = utf8.encode(controller.text).length;
                       if (currLen < maxLen / 2) return Container();
                       return Text('$currLen/$maxLen');
@@ -377,15 +382,14 @@ Future<String?> showSingleLineTextField({
                 Container(
                   padding: EdgeInsets.only(top: 4),
                   child: SIconButton(
-                    icon: SonaIcons.check,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    onTap: () {
-                      final text = controller.text.trim();
-                      if (validator(text) == null) {
-                        Navigator.pop(context, text);
-                      }
-                    }
-                  ),
+                      icon: SonaIcons.check,
+                      backgroundColor: Theme.of(context).primaryColor,
+                      onTap: () {
+                        final text = controller.text.trim();
+                        if (validator(text) == null) {
+                          Navigator.pop(context, text);
+                        }
+                      }),
                 )
               ],
             ),
@@ -407,37 +411,35 @@ Future<String?> showTextFieldDialog({
   final children = <Widget>[];
   children.add(Row(
     children: [
-      if (title != null) Expanded(child: Text(title, style: Theme.of(context).textTheme.titleLarge)),
+      if (title != null)
+        Expanded(
+            child: Text(title, style: Theme.of(context).textTheme.titleLarge)),
       SIconButton(
           icon: SonaIcons.close,
           backgroundColor: Colors.transparent,
-          borderSide: BorderSide(width: 2, color: Theme.of(context).primaryColor),
-          onTap: () => Navigator.pop(context)
-      )
+          borderSide:
+              BorderSide(width: 2, color: Theme.of(context).primaryColor),
+          onTap: () => Navigator.pop(context))
     ],
   ));
   children.add(Container(
     margin: EdgeInsets.only(top: 16),
     decoration: BoxDecoration(
-      border: Border.all(color: Theme.of(context).primaryColor, width: 2),
-      borderRadius: BorderRadius.circular(20)
-    ),
+        border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+        borderRadius: BorderRadius.circular(20)),
     child: TextField(
-      onTapOutside: (cv){
+      onTapOutside: (cv) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       controller: controller,
       style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
-        hintText: hintText,
-        fillColor: Color(0xFFF1F1F1),
-        alignLabelWithHint: true,
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none
-        ),
-        focusColor: Theme.of(context).primaryColor,
-        contentPadding: EdgeInsets.all(16)
-      ),
+          hintText: hintText,
+          fillColor: Color(0xFFF1F1F1),
+          alignLabelWithHint: true,
+          border: OutlineInputBorder(borderSide: BorderSide.none),
+          focusColor: Theme.of(context).primaryColor,
+          contentPadding: EdgeInsets.all(16)),
       keyboardType: TextInputType.multiline,
       maxLines: 5,
       minLines: 5,
@@ -461,14 +463,14 @@ Future<String?> showTextFieldDialog({
     backgroundColor: Colors.white,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(30),
-        topRight: Radius.circular(30),
-      )
-    ),
+        borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(30),
+      topRight: Radius.circular(30),
+    )),
     builder: (BuildContext context) {
       return Container(
-        margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        margin:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         padding: EdgeInsets.all(16),
         decoration: ShapeDecoration(
           color: Colors.white,
@@ -485,22 +487,18 @@ Future<String?> showTextFieldDialog({
             )
           ],
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: children
-        ),
+        child: Column(mainAxisSize: MainAxisSize.min, children: children),
       );
     },
   );
 }
 
-Future<T?> showActionButtons<T>({
-  required BuildContext context,
-  T? initialValue,
-  required Map<String, T> options,
-  String? title,
-  bool dismissible = true
-}) {
+Future<T?> showActionButtons<T>(
+    {required BuildContext context,
+    T? initialValue,
+    required Map<String, T> options,
+    String? title,
+    bool dismissible = true}) {
   return showModalBottomSheet<T>(
     context: context,
     backgroundColor: Colors.transparent,
@@ -514,7 +512,10 @@ Future<T?> showActionButtons<T>({
       return Container(
         margin: EdgeInsets.only(top: 4),
         color: Colors.transparent,
-        padding: EdgeInsets.only(left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom + 8),
+        padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            bottom: MediaQuery.of(context).padding.bottom + 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -523,7 +524,8 @@ Future<T?> showActionButtons<T>({
               visible: title != null && title.isNotEmpty,
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
-                child: Text(title ?? '', style: Theme.of(context).textTheme.titleLarge),
+                child: Text(title ?? '',
+                    style: Theme.of(context).textTheme.titleLarge),
               ),
             ),
             Container(
@@ -531,7 +533,6 @@ Future<T?> showActionButtons<T>({
                 maxHeight: MediaQuery.of(context).size.height * 0.7,
               ),
               decoration: ShapeDecoration(
-                color: Colors.white,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 2,
@@ -554,30 +555,31 @@ Future<T?> showActionButtons<T>({
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) => OptionButton(
+                    fontColor: Theme.of(context).textTheme!.bodySmall!.color!,
                     onTap: () => Navigator.pop(context, options[keys[index]]),
                     color: initialValue == options[keys[index]]
-                        ? Theme.of(context).colorScheme.secondaryContainer
+                        ? Theme.of(context).primaryColor
                         : Colors.transparent,
-                    text: keys[index]
-                ),
+                    text: keys[index]),
                 itemCount: keys.length,
               ),
             ),
             SizedBox(height: 12),
-            if (dismissible) Container(
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
-                  borderRadius: BorderRadius.circular(20),
+            if (dismissible)
+              Container(
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2, color: Color(0xFF2C2C2C)),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
-              ),
-              child: OptionButton(
-                onTap: () => Navigator.pop(context, null),
-                color: Colors.transparent,
-                text: S.of(context).buttonCancel,
-              ),
-            )
+                child: OptionButton(
+                  onTap: () => Navigator.pop(context, null),
+                  color: Colors.transparent,
+                  text: S.of(context).buttonCancel,
+                ),
+              )
           ],
         ),
       );
@@ -585,14 +587,13 @@ Future<T?> showActionButtons<T>({
   );
 }
 
-Future<T?> showRadioFields<T>({
-  required BuildContext context,
-  T? initialValue,
-  required Map<String, T> options,
-  String? title,
-  String? content,
-  bool dismissible = true
-}) {
+Future<T?> showRadioFields<T>(
+    {required BuildContext context,
+    T? initialValue,
+    required Map<String, T> options,
+    String? title,
+    String? content,
+    bool dismissible = true}) {
   return showModalBottomSheet<T>(
     context: context,
     backgroundColor: Colors.transparent,
@@ -605,9 +606,12 @@ Future<T?> showRadioFields<T>({
       final keys = options.keys.toList(growable: false);
       return Container(
         margin: EdgeInsets.only(top: 4),
-        padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.of(context).padding.bottom + 12),
+        padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            top: 16,
+            bottom: MediaQuery.of(context).padding.bottom + 12),
         decoration: ShapeDecoration(
-          color: Colors.white,
           shape: RoundedRectangleBorder(
             side: BorderSide(
               width: 2,
@@ -638,38 +642,42 @@ Future<T?> showRadioFields<T>({
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (title != null) Container(
-                        margin: EdgeInsets.symmetric(vertical: 8),
-                        child: Text(title, style: Theme.of(context).textTheme.titleLarge),
-                      ),
-                      if (content != null) Container(
-                        margin: EdgeInsets.symmetric(vertical: 8),
-                        child: Text(content, style: Theme.of(context).textTheme.labelMedium),
-                      )
+                      if (title != null)
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 8),
+                          child: Text(title,
+                              style: Theme.of(context).textTheme.titleLarge),
+                        ),
+                      if (content != null)
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 8),
+                          child: Text(content,
+                              style: Theme.of(context).textTheme.labelMedium),
+                        )
                     ],
                   ),
                 ),
-                SIconButton.outlined(icon: SonaIcons.close, onTap: () => Navigator.pop(context))
+                SIconButton.outlined(
+                    icon: SonaIcons.close, onTap: () => Navigator.pop(context))
               ],
             ),
             Container(
               constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.7
-              ),
+                  maxHeight: MediaQuery.of(context).size.height * 0.7),
               child: ListView.builder(
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 itemBuilder: (BuildContext context, int index) => RadioListTile(
-                  value: options[keys[index]],
-                  groupValue: initialValue,
-                  controlAffinity: ListTileControlAffinity.trailing,
-                  onChanged: (value) => Navigator.pop(context, value),
-                  activeColor: Theme.of(context).primaryColor,
-                  selectedTileColor: Theme.of(context).primaryColor,
-                  tileColor: Theme.of(context).primaryColor,
-                  contentPadding: EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 0),
-                  title: Text(keys[index])
-                ),
+                    value: options[keys[index]],
+                    groupValue: initialValue,
+                    controlAffinity: ListTileControlAffinity.trailing,
+                    onChanged: (value) => Navigator.pop(context, value),
+                    activeColor: Theme.of(context).primaryColor,
+                    selectedTileColor: Theme.of(context).primaryColor,
+                    tileColor: Theme.of(context).primaryColor,
+                    contentPadding:
+                        EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 0),
+                    title: Text(keys[index])),
                 itemCount: keys.length,
               ),
             ),
@@ -678,65 +686,6 @@ Future<T?> showRadioFields<T>({
         ),
       );
     },
-  );
-}
-
-Future<DateTime?> showBirthdayPicker({
-  required BuildContext context,
-  required DateTime initialDate,
-  bool dismissible = true,
-}) {
-  DateTime _birthday = initialDate;
-  return showCupertinoModalPopup<DateTime>(
-    context: context,
-    barrierDismissible: dismissible,
-    builder: (BuildContext context) => Container(
-      height: 338,
-      padding: const EdgeInsets.only(top: 6.0),
-      margin: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      decoration: BoxDecoration(
-          color: CupertinoColors.systemBackground.resolveFrom(context),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          )),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(height: 10),
-          Container(
-            width: 30,
-            height: 3,
-            color: Colors.black12,
-          ),
-          SizedBox(height: 24),
-          SizedBox(
-            height: 188,
-            child: CupertinoDatePicker(
-              initialDateTime: initialDate,
-              mode: CupertinoDatePickerMode.date,
-              showDayOfWeek: true,
-              maximumDate: DateTime.now().yearsAgo(18),
-              onDateTimeChanged: (DateTime newDate) {
-                _birthday = newDate;
-              },
-              itemExtent: 40
-            ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: FilledButton(
-                child: Text('Confirm'),
-                onPressed: () {
-                  Navigator.pop(context, _birthday);
-                }),
-          )
-        ],
-      ),
-    ),
   );
 }
 
@@ -754,8 +703,7 @@ Future<String?> showLocalePicker({
       options: options,
       title: S.of(context).commonLanguageTitle,
       initialValue: initialValue,
-      dismissible: dismissible
-  );
+      dismissible: dismissible);
 }
 
 Future openExternalWebsite(BuildContext context, String url) async {

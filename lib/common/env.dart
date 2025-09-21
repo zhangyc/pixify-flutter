@@ -5,26 +5,27 @@ import 'package:sona/utils/locale/locale.dart';
 
 const _env = String.fromEnvironment('ENV', defaultValue: 'prod');
 const _apiServer = _env == 'prod'
-  ? 'https://sona.chatbeat.app/api'
-  : 'https://867b4d975c07.ngrok-free.app';
-const _firestorePrefix = _env == 'prod'
-  ? 'prod'
-  : 'test';
+    ? 'https://sona.chatbeat.app/api'
+    : 'https://5a3298c061a4.ngrok-free.app';
+const _firestorePrefix = _env == 'prod' ? 'prod' : 'test';
 
 class _Env {
-  const _Env({
-    required this.env,
-    required this.apiServer,
-    required this.firestorePrefix
-  });
+  const _Env(
+      {required this.env,
+      required this.apiServer,
+      required this.firestorePrefix});
   final String env;
   final String apiServer;
   final String firestorePrefix;
   final String staticDomain = 'https://h5.sona.ninja';
 
-  String get privacyPolicy => '$staticDomain/privacy-policy-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
-  String get termsOfService => '$staticDomain/terms-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
-  String get disclaimer => '$staticDomain/disclaimer-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
+  String get privacyPolicy =>
+      '$staticDomain/privacy-policy-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
+  String get termsOfService =>
+      '$staticDomain/terms-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
+  String get disclaimer =>
+      '$staticDomain/disclaimer-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
 }
 
-const env = _Env(env: _env, apiServer: _apiServer, firestorePrefix: _firestorePrefix);
+const env =
+    _Env(env: _env, apiServer: _apiServer, firestorePrefix: _firestorePrefix);

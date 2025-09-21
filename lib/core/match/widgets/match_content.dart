@@ -202,7 +202,7 @@ class _MatchedContentState extends State<MatchedContent> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(Assets.iconsLogo,width: 20,height: 20,),
-                          Text('${S.current.letSONASayHiForYou}',style: TextStyle(
+                          Text('${S.current.letAstroPairSayHiForYou}',style: TextStyle(
                               color: Color(0xff2c2c2c),
                               fontSize: 16,
                               fontWeight: FontWeight.w800

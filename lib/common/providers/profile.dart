@@ -33,7 +33,7 @@ final asyncOthersProfileProvider = AsyncNotifierProvider.autoDispose
 class AsyncAdditionalUserInfoNotifier extends FamilyAsyncNotifier<UserInfo, int> {
   FutureOr<UserInfo> _fetchProfile() {
     return FirebaseFirestore.instance
-      .collection('${env.firestorePrefix}_v2_users')
+      .collection('${env.firestorePrefix}_users')
       .doc(arg.toString())
       .get()
       .then((snapshot) => UserInfo.fromFirestore(snapshot.data()!))

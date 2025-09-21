@@ -92,7 +92,7 @@ class Editbio extends StatelessWidget {
                         SizedBox(
                           height: 16,
                         ),
-                        Text(S.current.hereSonaCookedUpForU,style: TextStyle(
+                        Text(S.current.hereAstroPairCookedUpForU,style: TextStyle(
                             color: Color(0xff2c2c2c),
                             fontSize: 14,
                             fontWeight: FontWeight.w900

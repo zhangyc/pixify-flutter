@@ -28,10 +28,9 @@ class S {
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name =
-        (locale.countryCode?.isEmpty ?? false)
-            ? locale.languageCode
-            : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -130,10 +129,10 @@ class S {
     );
   }
 
-  /// `Country or Region`
+  /// `Select Country`
   String get selectCountryPageTitle {
     return Intl.message(
-      'Country or Region',
+      'Select Country',
       name: 'selectCountryPageTitle',
       desc: '',
       args: [],
@@ -500,10 +499,10 @@ class S {
     );
   }
 
-  /// `SONA is finding some potential friend...`
+  /// `AstroPair is finding some potential friend...`
   String get firstLandingLoadingTitle {
     return Intl.message(
-      'SONA is finding some potential friend...',
+      'AstroPair is finding some potential friend...',
       name: 'firstLandingLoadingTitle',
       desc: '',
       args: [],
@@ -565,11 +564,11 @@ class S {
     );
   }
 
-  /// `Let SONA say hi for you`
-  String get letSONASayHiForYou {
+  /// `Let AstroPair say hi for you`
+  String get letAstroPairSayHiForYou {
     return Intl.message(
-      'Let SONA say hi for you',
-      name: 'letSONASayHiForYou',
+      'Let AstroPair say hi for you',
+      name: 'letAstroPairSayHiForYou',
       desc: '',
       args: [],
     );
@@ -630,11 +629,11 @@ class S {
     return Intl.message('Age', name: 'age', desc: '', args: []);
   }
 
-  /// `Sona Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?`
-  String get sonaRecommendationCooldown {
+  /// `AstroPair Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?`
+  String get astroPairRecommendationCooldown {
     return Intl.message(
-      'Sona Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?',
-      name: 'sonaRecommendationCooldown',
+      'AstroPair Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?',
+      name: 'astroPairRecommendationCooldown',
       desc: '',
       args: [],
     );
@@ -700,11 +699,11 @@ class S {
     return Intl.message('Scam', name: 'reportOptionScam', desc: '', args: []);
   }
 
-  /// `Personal Attack`
-  String get reportOptionPersonalAttack {
+  /// `PerAstroPairl Attack`
+  String get reportOptionPerAstroPairlAttack {
     return Intl.message(
-      'Personal Attack',
-      name: 'reportOptionPersonalAttack',
+      'PerAstroPairl Attack',
+      name: 'reportOptionPerAstroPairlAttack',
       desc: '',
       args: [],
     );
@@ -845,11 +844,11 @@ class S {
     );
   }
 
-  /// `Have SONA Say Hi`
-  String get haveSonaSayHi {
+  /// `Have AstroPair Say Hi`
+  String get haveAstroPairSayHi {
     return Intl.message(
-      'Have SONA Say Hi',
-      name: 'haveSonaSayHi',
+      'Have AstroPair Say Hi',
+      name: 'haveAstroPairSayHi',
       desc: '',
       args: [],
     );
@@ -935,10 +934,10 @@ class S {
     return Intl.message('Unmatch', name: 'buttonUnmatch', desc: '', args: []);
   }
 
-  /// `😪SONA is tired, 👇Tap to refuel her!`
+  /// `😪AstroPair is tired, 👇Tap to refuel her!`
   String get buttonHitAIInterpretationMaximumLimit {
     return Intl.message(
-      '😪SONA is tired, 👇Tap to refuel her!',
+      '😪AstroPair is tired, 👇Tap to refuel her!',
       name: 'buttonHitAIInterpretationMaximumLimit',
       desc: '',
       args: [],
@@ -975,11 +974,11 @@ class S {
     );
   }
 
-  /// `⭕ SONA interpretation is turned off`
-  String get sonaInterpretationOff {
+  /// `⭕ AstroPair interpretation is turned off`
+  String get astroPairInterpretationOff {
     return Intl.message(
-      '⭕ SONA interpretation is turned off',
-      name: 'sonaInterpretationOff',
+      '⭕ AstroPair interpretation is turned off',
+      name: 'astroPairInterpretationOff',
       desc: '',
       args: [],
     );
@@ -1015,11 +1014,11 @@ class S {
     );
   }
 
-  /// `Unsent. SONA will not translate prohibited words`
-  String get exceptionSonaContentFilterTips {
+  /// `Unsent. AstroPair will not translate prohibited words`
+  String get exceptionAstroPairContentFilterTips {
     return Intl.message(
-      'Unsent. SONA will not translate prohibited words',
-      name: 'exceptionSonaContentFilterTips',
+      'Unsent. AstroPair will not translate prohibited words',
+      name: 'exceptionAstroPairContentFilterTips',
       desc: '',
       args: [],
     );
@@ -1035,11 +1034,11 @@ class S {
     );
   }
 
-  /// `SONA is overloaded, please try again later.`
-  String get exceptionSonaOverloadedTips {
+  /// `AstroPair is overloaded, please try again later.`
+  String get exceptionAstroPairOverloadedTips {
     return Intl.message(
-      'SONA is overloaded, please try again later.',
-      name: 'exceptionSonaOverloadedTips',
+      'AstroPair is overloaded, please try again later.',
+      name: 'exceptionAstroPairOverloadedTips',
       desc: '',
       args: [],
     );
@@ -1090,11 +1089,11 @@ class S {
     );
   }
 
-  /// `Get SONA Plus`
-  String get getSonaPlus {
+  /// `Get AstroPair Plus`
+  String get getAstroPairPlus {
     return Intl.message(
-      'Get SONA Plus',
-      name: 'getSonaPlus',
+      'Get AstroPair Plus',
+      name: 'getAstroPairPlus',
       desc: '',
       args: [],
     );
@@ -1140,11 +1139,11 @@ class S {
     return Intl.message('Edit', name: 'buttonEdit', desc: '', args: []);
   }
 
-  /// `Show your personality`
-  String get showYourPersonality {
+  /// `Show your perAstroPairlity`
+  String get showYourPerAstroPairlity {
     return Intl.message(
-      'Show your personality',
-      name: 'showYourPersonality',
+      'Show your perAstroPairlity',
+      name: 'showYourPerAstroPairlity',
       desc: '',
       args: [],
     );
@@ -1165,10 +1164,10 @@ class S {
     return Intl.message('Save', name: 'buttonSave', desc: '', args: []);
   }
 
-  /// `Get SONA Plus`
+  /// `Get AstroPair Plus`
   String get subPageTitle {
     return Intl.message(
-      'Get SONA Plus',
+      'Get AstroPair Plus',
       name: 'subPageTitle',
       desc: '',
       args: [],
@@ -1230,11 +1229,11 @@ class S {
     );
   }
 
-  /// `SONA Tips - Your chat advisor`
-  String get plusFuncSonaTips {
+  /// `AstroPair Tips - Your chat advisor`
+  String get plusFuncAstroPairTips {
     return Intl.message(
-      'SONA Tips - Your chat advisor',
-      name: 'plusFuncSonaTips',
+      'AstroPair Tips - Your chat advisor',
+      name: 'plusFuncAstroPairTips',
       desc: '',
       args: [],
     );
@@ -1335,11 +1334,11 @@ class S {
     );
   }
 
-  /// `SONA Tips - \nYour chat advisor`
-  String get subPageSubtitleSonaTips {
+  /// `AstroPair Tips - \nYour chat advisor`
+  String get subPageSubtitleAstroPairTips {
     return Intl.message(
-      'SONA Tips - \nYour chat advisor',
-      name: 'subPageSubtitleSonaTips',
+      'AstroPair Tips - \nYour chat advisor',
+      name: 'subPageSubtitleAstroPairTips',
       desc: '',
       args: [],
     );
@@ -1600,11 +1599,11 @@ class S {
     );
   }
 
-  /// `SONA will generate a bio based on your interests`
-  String get sonaWillGenerateABioBasedOnInterests {
+  /// `AstroPair will generate a bio based on your interests`
+  String get astroPairWillGenerateABioBasedOnInterests {
     return Intl.message(
-      'SONA will generate a bio based on your interests',
-      name: 'sonaWillGenerateABioBasedOnInterests',
+      'AstroPair will generate a bio based on your interests',
+      name: 'astroPairWillGenerateABioBasedOnInterests',
       desc: '',
       args: [],
     );
@@ -1615,11 +1614,11 @@ class S {
     return Intl.message('Generate', name: 'buttonGenerate', desc: '', args: []);
   }
 
-  /// `Here's SONA cooked up for you!`
-  String get hereSonaCookedUpForU {
+  /// `Here's AstroPair cooked up for you!`
+  String get hereAstroPairCookedUpForU {
     return Intl.message(
-      'Here\'s SONA cooked up for you!',
-      name: 'hereSonaCookedUpForU',
+      'Here\'s AstroPair cooked up for you!',
+      name: 'hereAstroPairCookedUpForU',
       desc: '',
       args: [],
     );
@@ -1670,10 +1669,10 @@ class S {
     return Intl.message('Set Default', name: 'setDefault', desc: '', args: []);
   }
 
-  /// `SONA is like a home base for world citizens`
+  /// `AstroPair is like a home base for world citizens`
   String get onboarding0 {
     return Intl.message(
-      'SONA is like a home base for world citizens',
+      'AstroPair is like a home base for world citizens',
       name: 'onboarding0',
       desc: '',
       args: [],
@@ -1710,16 +1709,6 @@ class S {
     );
   }
 
-  /// `Ease off the social pressure\nChill with fun souls worldwide`
-  String get onboardingB {
-    return Intl.message(
-      'Ease off the social pressure\nChill with fun souls worldwide',
-      name: 'onboardingB',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Set your wishlist for\n better matching!`
   String get onboardingWish {
     return Intl.message(
@@ -1730,25 +1719,70 @@ class S {
     );
   }
 
-  /// `just now`
-  String get justNow {
-    return Intl.message('just now', name: 'justNow', desc: '', args: []);
+  /// `They haven't shown their true self yet`
+  String get profileNotShown {
+    return Intl.message(
+      'They haven\'t shown their true self yet',
+      name: 'profileNotShown',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// `Permission required`
+  /// `💫 Send a star greeting to unlock album Continue`
+  String get sendStarGreetingToUnlockAlbum {
+    return Intl.message(
+      '💫 Send a star greeting to unlock album Continue',
+      name: 'sendStarGreetingToUnlockAlbum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue with phone`
+  String get continueWithPhone {
+    return Intl.message(
+      'Continue with phone',
+      name: 'continueWithPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload your photo`
+  String get uploadYourPhoto {
+    return Intl.message(
+      'Upload your photo',
+      name: 'uploadYourPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What's your email?`
+  String get whatsYourEmail {
+    return Intl.message(
+      'What\'s your email?',
+      name: 'whatsYourEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permission Required`
   String get permissionRequiredTitle {
     return Intl.message(
-      'Permission required',
+      'Permission Required',
       name: 'permissionRequiredTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sona needs your location to work properly. You'll have to turn on location access in your phone's settings`
+  /// `We need this permission to provide you with the best experience`
   String get permissionRequiredContent {
     return Intl.message(
-      'Sona needs your location to work properly. You\'ll have to turn on location access in your phone\'s settings',
+      'We need this permission to provide you with the best experience',
       name: 'permissionRequiredContent',
       desc: '',
       args: [],
@@ -1760,10 +1794,75 @@ class S {
     return Intl.message('Go', name: 'buttonGo', desc: '', args: []);
   }
 
-  /// `Sorry, you've got to allow location access before you can use this service`
+  /// `Show your personality`
+  String get showYourPersonality {
+    return Intl.message(
+      'Show your personality',
+      name: 'showYourPersonality',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Just now`
+  String get justNow {
+    return Intl.message('Just now', name: 'justNow', desc: '', args: []);
+  }
+
+  /// `Duo Snap`
+  String get duoSnap {
+    return Intl.message('Duo Snap', name: 'duoSnap', desc: '', args: []);
+  }
+
+  /// `Catch more`
+  String get catchMore {
+    return Intl.message('Catch more', name: 'catchMore', desc: '', args: []);
+  }
+
+  /// `Unmissable special offer prices`
+  String get unmissableSpecialOfferPrices {
+    return Intl.message(
+      'Unmissable special offer prices',
+      name: 'unmissableSpecialOfferPrices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check it out`
+  String get checkItOut {
+    return Intl.message('Check it out', name: 'checkItOut', desc: '', args: []);
+  }
+
+  /// `Issues`
+  String get issues {
+    return Intl.message('Issues', name: 'issues', desc: '', args: []);
+  }
+
+  /// `New gameplay`
+  String get newGameplay {
+    return Intl.message(
+      'New gameplay',
+      name: 'newGameplay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AI creating fun group pics`
+  String get aiCreatingFunGroupPics {
+    return Intl.message(
+      'AI creating fun group pics',
+      name: 'aiCreatingFunGroupPics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We need your location to show you nearby people`
   String get locationAuthorizeContent {
     return Intl.message(
-      'Sorry, you\'ve got to allow location access before you can use this service',
+      'We need your location to show you nearby people',
       name: 'locationAuthorizeContent',
       desc: '',
       args: [],
@@ -1780,171 +1879,61 @@ class S {
     );
   }
 
-  /// `Upload your photo`
-  String get uploadYourPhoto {
+  /// `You are a club member now`
+  String get youAreAClubMemberNow {
     return Intl.message(
-      'Upload your photo',
-      name: 'uploadYourPhoto',
+      'You are a club member now',
+      name: 'youAreAClubMemberNow',
       desc: '',
       args: [],
     );
   }
 
-  /// `SONA strives to provide a genuine communication environment, please upload your real photo`
-  String get uploadYourPhotoHint {
+  /// `Unlock VIP perks`
+  String get buttonUnlockVipPerks {
     return Intl.message(
-      'SONA strives to provide a genuine communication environment, please upload your real photo',
-      name: 'uploadYourPhotoHint',
+      'Unlock VIP perks',
+      name: 'buttonUnlockVipPerks',
       desc: '',
       args: [],
     );
   }
 
-  /// `What’s your E-Mail?`
-  String get whatsYourEmail {
+  /// `Personal Attack`
+  String get reportOptionPersonalAttack {
     return Intl.message(
-      'What’s your E-Mail?',
-      name: 'whatsYourEmail',
+      'Personal Attack',
+      name: 'reportOptionPersonalAttack',
       desc: '',
       args: [],
     );
   }
 
-  /// `Continue with Google`
-  String get continueWithGoogle {
-    return Intl.message(
-      'Continue with Google',
-      name: 'continueWithGoogle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Continue with Apple`
-  String get continueWithApple {
-    return Intl.message(
-      'Continue with Apple',
-      name: 'continueWithApple',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Continue with E-Mail`
-  String get continueWithEmail {
-    return Intl.message(
-      'Continue with E-Mail',
-      name: 'continueWithEmail',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Continue with Phone`
-  String get continueWithPhone {
-    return Intl.message(
-      'Continue with Phone',
-      name: 'continueWithPhone',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Time-limited offer`
+  /// `Join the Club`
   String get clubPromotionTitle {
     return Intl.message(
-      'Time-limited offer',
+      'Join the Club',
       name: 'clubPromotionTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Join the SONA Club, for Just`
-  String get clubFeePrefix {
+  /// `Upload your best photo`
+  String get uploadYourPhotoHint {
     return Intl.message(
-      'Join the SONA Club, for Just',
-      name: 'clubFeePrefix',
+      'Upload your best photo',
+      name: 'uploadYourPhotoHint',
       desc: '',
       args: [],
     );
   }
 
-  /// `that's the price of a coke`
+  /// `Just kidding! It's free`
   String get clubFeeJoking {
     return Intl.message(
-      'that\'s the price of a coke',
+      'Just kidding! It\'s free',
       name: 'clubFeeJoking',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Membership Perks`
-  String get membersPerks {
-    return Intl.message(
-      'Membership Perks',
-      name: 'membersPerks',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `3  Duo Snap  / week`
-  String get clubPerkDuoSnap {
-    return Intl.message(
-      '3  Duo Snap  / week',
-      name: 'clubPerkDuoSnap',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `100 Likes / day (2x free)`
-  String get clubPerkLike {
-    return Intl.message(
-      '100 Likes / day (2x free)',
-      name: 'clubPerkLike',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `100 Sona messages / day  (3x free)`
-  String get clubPerkSonaMessage {
-    return Intl.message(
-      '100 Sona messages / day  (3x free)',
-      name: 'clubPerkSonaMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `5 SONA Tips / day`
-  String get clubPerkSonaTip {
-    return Intl.message(
-      '5 SONA Tips / day',
-      name: 'clubPerkSonaTip',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Exclusive Club badge`
-  String get clubPerkBadge {
-    return Intl.message(
-      'Exclusive Club badge',
-      name: 'clubPerkBadge',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Snag the deal -  Join the Club & shine!`
-  String get clubPromotionContent {
-    return Intl.message(
-      'Snag the deal -  Join the Club & shine!',
-      name: 'clubPromotionContent',
       desc: '',
       args: [],
     );
@@ -1955,196 +1944,71 @@ class S {
     return Intl.message('Join Now', name: 'buttonJoinNow', desc: '', args: []);
   }
 
-  /// `You're a Club member now `
-  String get youAreAClubMemberNow {
+  /// `Club fee: $99/month`
+  String get clubFeePrefix {
     return Intl.message(
-      'You\'re a Club member now ',
-      name: 'youAreAClubMemberNow',
+      'Club fee: \$99/month',
+      name: 'clubFeePrefix',
       desc: '',
       args: [],
     );
   }
 
-  /// `Unlock VIP Perks!`
-  String get buttonUnlockVipPerks {
+  /// `Members get exclusive perks`
+  String get membersPerks {
     return Intl.message(
-      'Unlock VIP Perks!',
-      name: 'buttonUnlockVipPerks',
+      'Members get exclusive perks',
+      name: 'membersPerks',
       desc: '',
       args: [],
     );
   }
 
-  /// `By tapping Join, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via  {storeName} settings, and you agree to our `
-  String clubTerms(Object storeName) {
+  /// `Join our exclusive club for amazing benefits`
+  String get clubPromotionContent {
     return Intl.message(
-      'By tapping Join, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via  $storeName settings, and you agree to our ',
-      name: 'clubTerms',
+      'Join our exclusive club for amazing benefits',
+      name: 'clubPromotionContent',
       desc: '',
-      args: [storeName],
+      args: [],
     );
   }
 
-  /// `10 Duo Snap  / week`
+  /// `Duo Snap with Plus`
   String get plusPerkDuoSnap {
     return Intl.message(
-      '10 Duo Snap  / week',
+      'Duo Snap with Plus',
       name: 'plusPerkDuoSnap',
       desc: '',
       args: [],
     );
   }
 
-  /// `Become the top Plus member`
-  String get plusDescTitle {
-    return Intl.message(
-      'Become the top Plus member',
-      name: 'plusDescTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Catch more!`
-  String get catchMore {
-    return Intl.message('Catch more!', name: 'catchMore', desc: '', args: []);
-  }
-
-  /// `Unmissable special offer prices!`
-  String get unmissableSpecialOfferPrices {
-    return Intl.message(
-      'Unmissable special offer prices!',
-      name: 'unmissableSpecialOfferPrices',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Check it out!`
-  String get checkItOut {
-    return Intl.message(
-      'Check it out!',
-      name: 'checkItOut',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `New Gameplay!`
-  String get newGameplay {
-    return Intl.message(
-      'New Gameplay!',
-      name: 'newGameplay',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Duo Snap`
-  String get duoSnap {
-    return Intl.message('Duo Snap', name: 'duoSnap', desc: '', args: []);
-  }
-
-  /// `AI creating fun group pics!`
-  String get aiCreatingFunGroupPics {
-    return Intl.message(
-      'AI creating fun group pics!',
-      name: 'aiCreatingFunGroupPics',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Generating`
-  String get generating {
-    return Intl.message('Generating', name: 'generating', desc: '', args: []);
-  }
-
-  /// `You're in line, please hold on`
-  String get inLine {
-    return Intl.message(
-      'You\'re in line, please hold on',
-      name: 'inLine',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Almost there, almost!`
-  String get almost {
-    return Intl.message(
-      'Almost there, almost!',
-      name: 'almost',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Issues, please retry`
-  String get issues {
-    return Intl.message(
-      'Issues, please retry',
-      name: 'issues',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Retry`
-  String get retry {
-    return Intl.message('Retry', name: 'retry', desc: '', args: []);
-  }
-
-  /// `Duo snap is ready!`
-  String get duoSnapIsReady {
-    return Intl.message(
-      'Duo snap is ready!',
-      name: 'duoSnapIsReady',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Send to Her`
-  String get sendToHer {
-    return Intl.message('Send to Her', name: 'sendToHer', desc: '', args: []);
-  }
-
-  /// `Send to Him`
-  String get sendToHim {
-    return Intl.message('Send to Him', name: 'sendToHim', desc: '', args: []);
-  }
-
-  /// `Send to Them`
-  String get sendToThem {
-    return Intl.message('Send to Them', name: 'sendToThem', desc: '', args: []);
-  }
-
-  /// `Save`
-  String get save {
-    return Intl.message('Save', name: 'save', desc: '', args: []);
-  }
-
-  /// `Share`
-  String get share {
-    return Intl.message('Share', name: 'share', desc: '', args: []);
-  }
-
-  /// `Duo snap require your real photo`
+  /// `We need your real photo`
   String get requireYourRealPhoto {
     return Intl.message(
-      'Duo snap require your real photo',
+      'We need your real photo',
       name: 'requireYourRealPhoto',
       desc: '',
       args: [],
     );
   }
 
-  /// `The other person isn't a real photo, so we can't merge photos!`
-  String get cantMergePhotos {
+  /// `Duo Snap anyway`
+  String get duosnapAnyway {
     return Intl.message(
-      'The other person isn\'t a real photo, so we can\'t merge photos!',
-      name: 'cantMergePhotos',
+      'Duo Snap anyway',
+      name: 'duosnapAnyway',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This photo might not be real`
+  String get photoMightNotBeReal {
+    return Intl.message(
+      'This photo might not be real',
+      name: 'photoMightNotBeReal',
       desc: '',
       args: [],
     );
@@ -2160,176 +2024,491 @@ class S {
     return Intl.message('Send DM', name: 'sendDm', desc: '', args: []);
   }
 
-  /// `Wait please, only one at a time`
-  String get onlyOneAtatime {
+  /// `Plus Description`
+  String get plusDescTitle {
     return Intl.message(
-      'Wait please, only one at a time',
-      name: 'onlyOneAtatime',
+      'Plus Description',
+      name: 'plusDescTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Duo snap anyway`
-  String get duosnapAnyway {
+  /// `Like Back`
+  String get likeBack {
+    return Intl.message('Like Back', name: 'likeBack', desc: '', args: []);
+  }
+
+  /// `Start Chat`
+  String get startChat {
+    return Intl.message('Start Chat', name: 'startChat', desc: '', args: []);
+  }
+
+  /// `Astro Report`
+  String get astroReport {
     return Intl.message(
-      'Duo snap anyway',
-      name: 'duosnapAnyway',
+      'Astro Report',
+      name: 'astroReport',
       desc: '',
       args: [],
     );
   }
 
-  /// `Duo snap might be weird because the person's photo might not be real`
-  String get photoMightNotBeReal {
+  /// `No one found your charm yet`
+  String get noOneFoundYourCharm {
     return Intl.message(
-      'Duo snap might be weird because the person\'s photo might not be real',
-      name: 'photoMightNotBeReal',
+      'No one found your charm yet',
+      name: 'noOneFoundYourCharm',
       desc: '',
       args: [],
     );
   }
 
-  /// `Weekly limit reached`
-  String get weeklyLimitReached {
+  /// `Complete your astro profile`
+  String get completeAstroProfile {
     return Intl.message(
-      'Weekly limit reached',
-      name: 'weeklyLimitReached',
+      'Complete your astro profile',
+      name: 'completeAstroProfile',
       desc: '',
       args: [],
     );
   }
 
-  /// `Clear portrait photos lead to better quality`
-  String get betterQualityMessage {
+  /// `Complete Astro Profile`
+  String get completeAstroProfileButton {
     return Intl.message(
-      'Clear portrait photos lead to better quality',
-      name: 'betterQualityMessage',
+      'Complete Astro Profile',
+      name: 'completeAstroProfileButton',
       desc: '',
       args: [],
     );
   }
 
-  /// `Records`
-  String get recordsLabel {
-    return Intl.message('Records', name: 'recordsLabel', desc: '', args: []);
+  /// `Charm Tips`
+  String get charmTips {
+    return Intl.message('Charm Tips', name: 'charmTips', desc: '', args: []);
   }
 
-  /// `Solo`
-  String get soloLabel {
-    return Intl.message('Solo', name: 'soloLabel', desc: '', args: []);
-  }
-
-  /// `Share to get more AI Dress tries!👇`
-  String get shareForMoreTriesMessage {
+  /// `Upload high-quality real photos`
+  String get uploadQualityPhotos {
     return Intl.message(
-      'Share to get more AI Dress tries!👇',
-      name: 'shareForMoreTriesMessage',
+      'Upload high-quality real photos',
+      name: 'uploadQualityPhotos',
       desc: '',
       args: [],
     );
   }
 
-  /// `AI Dress up`
-  String get aiDressUpLabel {
+  /// `Write an interesting personal bio`
+  String get writeInterestingBio {
     return Intl.message(
-      'AI Dress up',
-      name: 'aiDressUpLabel',
+      'Write an interesting personal bio',
+      name: 'writeInterestingBio',
       desc: '',
       args: [],
     );
   }
 
-  /// `Free`
-  String get freeLabel {
-    return Intl.message('Free', name: 'freeLabel', desc: '', args: []);
-  }
-
-  /// `Add 2 solo photos`
-  String get addTwoSoloPhotosMessage {
+  /// `Complete detailed astro information`
+  String get completeAstroInfo {
     return Intl.message(
-      'Add 2 solo photos',
-      name: 'addTwoSoloPhotosMessage',
+      'Complete detailed astro information',
+      name: 'completeAstroInfo',
       desc: '',
       args: [],
     );
   }
 
-  /// `Example`
-  String get exampleLabel {
-    return Intl.message('Example', name: 'exampleLabel', desc: '', args: []);
-  }
-
-  /// `Generate`
-  String get generateButtonLabel {
+  /// `Actively chat with matched users`
+  String get chatWithMatches {
     return Intl.message(
-      'Generate',
-      name: 'generateButtonLabel',
+      'Actively chat with matched users',
+      name: 'chatWithMatches',
       desc: '',
       args: [],
     );
   }
 
-  /// `First`
-  String get firstLabel {
-    return Intl.message('First', name: 'firstLabel', desc: '', args: []);
-  }
-
-  /// `Second`
-  String get secondLabel {
-    return Intl.message('Second', name: 'secondLabel', desc: '', args: []);
-  }
-
-  /// `20 AI Dress up / week (Ladies-specific rights)`
-  String get twentyWeeklyDressUpRightsMessage {
+  /// `Set clear interest tags`
+  String get setInterestTags {
     return Intl.message(
-      '20 AI Dress up / week (Ladies-specific rights)',
-      name: 'twentyWeeklyDressUpRightsMessage',
+      'Set clear interest tags',
+      name: 'setInterestTags',
       desc: '',
       args: [],
     );
   }
 
-  /// `10 AI Dress up / week`
-  String get tenWeeklyDressUpRightsMessage {
+  /// `Jump to astro profile page`
+  String get navigateToAstroProfile {
     return Intl.message(
-      '10 AI Dress up / week',
-      name: 'tenWeeklyDressUpRightsMessage',
+      'Jump to astro profile page',
+      name: 'navigateToAstroProfile',
       desc: '',
       args: [],
     );
   }
 
-  /// `From libary`
-  String get fromLibrary {
-    return Intl.message('From libary', name: 'fromLibrary', desc: '', args: []);
-  }
-
-  /// `From profile`
-  String get fromProfile {
+  /// `Already liked back`
+  String get likedBack {
     return Intl.message(
-      'From profile',
-      name: 'fromProfile',
+      'Already liked back',
+      name: 'likedBack',
       desc: '',
       args: [],
     );
   }
 
-  /// `Take a photo`
-  String get fromTakeAPhoto {
+  /// `Started chatting with`
+  String get startedChat {
     return Intl.message(
-      'Take a photo',
-      name: 'fromTakeAPhoto',
+      'Started chatting with',
+      name: 'startedChat',
       desc: '',
       args: [],
     );
   }
 
-  /// `Your picture is ready!`
-  String get yourPictureIsReady {
+  /// `View astro report with`
+  String get viewAstroReport {
     return Intl.message(
-      'Your picture is ready!',
-      name: 'yourPictureIsReady',
+      'View astro report with',
+      name: 'viewAstroReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Destiny Match`
+  String get destinyMatch {
+    return Intl.message(
+      'Destiny Match',
+      name: 'destinyMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlock {count} users including {destinyCount} destiny matches ⭐`
+  String unlockUsersWithDestiny(Object count, Object destinyCount) {
+    return Intl.message(
+      'Unlock $count users including $destinyCount destiny matches ⭐',
+      name: 'unlockUsersWithDestiny',
+      desc: '',
+      args: [count, destinyCount],
+    );
+  }
+
+  /// `Unlock to view {count} high-match users ✨`
+  String unlockHighMatchUsers(Object count) {
+    return Intl.message(
+      'Unlock to view $count high-match users ✨',
+      name: 'unlockHighMatchUsers',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Destiny priority exposure in recommendations and likes`
+  String get plusBenefitDestinyPriority {
+    return Intl.message(
+      'Destiny priority exposure in recommendations and likes',
+      name: 'plusBenefitDestinyPriority',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `High match score display with percentage`
+  String get plusBenefitHighMatchDisplay {
+    return Intl.message(
+      'High match score display with percentage',
+      name: 'plusBenefitHighMatchDisplay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Star greeting package: 10 daily greetings`
+  String get plusBenefitStarGreeting {
+    return Intl.message(
+      'Star greeting package: 10 daily greetings',
+      name: 'plusBenefitStarGreeting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Smart opening lines: 3 high-conversion suggestions per person`
+  String get plusBenefitSmartOpener {
+    return Intl.message(
+      'Smart opening lines: 3 high-conversion suggestions per person',
+      name: 'plusBenefitSmartOpener',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conversation topic pool based on profile analysis`
+  String get plusBenefitTopicPool {
+    return Intl.message(
+      'Conversation topic pool based on profile analysis',
+      name: 'plusBenefitTopicPool',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Real-time translation and polishing: multilingual auto-correction`
+  String get plusBenefitRealTimeTranslation {
+    return Intl.message(
+      'Real-time translation and polishing: multilingual auto-correction',
+      name: 'plusBenefitRealTimeTranslation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Overall compatibility score visualization`
+  String get plusBenefitMatchScore {
+    return Intl.message(
+      'Overall compatibility score visualization',
+      name: 'plusBenefitMatchScore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `4-dimension breakdown: personality/communication/intimacy/boundaries`
+  String get plusBenefitDimensionBreakdown {
+    return Intl.message(
+      '4-dimension breakdown: personality/communication/intimacy/boundaries',
+      name: 'plusBenefitDimensionBreakdown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conflict points and relationship advice`
+  String get plusBenefitConflictAdvice {
+    return Intl.message(
+      'Conflict points and relationship advice',
+      name: 'plusBenefitConflictAdvice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Advanced filters: country/language/timezone/city`
+  String get plusBenefitAdvancedFilter {
+    return Intl.message(
+      'Advanced filters: country/language/timezone/city',
+      name: 'plusBenefitAdvancedFilter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interest and travel plan filters`
+  String get plusBenefitInterestFilter {
+    return Intl.message(
+      'Interest and travel plan filters',
+      name: 'plusBenefitInterestFilter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sort by recent activity and reply rate`
+  String get plusBenefitActivitySort {
+    return Intl.message(
+      'Sort by recent activity and reply rate',
+      name: 'plusBenefitActivitySort',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Like back and read receipt reminders`
+  String get plusBenefitLikeReminder {
+    return Intl.message(
+      'Like back and read receipt reminders',
+      name: 'plusBenefitLikeReminder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Activity and return reminders`
+  String get plusBenefitActivityReminder {
+    return Intl.message(
+      'Activity and return reminders',
+      name: 'plusBenefitActivityReminder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New destiny match arrival notifications`
+  String get plusBenefitDestinyPush {
+    return Intl.message(
+      'New destiny match arrival notifications',
+      name: 'plusBenefitDestinyPush',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Image instant translation and text recognition`
+  String get plusBenefitOCRTranslation {
+    return Intl.message(
+      'Image instant translation and text recognition',
+      name: 'plusBenefitOCRTranslation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick message templates (compliments/invitations/platform switch)`
+  String get plusBenefitMessageTemplates {
+    return Intl.message(
+      'Quick message templates (compliments/invitations/platform switch)',
+      name: 'plusBenefitMessageTemplates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `One-click translation of message history`
+  String get plusBenefitHistoryTranslation {
+    return Intl.message(
+      'One-click translation of message history',
+      name: 'plusBenefitHistoryTranslation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Priority anti-harassment protection and weight protection`
+  String get plusBenefitAntiHarassment {
+    return Intl.message(
+      'Priority anti-harassment protection and weight protection',
+      name: 'plusBenefitAntiHarassment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fast-track subscription issue resolution`
+  String get plusBenefitSupportChannel {
+    return Intl.message(
+      'Fast-track subscription issue resolution',
+      name: 'plusBenefitSupportChannel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlock clear avatars and tags in Liked Me`
+  String get plusBenefitUnlockLikedMe {
+    return Intl.message(
+      'Unlock clear avatars and tags in Liked Me',
+      name: 'plusBenefitUnlockLikedMe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complete basic profile`
+  String get personaCompleteProfile {
+    return Intl.message(
+      'Complete basic profile',
+      name: 'personaCompleteProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complete name, birthday, gender to unlock more recommendations`
+  String get personaCompleteProfileDesc {
+    return Intl.message(
+      'Complete name, birthday, gender to unlock more recommendations',
+      name: 'personaCompleteProfileDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload your photos`
+  String get personaUploadPhotos {
+    return Intl.message(
+      'Upload your photos',
+      name: 'personaUploadPhotos',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add at least 2 clear photos to increase exposure`
+  String get personaUploadPhotosDesc {
+    return Intl.message(
+      'Add at least 2 clear photos to increase exposure',
+      name: 'personaUploadPhotosDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable message notifications`
+  String get personaEnableNotifications {
+    return Intl.message(
+      'Enable message notifications',
+      name: 'personaEnableNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't miss matches and messages, interact in time`
+  String get personaEnableNotificationsDesc {
+    return Intl.message(
+      'Don\'t miss matches and messages, interact in time',
+      name: 'personaEnableNotificationsDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show your city`
+  String get personaShowCity {
+    return Intl.message(
+      'Show your city',
+      name: 'personaShowCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Easier to be discovered by local users`
+  String get personaShowCityDesc {
+    return Intl.message(
+      'Easier to be discovered by local users',
+      name: 'personaShowCityDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For you`
+  String get personaForYou {
+    return Intl.message('For you', name: 'personaForYou', desc: '', args: []);
+  }
+
+  /// `One line to win them over`
+  String get oneLineToWin {
+    return Intl.message(
+      'One line to win them over',
+      name: 'oneLineToWin',
       desc: '',
       args: [],
     );

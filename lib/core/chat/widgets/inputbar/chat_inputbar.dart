@@ -140,7 +140,7 @@ class ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with
         ? S.of(context).speakSameLanguage
         : ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona
             ? S.of(context).justTypeInYourLanguage(myL.displayName)
-            : S.of(context).sonaInterpretationOff;
+            : S.of(context).astroPairInterpretationOff;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,

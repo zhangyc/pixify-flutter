@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sona/account/event/account_event.dart';
 import 'package:sona/account/models/gender.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
@@ -114,45 +113,58 @@ class _LocationScreenState extends State<LocationScreen>
 
   void _next() async {
     Position location;
-    // try {
-    //   //PermissionStatus permission = await Permission.location.request();
-    //   location = await determinePosition();
-    // } catch(e) {
-    //   var permission = await Geolocator.checkPermission();
-    //   if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
-    //     if (!mounted) return;
-    //     await showCommonBottomSheet(
-    //       context: context,
-    //       title: S.current.permissionRequiredTitle,
-    //       content: S.current.permissionRequiredContent,
-    //       actions: [
-    //         FilledButton(
-    //           onPressed: () async {
-    //             Navigator.pop(context);
-    //             //await SystemSettings.app();
-    //           },
-    //           child: Text(S.current.buttonGo)
-    //         )
-    //       ]
-    //     );
-    //   }
-    //   return;
-    // }
-    //,"longitude":"116.32696513904762","latitude":"39.98198198198198",
-    longitude = 116.32696513904762;
-    latitude = 39.98198198198198;
-    location = Position(
-        longitude: longitude!,
-        latitude: latitude!,
-        timestamp: DateTime.now(),
-        accuracy: 10,
-        altitude: 0,
-        altitudeAccuracy: 0,
-        heading: 0,
-        headingAccuracy: 0,
-        speed: 0,
-        speedAccuracy: 0);
+    try {
+      location = await determinePosition();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Location error: $e');
+      }
 
+      // 检查是否是位置服务未启用
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        if (!mounted) return;
+        await showCommonBottomSheet(
+            context: context,
+            title: 'Location Services Disabled',
+            content:
+                'Please enable location services in your device settings to continue.\n\nGo to Settings > Privacy & Security > Location Services and turn it on.',
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Cancel')),
+              FilledButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    // 打开系统设置
+                    await Geolocator.openLocationSettings();
+                  },
+                  child: Text('Open Settings'))
+            ]);
+        return;
+      }
+
+      // 检查权限问题
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        if (!mounted) return;
+        await showCommonBottomSheet(
+            context: context,
+            title: S.current.permissionRequiredTitle,
+            content: S.current.permissionRequiredContent,
+            actions: [
+              FilledButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                  child: Text(S.current.buttonGo))
+            ]);
+      }
+      return;
+    }
+    longitude = location.longitude;
+    latitude = location.latitude;
     if (mounted) {
       Navigator.pushReplacement(
           context,

@@ -19,19 +19,17 @@ import '../models/message.dart';
 import '../../like_me/widgets/liked_me.dart';
 
 class ConversationScreen extends StatefulHookConsumerWidget {
-  const ConversationScreen({
-    super.key,
-    required this.onShowLikeMe
-  });
+  const ConversationScreen({super.key, required this.onShowLikeMe});
   final void Function() onShowLikeMe;
-  static const routeName="/conversations";
+  static const routeName = "/conversations";
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ConversationScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ConversationScreenState();
 }
 
-class _ConversationScreenState extends ConsumerState<ConversationScreen> with AutomaticKeepAliveClientMixin {
-
+class _ConversationScreenState extends ConsumerState<ConversationScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -44,71 +42,83 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(S.of(context).chat, style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-            fontSize: 28,
-            fontWeight: FontWeight.w900
-        )),
-        centerTitle: false,
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: LikedMeListView(
-              onShowAll: widget.onShowLikeMe,
-              onTap: ([UserInfo? u]) {
-                if (ref.read(myProfileProvider)?.memberType == MemberType.plus) {
-                  if (u == null) {
-                    // SonaAnalytics.log('chatlist_golikedme');
-                    // Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
-                  } else {
-                    SonaAnalytics.log('chatlist_member_card');
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => UserProfileScreen(userId: u.id, relation: Relation.likeMe,)));
-                  }
-                } else {
-                  SonaAnalytics.log('chatlist_tapblur');
-                  showSubscription(FromTag.pay_chatlist_blur);
-                }
-              }
-              ),
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: 16)),
-          ref.watch(conversationStreamProvider).when(
-            data: (conversations) => (conversations==null||conversations.isEmpty) ? _noChats() : SliverList.separated(
-              itemBuilder: (BuildContext context, int index) {
-                final conversation = conversations[index];
-                return ConversationItemWidget(
-                  key: ValueKey(conversation.otherSide.id),
-                  conversation: conversation,
-                  onTap: () => _chat(ChatEntry.conversation, conversation),
-                  onLongPress: () => _showConversationActions(conversation),
-                  onHookTap: () => _onHookTap(conversation.convoId)
-                );
-              },
-              itemCount: conversations.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 20),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(S.of(context).chat,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineLarge
+                  ?.copyWith(fontSize: 28, fontWeight: FontWeight.w900)),
+          centerTitle: false,
+        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: LikedMeListView(
+                  onShowAll: widget.onShowLikeMe,
+                  onTap: ([UserInfo? u]) {
+                    if (ref.read(myProfileProvider)?.memberType ==
+                        MemberType.plus) {
+                      if (u == null) {
+                        // SonaAnalytics.log('chatlist_golikedme');
+                        // Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));
+                      } else {
+                        SonaAnalytics.log('chatlist_member_card');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => UserProfileScreen(
+                                      userId: u.id,
+                                      relation: Relation.likeMe,
+                                    )));
+                      }
+                    } else {
+                      SonaAnalytics.log('chatlist_tapblur');
+                      showSubscription(FromTag.pay_chatlist_blur);
+                    }
+                  }),
             ),
-            error: (_, __) => SliverToBoxAdapter(child: Container()),
-            loading: () => SliverToBoxAdapter(child: Container(
-              alignment: Alignment.center,
-              child: const SizedBox(
-                height: 32,
-                width: 32,
-                child: CircularProgressIndicator(),
-              ),
-            ))
-          ),
-          SliverToBoxAdapter(
-            child: SizedBox(height: MediaQuery.of(context).padding.bottom),
-          )
-        ],
-      )
-    );
+            SliverToBoxAdapter(child: SizedBox(height: 4)),
+            ref.watch(conversationStreamProvider).when(
+                data: (conversations) => (conversations == null ||
+                        conversations.isEmpty)
+                    ? _noChats()
+                    : SliverList.separated(
+                        itemBuilder: (BuildContext context, int index) {
+                          final conversation = conversations[index];
+                          return ConversationItemWidget(
+                              key: ValueKey(conversation.otherSide.id),
+                              conversation: conversation,
+                              onTap: () =>
+                                  _chat(ChatEntry.conversation, conversation),
+                              onLongPress: () =>
+                                  _showConversationActions(conversation),
+                              onHookTap: () =>
+                                  _onHookTap(conversation.convoId));
+                        },
+                        itemCount: conversations.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 20),
+                      ),
+                error: (_, __) => SliverToBoxAdapter(child: Container()),
+                loading: () => SliverToBoxAdapter(
+                        child: Container(
+                      alignment: Alignment.center,
+                      child: const SizedBox(
+                        height: 32,
+                        width: 32,
+                        child: CircularProgressIndicator(),
+                      ),
+                    ))),
+            SliverToBoxAdapter(
+              child: SizedBox(height: MediaQuery.of(context).padding.bottom),
+            )
+          ],
+        ));
   }
 
   Future _showConversationActions(ImConversation conversation) async {
-    final choice = await showActionButtons<String>(context: context, options: {S.of(context).buttonDelete: 'delete'});
+    final choice = await showActionButtons<String>(
+        context: context, options: {S.of(context).buttonDelete: 'delete'});
     if (choice == 'delete') {
       deleteChat(id: conversation.otherSide.id);
     }
@@ -116,19 +126,18 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
 
   Future _chat(ChatEntry entry, ImConversation convo) {
     if (convo.hasUnreadMessage) SonaAnalytics.log('chatlist_unread');
-    return Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen(
-      entry: entry,
-      otherSide: convo.otherSide,
-      hasHistoryMessage: convo.lastMessageId != null
-    )));
+    return Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => ChatScreen(
+                entry: entry,
+                otherSide: convo.otherSide,
+                hasHistoryMessage: convo.lastMessageId != null)));
   }
 
   Future _onHookTap(int userId) async {
     SonaAnalytics.log('chatlist_quickreply');
-    return callSona(
-        userId: userId,
-        type: CallSonaType.HOOK
-    );
+    return callSona(userId: userId, type: CallSonaType.HOOK);
   }
 
   Widget _noChats() {
@@ -145,9 +154,11 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen> with Au
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(S.of(context).noMessageTips, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w500
-              )),
+              child: Text(S.of(context).noMessageTips,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w500)),
             )
           ],
         ),

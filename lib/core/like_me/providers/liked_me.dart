@@ -19,7 +19,7 @@ final likeMeStreamProvider = StreamProvider<List<SocialUser>>((ref) async* {
   final userId = ref.read(myProfileProvider)?.id;
   if (userId != null) {
     final stream = FirebaseFirestore.instance
-        .collection('${env.firestorePrefix}_v2_users').doc('$userId')
+        .collection('${env.firestorePrefix}_users').doc('$userId')
         .collection('like_me').limit(100)
         .snapshots();
 

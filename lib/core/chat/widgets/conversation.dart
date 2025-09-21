@@ -58,7 +58,7 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.conversation.otherSide.name ?? '',
+                        widget.conversation.otherSide.originNickname ?? '',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: Colors.black,
                         ),

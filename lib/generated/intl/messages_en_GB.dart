@@ -20,24 +20,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en_GB';
 
-  static String m0(storeName) =>
-      "By tapping Join, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via ${storeName} settings, and you agree to our ";
+  static String m0(something) => "\"I\'m interested in ${something}\"";
 
-  static String m1(something) => "\"I\'m interested in ${something}\"";
+  static String m1(something) => "I’m very interested in ‘${something}’!";
 
-  static String m2(something) => "I’m very interested in ‘${something}’!";
+  static String m2(lang) => "Just type in ${lang}";
 
-  static String m3(lang) => "Just type in ${lang}";
-
-  static String m4(gender) =>
+  static String m3(gender) =>
       "Which of ${Intl.gender(gender, female: 'her', male: 'his', other: 'their')} ideas do you like?";
 
-  static String m5(storeName) =>
+  static String m4(storeName) =>
       "By tapping Continue, you will be charged, your subscription will auto-renew for the same price and package length until you cancel via ${storeName} settings, and you agree to our ";
 
-  static String m6(country) => "Skip, Just ${country}";
+  static String m5(count) => "Unlock to view ${count} high-match users ✨";
 
-  static String m7(country) => "are you planning to go to ${country}";
+  static String m6(count, destinyCount) =>
+      "Unlock ${count} users including ${destinyCount} destiny matches ⭐";
+
+  static String m7(country) => "Skip, Just ${country}";
+
+  static String m8(country) => "are you planning to go to ${country}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -45,19 +47,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1 Year"),
     "about": MessageLookupByLibrary.simpleMessage("About"),
     "account": MessageLookupByLibrary.simpleMessage("Account"),
-    "addTwoSoloPhotosMessage": MessageLookupByLibrary.simpleMessage(
-      "Add 2 solo photos",
-    ),
     "age": MessageLookupByLibrary.simpleMessage("Age"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
-      "AI creating fun group pics!",
+      "AI creating fun group pics",
     ),
-    "aiDressUpLabel": MessageLookupByLibrary.simpleMessage("AI Dress up"),
     "allPeople": MessageLookupByLibrary.simpleMessage("All People"),
-    "almost": MessageLookupByLibrary.simpleMessage("Almost there, almost!"),
-    "betterQualityMessage": MessageLookupByLibrary.simpleMessage(
-      "Clear portrait photos lead to better quality",
+    "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
+      "⭕ AstroPair interpretation is turned off",
     ),
+    "astroPairRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
+      "AstroPair Recommendation: Cooldown\nWhat to do: Wait Suggestion: Watch a movie?",
+    ),
+    "astroPairWillGenerateABioBasedOnInterests":
+        MessageLookupByLibrary.simpleMessage(
+          "AstroPair will generate a bio based on your interests",
+        ),
+    "astroReport": MessageLookupByLibrary.simpleMessage("Astro Report"),
     "bio": MessageLookupByLibrary.simpleMessage("Bio"),
     "block": MessageLookupByLibrary.simpleMessage("Block"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -73,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage(
       "You\'re a Plus member",
     ),
-    "buttonAuthorize": MessageLookupByLibrary.simpleMessage("Authorise"),
+    "buttonAuthorize": MessageLookupByLibrary.simpleMessage("Authorize"),
     "buttonCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "buttonChange": MessageLookupByLibrary.simpleMessage("Change"),
     "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -91,7 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("Got it"),
     "buttonHitAIInterpretationMaximumLimit":
         MessageLookupByLibrary.simpleMessage(
-          "😪SONA is tired, 👇Tap to refuel her!",
+          "😪AstroPair is tired, 👇Tap to refuel her!",
         ),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage("Join Now"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("Keep account"),
@@ -106,111 +111,88 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonSignOut": MessageLookupByLibrary.simpleMessage("Sign out"),
     "buttonSubmit": MessageLookupByLibrary.simpleMessage("Submit"),
     "buttonUnlockVipPerks": MessageLookupByLibrary.simpleMessage(
-      "Unlock VIP Perks!",
+      "Unlock VIP perks",
     ),
     "buttonUnmatch": MessageLookupByLibrary.simpleMessage("Unmatch"),
     "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("Unsubscribe"),
-    "cantMergePhotos": MessageLookupByLibrary.simpleMessage(
-      "The other person isn\'t a real photo, so we can\'t merge photos!",
-    ),
-    "catchMore": MessageLookupByLibrary.simpleMessage("Catch more!"),
+    "catchMore": MessageLookupByLibrary.simpleMessage("Catch more"),
+    "charmTips": MessageLookupByLibrary.simpleMessage("Charm Tips"),
     "chat": MessageLookupByLibrary.simpleMessage("Chat"),
-    "checkItOut": MessageLookupByLibrary.simpleMessage("Check it out!"),
+    "chatWithMatches": MessageLookupByLibrary.simpleMessage(
+      "Actively chat with matched users",
+    ),
+    "checkItOut": MessageLookupByLibrary.simpleMessage("Check it out"),
     "checkOutTheirProfiles": MessageLookupByLibrary.simpleMessage(
       "Check out their profiles",
     ),
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Choose"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage(
-      "that\'s the price of a coke",
+      "Just kidding! It\'s free",
     ),
     "clubFeePrefix": MessageLookupByLibrary.simpleMessage(
-      "Join the SONA Club, for Just",
-    ),
-    "clubPerkBadge": MessageLookupByLibrary.simpleMessage(
-      "Exclusive Club badge",
-    ),
-    "clubPerkDuoSnap": MessageLookupByLibrary.simpleMessage(
-      "3  Duo Snap  / week",
-    ),
-    "clubPerkLike": MessageLookupByLibrary.simpleMessage(
-      "100 Likes / day (2x free)",
-    ),
-    "clubPerkSonaMessage": MessageLookupByLibrary.simpleMessage(
-      "100 Sona messages / day  (3x free)",
-    ),
-    "clubPerkSonaTip": MessageLookupByLibrary.simpleMessage(
-      "5 SONA Tips / day",
+      "Club fee: \$99/month",
     ),
     "clubPromotionContent": MessageLookupByLibrary.simpleMessage(
-      "Snag the deal -  Join the Club & shine!",
+      "Join our exclusive club for amazing benefits",
     ),
-    "clubPromotionTitle": MessageLookupByLibrary.simpleMessage(
-      "Time-limited offer",
-    ),
-    "clubTerms": m0,
+    "clubPromotionTitle": MessageLookupByLibrary.simpleMessage("Join the Club"),
     "commonLanguage": MessageLookupByLibrary.simpleMessage("Common language"),
     "commonLanguageTitle": MessageLookupByLibrary.simpleMessage(
       "Common language",
     ),
-    "continueWithApple": MessageLookupByLibrary.simpleMessage(
-      "Continue with Apple",
+    "completeAstroInfo": MessageLookupByLibrary.simpleMessage(
+      "Complete detailed astro information",
     ),
-    "continueWithEmail": MessageLookupByLibrary.simpleMessage(
-      "Continue with E-Mail",
+    "completeAstroProfile": MessageLookupByLibrary.simpleMessage(
+      "Complete your astro profile",
     ),
-    "continueWithGoogle": MessageLookupByLibrary.simpleMessage(
-      "Continue with Google",
+    "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
+      "Complete Astro Profile",
     ),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage(
-      "Continue with Phone",
+      "Continue with phone",
     ),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage(
       "Description (optional)",
     ),
+    "destinyMatch": MessageLookupByLibrary.simpleMessage("Destiny Match"),
     "disclaimer": MessageLookupByLibrary.simpleMessage("Disclaimer"),
     "displayMyCity": MessageLookupByLibrary.simpleMessage("Display my city"),
     "dm": MessageLookupByLibrary.simpleMessage("DM"),
     "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
-    "duoSnapIsReady": MessageLookupByLibrary.simpleMessage(
-      "Duo snap is ready!",
+    "duosnapAnyway": MessageLookupByLibrary.simpleMessage("Duo Snap anyway"),
+    "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
+      "Unsent. AstroPair will not translate prohibited words",
     ),
-    "duosnapAnyway": MessageLookupByLibrary.simpleMessage("Duo snap anyway"),
-    "exampleLabel": MessageLookupByLibrary.simpleMessage("Example"),
+    "exceptionAstroPairOverloadedTips": MessageLookupByLibrary.simpleMessage(
+      "AstroPair is overloaded, please try again later.",
+    ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "Failed to send, please try again later.",
-    ),
-    "exceptionSonaContentFilterTips": MessageLookupByLibrary.simpleMessage(
-      "Unsent. SONA will not translate prohibited words",
-    ),
-    "exceptionSonaOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "SONA is overloaded, please try again later.",
     ),
     "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
     "filter": MessageLookupByLibrary.simpleMessage("Filter"),
     "findingFolksWhoShareYourInterests": MessageLookupByLibrary.simpleMessage(
       "Finding folks who share your interests",
     ),
-    "firstLabel": MessageLookupByLibrary.simpleMessage("First"),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "SONA is finding some potential friend...",
+      "AstroPair is finding some potential friend...",
     ),
-    "freeLabel": MessageLookupByLibrary.simpleMessage("Free"),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "Hey, I think you\'re quite brilliant. Fancy becoming friends?",
     ),
-    "fromLibrary": MessageLookupByLibrary.simpleMessage("From libary"),
-    "fromProfile": MessageLookupByLibrary.simpleMessage("From profile"),
-    "fromTakeAPhoto": MessageLookupByLibrary.simpleMessage("Take a photo"),
-    "generateButtonLabel": MessageLookupByLibrary.simpleMessage("Generate"),
-    "generating": MessageLookupByLibrary.simpleMessage("Generating"),
-    "getSonaPlus": MessageLookupByLibrary.simpleMessage("Get SONA Plus"),
+    "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
+      "Get AstroPair Plus",
+    ),
     "gotIt": MessageLookupByLibrary.simpleMessage("Got it"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "Hey, fancy a guess at who\'ll break the silence first?",
     ),
-    "haveSonaSayHi": MessageLookupByLibrary.simpleMessage("Have SONA Say Hi"),
-    "hereSonaCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "Here\'s SONA cooked up for you!",
+    "haveAstroPairSayHi": MessageLookupByLibrary.simpleMessage(
+      "Have AstroPair Say Hi",
+    ),
+    "hereAstroPairCookedUpForU": MessageLookupByLibrary.simpleMessage(
+      "Here\'s AstroPair cooked up for you!",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "How do you feel about AI interpretation?",
@@ -221,11 +203,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage(
       "I like your style!",
     ),
-    "imInterestedSomething": m1,
-    "imVeryInterestedInSomething": m2,
-    "inLine": MessageLookupByLibrary.simpleMessage(
-      "You\'re in line, please hold on",
-    ),
+    "imInterestedSomething": m0,
+    "imVeryInterestedInSomething": m1,
     "interests": MessageLookupByLibrary.simpleMessage("Interests"),
     "interpretationOff": MessageLookupByLibrary.simpleMessage(
       "AI Interpretation: Off",
@@ -233,13 +212,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "interpretationOn": MessageLookupByLibrary.simpleMessage(
       "AI Interpretation: On",
     ),
-    "issues": MessageLookupByLibrary.simpleMessage("Issues, please retry"),
-    "justNow": MessageLookupByLibrary.simpleMessage("just now"),
+    "issues": MessageLookupByLibrary.simpleMessage("Issues"),
+    "justNow": MessageLookupByLibrary.simpleMessage("Just now"),
     "justSendALike": MessageLookupByLibrary.simpleMessage("Just Send a Like"),
-    "justTypeInYourLanguage": m3,
-    "letSONASayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "Let SONA say hi for you",
+    "justTypeInYourLanguage": m2,
+    "letAstroPairSayHiForYou": MessageLookupByLibrary.simpleMessage(
+      "Let AstroPair say hi for you",
     ),
+    "likeBack": MessageLookupByLibrary.simpleMessage("Like Back"),
+    "likedBack": MessageLookupByLibrary.simpleMessage("Already liked back"),
     "likedPageMonetizeButton": MessageLookupByLibrary.simpleMessage(
       "Check out their profiles",
     ),
@@ -248,7 +229,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "likedYou": MessageLookupByLibrary.simpleMessage("Liked you"),
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
-      "Sorry, you\'ve got to allow location access before you can use this service",
+      "We need your location to show you nearby people",
     ),
     "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
       "We need your location to make your social experience better",
@@ -256,9 +237,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationPermissionRequestTitle": MessageLookupByLibrary.simpleMessage(
       "Authorize location",
     ),
-    "matchPageSelectIdeas": m4,
+    "matchPageSelectIdeas": m3,
     "me": MessageLookupByLibrary.simpleMessage("Me"),
-    "membersPerks": MessageLookupByLibrary.simpleMessage("Membership Perks"),
+    "membersPerks": MessageLookupByLibrary.simpleMessage(
+      "Members get exclusive perks",
+    ),
     "month": MessageLookupByLibrary.simpleMessage("mo"),
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
       "More photos, higher recommendation",
@@ -266,17 +249,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage(
       "More photos, More charm!",
     ),
+    "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
+      "Jump to astro profile page",
+    ),
     "nearby": MessageLookupByLibrary.simpleMessage("Nearby"),
-    "newGameplay": MessageLookupByLibrary.simpleMessage("New Gameplay!"),
+    "newGameplay": MessageLookupByLibrary.simpleMessage("New gameplay"),
     "newMatch": MessageLookupByLibrary.simpleMessage("New Matched!"),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage("Next billing date"),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
       "Status: No messages\n\nWhat to do: Go to match\n\nSuggestion: Make an awesome profile",
     ),
+    "noOneFoundYourCharm": MessageLookupByLibrary.simpleMessage(
+      "No one found your charm yet",
+    ),
     "noThanks": MessageLookupByLibrary.simpleMessage("No Thanks"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "SONA is like a home base for world citizens",
+      "AstroPair is like a home base for world citizens",
     ),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "Whether at home or on the road, meet people worldwide. And...",
@@ -287,14 +276,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboarding3": MessageLookupByLibrary.simpleMessage(
       "Talk less, Love more\nA legendary romance awaits you",
     ),
-    "onboardingB": MessageLookupByLibrary.simpleMessage(
-      "Ease off the social pressure\nChill with fun souls worldwide",
-    ),
     "onboardingWish": MessageLookupByLibrary.simpleMessage(
       "Set your wishlist for\n better matching!",
     ),
-    "onlyOneAtatime": MessageLookupByLibrary.simpleMessage(
-      "Wait please, only one at a time",
+    "oneLineToWin": MessageLookupByLibrary.simpleMessage(
+      "One line to win them over",
     ),
     "oopsNoDataRightNow": MessageLookupByLibrary.simpleMessage(
       "Oops, no data right now",
@@ -304,33 +290,117 @@ class MessageLookup extends MessageLookupByLibrary {
           "People from your wishlist get more recommendations",
         ),
     "permissionRequiredContent": MessageLookupByLibrary.simpleMessage(
-      "Sona needs your location to work properly. You\'ll have to turn on location access in your phone\'s settings",
+      "We need this permission to provide you with the best experience",
     ),
     "permissionRequiredTitle": MessageLookupByLibrary.simpleMessage(
-      "Permission required",
+      "Permission Required",
+    ),
+    "personaCompleteProfile": MessageLookupByLibrary.simpleMessage(
+      "Complete basic profile",
+    ),
+    "personaCompleteProfileDesc": MessageLookupByLibrary.simpleMessage(
+      "Complete name, birthday, gender to unlock more recommendations",
+    ),
+    "personaEnableNotifications": MessageLookupByLibrary.simpleMessage(
+      "Enable message notifications",
+    ),
+    "personaEnableNotificationsDesc": MessageLookupByLibrary.simpleMessage(
+      "Don\'t miss matches and messages, interact in time",
+    ),
+    "personaForYou": MessageLookupByLibrary.simpleMessage("For you"),
+    "personaShowCity": MessageLookupByLibrary.simpleMessage("Show your city"),
+    "personaShowCityDesc": MessageLookupByLibrary.simpleMessage(
+      "Easier to be discovered by local users",
+    ),
+    "personaUploadPhotos": MessageLookupByLibrary.simpleMessage(
+      "Upload your photos",
+    ),
+    "personaUploadPhotosDesc": MessageLookupByLibrary.simpleMessage(
+      "Add at least 2 clear photos to increase exposure",
     ),
     "photoFromCamera": MessageLookupByLibrary.simpleMessage("Take a photo"),
     "photoFromGallery": MessageLookupByLibrary.simpleMessage("From gallery"),
     "photoMightNotBeReal": MessageLookupByLibrary.simpleMessage(
-      "Duo snap might be weird because the person\'s photo might not be real",
+      "This photo might not be real",
     ),
     "photos": MessageLookupByLibrary.simpleMessage("Photos"),
     "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
         MessageLookupByLibrary.simpleMessage(
           "Please check your internet or Tap to Refresh and try again",
         ),
-    "plusDescTitle": MessageLookupByLibrary.simpleMessage(
-      "Become the top Plus member",
+    "plusBenefitActivityReminder": MessageLookupByLibrary.simpleMessage(
+      "Activity and return reminders",
     ),
+    "plusBenefitActivitySort": MessageLookupByLibrary.simpleMessage(
+      "Sort by recent activity and reply rate",
+    ),
+    "plusBenefitAdvancedFilter": MessageLookupByLibrary.simpleMessage(
+      "Advanced filters: country/language/timezone/city",
+    ),
+    "plusBenefitAntiHarassment": MessageLookupByLibrary.simpleMessage(
+      "Priority anti-harassment protection and weight protection",
+    ),
+    "plusBenefitConflictAdvice": MessageLookupByLibrary.simpleMessage(
+      "Conflict points and relationship advice",
+    ),
+    "plusBenefitDestinyPriority": MessageLookupByLibrary.simpleMessage(
+      "Destiny priority exposure in recommendations and likes",
+    ),
+    "plusBenefitDestinyPush": MessageLookupByLibrary.simpleMessage(
+      "New destiny match arrival notifications",
+    ),
+    "plusBenefitDimensionBreakdown": MessageLookupByLibrary.simpleMessage(
+      "4-dimension breakdown: personality/communication/intimacy/boundaries",
+    ),
+    "plusBenefitHighMatchDisplay": MessageLookupByLibrary.simpleMessage(
+      "High match score display with percentage",
+    ),
+    "plusBenefitHistoryTranslation": MessageLookupByLibrary.simpleMessage(
+      "One-click translation of message history",
+    ),
+    "plusBenefitInterestFilter": MessageLookupByLibrary.simpleMessage(
+      "Interest and travel plan filters",
+    ),
+    "plusBenefitLikeReminder": MessageLookupByLibrary.simpleMessage(
+      "Like back and read receipt reminders",
+    ),
+    "plusBenefitMatchScore": MessageLookupByLibrary.simpleMessage(
+      "Overall compatibility score visualization",
+    ),
+    "plusBenefitMessageTemplates": MessageLookupByLibrary.simpleMessage(
+      "Quick message templates (compliments/invitations/platform switch)",
+    ),
+    "plusBenefitOCRTranslation": MessageLookupByLibrary.simpleMessage(
+      "Image instant translation and text recognition",
+    ),
+    "plusBenefitRealTimeTranslation": MessageLookupByLibrary.simpleMessage(
+      "Real-time translation and polishing: multilingual auto-correction",
+    ),
+    "plusBenefitSmartOpener": MessageLookupByLibrary.simpleMessage(
+      "Smart opening lines: 3 high-conversion suggestions per person",
+    ),
+    "plusBenefitStarGreeting": MessageLookupByLibrary.simpleMessage(
+      "Star greeting package: 10 daily greetings",
+    ),
+    "plusBenefitSupportChannel": MessageLookupByLibrary.simpleMessage(
+      "Fast-track subscription issue resolution",
+    ),
+    "plusBenefitTopicPool": MessageLookupByLibrary.simpleMessage(
+      "Conversation topic pool based on profile analysis",
+    ),
+    "plusBenefitUnlockLikedMe": MessageLookupByLibrary.simpleMessage(
+      "Unlock clear avatars and tags in Liked Me",
+    ),
+    "plusDescTitle": MessageLookupByLibrary.simpleMessage("Plus Description"),
     "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
       "1000 AI Interpretation messages daily",
+    ),
+    "plusFuncAstroPairTips": MessageLookupByLibrary.simpleMessage(
+      "AstroPair Tips - Your chat advisor",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("5 DM per week"),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
       "Filter matching Countries",
-    ),
-    "plusFuncSonaTips": MessageLookupByLibrary.simpleMessage(
-      "SONA Tips - Your chat advisor",
     ),
     "plusFuncUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "Unlimited Likes",
@@ -340,18 +410,23 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 Wshes"),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage(
-      "10 Duo Snap  / week",
+      "Duo Snap with Plus",
     ),
     "preference": MessageLookupByLibrary.simpleMessage("Preference"),
     "privacy": MessageLookupByLibrary.simpleMessage("Privacy"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+    "profileNotShown": MessageLookupByLibrary.simpleMessage(
+      "They haven\'t shown their true self yet",
+    ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "Push notifications",
     ),
-    "recordsLabel": MessageLookupByLibrary.simpleMessage("Records"),
     "report": MessageLookupByLibrary.simpleMessage("Report"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("Gore"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("Other"),
+    "reportOptionPerAstroPairlAttack": MessageLookupByLibrary.simpleMessage(
+      "PerAstroPairl Attack",
+    ),
     "reportOptionPersonalAttack": MessageLookupByLibrary.simpleMessage(
       "Personal Attack",
     ),
@@ -360,31 +435,30 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "reportOptionScam": MessageLookupByLibrary.simpleMessage("Scam"),
     "requireYourRealPhoto": MessageLookupByLibrary.simpleMessage(
-      "Duo snap require your real photo",
+      "We need your real photo",
     ),
-    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
       "Running into foreigners near you",
     ),
-    "save": MessageLookupByLibrary.simpleMessage("Save"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage(
       "Screenshot evidence",
     ),
-    "secondLabel": MessageLookupByLibrary.simpleMessage("Second"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("View profile"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("See who likes you"),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage(
-      "Country or Region",
+      "Select Country",
     ),
     "sendDm": MessageLookupByLibrary.simpleMessage("Send DM"),
-    "sendToHer": MessageLookupByLibrary.simpleMessage("Send to Her"),
-    "sendToHim": MessageLookupByLibrary.simpleMessage("Send to Him"),
-    "sendToThem": MessageLookupByLibrary.simpleMessage("Send to Them"),
+    "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
+      "💫 Send a star greeting to unlock album Continue",
+    ),
     "setDefault": MessageLookupByLibrary.simpleMessage("Set as default"),
+    "setInterestTags": MessageLookupByLibrary.simpleMessage(
+      "Set clear interest tags",
+    ),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
-    "share": MessageLookupByLibrary.simpleMessage("Share"),
-    "shareForMoreTriesMessage": MessageLookupByLibrary.simpleMessage(
-      "Share to get more AI Dress tries!👇",
+    "showYourPerAstroPairlity": MessageLookupByLibrary.simpleMessage(
+      "Show your perAstroPairlity",
     ),
     "showYourPersonality": MessageLookupByLibrary.simpleMessage(
       "Show your personality",
@@ -393,47 +467,37 @@ class MessageLookup extends MessageLookupByLibrary {
       "Almost done",
     ),
     "sixMonths": MessageLookupByLibrary.simpleMessage("6 Months"),
-    "soloLabel": MessageLookupByLibrary.simpleMessage("Solo"),
-    "sonaInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ SONA interpretation is turned off",
-    ),
-    "sonaRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
-      "Sona Recommendation: Cooldown\nWhat to do: Wait Suggestion: Watch a movie?",
-    ),
-    "sonaWillGenerateABioBasedOnInterests":
-        MessageLookupByLibrary.simpleMessage(
-          "SONA will generate a bio based on your interests",
-        ),
     "speakSameLanguage": MessageLookupByLibrary.simpleMessage(
       "🤝 You guys speak the same language",
     ),
     "standard": MessageLookupByLibrary.simpleMessage("Standard"),
+    "startChat": MessageLookupByLibrary.simpleMessage("Start Chat"),
+    "startedChat": MessageLookupByLibrary.simpleMessage(
+      "Started chatting with",
+    ),
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage(
           "1000 AI \nInterpretation \nmessages daily",
         ),
+    "subPageSubtitleAstroPairTips": MessageLookupByLibrary.simpleMessage(
+      "AstroPair Tips -\nYour chat advisor",
+    ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage(
       "5 DM per week",
     ),
     "subPageSubtitleFilterMatchingCountries":
         MessageLookupByLibrary.simpleMessage("Filter matching \nCountries"),
-    "subPageSubtitleSonaTips": MessageLookupByLibrary.simpleMessage(
-      "SONA Tips -\nYour chat advisor",
-    ),
     "subPageSubtitleUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "Unlimited Likes",
     ),
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
       "Unlock to see\nwho likes you",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage("Get SONA Plus"),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("Get AstroPair Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("Terms"),
-    "subscriptionAgreementPrefix": m5,
+    "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(" ."),
     "takeIt": MessageLookupByLibrary.simpleMessage("Take It"),
-    "tenWeeklyDressUpRightsMessage": MessageLookupByLibrary.simpleMessage(
-      "10 AI Dress up / week",
-    ),
     "termsOfService": MessageLookupByLibrary.simpleMessage("Terms of Service"),
     "theKeyIsBalance": MessageLookupByLibrary.simpleMessage(
       "The key is balance",
@@ -448,17 +512,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
       "👅You\'ve hit your weekly limit",
     ),
-    "twentyWeeklyDressUpRightsMessage": MessageLookupByLibrary.simpleMessage(
-      "20 AI Dress up / week (Ladies-specific rights)",
-    ),
+    "unlockHighMatchUsers": m5,
+    "unlockUsersWithDestiny": m6,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
-      "Unmissable special offer prices!",
+      "Unmissable special offer prices",
+    ),
+    "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage(
+      "Upload high-quality real photos",
     ),
     "uploadYourPhoto": MessageLookupByLibrary.simpleMessage(
       "Upload your photo",
     ),
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
-      "SONA strives to provide a genuine communication environment, please upload your real photo",
+      "Upload your best photo",
     ),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage(
       "Take a photo",
@@ -524,6 +590,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage(
       "Enter verification code we‘ve just sent",
     ),
+    "viewAstroReport": MessageLookupByLibrary.simpleMessage(
+      "View astro report with",
+    ),
     "wannaHollaAt": MessageLookupByLibrary.simpleMessage("Wanna holla at..."),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "When turned off, your city will not be displayed when matching",
@@ -541,11 +610,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
       "After unmatching, all your chat history will be cleared.",
     ),
-    "weeklyLimitReached": MessageLookupByLibrary.simpleMessage(
-      "Weekly limit reached",
-    ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage(
-      "What’s your E-Mail?",
+      "What\'s your email?",
     ),
     "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Who likes you"),
     "whoLikesU": MessageLookupByLibrary.simpleMessage("Who likes you"),
@@ -558,7 +624,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "Wanna do something?",
     ),
-    "wishCityPickerSkipButton": m6,
+    "wishCityPickerSkipButton": m7,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "if you go there, Which cities do you want to visit?",
     ),
@@ -576,19 +642,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "Recently, I guess",
     ),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("Within a year"),
-    "wishDatePickerSubtitle": m7,
+    "wishDatePickerSubtitle": m8,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("When"),
     "wishList": MessageLookupByLibrary.simpleMessage("Wish List"),
     "wishes": MessageLookupByLibrary.simpleMessage("Wishes"),
+    "writeInterestingBio": MessageLookupByLibrary.simpleMessage(
+      "Write an interesting personal bio",
+    ),
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage(
-      "You\'re a Club member now ",
+      "You are a club member now",
     ),
     "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage(
       "You can edit it anytime",
     ),
     "youSeemCool": MessageLookupByLibrary.simpleMessage("You seem cool"),
-    "yourPictureIsReady": MessageLookupByLibrary.simpleMessage(
-      "Your picture is ready!",
-    ),
   };
 }

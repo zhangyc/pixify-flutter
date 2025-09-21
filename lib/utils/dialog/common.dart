@@ -24,7 +24,6 @@ Future<T?> showCommonBottomSheet<T>({
         ),
         padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
         decoration: ShapeDecoration(
-          color: Colors.white,
           shape: RoundedRectangleBorder(
             side: BorderSide(
               width: 2,

@@ -161,7 +161,6 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                   child:PageView(
                                     onPageChanged: (value){
                                       _currentPage = value;
-                                      ref.read(backgroundImageProvider.notifier).updateBgImage(widget.info.wishList[value].pic!);
                                     },
                                     controller: pageController,
                                     children: widget.info.wishList.map((wish) => Container(
@@ -216,8 +215,6 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                                                             travelWishId: wish.id
                                                         );
                                                         SonaAnalytics.log(MatchEvent.match_like_wishlist.name);
-
-                                                        ref.read(backgroundImageProvider.notifier).updateBgImage(null);
 
                                                         widget.next.call();
                                                       },),
@@ -294,7 +291,6 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                         ///
                         if(info.wishList.isEmpty){
                           MatchApi.like(info.id);
-                          ref.read(backgroundImageProvider.notifier).updateBgImage(null);
                           widget.next.call();
                         }else {
                           widget.onMatch.call(true);
@@ -351,7 +347,6 @@ class _ProfileState extends ConsumerState<ProfileWidget> {
                         ///
                         if(info.wishList.isEmpty){
                           MatchApi.like(info.id);
-                          ref.read(backgroundImageProvider.notifier).updateBgImage(null);
                           widget.next.call();
                         }else {
                           widget.onMatch.call(true);

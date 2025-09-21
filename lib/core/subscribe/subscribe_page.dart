@@ -5,25 +5,24 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sona/common/env.dart';
 import 'package:sona/common/permission/permission.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/subscribe/providers/subscriptions.dart';
-import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/global/global.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../account/providers/profile.dart';
 import '../../common/widgets/webview.dart';
 import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
+import '../../utils/toast/flutter_toast.dart';
 import '../match/util/event.dart';
 import '../match/util/iap_helper.dart';
 import 'model/member.dart';
@@ -41,14 +40,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   late StreamSubscription<List<PurchaseDetails>> _subscription;
   bool _purchasePending = false;
   ScrollController _scrollController = ScrollController();
-  late var _showing = [
-    FromTag.pay_chatlist_likedme,
-    FromTag.pay_match_arrow,
-    FromTag.club_duo_snap,
-    FromTag.pay_chatlist_blur
-  ].contains(widget.fromTag)
-      ? 'plus'
-      : 'club';
 
   @override
   void initState() {
@@ -63,23 +54,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     }, onError: (Object error) {
       if (kDebugMode) print(error);
     });
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   Future.delayed(const Duration(milliseconds: 500), () {
-    //     if(_scrollController.hasClients){
-    //       _scrollController.animateTo(_scrollController.initialScrollOffset+211/1.5, duration: Duration(milliseconds: 200),curve: Curves.bounceIn);
-    //       setState(() {});
-    //     }
-    //   });
-    // });
-  }
-
-  Future _subscribeClub() async {
-    final clubDetails = ref
-        .read(asyncSubscriptionsProvider)
-        .value!
-        .firstWhere((sub) => sub.id == clubMonthlyId);
-    _subscribe(clubDetails);
-    SonaAnalytics.log(DuoSnapEvent.club_click_pay.name);
   }
 
   Future _subscribePlus() async {
@@ -118,9 +92,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     try {
       await inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
     } catch (e) {
-      if (pd.id == clubMonthlyId) {
-        SonaAnalytics.log(DuoSnapEvent.club_pay_fail.name);
-      }
       inAppPurchase.restorePurchases(
           applicationUserName: ref.read(myProfileProvider)!.id.toString());
     }
@@ -131,12 +102,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor:
-            _showing == 'club' ? Colors.white : const Color(0xFFBEFF06),
         appBar: AppBar(
-          backgroundColor:
-              _showing == 'club' ? const Color(0xFFBEFF06) : Colors.white,
-          title: Text('Subscribe'),
+          title: Text(S.of(context).subPageTitle),
           actions: [
             if (ref.read(myProfileProvider)!.isMember)
               UnconstrainedBox(
@@ -165,73 +132,62 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               )
           ],
         ),
-        floatingActionButton: ref.watch(myProfileProvider)!.memberType ==
-                    MemberType.none ||
-                (ref.watch(myProfileProvider)!.memberType == MemberType.club &&
-                    _showing == 'plus')
-            ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: OutlinedButton(
-                  onPressed: _purchasePending ||
-                          !ref.watch(asyncSubscriptionsProvider).hasValue
-                      ? null
-                      : (_showing == 'club' ? _subscribeClub : _subscribePlus),
-                  style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      backgroundColor: _showing == 'club'
-                          ? Color(0xFFBEFF06)
-                          : Colors.white),
-                  child: _purchasePending
-                      ? CircularProgressIndicator()
-                      : Text(_showing == 'club'
-                          ? S.current.buttonJoinNow
-                          : '🌟 ${S.of(context).buttonContinue} 🌟'),
-                ),
-              )
-            : null,
+        floatingActionButton:
+            (ref.watch(myProfileProvider)!.memberType == MemberType.none ||
+                    ref.watch(myProfileProvider)!.memberType == MemberType.club)
+                ? Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    child: ElevatedButton(
+                      onPressed: _purchasePending ||
+                              !ref.watch(asyncSubscriptionsProvider).hasValue
+                          ? null
+                          : _subscribePlus,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF00EED1),
+                        foregroundColor: Colors.black,
+                        elevation: 8,
+                        shadowColor: const Color(0xFF00EED1).withOpacity(0.3),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        minimumSize: const Size(double.infinity, 56),
+                      ),
+                      child: _purchasePending
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.black),
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.auto_awesome,
+                                    size: 20, color: Colors.black),
+                                const SizedBox(width: 8),
+                                Text(
+                                  S.of(context).buttonContinue,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                const Icon(Icons.auto_awesome,
+                                    size: 20, color: Colors.black),
+                              ],
+                            ),
+                    ),
+                  )
+                : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: _showing == 'club' ? _buildClub() : _buildPlus());
+        body: _buildPlus());
   }
-
-  void _showTab(String name) {
-    if (_showing != name) {
-      setState(() {
-        _showing = name;
-      });
-    }
-  }
-
-  Widget _buildTabBar() => Container(
-        margin: EdgeInsets.symmetric(vertical: 12),
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          children: [
-            Flexible(
-              child: OutlinedButton(
-                  onPressed: () => _showTab('club'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        _showing == 'club' ? Colors.black : Colors.transparent),
-                    foregroundColor: MaterialStatePropertyAll(
-                        _showing == 'club' ? Colors.white : Colors.black),
-                  ),
-                  child: Text('Club')),
-            ),
-            SizedBox(width: 12),
-            Flexible(
-              child: OutlinedButton(
-                  onPressed: () => _showTab('plus'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        _showing == 'plus' ? Colors.black : Colors.transparent),
-                    foregroundColor: MaterialStatePropertyAll(
-                        _showing == 'plus' ? Colors.white : Colors.black),
-                  ),
-                  child: Text('Plus')),
-            ),
-          ],
-        ),
-      );
 
   Widget _buildPlusTerms() => Container(
         margin: EdgeInsets.only(top: 24),
@@ -249,7 +205,8 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                     text: S.current.subscriptionAgreement,
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigator.push(context, MaterialPageRoute(builder: (c) {
+                        Navigator.push(context,
+                            MaterialPageRoute<void>(builder: (c) {
                           return WebView(
                               url: env.termsOfService,
                               title: S.of(context).termsOfService);
@@ -263,150 +220,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
               ]),
         ),
       );
-
-  Widget _buildClubTerms() => Container(
-        margin: EdgeInsets.only(top: 24),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: RichText(
-          text: TextSpan(
-              text: S.current
-                  .clubTerms(Platform.isAndroid ? 'Play Store' : 'Apple ID'),
-              style: const TextStyle(
-                color: Color(0xffa9a9a9),
-                fontSize: 12,
-              ),
-              children: [
-                TextSpan(
-                    text: S.current.subscriptionAgreement,
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.push(context, MaterialPageRoute(builder: (c) {
-                          return WebView(
-                              url: env.termsOfService,
-                              title: S.of(context).termsOfService);
-                        }));
-                      },
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(fontSize: 12, fontWeight: FontWeight.w800)),
-                TextSpan(text: S.current.subscriptionAgreementSuffix),
-              ]),
-        ),
-      );
-
-  Widget _buildClubFee() {
-    return Container(
-        height: 200,
-        alignment: Alignment.center,
-        child: ref.watch(asyncSubscriptionsProvider).when(
-            data: (subscriptions) {
-              print(subscriptions);
-              final club = subscriptions.firstWhere(
-                  (sub) => sub.id == clubMonthlyId,
-                  orElse: () => throw Exception('ex'));
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  FittedBox(
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black, width: 2),
-                          borderRadius: BorderRadius.circular(12)),
-                      clipBehavior: Clip.antiAlias,
-                      alignment: Alignment.center,
-                      child: Text(
-                        S.current.clubPromotionTitle,
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w900),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 12),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    alignment: Alignment.center,
-                    child: Text(S.current.clubFeePrefix,
-                        style: Theme.of(context).textTheme.titleLarge),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 4),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    alignment: Alignment.center,
-                    child: Text('${club.price}/${S.of(context).month}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(fontSize: 32)),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 4),
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    alignment: Alignment.center,
-                    child: Text('😉 ${S.current.clubFeeJoking}',
-                        style: Theme.of(context).textTheme.bodySmall),
-                  ),
-                ],
-              );
-            },
-            error: (_, __) => Container(),
-            loading: () => const SizedBox(
-                width: 32, height: 32, child: CircularProgressIndicator())));
-  }
-
-  final _clubPerks = [
-    S.current.clubPerkDuoSnap,
-    S.current.clubPerkLike,
-    S.current.clubPerkSonaMessage,
-    S.current.clubPerkSonaTip,
-    S.current.clubPerkBadge
-  ];
-
-  Widget _buildClubDesc() {
-    return Container(
-      padding: const EdgeInsets.only(top: 60, left: 16, right: 16, bottom: 0),
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/white_star_bg.png'),
-            alignment: Alignment.topCenter,
-            fit: BoxFit.fitWidth),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(S.current.membersPerks,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(fontWeight: FontWeight.w900)),
-          const SizedBox(height: 8),
-          ..._clubPerks.map((perk) => Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: [
-                    Image.asset(Assets.iconsCorrect,
-                        width: 14, height: 14, color: Colors.black),
-                    const SizedBox(width: 8),
-                    Text(perk,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(fontWeight: FontWeight.w800)),
-                  ],
-                ),
-              )),
-          const SizedBox(height: 8),
-          Text(S.current.clubPromotionContent,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: Color(0xFFFFE41F), fontWeight: FontWeight.w900))
-        ],
-      ),
-    );
-  }
 
   Widget _buildRestoreButton() {
     return Visibility(
@@ -440,84 +253,180 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     );
   }
 
-  Widget _buildClub() {
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.only(bottom: 90),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/green_bg.png'),
-              alignment: Alignment.topCenter,
-              fit: BoxFit.fitWidth),
-          color: Colors.white,
-        ),
-        child: Column(
-          children: [
-            _buildTabBar(),
-            _buildClubFee(),
-            _buildClubDesc(),
-            _buildClubTerms(),
-            _buildRestoreButton()
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDivider() {
-    return Image.asset('assets/images/cloud_green_narrow.png',
-        fit: BoxFit.fitWidth);
-  }
-
   Widget _buildPlusTitle() {
     return Container(
-      height: 100,
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      height: 120,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xFF00EED1).withOpacity(0.1),
+            const Color(0xFF00EED1).withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: const Color(0xFF00EED1).withOpacity(0.3),
+          width: 1,
+        ),
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-              child: Text(
-                  widget.fromTag == FromTag.club_duo_snap
-                      ? S.current.plusPerkDuoSnap
-                      : S.current.plusDescTitle,
-                  style: Theme.of(context).textTheme.titleLarge)),
-          SonaIcon(icon: SonaIcons.plus_mark, size: 100)
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Astro Pair Plus",
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: const Color(0xFF00EED1),
+                        fontWeight: FontWeight.w900,
+                      ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "Destiny Through Stars",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFF00EED1).withOpacity(0.1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: SonaIcon(
+              icon: SonaIcons.plus_mark,
+              size: 48,
+              color: const Color(0xFF00EED1),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  final _plusPerks = [
-    S.current.plusPerkDuoSnap,
-    S.current.plusFuncUnlockWhoLikesU,
-    S.current.plusFuncAIInterpretation,
-    S.current.plusFuncUnlimitedLikes,
-    S.current.plusFuncDMPerWeek,
-    S.current.plusFuncSonaTips
-  ];
+  // Plus 权益清单（使用新的 i18n 文案）
+  List<String> _plusPerksList(BuildContext context) {
+    return <String>[
+      // 曝光/可见
+      S.of(context).plusBenefitDestinyPriority,
+      S.of(context).plusBenefitUnlockLikedMe,
+      S.of(context).plusBenefitHighMatchDisplay,
+
+      // 开聊/转化
+      S.of(context).plusBenefitStarGreeting,
+      S.of(context).plusBenefitSmartOpener,
+      S.of(context).plusBenefitTopicPool,
+      S.of(context).plusBenefitRealTimeTranslation,
+
+      // 合盘/洞察
+      S.of(context).plusBenefitMatchScore,
+      S.of(context).plusBenefitDimensionBreakdown,
+      S.of(context).plusBenefitConflictAdvice,
+
+      // 筛选/控制
+      S.of(context).plusBenefitAdvancedFilter,
+      S.of(context).plusBenefitInterestFilter,
+      S.of(context).plusBenefitActivitySort,
+
+      // 提醒/回访
+      S.of(context).plusBenefitLikeReminder,
+      S.of(context).plusBenefitActivityReminder,
+      S.of(context).plusBenefitDestinyPush,
+
+      // 效率/体验
+      S.of(context).plusBenefitOCRTranslation,
+      S.of(context).plusBenefitMessageTemplates,
+      S.of(context).plusBenefitHistoryTranslation,
+
+      // 保障
+      S.of(context).plusBenefitAntiHarassment,
+      S.of(context).plusBenefitSupportChannel,
+    ];
+  }
 
   Widget _buildPlusDesc() {
     return Container(
-      padding: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ..._plusPerks.map((perk) => Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: [
-                    Image.asset(Assets.iconsCorrect,
-                        width: 14, height: 14, color: Colors.black),
-                    const SizedBox(width: 8),
-                    Text(perk,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(fontWeight: FontWeight.w800)),
-                  ],
+          Text(
+            "Plus 会员权益",
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w800,
                 ),
-              )),
+          ),
+          const SizedBox(height: 16),
+          ..._plusPerksList(context).asMap().entries.map((entry) {
+            final index = entry.key;
+            final perk = entry.value;
+            return Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                border: index < _plusPerksList(context).length - 1
+                    ? Border(
+                        bottom: BorderSide(
+                          color: Colors.grey.withOpacity(0.1),
+                          width: 1,
+                        ),
+                      )
+                    : null,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF00EED1).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      Icons.check,
+                      size: 14,
+                      color: const Color(0xFF00EED1),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      perk,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                            height: 1.4,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
         ],
       ),
     );
@@ -526,29 +435,24 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   Widget _buildPlus() {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(bottom: 90),
+        padding: const EdgeInsets.only(bottom: 90),
         decoration: BoxDecoration(
-            color: Colors.white,
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0, 0.3],
-                colors: [Colors.white, Color(0xFFBEFF06)])),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              const Color(0xFFF8F9FA),
+              const Color(0xFF00EED1).withOpacity(0.05),
+            ],
+          ),
+        ),
         child: Column(
           children: [
-            Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  _buildTabBar(),
-                  _buildPlusTitle(),
-                  _buildPlusDesc(),
-                  _buildDivider(),
-                ],
-              ),
-            ),
-            _buildPlusSubscriptionsTitle(),
             _buildPlusSubscriptions(),
+            _buildPlusTitle(),
+            _buildPlusDesc(),
+            const SizedBox(height: 20),
+            _buildPlusSubscriptionsTitle(),
             _buildPlusTerms(),
             _buildRestoreButton()
           ],
@@ -561,7 +465,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
         alignment: Alignment.centerLeft,
-        child: Text('Sona Plus',
+        child: Text('Astro Pair Plus',
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
@@ -632,10 +536,15 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   }
 
   Future<Response> _verifyPurchase(PurchaseDetails purchaseDetails) async {
+    /// 获取包名通过PackageInfo
+    final packageInfo = await PackageInfo.fromPlatform();
+    final packageName = packageInfo.packageName;
+
+    ///
     Map<String, dynamic> map = {};
     if (Platform.isAndroid) {
       map = {
-        "packageName": "com.solararrow.pixify",
+        "packageName": packageName,
         "productId": purchaseDetails.productID,
         "purchaseToken":
             purchaseDetails.verificationData.serverVerificationData,
@@ -643,7 +552,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       };
     } else if (Platform.isIOS) {
       map = {
-        "packageName": "com.solararrow.pixify",
+        "packageName": packageName,
         "productId": purchaseDetails.productID,
         "purchaseToken":
             purchaseDetails.verificationData.serverVerificationData,

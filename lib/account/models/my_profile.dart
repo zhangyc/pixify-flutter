@@ -67,8 +67,9 @@ class MyProfile {
         name: json['nickname'],
         gender:
             json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-        birthday: json['birthday'] != null ? DateTime.tryParse(json['birthday']) : null,
-
+        birthday: json['birthday'] != null
+            ? DateTime.tryParse(json['birthday'])
+            : null,
         countryId: json['countryId'],
         countryCode: json['countryCode'],
         countryFlag: json['countryFlag'],
@@ -120,38 +121,12 @@ class MyProfile {
     };
   }
 
-  static DateTime? _parseBirthday(dynamic birthday) {
-    if (birthday == null) return null;
-
-    if (birthday is int) {
-      // 如果是整数，判断是秒还是毫秒
-      if (birthday > 1000000000000) {
-        return DateTime.fromMillisecondsSinceEpoch(birthday);
-      } else {
-        return DateTime.fromMillisecondsSinceEpoch(birthday * 1000);
-      }
-    } else if (birthday is String) {
-      // 如果是字符串，先尝试解析为整数
-      final timestamp = int.tryParse(birthday);
-      if (timestamp != null) {
-        if (timestamp > 1000000000000) {
-          return DateTime.fromMillisecondsSinceEpoch(timestamp);
-        } else {
-          return DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-        }
-      }
-      // 如果不是数字，尝试直接解析日期
-      return DateTime.tryParse(birthday);
-    }
-
-    return null;
-  }
-
   bool _validate() {
     return name != null &&
         gender != null &&
-        birthday != null &&
-        (avatar != null && avatar!.isNotEmpty) &&
+        birthday != null
+        // && (avatar != null && avatar!.isNotEmpty)
+        &&
         locale != null;
     // && countryId != null;
   }

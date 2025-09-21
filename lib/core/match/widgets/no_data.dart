@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../generated/assets.dart';
+import 'package:sona/generated/l10n.dart';
 
 class NoDataWidget extends StatelessWidget {
   const NoDataWidget({super.key, required this.onTap});
@@ -8,80 +7,77 @@ class NoDataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
-   return Column(
-     mainAxisAlignment: MainAxisAlignment.start,
-     children: [
-       Container(
-         decoration: BoxDecoration(
-           gradient: LinearGradient(colors: [
-             Colors.white,
-             Color(0x00ffffff),
-             Color(0x00ffffff),
-             Colors.white,
-           ],
-             begin: Alignment.topCenter,
-             end: Alignment.bottomCenter
-           )
-         ),
-         height: 425,
-         child: Stack(
-           children: [
-             Image.asset(Assets.imagesNoDataBg,fit: BoxFit.cover,width: MediaQuery.of(context).size.width ,),
-             Positioned(child: Align(child: Image.asset(Assets.imagesNoDataBgContent,width: 165,height: 165,),alignment: Alignment.bottomCenter,),
-              bottom: 110   ,
-              left: MediaQuery.of(context).size.width/2-165/2,
-             )
-           ],
-         ),
-       ),
-       // Image.asset(Assets.imagesError,width: 132,height: 166,fit: BoxFit.cover,),
-       const SizedBox(height: 4,),
-       const Text('Oops, no data right now ',
-         style: TextStyle(
-             color: Color(0xff2c2c2c),
-             fontSize: 16,
-             fontWeight: FontWeight.w900
-         ),
-       ),
-       const SizedBox(height: 4,),
-       Text.rich(
-           TextSpan(
-               children: [
-                 TextSpan(text: "Please check your internet or Tap to ",style: TextStyle(
-                     color: Color(0xff727272),
-                     fontSize: 14
-
-                 ),),
-                 TextSpan(text: "Refresh\n", style: TextStyle(fontWeight: FontWeight.bold,color: Color(0xff2c2c2c),)),
-                 TextSpan(text: " and try again",style: TextStyle(
-                     color: Color(0xff727272),
-                     fontSize: 14
-
-                 ),),
-               ]
-           ),
-         textAlign: TextAlign.center,
-       ),
-       const SizedBox(height: 12,),
-       Padding(
-         padding: const EdgeInsets.symmetric(
-             horizontal: 33
-         ),
-         child: ElevatedButton(onPressed: (){
-           onTap.call();
-          }, child: Container(child: const Text('Refresh',style: TextStyle(
-           color: Colors.white,
-         ),),
-           height: 56,
-           alignment: Alignment.center,
-         ),
-           style: ElevatedButton.styleFrom(
-               backgroundColor: const Color(0xff2c2c2c)
-           ),
-         ),
-       ),
-     ],
-   );
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 圆形柔光占位图标
+            Container(
+              width: 88,
+              height: 88,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: isDark
+                      ? [
+                          const Color(0xFF12121B),
+                          const Color(0xFF0E0E14),
+                        ]
+                      : [
+                          const Color(0xFFF3F3F6),
+                          const Color(0xFFF8F8FA),
+                        ],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: theme.primaryColor.withOpacity(isDark ? 0.20 : 0.10),
+                    blurRadius: 20,
+                  ),
+                ],
+                border: Border.all(
+                  color: theme.primaryColor.withOpacity(isDark ? 0.30 : 0.15),
+                  width: 1,
+                ),
+              ),
+              child: Icon(
+                Icons.inbox_rounded,
+                color: theme.primaryColor,
+                size: 36,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              S.of(context).oopsNoDataRightNow,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w800,
+                color:
+                    isDark ? const Color(0xFFEDEDF4) : const Color(0xFF2C2C2C),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              S.of(context).pleaseCheckYourInternetOrTapToRefreshAndTryAgain,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color:
+                    isDark ? const Color(0xFFB5B6C8) : const Color(0xFF727272),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            FilledButton(
+              onPressed: () => onTap.call(),
+              child: Text(S.of(context).buttonRefresh),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
