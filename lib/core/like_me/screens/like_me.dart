@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
-import 'package:sona/common/screens/profile.dart';
+import 'package:sona/common/screens/other_user_profile.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/subscribe/model/member.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
@@ -120,7 +120,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen>
                             Navigator.push(
                                 context,
                                 MaterialPageRoute<void>(
-                                    builder: (_) => UserProfileScreen(
+                                    builder: (_) => OtherUserProfileScreen(
                                           userId: u.id,
                                           relation: Relation.likeMe,
                                         )));
@@ -364,19 +364,19 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen>
             ),
           ),
           SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () => _navigateToAstroOnboarding(),
-            icon: Icon(Icons.auto_awesome, size: 18),
-            label: Text(S.of(context).completeAstroProfileButton),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).primaryColor,
-              foregroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          ),
+          // ElevatedButton.icon(
+          //   onPressed: () => _navigateToAstroOnboarding(),
+          //   icon: Icon(Icons.auto_awesome, size: 18),
+          //   label: Text(S.of(context).completeAstroProfileButton),
+          //   style: ElevatedButton.styleFrom(
+          //     backgroundColor: Theme.of(context).primaryColor,
+          //     foregroundColor: Colors.white,
+          //     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(20),
+          //     ),
+          //   ),
+          // ),
           SizedBox(height: 16),
           TextButton.icon(
             onPressed: () => _showTipsDialog(),
@@ -394,9 +394,9 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen>
   // 跳转到星盘资料完善页面
   void _navigateToAstroOnboarding() {
     // TODO: 实现跳转到星盘资料页面
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(S.of(context).navigateToAstroProfile)),
-    );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(content: Text(S.of(context).navigateToAstroProfile)),
+    // );
   }
 
   // 显示提升魅力小贴士弹窗

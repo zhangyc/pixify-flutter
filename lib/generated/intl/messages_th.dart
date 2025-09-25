@@ -146,6 +146,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "เติมเต็มโปรไฟล์ดวงดาว",
     ),
+    "completeProfile": MessageLookupByLibrary.simpleMessage("เติมเต็มโปรไฟล์"),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage(
       "ดำเนินการต่อด้วยโทรศัพท์",
     ),
@@ -160,6 +161,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage(
       "Duo Snap อย่างไรก็ตาม",
     ),
+    "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
+      "ห้องแชทส่วนตัวของคุณยังว่างอยู่\nแต่ดวงดาวรู้ว่าคนที่ใช่กำลังมาหาคุณ",
+    ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "ไม่ได้ส่ง โปรแกรม AstroPair จะไม่แปลคำที่ถูกห้ามใช้",
     ),
@@ -169,6 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "ส่งไม่สำเร็จ กรุณาลองใหม่ภายหลัง",
     ),
+    "fateOnTheWay": MessageLookupByLibrary.simpleMessage("โชคชะตากำลังมา"),
     "feedback": MessageLookupByLibrary.simpleMessage("ข้อเสนอแนะ"),
     "filter": MessageLookupByLibrary.simpleMessage("ตัวกรอง"),
     "findingFolksWhoShareYourInterests": MessageLookupByLibrary.simpleMessage(
@@ -183,6 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "รับ AstroPair Plus",
     ),
+    "goDiscover": MessageLookupByLibrary.simpleMessage("ไปค้นหา"),
     "gotIt": MessageLookupByLibrary.simpleMessage("เข้าใจแล้ว"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "เฮ้ย ลองทายสิว่าใครจะเป็นคนพูดก่อน?",
@@ -423,8 +429,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "ยังไม่ได้แสดงตัวตนที่แท้จริง",
     ),
+    "profileTip": MessageLookupByLibrary.simpleMessage(
+      "✨ เติมเต็มโปรไฟล์ให้ดวงดาวรู้จักคุณมากขึ้น เพื่อการจับคู่ที่แม่นยำ",
+    ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "การแจ้งเตือนแบบพุช",
+    ),
+    "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
+      "📸 กระตุ้นให้อัปโหลดรูปภาพ รู้จักกันมากขึ้น",
     ),
     "report": MessageLookupByLibrary.simpleMessage("รายงาน"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("โหดร้าย"),
@@ -526,6 +538,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "ราคาพิเศษที่ไม่ควรพลาด",
     ),
+    "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
+      "อัปเกรดเป็นพรีเมียมเพื่อรับคำแนะนำเพิ่มเติม",
+    ),
     "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage(
       "อัปโหลดรูปภาพจริงคุณภาพสูง",
     ),
@@ -535,6 +550,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
       "อัปโหลดรูปภาพที่ดีที่สุดของคุณ",
     ),
+    "uploading": MessageLookupByLibrary.simpleMessage("กำลังอัปโหลด..."),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("ถ่ายภาพ"),
     "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage(
       "จากแกลเลอรีเลือก",

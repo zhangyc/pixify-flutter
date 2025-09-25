@@ -563,5 +563,21 @@
   "personaForYou": "為你推薦",
   "@personaForYou": {},
   "oneLineToWin": "一句話打動對方",
-  "@oneLineToWin": {}
+  "@oneLineToWin": {},
+  "remindUploadPhoto": "📸 提醒TA上傳照片，讓彼此更了解",
+  "@remindUploadPhoto": {},
+  "fateOnTheWay": "緣分正在路上",
+  "@fateOnTheWay": {},
+  "emptyChatRoomMessage": "你的專屬聊天室還是空的\n但星星知道，對的人正在向你走來",
+  "@emptyChatRoomMessage": {},
+  "goDiscover": "去發現",
+  "@goDiscover": {},
+  "completeProfile": "完善資料",
+  "@completeProfile": {},
+  "profileTip": "✨ 完善資料讓星星更了解你，匹配更精準",
+  "@profileTip": {},
+  "upgradeForMoreRecommendations": "開通會員獲得更多推薦",
+  "@upgradeForMoreRecommendations": {},
+  "uploading": "上傳中...",
+  "@uploading": {}
 }

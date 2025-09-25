@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,6 +17,7 @@ import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/dialog/crop_image.dart';
 import '../../../utils/global/global.dart';
+import '../../../utils/image_compress_util.dart';
 import '../util/event.dart';
 class UploadPortrait extends StatelessWidget {
   const UploadPortrait({
@@ -110,8 +112,8 @@ class UploadPortrait extends StatelessWidget {
                             Fluttertoast.showToast(msg: 'GIF is not allowed');
                             return;
                           }
-                          Uint8List? bytes = await file.readAsBytes();
-                          bytes = await cropImage(bytes);
+                          File? fileResult=await ImageCompressUtil.compressImage(File(file.path));
+                          Uint8List? bytes = await fileResult?.readAsBytes();
                           if (bytes == null) return;
                           await addPhoto(bytes: bytes, filename: file.name);
                           ref.read(myProfileProvider.notifier).refresh();

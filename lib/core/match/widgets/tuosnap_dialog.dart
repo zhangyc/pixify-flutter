@@ -2,7 +2,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:sona/account/providers/profile.dart';
+// import 'package:sona/account/providers/other_user_profile.dart';
 // import 'package:sona/core/match/widgets/duosnap_button.dart';
 //
 // import '../../../generated/assets.dart';

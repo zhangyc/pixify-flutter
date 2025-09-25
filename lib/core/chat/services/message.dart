@@ -10,6 +10,7 @@ import 'package:sona/common/services/common.dart';
 import '../../../common/models/user.dart';
 import '../../../utils/global/global.dart';
 import '../models/audio_message.dart';
+import '../models/image_message.dart';
 import '../models/message.dart';
 import '../models/message_type.dart';
 import '../models/text_message.dart';
@@ -46,6 +47,16 @@ class MessageController {
           content: content,
         );
         break;
+     case ImMessageContentType.image:
+        message = ImageMessage.fromContent(
+          sender: myInfo,
+          receiver: otherInfo,
+          content: content,
+        );
+        break;
+
+
+
       default:
         throw();
     }
@@ -82,7 +93,7 @@ class MessageController {
             response = await callSona(
               uuid: msg.uuid,
               userId: msg.receiver.id,
-              type: CallSonaType.INPUT,
+              type: CallSonaType.MANUAL,
               input: msg.content['originalText']
             );
           }
@@ -90,6 +101,14 @@ class MessageController {
           final localFile = File(msg.content['localExtension']['path']);
           msg.content['url'] ??= await uploadFile(bytes: localFile.readAsBytesSync(), filename: localFile.path);
           response = await sendMessage(
+            type: ImMessageType.manual,
+            uuid: msg.uuid!,
+            userId: msg.receiver.id,
+            content: msg.content,
+          );
+        case ImageMessage:
+          response = await sendMessage(
+            type: ImMessageType.manual,
             uuid: msg.uuid!,
             userId: msg.receiver.id,
             content: msg.content,

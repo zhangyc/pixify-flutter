@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sona/account/models/my_profile.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/account/services/info.dart';
-import 'package:sona/common/screens/profile.dart';
+import 'package:sona/common/screens/other_user_profile.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/common/widgets/tag/hobby.dart';
 import 'package:sona/utils/dialog/crop_image.dart';
@@ -19,6 +20,7 @@ import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/picker/interest.dart';
 
 import '../../generated/l10n.dart';
+import '../../utils/image_compress_util.dart';
 import '../../utils/toast/flutter_toast.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -30,6 +32,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   late MyProfile _profile;
+  final Set<int> _uploadingPhotos = <int>{}; // 正在上传的照片索引
 
   @override
   void initState() {
@@ -43,7 +46,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: SonaIcon(icon: SonaIcons.back,color: Colors.white,),
+          icon: SonaIcon(
+            icon: SonaIcons.back,
+            color: Colors.white,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(S.of(context).buttonEditProfile),
@@ -192,11 +198,39 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     } else {
       final realIndex = index - 1;
       if (realIndex >= _profile.photos.length) {
-        child = Container(
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Color(0xFFE8E6E6)),
-                borderRadius: BorderRadius.circular(20),
-                color: Color(0xFFF6F3F3)));
+        // 检查是否正在上传到这一格
+        if (_uploadingPhotos.contains(realIndex)) {
+          child = Container(
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Color(0xFFE8E6E6)),
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color(0xFFF6F3F3)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    S.of(context).uploading,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).hintColor,
+                          fontSize: 10,
+                        ),
+                  ),
+                ],
+              ));
+        } else {
+          child = Container(
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Color(0xFFE8E6E6)),
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color(0xFFF6F3F3)));
+        }
       } else {
         final photo = _profile.photos[realIndex];
         child = CachedNetworkImage(
@@ -230,16 +264,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  void _seeMyProfile() {
-    SonaAnalytics.log('my_profile_preview');
-    Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-            builder: (_) => UserProfileScreen(
-                  userId: ref.read(myProfileProvider)!.toUser().id,
-                  relation: Relation.self,
-                )));
-  }
+  // void _seeMyProfile() {
+  //   SonaAnalytics.log('my_profile_preview');
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute<void>(
+  //           builder: (_) => UserProfileScreen(
+  //                 userId: ref.read(myProfileProvider)!.toUser().id,
+  //                 relation: Relation.self,
+  //               )));
+  // }
 
   Future _onEditInterests() async {
     final result = await showHobbiesSelector(context: context);
@@ -306,12 +340,29 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       Fluttertoast.showToast(msg: 'GIF is not allowed');
       return;
     }
-    Uint8List? bytes = await file.readAsBytes();
-    bytes = await cropImage(bytes);
-    if (bytes == null) return;
-    await addPhoto(bytes: bytes, filename: file.name);
-    ref.read(myProfileProvider.notifier).refresh();
-    SonaAnalytics.log('my_profile_photo_add');
+
+    // 确定要上传到的位置（第一个空位）
+    final uploadIndex = _profile.photos.length;
+
+    // 开始上传，显示 loading
+    setState(() {
+      _uploadingPhotos.add(uploadIndex);
+    });
+
+    try {
+      File? fileResult = await ImageCompressUtil.compressImage(File(file.path));
+      Uint8List? bytes = await fileResult?.readAsBytes();
+      if (bytes == null) return;
+
+      await addPhoto(bytes: bytes, filename: file.name);
+      ref.read(myProfileProvider.notifier).refresh();
+      SonaAnalytics.log('my_profile_photo_add');
+    } finally {
+      // 上传完成，移除 loading
+      setState(() {
+        _uploadingPhotos.remove(uploadIndex);
+      });
+    }
   }
 
   Widget _buildPhotoQuickActions() {
@@ -379,12 +430,29 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       Fluttertoast.showToast(msg: 'GIF is not allowed');
       return;
     }
-    Uint8List? bytes = await file.readAsBytes();
-    bytes = await cropImage(bytes);
-    if (bytes == null) return;
-    await addPhoto(bytes: bytes, filename: file.name);
-    ref.read(myProfileProvider.notifier).refresh();
-    SonaAnalytics.log('my_profile_photo_add');
+
+    // 确定要上传到的位置（第一个空位）
+    final uploadIndex = _profile.photos.length;
+
+    // 开始上传，显示 loading
+    setState(() {
+      _uploadingPhotos.add(uploadIndex);
+    });
+
+    try {
+      File? fileResult = await ImageCompressUtil.compressImage(File(file.path));
+      Uint8List? bytes = await fileResult?.readAsBytes();
+      if (bytes == null) return;
+
+      await addPhoto(bytes: bytes, filename: file.name);
+      ref.read(myProfileProvider.notifier).refresh();
+      SonaAnalytics.log('my_profile_photo_add');
+    } finally {
+      // 上传完成，移除 loading
+      setState(() {
+        _uploadingPhotos.remove(uploadIndex);
+      });
+    }
   }
 
   Future _onRemovePhoto(int photoId) async {

@@ -409,6 +409,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       );
     } else if (_state == PageState.success) {
       return CardSwiper(
+
         controller: swiperController,
         cardsCount: users.length,
         cardBuilder: (context, index, percentThresholdX, percentThresholdY) {

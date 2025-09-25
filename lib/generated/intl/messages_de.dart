@@ -153,6 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "Astro-Profil vervollständigen",
     ),
+    "completeProfile": MessageLookupByLibrary.simpleMessage("Completa Profilo"),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage(
       "Mit Telefon fortfahren",
     ),
@@ -167,6 +168,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "dm": MessageLookupByLibrary.simpleMessage("DM"),
     "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("Duo Snap trotzdem"),
+    "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
+      "La tua chat privata è ancora vuota\nMa le stelle sanno, la persona giusta sta venendo da te",
+    ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "Nicht gesendet. AstroPair wird verbotene Wörter nicht übersetzen.",
     ),
@@ -175,6 +179,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "Senden fehlgeschlagen, bitte versuchen Sie es später noch einmal.",
+    ),
+    "fateOnTheWay": MessageLookupByLibrary.simpleMessage(
+      "Il destino è in arrivo",
     ),
     "feedback": MessageLookupByLibrary.simpleMessage("Rückmeldung"),
     "filter": MessageLookupByLibrary.simpleMessage("Filter"),
@@ -190,6 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "AstroPair Plus holen",
     ),
+    "goDiscover": MessageLookupByLibrary.simpleMessage("Vai a Scoprire"),
     "gotIt": MessageLookupByLibrary.simpleMessage("Verstanden"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "Hey, rate mal, wer zuerst das Schweigen bricht?",
@@ -434,8 +442,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "Sie haben ihr wahres Gesicht noch nicht gezeigt",
     ),
+    "profileTip": MessageLookupByLibrary.simpleMessage(
+      "✨ Completa il tuo profilo così le stelle possono conoscerti meglio, per un abbinamento più preciso",
+    ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "Push-Benachrichtigungen",
+    ),
+    "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
+      "📸 Ricorda loro di caricare foto, conoscetevi meglio",
     ),
     "report": MessageLookupByLibrary.simpleMessage("Melden"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("Blut"),
@@ -541,6 +555,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "Unverzichtbare Sonderpreise",
     ),
+    "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
+      "Aggiorna a Premium per più raccomandazioni",
+    ),
     "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage(
       "Laden Sie hochwertige echte Fotos hoch",
     ),
@@ -550,6 +567,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
       "Laden Sie Ihr bestes Foto hoch",
     ),
+    "uploading": MessageLookupByLibrary.simpleMessage("Caricamento..."),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage(
       "Ein Foto machen",
     ),

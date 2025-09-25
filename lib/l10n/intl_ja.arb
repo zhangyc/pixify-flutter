@@ -563,5 +563,21 @@
   "personaForYou": "おすすめ",
   "@personaForYou": {},
   "oneLineToWin": "一言で相手を魅了",
-  "@oneLineToWin": {}
+  "@oneLineToWin": {},
+  "remindUploadPhoto": "📸 写真のアップロードを促し、お互いをもっと知り合いましょう",
+  "@remindUploadPhoto": {},
+  "fateOnTheWay": "運命は道の途中に",
+  "@fateOnTheWay": {},
+  "emptyChatRoomMessage": "あなたの専用チャットルームはまだ空です\nでも星は知っています、運命の人はあなたに向かって来ています",
+  "@emptyChatRoomMessage": {},
+  "goDiscover": "発見に行く",
+  "@goDiscover": {},
+  "completeProfile": "プロフィールを完成",
+  "@completeProfile": {},
+  "profileTip": "✨ プロフィールを完成させて、星があなたをもっとよく知れるように、より正確なマッチングを",
+  "@profileTip": {},
+  "upgradeForMoreRecommendations": "プレミアムにアップグレードしてより多くのおすすめを",
+  "@upgradeForMoreRecommendations": {},
+  "uploading": "アップロード中...",
+  "@uploading": {}
 }

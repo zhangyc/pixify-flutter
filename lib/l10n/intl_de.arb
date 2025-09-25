@@ -563,5 +563,21 @@
   "personaForYou": "Per te",
   "@personaForYou": {},
   "oneLineToWin": "Una frase per conquistarli",
-  "@oneLineToWin": {}
+  "@oneLineToWin": {},
+  "remindUploadPhoto": "📸 Ricorda loro di caricare foto, conoscetevi meglio",
+  "@remindUploadPhoto": {},
+  "fateOnTheWay": "Il destino è in arrivo",
+  "@fateOnTheWay": {},
+  "emptyChatRoomMessage": "La tua chat privata è ancora vuota\nMa le stelle sanno, la persona giusta sta venendo da te",
+  "@emptyChatRoomMessage": {},
+  "goDiscover": "Vai a Scoprire",
+  "@goDiscover": {},
+  "completeProfile": "Completa Profilo",
+  "@completeProfile": {},
+  "profileTip": "✨ Completa il tuo profilo così le stelle possono conoscerti meglio, per un abbinamento più preciso",
+  "@profileTip": {},
+  "upgradeForMoreRecommendations": "Aggiorna a Premium per più raccomandazioni",
+  "@upgradeForMoreRecommendations": {},
+  "uploading": "Caricamento...",
+  "@uploading": {}
 }

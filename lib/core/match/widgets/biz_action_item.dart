@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sona/common/screens/profile.dart';
+import 'package:sona/common/screens/other_user_profile.dart';
 import 'package:sona/core/match/widgets/profile_widget.dart';
 
 import '../../../generated/l10n.dart';

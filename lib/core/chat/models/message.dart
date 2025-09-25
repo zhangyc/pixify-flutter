@@ -65,17 +65,7 @@ class ImMessage {
 }
 
 enum CallSonaType {
-  PROLOGUE,
-  AUTO,
-  SUGGEST,
-  INPUT,
   MANUAL,
-  BIO,
-  HOOK,
-  SIMPLE,
-  SONA_IMPRESSION,
-  SUGGEST_V2,
-  SUGGEST_FUNC
 }
 
 extension DateTimeExt on DateTime {

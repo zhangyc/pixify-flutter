@@ -131,6 +131,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "星盤プロフィール完成",
     ),
+    "completeProfile": MessageLookupByLibrary.simpleMessage("プロフィールを完成"),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage("電話で続行"),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage("説明（任意）"),
     "destinyMatch": MessageLookupByLibrary.simpleMessage("命定"),
@@ -139,6 +140,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "dm": MessageLookupByLibrary.simpleMessage("ディーエム"),
     "duoSnap": MessageLookupByLibrary.simpleMessage("デュオスナップ"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("とにかくデュオスナップ"),
+    "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
+      "あなたの専用チャットルームはまだ空です\nでも星は知っています、運命の人はあなたに向かって来ています",
+    ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "送信されていない。AstroPairは禁止された言葉を翻訳しません。",
     ),
@@ -148,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "送信に失敗しました、後で再試行してください。",
     ),
+    "fateOnTheWay": MessageLookupByLibrary.simpleMessage("運命は道の途中に"),
     "feedback": MessageLookupByLibrary.simpleMessage("フィードバック"),
     "filter": MessageLookupByLibrary.simpleMessage("フィルター"),
     "findingFolksWhoShareYourInterests": MessageLookupByLibrary.simpleMessage(
@@ -162,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "AstroPair Plusを入手",
     ),
+    "goDiscover": MessageLookupByLibrary.simpleMessage("発見に行く"),
     "gotIt": MessageLookupByLibrary.simpleMessage("分かった"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "ねえ、誰が最初に沈黙を破ると思う？",
@@ -372,7 +378,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacy": MessageLookupByLibrary.simpleMessage("プライバシー"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("プライバシーポリシー"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage("まだ本音を出していない"),
+    "profileTip": MessageLookupByLibrary.simpleMessage(
+      "✨ プロフィールを完成させて、星があなたをもっとよく知れるように、より正確なマッチングを",
+    ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage("プッシュ通知"),
+    "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
+      "📸 写真のアップロードを促し、お互いをもっと知り合いましょう",
+    ),
     "report": MessageLookupByLibrary.simpleMessage("報告する"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("グロテスク"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("その他"),
@@ -449,11 +461,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "見逃せない特別価格",
     ),
+    "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
+      "プレミアムにアップグレードしてより多くのおすすめを",
+    ),
     "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage(
       "高品質な本物の写真をアップロード",
     ),
     "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("写真をアップロード"),
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage("最高の写真をアップロード"),
+    "uploading": MessageLookupByLibrary.simpleMessage("アップロード中..."),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("写真を撮る"),
     "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage(
       "ギャラリーから選択",

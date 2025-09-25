@@ -133,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "별자리 프로필 완성",
     ),
+    "completeProfile": MessageLookupByLibrary.simpleMessage("프로필 완성"),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage("전화로 계속하기"),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage("설명 (선택 사항)"),
     "destinyMatch": MessageLookupByLibrary.simpleMessage("운명의 매치"),
@@ -141,6 +142,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "dm": MessageLookupByLibrary.simpleMessage("DM"),
     "duoSnap": MessageLookupByLibrary.simpleMessage("듀오 스냅"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("어쨌든 듀오 스냅"),
+    "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
+      "당신의 전용 채팅방은 아직 비어있습니다\n하지만 별들은 알고 있습니다, 운명의 사람이 당신에게 오고 있습니다",
+    ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "발송되지 않음. AstroPair는 금지된 단어를 번역하지 않습니다.",
     ),
@@ -150,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "전송 실패, 나중에 다시 시도해주세요.",
     ),
+    "fateOnTheWay": MessageLookupByLibrary.simpleMessage("운명이 오고 있어"),
     "feedback": MessageLookupByLibrary.simpleMessage("피드백"),
     "filter": MessageLookupByLibrary.simpleMessage("필터"),
     "findingFolksWhoShareYourInterests": MessageLookupByLibrary.simpleMessage(
@@ -164,6 +169,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "AstroPair Plus받기",
     ),
+    "goDiscover": MessageLookupByLibrary.simpleMessage("발견하러 가기"),
     "gotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "헤이, 누가 먼저 침묵을 깰까?",
@@ -374,7 +380,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "아직 진짜 모습을 보여주지 않았어요",
     ),
+    "profileTip": MessageLookupByLibrary.simpleMessage(
+      "✨ 프로필을 완성하여 별들이 당신을 더 잘 알 수 있도록, 더 정확한 매칭을",
+    ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage("푸시 알림"),
+    "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
+      "📸 사진 업로드를 권하고 서로를 더 잘 알아가세요",
+    ),
     "report": MessageLookupByLibrary.simpleMessage("신고"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("잔인함"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("기타"),
@@ -455,6 +467,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "놓치면 안 되는 특가",
     ),
+    "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
+      "프리미엄으로 업그레이드하여 더 많은 추천 받기",
+    ),
     "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage(
       "고품질의 실제 사진을 업로드하세요",
     ),
@@ -462,6 +477,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
       "최고의 사진을 업로드하세요",
     ),
+    "uploading": MessageLookupByLibrary.simpleMessage("업로드 중..."),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("사진 찍기"),
     "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage("갤러리에서 선택"),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(

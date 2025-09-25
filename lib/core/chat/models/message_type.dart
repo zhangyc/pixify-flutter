@@ -1,8 +1,5 @@
 enum ImMessageType {
-  manual('MANUAL'),
-  sona('INPUT'),
-  startUpLine('PROLOGUE'),
-  suggestion('SUGGEST');
+  manual('MANUAL');
 
   const ImMessageType(this.name);
 

@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:ui';
 
 import 'package:sona/utils/toast/flutter_toast.dart';
+import 'package:sona/utils/uuid.dart';
 
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
@@ -14,6 +18,7 @@ import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
 import '../providers/matched.dart';
 import '../util/event.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class DmDialogContent extends StatefulWidget {
   const DmDialogContent({
@@ -125,18 +130,16 @@ class _DmDialogContentState extends State<DmDialogContent> {
                                   width: 56,
                                   height: 56,
                                 ),
-                                onTap: () {
+                                onTap: () async {
                                   if (controller.text.isEmpty) {
                                     return;
                                   }
-                                  if (true) {
-                                    arrow = 100;
+                                  if (canArrow) {
                                     MatchApi.customSend(
                                         widget.info.id, controller.text);
                                     SonaAnalytics.log(
                                         MatchEvent.match_arrow_send.name);
-                                    SonaAnalytics.logFacebookEvent(
-                                        MatchEvent.match_arrow_send.name);
+
                                     widget.next.call();
                                     Navigator.pop(context);
                                   } else {

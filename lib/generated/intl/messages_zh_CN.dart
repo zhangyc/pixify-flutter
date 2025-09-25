@@ -121,6 +121,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "完善星盘资料",
     ),
+    "completeProfile": MessageLookupByLibrary.simpleMessage("完善资料"),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage("使用手机继续"),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage("描述（可选）"),
     "destinyMatch": MessageLookupByLibrary.simpleMessage("命定"),
@@ -129,6 +130,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "dm": MessageLookupByLibrary.simpleMessage("超级私信"),
     "duoSnap": MessageLookupByLibrary.simpleMessage("双人快照"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("无论如何都要双人快照"),
+    "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
+      "你的专属聊天室还是空的\n但星星知道，对的人正在向你走来",
+    ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "未发送。AstroPair不会翻译违禁词。",
     ),
@@ -138,6 +142,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "发送失败，请稍后再试。",
     ),
+    "fateOnTheWay": MessageLookupByLibrary.simpleMessage("缘分正在路上"),
     "feedback": MessageLookupByLibrary.simpleMessage("反馈"),
     "filter": MessageLookupByLibrary.simpleMessage("筛选"),
     "findingFolksWhoShareYourInterests": MessageLookupByLibrary.simpleMessage(
@@ -152,6 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "获取AstroPair Plus",
     ),
+    "goDiscover": MessageLookupByLibrary.simpleMessage("去发现"),
     "gotIt": MessageLookupByLibrary.simpleMessage("明白了"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "嘿，猜猜谁会先打破沉默？",
@@ -334,7 +340,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacy": MessageLookupByLibrary.simpleMessage("隐私"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("隐私政策"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage("TA还没有展示真容"),
+    "profileTip": MessageLookupByLibrary.simpleMessage("✨ 完善资料让星星更了解你，匹配更精准"),
     "pushNotifications": MessageLookupByLibrary.simpleMessage("推送通知"),
+    "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
+      "📸 提醒TA上传照片，让彼此更了解",
+    ),
     "report": MessageLookupByLibrary.simpleMessage("举报"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("血腥"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("其他"),
@@ -405,9 +415,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "不容错过的特价",
     ),
+    "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
+      "开通会员获得更多推荐",
+    ),
     "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage("上传高质量的真实照片"),
     "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("上传你的照片"),
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage("上传你最好的照片"),
+    "uploading": MessageLookupByLibrary.simpleMessage("上传中..."),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("拍照"),
     "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage("从图库选择"),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(

@@ -58,9 +58,9 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.conversation.otherSide.originNickname ?? '',
+                        widget.conversation.otherSide.name ?? '',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.black,
+                            color: Colors.white,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

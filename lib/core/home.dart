@@ -15,6 +15,7 @@ import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
 import 'package:sona/core/discover/screens/discover.dart';
+import 'package:sona/core/im/rooms/rooms.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/like_me/screens/like_me.dart';
 import 'package:sona/core/persona/screens/persona.dart';
@@ -27,6 +28,7 @@ import 'package:sona/utils/global/global.dart';
 import 'package:sona/utils/location/location.dart';
 
 import '../common/permission/permission.dart';
+import '../common/widgets/dialogs/test.dart';
 import '../firebase/sona_firebase.dart';
 import '../generated/l10n.dart';
 import 'chat/providers/chat.dart';
@@ -78,6 +80,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         children: [
           MatchScreen(),
           LikeMeScreen(),
+          // RoomsPage(),
           ConversationScreen(onShowLikeMe: () {
             _pageController.animateToPage(1,
                 duration: const Duration(milliseconds: 2), curve: Curves.ease);
@@ -113,24 +116,32 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
               BottomNavigationBarItem(
                   icon: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(Assets.homeUndiscover,width: 24,),
+                    child: SvgPicture.asset(
+                      Assets.homeUndiscover,
+                      width: 24,
+                    ),
                     // child: SonaIcon(icon: SonaIcons.navicon_match, size: 24),x
                   ),
                   activeIcon: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: SvgPicture.asset(Assets.homeDiscover,width: 24,),
-                  // activeIcon: SonaIcon(
-                  //   icon: SonaIcons.navicon_match_active,
-                  //   size: 24,
-                  //   color: Theme.of(context).primaryColor,
-                  // ),
+                    child: SvgPicture.asset(
+                      Assets.homeDiscover,
+                      width: 24,
+                    ),
+                    // activeIcon: SonaIcon(
+                    //   icon: SonaIcons.navicon_match_active,
+                    //   size: 24,
+                    //   color: Theme.of(context).primaryColor,
+                    // ),
                   ),
-                  label: ''
-              ),
+                  label: ''),
               BottomNavigationBarItem(
                   icon: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(Assets.homeUnFavorite,width: 24,),
+                    child: SvgPicture.asset(
+                      Assets.homeUnFavorite,
+                      width: 24,
+                    ),
                     // child: SonaIcon(
                     //     icon: SonaIcons.navicon_like_me,
                     //     size: 24,
@@ -138,28 +149,36 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
                   ),
                   activeIcon: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: SvgPicture.asset(Assets.homeFavorite,width: 24,),
+                    child: SvgPicture.asset(
+                      Assets.homeFavorite,
+                      width: 24,
+                    ),
 
-                  // activeIcon: SonaIcon(
-                  //   icon: SonaIcons.navicon_like_me_active,
-                  //   size: 24,
-                  //   color: Theme.of(context).primaryColor,
-                  // ),
+                    // activeIcon: SonaIcon(
+                    //   icon: SonaIcons.navicon_like_me_active,
+                    //   size: 24,
+                    //   color: Theme.of(context).primaryColor,
+                    // ),
                   ),
-                  label: ''
-              ),
+                  label: ''),
               BottomNavigationBarItem(
                   icon: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(Assets.homeUnchat,width: 24,),
+                    child: SvgPicture.asset(
+                      Assets.homeUnchat,
+                      width: 24,
+                    ),
                     // child: SonaIcon(
                     //     icon: SonaIcons.navicon_chat,
                     //     size: 24,
                     //     activeProvider: chatNoticeProvider),
                   ),
-
-                  activeIcon: Padding(padding: EdgeInsets.all(4.0),
-                    child: SvgPicture.asset(Assets.homeChat,width: 24,),
+                  activeIcon: Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: SvgPicture.asset(
+                      Assets.homeChat,
+                      width: 24,
+                    ),
                   ),
                   label: ''),
               BottomNavigationBarItem(

@@ -23,7 +23,7 @@ dependencies:
   # C
   cached_network_image: ^3.2.3
   cloud_firestore: ^6.0.1
-  crop_your_image: ^0.7.5
+#  crop_your_image: ^0.7.5
   cupertino_icons: ^1.0.2
 
   # D
@@ -47,7 +47,17 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   flutter_svg: ^2.0.9
   flutter_card_swiper: ^7.0.2
-#  flutter_tts: ^4.2.3
+  flutter_firebase_chat_core:
+    git:
+      url: git@github.com:zhangyc/flutter_firebase_chat_core.git
+      branch: main
+  flutter_chat_types: ^3.6.2
+  flutter_chat_ui: ^1.6.14
+  file_picker: ^8.0.3
+  faker: ^2.1.0
+
+
+  #  flutter_tts: ^4.2.3
 
   # G
   gal:
@@ -73,6 +83,9 @@ dependencies:
   # L
   lottie:
 
+  # O
+  open_filex: ^4.4.0
+
   # P
   package_info_plus: ^9.0.0
   path_provider: ^2.1.2
@@ -85,6 +98,7 @@ dependencies:
   record: ^6.1.1
   rxdart: ^0.28.0
 
+
   # S
   shared_preferences: ^2.2.0
   share_plus: ^7.2.2
@@ -92,6 +106,10 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   stacked_page_view: ^1.1.2
   sweph: ^3.2.1+2.10.3
+
+  #m
+  mime: ^1.0.5
+
 
   # U
   url_launcher: ^6.1.14

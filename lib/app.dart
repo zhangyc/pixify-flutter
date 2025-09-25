@@ -38,7 +38,7 @@ class SonaApp extends HookConsumerWidget {
         builder: (context, child) {
           return Stack(
             children: [
-              child!,
+              FlutterEasyLoading(child: child!,),
               GlobalNotificationOverlay(), // 浮动通知层
             ],
           );

@@ -269,74 +269,74 @@ class _BaseInfoScreenState extends ConsumerState<BaseInfoScreen> {
                         ),
                       ),
 
-                      const SizedBox(height: 16),
+                      // const SizedBox(height: 16),
 
-                      // 出生城市选择区域
-                      _buildInputSection(
-                        context,
-                        label: '出生城市',
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: () async {
-                            final value = await _showCityPicker(context);
-                            if (value != null) {
-                              setState(() {
-                                _birthCity = value;
-                              });
-                              SonaAnalytics.log('reg_birth_city');
-                            }
-                          },
-                          child: Container(
-                              height: 48,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? const Color(0xFF1A1A1F)
-                                    : const Color(0xFFF8F9FA),
-                                border: Border.all(
-                                    width: 2,
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.3)),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              alignment: Alignment.center,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  if (_birthCity != null)
-                                    Text(_birthCity!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ))
-                                  else
-                                    Text(
-                                      '请选择出生城市',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            color: Theme.of(context).hintColor,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                    ),
-                                  Icon(
-                                    Icons.location_city_outlined,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 20,
-                                  )
-                                ],
-                              )),
-                        ),
-                      ),
+                      // // 出生城市选择区域
+                      // _buildInputSection(
+                      //   context,
+                      //   label: '出生城市',
+                      //   child: GestureDetector(
+                      //     behavior: HitTestBehavior.translucent,
+                      //     onTap: () async {
+                      //       final value = await _showCityPicker(context);
+                      //       if (value != null) {
+                      //         setState(() {
+                      //           _birthCity = value;
+                      //         });
+                      //         SonaAnalytics.log('reg_birth_city');
+                      //       }
+                      //     },
+                      //     child: Container(
+                      //         height: 48,
+                      //         padding:
+                      //             const EdgeInsets.symmetric(horizontal: 16),
+                      //         decoration: BoxDecoration(
+                      //           color: Theme.of(context).brightness ==
+                      //                   Brightness.dark
+                      //               ? const Color(0xFF1A1A1F)
+                      //               : const Color(0xFFF8F9FA),
+                      //           border: Border.all(
+                      //               width: 2,
+                      //               color: Theme.of(context)
+                      //                   .primaryColor
+                      //                   .withOpacity(0.3)),
+                      //           borderRadius: BorderRadius.circular(16),
+                      //         ),
+                      //         alignment: Alignment.center,
+                      //         child: Row(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             if (_birthCity != null)
+                      //               Text(_birthCity!,
+                      //                   style: Theme.of(context)
+                      //                       .textTheme
+                      //                       .bodyMedium
+                      //                       ?.copyWith(
+                      //                         fontSize: 16,
+                      //                         fontWeight: FontWeight.w500,
+                      //                       ))
+                      //             else
+                      //               Text(
+                      //                 '请选择出生城市',
+                      //                 style: Theme.of(context)
+                      //                     .textTheme
+                      //                     .bodyMedium
+                      //                     ?.copyWith(
+                      //                       color: Theme.of(context).hintColor,
+                      //                       fontSize: 16,
+                      //                       fontWeight: FontWeight.w400,
+                      //                     ),
+                      //               ),
+                      //             Icon(
+                      //               Icons.location_city_outlined,
+                      //               color: Theme.of(context).primaryColor,
+                      //               size: 20,
+                      //             )
+                      //           ],
+                      //         )),
+                      //   ),
+                      // ),
 
                       const SizedBox(height: 16),
 

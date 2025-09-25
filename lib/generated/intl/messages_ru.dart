@@ -160,6 +160,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "Завершить астрологический профиль",
     ),
+    "completeProfile": MessageLookupByLibrary.simpleMessage(
+      "Завершити Профіль",
+    ),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage(
       "Продолжить с телефоном",
     ),
@@ -178,6 +181,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage(
       "Дуо Снап в любом случае",
     ),
+    "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
+      "Ваша приватна кімната чату все ще порожня\nАле зірки знають, що правильна людина йде до вас",
+    ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "Не отправлено. AstroPair не будет переводить запрещенные слова.",
     ),
@@ -187,6 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "Ошибка отправки, пожалуйста, попробуйте позже.",
     ),
+    "fateOnTheWay": MessageLookupByLibrary.simpleMessage("Доля в дорозі"),
     "feedback": MessageLookupByLibrary.simpleMessage("Обратная связь"),
     "filter": MessageLookupByLibrary.simpleMessage("Фильтр"),
     "findingFolksWhoShareYourInterests": MessageLookupByLibrary.simpleMessage(
@@ -201,6 +208,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "Получить AstroPair Plus",
     ),
+    "goDiscover": MessageLookupByLibrary.simpleMessage("Йди Відкривати"),
     "gotIt": MessageLookupByLibrary.simpleMessage("Понял"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "Эй, угадай, кто первым нарушит молчание?",
@@ -443,8 +451,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "Они еще не показали свое настоящее лицо",
     ),
+    "profileTip": MessageLookupByLibrary.simpleMessage(
+      "✨ Завершіть свій профіль, щоб зірки могли краще вас знати, для більш точного співставлення",
+    ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "Пуш-уведомления",
+    ),
+    "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
+      "📸 Нагадайте їм завантажити фото, дізнайтеся один одного краще",
     ),
     "report": MessageLookupByLibrary.simpleMessage("Сообщить"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("Жестокость"),
@@ -552,6 +566,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "Незабываемые специальные цены",
     ),
+    "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
+      "Оновіться до Premium для більшої кількості рекомендацій",
+    ),
     "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage(
       "Загрузите качественные настоящие фотографии",
     ),
@@ -561,6 +578,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
       "Загрузите ваше лучшее фото",
     ),
+    "uploading": MessageLookupByLibrary.simpleMessage("Завантаження..."),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage(
       "Сфотографировать",
     ),

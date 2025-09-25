@@ -2,64 +2,33 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:sona/utils/toast/flutter_toast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:record/record.dart';
-import 'package:sona/account/providers/profile.dart';
-import 'package:sona/common/widgets/image/icon.dart';
-import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/models/text_message.dart';
-import 'package:sona/core/chat/providers/audio.dart';
-import 'package:sona/core/chat/widgets/message/audio_message_controls.dart';
-import 'package:sona/core/chat/widgets/voice_message_recorder.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../../common/models/user.dart';
-import '../../../../common/permission/permission.dart';
-import '../../../../generated/assets.dart';
-import '../../../../generated/l10n.dart';
-import '../../../../utils/dialog/common.dart';
-import '../../../../utils/face_detection/detection.dart';
-import '../../../../utils/locale/locale.dart';
-import '../../../match/bean/match_user.dart';
-import '../../../match/util/event.dart';
-import '../../../match/util/http_util.dart';
-import '../../../match/util/image_util.dart';
-import '../../../match/widgets/dialogs.dart';
-import '../../../subscribe/model/member.dart';
-import '../../../subscribe/subscribe_page.dart';
-import '../../../widgets/not_meet_conditions.dart';
-import '../../../widgets/other_not_meet_conditions.dart';
-import '../tips_dialog.dart';
 import 'mode_provider.dart';
 
 class ChatInstructionInput extends ConsumerStatefulWidget {
-  const ChatInstructionInput({
-    Key? key,
-    required this.chatId,
-    required this.otherInfo,
-    required this.sameLanguage,
-    required this.onSendMessage
-  }) : super(key: key);
+  const ChatInstructionInput(
+      {Key? key,
+      required this.chatId,
+      required this.otherInfo,
+      required this.onSendMessage})
+      : super(key: key);
 
   final int chatId;
   final UserInfo otherInfo;
-  final bool sameLanguage;
   final Future Function(Map<String, dynamic>) onSendMessage;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => ChatInstructionInputState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      ChatInstructionInputState();
 }
 
-class ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with RouteAware, SingleTickerProviderStateMixin {
+class ChatInstructionInputState extends ConsumerState<ChatInstructionInput>
+    with RouteAware, SingleTickerProviderStateMixin {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
   // OverlayEntry? _voiceEntry;
@@ -68,17 +37,6 @@ class ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with
   bool detecting = false;
 
   static const enterTimesKey = 'enter_times';
-  static final recorder = AudioRecorder();
-  static const config = RecordConfig(
-    encoder: AudioEncoder.aacLc,
-    bitRate: 32000,
-    sampleRate: 16000,
-    numChannels: 1,
-    device: null,
-    autoGain: false,
-    echoCancel: false,
-    noiseSuppress: true
-  );
 
   @override
   void initState() {
@@ -99,374 +57,183 @@ class ChatInstructionInputState extends ConsumerState<ChatInstructionInput> with
   }
 
   void _onInputChange() {
-    final mode = ref.read(inputModeProvider(widget.chatId));
-    if (mode == InputMode.sona) {
-      ref.read(sonaInputProvider(widget.chatId).notifier).update((state) => _controller.text);
-    } else {
-      ref.read(manualInputProvider(widget.chatId).notifier).update((state) => _controller.text);
-    }
+    // 简化输入处理，不需要翻译模式
+    ref
+        .read(manualInputProvider(widget.chatId).notifier)
+        .update((state) => _controller.text);
+
+    // 触发UI更新以显示/隐藏发送按钮
+    setState(() {});
   }
 
   void _focusListener() {
     if (_focusNode.hasFocus) {
-      ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => true);
-      Future.delayed(const Duration(milliseconds: 500),
-          () => ref.read(softKeyboardHeightProvider.notifier)
-              .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom))
-      );
-      Future.delayed(const Duration(milliseconds: 1000),
-              () => ref.read(softKeyboardHeightProvider.notifier)
-              .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom))
-      );
-      Future.delayed(const Duration(milliseconds: 3000),
-              () => ref.read(softKeyboardHeightProvider.notifier)
-              .update((state) => max(state, MediaQuery.of(context).viewInsets.bottom))
-      );
+      ref
+          .read(keyboardExtensionVisibilityProvider.notifier)
+          .update((state) => true);
+      Future.delayed(
+          const Duration(milliseconds: 500),
+          () => ref.read(softKeyboardHeightProvider.notifier).update(
+              (state) => max(state, MediaQuery.of(context).viewInsets.bottom)));
+      Future.delayed(
+          const Duration(milliseconds: 1000),
+          () => ref.read(softKeyboardHeightProvider.notifier).update(
+              (state) => max(state, MediaQuery.of(context).viewInsets.bottom)));
+      Future.delayed(
+          const Duration(milliseconds: 3000),
+          () => ref.read(softKeyboardHeightProvider.notifier).update(
+              (state) => max(state, MediaQuery.of(context).viewInsets.bottom)));
     } else {
-      Future.delayed(const Duration(milliseconds: 500),
-              () => ref.read(paddingBottomHeightProvider.notifier)
-              .update((state) => max(state, MediaQuery.of(context).padding.bottom))
-      );
+      Future.delayed(
+          const Duration(milliseconds: 500),
+          () => ref.read(paddingBottomHeightProvider.notifier).update(
+              (state) => max(state, MediaQuery.of(context).padding.bottom)));
     }
   }
 
+  // 语音相关状态变量已移除
+
   @override
   Widget build(BuildContext context) {
-    // final currentChatStyle = ref.watch(currentChatStyleProvider(widget.chatId));
-    // final isMember = ref.watch(myProfileProvider)!.isMember;
-    final myL = findMatchedSonaLocale(ref.read(myProfileProvider)!.locale!);
-    final myLocale = Locale.fromSubtags(languageCode: myL.locale.languageCode, scriptCode: myL.locale.scriptCode, countryCode: myL.locale.countryCode);
-    final hintText = widget.sameLanguage
-        ? S.of(context).speakSameLanguage
-        : ref.watch(inputModeProvider(widget.chatId)) == InputMode.sona
-            ? S.of(context).justTypeInYourLanguage(myL.displayName)
-            : S.of(context).astroPairInterpretationOff;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              if (ref.watch(keyboardExtensionVisibilityProvider)) GestureDetector(
-                onTap: () {
-                  ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) {
-                    if (_focusNode.hasFocus) {
-                      _focusNode.unfocus();
-                    }
-                    return false;
-                  });
-                },
-                child: Container(
-                  width: 54,
-                  height: 54,
-                  margin: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  alignment: Alignment.center,
-                  child: SonaIcon(
-                    icon: SonaIcons.close,
-                    size: 24,
-                  )
-                )
-              )
-              else if (!ref.watch(recordButtonLongPressedProvider)) GestureDetector(
-                  onTap: () {
-                    ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) {
-                        return true;
-                    });
-                  },
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // 输入框
+                Expanded(
                   child: Container(
-                      width: 54,
-                      height: 54,
-                      margin: EdgeInsets.all(2),
+                    constraints: const BoxConstraints(minHeight: 40),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Theme.of(context).dividerColor,
+                        width: 1,
+                      ),
+                    ),
+                    child: _buildTextInput(),
+                  ),
+                ),
+
+                const SizedBox(width: 12),
+
+                // 发送按钮
+                if (_controller.text.trim().isNotEmpty)
+                  GestureDetector(
+                    onTap: _sendTextMessage,
+                    child: Container(
+                      width: 40,
+                      height: 40,
                       decoration: BoxDecoration(
-                          border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-                          borderRadius: BorderRadius.circular(20)
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      alignment: Alignment.center,
-                      child: Icon(Icons.add, size: 24)
-                  )
-              )
-              else GestureDetector(
-                onTap: cancelRecord,
-                child: Container(
-                  width: 54,
-                  height: 54,
-                  margin: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    // border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.circular(20),
-                    color: ref.watch(recordButtonDeltaProvider) < 100 ? Color(0xFFFDEDE7) : Colors.red
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  alignment: Alignment.center,
-                  child: Icon(CupertinoIcons.delete, size: 24, color: ref.watch(recordButtonDeltaProvider) < 100 ? Colors.red : Colors.white)
-                ),
-              ),
-              SizedBox(width: 4),
-              if (!ref.watch(recordButtonLongPressedProvider)) Expanded(
-                child: Container(
-                  // width: MediaQuery.of(context).size.width - 33 - 33 - 16 - 36,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 1.5),
-                  child: TextField(
-                    controller: _controller,
-                    focusNode: _focusNode,
-                    textAlign: TextAlign.left,
-                    textAlignVertical: TextAlignVertical.center,
-                    maxLines: 5,
-                    minLines: 1,
-                    maxLength: 160,
-                    buildCounter: (BuildContext _, {required int currentLength, required bool isFocused, required int? maxLength}) => null,
-                    keyboardAppearance: Brightness.dark,
-                    keyboardType: TextInputType.multiline,
-                    textInputAction: TextInputAction.newline,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: 14,
-                      locale: myLocale
-                    ),
-                    // onTapOutside: (_) {
-                    //   if (_focusNode.hasFocus) _focusNode.unfocus();
-                    //   ref.read(keyboardExtensionVisibilityProvider.notifier).update((state) => false);
-                    // },
-                    autocorrect: true,
-                    cursorWidth: 1.8,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 2),
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(20),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 2),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                      isDense: true,
-                      filled: true,
-                      fillColor: Colors.white,
-                      focusColor: Color(0xFF6D91F4),
-                      hintText: hintText,
-                      hintStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                        fontWeight: FontWeight.w500
-                      )
-                    ),
-                    onSubmitted: (String text) {
-                      final trimmedText = text.trim();
-                      if (trimmedText.isEmpty) return;
-                      final needsTranslation = ref.read(inputModeProvider(widget.chatId)) == InputMode.sona;
-                      widget.onSendMessage(TextMessage.buildContent(trimmedText, needsTranslation));
-                      _controller.clear();
-                    },
-                    autofocus: false,
-                  ),
-                ),
-              )
-              else if (ref.watch(recordButtonDeltaProvider) < 150) Expanded(
-                  child: Container(
-                    height: 56,
-                    padding: EdgeInsets.symmetric(horizontal: 6),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(CupertinoIcons.waveform, color: Colors.white),
-                        SizedBox(width: 6),
-                        RecordDurationWidget(stopwatch: _stopwatch)
-                      ],
-                    ),
-                  )
-              ),
-              SizedBox(width: 4),
-              // if (ref.watch(currentInputEmptyProvider(widget.chatId))) GestureDetector(
-              //     behavior: HitTestBehavior.opaque,
-              //     onLongPressStart: (_) async {
-              //       ref.read(recordButtonLongPressedProvider.notifier).update((state) => true);
-              //       // ref.read(recordButtonDeltaProvider.notifier).update(0);
-              //       if (await Permission.microphone.request().isGranted) {
-              //         _stopwatch.reset();
-              //         _stopwatch.start();
-              //         _timer = Timer(const Duration(seconds: 60), () async {
-              //           _stopwatch.stop();
-              //           final _voicePath = await recorder.stop();
-              //           if (_voicePath == null) return;
-              //           widget.onSendMessage({
-              //             'type': ImMessageContentType.audio,
-              //             'duration': 60.0,
-              //             'localExtension': {
-              //               'path': _voicePath,
-              //             }
-              //           });
-              //           // _voiceEntry?.remove();
-              //         });
-              //         recorder.start(config, path: ((await getTemporaryDirectory()).path + '/' + DateTime.now().millisecondsSinceEpoch.toString() + '.m4a'));
-              //       } else {
-              //         Fluttertoast.showToast(msg: 'Microphone permission is required!');
-              //         return;
-              //       }
-              //       // _voiceEntry = OverlayEntry(builder: (_) => VoiceMessageRecorder(onCancel: _cancelRecord));
-              //       // if (mounted) Overlay.of(context).insert(_voiceEntry!);
-              //     },
-              //     onLongPressMoveUpdate: (details) {
-              //       final dx = details.localOffsetFromOrigin.dx;
-              //       if (dx < 0) ref.read(recordButtonDeltaProvider.notifier).update(dx.abs());
-              //       if (dx < -150) {
-              //         cancelRecord();
-              //       }
-              //     },
-              //     onLongPressEnd: (_) async {
-              //       ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
-              //       // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();
-              //       if (_stopwatch.isRunning) _stopwatch.stop();
-              //       if (_timer?.isActive == true) _timer?.cancel();
-              //       if (_stopwatch.elapsedMilliseconds < 1000) {
-              //         await recorder.stop();
-              //         return;
-              //       }
-              //       final path = await recorder.stop();
-              //       if (path == null) return;
-              //
-              //       final player = ref.read(audioPlayerProvider(widget.chatId));
-              //       ref.read(currentPlayingAudioMessageIdProvider.notifier).update((state) => null);
-              //       await player.setSourceDeviceFile(path);
-              //       var duration = await player.getDuration();
-              //       await player.release();
-              //       duration ??= _stopwatch.elapsed;
-              //       widget.onSendMessage({
-              //         'type': ImMessageContentType.audio,
-              //         'duration': duration.inMilliseconds / 1000.0,
-              //         'localExtension': {
-              //           'path': path,
-              //         }
-              //       });
-              //     },
-              //     child: Container(
-              //         width: 72,
-              //         height: 54,
-              //         margin: EdgeInsets.all(2),
-              //         decoration: BoxDecoration(
-              //           border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-              //           borderRadius: BorderRadius.circular(20),
-              //           color: ref.watch(recordButtonLongPressedProvider) ? Color(0xFFBEFF06) : Theme.of(context).primaryColor
-              //         ),
-              //         clipBehavior: Clip.antiAlias,
-              //         alignment: Alignment.center,
-              //         child: Icon(CupertinoIcons.mic, size: 24, color: Colors.white)
-              //     )
-              // )
-              if (!ref.watch(currentInputEmptyProvider(widget.chatId))) Container(
-                width: 76,
-                margin: EdgeInsets.all(1),
-                child: IconButton(
-                  iconSize: 56,
-                  padding: EdgeInsets.all(14),
-                  onPressed: () {
-                    final trimmedText = _controller.text.trim();
-                    if (trimmedText.isEmpty) return;
-                    final needsTranslation = ref.read(inputModeProvider(widget.chatId)) == InputMode.sona;
-                    widget.onSendMessage(TextMessage.buildContent(trimmedText, needsTranslation));
-                    _controller.clear();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        Theme.of(context).primaryColor
-                    ),
-                    shape: MaterialStatePropertyAll(
-                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
-                    )
-                  ),
-                  icon: SonaIcon(icon: SonaIcons.chat_send, size: 28)
-                ),
-              ),
-              if (ref.watch(recordButtonLongPressedProvider)) SizedBox(width: ref.watch(recordButtonDeltaProvider))
-            ],
-          ),
-        ),
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.ease,
-          height: ref.watch(keyboardExtensionVisibilityProvider) ? ref.watch(softKeyboardHeightProvider) : ref.watch(paddingBottomHeightProvider),
-          padding: EdgeInsets.all(16),
-          clipBehavior: Clip.antiAlias,
-          foregroundDecoration: BoxDecoration(
-            color: ref.watch(keyboardExtensionVisibilityProvider) ? Colors.transparent : Colors.white
-          ),
-          decoration: BoxDecoration(),
-          child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: _onTipsTap,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xffF6F3F3),
-                        borderRadius: BorderRadius.circular(24)
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(Assets.iconsSonaMessage,height: 48,width: 48,),
-                        Text('Give me advice',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xff2c2c2c),
-                            fontWeight: FontWeight.w900
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.send,
+                        size: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                )
-              ),
-              SizedBox(
-                width: 8,
-              ),
-
-            ],
+              ],
+            ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 
+  // 发送文本消息
+  void _sendTextMessage() {
+    final text = _controller.text.trim();
+    if (text.isEmpty) return;
 
-  void cancelRecord() {
-    ref.read(recordButtonLongPressedProvider.notifier).update((state) => false);
-    ref.read(recordButtonDeltaProvider.notifier).reset();
-    // if (_voiceEntry?.mounted == true) _voiceEntry?.remove();
-    if (_stopwatch.isRunning) _stopwatch.stop();
-    if (_timer?.isActive == true) _timer?.cancel();
-    recorder.stop();
+    widget.onSendMessage(TextMessage.buildContent(text, false));
+    _controller.clear();
+
+    SonaAnalytics.log('text_message_sent', {
+      'chat_id': widget.chatId,
+      'user_id': widget.otherInfo.id,
+      'message_length': text.length,
+    });
   }
 
-  Future _onTipsTap() async {
-    showCommonBottomSheet(
-        context: context,
-        title: 'SONA Tips',
-        actions: [
-          SonaTipsDialog(userId: widget.chatId)
-        ]
+  // 构建文本输入框
+  Widget _buildTextInput() {
+    return Container(
+      constraints: const BoxConstraints(minHeight: 40),
+      child: TextField(
+        controller: _controller,
+        focusNode: _focusNode,
+        textAlign: TextAlign.left,
+        textAlignVertical: TextAlignVertical.center,
+        maxLines: 5,
+        minLines: 1,
+        maxLength: 160,
+        buildCounter: (BuildContext _,
+                {required int currentLength,
+                required bool isFocused,
+                required int? maxLength}) =>
+            null,
+        keyboardAppearance: Brightness.dark,
+        keyboardType: TextInputType.multiline,
+        textInputAction: TextInputAction.newline,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
+        autocorrect: true,
+        cursorWidth: 1.8,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          isDense: true,
+          filled: true,
+          fillColor: Theme.of(context).cardColor,
+          hintText: 'Type a message...',
+          hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontSize: 16,
+                color: Theme.of(context).hintColor,
+                fontWeight: FontWeight.w400,
+              ),
+        ),
+        onSubmitted: (String text) {
+          _sendTextMessage();
+        },
+        autofocus: false,
+      ),
     );
-    SonaAnalytics.log('chat_suggest');
   }
 }
 
@@ -482,7 +249,6 @@ class RecordDurationWidget extends StatefulWidget {
 }
 
 class _RecordDurationState extends State<RecordDurationWidget> {
-
   late Timer? timer;
 
   @override
@@ -506,10 +272,10 @@ class _RecordDurationState extends State<RecordDurationWidget> {
     if (elapsed < 1) {
       return Text('  ');
     }
-    return Text('${widget.stopwatch.elapsed.inSeconds.toString()}s',
-      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-        color: Colors.white
-      ),
+    return Text(
+      '${widget.stopwatch.elapsed.inSeconds.toString()}s',
+      style:
+          Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );
@@ -539,7 +305,6 @@ class RecordButtonDeltaHorizontalNotifier extends StateNotifier<double> {
   }
 }
 
-final recordButtonDeltaProvider = StateNotifierProvider<
-  RecordButtonDeltaHorizontalNotifier,
-  double
->((ref) => RecordButtonDeltaHorizontalNotifier(0));
+final recordButtonDeltaProvider =
+    StateNotifierProvider<RecordButtonDeltaHorizontalNotifier, double>(
+        (ref) => RecordButtonDeltaHorizontalNotifier(0));

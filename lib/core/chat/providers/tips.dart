@@ -21,7 +21,7 @@ class AsyncSonaTipsNotifier extends AutoDisposeFamilyAsyncNotifier<SonaTips, int
   FutureOr<SonaTips> build(arg) async {
     final resp = await callSona(
         userId: arg,
-        type: CallSonaType.SUGGEST_V2
+        type: CallSonaType.MANUAL
     );
     if (resp.statusCode == 10150) {
       if (ref.read(myProfileProvider)!.isMember) {

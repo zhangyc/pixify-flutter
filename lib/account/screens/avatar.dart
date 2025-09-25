@@ -156,7 +156,6 @@ class _AvatarScreenState extends State<AvatarScreen> {
         throw Error();
       }
       Uint8List? bytes = await file.readAsBytes();
-      bytes = await cropImage(bytes);
       if (bytes == null) {
         throw Exception('No file');
       }

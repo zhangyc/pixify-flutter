@@ -121,7 +121,7 @@ class _ImMessageWidgetState extends ConsumerState<ImMessageWidget> {
                 },
                 if (_fromMe) Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: UserAvatar(url: widget.mySide.avatar!, size: Size.square(40)),
+                  child: UserAvatar(url: widget.mySide.avatar, size: Size.square(40)),
                 ),
               ],
             ),

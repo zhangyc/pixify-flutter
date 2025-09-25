@@ -563,5 +563,21 @@
   "personaForYou": "For you",
   "@personaForYou": {},
   "oneLineToWin": "One line to win them over",
-  "@oneLineToWin": {}
+  "@oneLineToWin": {},
+  "remindUploadPhoto": "📸 Remind them to upload photos, get to know each other better",
+  "@remindUploadPhoto": {},
+  "fateOnTheWay": "Fate is on the way",
+  "@fateOnTheWay": {},
+  "emptyChatRoomMessage": "Your private chat room is still empty\nBut the stars know, the right person is coming to you",
+  "@emptyChatRoomMessage": {},
+  "goDiscover": "Go Discover",
+  "@goDiscover": {},
+  "completeProfile": "Complete Profile",
+  "@completeProfile": {},
+  "profileTip": "✨ Complete your profile so the stars can know you better, for more accurate matching",
+  "@profileTip": {},
+  "upgradeForMoreRecommendations": "Upgrade to Premium for more recommendations",
+  "@upgradeForMoreRecommendations": {},
+  "uploading": "Uploading...",
+  "@uploading": {}
 }

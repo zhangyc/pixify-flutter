@@ -149,6 +149,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "Complete Astro Profile",
     ),
+    "completeProfile": MessageLookupByLibrary.simpleMessage("Complete Profile"),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage(
       "Continue with phone",
     ),
@@ -161,6 +162,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "dm": MessageLookupByLibrary.simpleMessage("DM"),
     "duoSnap": MessageLookupByLibrary.simpleMessage("Duo Snap"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("Duo Snap anyway"),
+    "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
+      "Your private chat room is still empty\nBut the stars know, the right person is coming to you",
+    ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "Unsent. AstroPair will not translate prohibited words",
     ),
@@ -170,6 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "Failed to send, please try again later.",
     ),
+    "fateOnTheWay": MessageLookupByLibrary.simpleMessage("Fate is on the way"),
     "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
     "filter": MessageLookupByLibrary.simpleMessage("Filter"),
     "findingFolksWhoShareYourInterests": MessageLookupByLibrary.simpleMessage(
@@ -184,6 +189,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "Get AstroPair Plus",
     ),
+    "goDiscover": MessageLookupByLibrary.simpleMessage("Go Discover"),
     "gotIt": MessageLookupByLibrary.simpleMessage("Got it"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "Hey, guess who\'s gonna break the silence first?",
@@ -418,8 +424,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "They haven\'t shown their true self yet",
     ),
+    "profileTip": MessageLookupByLibrary.simpleMessage(
+      "✨ Complete your profile so the stars can know you better, for more accurate matching",
+    ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "Push notifications",
+    ),
+    "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
+      "📸 Remind them to upload photos, get to know each other better",
     ),
     "report": MessageLookupByLibrary.simpleMessage("Report"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("Gore"),
@@ -517,6 +529,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "Unmissable special offer prices",
     ),
+    "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
+      "Upgrade to Premium for more recommendations",
+    ),
     "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage(
       "Upload high-quality real photos",
     ),
@@ -526,6 +541,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
       "Upload your best photo",
     ),
+    "uploading": MessageLookupByLibrary.simpleMessage("Uploading..."),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage(
       "Take a photo",
     ),

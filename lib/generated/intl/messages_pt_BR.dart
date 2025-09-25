@@ -154,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "Completar Perfil Astro",
     ),
+    "completeProfile": MessageLookupByLibrary.simpleMessage("Completar Perfil"),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage(
       "Continuar com telefone",
     ),
@@ -170,6 +171,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage(
       "Duo Snap de qualquer forma",
     ),
+    "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
+      "Tu sala de chat privada aún está vacía\nPero las estrellas saben, la persona correcta viene hacia ti",
+    ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "Não enviado. O AstroPair não traduzirá palavras proibidas.",
     ),
@@ -178,6 +182,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "Falha ao enviar, por favor tente novamente mais tarde.",
+    ),
+    "fateOnTheWay": MessageLookupByLibrary.simpleMessage(
+      "El destino está en camino",
     ),
     "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
     "filter": MessageLookupByLibrary.simpleMessage("Filtro"),
@@ -193,6 +200,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "Obter AstroPair Plus",
     ),
+    "goDiscover": MessageLookupByLibrary.simpleMessage("Ve a Descubrir"),
     "gotIt": MessageLookupByLibrary.simpleMessage("Entendi"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "Ei, adivinha quem vai quebrar o silêncio primeiro?",
@@ -439,8 +447,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "Ainda não mostraram o seu verdadeiro eu",
     ),
+    "profileTip": MessageLookupByLibrary.simpleMessage(
+      "✨ Completa tu perfil para que las estrellas puedan conocerte mejor, para un emparejamiento más preciso",
+    ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "Notificações push",
+    ),
+    "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
+      "📸 Recuérdales subir fotos, conócanse mejor",
     ),
     "report": MessageLookupByLibrary.simpleMessage("Relatar"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("Gore"),
@@ -544,6 +558,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "Preços especiais imperdíveis",
     ),
+    "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
+      "Actualiza a Premium para más recomendaciones",
+    ),
     "uploadQualityPhotos": MessageLookupByLibrary.simpleMessage(
       "Carregue fotos reais de alta qualidade",
     ),
@@ -553,6 +570,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage(
       "Carregue sua melhor foto",
     ),
+    "uploading": MessageLookupByLibrary.simpleMessage("Subiendo..."),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage(
       "Tirar uma foto",
     ),

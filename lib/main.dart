@@ -25,6 +25,10 @@ import 'utils/global/global.dart' as global;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await initSweph([
     'assets/ephe/seas_18.se1', // For house calc
@@ -37,8 +41,9 @@ void main() async {
   final firebase = await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform, name: 'sona');
   await FirebaseAppCheck.instance.activate(
-    androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.debug,
-    appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.debug,
+    androidProvider:
+        kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
+    appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttest,
   );
   purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
     purchaseDetailsList.forEach((p) {
@@ -127,7 +132,9 @@ Future<void> _testAstroCalc() async {
 
     debugPrint('AstroCalc Natal A: ' + jsonEncode(chartA.toJson()));
     debugPrint('AstroCalc Natal B: ' + jsonEncode(chartB.toJson()));
-    log('AstroCalc Synastry: ' + jsonEncode(syn.toJson()),);
+    log(
+      'AstroCalc Synastry: ' + jsonEncode(syn.toJson()),
+    );
   } catch (e, st) {
     debugPrint('AstroCalc test error: $e\n$st');
   }

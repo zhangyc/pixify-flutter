@@ -1,10 +1,14 @@
 // lib/core/match/widgets/match_user_card.dart
+import 'dart:math' as SonaAnalytics;
+
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
 
 import 'package:sona/core/match/bean/match_user.dart';
 import 'package:sona/core/astro/widgets/astro_preview.dart';
+import 'package:sona/core/match/providers/matched.dart';
+import 'package:sona/core/match/util/event.dart';
 import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sona/generated/l10n.dart';
 
@@ -167,7 +171,7 @@ class MatchUserCard extends StatelessWidget {
           children: [
             CachedNetworkImage(
               height: 240,
-              imageUrl: user.avatar!,
+              imageUrl: user.avatar??'',
               fit: BoxFit.cover,
               placeholder: (context, url) => _buildPhotoPlaceholder(),
               errorWidget: (context, url, error) => _buildPhotoError(),
@@ -313,6 +317,89 @@ class MatchUserCard extends StatelessWidget {
   }
 
   Widget _buildNoPhotoPlaceholder(ThemeData theme) {
+    /// 暂时先不展示星盘了。只是文案。"📸 提醒TA上传照片，让彼此更了解"
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              // 暗色主题：深色渐变 + 霓虹青绿色点缀
+              const Color(0xFF0E0E14).withOpacity(0.9),
+              const Color(0xFF12121B).withOpacity(0.7),
+              theme.primaryColor.withOpacity(0.1),
+            ]),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // 星盘图标 - 添加霓虹光晕效果
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: theme.primaryColor.withOpacity(0.3),
+                  blurRadius: 20,
+                  offset: const Offset(0, 0),
+                ),
+              ],
+            ),
+            child: Icon(
+              Icons.auto_awesome,
+              size: 56,
+              color: theme.primaryColor,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            S.current.remindUploadPhoto,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.primaryColor.withOpacity(0.7),
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 24),
+          GestureDetector(
+            onTap: () {
+              MatchApi.customSend(user.id, S.current.remindUploadPhoto);
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              decoration: BoxDecoration(
+                color: theme.primaryColor.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: theme.primaryColor.withOpacity(0.5),
+                  width: 1.5,
+                ),
+                // 暗色主题添加霓虹光晕
+                boxShadow: [
+                  BoxShadow(
+                    color: theme.primaryColor.withOpacity(0.2),
+                    blurRadius: 12,
+                    offset: const Offset(0, 0),
+                  ),
+                ],
+              ),
+              child: Text(
+                S.current.sendStarGreetingToUnlockAlbum,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    ///
+    ///
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -354,7 +441,7 @@ class MatchUserCard extends StatelessWidget {
           RepaintBoundary(
             child: AstroPreview(
               birthday: user.birthday,
-              country: SonaCountry.fromCode(user.countryCode!),
+              country: SonaCountry.fromCode(user.countryCode ?? 'US'),
               isBackground: true,
             ),
           ),

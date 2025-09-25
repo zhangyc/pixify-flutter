@@ -37,7 +37,7 @@ class SonaTipsDialog extends ConsumerWidget {
                   Navigator.pop(context);
                   callSona(
                     userId: userId,
-                    type: CallSonaType.SUGGEST_FUNC,
+                    type: CallSonaType.MANUAL,
                     input: opt
                   );
                   SonaAnalytics.log('chat_sendsuggest');

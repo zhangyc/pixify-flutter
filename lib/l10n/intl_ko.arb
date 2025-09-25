@@ -563,5 +563,21 @@
   "personaForYou": "당신을 위한",
   "@personaForYou": {},
   "oneLineToWin": "한 줄로 상대를 사로잡아",
-  "@oneLineToWin": {}
+  "@oneLineToWin": {},
+  "remindUploadPhoto": "📸 사진 업로드를 권하고 서로를 더 잘 알아가세요",
+  "@remindUploadPhoto": {},
+  "fateOnTheWay": "운명이 오고 있어",
+  "@fateOnTheWay": {},
+  "emptyChatRoomMessage": "당신의 전용 채팅방은 아직 비어있습니다\n하지만 별들은 알고 있습니다, 운명의 사람이 당신에게 오고 있습니다",
+  "@emptyChatRoomMessage": {},
+  "goDiscover": "발견하러 가기",
+  "@goDiscover": {},
+  "completeProfile": "프로필 완성",
+  "@completeProfile": {},
+  "profileTip": "✨ 프로필을 완성하여 별들이 당신을 더 잘 알 수 있도록, 더 정확한 매칭을",
+  "@profileTip": {},
+  "upgradeForMoreRecommendations": "프리미엄으로 업그레이드하여 더 많은 추천 받기",
+  "@upgradeForMoreRecommendations": {},
+  "uploading": "업로드 중...",
+  "@uploading": {}
 }

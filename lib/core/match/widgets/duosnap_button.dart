@@ -10,7 +10,7 @@
 // import 'package:sona/core/match/util/http_util.dart';
 // import 'package:sona/core/subscribe/subscribe_page.dart';
 //
-// import '../../../account/providers/profile.dart';
+// import '../../../account/providers/other_user_profile.dart';
 // import '../../../common/services/common.dart';
 // import '../../../generated/l10n.dart';
 // import '../../../utils/global/global.dart';

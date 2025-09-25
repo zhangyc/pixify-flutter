@@ -8,7 +8,7 @@ import 'package:sona/core/match/widgets/loading_button.dart';
 import 'package:sona/utils/dialog/input.dart';
 import '../../../account/providers/profile.dart';
 import '../../../common/permission/permission.dart';
-import '../../../common/screens/profile.dart';
+import '../../../common/screens/other_user_profile.dart';
 import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/dialog/report.dart';

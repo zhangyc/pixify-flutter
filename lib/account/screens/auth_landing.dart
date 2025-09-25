@@ -1,6 +1,7 @@
 import 'dart:io';
-import 'dart:ui' as ui;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -8,13 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:sona/account/screens/email_sign_in.dart';
-import 'package:sona/account/screens/phone_sign_in.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/widgets/image/icon.dart';
+import 'package:sona/firebase/sona_firebase.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../common/env.dart';
@@ -30,6 +31,7 @@ import '../models/my_profile.dart';
 import '../providers/profile.dart';
 import '../services/info.dart';
 import 'base_info.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 class AuthLandingScreen extends ConsumerStatefulWidget {
   const AuthLandingScreen({super.key});
@@ -41,22 +43,14 @@ class AuthLandingScreen extends ConsumerStatefulWidget {
 
 class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
   late final VideoPlayerController _videoController;
-  GoogleSignInAccount? _googleUser; // 7.x：通过 authenticationEvents 获取
 
   @override
   void initState() {
     SonaAnalytics.log('auth_landing');
     super.initState();
-    // 初始化 Google Sign-In 并尝试轻量认证（7.x 推荐）
+    // 初始化 Google Sign-In
     // GoogleSignIn.instance.initialize().then((_) {
-    //   // 监听认证事件，保存当前用户
-    //   GoogleSignIn.instance.authenticationEvents.listen((event) {
-    //     try {
-    //       final dynamic e = event;
-    //       final GoogleSignInAccount? u = e.user as GoogleSignInAccount?;
-    //       _googleUser = u;
-    //     } catch (_) {}
-    //   });
+    //   // 尝试轻量认证，但不依赖 authenticationEvents
     //   GoogleSignIn.instance.attemptLightweightAuthentication();
     // });
     _videoController = VideoPlayerController.asset('assets/videos/landing.mp4',
@@ -91,7 +85,10 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
         children: [
           Positioned.fill(
               child: _videoController.value.isInitialized
-                  ? VideoPlayer(_videoController)
+                  ? AspectRatio(
+                      aspectRatio: _videoController.value.aspectRatio,
+                      child: VideoPlayer(_videoController),
+                    )
                   : Container()),
 
           /// 霓虹渐变氛围层（紫→青，低透明度）
@@ -118,23 +115,17 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
             height: 260,
             child: ClipRect(
               child: Container(
-
                 decoration: BoxDecoration(
-
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black
-                    ],
+                    colors: [Colors.transparent, Colors.black],
                   ),
                 ),
               ),
             ),
           ),
           Positioned.fill(
-
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -186,36 +177,36 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                 //   ],
                 // ),
                 //Row(
-                  //children: [
-                    // SizedBox(width: 16),
-                    // Flexible(
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.symmetric(
-                    //         vertical: 6, horizontal: 0),
-                    //     child: OutlinedButton.icon(
-                    //         onPressed: _signInWithEmail,
-                    //         style: ButtonStyle(
-                    //           backgroundColor: MaterialStatePropertyAll(
-                    //               Colors.white.withOpacity(0.08)),
-                    //           foregroundColor:
-                    //               const MaterialStatePropertyAll(Colors.white),
-                    //           overlayColor: MaterialStatePropertyAll(
-                    //               const Color(0xFF22D3EE).withOpacity(0.10)),
-                    //           side: MaterialStatePropertyAll(BorderSide(
-                    //               color:
-                    //                   const Color(0xFF22D3EE).withOpacity(0.70),
-                    //               width: 1.5)),
-                    //           shape: MaterialStatePropertyAll(
-                    //               RoundedRectangleBorder(
-                    //                   borderRadius: BorderRadius.circular(24))),
-                    //         ),
-                    //         icon: const SonaIcon(
-                    //             icon: SonaIcons.email, color: Colors.white),
-                    //         label: Text('E-mail')),
-                    //   ),
-                    // ),
+                //children: [
+                // SizedBox(width: 16),
+                // Flexible(
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(
+                //         vertical: 6, horizontal: 0),
+                //     child: OutlinedButton.icon(
+                //         onPressed: _signInWithEmail,
+                //         style: ButtonStyle(
+                //           backgroundColor: MaterialStatePropertyAll(
+                //               Colors.white.withOpacity(0.08)),
+                //           foregroundColor:
+                //               const MaterialStatePropertyAll(Colors.white),
+                //           overlayColor: MaterialStatePropertyAll(
+                //               const Color(0xFF22D3EE).withOpacity(0.10)),
+                //           side: MaterialStatePropertyAll(BorderSide(
+                //               color:
+                //                   const Color(0xFF22D3EE).withOpacity(0.70),
+                //               width: 1.5)),
+                //           shape: MaterialStatePropertyAll(
+                //               RoundedRectangleBorder(
+                //                   borderRadius: BorderRadius.circular(24))),
+                //         ),
+                //         icon: const SonaIcon(
+                //             icon: SonaIcons.email, color: Colors.white),
+                //         label: Text('E-mail')),
+                //   ),
+                // ),
 
-                 // ],
+                // ],
                 //),
                 Container(
                   height: 260,
@@ -235,23 +226,28 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                                   child: OutlinedButton.icon(
                                       onPressed: _signInWithGoogle,
                                       style: ButtonStyle(
-                                        backgroundColor: MaterialStatePropertyAll(
-                                            Colors.white.withOpacity(0.05)),
-                                        foregroundColor: const MaterialStatePropertyAll(
-                                            Colors.white),
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                Colors.white.withOpacity(0.05)),
+                                        foregroundColor:
+                                            const MaterialStatePropertyAll(
+                                                Colors.white),
                                         overlayColor: MaterialStatePropertyAll(
-                                            const Color(0xFF22D3EE).withOpacity(0.10)),
-                                        side: MaterialStatePropertyAll(BorderSide(
-                                            color: const Color(0xFF22D3EE)
-                                                .withOpacity(0.70),
-                                            width: 1.5)),
+                                            const Color(0xFF22D3EE)
+                                                .withOpacity(0.10)),
+                                        side: MaterialStatePropertyAll(
+                                            BorderSide(
+                                                color: const Color(0xFF22D3EE)
+                                                    .withOpacity(0.70),
+                                                width: 1.5)),
                                         shape: MaterialStatePropertyAll(
                                             RoundedRectangleBorder(
                                                 borderRadius:
-                                                BorderRadius.circular(24))),
+                                                    BorderRadius.circular(24))),
                                       ),
                                       icon: const SonaIcon(
-                                          icon: SonaIcons.google, color: Colors.white),
+                                          icon: SonaIcons.google,
+                                          color: Colors.white),
                                       label: Text('Google')),
                                 ),
                               ),
@@ -263,23 +259,28 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                                   child: OutlinedButton.icon(
                                       onPressed: _signInWithApple,
                                       style: ButtonStyle(
-                                        backgroundColor: MaterialStatePropertyAll(
-                                            Colors.white.withOpacity(0.08)),
-                                        foregroundColor: const MaterialStatePropertyAll(
-                                            Colors.white),
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                Colors.white.withOpacity(0.08)),
+                                        foregroundColor:
+                                            const MaterialStatePropertyAll(
+                                                Colors.white),
                                         overlayColor: MaterialStatePropertyAll(
-                                            const Color(0xFF22D3EE).withOpacity(0.10)),
-                                        side: MaterialStatePropertyAll(BorderSide(
-                                            color: const Color(0xFF22D3EE)
-                                                .withOpacity(0.70),
-                                            width: 1.5)),
+                                            const Color(0xFF22D3EE)
+                                                .withOpacity(0.10)),
+                                        side: MaterialStatePropertyAll(
+                                            BorderSide(
+                                                color: const Color(0xFF22D3EE)
+                                                    .withOpacity(0.70),
+                                                width: 1.5)),
                                         shape: MaterialStatePropertyAll(
                                             RoundedRectangleBorder(
                                                 borderRadius:
-                                                BorderRadius.circular(24))),
+                                                    BorderRadius.circular(24))),
                                       ),
                                       icon: const SonaIcon(
-                                          icon: SonaIcons.apple, color: Colors.white),
+                                          icon: SonaIcons.apple,
+                                          color: Colors.white),
                                       label: Text('Apple ID')),
                                 ),
                               ),
@@ -287,11 +288,12 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                         ),
                       ),
                       Padding(
-                        padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
                         child: Text.rich(
                           TextSpan(children: [
-                            TextSpan(text: S.current.userPhoneNumberPageTermsPrefix),
+                            TextSpan(
+                                text: S.current.userPhoneNumberPageTermsPrefix),
                             TextSpan(
                                 text: S.current.userPhoneNumberPageTermsText,
                                 style: TextStyle(
@@ -301,12 +303,14 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                                     decorationColor: Colors.white),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => Navigator.push(context,
-                                      MaterialPageRoute<void>(builder: (c) {
+                                          MaterialPageRoute<void>(builder: (c) {
                                         return WebView(
                                             url: env.termsOfService,
-                                            title: S.of(context).termsOfService);
+                                            title:
+                                                S.of(context).termsOfService);
                                       }))),
-                            TextSpan(text: S.current.userPhoneNumberPageTermsAnd),
+                            TextSpan(
+                                text: S.current.userPhoneNumberPageTermsAnd),
                             TextSpan(
                                 text: S.current.userPhoneNumberPagePrivacyText,
                                 style: TextStyle(
@@ -316,13 +320,14 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                                     decorationColor: Colors.white),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => Navigator.push(context,
-                                      MaterialPageRoute<void>(builder: (c) {
+                                          MaterialPageRoute<void>(builder: (c) {
                                         return WebView(
                                             url: env.privacyPolicy,
                                             title: S.of(context).privacyPolicy);
                                       }))),
                             TextSpan(
-                                text: S.current.userPhoneNumberPagePrivacySuffix),
+                                text:
+                                    S.current.userPhoneNumberPagePrivacySuffix),
                           ]),
                           style: Theme.of(context)
                               .textTheme
@@ -344,25 +349,24 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
     );
   }
 
-  void _signInWithSMS() {
-    Navigator.push(context,
-        MaterialPageRoute<void>(builder: (_) => SignInWithPhoneNumberScreen()));
-  }
-
-  void _signInWithEmail() {
-    Navigator.push(context,
-        MaterialPageRoute<void>(builder: (_) => SignInWithEmailScreen()));
-  }
-
   void _signInWithGoogle() async {
     Map<String, dynamic> params = {};
     try {
+      GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+      await _googleSignIn.initialize(
+          serverClientId:
+              "972955903429-fe5r0tp9fbuu3mqk94u911iat1coelar.apps.googleusercontent.com");
+      //
       if (!GoogleSignIn.instance.supportsAuthenticate()) {
         throw UnsupportedError('GoogleSignIn.authenticate 在当前平台不可用');
       }
-      await GoogleSignIn.instance.authenticate();
-      GoogleSignInAccount? account = _googleUser;
-      if (account == null) throw (Exception('Account is null'));
+
+      // 先登出当前用户，确保选择账号
+      await GoogleSignIn.instance.signOut();
+
+      // 重新认证，让用户选择账号
+      GoogleSignInAccount? account = await GoogleSignIn.instance.authenticate();
+
       final auth = await account.authentication; // 可获取 idToken
       params.addAll({
         'id': account.id,
@@ -372,7 +376,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
         'code': null
       });
     } catch (e) {
-      if (kDebugMode) print(e);
+      if (kDebugMode) print('Google sign in error: $e');
     }
     if (params.isNotEmpty) _signInWithOAuth('GOOGLE', params);
   }
@@ -421,8 +425,12 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
         }
 
         final response = await getMyProfile();
+
         if (response.statusCode == 0) {
           final profile = MyProfile.fromJson(response.data);
+
+          ///注册成功后，继续注册在fireauth和firestore中进行保存
+          await _registerOrLoginUser(params['email'], profile);
           ref.read(myProfileProvider.notifier).update(profile);
           if (!profile.completed) {
             _completeRequiredInfo(name: params['name']);
@@ -457,6 +465,32 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
           MaterialPageRoute<void>(
               builder: (_) => BaseInfoScreen(
                   name: name, country: findCountryByCode(null))));
+    }
+  }
+
+  /// 注册或登录用户到 Firebase Auth 和 Firestore
+  Future<void> _registerOrLoginUser(String email, MyProfile profile) async {
+    try {
+      /// firestore中查询用户是否存在
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(profile.id.toString())
+          .get();
+
+      if (userDoc.exists) {
+        debugPrint('Firestore已存在');
+        return;
+      }
+      await FirebaseChatCore.instance.createUserInFirestore(
+        types.User(
+          id: profile.id.toString(),
+          firstName: profile.name,
+          imageUrl: profile.avatar,
+        ),
+      );
+    } catch (e) {
+      debugPrint('注册/登录失败: $e');
+      rethrow;
     }
   }
 }

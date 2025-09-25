@@ -2513,6 +2513,76 @@ class S {
       args: [],
     );
   }
+
+  /// `📸 Remind them to upload photos, get to know each other better`
+  String get remindUploadPhoto {
+    return Intl.message(
+      '📸 Remind them to upload photos, get to know each other better',
+      name: 'remindUploadPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fate is on the way`
+  String get fateOnTheWay {
+    return Intl.message(
+      'Fate is on the way',
+      name: 'fateOnTheWay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your private chat room is still empty\nBut the stars know, the right person is coming to you`
+  String get emptyChatRoomMessage {
+    return Intl.message(
+      'Your private chat room is still empty\nBut the stars know, the right person is coming to you',
+      name: 'emptyChatRoomMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Go Discover`
+  String get goDiscover {
+    return Intl.message('Go Discover', name: 'goDiscover', desc: '', args: []);
+  }
+
+  /// `Complete Profile`
+  String get completeProfile {
+    return Intl.message(
+      'Complete Profile',
+      name: 'completeProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `✨ Complete your profile so the stars can know you better, for more accurate matching`
+  String get profileTip {
+    return Intl.message(
+      '✨ Complete your profile so the stars can know you better, for more accurate matching',
+      name: 'profileTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upgrade to Premium for more recommendations`
+  String get upgradeForMoreRecommendations {
+    return Intl.message(
+      'Upgrade to Premium for more recommendations',
+      name: 'upgradeForMoreRecommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uploading...`
+  String get uploading {
+    return Intl.message('Uploading...', name: 'uploading', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
