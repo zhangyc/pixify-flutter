@@ -2,7 +2,6 @@
 class Assets {
   Assets._();
 
-  static const String apngMatchBgAnim = 'assets/apng/match_bg_anim.png';
   static const String appAppIcon = 'assets/app/app_icon.png';
   static const String appAppIconSplash = 'assets/app/app_icon_splash.png';
   static const String epheSeas18 = 'assets/ephe/seas_18.se1';
@@ -71,9 +70,7 @@ class Assets {
   static const String iconsSparkles = 'assets/icons/sparkles.png';
   static const String iconsWomanUnselected = 'assets/icons/woman_unselected.png';
   static const String iconsWonmanSelected = 'assets/icons/wonman_selected.png';
-  static const String imagesAboutLogo = 'assets/images/about_logo.png';
   static const String imagesAddPhoto = 'assets/images/add_photo.png';
-  static const String imagesCatPortrait = 'assets/images/cat_portrait.jpeg';
   static const String imagesChatBg = 'assets/images/chat_bg.png';
   static const String imagesCloudGreenNarrow = 'assets/images/cloud_green_narrow.png';
   static const String imagesDataEmpty = 'assets/images/data_empty.png';

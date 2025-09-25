@@ -44,6 +44,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _initData();
+
     });
     super.initState();
   }

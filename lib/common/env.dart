@@ -19,9 +19,11 @@ class _Env {
   final String firestorePrefix;
   final String staticDomain = 'https://pixify.aegis-labs.com/';
 
-  String get privacyPolicy => 'https://pixify-rp.web.app/privacy-policy';
-  String get termsOfService => 'https://pixify-rp.web.app/terms-and-conditions';
-  String get disclaimer => 'https://pixify-rp.web.app/disclaimer';
+  String get privacyPolicy =>
+      'https://pixify-rp.web.app/privacy-policy-astro.html';
+  String get termsOfService =>
+      'https://pixify-rp.web.app/terms-and-conditions-astro.html';
+  String get disclaimer => 'https://pixify-rp.web.app/disclaimer-astro.html';
 }
 
 const env =
