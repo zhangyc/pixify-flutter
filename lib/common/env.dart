@@ -17,14 +17,11 @@ class _Env {
   final String env;
   final String apiServer;
   final String firestorePrefix;
-  final String staticDomain = 'https://h5.sona.ninja';
+  final String staticDomain = 'https://pixify.aegis-labs.com/';
 
-  String get privacyPolicy =>
-      '$staticDomain/privacy-policy-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
-  String get termsOfService =>
-      '$staticDomain/terms-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
-  String get disclaimer =>
-      '$staticDomain/disclaimer-${findMatchedSonaLocale(profile?.locale ?? Platform.localeName).locale.toLanguageTag()}.html';
+  String get privacyPolicy => 'https://pixify-rp.web.app/privacy-policy';
+  String get termsOfService => 'https://pixify-rp.web.app/terms-and-conditions';
+  String get disclaimer => 'https://pixify-rp.web.app/disclaimer';
 }
 
 const env =
