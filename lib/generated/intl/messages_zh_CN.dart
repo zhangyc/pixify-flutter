@@ -335,6 +335,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "解锁查看谁喜欢了你",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3个心愿"),
+    "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage("Plus会员权益"),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("Plus双人快照"),
     "preference": MessageLookupByLibrary.simpleMessage("偏好"),
     "privacy": MessageLookupByLibrary.simpleMessage("隐私"),

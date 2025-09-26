@@ -2583,6 +2583,16 @@ class S {
   String get uploading {
     return Intl.message('Uploading...', name: 'uploading', desc: '', args: []);
   }
+
+  /// `Plus Membership Benefits`
+  String get plusMembershipBenefits {
+    return Intl.message(
+      'Plus Membership Benefits',
+      name: 'plusMembershipBenefits',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

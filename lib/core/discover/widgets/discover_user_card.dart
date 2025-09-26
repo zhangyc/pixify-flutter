@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
+import 'package:sona/common/widgets/member/member.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 import '../models/discover_user.dart';
 import 'astro_badge.dart';
 
@@ -303,12 +305,20 @@ class DiscoverUserCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // 姓名和年龄
-              Text(
-                '${user.name}, ${user.age}',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 20,
-                ),
+              Row(
+                children: [
+                  Text(
+                    '${user.name}, ${user.age}',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  // 会员标识
+                  if (user.memberType == MemberType.plus)
+                    const MemberIcon(size: 18),
+                ],
               ),
 
               // 距离信息

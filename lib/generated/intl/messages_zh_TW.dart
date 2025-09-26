@@ -333,6 +333,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "plusFuncUnlimitedLikes": MessageLookupByLibrary.simpleMessage("無限點讚"),
     "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage("解鎖查看誰喜歡你"),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3個心願"),
+    "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage("Plus會員權益"),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("Plus雙人快照"),
     "preference": MessageLookupByLibrary.simpleMessage("偏好"),
     "privacy": MessageLookupByLibrary.simpleMessage("隱私"),

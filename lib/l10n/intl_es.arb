@@ -579,5 +579,7 @@
   "upgradeForMoreRecommendations": "Upgrade vers Premium pour plus de recommandations",
   "@upgradeForMoreRecommendations": {},
   "uploading": "Téléchargement...",
-  "@uploading": {}
+  "@uploading": {},
+  "plusMembershipBenefits": "Beneficios de Membresía Plus",
+  "@plusMembershipBenefits": {}
 }

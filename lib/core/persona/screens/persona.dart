@@ -83,36 +83,13 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // 头像 + 会员徽章
+                        // 头像 + 会员皇冠
                         Stack(
                           children: [
                             UserAvatar(
                               url: myProfile.avatar,
-                              // size: const Size.square(72),
                               name: myProfile.name,
-                            ),
-                            Positioned(
-                              right: 0,
-                              bottom: 0,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.surface,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2,
-                                  ),
-                                ),
-                                padding: const EdgeInsets.all(4),
-                                child: switch (
-                                    ref.read(myProfileProvider)?.memberType) {
-                                  MemberType.club => SonaIcon(
-                                      icon: SonaIcons.club_mark, size: 14),
-                                  MemberType.plus => SonaIcon(
-                                      icon: SonaIcons.plus_mark, size: 14),
-                                  _ => const SizedBox.shrink(),
-                                },
-                              ),
+                              memberType: myProfile.memberType,
                             ),
                           ],
                         ),

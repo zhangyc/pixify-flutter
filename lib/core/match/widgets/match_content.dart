@@ -5,13 +5,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 
-import '../../../generated/assets.dart';
 import '../../../generated/l10n.dart';
-import '../../../utils/global/global.dart';
 import '../bean/match_user.dart';
 import '../providers/matched.dart';
-import '../util/event.dart';
 
 class MatchedContent extends StatefulWidget {
   const MatchedContent({super.key, required this.target, required this.next});
@@ -304,34 +302,69 @@ class _MatchedContentState extends State<MatchedContent>
             builder: (context, child) {
               return Transform.scale(
                 scale: _pulseAnimation.value * 0.1 + 0.9,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 3,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.3),
-                        blurRadius: 20,
-                        spreadRadius: 5,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 3,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white.withOpacity(0.3),
+                            blurRadius: 20,
+                            spreadRadius: 5,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: ClipOval(
-                    child: widget.target.avatar != null &&
-                            widget.target.avatar!.isNotEmpty
-                        ? Image.network(
-                            widget.target.avatar!,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) =>
-                                _buildDefaultAvatar(),
-                          )
-                        : _buildDefaultAvatar(),
-                  ),
+                      child: ClipOval(
+                        child: widget.target.avatar != null &&
+                                widget.target.avatar!.isNotEmpty
+                            ? Image.network(
+                                widget.target.avatar!,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    _buildDefaultAvatar(),
+                              )
+                            : _buildDefaultAvatar(),
+                      ),
+                    ),
+                    // 会员皇冠
+                    if (widget.target.memberType == MemberType.plus)
+                      Positioned(
+                        top: -8,
+                        right: -8,
+                        child: Container(
+                          width: 28,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF9370DB),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF9370DB).withOpacity(0.3),
+                                blurRadius: 6,
+                                spreadRadius: 1,
+                              ),
+                            ],
+                          ),
+                          child: const Icon(
+                            Icons.star,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               );
             },

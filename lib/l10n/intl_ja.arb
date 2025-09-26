@@ -579,5 +579,7 @@
   "upgradeForMoreRecommendations": "プレミアムにアップグレードしてより多くのおすすめを",
   "@upgradeForMoreRecommendations": {},
   "uploading": "アップロード中...",
-  "@uploading": {}
+  "@uploading": {},
+  "plusMembershipBenefits": "Plus会員特典",
+  "@plusMembershipBenefits": {}
 }

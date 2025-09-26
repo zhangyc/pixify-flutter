@@ -3,6 +3,7 @@ import 'dart:math' as SonaAnalytics;
 
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:sona/account/models/age.dart';
 import 'dart:math' as math;
 
 import 'package:sona/core/match/bean/match_user.dart';

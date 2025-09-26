@@ -444,6 +444,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Débloquer pour voir qui vous aime",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 souhaits"),
+    "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage(
+      "Avantages de l\'Abonnement Plus",
+    ),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage(
       "Duo Snap avec Plus",
     ),

@@ -438,6 +438,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sblocca per vedere chi ti piace",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 desideri"),
+    "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage(
+      "Vantaggi dell\'Iscrizione Plus",
+    ),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage(
       "Duo Snap con Plus",
     ),

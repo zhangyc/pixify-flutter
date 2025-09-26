@@ -8,6 +8,7 @@ import 'package:sona/generated/assets.dart';
 import 'package:sona/utils/global/global.dart';
 
 import '../../../common/widgets/image/user_avatar.dart';
+import '../../../common/widgets/member/member.dart';
 import '../../../generated/l10n.dart';
 
 class ConversationItemWidget extends ConsumerStatefulWidget {
@@ -16,82 +17,110 @@ class ConversationItemWidget extends ConsumerStatefulWidget {
   final Future Function() onLongPress;
   final Future Function() onHookTap;
 
-  const ConversationItemWidget({
-    super.key,
-    required this.conversation,
-    required this.onTap,
-    required this.onLongPress,
-    required this.onHookTap
-  });
+  const ConversationItemWidget(
+      {super.key,
+      required this.conversation,
+      required this.onTap,
+      required this.onLongPress,
+      required this.onHookTap});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ConversationItemWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ConversationItemWidgetState();
 }
 
-class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget> {
-
+class _ConversationItemWidgetState
+    extends ConsumerState<ConversationItemWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        widget.onTap().then((value) {
-          widget.conversation.checkTime = DateTime.now();
-          if (mounted) setState(() {});
-        });
-        kvStore.setInt('convo_${widget.conversation.convoId}_check_time', DateTime.now().millisecondsSinceEpoch);
-      },
-      onLongPress: widget.onLongPress,
-      child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-          child: Row(
-            children: [
-              UserAvatar(url: widget.conversation.otherSide.avatar ?? '', size: Size.square(64)),
-              SizedBox(width: 8),
-              Expanded(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: 64
-                  ),
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          widget.onTap().then((value) {
+            widget.conversation.checkTime = DateTime.now();
+            if (mounted) setState(() {});
+          });
+          kvStore.setInt('convo_${widget.conversation.convoId}_check_time',
+              DateTime.now().millisecondsSinceEpoch);
+        },
+        onLongPress: widget.onLongPress,
+        child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            child: Row(
+              children: [
+                Stack(
+                  children: [
+                    UserAvatar(
+                        url: widget.conversation.otherSide.avatar ?? '',
+                        size: Size.square(64)),
+                    // TODO: 需要从API获取用户的会员状态
+                    // Positioned(
+                    //   top: -4,
+                    //   right: -4,
+                    //   child: Container(
+                    //     width: 20,
+                    //     height: 20,
+                    //     decoration: BoxDecoration(
+                    //       color: const Color(0xFF9370DB),
+                    //       shape: BoxShape.circle,
+                    //       border: Border.all(
+                    //         color: Colors.white,
+                    //         width: 2,
+                    //       ),
+                    //     ),
+                    //     child: const Icon(
+                    //       Icons.star,
+                    //       color: Colors.white,
+                    //       size: 12,
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                    child: ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: 64),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         widget.conversation.otherSide.name ?? '',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.white,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: Colors.white,
+                                ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 2),
-                      _buildConversationTip(widget.conversation.contentType??1)
+                      _buildConversationTip(
+                          widget.conversation.contentType ?? 1)
                     ],
                   ),
-                )
-              ),
-              SizedBox(width: 8),
-              if (widget.conversation.hasUnreadMessage) Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: Color(0xFFBEFF06),
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: Colors.white.withOpacity(0.2), width: 1)
-                ),
-              )
-            ],
-          )
-      )
-    );
+                )),
+                SizedBox(width: 8),
+                if (widget.conversation.hasUnreadMessage)
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFBEFF06),
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(
+                            color: Colors.white.withOpacity(0.2), width: 1)),
+                  )
+              ],
+            )));
   }
 
   _buildConversationTip(int contentType) {
-    if(contentType==1){
+    if (contentType == 1) {
       String? displayMessage;
 
-      if (widget.conversation.lastMessageSenderId == ref.read(myProfileProvider)!.id) {
+      if (widget.conversation.lastMessageSenderId ==
+          ref.read(myProfileProvider)!.id) {
         displayMessage = widget.conversation.lastMessageOriginalContent;
       } else {
         displayMessage = widget.conversation.lastMessageTranslatedContent;
@@ -100,18 +129,26 @@ class _ConversationItemWidgetState extends ConsumerState<ConversationItemWidget>
         }
       }
       return Text(
-        displayMessage != null && displayMessage.isNotEmpty ? displayMessage : S.of(context).newMatch,
+        displayMessage != null && displayMessage.isNotEmpty
+            ? displayMessage
+            : S.of(context).newMatch,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
-          fontWeight: FontWeight.w500,
-          color: widget.conversation.hasUnreadMessage ? Theme.of(context).primaryColor : Colors.grey,
-        ),
+              fontWeight: FontWeight.w500,
+              color: widget.conversation.hasUnreadMessage
+                  ? Theme.of(context).primaryColor
+                  : Colors.grey,
+            ),
       );
-    }else if(contentType==2){
+    } else if (contentType == 2) {
       return Row(
         children: [
-          SvgPicture.asset(Assets.svgConverationDuo,width: 14,height: 14,),
+          SvgPicture.asset(
+            Assets.svgConverationDuo,
+            width: 14,
+            height: 14,
+          ),
           SizedBox(
             width: 4,
           ),

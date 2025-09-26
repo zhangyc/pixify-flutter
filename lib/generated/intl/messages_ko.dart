@@ -373,6 +373,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "좋아하는 사람이 누구인지 보려면 잠금 해제",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3개의 소원"),
+    "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage(
+      "Plus 멤버십 혜택",
+    ),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("Plus 듀오 스냅"),
     "preference": MessageLookupByLibrary.simpleMessage("취향"),
     "privacy": MessageLookupByLibrary.simpleMessage("프라이버시"),

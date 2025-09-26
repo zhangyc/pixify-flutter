@@ -1,6 +1,5 @@
 enum MemberType {
   none(_noneName),
-  club(_clubName),
   plus(_plusName);
 
   static const _noneName = 'NONE';
@@ -11,10 +10,6 @@ enum MemberType {
   final String name;
 
   factory MemberType.fromString(String? t) {
-    return switch(t) {
-      _clubName => club,
-      _plusName => plus,
-      _ => none
-    };
+    return switch (t) { _plusName => plus, _ => none };
   }
 }

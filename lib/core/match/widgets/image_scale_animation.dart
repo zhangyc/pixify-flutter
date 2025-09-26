@@ -15,8 +15,8 @@ class MyImageAnimation extends StatefulWidget {
   @override
   _MyImageAnimationState createState() => _MyImageAnimationState();
 }
-class _MyImageAnimationState extends State<MyImageAnimation> {
 
+class _MyImageAnimationState extends State<MyImageAnimation> {
   @override
   void initState() {
     _startAnimation();
@@ -29,99 +29,129 @@ class _MyImageAnimationState extends State<MyImageAnimation> {
       child: AnimatedContainer(
         duration: Duration(milliseconds: 500),
         curve: Curves.linearToEaseOut,
-        width: widget.info.matched ? 95 : MediaQuery.of(context).size.width-16*2,
+        width: widget.info.matched
+            ? 95
+            : MediaQuery.of(context).size.width - 16 * 2,
         height: widget.info.matched ? 118 : 457,
         child: widget.info.matched
-            ? Container(decoration: BoxDecoration(
-            color: Colors.black,
-            image: widget.info.avatar==null?null:DecorationImage(image: CachedNetworkImageProvider(widget.info.avatar!),fit: BoxFit.cover),
-            border: Border.all(
-                color: Colors.black,
-                width: 2
-            ),
-            borderRadius: BorderRadius.circular(20)
-        ),
-          clipBehavior: Clip.antiAlias,
-        ):
-        Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Stack(
-            alignment: Alignment.bottomLeft,
-            children: [
-              widget.info.avatar==null?Container():CachedNetworkImage(imageUrl: widget.info.avatar!,fit: BoxFit.cover,width: MediaQuery.of(context).size.width-16*2,height: 457,),
-              Container(
-                padding: const EdgeInsets.all(16.0),
+            ? Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.5)
-                  ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter
-                  )
+                    color: Colors.black,
+                    image: widget.info.avatar == null
+                        ? null
+                        : DecorationImage(
+                            image:
+                                CachedNetworkImageProvider(widget.info.avatar!),
+                            fit: BoxFit.cover),
+                    border: Border.all(color: Colors.black, width: 2),
+                    borderRadius: BorderRadius.circular(20)),
+                clipBehavior: Clip.antiAlias,
+              )
+            : Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                child: Stack(
+                  alignment: Alignment.bottomLeft,
                   children: [
-                    Text(widget.info.originNickname??'',style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800
+                    widget.info.avatar == null
+                        ? Container()
+                        : CachedNetworkImage(
+                            imageUrl: widget.info.avatar!,
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width - 16 * 2,
+                            height: 457,
+                          ),
+                    Container(
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.5)
+                          ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            widget.info.originNickname ?? '',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w800),
+                            maxLines: 1,
+                          ),
+                          Wrap(
+                            // alignment: WrapAlignment.center, // 水平居中
+                            crossAxisAlignment:
+                                WrapCrossAlignment.center, // 垂直居中
+                            children: [
+                              Text(
+                                '${widget.info.name ?? ''}, ${widget.info.age} ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w800,
+                                  height: 1.5,
+                                ),
+                                maxLines: 2,
+                              ),
+                              widget.info.memberType == MemberType.none
+                                  ? Container()
+                                  : widget.info.memberType == MemberType.plus
+                                      ? SonaIcon(
+                                          icon: SonaIcons.club_mark, size: 24)
+                                      : SonaIcon(
+                                          icon: SonaIcons.plus_mark, size: 24)
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              if (widget.info.countryFlag != null)
+                                Text(widget.info.countryFlag ?? ''),
+                              if (widget.info.countryName != null)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 6, right: 12),
+                                  child: Text(widget.info.countryName ?? '',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w900)),
+                                ),
+                              if (widget.info.currentCity != null &&
+                                  widget.info.currentCity!.isNotEmpty)
+                                Image.asset(
+                                  Assets.iconsGps,
+                                  width: 16,
+                                  height: 16,
+                                ),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              if (widget.info.currentCity != null &&
+                                  widget.info.currentCity!.isNotEmpty)
+                                Text(
+                                  '${widget.info.currentCity}',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w900),
+                                )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                      maxLines: 1,
-                    ),
-                    Wrap(
-                      // alignment: WrapAlignment.center, // 水平居中
-                      crossAxisAlignment: WrapCrossAlignment.center, // 垂直居中
-                      children: [
-                        Text('${widget.info.name??''}, ${widget.info.age} ',style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w800,
-                            height: 1.5,
-                         ),
-                          maxLines: 2,
-                        ),
-                        widget.info.memberType==MemberType.none?Container():
-                            widget.info.memberType==MemberType.club?SonaIcon(icon: SonaIcons.club_mark, size: 24):
-                            SonaIcon(icon: SonaIcons.plus_mark, size: 24)
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        if (widget.info.countryFlag != null) Text(widget.info.countryFlag??''),
-                        if (widget.info.countryName != null) Padding(
-                          padding: const EdgeInsets.only(left: 6, right: 12),
-                          child: Text(widget.info.countryName??'', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w900
-                          )),
-                        ),
-                        if (widget.info.currentCity != null && widget.info.currentCity!.isNotEmpty) Image.asset(Assets.iconsGps,width: 16,height: 16,),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        if (widget.info.currentCity != null && widget.info.currentCity!.isNotEmpty) Text('${widget.info.currentCity}',style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w900
-                        ),)
-                      ],
-                    )
+                    Positioned(top: 11, child: IconAnimation())
                   ],
                 ),
               ),
-
-              Positioned(top: 11,child: IconAnimation())
-            ],
-          ),
-        ),
         onEnd: () {
           // 在动画结束时切换widget
           setState(() {

@@ -6,6 +6,8 @@ import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/env.dart';
 import 'package:sona/common/providers/package_info.dart';
 import 'package:sona/common/widgets/button/forward.dart';
+import 'package:sona/common/widgets/member/member.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 import 'package:sona/common/widgets/text/neon_word_mark.dart';
 import 'package:sona/core/providers/token.dart';
 import 'package:sona/setting/screens/account.dart';
@@ -52,6 +54,71 @@ class _SettingScreen extends ConsumerState<SettingScreen> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Column(
                     children: [
+                      // 会员状态
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final profile = ref.watch(myProfileProvider);
+                          final memberType =
+                              profile?.memberType ?? MemberType.none;
+
+                          return Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? const Color(0xFF1C1C1E)
+                                  : Colors.white,
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(
+                                color: Theme.of(context).brightness ==
+                                        Brightness.dark
+                                    ? Colors.white.withOpacity(0.06)
+                                    : Colors.black.withOpacity(0.06),
+                                width: 0.5,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  'Membership Status',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const Spacer(),
+                                if (memberType == MemberType.plus)
+                                  Row(
+                                    children: [
+                                      MemberBadge(
+                                        size: 16,
+                                        showText: true,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      const Text(
+                                        'Active',
+                                        style: TextStyle(
+                                          color: Color(0xFF9370DB),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                else
+                                  const Text(
+                                    'Free',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 12),
+
                       // Account 分组
                       Container(
                         decoration: BoxDecoration(

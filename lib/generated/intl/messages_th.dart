@@ -418,6 +418,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "ปลดล็อกเพื่อดูว่าใครชอบคุณ",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 คำอธิษฐาน"),
+    "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage(
+      "สิทธิพิเศษสมาชิก Plus",
+    ),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage(
       "Duo Snap กับ Plus",
     ),

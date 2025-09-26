@@ -579,5 +579,7 @@
   "upgradeForMoreRecommendations": "Обновитесь до Premium для большего количества рекомендаций",
   "@upgradeForMoreRecommendations": {},
   "uploading": "Загрузка...",
-  "@uploading": {}
+  "@uploading": {},
+  "plusMembershipBenefits": "Vantaggi dell'Iscrizione Plus",
+  "@plusMembershipBenefits": {}
 }

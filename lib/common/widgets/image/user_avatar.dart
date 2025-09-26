@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 
 class UserAvatar extends ConsumerWidget {
   const UserAvatar(
@@ -11,26 +12,63 @@ class UserAvatar extends ConsumerWidget {
       this.name,
       this.size = const Size.square(50),
       this.borderRadius = const BorderRadius.all(Radius.circular(24)),
-      this.borderSide = const BorderSide(color: Color(0xFFE8E6E6), width: 1)});
+      this.borderSide = const BorderSide(color: Color(0xFFE8E6E6), width: 1),
+      this.memberType});
 
   final String? url;
   final String? name;
   final Size size;
   final BorderSide borderSide;
   final BorderRadius borderRadius;
+  final MemberType? memberType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      width: size.width,
-      height: size.height,
-      decoration: BoxDecoration(borderRadius: borderRadius),
-      foregroundDecoration: BoxDecoration(
-          border: Border.fromBorderSide(borderSide),
-          borderRadius: borderRadius),
-      alignment: Alignment.center,
-      clipBehavior: Clip.antiAlias,
-      child: _buildAvatarContent(context),
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: size.width,
+          height: size.height,
+          decoration: BoxDecoration(borderRadius: borderRadius),
+          foregroundDecoration: BoxDecoration(
+              border: Border.fromBorderSide(borderSide),
+              borderRadius: borderRadius),
+          alignment: Alignment.center,
+          clipBehavior: Clip.antiAlias,
+          child: _buildAvatarContent(context),
+        ),
+        // 会员皇冠
+        if (memberType == MemberType.plus)
+          Positioned(
+            top: -size.width * 0.1,
+            right: -size.width * 0.1,
+            child: Container(
+              width: size.width * 0.3,
+              height: size.width * 0.3,
+              decoration: BoxDecoration(
+                color: const Color(0xFF9370DB),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: size.width * 0.02,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF9370DB).withOpacity(0.3),
+                    blurRadius: size.width * 0.05,
+                    spreadRadius: size.width * 0.01,
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.star,
+                color: Colors.white,
+                size: size.width * 0.18,
+              ),
+            ),
+          ),
+      ],
     );
   }
 

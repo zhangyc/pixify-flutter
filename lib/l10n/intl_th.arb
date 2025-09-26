@@ -579,5 +579,7 @@
   "upgradeForMoreRecommendations": "อัปเกรดเป็นพรีเมียมเพื่อรับคำแนะนำเพิ่มเติม",
   "@upgradeForMoreRecommendations": {},
   "uploading": "กำลังอัปโหลด...",
-  "@uploading": {}
+  "@uploading": {},
+  "plusMembershipBenefits": "สิทธิพิเศษสมาชิก Plus",
+  "@plusMembershipBenefits": {}
 }

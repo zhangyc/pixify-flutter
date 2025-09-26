@@ -579,5 +579,7 @@
   "upgradeForMoreRecommendations": "Actualiza a Premium para más recomendaciones",
   "@upgradeForMoreRecommendations": {},
   "uploading": "Subiendo...",
-  "@uploading": {}
+  "@uploading": {},
+  "plusMembershipBenefits": "Vantagens da Assinatura Plus",
+  "@plusMembershipBenefits": {}
 }

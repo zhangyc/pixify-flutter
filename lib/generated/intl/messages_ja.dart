@@ -373,6 +373,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "あなたを好きな人が誰か見るために解除",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3つの願い"),
+    "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage("Plus会員特典"),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("Plusでデュオスナップ"),
     "preference": MessageLookupByLibrary.simpleMessage("好み"),
     "privacy": MessageLookupByLibrary.simpleMessage("プライバシー"),

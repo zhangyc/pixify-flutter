@@ -6,14 +6,15 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/models/hobby.dart';
 import 'package:sona/common/providers/other_info_provider.dart';
+import 'package:sona/common/widgets/member/member.dart';
 import 'package:sona/core/match/bean/match_user.dart';
+import 'package:sona/core/subscribe/model/member.dart';
 
 import '../../core/match/services/match.dart';
 import '../../core/match/util/event.dart';
 import '../../generated/l10n.dart';
 import '../../utils/dialog/input.dart';
 import '../../utils/dialog/report.dart';
-import '../../utils/toast/flutter_toast.dart';
 
 class OtherUserProfileScreen extends ConsumerStatefulWidget {
   static const String routeName = '/user-profile';
@@ -192,12 +193,24 @@ class _OtherUserProfileScreenState
               ),
               child: Column(
                 children: [
-                  Text(
-                    userData?.name ?? 'Unknown',
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                    textAlign: TextAlign.center,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        userData?.name ?? 'Unknown',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(width: 8),
+                      // 会员标识
+                      if (userData?.memberType == MemberType.plus)
+                        const MemberIcon(size: 24),
+                    ],
                   ),
                   const SizedBox(height: 8),
                   Text(

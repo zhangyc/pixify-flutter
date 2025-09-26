@@ -579,5 +579,7 @@
   "upgradeForMoreRecommendations": "프리미엄으로 업그레이드하여 더 많은 추천 받기",
   "@upgradeForMoreRecommendations": {},
   "uploading": "업로드 중...",
-  "@uploading": {}
+  "@uploading": {},
+  "plusMembershipBenefits": "Plus 멤버십 혜택",
+  "@plusMembershipBenefits": {}
 }

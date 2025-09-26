@@ -579,5 +579,7 @@
   "upgradeForMoreRecommendations": "開通會員獲得更多推薦",
   "@upgradeForMoreRecommendations": {},
   "uploading": "上傳中...",
-  "@uploading": {}
+  "@uploading": {},
+  "plusMembershipBenefits": "Plus會員權益",
+  "@plusMembershipBenefits": {}
 }

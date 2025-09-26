@@ -134,7 +134,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         ),
         floatingActionButton:
             (ref.watch(myProfileProvider)!.memberType == MemberType.none ||
-                    ref.watch(myProfileProvider)!.memberType == MemberType.club)
+                    ref.watch(myProfileProvider)!.memberType == MemberType.plus)
                 ? Container(
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     child: ElevatedButton(
@@ -230,7 +230,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
             if (isMember) {
               Fluttertoast.showToast(
                   msg: switch (ref.read(myProfileProvider)?.memberType) {
-                MemberType.club => S.current.youAreAClubMemberNow,
+                MemberType.plus => S.current.youAreAClubMemberNow,
                 MemberType.plus => S.current.buttonAlreadyPlus,
                 _ => ''
               });
@@ -375,7 +375,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Plus 会员权益",
+            S.of(context).plusMembershipBenefits,
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   color: Colors.black87,
                   fontWeight: FontWeight.w800,
@@ -573,7 +573,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
       });
       Fluttertoast.showToast(
           msg: switch (ref.read(myProfileProvider)?.memberType) {
-        MemberType.club => S.current.youAreAClubMemberNow,
+        MemberType.plus => S.current.youAreAClubMemberNow,
         MemberType.plus => S.current.buttonAlreadyPlus,
         _ => ''
       });
@@ -776,7 +776,7 @@ enum FromTag {
   chat_starter,
   profile_myplan,
   travel_wish,
-  club_duo_snap, // club会员的duo snap次数用完时
+  club_duo_snap, // plus会员的duo snap次数用完时
   duo_snap
 }
 
