@@ -2,7 +2,7 @@ name: sona
 description: an AI persona dating app.
 publish_to: 'none'
 
-version: 1.0.1+7
+version: 1.0.1+9
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -167,7 +167,6 @@ flutter:
     - assets/images/
     - assets/videos/
     - assets/svg/
-    - assets/apng/
     - assets/app/
     - assets/fonts/
     - assets/ephe/

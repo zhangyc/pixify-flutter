@@ -39,7 +39,6 @@ class _SignInWithEmailScreenState extends ConsumerState<SignInWithEmailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         // forceMaterialTransparency: true,
@@ -60,10 +59,6 @@ class _SignInWithEmailScreenState extends ConsumerState<SignInWithEmailScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset('assets/images/tender_affection.png', height: 206),
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 24),
                 child: Text(
@@ -163,8 +158,9 @@ class _SignInWithEmailScreenState extends ConsumerState<SignInWithEmailScreen> {
             ),
             SizedBox(height: 12),
             ColoredButton(
+              borderColor: Colors.transparent,
               size: ColoredButtonSize.large,
-              // color: Color(0xFFDD70E0),
+              color: Theme.of(context).primaryColor,
               fontColor: Colors.white,
               text: S.current.buttonNext,
               onTap: _next,

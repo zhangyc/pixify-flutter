@@ -33,6 +33,8 @@ import '../services/info.dart';
 import 'base_info.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
+import 'email_sign_in.dart';
+
 class AuthLandingScreen extends ConsumerStatefulWidget {
   const AuthLandingScreen({super.key});
 
@@ -64,6 +66,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
 
   @override
   void dispose() {
+    _videoController.pause();
     _videoController.dispose();
     super.dispose();
   }
@@ -176,38 +179,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                 //     SizedBox(width: 16)
                 //   ],
                 // ),
-                //Row(
-                //children: [
-                // SizedBox(width: 16),
-                // Flexible(
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(
-                //         vertical: 6, horizontal: 0),
-                //     child: OutlinedButton.icon(
-                //         onPressed: _signInWithEmail,
-                //         style: ButtonStyle(
-                //           backgroundColor: MaterialStatePropertyAll(
-                //               Colors.white.withOpacity(0.08)),
-                //           foregroundColor:
-                //               const MaterialStatePropertyAll(Colors.white),
-                //           overlayColor: MaterialStatePropertyAll(
-                //               const Color(0xFF22D3EE).withOpacity(0.10)),
-                //           side: MaterialStatePropertyAll(BorderSide(
-                //               color:
-                //                   const Color(0xFF22D3EE).withOpacity(0.70),
-                //               width: 1.5)),
-                //           shape: MaterialStatePropertyAll(
-                //               RoundedRectangleBorder(
-                //                   borderRadius: BorderRadius.circular(24))),
-                //         ),
-                //         icon: const SonaIcon(
-                //             icon: SonaIcons.email, color: Colors.white),
-                //         label: Text('E-mail')),
-                //   ),
-                // ),
 
-                // ],
-                //),
                 Container(
                   height: 260,
                   child: Column(
@@ -218,11 +190,39 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 6, horizontal: 16),
+                              child: OutlinedButton.icon(
+                                  onPressed: _signInWithEmail,
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        Colors.white.withOpacity(0.08)),
+                                    foregroundColor:
+                                        const MaterialStatePropertyAll(
+                                            Colors.white),
+                                    overlayColor: MaterialStatePropertyAll(
+                                        const Color(0xFF22D3EE)
+                                            .withOpacity(0.10)),
+                                    side: MaterialStatePropertyAll(BorderSide(
+                                        color: const Color(0xFF22D3EE)
+                                            .withOpacity(0.70),
+                                        width: 1.5)),
+                                    shape: MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(24))),
+                                  ),
+                                  icon: const SonaIcon(
+                                      icon: SonaIcons.email,
+                                      color: Colors.white),
+                                  label: Text('E-mail')),
+                            ),
                             if (Platform.isAndroid)
                               Flexible(
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 64),
+                                      vertical: 6, horizontal: 16),
                                   child: OutlinedButton.icon(
                                       onPressed: _signInWithGoogle,
                                       style: ButtonStyle(
@@ -251,39 +251,39 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                                       label: Text('Google')),
                                 ),
                               ),
-                            if (Platform.isIOS)
-                              Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 0),
-                                  child: OutlinedButton.icon(
-                                      onPressed: _signInWithApple,
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                Colors.white.withOpacity(0.08)),
-                                        foregroundColor:
-                                            const MaterialStatePropertyAll(
-                                                Colors.white),
-                                        overlayColor: MaterialStatePropertyAll(
-                                            const Color(0xFF22D3EE)
-                                                .withOpacity(0.10)),
-                                        side: MaterialStatePropertyAll(
-                                            BorderSide(
-                                                color: const Color(0xFF22D3EE)
-                                                    .withOpacity(0.70),
-                                                width: 1.5)),
-                                        shape: MaterialStatePropertyAll(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(24))),
-                                      ),
-                                      icon: const SonaIcon(
-                                          icon: SonaIcons.apple,
-                                          color: Colors.white),
-                                      label: Text('Apple ID')),
-                                ),
-                              ),
+                            // if (Platform.isIOS)
+                            //   Flexible(
+                            //     child: Padding(
+                            //       padding: const EdgeInsets.symmetric(
+                            //           vertical: 6, horizontal: 0),
+                            //       child: OutlinedButton.icon(
+                            //           onPressed: _signInWithApple,
+                            //           style: ButtonStyle(
+                            //             backgroundColor:
+                            //                 MaterialStatePropertyAll(
+                            //                     Colors.white.withOpacity(0.08)),
+                            //             foregroundColor:
+                            //                 const MaterialStatePropertyAll(
+                            //                     Colors.white),
+                            //             overlayColor: MaterialStatePropertyAll(
+                            //                 const Color(0xFF22D3EE)
+                            //                     .withOpacity(0.10)),
+                            //             side: MaterialStatePropertyAll(
+                            //                 BorderSide(
+                            //                     color: const Color(0xFF22D3EE)
+                            //                         .withOpacity(0.70),
+                            //                     width: 1.5)),
+                            //             shape: MaterialStatePropertyAll(
+                            //                 RoundedRectangleBorder(
+                            //                     borderRadius:
+                            //                         BorderRadius.circular(24))),
+                            //           ),
+                            //           icon: const SonaIcon(
+                            //               icon: SonaIcons.apple,
+                            //               color: Colors.white),
+                            //           label: Text('Apple ID')),
+                            //     ),
+                            //   ),
                           ],
                         ),
                       ),
@@ -347,6 +347,16 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
         ],
       ),
     );
+  }
+
+  // void _signInWithSMS() {
+  //   Navigator.push(context,
+  //       MaterialPageRoute<void>(builder: (_) => SignInWithPhoneNumberScreen()));
+  // }
+
+  void _signInWithEmail() {
+    Navigator.push(context,
+        MaterialPageRoute<void>(builder: (_) => SignInWithEmailScreen()));
   }
 
   void _signInWithGoogle() async {
@@ -430,7 +440,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
           final profile = MyProfile.fromJson(response.data);
 
           ///注册成功后，继续注册在fireauth和firestore中进行保存
-          await _registerOrLoginUser(params['email'], profile);
+          // await _registerOrLoginUser(params['email'], profile);
           ref.read(myProfileProvider.notifier).update(profile);
           if (!profile.completed) {
             _completeRequiredInfo(name: params['name']);

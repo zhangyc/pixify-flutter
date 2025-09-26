@@ -62,7 +62,6 @@ class _EmailPinScreenState extends ConsumerState<EmailPinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: true,
         ),
@@ -81,10 +80,6 @@ class _EmailPinScreenState extends ConsumerState<EmailPinScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Image.asset('assets/images/tender_affection.png', height: 179,),
-                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24),
                   child: Text.rich(
