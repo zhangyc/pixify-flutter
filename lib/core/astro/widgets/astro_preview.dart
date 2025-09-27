@@ -1,48 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:sona/core/travel_wish/models/country.dart';
 import 'package:sweph/sweph.dart';
 import '../engine/astro_calc.dart';
-
-// 城市坐标数据库
-const Map<String, Map<String, double>> cityCoordinates = {
-  '北京市': {'lat': 39.9042, 'lng': 116.4074},
-  '上海市': {'lat': 31.2304, 'lng': 121.4737},
-  '广州市': {'lat': 23.1291, 'lng': 113.2644},
-  '深圳市': {'lat': 22.5431, 'lng': 114.0579},
-  '杭州市': {'lat': 30.2741, 'lng': 120.1551},
-  '南京市': {'lat': 32.0603, 'lng': 118.7969},
-  '武汉市': {'lat': 30.5928, 'lng': 114.3055},
-  '成都市': {'lat': 30.5728, 'lng': 104.0668},
-  '重庆市': {'lat': 29.5647, 'lng': 106.5507},
-  '西安市': {'lat': 34.3416, 'lng': 108.9398},
-  '天津市': {'lat': 39.3434, 'lng': 117.3616},
-  '苏州市': {'lat': 31.2989, 'lng': 120.5853},
-  '长沙市': {'lat': 28.2282, 'lng': 112.9388},
-  '郑州市': {'lat': 34.7466, 'lng': 113.6253},
-  '青岛市': {'lat': 36.0986, 'lng': 120.3719},
-  '大连市': {'lat': 38.9140, 'lng': 121.6147},
-  '宁波市': {'lat': 29.8683, 'lng': 121.5440},
-  '厦门市': {'lat': 24.4798, 'lng': 118.0819},
-  '福州市': {'lat': 26.0745, 'lng': 119.2965},
-  '哈尔滨市': {'lat': 45.8038, 'lng': 126.5349},
-  '济南市': {'lat': 36.6512, 'lng': 117.1201},
-  '石家庄市': {'lat': 38.0428, 'lng': 114.5149},
-  '长春市': {'lat': 43.8171, 'lng': 125.3235},
-  '沈阳市': {'lat': 41.8057, 'lng': 123.4315},
-  '太原市': {'lat': 37.8706, 'lng': 112.5489},
-  '合肥市': {'lat': 31.8206, 'lng': 117.2272},
-  '昆明市': {'lat': 25.0389, 'lng': 102.7183},
-  '南宁市': {'lat': 22.8170, 'lng': 108.3669},
-  '海口市': {'lat': 20.0444, 'lng': 110.1999},
-  '贵阳市': {'lat': 26.6470, 'lng': 106.6302},
-  '兰州市': {'lat': 36.0611, 'lng': 103.8343},
-  '银川市': {'lat': 38.4872, 'lng': 106.2309},
-  '西宁市': {'lat': 36.6171, 'lng': 101.7782},
-  '乌鲁木齐市': {'lat': 43.8256, 'lng': 87.6168},
-  '拉萨市': {'lat': 29.6520, 'lng': 91.1721},
-  '呼和浩特市': {'lat': 40.8414, 'lng': 111.7519},
-};
 
 // 使用整数 ID 作为 Key，映射到行星符号
 const Map<int, String> planetSymbols = {
@@ -141,16 +100,16 @@ class AstroPreview extends StatefulWidget {
   const AstroPreview({
     super.key,
     required this.birthday,
-    required this.country,
+    required this.birthLatitude,
+    required this.birthLongitude,
     this.birthTime,
-    this.birthCity,
     this.isBackground = false,
   });
 
   final DateTime? birthday;
-  final SonaCountry country;
+  final double? birthLatitude; // 出生纬度
+  final double? birthLongitude; // 出生经度
   final String? birthTime; // 格式 "HH:mm"
-  final String? birthCity; // 出生城市
   final bool isBackground; // 是否作为背景显示
 
   @override
@@ -172,10 +131,13 @@ class _AstroPreviewState extends State<AstroPreview> {
   void didUpdateWidget(covariant AstroPreview oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.birthday != oldWidget.birthday ||
+        widget.birthLatitude != oldWidget.birthLatitude ||
+        widget.birthLongitude != oldWidget.birthLongitude ||
         widget.birthTime != oldWidget.birthTime ||
-        widget.birthCity != oldWidget.birthCity ||
-        widget.country != oldWidget.country) {
-      if (widget.birthday != null) {
+        widget.isBackground != oldWidget.isBackground) {
+      if (widget.birthday != null &&
+          widget.birthLatitude != null &&
+          widget.birthLongitude != null) {
         setState(() {
           _chartDataFuture = _calculateAstroData();
         });
@@ -200,17 +162,9 @@ class _AstroPreviewState extends State<AstroPreview> {
           birthDateTime.year, birthDateTime.month, birthDateTime.day, 12, 0);
     }
 
-    // 获取城市坐标
-    double latitude = 39.9042; // 默认北京
-    double longitude = 116.4074;
-
-    if (widget.birthCity != null) {
-      final coords = cityCoordinates[widget.birthCity!];
-      if (coords != null) {
-        latitude = coords['lat']!;
-        longitude = coords['lng']!;
-      }
-    }
+    // 直接使用传入的经纬度参数
+    final latitude = widget.birthLatitude!;
+    final longitude = widget.birthLongitude!;
 
     // 使用已有的 AstroCalc 计算本命盘
     final natalChart = AstroCalc.computeNatalChart(
@@ -512,6 +466,10 @@ class _AstroPreviewState extends State<AstroPreview> {
     final ascendantSign = _getZodiacSign(chartData.ascendant);
     final birthTimeText = widget.birthTime ?? '12:00 (默认)';
 
+    // 构建出生地点信息
+    final locationText =
+        '${widget.birthLatitude!.toStringAsFixed(4)}, ${widget.birthLongitude!.toStringAsFixed(4)}';
+
     return Column(
       children: [
         Row(
@@ -537,9 +495,9 @@ class _AstroPreviewState extends State<AstroPreview> {
           children: [
             _buildInfoItem(
               theme,
-              '出生城市',
-              widget.birthCity ?? '未选择',
-              Icons.location_city,
+              '出生地点',
+              locationText,
+              Icons.location_on,
             ),
             _buildInfoItem(
               theme,

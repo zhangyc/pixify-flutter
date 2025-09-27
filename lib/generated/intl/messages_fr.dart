@@ -48,11 +48,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1 an"),
     "about": MessageLookupByLibrary.simpleMessage("À propos"),
     "account": MessageLookupByLibrary.simpleMessage("Compte"),
+    "addPhoto": MessageLookupByLibrary.simpleMessage("Ajouter une Photo"),
     "age": MessageLookupByLibrary.simpleMessage("Âge"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
       "IA créant des photos de groupe amusantes",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("Tout"),
+    "astroChartTab": MessageLookupByLibrary.simpleMessage("Graphique Astro"),
+    "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
+      "L\'autre utilisateur n\'a pas encore terminé ses informations de lieu de naissance, nous ne pouvons donc pas générer un graphique astrologique. Veuillez attendre qu\'ils terminent leurs informations.",
+    ),
     "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
       "⭕ AstroPair Interprétation désactivée",
     ),
@@ -64,6 +69,9 @@ class MessageLookup extends MessageLookupByLibrary {
           "AstroPair générera une biographie basée sur vos intérêts",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("Rapport astro"),
+    "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage(
+      "Échec de la mise à jour de l\'avatar",
+    ),
     "bio": MessageLookupByLibrary.simpleMessage("Introduction"),
     "block": MessageLookupByLibrary.simpleMessage("Bloquer"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -158,11 +166,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "Compléter le Profil Astro",
     ),
+    "completeBirthLocationInfo": MessageLookupByLibrary.simpleMessage(
+      "Vervollständigen Sie Ihre Geburtsort-Informationen",
+    ),
     "completeProfile": MessageLookupByLibrary.simpleMessage(
       "Profil vervollständigen",
     ),
+    "confirmSelectLocation": MessageLookupByLibrary.simpleMessage(
+      "Confirmer la sélection de cet emplacement",
+    ),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage(
       "Continuer avec le téléphone",
+    ),
+    "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
+      "Coordonnées sélectionnées actuelles",
+    ),
+    "deletePhoto": MessageLookupByLibrary.simpleMessage("Supprimer la Photo"),
+    "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
+      "Êtes-vous sûr de vouloir supprimer cette photo ? Cette action ne peut pas être annulée.",
     ),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage(
       "Description (facultative)",
@@ -175,6 +196,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage(
       "Duo Snap quand même",
     ),
+    "editProfile": MessageLookupByLibrary.simpleMessage("Modifier le Profil"),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "Ihr privater Chatraum ist noch leer\nAber die Sterne wissen, die richtige Person kommt zu Ihnen",
     ),
@@ -204,6 +226,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "Obtenir AstroPair Plus",
     ),
+    "gifNotAllowed": MessageLookupByLibrary.simpleMessage(
+      "GIF n\'est pas autorisé",
+    ),
     "goDiscover": MessageLookupByLibrary.simpleMessage("Geh Entdecken"),
     "gotIt": MessageLookupByLibrary.simpleMessage("Compris"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
@@ -226,6 +251,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "imInterestedSomething": m0,
     "imVeryInterestedInSomething": m1,
+    "infoIncompleteTitle": MessageLookupByLibrary.simpleMessage(
+      "Informations Incomplètes",
+    ),
     "interests": MessageLookupByLibrary.simpleMessage("Intérêts"),
     "interpretationOff": MessageLookupByLibrary.simpleMessage(
       "Interprétation Synchrone IA : Désactivée",
@@ -254,14 +282,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "Nous avons besoin de votre localisation pour vous montrer des personnes à proximité",
     ),
+    "locationLocatedFailed": MessageLookupByLibrary.simpleMessage(
+      "Échec de l\'obtention de l\'emplacement",
+    ),
+    "locationLocatedSuccess": MessageLookupByLibrary.simpleMessage(
+      "Localisé à la position actuelle",
+    ),
     "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
       "Nous avons besoin de votre localisation pour améliorer votre expérience sociale",
     ),
     "locationPermissionRequestTitle": MessageLookupByLibrary.simpleMessage(
       "Autoriser l\'emplacement",
     ),
+    "mapSelectedLocation": MessageLookupByLibrary.simpleMessage(
+      "Emplacement sélectionné sur la carte",
+    ),
     "matchPageSelectIdeas": m3,
     "me": MessageLookupByLibrary.simpleMessage("Moi"),
+    "memberCenter": MessageLookupByLibrary.simpleMessage("Centre Membre"),
     "membersPerks": MessageLookupByLibrary.simpleMessage(
       "Les membres obtiennent des avantages exclusifs",
     ),
@@ -272,6 +310,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage(
       "Plus de photos, Plus de charme!",
     ),
+    "myPhotos": MessageLookupByLibrary.simpleMessage("Mes Photos"),
+    "myProfileTitle": MessageLookupByLibrary.simpleMessage("Mon Profil"),
     "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
       "Aller à la page de profil astro",
     ),
@@ -444,6 +484,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Débloquer pour voir qui vous aime",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 souhaits"),
+    "plusMember": MessageLookupByLibrary.simpleMessage("Membre Plus"),
     "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage(
       "Avantages de l\'Abonnement Plus",
     ),
@@ -455,6 +496,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacyPolicy": MessageLookupByLibrary.simpleMessage(
       "Politique de confidentialité",
     ),
+    "profileInfoTab": MessageLookupByLibrary.simpleMessage("Profil"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "Ils n\'ont pas encore montré leur vrai visage",
     ),
@@ -464,6 +506,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "Notifications push",
     ),
+    "quickActions": MessageLookupByLibrary.simpleMessage("Actions Rapides"),
     "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
       "📸 Erinnern Sie sie daran, Fotos hochzuladen, lernen Sie sich besser kennen",
     ),
@@ -493,6 +536,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("Voir qui vous aime"),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage(
       "Sélectionner le Pays",
+    ),
+    "selectLocationTitle": MessageLookupByLibrary.simpleMessage(
+      "Sélectionner l\'Emplacement",
     ),
     "sendDm": MessageLookupByLibrary.simpleMessage("Envoyer DM"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
@@ -584,6 +630,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Chargez votre meilleure photo",
     ),
     "uploading": MessageLookupByLibrary.simpleMessage("Wird hochgeladen..."),
+    "useCurrentLocation": MessageLookupByLibrary.simpleMessage(
+      "Utiliser la position actuelle",
+    ),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage(
       "Prendre une photo",
     ),

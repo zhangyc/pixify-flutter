@@ -23,7 +23,10 @@ class MyProfile {
       this.photos = const <ProfilePhoto>[],
       this.locale,
       this.cityVisibility = true,
-      required this.memberType,
+      this.birthCity,
+      this.birthLatitude,
+      this.birthLongitude,
+      // required this.memberType,
       required this.vipEndDate});
 
   final int id;
@@ -43,11 +46,20 @@ class MyProfile {
   final bool pushEnabled;
   final String? locale;
   final bool cityVisibility;
-  final MemberType memberType;
+  final String? birthCity;
+  final String? birthLatitude;
+  final String? birthLongitude;
+  // final MemberType memberType;
   final int? vipEndDate;
 
   bool get completed => _validate();
-  bool get isMember => memberType != MemberType.none;
+  bool get isMember {
+    if (vipEndDate == null) return false;
+    // vipEndDate是毫秒时间戳，需要转换为秒
+    final expiryDate = DateTime.fromMillisecondsSinceEpoch(vipEndDate!);
+    final now = DateTime.now();
+    return expiryDate.isAfter(now);
+  }
 
   factory MyProfile.fromJson(Map<String, dynamic> json) {
     final longitudeStr = json['longitude'];
@@ -63,36 +75,38 @@ class MyProfile {
       });
     }
     return MyProfile(
-        id: json['id'],
-        name: json['nickname'],
-        gender:
-            json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-        birthday: json['birthday'] != null
-            ? DateTime.tryParse(json['birthday'])
-            : null,
-        countryId: json['countryId'],
-        countryCode: json['countryCode'],
-        countryFlag: json['countryFlag'],
-        avatar: json['avatar'],
-        bio: json['description'],
-        impression: json['impression'],
-        chatStyleId: json['chatStyleId'],
-        vipEndDate: json['vipEndDate'],
-        interests: json['interestList'] != null
-            ? (json['interestList'] as List)
-                .map<UserHobby>((json) => UserHobby.fromJson(json))
-                .toList()
-            : [],
-        photos: json['images'] != null
-            ? (json['images'] as List)
-                .map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo))
-                .toList()
-            : <ProfilePhoto>[],
-        position: pos,
-        pushEnabled: json['openPush'] ?? true,
-        locale: json['lang'],
-        cityVisibility: json['showCity'] ?? true,
-        memberType: MemberType.fromString(json['vip']));
+      id: json['id'],
+      name: json['nickname'],
+      gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
+      birthday:
+          json['birthday'] != null ? DateTime.tryParse(json['birthday']) : null,
+      countryId: json['countryId'],
+      countryCode: json['countryCode'],
+      countryFlag: json['countryFlag'],
+      avatar: json['avatar'],
+      bio: json['description'],
+      impression: json['impression'],
+      chatStyleId: json['chatStyleId'],
+      vipEndDate: json['vipEndDate'],
+      interests: json['interestList'] != null
+          ? (json['interestList'] as List)
+              .map<UserHobby>((json) => UserHobby.fromJson(json))
+              .toList()
+          : [],
+      photos: json['images'] != null
+          ? (json['images'] as List)
+              .map<ProfilePhoto>((photo) => ProfilePhoto.fromJson(photo))
+              .toList()
+          : <ProfilePhoto>[],
+      position: pos,
+      pushEnabled: json['openPush'] ?? true,
+      locale: json['lang'],
+      cityVisibility: json['showCity'] ?? true,
+      birthCity: json['birthCity'],
+      birthLatitude: json['birthLatitude'],
+      birthLongitude: json['birthLongitude'],
+      // memberType: MemberType.fromString(json['vip'])
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -116,8 +130,11 @@ class MyProfile {
       'openPush': pushEnabled,
       'lang': locale,
       'showCity': cityVisibility,
+      'birthCity': birthCity,
+      'birthLatitude': birthLatitude,
+      'birthLongitude': birthLongitude,
       'vipEndDate': vipEndDate,
-      'vip': memberType.name
+      // 'vip': memberType.name
     };
   }
 
@@ -143,7 +160,10 @@ class MyProfile {
         locale: locale,
         gender: gender,
         bio: bio,
-        photos: photos.map((photo) => photo.url).toList());
+        photos: photos.map((photo) => photo.url).toList(),
+        birthCity: birthCity,
+        birthLatitude: birthLatitude,
+        birthLongitude: birthLongitude);
   }
 
   MyProfile copyWith({bool? pushEnabled, bool? cityVisibility}) {

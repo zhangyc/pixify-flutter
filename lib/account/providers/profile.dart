@@ -36,28 +36,32 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
     state = state?.copyWith(cityVisibility: value);
   }
 
-  Future<bool> updateFields({
-    String? name,
-    Gender? gender,
-    DateTime? birthday,
-    Set<String>? interests,
-    String? avatar,
-    String? bio,
-    Position? position,
-    SonaLocale? locale,
-    String? countryCode
-  }) async {
+  Future<bool> updateFields(
+      {String? name,
+      Gender? gender,
+      DateTime? birthday,
+      Set<String>? interests,
+      String? avatar,
+      String? bio,
+      Position? position,
+      SonaLocale? locale,
+      String? countryCode,
+      String? birthCity,
+      String? birthLatitude,
+      String? birthLongitude}) async {
     final resp = await updateMyProfile(
-      name: name,
-      gender: gender,
-      birthday: birthday,
-      interests: interests,
-      avatar: avatar,
-      bio: bio,
-      position: position,
-      locale: locale,
-      countryCode: countryCode
-    );
+        name: name,
+        gender: gender,
+        birthday: birthday,
+        interests: interests,
+        avatar: avatar,
+        bio: bio,
+        position: position,
+        locale: locale,
+        countryCode: countryCode,
+        birthCity: birthCity,
+        birthLatitude: birthLatitude,
+        birthLongitude: birthLongitude);
     if (resp.statusCode == 0) {
       return refresh();
     } else {
@@ -76,22 +80,20 @@ class MyProfileNotifier extends StateNotifier<MyProfile?> {
   }
 }
 
-
-final myProfileProvider = StateNotifierProvider<MyProfileNotifier, MyProfile?>(
-  (ref) {
-    MyProfile? profile;
-    try {
-      final localCachedProfileString = global.kvStore.getString(profileKey);
-      if (localCachedProfileString != null) {
-        profile = MyProfile.fromJson(jsonDecode(localCachedProfileString));
-        global.profile = profile;
-      }
-    } catch(e) {
-      if (kDebugMode) print('error occurred when reading profile from local: $e');
+final myProfileProvider =
+    StateNotifierProvider<MyProfileNotifier, MyProfile?>((ref) {
+  MyProfile? profile;
+  try {
+    final localCachedProfileString = global.kvStore.getString(profileKey);
+    if (localCachedProfileString != null) {
+      profile = MyProfile.fromJson(jsonDecode(localCachedProfileString));
+      global.profile = profile;
     }
-    return MyProfileNotifier(profile);
+  } catch (e) {
+    if (kDebugMode) print('error occurred when reading profile from local: $e');
   }
-);
+  return MyProfileNotifier(profile);
+});
 
 final localeProvider = StateProvider<Locale>((ref) {
   final profile = ref.watch(myProfileProvider);

@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
@@ -133,8 +134,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           ],
         ),
         floatingActionButton:
-            (ref.watch(myProfileProvider)!.memberType == MemberType.none ||
-                    ref.watch(myProfileProvider)!.memberType == MemberType.plus)
+            (!(ref.watch(myProfileProvider)!.isMember ?? false))
                 ? Container(
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     child: ElevatedButton(
@@ -228,12 +228,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
           onPressed: () {
             bool isMember = ref.read(myProfileProvider)?.isMember ?? false;
             if (isMember) {
-              Fluttertoast.showToast(
-                  msg: switch (ref.read(myProfileProvider)?.memberType) {
-                MemberType.plus => S.current.youAreAClubMemberNow,
-                MemberType.plus => S.current.buttonAlreadyPlus,
-                _ => ''
-              });
+              EasyLoading.showToast(S.current.youAreAClubMemberNow);
             } else {
               if (hasPurchased == true) {
                 inAppPurchase.restorePurchases(
@@ -570,12 +565,6 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
     if (mounted) {
       setState(() {
         _purchasePending = false;
-      });
-      Fluttertoast.showToast(
-          msg: switch (ref.read(myProfileProvider)?.memberType) {
-        MemberType.plus => S.current.youAreAClubMemberNow,
-        MemberType.plus => S.current.buttonAlreadyPlus,
-        _ => ''
       });
     }
   }

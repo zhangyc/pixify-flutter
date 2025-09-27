@@ -18,9 +18,8 @@ class MemberCrown extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(myProfileProvider);
-    final memberType = profile?.memberType ?? MemberType.plus;
 
-    if (memberType != MemberType.plus) {
+    if (!(profile?.isMember ?? false)) {
       return const SizedBox.shrink();
     }
 
@@ -85,7 +84,6 @@ class AvatarWithCrown extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(myProfileProvider);
-    final memberType = profile?.memberType ?? MemberType.none;
 
     return Stack(
       clipBehavior: Clip.none,
@@ -114,7 +112,7 @@ class AvatarWithCrown extends ConsumerWidget {
         ),
 
         // 皇冠
-        if (memberType == MemberType.plus)
+        if (profile?.isMember ?? false)
           Positioned(
             top: _getCrownTop(),
             left: _getCrownLeft(),
@@ -180,9 +178,7 @@ class MemberStatusText extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(myProfileProvider);
-    final memberType = profile?.memberType ?? MemberType.none;
-
-    if (memberType != MemberType.plus) {
+    if (!(profile?.isMember ?? false)) {
       return const SizedBox.shrink();
     }
 
@@ -204,8 +200,7 @@ class MemberStatusText extends ConsumerWidget {
     final String baseText = 'Plus Member';
 
     if (showExpiry && vipEndDate != null) {
-      final expiryDate =
-          DateTime.fromMillisecondsSinceEpoch(vipEndDate! * 1000);
+      final expiryDate = DateTime.fromMillisecondsSinceEpoch(vipEndDate!);
       final now = DateTime.now();
       final daysLeft = expiryDate.difference(now).inDays;
 

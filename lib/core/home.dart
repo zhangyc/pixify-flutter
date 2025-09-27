@@ -18,6 +18,7 @@ import 'package:sona/core/discover/screens/discover.dart';
 import 'package:sona/core/im/rooms/rooms.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/like_me/screens/like_me.dart';
+import 'package:sona/core/match/widgets/location_selector.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/home_provider.dart';
 import 'package:sona/core/providers/notice.dart';

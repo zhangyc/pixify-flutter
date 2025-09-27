@@ -37,7 +37,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    isPlus = ref.watch(myProfileProvider)!.memberType == MemberType.plus;
+    isPlus = ref.watch(myProfileProvider)!.isMember ?? false;
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).whoLikesU,
@@ -252,7 +252,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen>
               ],
             ),
           ),
-          if (isPlus)
+          if (isPlus ?? false)
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: Text(
@@ -310,7 +310,7 @@ class _LikeMeScreenState extends ConsumerState<LikeMeScreen>
                     label: S.of(context).startChat,
                     onTap: () => _handleStartChat(u, index),
                   ),
-                  if (isPlus && astroScore != null)
+                  if (isPlus ?? false && astroScore != null)
                     _actionButton(
                       icon: Icons.auto_awesome,
                       label: S.of(context).astroReport,

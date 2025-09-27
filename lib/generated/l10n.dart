@@ -2593,6 +2593,216 @@ class S {
       args: [],
     );
   }
+
+  /// `Delete Photo`
+  String get deletePhoto {
+    return Intl.message(
+      'Delete Photo',
+      name: 'deletePhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this photo? This action cannot be undone.`
+  String get deletePhotoContent {
+    return Intl.message(
+      'Are you sure you want to delete this photo? This action cannot be undone.',
+      name: 'deletePhotoContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GIF is not allowed`
+  String get gifNotAllowed {
+    return Intl.message(
+      'GIF is not allowed',
+      name: 'gifNotAllowed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Photos`
+  String get myPhotos {
+    return Intl.message('My Photos', name: 'myPhotos', desc: '', args: []);
+  }
+
+  /// `Add Photo`
+  String get addPhoto {
+    return Intl.message('Add Photo', name: 'addPhoto', desc: '', args: []);
+  }
+
+  /// `Quick Actions`
+  String get quickActions {
+    return Intl.message(
+      'Quick Actions',
+      name: 'quickActions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plus Member`
+  String get plusMember {
+    return Intl.message('Plus Member', name: 'plusMember', desc: '', args: []);
+  }
+
+  /// `Edit Profile`
+  String get editProfile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'editProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Member Center`
+  String get memberCenter {
+    return Intl.message(
+      'Member Center',
+      name: 'memberCenter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Profile`
+  String get myProfileTitle {
+    return Intl.message(
+      'My Profile',
+      name: 'myProfileTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to update avatar`
+  String get avatarUpdateFailed {
+    return Intl.message(
+      'Failed to update avatar',
+      name: 'avatarUpdateFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile`
+  String get profileInfoTab {
+    return Intl.message('Profile', name: 'profileInfoTab', desc: '', args: []);
+  }
+
+  /// `Astro Chart`
+  String get astroChartTab {
+    return Intl.message(
+      'Astro Chart',
+      name: 'astroChartTab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Information Incomplete`
+  String get infoIncompleteTitle {
+    return Intl.message(
+      'Information Incomplete',
+      name: 'infoIncompleteTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The other user hasn't completed their birth location information yet, so we can't generate an astrological chart. Please wait for them to complete their information.`
+  String get astroInfoIncompleteMessage {
+    return Intl.message(
+      'The other user hasn\'t completed their birth location information yet, so we can\'t generate an astrological chart. Please wait for them to complete their information.',
+      name: 'astroInfoIncompleteMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Location`
+  String get selectLocationTitle {
+    return Intl.message(
+      'Select Location',
+      name: 'selectLocationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current selected coordinates`
+  String get currentSelectedCoordinates {
+    return Intl.message(
+      'Current selected coordinates',
+      name: 'currentSelectedCoordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Map selected location`
+  String get mapSelectedLocation {
+    return Intl.message(
+      'Map selected location',
+      name: 'mapSelectedLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm select this location`
+  String get confirmSelectLocation {
+    return Intl.message(
+      'Confirm select this location',
+      name: 'confirmSelectLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Located to current position`
+  String get locationLocatedSuccess {
+    return Intl.message(
+      'Located to current position',
+      name: 'locationLocatedSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to get location`
+  String get locationLocatedFailed {
+    return Intl.message(
+      'Failed to get location',
+      name: 'locationLocatedFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use current location`
+  String get useCurrentLocation {
+    return Intl.message(
+      'Use current location',
+      name: 'useCurrentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please complete your birth location information`
+  String get completeBirthLocationInfo {
+    return Intl.message(
+      'Please complete your birth location information',
+      name: 'completeBirthLocationInfo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -47,11 +47,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1年"),
     "about": MessageLookupByLibrary.simpleMessage("关于"),
     "account": MessageLookupByLibrary.simpleMessage("账户"),
+    "addPhoto": MessageLookupByLibrary.simpleMessage("添加照片"),
     "age": MessageLookupByLibrary.simpleMessage("年龄"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
       "AI正在创建有趣的群组照片",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("所有人"),
+    "astroChartTab": MessageLookupByLibrary.simpleMessage("星盘"),
+    "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
+      "对方尚未完善出生地信息，暂时无法生成星盘分析。请期待对方完善信息后查看。",
+    ),
     "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
       "⭕ AstroPair传译已关闭",
     ),
@@ -61,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "astroPairWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage("AstroPair会根据你的兴趣生成一份简介"),
     "astroReport": MessageLookupByLibrary.simpleMessage("合盘"),
+    "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage("头像更新失败"),
     "bio": MessageLookupByLibrary.simpleMessage("简介"),
     "block": MessageLookupByLibrary.simpleMessage("屏蔽"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -121,8 +127,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "完善星盘资料",
     ),
+    "completeBirthLocationInfo": MessageLookupByLibrary.simpleMessage(
+      "請完善出生地資訊",
+    ),
     "completeProfile": MessageLookupByLibrary.simpleMessage("完善资料"),
+    "confirmSelectLocation": MessageLookupByLibrary.simpleMessage("确认选择此地点"),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage("使用手机继续"),
+    "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
+      "当前选择的坐标",
+    ),
+    "deletePhoto": MessageLookupByLibrary.simpleMessage("删除照片"),
+    "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
+      "确定要删除这张照片吗？此操作无法撤销。",
+    ),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage("描述（可选）"),
     "destinyMatch": MessageLookupByLibrary.simpleMessage("命定"),
     "disclaimer": MessageLookupByLibrary.simpleMessage("免责声明"),
@@ -130,6 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dm": MessageLookupByLibrary.simpleMessage("超级私信"),
     "duoSnap": MessageLookupByLibrary.simpleMessage("双人快照"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("无论如何都要双人快照"),
+    "editProfile": MessageLookupByLibrary.simpleMessage("编辑资料"),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "你的专属聊天室还是空的\n但星星知道，对的人正在向你走来",
     ),
@@ -157,6 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "获取AstroPair Plus",
     ),
+    "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF文件不允许"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("去发现"),
     "gotIt": MessageLookupByLibrary.simpleMessage("明白了"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
@@ -171,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("我喜欢你的风格！"),
     "imInterestedSomething": m0,
     "imVeryInterestedInSomething": m1,
+    "infoIncompleteTitle": MessageLookupByLibrary.simpleMessage("信息不完整"),
     "interests": MessageLookupByLibrary.simpleMessage("兴趣"),
     "interpretationOff": MessageLookupByLibrary.simpleMessage("AI传译：关"),
     "interpretationOn": MessageLookupByLibrary.simpleMessage("AI传译：开"),
@@ -191,18 +211,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "我们需要您的位置来显示附近的人",
     ),
+    "locationLocatedFailed": MessageLookupByLibrary.simpleMessage("获取位置失败"),
+    "locationLocatedSuccess": MessageLookupByLibrary.simpleMessage("已定位到当前位置"),
     "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
       "我们需要您的位置信息来改善您的社交体验",
     ),
     "locationPermissionRequestTitle": MessageLookupByLibrary.simpleMessage(
       "位置授权",
     ),
+    "mapSelectedLocation": MessageLookupByLibrary.simpleMessage("地图选择地点"),
     "matchPageSelectIdeas": m3,
     "me": MessageLookupByLibrary.simpleMessage("我的"),
+    "memberCenter": MessageLookupByLibrary.simpleMessage("会员中心"),
     "membersPerks": MessageLookupByLibrary.simpleMessage("会员享受专属特权"),
     "month": MessageLookupByLibrary.simpleMessage("月"),
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage("照片越多，推荐值越高"),
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage("照片多多魅力增！"),
+    "myPhotos": MessageLookupByLibrary.simpleMessage("我的照片"),
+    "myProfileTitle": MessageLookupByLibrary.simpleMessage("我的"),
     "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
       "跳转到星盘资料完善页面",
     ),
@@ -335,14 +361,17 @@ class MessageLookup extends MessageLookupByLibrary {
       "解锁查看谁喜欢了你",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3个心愿"),
+    "plusMember": MessageLookupByLibrary.simpleMessage("Plus 会员"),
     "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage("Plus会员权益"),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("Plus双人快照"),
     "preference": MessageLookupByLibrary.simpleMessage("偏好"),
     "privacy": MessageLookupByLibrary.simpleMessage("隐私"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("隐私政策"),
+    "profileInfoTab": MessageLookupByLibrary.simpleMessage("资料"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage("TA还没有展示真容"),
     "profileTip": MessageLookupByLibrary.simpleMessage("✨ 完善资料让星星更了解你，匹配更精准"),
     "pushNotifications": MessageLookupByLibrary.simpleMessage("推送通知"),
+    "quickActions": MessageLookupByLibrary.simpleMessage("快捷操作"),
     "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
       "📸 提醒TA上传照片，让彼此更了解",
     ),
@@ -363,6 +392,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "seeProfile": MessageLookupByLibrary.simpleMessage("查看资料"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("看看谁喜欢你"),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("选择国家"),
+    "selectLocationTitle": MessageLookupByLibrary.simpleMessage("选择地点"),
     "sendDm": MessageLookupByLibrary.simpleMessage("发送私信"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
       "💫 发送星语问候解锁相册 继续",
@@ -423,6 +453,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadYourPhoto": MessageLookupByLibrary.simpleMessage("上传你的照片"),
     "uploadYourPhotoHint": MessageLookupByLibrary.simpleMessage("上传你最好的照片"),
     "uploading": MessageLookupByLibrary.simpleMessage("上传中..."),
+    "useCurrentLocation": MessageLookupByLibrary.simpleMessage("使用当前位置"),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("拍照"),
     "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage("从图库选择"),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(

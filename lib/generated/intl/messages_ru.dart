@@ -48,11 +48,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1 год"),
     "about": MessageLookupByLibrary.simpleMessage("О"),
     "account": MessageLookupByLibrary.simpleMessage("Аккаунт"),
+    "addPhoto": MessageLookupByLibrary.simpleMessage("Добавить Фото"),
     "age": MessageLookupByLibrary.simpleMessage("Возраст"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
       "ИИ создает веселые групповые фото",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("Все"),
+    "astroChartTab": MessageLookupByLibrary.simpleMessage(
+      "Астрологическая Карта",
+    ),
+    "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
+      "Другой пользователь еще не завершил информацию о месте рождения, поэтому мы не можем сгенерировать астрологическую карту. Пожалуйста, подождите, пока они завершат свою информацию.",
+    ),
     "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
       "⭕ AstroPair Interpretazione disattivata",
     ),
@@ -65,6 +72,9 @@ class MessageLookup extends MessageLookupByLibrary {
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage(
       "Астрологический отчет",
+    ),
+    "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage(
+      "Не удалось обновить аватар",
     ),
     "bio": MessageLookupByLibrary.simpleMessage("Введение"),
     "block": MessageLookupByLibrary.simpleMessage("Блокировать"),
@@ -160,11 +170,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "Завершить астрологический профиль",
     ),
+    "completeBirthLocationInfo": MessageLookupByLibrary.simpleMessage(
+      " заполните информацию о месте рождения",
+    ),
     "completeProfile": MessageLookupByLibrary.simpleMessage(
       "Завершити Профіль",
     ),
+    "confirmSelectLocation": MessageLookupByLibrary.simpleMessage(
+      "Подтвердить выбор этого местоположения",
+    ),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage(
       "Продолжить с телефоном",
+    ),
+    "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
+      "Текущие выбранные координаты",
+    ),
+    "deletePhoto": MessageLookupByLibrary.simpleMessage("Удалить Фото"),
+    "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
+      "Вы уверены, что хотите удалить это фото? Это действие нельзя отменить.",
     ),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage(
       "Описание (необязательно)",
@@ -180,6 +203,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "duoSnap": MessageLookupByLibrary.simpleMessage("Дуо Снап"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage(
       "Дуо Снап в любом случае",
+    ),
+    "editProfile": MessageLookupByLibrary.simpleMessage(
+      "Редактировать Профиль",
     ),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "Ваша приватна кімната чату все ще порожня\nАле зірки знають, що правильна людина йде до вас",
@@ -208,6 +234,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "Получить AstroPair Plus",
     ),
+    "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF не разрешен"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("Йди Відкривати"),
     "gotIt": MessageLookupByLibrary.simpleMessage("Понял"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
@@ -230,6 +257,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "imInterestedSomething": m0,
     "imVeryInterestedInSomething": m1,
+    "infoIncompleteTitle": MessageLookupByLibrary.simpleMessage(
+      "Информация Неполная",
+    ),
     "interests": MessageLookupByLibrary.simpleMessage("Интересы"),
     "interpretationOff": MessageLookupByLibrary.simpleMessage(
       "Синхронный перевод ИИ: Выключен",
@@ -258,14 +288,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "Нам нужно ваше местоположение, чтобы показать вам людей поблизости",
     ),
+    "locationLocatedFailed": MessageLookupByLibrary.simpleMessage(
+      "Не удалось получить местоположение",
+    ),
+    "locationLocatedSuccess": MessageLookupByLibrary.simpleMessage(
+      "Расположен в текущей позиции",
+    ),
     "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
       "Нам нужно ваше местоположение, чтобы улучшить ваш социальный опыт",
     ),
     "locationPermissionRequestTitle": MessageLookupByLibrary.simpleMessage(
       "Авторизовать местоположение",
     ),
+    "mapSelectedLocation": MessageLookupByLibrary.simpleMessage(
+      "Местоположение, выбранное на карте",
+    ),
     "matchPageSelectIdeas": m3,
     "me": MessageLookupByLibrary.simpleMessage("Я"),
+    "memberCenter": MessageLookupByLibrary.simpleMessage("Центр Участников"),
     "membersPerks": MessageLookupByLibrary.simpleMessage(
       "Участники получают эксклюзивные привилегии",
     ),
@@ -276,6 +316,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage(
       "Больше фото, Больше очарования!",
     ),
+    "myPhotos": MessageLookupByLibrary.simpleMessage("Мои Фото"),
+    "myProfileTitle": MessageLookupByLibrary.simpleMessage("Мой Профиль"),
     "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
       "Перейти на страницу астрологического профиля",
     ),
@@ -442,6 +484,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Разблокировать, чтобы увидеть, кто вас любит",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 желания"),
+    "plusMember": MessageLookupByLibrary.simpleMessage("Plus Пользователь"),
     "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage(
       "Преимущества подписки Plus",
     ),
@@ -451,6 +494,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacyPolicy": MessageLookupByLibrary.simpleMessage(
       "Политика конфиденциальности",
     ),
+    "profileInfoTab": MessageLookupByLibrary.simpleMessage("Профиль"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "Они еще не показали свое настоящее лицо",
     ),
@@ -460,6 +504,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "Пуш-уведомления",
     ),
+    "quickActions": MessageLookupByLibrary.simpleMessage("Быстрые Действия"),
     "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
       "📸 Нагадайте їм завантажити фото, дізнайтеся один одного краще",
     ),
@@ -491,6 +536,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage(
       "Выбрать Страну",
+    ),
+    "selectLocationTitle": MessageLookupByLibrary.simpleMessage(
+      "Выбрать Местоположение",
     ),
     "sendDm": MessageLookupByLibrary.simpleMessage("Отправить ЛС"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
@@ -582,6 +630,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Загрузите ваше лучшее фото",
     ),
     "uploading": MessageLookupByLibrary.simpleMessage("Завантаження..."),
+    "useCurrentLocation": MessageLookupByLibrary.simpleMessage(
+      "Использовать текущее местоположение",
+    ),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage(
       "Сфотографировать",
     ),

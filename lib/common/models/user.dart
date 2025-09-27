@@ -3,25 +3,27 @@ import 'package:sona/account/models/age.dart';
 import 'package:sona/account/models/gender.dart';
 
 class UserInfo {
-  UserInfo({
-    required this.id,
-    required this.name,
-    required this.gender,
-    required this.birthday,
-    this.countryId,
-    this.countryCode,
-    this.countryName,
-    this.countryFlag,
-    this.locale,
-    required this.avatar,
-    this.bio,
-    this.chatStyleId,
-    this.photos = const <String>[],
-    this.allScore,
-    this.impression,
-    this.originNickname,
-    this.currentCity
-  });
+  UserInfo(
+      {required this.id,
+      required this.name,
+      required this.gender,
+      required this.birthday,
+      this.countryId,
+      this.countryCode,
+      this.countryName,
+      this.countryFlag,
+      this.locale,
+      required this.avatar,
+      this.bio,
+      this.chatStyleId,
+      this.photos = const <String>[],
+      this.allScore,
+      this.impression,
+      this.originNickname,
+      this.currentCity,
+      this.birthCity,
+      this.birthLatitude,
+      this.birthLongitude});
 
   final int id;
   final String? name;
@@ -39,6 +41,9 @@ class UserInfo {
   final List<String> photos;
   final String? allScore;
   final String? currentCity;
+  final String? birthCity;
+  final String? birthLatitude;
+  final String? birthLongitude;
   DateTime? likeDate;
   int get age => birthday!.toAge();
   final String? impression;
@@ -56,8 +61,11 @@ class UserInfo {
     return UserInfo(
         id: json['id'],
         name: json['nickname'],
-        gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-        birthday: json['birthday'] != null ? DateTime.fromMillisecondsSinceEpoch(json['birthday']) : null,
+        gender:
+            json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
+        birthday: json['birthday'] != null
+            ? DateTime.fromMillisecondsSinceEpoch(json['birthday'])
+            : null,
         locale: json['lang'],
         countryId: json['countryId'],
         countryCode: json['countryCode'],
@@ -68,27 +76,29 @@ class UserInfo {
         chatStyleId: json['chatStyleId'],
         photos: photos,
         allScore: json['allScore']?.toStringAsFixed(2),
-        impression:json['impression'],
-        originNickname:json['originNickname'],
-        currentCity:json['currentCity']
-
-    );
+        impression: json['impression'],
+        originNickname: json['originNickname'],
+        currentCity: json['currentCity'],
+        birthCity: json['birthCity'],
+        birthLatitude: json['birthLatitude'],
+        birthLongitude: json['birthLongitude']);
   }
 
   factory UserInfo.fromFirestore(Map<String, dynamic> json) {
     return UserInfo(
         id: json['id'],
         name: json['originalNickname'],
-        gender: json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
-        birthday: json['birthday'] != null ? (json['birthday'] as Timestamp).toDate() : null,
+        gender:
+            json['gender'] != null ? Gender.fromIndex(json['gender']) : null,
+        birthday: json['birthday'] != null
+            ? (json['birthday'] as Timestamp).toDate()
+            : null,
         locale: json['lang'],
         countryId: json['countryId'],
         countryCode: json['countryCode'],
         countryName: json['countryName'],
         countryFlag: json['countryFlag'] ?? '🇺🇸',
         avatar: json['avatar'],
-        bio: json['description']
-    );
+        bio: json['description']);
   }
-
 }

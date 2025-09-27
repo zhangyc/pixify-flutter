@@ -8,95 +8,74 @@ import 'package:sona/utils/locale/locale.dart';
 
 import '../../common/services/common.dart';
 
-
 /// country 只可以改一次，注册时
-Future<Response> updateMyProfile({
-  String? name,
-  Gender? gender,
-  DateTime? birthday,
-  Set<String>? interests,
-  String? avatar,
-  String? bio,
-  Position? position,
-  SonaLocale? locale,
-  String? countryCode
-}) async {
-  return dio.post(
-      '/user/update',
+Future<Response> updateMyProfile(
+    {String? name,
+    Gender? gender,
+    DateTime? birthday,
+    Set<String>? interests,
+    String? avatar,
+    String? bio,
+    Position? position,
+    SonaLocale? locale,
+    String? countryCode,
+    String? birthCity,
+    String? birthLatitude,
+    String? birthLongitude}) async {
+  return dio.post('/user/update',
       data: {
         'nickname': name,
         'gender': gender?.index,
         'birthday': birthday?.toBirthdayString(),
         'interest': interests?.join(','),
         'imageUrl': avatar,
+        'avatar': avatar,
         'description': bio,
         'longitude': position?.longitude,
         'latitude': position?.latitude,
         'lang': locale?.locale.toLanguageTag(),
-        'countryCode': countryCode
-      }..removeWhere((key, value) => value == null)
-  );
+        'countryCode': countryCode,
+        'birthCity': birthCity,
+        'birthLatitude': birthLatitude,
+        'birthLongitude': birthLongitude
+      }..removeWhere((key, value) => value == null));
 }
 
 Future<Response> getMyProfile() async {
-  return dio.post(
-    '/user/find-myself'
-  );
+  return dio.post('/user/find-myself');
 }
 
-Future<Response> addPhoto({
-  required Uint8List bytes,
-  required String filename
-}) async {
+Future<Response> addPhoto(
+    {required Uint8List bytes, required String filename}) async {
   final data = await compressImage(bytes);
   final formData = FormData.fromMap({
-    'file': MultipartFile.fromBytes(
-      data.toList(growable: false),
-      filename: '.webp'
-    )
+    'file':
+        MultipartFile.fromBytes(data.toList(growable: false), filename: '.webp')
   });
 
-  return dio.post(
-    '/user/upload-image',
-    data: formData
-  );
+  return dio.post('/user/upload-image', data: formData);
 }
+
 Future<Response> setAvatarPhoto({
   required Uint8List bytes,
 }) async {
   final data = await compressImage(bytes);
   final formData = FormData.fromMap({
-    'file': MultipartFile.fromBytes(
-        data.toList(growable: false),
-        filename: '.webp'
-    )
+    'file':
+        MultipartFile.fromBytes(data.toList(growable: false), filename: '.webp')
   });
 
-  return dio.post(
-      '/user/upload-avatar',
-      data: formData
-  );
-}
-Future<Response> removePhoto({
-  required int photoId
-}) async {
-  return dio.post(
-    '/user/delete-image',
-    data: {'id': photoId}
-  );
+  return dio.post('/user/upload-avatar', data: formData);
 }
 
-Future<Response> updatePhotoSorts({
-  required data
-}) async {
-  return dio.post(
-      '/user/update-image-sort',
-      data: data
-  );
+Future<Response> removePhoto({required int photoId}) async {
+  return dio.post('/user/delete-image', data: {'id': photoId});
+}
+
+Future<Response> updatePhotoSorts({required data}) async {
+  return dio.post('/user/update-image-sort', data: data);
 }
 
 Future<Response> deleteAccount() async {
-  return dio.post(
-      '/user/delete'
-  );
+  return dio.post('/user/delete');
 }

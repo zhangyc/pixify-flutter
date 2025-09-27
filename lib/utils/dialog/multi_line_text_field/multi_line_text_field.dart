@@ -49,7 +49,7 @@ class _MultiLineTextFieldScreenState extends State<MultiLineTextFieldScreen> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: SonaIcon(icon: SonaIcons.back),
+            icon: SonaIcon(icon: SonaIcons.back, color: Colors.white),
             onPressed: () => Navigator.pop(context),
           ),
           title: (widget.title != null) ? Text(widget.title!) : null,

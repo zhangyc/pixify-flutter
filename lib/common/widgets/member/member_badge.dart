@@ -23,10 +23,9 @@ class MemberBadge extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(myProfileProvider);
-    final memberType = profile?.memberType ?? MemberType.none; // 默认当做plus处理
 
     // 只在Plus会员时显示标识
-    if (memberType != MemberType.plus) {
+    if (!(profile?.isMember ?? false)) {
       return const SizedBox.shrink();
     }
 
@@ -106,9 +105,8 @@ class MemberIcon extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(myProfileProvider);
-    final memberType = profile?.memberType ?? MemberType.none;
 
-    if (memberType != MemberType.plus) {
+    if (!(profile?.isMember ?? false)) {
       return const SizedBox.shrink();
     }
 

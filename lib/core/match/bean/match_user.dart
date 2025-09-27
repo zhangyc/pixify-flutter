@@ -12,6 +12,9 @@ class MatchUserInfo extends UserInfo {
   bool matched = false;
   bool skipped = false;
   double? distance;
+  final String? birthCity;
+  final String? birthLatitude;
+  final String? birthLongitude;
   MatchUserInfo(
       {required this.id,
       required this.name,
@@ -33,6 +36,9 @@ class MatchUserInfo extends UserInfo {
       this.wishList = const [],
       this.originNickname,
       this.currentCity,
+      this.birthCity,
+      this.birthLatitude,
+      this.birthLongitude,
       this.likeActivityName,
       this.memberType})
       : super(
@@ -52,6 +58,9 @@ class MatchUserInfo extends UserInfo {
           photos: photos,
           allScore: allScore,
           currentCity: currentCity,
+          birthCity: birthCity,
+          birthLatitude: birthLatitude,
+          birthLongitude: birthLongitude,
           impression: impression,
         );
   @override
@@ -145,6 +154,9 @@ class MatchUserInfo extends UserInfo {
         wishList: wishList,
         originNickname: json['originNickname'],
         currentCity: json['currentCity'],
+        birthCity: json['birthCity'],
+        birthLatitude: json['birthLatitude'],
+        birthLongitude: json['birthLongitude'],
         likeActivityName: json['likeActivityName'],
         memberType: MemberType.fromString(json['vip']));
   }

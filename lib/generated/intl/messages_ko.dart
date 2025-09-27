@@ -47,11 +47,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1년"),
     "about": MessageLookupByLibrary.simpleMessage("정보"),
     "account": MessageLookupByLibrary.simpleMessage("계정"),
+    "addPhoto": MessageLookupByLibrary.simpleMessage("사진 추가"),
     "age": MessageLookupByLibrary.simpleMessage("나이"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
       "AI가 재미있는 그룹 사진을 만들고 있습니다",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("전부"),
+    "astroChartTab": MessageLookupByLibrary.simpleMessage("별자리 차트"),
+    "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
+      "상대방이 아직 출생지 정보를 완료하지 않았으므로 점성술 차트를 생성할 수 없습니다. 상대방이 정보를 완료할 때까지 기다려주세요.",
+    ),
     "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
       "⭕ AstroPair 동시 통역이 꺼졌습니다",
     ),
@@ -63,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
           "AstroPair는 당신의 관심사에 기반하여 바이오를 생성할 것입니다",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("별자리 리포트"),
+    "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage("아바타 업데이트 실패"),
     "bio": MessageLookupByLibrary.simpleMessage("소개"),
     "block": MessageLookupByLibrary.simpleMessage("차단"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -133,8 +139,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "별자리 프로필 완성",
     ),
+    "completeBirthLocationInfo": MessageLookupByLibrary.simpleMessage(
+      "กรุณากรอกข้อมูลตำแหน่งที่เกิดให้ครบถ้วน",
+    ),
     "completeProfile": MessageLookupByLibrary.simpleMessage("프로필 완성"),
+    "confirmSelectLocation": MessageLookupByLibrary.simpleMessage("이 위치 선택 확인"),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage("전화로 계속하기"),
+    "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
+      "현재 선택된 좌표",
+    ),
+    "deletePhoto": MessageLookupByLibrary.simpleMessage("사진 삭제"),
+    "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
+      "이 사진을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
+    ),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage("설명 (선택 사항)"),
     "destinyMatch": MessageLookupByLibrary.simpleMessage("운명의 매치"),
     "disclaimer": MessageLookupByLibrary.simpleMessage("면책 조항"),
@@ -142,6 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "dm": MessageLookupByLibrary.simpleMessage("DM"),
     "duoSnap": MessageLookupByLibrary.simpleMessage("듀오 스냅"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("어쨌든 듀오 스냅"),
+    "editProfile": MessageLookupByLibrary.simpleMessage("프로필 편집"),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "당신의 전용 채팅방은 아직 비어있습니다\n하지만 별들은 알고 있습니다, 운명의 사람이 당신에게 오고 있습니다",
     ),
@@ -169,6 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "AstroPair Plus받기",
     ),
+    "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF는 허용되지 않습니다"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("발견하러 가기"),
     "gotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
@@ -187,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("스타일이 마음에 들어요!"),
     "imInterestedSomething": m0,
     "imVeryInterestedInSomething": m1,
+    "infoIncompleteTitle": MessageLookupByLibrary.simpleMessage("정보 불완전"),
     "interests": MessageLookupByLibrary.simpleMessage("관심사"),
     "interpretationOff": MessageLookupByLibrary.simpleMessage("AI 동시 통역: 꺼짐"),
     "interpretationOn": MessageLookupByLibrary.simpleMessage("AI 동시 통역: 켜짐"),
@@ -209,14 +229,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "근처 사람들을 보여주기 위해 위치가 필요합니다",
     ),
+    "locationLocatedFailed": MessageLookupByLibrary.simpleMessage("위치 가져오기 실패"),
+    "locationLocatedSuccess": MessageLookupByLibrary.simpleMessage(
+      "현재 위치로 이동됨",
+    ),
     "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
       "소셜 경험을 향상시키기 위해 위치 정보가 필요합니다",
     ),
     "locationPermissionRequestTitle": MessageLookupByLibrary.simpleMessage(
       "위치 승인",
     ),
+    "mapSelectedLocation": MessageLookupByLibrary.simpleMessage("지도에서 선택한 위치"),
     "matchPageSelectIdeas": m3,
     "me": MessageLookupByLibrary.simpleMessage("나"),
+    "memberCenter": MessageLookupByLibrary.simpleMessage("회원 센터"),
     "membersPerks": MessageLookupByLibrary.simpleMessage("멤버는 독점 혜택을 받습니다"),
     "month": MessageLookupByLibrary.simpleMessage("월"),
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
@@ -225,6 +251,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage(
       "사진이 더 많으면 매력도 더해요",
     ),
+    "myPhotos": MessageLookupByLibrary.simpleMessage("내 사진"),
+    "myProfileTitle": MessageLookupByLibrary.simpleMessage("내 프로필"),
     "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
       "별자리 프로필 페이지로 이동",
     ),
@@ -373,6 +401,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "좋아하는 사람이 누구인지 보려면 잠금 해제",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3개의 소원"),
+    "plusMember": MessageLookupByLibrary.simpleMessage("Plus 회원"),
     "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage(
       "Plus 멤버십 혜택",
     ),
@@ -380,6 +409,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "preference": MessageLookupByLibrary.simpleMessage("취향"),
     "privacy": MessageLookupByLibrary.simpleMessage("프라이버시"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("개인정보처리방침"),
+    "profileInfoTab": MessageLookupByLibrary.simpleMessage("프로필"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "아직 진짜 모습을 보여주지 않았어요",
     ),
@@ -387,6 +417,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "✨ 프로필을 완성하여 별들이 당신을 더 잘 알 수 있도록, 더 정확한 매칭을",
     ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage("푸시 알림"),
+    "quickActions": MessageLookupByLibrary.simpleMessage("빠른 작업"),
     "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
       "📸 사진 업로드를 권하고 서로를 더 잘 알아가세요",
     ),
@@ -409,6 +440,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "seeProfile": MessageLookupByLibrary.simpleMessage("프로필 보기"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("당신을 좋아하는 사람들 보기"),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("국가 선택"),
+    "selectLocationTitle": MessageLookupByLibrary.simpleMessage("위치 선택"),
     "sendDm": MessageLookupByLibrary.simpleMessage("DM 보내기"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
       "💫 별 인사말을 보내서 앨범 잠금 해제 계속",
@@ -481,6 +513,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "최고의 사진을 업로드하세요",
     ),
     "uploading": MessageLookupByLibrary.simpleMessage("업로드 중..."),
+    "useCurrentLocation": MessageLookupByLibrary.simpleMessage("현재 위치 사용"),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("사진 찍기"),
     "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage("갤러리에서 선택"),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(

@@ -48,11 +48,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1 ปี"),
     "about": MessageLookupByLibrary.simpleMessage("เกี่ยวกับ"),
     "account": MessageLookupByLibrary.simpleMessage("บัญชี"),
+    "addPhoto": MessageLookupByLibrary.simpleMessage("เพิ่มรูปภาพ"),
     "age": MessageLookupByLibrary.simpleMessage("อายุ"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
       "AI กำลังสร้างรูปกลุ่มสนุกๆ",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("ทั้งหมด"),
+    "astroChartTab": MessageLookupByLibrary.simpleMessage("แผนภูมิดวงดาว"),
+    "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
+      "ผู้ใช้คนอื่นยังไม่ได้กรอกข้อมูลตำแหน่งที่เกิดให้ครบถ้วน ดังนั้นเราจึงไม่สามารถสร้างแผนภูมิโหราศาสตร์ได้ กรุณารอให้ผู้ใช้คนอื่นกรอกข้อมูลให้ครบถ้วน",
+    ),
     "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
       "⭕ AstroPair การแปลภาษาถูกปิดแล้ว",
     ),
@@ -64,6 +69,9 @@ class MessageLookup extends MessageLookupByLibrary {
           "AstroPair จะสร้างประวัติตามความสนใจของคุณ",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("รายงานดวงดาว"),
+    "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage(
+      "อัปเดตอวตาล้มเหลว",
+    ),
     "bio": MessageLookupByLibrary.simpleMessage("บทนำ"),
     "block": MessageLookupByLibrary.simpleMessage("บล็อก"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
@@ -146,9 +154,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "completeAstroProfileButton": MessageLookupByLibrary.simpleMessage(
       "เติมเต็มโปรไฟล์ดวงดาว",
     ),
+    "completeBirthLocationInfo": MessageLookupByLibrary.simpleMessage(
+      "Complete suas informações de local de nascimento",
+    ),
     "completeProfile": MessageLookupByLibrary.simpleMessage("เติมเต็มโปรไฟล์"),
+    "confirmSelectLocation": MessageLookupByLibrary.simpleMessage(
+      "ยืนยันเลือกสถานที่นี้",
+    ),
     "continueWithPhone": MessageLookupByLibrary.simpleMessage(
       "ดำเนินการต่อด้วยโทรศัพท์",
+    ),
+    "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
+      "พิกัดที่เลือกไว้ในปัจจุบัน",
+    ),
+    "deletePhoto": MessageLookupByLibrary.simpleMessage("ลบรูปภาพ"),
+    "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
+      "แน่ใจหรือไม่ว่าต้องการลบรูปภาพนี้? การดำเนินการนี้ไม่สามารถยกเลิกได้",
     ),
     "descriptionOptional": MessageLookupByLibrary.simpleMessage(
       "คำอธิบาย (ไม่บังคับ)",
@@ -161,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage(
       "Duo Snap อย่างไรก็ตาม",
     ),
+    "editProfile": MessageLookupByLibrary.simpleMessage("แก้ไขโปรไฟล์"),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "ห้องแชทส่วนตัวของคุณยังว่างอยู่\nแต่ดวงดาวรู้ว่าคนที่ใช่กำลังมาหาคุณ",
     ),
@@ -188,6 +210,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "รับ AstroPair Plus",
     ),
+    "gifNotAllowed": MessageLookupByLibrary.simpleMessage(
+      "GIF ไม่ได้รับอนุญาต",
+    ),
     "goDiscover": MessageLookupByLibrary.simpleMessage("ไปค้นหา"),
     "gotIt": MessageLookupByLibrary.simpleMessage("เข้าใจแล้ว"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
@@ -210,6 +235,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "imInterestedSomething": m0,
     "imVeryInterestedInSomething": m1,
+    "infoIncompleteTitle": MessageLookupByLibrary.simpleMessage(
+      "ข้อมูลไม่สมบูรณ์",
+    ),
     "interests": MessageLookupByLibrary.simpleMessage("ความสนใจ"),
     "interpretationOff": MessageLookupByLibrary.simpleMessage(
       "AI การแปลภาษาแบบพร้อมเพรียง: ปิด",
@@ -236,14 +264,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "เราต้องการตำแหน่งของคุณเพื่อแสดงคนใกล้เคียง",
     ),
+    "locationLocatedFailed": MessageLookupByLibrary.simpleMessage(
+      "ไม่สามารถรับตำแหน่งได้",
+    ),
+    "locationLocatedSuccess": MessageLookupByLibrary.simpleMessage(
+      "ตั้งค่าตำแหน่งปัจจุบันแล้ว",
+    ),
     "locationPermissionRequestSubtitle": MessageLookupByLibrary.simpleMessage(
       "เราต้องการตำแหน่งของคุณเพื่อทำให้ประสบการณ์ทางสังคมของคุณดีขึ้น",
     ),
     "locationPermissionRequestTitle": MessageLookupByLibrary.simpleMessage(
       "อนุญาตตำแหน่ง",
     ),
+    "mapSelectedLocation": MessageLookupByLibrary.simpleMessage(
+      "ตำแหน่งที่เลือกบนแผนที่",
+    ),
     "matchPageSelectIdeas": m3,
     "me": MessageLookupByLibrary.simpleMessage("ฉัน"),
+    "memberCenter": MessageLookupByLibrary.simpleMessage("ศูนย์สมาชิก"),
     "membersPerks": MessageLookupByLibrary.simpleMessage(
       "สมาชิกได้รับสิทธิประโยชน์พิเศษ",
     ),
@@ -254,6 +292,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage(
       "รูปเยอะ, เสน่ห์เยอะ!",
     ),
+    "myPhotos": MessageLookupByLibrary.simpleMessage("รูปภาพของฉัน"),
+    "myProfileTitle": MessageLookupByLibrary.simpleMessage("โปรไฟล์ของฉัน"),
     "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
       "ไปที่หน้าโปรไฟล์ดวงดาว",
     ),
@@ -418,6 +458,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ปลดล็อกเพื่อดูว่าใครชอบคุณ",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 คำอธิษฐาน"),
+    "plusMember": MessageLookupByLibrary.simpleMessage("สมาชิก Plus"),
     "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage(
       "สิทธิพิเศษสมาชิก Plus",
     ),
@@ -429,6 +470,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacyPolicy": MessageLookupByLibrary.simpleMessage(
       "นโยบายความเป็นส่วนตัว",
     ),
+    "profileInfoTab": MessageLookupByLibrary.simpleMessage("โปรไฟล์"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "ยังไม่ได้แสดงตัวตนที่แท้จริง",
     ),
@@ -438,6 +480,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "การแจ้งเตือนแบบพุช",
     ),
+    "quickActions": MessageLookupByLibrary.simpleMessage("การดำเนินการด่วน"),
     "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
       "📸 กระตุ้นให้อัปโหลดรูปภาพ รู้จักกันมากขึ้น",
     ),
@@ -466,6 +509,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage(
       "เลือกประเทศ",
     ),
+    "selectLocationTitle": MessageLookupByLibrary.simpleMessage("เลือกสถานที่"),
     "sendDm": MessageLookupByLibrary.simpleMessage("ส่ง DM"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
       "💫 ส่งคำทักทายดาวเพื่อปลดล็อกอัลบั้ม ต่อไป",
@@ -554,6 +598,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "อัปโหลดรูปภาพที่ดีที่สุดของคุณ",
     ),
     "uploading": MessageLookupByLibrary.simpleMessage("กำลังอัปโหลด..."),
+    "useCurrentLocation": MessageLookupByLibrary.simpleMessage(
+      "ใช้ตำแหน่งปัจจุบัน",
+    ),
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("ถ่ายภาพ"),
     "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage(
       "จากแกลเลอรีเลือก",

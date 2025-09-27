@@ -58,8 +58,7 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen>
               child: LikedMeListView(
                   onShowAll: widget.onShowLikeMe,
                   onTap: ([UserInfo? u]) {
-                    if (ref.read(myProfileProvider)?.memberType ==
-                        MemberType.plus) {
+                    if (ref.read(myProfileProvider)?.isMember ?? false) {
                       if (u == null) {
                         // SonaAnalytics.log('chatlist_golikedme');
                         // Navigator.push(context, MaterialPageRoute(builder: (_) => LikeMeScreen(data: ref.watch(asyncLikedMeProvider).value!)));

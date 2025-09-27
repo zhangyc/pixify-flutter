@@ -82,21 +82,12 @@ class MessageController {
     try {
       switch(msg.runtimeType) {
         case TextMessage:
-          if (msg.content['localExtension']['needsTranslation']) {
-            response = await sendMessage(
-              uuid: msg.uuid!,
-              userId: msg.receiver.id,
-              type: ImMessageType.manual,
-              content: msg.content..['message'] = msg.content['originalText'],
-            );
-          } else {
-            response = await callSona(
-              uuid: msg.uuid,
-              userId: msg.receiver.id,
-              type: CallSonaType.MANUAL,
-              input: msg.content['originalText']
-            );
-          }
+          response = await sendMessage(
+            uuid: msg.uuid!,
+            userId: msg.receiver.id,
+            type: ImMessageType.manual,
+            content: msg.content,
+          );
         case AudioMessage:
           final localFile = File(msg.content['localExtension']['path']);
           msg.content['url'] ??= await uploadFile(bytes: localFile.readAsBytesSync(), filename: localFile.path);

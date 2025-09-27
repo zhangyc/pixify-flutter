@@ -13,7 +13,8 @@ class HobbiesSelector extends ConsumerStatefulWidget {
   const HobbiesSelector({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _HobbiesSelectorState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _HobbiesSelectorState();
 }
 
 class _HobbiesSelectorState extends ConsumerState<HobbiesSelector> {
@@ -27,7 +28,11 @@ class _HobbiesSelectorState extends ConsumerState<HobbiesSelector> {
 
   @override
   void didChangeDependencies() {
-    _selected = ref.read(myProfileProvider)!.interests.map((hobby) => hobby.code).toSet();
+    _selected = ref
+        .read(myProfileProvider)!
+        .interests
+        .map((hobby) => hobby.code)
+        .toSet();
     super.didChangeDependencies();
   }
 
@@ -50,66 +55,62 @@ class _HobbiesSelectorState extends ConsumerState<HobbiesSelector> {
                   children: [
                     TextSpan(
                         text: '/$maxCount',
-                        style: Theme.of(context).textTheme.bodySmall
-                    )
-                  ]
-              ),
+                        style: Theme.of(context).textTheme.bodySmall)
+                  ]),
             ),
           )
         ],
       ),
       body: ref.watch(asyncInterestsProvider).when(
-        data: (data) => SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
-            child: Wrap(
-              spacing: 8,
-              runSpacing: 6,
-              children: [
-                for (final hobby in data)
-                  HobbyTag<String>(
-                      displayName: hobby.displayName,
-                      value: hobby.code,
-                      selected: _selected.contains(hobby.code),
-                      onSelect: (hb) => _toggleInterest(hb)
-                  )
-              ],
-            ),
-          ),
-        ),
-        loading: () => Container(
-          color: Colors.white54,
-          alignment: Alignment.center,
-          child: const SizedBox(
-            width: 32,
-            height: 32,
-            child: CircularProgressIndicator()
-          ),
-        ),
-        error: (err, stack) => GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => ref.read(asyncInterestsProvider.notifier).refresh(),
-          child: Container(
-            color: Colors.white,
-            alignment: Alignment.center,
-            child: const Text(
-                'Cannot connect to server\ntap to retry',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 16,
-                    decoration: TextDecoration.none
-                )
-            ),
-          ),
-        )
-      ),
+          data: (data) => SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 16, bottom: 120),
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 6,
+                    children: [
+                      for (final hobby in data)
+                        HobbyTag<String>(
+                            displayName: hobby.displayName,
+                            value: hobby.code,
+                            selected: _selected.contains(hobby.code),
+                            onSelect: (hb) => _toggleInterest(hb))
+                    ],
+                  ),
+                ),
+              ),
+          loading: () => Container(
+                color: Colors.white54,
+                alignment: Alignment.center,
+                child: const SizedBox(
+                    width: 32, height: 32, child: CircularProgressIndicator()),
+              ),
+          error: (err, stack) => GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () =>
+                    ref.read(asyncInterestsProvider.notifier).refresh(),
+                child: Container(
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  child: const Text('Cannot connect to server\ntap to retry',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 16, decoration: TextDecoration.none)),
+                ),
+              )),
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ColoredButton(
+          borderColor: Colors.transparent,
+          color: Theme.of(context).primaryColor,
           size: ColoredButtonSize.large,
           text: S.of(context).buttonSave,
           loadingWhenAsyncAction: true,
-          onTap: () => ref.read(myProfileProvider.notifier).updateFields(interests: _selected).then((_) => Navigator.pop(context)),
+          onTap: () => ref
+              .read(myProfileProvider.notifier)
+              .updateFields(interests: _selected)
+              .then((_) => Navigator.pop(context)),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

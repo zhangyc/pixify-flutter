@@ -68,20 +68,20 @@ class _BaseInfoScreenState extends ConsumerState<BaseInfoScreen> {
           top: false,
           child: Stack(
             children: [
-              // 背景星盘
-              Positioned(
-                top: MediaQuery.of(context).viewPadding.top + 60,
-                right: -50,
-                child: Opacity(
-                  opacity: 0.15,
-                  child: AstroPreview(
-                    birthday: _birthday,
-                    country: widget.country,
-                    birthCity: _birthCity,
-                    isBackground: true,
-                  ),
-                ),
-              ),
+              // // 背景星盘
+              // Positioned(
+              //   top: MediaQuery.of(context).viewPadding.top + 60,
+              //   right: -50,
+              //   child: Opacity(
+              //     opacity: 0.15,
+              //     child: AstroPreview(
+              //       birthday: _birthday,
+              //       country: widget.country,
+              //       birthCity: _birthCity,
+              //       isBackground: true,
+              //     ),
+              //   ),
+              // ),
 
               // 主要内容
               SingleChildScrollView(
