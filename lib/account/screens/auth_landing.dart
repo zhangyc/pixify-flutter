@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -475,32 +474,6 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
           MaterialPageRoute<void>(
               builder: (_) => BaseInfoScreen(
                   name: name, country: findCountryByCode(null))));
-    }
-  }
-
-  /// 注册或登录用户到 Firebase Auth 和 Firestore
-  Future<void> _registerOrLoginUser(String email, MyProfile profile) async {
-    try {
-      /// firestore中查询用户是否存在
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(profile.id.toString())
-          .get();
-
-      if (userDoc.exists) {
-        debugPrint('Firestore已存在');
-        return;
-      }
-      await FirebaseChatCore.instance.createUserInFirestore(
-        types.User(
-          id: profile.id.toString(),
-          firstName: profile.name,
-          imageUrl: profile.avatar,
-        ),
-      );
-    } catch (e) {
-      debugPrint('注册/登录失败: $e');
-      rethrow;
     }
   }
 }

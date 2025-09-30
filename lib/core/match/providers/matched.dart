@@ -46,12 +46,13 @@ class MatchApi{
       "contentType": 2 // 消息内容的类型：必填
     });
  }
- static  Future<HttpResult> customSend(int id,String text) {
+ static  Future<HttpResult> customSend(int id,String text,String uuid) {
     return post(
         '/message/send',
         data: {
           // 请求类型,取值范围见下方说明
           // x
+          'uuid': uuid,
           "type":"ARROW",
           "userId":id, // 对方用户的ID
           // 当type=INPUT 时，该参数必填，内容为用户的输入内容

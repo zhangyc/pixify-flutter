@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sona/utils/global/global.dart';
+
+import '../../../utils/im/src/firebase_chat_core.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({
@@ -94,7 +96,7 @@ class _ChatPageState extends State<ChatPage> {
           uri: uri,
         );
 
-        FirebaseChatCore.instance.sendMessage(message, widget.room.id);
+        FirebaseChatCore.instance.sendMessage(message, widget.room.id,profile!);
         _setAttachmentUploading(false);
       } finally {
         _setAttachmentUploading(false);
@@ -133,6 +135,7 @@ class _ChatPageState extends State<ChatPage> {
         FirebaseChatCore.instance.sendMessage(
           message,
           widget.room.id,
+            profile!
         );
         _setAttachmentUploading(false);
       } finally {
@@ -151,6 +154,7 @@ class _ChatPageState extends State<ChatPage> {
           FirebaseChatCore.instance.updateMessage(
             updatedMessage,
             widget.room.id,
+              profile!
           );
 
           final client = http.Client();
@@ -168,6 +172,7 @@ class _ChatPageState extends State<ChatPage> {
           FirebaseChatCore.instance.updateMessage(
             updatedMessage,
             widget.room.id,
+              profile!
           );
         }
       }
@@ -182,13 +187,14 @@ class _ChatPageState extends State<ChatPage> {
   ) {
     final updatedMessage = message.copyWith(previewData: previewData);
 
-    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.room.id);
+    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.room.id,profile!);
   }
 
   void _handleSendPressed(types.PartialText message) {
     FirebaseChatCore.instance.sendMessage(
       message,
       widget.room.id,
+        profile!
     );
   }
 
@@ -206,7 +212,7 @@ class _ChatPageState extends State<ChatPage> {
         ),
         body: StreamBuilder<types.Room>(
           initialData: widget.room,
-          stream: FirebaseChatCore.instance.room(widget.room.id),
+          stream: FirebaseChatCore.instance.room(widget.room.id,profile!),
           builder: (context, snapshot) => StreamBuilder<List<types.Message>>(
             initialData: const [],
             stream: FirebaseChatCore.instance.messages(snapshot.data!),
@@ -218,7 +224,7 @@ class _ChatPageState extends State<ChatPage> {
               onPreviewDataFetched: _handlePreviewDataFetched,
               onSendPressed: _handleSendPressed,
               user: types.User(
-                id: FirebaseChatCore.instance.firebaseUser?.uid ?? '',
+                id: profile!.id.toString()
               ),
             ),
           ),

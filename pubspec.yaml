@@ -47,11 +47,11 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   flutter_svg: ^2.0.9
   flutter_card_swiper: ^7.0.2
-  flutter_firebase_chat_core:
-    git:
-      url: git@github.com:zhangyc/flutter_firebase_chat_core.git
-      branch: main
-  flutter_chat_types: ^3.6.2
+#  flutter_firebase_chat_core:
+#    git:
+#      url: git@github.com:zhangyc/flutter_firebase_chat_core.git
+#      branch: main
+#  flutter_chat_types: ^3.6.2
   flutter_chat_ui: ^1.6.14
   file_picker: ^8.0.3
   faker: ^2.1.0

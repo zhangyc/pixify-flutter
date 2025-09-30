@@ -1,26 +1,29 @@
 import 'package:dio/dio.dart';
 import 'package:sona/core/chat/models/message.dart';
 import 'package:sona/core/chat/models/message_type.dart';
+import 'package:sona/core/match/util/http_util.dart';
 import 'package:sona/utils/global/global.dart';
 
-Future<Response> fetchChatList() async {
-  return dio.post('/user/friend/find-chat');
+import '../../match/providers/matched.dart';
+
+Future<Future<HttpResult>> fetchChatList() async {
+  return post('/user/friend/find-chat');
 }
 
-Future<Response> fetchMessageList(
+Future<HttpResult> fetchMessageList(
     {required int userId, required int page, int pageSize = 20}) async {
-  return dio.post('/message/find',
+  return post('/message/find',
       data: {'userId': userId, 'page': page, 'pageSize': pageSize});
 }
 
-Future<Response> callSona(
+Future<HttpResult> callSona(
     {String? uuid,
     int? userId,
     required CallSonaType type,
     int? chatStyleId,
     String? input,
     int? messageId}) async {
-  return dio.post('/prompt/common',
+  return post('/prompt/common',
       data: {
         'uuid': uuid,
         'userId': userId,
@@ -32,12 +35,12 @@ Future<Response> callSona(
 }
 
 /// 发送文本消息
-Future<Response> sendTextMessage({
+Future<HttpResult> sendTextMessage({
   required String uuid,
   required int userId,
   required String text,
 }) async {
-  return dio.post('/message/send', data: {
+  return post('/message/send', data: {
     'uuid': uuid,
     'userId': userId,
     'messageType': ImMessageType.manual.name,
@@ -47,13 +50,13 @@ Future<Response> sendTextMessage({
 }
 
 /// 发送图片消息
-Future<Response> sendImageMessage({
+Future<HttpResult> sendImageMessage({
   required String uuid,
   required int userId,
   ImMessageType? type,
   required Map<String, dynamic> content,
 }) async {
-  return dio.post('/message/send',
+  return post('/message/send',
       data: {
         'uuid': uuid,
         'userId': userId,
@@ -64,46 +67,40 @@ Future<Response> sendImageMessage({
       }..removeWhere((key, value) => value == null || key == 'localExtension'));
 }
 
-Future<Response> sendMessage({
+Future<HttpResult> sendMessage({
   required String uuid,
   required int userId,
   ImMessageType? type,
   required Map<String, dynamic> content,
 }) async {
-  return dio.post('/message/send',
-      data: {
-        'uuid': uuid,
-        'userId': userId,
-        'messageType': type?.name,
-        'contentType': content['type'],
-        'message': content['url'],
-        ...content
-      }..removeWhere((key, value) => value == null || key == 'localExtension'));
+  HttpResult result =
+      await MatchApi.customSend(userId, content['originalText'],uuid);
+  return result;
 }
 
-Future<Response> deleteChat({required int id}) async {
-  return dio.post('/message/delete-chat', data: {
+Future<HttpResult> deleteChat({required int id}) async {
+  return post('/message/delete-chat', data: {
     'id': id,
   });
 }
 
-Future<Response> deleteMessage({required int messageId}) async {
-  return dio.post('/message/delete', data: {
+Future<HttpResult> deleteMessage({required int messageId}) async {
+  return post('/message/delete', data: {
     'id': messageId,
   });
 }
 
-Future<Response> deleteAllMessages({required int chatId}) async {
-  return dio.post('/message/delete-all', data: {
+Future<HttpResult> deleteAllMessages({required int chatId}) async {
+  return post('/message/delete-all', data: {
     'id': chatId,
   });
 }
 
-Future<Response> feedback({
+Future<HttpResult> feedback({
   required int messageId,
   required MessageFeedbackType type,
 }) async {
-  return dio.post('/message/feedback',
+  return post('/message/feedback',
       data: {'messageId': messageId, 'feedbackStatus': type.status});
 }
 

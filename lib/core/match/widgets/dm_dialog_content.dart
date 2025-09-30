@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart';
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:ui';
 
@@ -136,7 +133,7 @@ class _DmDialogContentState extends State<DmDialogContent> {
                                   }
                                   if (canArrow) {
                                     MatchApi.customSend(
-                                        widget.info.id, controller.text);
+                                        widget.info.id, controller.text,uuid.v4());
                                     SonaAnalytics.log(
                                         MatchEvent.match_arrow_send.name);
 

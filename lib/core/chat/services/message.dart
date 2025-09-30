@@ -6,9 +6,11 @@ import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/account/providers/profile.dart';
 import 'package:sona/common/services/common.dart';
+import 'package:sona/core/match/util/http_util.dart';
 
 import '../../../common/models/user.dart';
 import '../../../utils/global/global.dart';
+import '../../match/providers/matched.dart';
 import '../models/audio_message.dart';
 import '../models/image_message.dart';
 import '../models/message.dart';
@@ -19,11 +21,9 @@ import '../providers/message.dart';
 import 'chat.dart';
 
 class MessageController {
-  MessageController({
-    required this.ref,
-    required this.chatId,
-    required this.otherInfo
-  }) : myInfo = ref.read(myProfileProvider)!.toUser();
+  MessageController(
+      {required this.ref, required this.chatId, required this.otherInfo})
+      : myInfo = ref.read(myProfileProvider)!.toUser();
 
   final WidgetRef ref;
   final int chatId;
@@ -32,7 +32,7 @@ class MessageController {
 
   Future send(Map<String, dynamic> content) async {
     ImMessage message;
-    switch(content['type']) {
+    switch (content['type']) {
       case ImMessageContentType.text:
         message = TextMessage.fromContent(
           sender: myInfo,
@@ -47,7 +47,7 @@ class MessageController {
           content: content,
         );
         break;
-     case ImMessageContentType.image:
+      case ImMessageContentType.image:
         message = ImageMessage.fromContent(
           sender: myInfo,
           receiver: otherInfo,
@@ -55,10 +55,8 @@ class MessageController {
         );
         break;
 
-
-
       default:
-        throw();
+        throw ();
     }
     final sendFuture = _send(message);
     if (message.localExtension == null) {
@@ -77,11 +75,22 @@ class MessageController {
   }
 
   Future<MessageSendingResult> _send(ImMessage msg) async {
-    Response<dynamic> response;
+    HttpResult response;
     MessageSendingResult result;
     try {
-      switch(msg.runtimeType) {
+      switch (msg.runtimeType) {
         case TextMessage:
+
+          // if (msg.content['localExtension']['needsTranslation']) {
+
+          // } else {
+          //   response = await callSona(
+          //     uuid: msg.uuid,
+          //     userId: msg.receiver.id,
+          //     type: CallSonaType.MANUAL,
+          //     input: msg.content['originalText']
+          //   );
+          // }
           response = await sendMessage(
             uuid: msg.uuid!,
             userId: msg.receiver.id,
@@ -90,7 +99,8 @@ class MessageController {
           );
         case AudioMessage:
           final localFile = File(msg.content['localExtension']['path']);
-          msg.content['url'] ??= await uploadFile(bytes: localFile.readAsBytesSync(), filename: localFile.path);
+          msg.content['url'] ??= await uploadFile(
+              bytes: localFile.readAsBytesSync(), filename: localFile.path);
           response = await sendMessage(
             type: ImMessageType.manual,
             uuid: msg.uuid!,
@@ -105,14 +115,16 @@ class MessageController {
             content: msg.content,
           );
         default:
-          throw();
+          throw ();
       }
-
       result = switch (response.statusCode) {
         0 => MessageSendingResult(success: true, data: response.data),
-        10150 => const MessageSendingResult(success: false, error: MessageSendingError.maximumLimit),
-        20020 => const MessageSendingResult(success: false, error: MessageSendingError.contentFilter),
-        _ => const MessageSendingResult(success: false, error: MessageSendingError.other)
+        10150 => const MessageSendingResult(
+            success: false, error: MessageSendingError.maximumLimit),
+        20020 => const MessageSendingResult(
+            success: false, error: MessageSendingError.contentFilter),
+        _ => const MessageSendingResult(
+            success: false, error: MessageSendingError.other)
       };
 
       if (result.success) {
@@ -133,12 +145,10 @@ class MessageController {
             break;
         }
       }
-    } catch(e) {
+    } catch (e) {
       if (kDebugMode) print(e);
       result = const MessageSendingResult(
-          success: false,
-          error: MessageSendingError.other
-      );
+          success: false, error: MessageSendingError.other);
     }
     return result;
   }

@@ -8,6 +8,7 @@ import 'package:sona/core/match/bean/match_user.dart';
 import 'package:sona/core/match/providers/matched.dart';
 import 'package:sona/core/astro/widgets/astro_preview.dart';
 import 'package:sona/generated/l10n.dart';
+import 'package:sona/utils/uuid.dart';
 
 class MatchUserCard extends StatefulWidget {
   const MatchUserCard({
@@ -490,7 +491,7 @@ class _MatchUserCardState extends State<MatchUserCard>
             theme: theme,
             text: S.current.sendStarGreetingToUnlockAlbum,
             onTap: () => MatchApi.customSend(
-                widget.user.id, S.current.remindUploadPhoto),
+                widget.user.id, S.current.remindUploadPhoto,uuid.v4()),
           ),
         ],
       ),

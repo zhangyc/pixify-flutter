@@ -469,7 +469,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
 
   Widget _buildPlusSubscriptions() {
     return Container(
-      height: 152,
+      height: 180,
       width: MediaQuery.maybeOf(context)?.size.width,
       child: ref.watch(asyncSubscriptionsProvider).when(
           data: (subscriptions) {
@@ -493,7 +493,7 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
                           },
                           child: Container(
                             width: 160,
-                            height: 134,
+                            height: 180,
                             margin: EdgeInsets.only(right: 11, top: 14),
                             decoration: BoxDecoration(
                                 color: ref.watch(selectedPlusSubIdProvider) ==
@@ -721,13 +721,24 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
         SizedBox(
           height: 4,
         ),
+        // 总价 - 更突出显示 (billed amount)
+        Text(
+            '${details.currencySymbol}${details.rawPrice.toStringAsFixed(2)} total',
+            style: TextStyle(
+                color: selected ? Colors.white : Color(0xff2c2c2c),
+                fontSize: 16,
+                fontWeight: FontWeight.w700)),
+        SizedBox(height: 2),
+        // 月均价 - 更小更不突出 (calculated pricing)
         Text(
             '${details.currencySymbol}${(details.rawPrice / monthCount).toStringAsFixed(2)}/${S.current.month}',
             style: TextStyle(
-                color: selected ? Colors.white : Color(0xff2c2c2c),
-                fontSize: 14,
+                color: selected
+                    ? Colors.white.withOpacity(0.8)
+                    : Color(0xff2c2c2c).withOpacity(0.6),
+                fontSize: 12,
                 fontWeight: FontWeight.w400)),
-        SizedBox(height: 4),
+        SizedBox(height: 12),
         details.id == plusMonthlyId
             ? Container()
             : Container(

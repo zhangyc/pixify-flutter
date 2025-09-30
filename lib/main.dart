@@ -12,9 +12,12 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sona/common/env.dart';
 import 'package:sona/firebase/sona_firebase.dart';
 import 'package:sona/utils/global/global.dart';
 import 'package:sona/core/astro/engine/astro_calc.dart';
+import 'package:sona/utils/im/src/firebase_chat_core.dart';
+import 'package:sona/utils/im/src/firebase_chat_core_config.dart';
 import 'package:sweph/sweph.dart';
 
 import 'app.dart';
@@ -61,6 +64,12 @@ void main() async {
   ///成功初始化firebase app。
   if (firebase.name == 'sona') {
     initFireBaseService(firebase);
+    // 在Flutter项目中配置FirebaseChatCoreConfig
+    FirebaseChatCore.instance.setConfig(FirebaseChatCoreConfig(
+      sonaFireBase.name, // firebaseAppName
+      '${env.aegisPrefix}rooms', // roomsCollectionName (前缀+集合名)
+      '${env.aegisPrefix}users', // usersCollectionName (前缀+集合名)
+    ));
   }
   await global.init();
   SonaAnalytics.init();

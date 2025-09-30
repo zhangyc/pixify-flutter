@@ -57,6 +57,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       ref.refresh(asyncMyTravelWishesProvider);
       ref.refresh(conversationStreamProvider);
       ref.refresh(likeMeStreamProvider);
+      ref.refresh(myProfileProvider);
     });
     super.initState();
   }
@@ -69,11 +70,45 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
     ref.read(myProfileProvider.notifier).updateFields(position: position);
   }
 
+  void _testFirebaseListener() {
+    // 监听Firebase文档 /aegis_local_rooms/uVI8AisIS1F4ZiUgHbAq (修正回单下划线，与现有数据一致)
+    FirebaseFirestore.instance
+        .doc('/aegis_local_rooms/uVI8AisIS1F4ZiUgHbAq')
+        .snapshots()
+        .listen((DocumentSnapshot snapshot) {
+      if (kDebugMode) {
+        print('Firebase document update:');
+        print('Document exists: ${snapshot.exists}');
+        if (snapshot.exists) {
+          print('Document data: ${snapshot.data()}');
+        } else {
+          print('Document does not exist');
+        }
+      }
+    }, onError: (Object error) {
+      if (kDebugMode) {
+        print('Firebase listener error: $error');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
+      // appBar: kDebugMode
+      //     ? AppBar(
+      //         title: const Text('Sona Home (Debug)'),
+      //         actions: [
+      //           IconButton(
+      //             icon: const Icon(Icons.bug_report),
+      //             onPressed: _testFirebaseListener,
+      //             tooltip: 'Test Firebase Listener',
+      //           ),
+      //         ],
+      //       )
+      //     : null,
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),

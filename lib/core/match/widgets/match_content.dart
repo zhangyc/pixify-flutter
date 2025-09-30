@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/subscribe/model/member.dart';
+import 'package:sona/utils/uuid.dart';
 
 import '../../../generated/l10n.dart';
 import '../bean/match_user.dart';
@@ -470,7 +471,7 @@ class _MatchedContentState extends State<MatchedContent>
                     onTap: () {
                       if (controller.text.isEmpty) return;
                       widget.next.call();
-                      MatchApi.customSend(widget.target.id, controller.text);
+                      MatchApi.customSend(widget.target.id, controller.text,uuid.v4());
                       Navigator.pop(context);
                     },
                     child: Container(
