@@ -9,7 +9,6 @@ import 'package:sona/core/chat/providers/chat.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/services/chat.dart';
 import 'package:sona/core/chat/widgets/conversation.dart';
-import 'package:sona/core/subscribe/model/member.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/dialog/subsciption.dart';
 import 'package:sona/utils/global/global.dart';
@@ -142,7 +141,6 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen>
   Widget _noChats() {
     return SliverToBoxAdapter(
       child: Container(
-        width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -177,28 +175,33 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen>
             const SizedBox(height: 12),
 
             // 副标题
-            Text(
-              S.of(context).emptyChatRoomMessage,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.color
-                        ?.withOpacity(0.7),
-                    height: 1.5,
-                  ),
+            Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.8,
+              ),
+              child: Text(
+                S.of(context).emptyChatRoomMessage,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.color
+                          ?.withOpacity(0.7),
+                      height: 1.5,
+                    ),
+              ),
             ),
 
             const SizedBox(height: 32),
 
             // 运营按钮组
-            Column(
-              children: [
-                // 去发现按钮
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 48,
+              child: Column(
+                children: [
+                  // 去发现按钮
+                  FilledButton(
                     onPressed: () {
                       // 切换到发现页面
                       ///开通会员，获取更多推荐
@@ -212,6 +215,8 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen>
                     },
                     style: FilledButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor,
+                      fixedSize:
+                          Size(MediaQuery.of(context).size.width - 48, 80),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
@@ -219,28 +224,28 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen>
                       ),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.explore_outlined, size: 20),
-                        const SizedBox(width: 8),
+                        const SizedBox(height: 8),
                         Text(
                           S.of(context).upgradeForMoreRecommendations,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
                   ),
-                ),
 
-                const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-                // 完善资料按钮
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
+                  // 完善资料按钮
+                  OutlinedButton(
                     onPressed: () {
                       // 跳转到个人资料页面
                       Navigator.push(
@@ -250,6 +255,8 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen>
                       );
                     },
                     style: OutlinedButton.styleFrom(
+                      fixedSize:
+                          Size(MediaQuery.of(context).size.width - 48, 80),
                       foregroundColor: Theme.of(context).primaryColor,
                       side: BorderSide(
                         color: Theme.of(context).primaryColor.withOpacity(0.5),
@@ -261,22 +268,25 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen>
                       ),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.person_outline, size: 20),
-                        const SizedBox(width: 8),
+                        const SizedBox(height: 8),
                         Text(
                           S.of(context).completeProfile,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
 
             const SizedBox(height: 24),
@@ -307,6 +317,8 @@ class _ConversationScreenState extends ConsumerState<ConversationScreen>
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w500,
                           ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

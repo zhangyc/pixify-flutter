@@ -1459,9 +1459,14 @@ class S {
     );
   }
 
-  /// `Confirm`
+  /// `buttonConfirm`
   String get buttonConfirm {
-    return Intl.message('Confirm', name: 'buttonConfirm', desc: '', args: []);
+    return Intl.message(
+      'buttonConfirm',
+      name: 'buttonConfirm',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Your account will be automatically deleted in 14 days. Please remember to go to the store to cancel your current subscription to avoid additional charges.`
@@ -2802,6 +2807,451 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `birthInfo`
+  String get birthInfo {
+    return Intl.message('birthInfo', name: 'birthInfo', desc: '', args: []);
+  }
+
+  /// `birthday`
+  String get birthday {
+    return Intl.message('birthday', name: 'birthday', desc: '', args: []);
+  }
+
+  /// `clickToSetBirthday`
+  String get clickToSetBirthday {
+    return Intl.message(
+      'clickToSetBirthday',
+      name: 'clickToSetBirthday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `birthPlace`
+  String get birthPlace {
+    return Intl.message('birthPlace', name: 'birthPlace', desc: '', args: []);
+  }
+
+  /// `clickToSetBirthPlace`
+  String get clickToSetBirthPlace {
+    return Intl.message(
+      'clickToSetBirthPlace',
+      name: 'clickToSetBirthPlace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `selectBirthPlace`
+  String get selectBirthPlace {
+    return Intl.message(
+      'selectBirthPlace',
+      name: 'selectBirthPlace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enterBirthPlace`
+  String get enterBirthPlace {
+    return Intl.message(
+      'enterBirthPlace',
+      name: 'enterBirthPlace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `synastryAnalysis`
+  String get synastryAnalysis {
+    return Intl.message(
+      'synastryAnalysis',
+      name: 'synastryAnalysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `deepSynastryAnalysis`
+  String get deepSynastryAnalysis {
+    return Intl.message(
+      'deepSynastryAnalysis',
+      name: 'deepSynastryAnalysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `analyzingText`
+  String get analyzingText {
+    return Intl.message(
+      'analyzingText',
+      name: 'analyzingText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `sunSignLabel`
+  String get sunSignLabel {
+    return Intl.message(
+      'sunSignLabel',
+      name: 'sunSignLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ascendantSignLabel`
+  String get ascendantSignLabel {
+    return Intl.message(
+      'ascendantSignLabel',
+      name: 'ascendantSignLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `birthPlaceLabel`
+  String get birthPlaceLabel {
+    return Intl.message(
+      'birthPlaceLabel',
+      name: 'birthPlaceLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `birthTimeLabel`
+  String get birthTimeLabel {
+    return Intl.message(
+      'birthTimeLabel',
+      name: 'birthTimeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `defaultBirthTime`
+  String get defaultBirthTime {
+    return Intl.message(
+      'defaultBirthTime',
+      name: 'defaultBirthTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `deepAnalysisReportTitle`
+  String get deepAnalysisReportTitle {
+    return Intl.message(
+      'deepAnalysisReportTitle',
+      name: 'deepAnalysisReportTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `lightAnalysisTitle`
+  String get lightAnalysisTitle {
+    return Intl.message(
+      'lightAnalysisTitle',
+      name: 'lightAnalysisTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `closeButtonText`
+  String get closeButtonText {
+    return Intl.message(
+      'closeButtonText',
+      name: 'closeButtonText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `unsupportedPlatform`
+  String get unsupportedPlatform {
+    return Intl.message(
+      'unsupportedPlatform',
+      name: 'unsupportedPlatform',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `productNotFound`
+  String get productNotFound {
+    return Intl.message(
+      'productNotFound',
+      name: 'productNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diamond Store`
+  String get diamondStoreTitle {
+    return Intl.message(
+      'Diamond Store',
+      name: 'diamondStoreTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading...`
+  String get loading {
+    return Intl.message('Loading...', name: 'loading', desc: '', args: []);
+  }
+
+  /// `Purchase Failed`
+  String get purchaseFailed {
+    return Intl.message(
+      'Purchase Failed',
+      name: 'purchaseFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diamond Store`
+  String get diamondStore {
+    return Intl.message(
+      'Diamond Store',
+      name: 'diamondStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlock premium features with diamonds`
+  String get diamondStoreSubtitle {
+    return Intl.message(
+      'Unlock premium features with diamonds',
+      name: 'diamondStoreSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Purchase Pending`
+  String get purchasePending {
+    return Intl.message(
+      'Purchase Pending',
+      name: 'purchasePending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Purchase`
+  String get buttonPurchase {
+    return Intl.message('Purchase', name: 'buttonPurchase', desc: '', args: []);
+  }
+
+  /// `Deep Synastry Analysis`
+  String get deepSynastryRemark {
+    return Intl.message(
+      'Deep Synastry Analysis',
+      name: 'deepSynastryRemark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Synastry Analysis`
+  String get lightSynastryRemark {
+    return Intl.message(
+      'Synastry Analysis',
+      name: 'lightSynastryRemark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send DM Message`
+  String get sendDmRemark {
+    return Intl.message(
+      'Send DM Message',
+      name: 'sendDmRemark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diamond consumption failed`
+  String get diamondConsumeFailed {
+    return Intl.message(
+      'Diamond consumption failed',
+      name: 'diamondConsumeFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leo`
+  String get leoSign {
+    return Intl.message('Leo', name: 'leoSign', desc: '', args: []);
+  }
+
+  /// `Libra`
+  String get libraSign {
+    return Intl.message('Libra', name: 'libraSign', desc: '', args: []);
+  }
+
+  /// `Unknown`
+  String get unknownLocation {
+    return Intl.message('Unknown', name: 'unknownLocation', desc: '', args: []);
+  }
+
+  /// `User birthday information is incomplete`
+  String get incompleteBirthdayInfo {
+    return Intl.message(
+      'User birthday information is incomplete',
+      name: 'incompleteBirthdayInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emotional`
+  String get emotionalCompatibility {
+    return Intl.message(
+      'Emotional',
+      name: 'emotionalCompatibility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Intellectual`
+  String get intellectualCompatibility {
+    return Intl.message(
+      'Intellectual',
+      name: 'intellectualCompatibility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lifestyle`
+  String get lifestyleCompatibility {
+    return Intl.message(
+      'Lifestyle',
+      name: 'lifestyleCompatibility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Values`
+  String get valuesCompatibility {
+    return Intl.message(
+      'Values',
+      name: 'valuesCompatibility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Communication`
+  String get communicationCompatibility {
+    return Intl.message(
+      'Communication',
+      name: 'communicationCompatibility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Future`
+  String get futureCompatibility {
+    return Intl.message(
+      'Future',
+      name: 'futureCompatibility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chart Preview`
+  String get chartPreview {
+    return Intl.message(
+      'Chart Preview',
+      name: 'chartPreview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select your birth date to view your astrological chart`
+  String get selectBirthdayHint {
+    return Intl.message(
+      'Please select your birth date to view your astrological chart',
+      name: 'selectBirthdayHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aries`
+  String get ariesSign {
+    return Intl.message('Aries', name: 'ariesSign', desc: '', args: []);
+  }
+
+  /// `Taurus`
+  String get taurusSign {
+    return Intl.message('Taurus', name: 'taurusSign', desc: '', args: []);
+  }
+
+  /// `Gemini`
+  String get geminiSign {
+    return Intl.message('Gemini', name: 'geminiSign', desc: '', args: []);
+  }
+
+  /// `Cancer`
+  String get cancerSign {
+    return Intl.message('Cancer', name: 'cancerSign', desc: '', args: []);
+  }
+
+  /// `Virgo`
+  String get virgoSign {
+    return Intl.message('Virgo', name: 'virgoSign', desc: '', args: []);
+  }
+
+  /// `Scorpio`
+  String get scorpioSign {
+    return Intl.message('Scorpio', name: 'scorpioSign', desc: '', args: []);
+  }
+
+  /// `Sagittarius`
+  String get sagittariusSign {
+    return Intl.message(
+      'Sagittarius',
+      name: 'sagittariusSign',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Capricorn`
+  String get capricornSign {
+    return Intl.message('Capricorn', name: 'capricornSign', desc: '', args: []);
+  }
+
+  /// `Aquarius`
+  String get aquariusSign {
+    return Intl.message('Aquarius', name: 'aquariusSign', desc: '', args: []);
+  }
+
+  /// `Pisces`
+  String get piscesSign {
+    return Intl.message('Pisces', name: 'piscesSign', desc: '', args: []);
   }
 }
 

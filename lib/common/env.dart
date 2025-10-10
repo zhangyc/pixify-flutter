@@ -6,7 +6,7 @@ import 'package:sona/utils/locale/locale.dart';
 const _env = String.fromEnvironment('ENV', defaultValue: 'prod');
 const _apiServer = _env == 'prod'
     ? 'https://pixify-api.aegis-labs.com/api/'
-    : 'https://a7ee4742cc6d.ngrok-free.app/api/';
+    : 'https://43cf353f2197.ngrok-free.app/api/';
 const _firestorePrefix = _env == 'prod' ? 'prod' : 'test';
 
 /// 新的aegis前缀

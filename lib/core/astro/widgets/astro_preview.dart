@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:sweph/sweph.dart';
+import '../../../generated/l10n.dart';
 import '../engine/astro_calc.dart';
 
 // 使用整数 ID 作为 Key，映射到行星符号
@@ -31,20 +32,6 @@ const List<String> zodiacSymbols = [
   '♑',
   '♒',
   '♓'
-];
-const List<String> zodiacNames = [
-  '白羊座',
-  '金牛座',
-  '双子座',
-  '巨蟹座',
-  '狮子座',
-  '处女座',
-  '天秤座',
-  '天蝎座',
-  '射手座',
-  '摩羯座',
-  '水瓶座',
-  '双鱼座'
 ];
 
 // 相位符号映射
@@ -104,6 +91,7 @@ class AstroPreview extends StatefulWidget {
     required this.birthLongitude,
     this.birthTime,
     this.isBackground = false,
+    this.showBorder = true, // 新增：是否显示边框
   });
 
   final DateTime? birthday;
@@ -111,20 +99,46 @@ class AstroPreview extends StatefulWidget {
   final double? birthLongitude; // 出生经度
   final String? birthTime; // 格式 "HH:mm"
   final bool isBackground; // 是否作为背景显示
+  final bool showBorder; // 是否显示边框
 
   @override
   State<AstroPreview> createState() => _AstroPreviewState();
 }
 
-class _AstroPreviewState extends State<AstroPreview> {
+class _AstroPreviewState extends State<AstroPreview>
+    with SingleTickerProviderStateMixin {
   Future<AstroChartData?>? _chartDataFuture;
+  late AnimationController _rotationController;
+  late Animation<double> _rotationAnimation;
 
   @override
   void initState() {
     super.initState();
+
+    // 初始化旋转动画控制器 - 使用平滑循环避免跳跃
+    _rotationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 120), // 120秒，让动画更慢更平滑
+    )..repeat(); // 无限循环
+
+    // 创建平滑的角度动画，使用TweenSequence避免跳跃
+    _rotationAnimation = Tween<double>(
+      begin: 0.0,
+      end: 2 * math.pi, // 360度
+    ).animate(CurvedAnimation(
+      parent: _rotationController,
+      curve: Curves.linear, // 线性变化
+    ));
+
     if (widget.birthday != null) {
       _chartDataFuture = _calculateAstroData();
     }
+  }
+
+  @override
+  void dispose() {
+    _rotationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -261,12 +275,6 @@ class _AstroPreviewState extends State<AstroPreview> {
     return aspects;
   }
 
-  String _getZodiacSign(double longitude) {
-    // 确保经度在 0-360 之间
-    final normalizedLongitude = longitude % 360;
-    return zodiacNames[(normalizedLongitude / 30).floor()];
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -297,23 +305,27 @@ class _AstroPreviewState extends State<AstroPreview> {
 
     // 正常模式：完整的星盘预览卡片
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 16),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            theme.primaryColor.withOpacity(0.1),
-            theme.primaryColor.withOpacity(0.05),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: theme.primaryColor.withOpacity(0.3),
-          width: 1,
-        ),
-      ),
+      margin: widget.showBorder
+          ? const EdgeInsets.symmetric(vertical: 16)
+          : EdgeInsets.zero,
+      padding: widget.showBorder ? const EdgeInsets.all(20) : EdgeInsets.zero,
+      decoration: widget.showBorder
+          ? BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  theme.primaryColor.withOpacity(0.1),
+                  theme.primaryColor.withOpacity(0.05),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: theme.primaryColor.withOpacity(0.3),
+                width: 1,
+              ),
+            )
+          : null,
       child: FutureBuilder<AstroChartData?>(
         future: _chartDataFuture,
         builder: (context, snapshot) {
@@ -328,37 +340,10 @@ class _AstroPreviewState extends State<AstroPreview> {
 
           final chartData = snapshot.data!;
 
-          return Column(
-            children: [
-              _buildHeader(theme),
-              const SizedBox(height: 16),
-              _buildAstroChart(theme, chartData),
-              const SizedBox(height: 16),
-              _buildAstroInfo(theme, chartData),
-            ],
-          );
+          // 只返回星盘部分，布局由父组件管理
+          return _buildAstroChart(theme, chartData);
         },
       ),
-    );
-  }
-
-  Row _buildHeader(ThemeData theme) {
-    return Row(
-      children: [
-        Icon(
-          Icons.auto_awesome,
-          color: theme.primaryColor,
-          size: 20,
-        ),
-        const SizedBox(width: 8),
-        Text(
-          '您的星盘预览',
-          style: theme.textTheme.titleMedium?.copyWith(
-            color: theme.primaryColor,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
     );
   }
 
@@ -387,7 +372,7 @@ class _AstroPreviewState extends State<AstroPreview> {
               ),
               const SizedBox(width: 8),
               Text(
-                '星盘预览',
+                S.current.chartPreview,
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: theme.hintColor,
                   fontWeight: FontWeight.w600,
@@ -416,7 +401,7 @@ class _AstroPreviewState extends State<AstroPreview> {
           ),
           const SizedBox(height: 16),
           Text(
-            '请选择出生日期查看您的星盘',
+            S.current.selectBirthdayHint,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.hintColor,
               fontSize: 14,
@@ -429,11 +414,11 @@ class _AstroPreviewState extends State<AstroPreview> {
 
   Widget _buildAstroChart(ThemeData theme, AstroChartData chartData,
       {bool isBackground = false}) {
-    final size = isBackground ? 250.0 : 180.0;
+    final size = isBackground ? 250.0 : double.infinity; // 使用全部可用空间
 
     return Container(
-      width: size,
-      height: size,
+      width: size == double.infinity ? null : size,
+      height: size == double.infinity ? null : size,
       decoration: isBackground
           ? null
           : BoxDecoration(
@@ -445,98 +430,35 @@ class _AstroPreviewState extends State<AstroPreview> {
                 ],
               ),
             ),
-      child: CustomPaint(
-        painter: AstroChartPainter(
-          chartData: chartData,
-          primaryColor: theme.primaryColor,
-          labelColor: theme.hintColor,
-          backgroundColor: theme.scaffoldBackgroundColor,
-          textColor: theme.textTheme.bodyMedium?.color ?? Colors.black,
-          isBackground: isBackground,
-        ),
-        size: Size(size, size),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final chartSize = size == double.infinity
+              ? constraints.maxWidth < constraints.maxHeight
+                  ? constraints.maxWidth
+                  : constraints.maxHeight
+              : size;
+
+          return AnimatedBuilder(
+            animation: _rotationAnimation,
+            builder: (context, child) {
+              // 简单的调试信息，确认动画在运行
+              final angle = _rotationAnimation.value;
+              return CustomPaint(
+                painter: AstroChartPainter(
+                  chartData: chartData,
+                  primaryColor: theme.primaryColor,
+                  labelColor: theme.hintColor,
+                  backgroundColor: theme.scaffoldBackgroundColor,
+                  textColor: theme.textTheme.bodyMedium?.color ?? Colors.black,
+                  isBackground: isBackground,
+                  rotationAngle: angle,
+                ),
+                size: Size(chartSize, chartSize),
+              );
+            },
+          );
+        },
       ),
-    );
-  }
-
-  Widget _buildAstroInfo(ThemeData theme, AstroChartData chartData) {
-    // 使用太阳的 ID (0) 来获取太阳经度
-    final sunLongitude = chartData.planetPositions[0]!;
-    final sunSign = _getZodiacSign(sunLongitude);
-    final ascendantSign = _getZodiacSign(chartData.ascendant);
-    final birthTimeText = widget.birthTime ?? '12:00 (默认)';
-
-    // 构建出生地点信息
-    final locationText =
-        '${widget.birthLatitude!.toStringAsFixed(4)}, ${widget.birthLongitude!.toStringAsFixed(4)}';
-
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildInfoItem(
-              theme,
-              '太阳星座',
-              sunSign,
-              Icons.wb_sunny,
-            ),
-            _buildInfoItem(
-              theme,
-              '上升星座',
-              ascendantSign,
-              Icons.trending_up,
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildInfoItem(
-              theme,
-              '出生地点',
-              locationText,
-              Icons.location_on,
-            ),
-            _buildInfoItem(
-              theme,
-              '出生时间',
-              birthTimeText,
-              Icons.access_time,
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInfoItem(
-      ThemeData theme, String label, String value, IconData icon) {
-    return Column(
-      children: [
-        Icon(
-          icon,
-          color: theme.primaryColor,
-          size: 16,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: theme.textTheme.labelSmall?.copyWith(
-            color: theme.hintColor,
-            fontSize: 12,
-          ),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          value,
-          style: theme.textTheme.bodySmall?.copyWith(
-            fontWeight: FontWeight.w600,
-            fontSize: 13,
-          ),
-        ),
-      ],
     );
   }
 }
@@ -548,6 +470,7 @@ class AstroChartPainter extends CustomPainter {
   final Color backgroundColor;
   final Color textColor;
   final bool isBackground;
+  final double rotationAngle; // 旋转角度，用于动画
 
   AstroChartPainter({
     required this.chartData,
@@ -556,41 +479,101 @@ class AstroChartPainter extends CustomPainter {
     required this.backgroundColor,
     required this.textColor,
     this.isBackground = false,
+    this.rotationAngle = 0.0,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2 - 5;
-    final ascendant = chartData.ascendant;
+    try {
+      final center = Offset(size.width / 2, size.height / 2);
+      final radius = size.width / 2 - 5;
+      final ascendant = chartData.ascendant;
 
-    double toCanvasAngle(double longitude) {
-      double relativeAngle = longitude - ascendant;
-      return (relativeAngle * math.pi / 180) - math.pi / 2; // 调整起始角度
-    }
+      double toCanvasAngle(double longitude) {
+        double relativeAngle = longitude - ascendant;
+        return (relativeAngle * math.pi / 180) - math.pi / 2; // 调整起始角度
+      }
 
-    // 定义4个环的半径
-    final outerRadius = radius; // 最外环 - 度数刻度
-    final zodiacRadius = radius * 0.85; // 第3环 - 星座符号
-    final planetRadius = radius * 0.65; // 第2环 - 行星符号
-    final houseRadius = radius * 0.45; // 最内环 - 宫位编号
+      // 定义4个环的半径
+      final outerRadius = radius; // 最外环 - 度数刻度
+      final zodiacRadius = radius * 0.85; // 第3环 - 星座符号
+      final planetRadius = radius * 0.65; // 第2环 - 行星符号
+      final houseRadius = radius * 0.45; // 最内环 - 宫位编号
 
-    if (isBackground) {
-      // 背景模式：只绘制简化的星盘轮廓
-      _drawZodiacRing(canvas, center, zodiacRadius, toCanvasAngle);
-      _drawPlanetRing(canvas, center, planetRadius, toCanvasAngle);
-      _drawRingBorders(
-          canvas, center, outerRadius, zodiacRadius, planetRadius, houseRadius);
-    } else {
-      // 完整模式：绘制所有细节
-      _drawAspects(canvas, center, planetRadius, toCanvasAngle); // 先绘制相位线
-      _drawDegreeScale(canvas, center, outerRadius);
-      _drawZodiacRing(canvas, center, zodiacRadius, toCanvasAngle);
-      _drawPlanetRing(canvas, center, planetRadius, toCanvasAngle);
-      _drawHouseRing(canvas, center, houseRadius, toCanvasAngle);
-      _drawRingBorders(
-          canvas, center, outerRadius, zodiacRadius, planetRadius, houseRadius);
-      _drawMainAxes(canvas, center, outerRadius, toCanvasAngle);
+      // 计算每个环的旋转角度（不同的倍数创造不同的旋转速度）
+      final degreeRotation = rotationAngle * 0.5; // 度数刻度环 - 中等速度
+      final zodiacRotation = rotationAngle * 1.0; // 星座环 - 标准速度
+      final planetRotation = rotationAngle * 1.5; // 行星环 - 较快速度
+      final houseRotation = rotationAngle * 0.3; // 宫位环 - 较慢速度
+
+      if (isBackground) {
+        // 背景模式：只绘制简化的星盘轮廓
+        canvas.save();
+        canvas.translate(center.dx, center.dy);
+        canvas.rotate(zodiacRotation);
+        canvas.translate(-center.dx, -center.dy);
+        _drawZodiacRing(canvas, center, zodiacRadius, toCanvasAngle);
+
+        canvas.save();
+        canvas.translate(center.dx, center.dy);
+        canvas.rotate(planetRotation);
+        canvas.translate(-center.dx, -center.dy);
+        _drawPlanetRing(canvas, center, planetRadius, toCanvasAngle);
+        canvas.restore();
+
+        _drawRingBorders(canvas, center, outerRadius, zodiacRadius,
+            planetRadius, houseRadius);
+        canvas.restore();
+      } else {
+        // 完整模式：绘制所有细节
+        _drawAspects(canvas, center, planetRadius, toCanvasAngle); // 先绘制相位线
+
+        // 度数刻度环旋转
+        canvas.save();
+        canvas.translate(center.dx, center.dy);
+        canvas.rotate(degreeRotation);
+        canvas.translate(-center.dx, -center.dy);
+        _drawDegreeScale(canvas, center, outerRadius);
+        canvas.restore();
+
+        // 星座环旋转
+        canvas.save();
+        canvas.translate(center.dx, center.dy);
+        canvas.rotate(zodiacRotation);
+        canvas.translate(-center.dx, -center.dy);
+        _drawZodiacRing(canvas, center, zodiacRadius, toCanvasAngle);
+        canvas.restore();
+
+        // 行星环旋转
+        canvas.save();
+        canvas.translate(center.dx, center.dy);
+        canvas.rotate(planetRotation);
+        canvas.translate(-center.dx, -center.dy);
+        _drawPlanetRing(canvas, center, planetRadius, toCanvasAngle);
+        canvas.restore();
+
+        // 宫位环旋转
+        canvas.save();
+        canvas.translate(center.dx, center.dy);
+        canvas.rotate(houseRotation);
+        canvas.translate(-center.dx, -center.dy);
+        _drawHouseRing(canvas, center, houseRadius, toCanvasAngle);
+        canvas.restore();
+
+        _drawRingBorders(canvas, center, outerRadius, zodiacRadius,
+            planetRadius, houseRadius);
+        _drawMainAxes(canvas, center, outerRadius, toCanvasAngle);
+      }
+    } catch (e, stackTrace) {
+      print('星盘绘制错误: $e');
+      print('StackTrace: $stackTrace');
+      // 如果绘制失败，至少绘制一个简单的圆圈
+      final errorPaint = Paint()
+        ..color = Colors.red.withOpacity(0.5)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.0;
+      canvas.drawCircle(
+          Offset(size.width / 2, size.height / 2), size.width / 4, errorPaint);
     }
   }
 
@@ -818,8 +801,6 @@ class AstroChartPainter extends CustomPainter {
   // 绘制相位线条
   void _drawAspects(Canvas canvas, Offset center, double planetRadius,
       Function toCanvasAngle) {
-    print('开始绘制 ${chartData.aspects.length} 个相位');
-
     for (final aspect in chartData.aspects) {
       // 获取行星位置
       final planet1Pos = chartData.natalChart.planets[aspect.bodyA]?.longitude;
@@ -954,6 +935,7 @@ class AstroChartPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant AstroChartPainter oldDelegate) {
     return oldDelegate.chartData != chartData ||
-        oldDelegate.isBackground != isBackground;
+        oldDelegate.isBackground != isBackground ||
+        oldDelegate.rotationAngle != rotationAngle;
   }
 }

@@ -44,7 +44,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _initData();
-
     });
     super.initState();
   }
@@ -70,7 +69,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const NeonWordmark(text: 'Pair', fontSize: 28),
+            const NeonWordmark(text: "AstroPair", fontSize: 18),
             Row(
               children: [
                 GestureDetector(
@@ -410,7 +409,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
       );
     } else if (_state == PageState.success) {
       return CardSwiper(
-
         controller: swiperController,
         cardsCount: users.length,
         cardBuilder: (context, index, percentThresholdX, percentThresholdY) {

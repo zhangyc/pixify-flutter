@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +19,7 @@ import 'package:sona/utils/picker/interest.dart';
 import '../../generated/l10n.dart';
 import '../../utils/image_compress_util.dart';
 import '../../utils/toast/flutter_toast.dart';
+import '../../utils/location_picker/location_picker.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -72,6 +74,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             const SizedBox(height: 16),
             // 兴趣标签卡片
             _buildInterestsCard(context),
+            const SizedBox(height: 16),
+            // 出生信息卡片
+            _buildBirthInfoCard(context),
             const SizedBox(height: 32),
           ],
         ),
@@ -550,7 +555,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   // 删除照片确认对话框
   void _showDeletePhotoDialog(dynamic photo) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -653,5 +658,225 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future _onRemovePhoto(int photoId) async {
     await removePhoto(photoId: photoId);
     ref.read(myProfileProvider.notifier).refresh();
+  }
+
+  // 出生信息卡片
+  Widget _buildBirthInfoCard(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF1C1C1E)
+            : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white.withOpacity(0.06)
+              : Colors.black.withOpacity(0.06),
+          width: 0.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.black.withOpacity(0.2)
+                : Colors.black.withOpacity(0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.cake_outlined,
+                color: Theme.of(context).primaryColor,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                S.of(context).birthInfo,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          // 生日
+          _buildBirthDateItem(context),
+          const SizedBox(height: 16),
+          // 出生地
+          _buildBirthLocationItem(context),
+        ],
+      ),
+    );
+  }
+
+  // 生日项
+  Widget _buildBirthDateItem(BuildContext context) {
+    return GestureDetector(
+      onTap: _onEditBirthDate,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? const Color(0xFF2C2C2E)
+              : const Color(0xFFF2F2F7),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withOpacity(0.1)
+                : Colors.black.withOpacity(0.1),
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.calendar_today,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              size: 20,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).birthday,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    _profile.birthday != null
+                        ? _formatBirthDate(_profile.birthday!)
+                        : S.of(context).clickToSetBirthday,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: _profile.birthday != null
+                              ? Theme.of(context).colorScheme.onSurface
+                              : Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              size: 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // 出生地项
+  Widget _buildBirthLocationItem(BuildContext context) {
+    return GestureDetector(
+      onTap: _onEditBirthLocation,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? const Color(0xFF2C2C2E)
+              : const Color(0xFFF2F2F7),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withOpacity(0.1)
+                : Colors.black.withOpacity(0.1),
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.location_on,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              size: 20,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).birthPlace,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    _profile.birthCity != null && _profile.birthCity!.isNotEmpty
+                        ? _profile.birthCity!
+                        : S.of(context).clickToSetBirthPlace,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: _profile.birthCity != null &&
+                                  _profile.birthCity!.isNotEmpty
+                              ? Theme.of(context).colorScheme.onSurface
+                              : Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              size: 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // 格式化生日显示
+  String _formatBirthDate(DateTime birthDate) {
+    return DateFormat('yyyy MM dd', 'zh_CN').format(birthDate);
+  }
+
+  // 编辑生日
+  Future _onEditBirthDate() async {
+    final result = await showDatePicker(
+      context: context,
+      initialDate: _profile.birthday ?? DateTime(1990, 1, 1),
+      firstDate: DateTime(1900, 1, 1),
+      lastDate: DateTime.now(),
+      locale: const Locale('zh', 'CN'),
+    );
+
+    if (result != null) {
+      await ref.read(myProfileProvider.notifier).updateFields(birthday: result);
+      SonaAnalytics.log('my_profile_birth_date_edit');
+    }
+  }
+
+  // 编辑出生地
+  Future _onEditBirthLocation() async {
+    final result = await LocationPickerUtil.showLocationPicker(
+      context: context,
+      initialLocation: _profile.birthCity,
+    );
+
+    if (result != null) {
+      await ref
+          .read(myProfileProvider.notifier)
+          .updateFields(birthCity: result);
+      SonaAnalytics.log('my_profile_birth_location_edit');
+    }
   }
 }

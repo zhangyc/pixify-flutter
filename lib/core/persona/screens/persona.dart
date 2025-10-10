@@ -13,6 +13,7 @@ import 'package:sona/account/screens/profile.dart';
 import 'package:sona/common/services/common.dart';
 import 'package:sona/common/services/global_notification_service.dart';
 import 'package:sona/common/widgets/image/user_avatar.dart';
+import 'package:sona/common/widgets/text/neon_word_mark.dart';
 import 'package:sona/core/match/widgets/location_selector.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/utils/dialog/input.dart';
@@ -80,27 +81,27 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
   @override
   void initState() {
     super.initState();
-    if (ref.read(myProfileProvider)?.birthLongitude == null) {
-      /// 使用全局提示框提示用户去完善出生地信息
-      Future.delayed(const Duration(seconds: 2), () {
-        GlobalNotifications.showAstroNotification(
-          title: S.current.infoIncompleteTitle,
-          content: S.current.completeBirthLocationInfo,
-          onTap: () {
-            LocationSelectorBottomSheet.show(context,
-                onLocationSelected: (city, lat, lng) {
-              ref.read(myProfileProvider.notifier).updateFields(
-                  birthCity: city,
-                  birthLatitude: lat.toString(),
-                  birthLongitude: lng.toString());
+    // if (ref.read(myProfileProvider)?.birthLongitude == null) {
+    //   /// 使用全局提示框提示用户去完善出生地信息
+    //   Future.delayed(const Duration(seconds: 2), () {
+    //     GlobalNotifications.showAstroNotification(
+    //       title: S.current.infoIncompleteTitle,
+    //       content: S.current.completeBirthLocationInfo,
+    //       onTap: () {
+    //         LocationSelectorBottomSheet.show(context,
+    //             onLocationSelected: (city, lat, lng) {
+    //           ref.read(myProfileProvider.notifier).updateFields(
+    //               birthCity: city,
+    //               birthLatitude: lat.toString(),
+    //               birthLongitude: lng.toString());
 
-              /// 关闭通知
-              GlobalNotifications.hide();
-            });
-          },
-        );
-      });
-    }
+    //           /// 关闭通知
+    //           GlobalNotifications.hide();
+    //         });
+    //       },
+    //     );
+    //   });
+    // }
   }
 
   @override
@@ -109,33 +110,40 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
     final myProfile = ref.watch(myProfileProvider)!;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      // appBar: AppBar(
-      //   title: Text(
-      //     '',
-      //     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-      //           fontWeight: FontWeight.w700,
-      //         ),
-      //   ),
-      //   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      //   elevation: 0,
-      //   centerTitle: true,
-      // ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: MediaQuery.of(context).padding.top),
-            // 用户信息卡片
-            _buildUserCard(context, myProfile),
-            const SizedBox(height: 24),
-            // 信息卡片组
-            _buildInfoCards(context, myProfile),
-            // 快捷操作网格
-            _buildQuickActions(context),
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? const Color(0xFF0A0A0A)
+          : const Color(0xFFF8F9FA),
+      appBar: AppBar(
+        title: NeonWordmark(text: "AstroPair", fontSize: 18),
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF0A0A0A)
+            : const Color(0xFFF8F9FA),
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
 
-            SizedBox(height: 32 + MediaQuery.of(context).padding.bottom),
-          ],
+                // 用户信息卡片
+                _buildUserCard(context, myProfile),
+
+                const SizedBox(height: 32),
+
+                // 信息卡片组
+                _buildInfoCards(context, myProfile),
+
+                // 快捷操作网格
+                _buildQuickActions(context),
+
+                SizedBox(height: 20 + MediaQuery.of(context).padding.bottom),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -144,26 +152,25 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
   // 用户信息卡片
   Widget _buildUserCard(BuildContext context, MyProfile myProfile) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF1C1C1E)
+            ? const Color(0xFF1A1A1A)
             : Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.white.withOpacity(0.06)
-              : Colors.black.withOpacity(0.06),
+              ? Colors.white.withOpacity(0.05)
+              : Colors.black.withOpacity(0.03),
           width: 0.5,
         ),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.black.withOpacity(0.3)
-                : Colors.black.withOpacity(0.08),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+                ? Colors.black.withOpacity(0.2)
+                : Colors.black.withOpacity(0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -291,79 +298,76 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
 
   // 快捷操作网格
   Widget _buildQuickActions(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 4, bottom: 16),
-            child: Text(
-              S.of(context).quickActions,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20, top: 8),
+          child: Text(
+            S.of(context).quickActions,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+          ),
+        ),
+        GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 2,
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
+          childAspectRatio: 1.1,
+          children: [
+            _buildQuickActionItem(
+              context,
+              icon: Icons.edit,
+              title: S.of(context).editProfile,
+              color: Theme.of(context).primaryColor,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (_) => const ProfileScreen(),
+                ),
+              ),
             ),
-          ),
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: 1.1,
-            children: [
-              _buildQuickActionItem(
+            _buildQuickActionItem(
+              context,
+              icon: Icons.star,
+              title: S.of(context).memberCenter,
+              color: const Color(0xFF9370DB),
+              onTap: () => Navigator.push(
                 context,
-                icon: Icons.edit,
-                title: S.of(context).editProfile,
-                color: Theme.of(context).primaryColor,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const ProfileScreen(),
-                  ),
+                MaterialPageRoute<void>(
+                  builder: (_) =>
+                      const SubscribePage(fromTag: FromTag.profile_myplan),
                 ),
               ),
-              _buildQuickActionItem(
+            ),
+            _buildQuickActionItem(
+              context,
+              icon: Icons.settings,
+              title: S.of(context).settings,
+              color: Theme.of(context).colorScheme.secondary,
+              onTap: () => Navigator.push(
                 context,
-                icon: Icons.star,
-                title: S.of(context).memberCenter,
-                color: const Color(0xFF9370DB),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) =>
-                        const SubscribePage(fromTag: FromTag.profile_myplan),
-                  ),
+                MaterialPageRoute<void>(
+                  builder: (_) => const SettingScreen(),
                 ),
               ),
-              _buildQuickActionItem(
-                context,
-                icon: Icons.settings,
-                title: S.of(context).settings,
-                color: Theme.of(context).colorScheme.secondary,
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const SettingScreen(),
-                  ),
-                ),
-              ),
-              // _buildQuickActionItem(
-              //   context,
-              //   icon: Icons.bar_chart,
-              //   title: '数据统计',
-              //   color: const Color(0xFF4CAF50),
-              //   onTap: () {
-              //     // TODO: 跳转到数据统计页面
-              //   },
-              // ),
-            ],
-          ),
-        ],
-      ),
+            ),
+            // _buildQuickActionItem(
+            //   context,
+            //   icon: Icons.bar_chart,
+            //   title: '数据统计',
+            //   color: const Color(0xFF4CAF50),
+            //   onTap: () {
+            //     // TODO: 跳转到数据统计页面
+            //   },
+            // ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -381,22 +385,22 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Theme.of(context).brightness == Brightness.dark
-              ? const Color(0xFF1C1C1E)
+              ? const Color(0xFF1A1A1A)
               : Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.white.withOpacity(0.06)
-                : Colors.black.withOpacity(0.06),
+                ? Colors.white.withOpacity(0.05)
+                : Colors.black.withOpacity(0.03),
             width: 0.5,
           ),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.black.withOpacity(0.2)
-                  : Colors.black.withOpacity(0.04),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
+                  ? Colors.black.withOpacity(0.15)
+                  : Colors.black.withOpacity(0.03),
+              blurRadius: 6,
+              offset: const Offset(0, 1),
             ),
           ],
         ),
@@ -439,26 +443,26 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
         // 个人简介卡片
         if (myProfile.bio != null && myProfile.bio!.isNotEmpty) ...[
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            padding: const EdgeInsets.all(20),
+            margin: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.dark
-                  ? const Color(0xFF1C1C1E)
+                  ? const Color(0xFF1A1A1A)
                   : Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white.withOpacity(0.06)
-                    : Colors.black.withOpacity(0.06),
+                    ? Colors.white.withOpacity(0.05)
+                    : Colors.black.withOpacity(0.03),
                 width: 0.5,
               ),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.black.withOpacity(0.2)
-                      : Colors.black.withOpacity(0.04),
-                  blurRadius: 12,
-                  offset: const Offset(0, 3),
+                      ? Colors.black.withOpacity(0.15)
+                      : Colors.black.withOpacity(0.03),
+                  blurRadius: 8,
+                  offset: const Offset(0, 1),
                 ),
               ],
             ),
@@ -500,26 +504,26 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
         // 兴趣标签卡片
         if (myProfile.interests.isNotEmpty) ...[
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            padding: const EdgeInsets.all(20),
+            margin: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Theme.of(context).brightness == Brightness.dark
-                  ? const Color(0xFF1C1C1E)
+                  ? const Color(0xFF1A1A1A)
                   : Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white.withOpacity(0.06)
-                    : Colors.black.withOpacity(0.06),
+                    ? Colors.white.withOpacity(0.05)
+                    : Colors.black.withOpacity(0.03),
                 width: 0.5,
               ),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.black.withOpacity(0.2)
-                      : Colors.black.withOpacity(0.04),
-                  blurRadius: 12,
-                  offset: const Offset(0, 3),
+                      ? Colors.black.withOpacity(0.15)
+                      : Colors.black.withOpacity(0.03),
+                  blurRadius: 8,
+                  offset: const Offset(0, 1),
                 ),
               ],
             ),
@@ -679,47 +683,4 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
 
   @override
   bool get wantKeepAlive => true;
-
-  // 统计数据项
-  Widget _buildStatItem(
-    BuildContext context, {
-    required IconData icon,
-    required String value,
-    required String label,
-    required Color color,
-  }) {
-    return Column(
-      children: [
-        Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            icon,
-            color: color,
-            size: 24,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          value,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w800,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                fontWeight: FontWeight.w500,
-              ),
-        ),
-      ],
-    );
-  }
 }

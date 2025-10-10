@@ -1,5 +1,7 @@
 import 'package:sweph/sweph.dart';
 import 'package:sona/core/discover/models/astro_score.dart';
+import 'package:sona/common/widgets/astrolabe/models/astrolabe_data.dart';
+import 'package:sona/common/widgets/astrolabe/utils/sweph_to_astrolabe_converter.dart';
 
 // 星座名称（0-11）
 const List<String> zodiacNames = [
@@ -648,5 +650,74 @@ class AstroCalc {
       default:
         return 'UNKNOWN';
     }
+  }
+
+  // ===== 星盘绘制数据生成方法 =====
+
+  /// 直接生成本命盘绘制数据
+  /// 从出生信息一步到位生成星盘绘制所需的所有数据
+  static AstrolabeData generateNatalChartData({
+    required DateTime birthLocal,
+    required double geoLat,
+    required double geoLon,
+    double timeZoneOffsetHours = 0.0,
+    String? name,
+    String? sex,
+    String? birthPlace,
+  }) {
+    // 计算本命盘
+    final natalChart = computeNatalChart(
+      birthLocal: birthLocal,
+      geoLat: geoLat,
+      geoLon: geoLon,
+      timeZoneOffsetHours: timeZoneOffsetHours,
+    );
+
+    // 转换为星盘绘制数据
+    return SwephToAstrolabeDataConverter.convertNatalChart(
+      natalChart: natalChart,
+      name: name,
+      sex: sex,
+      birthPlace: birthPlace,
+    );
+  }
+
+  /// 直接生成合盘绘制数据
+  /// 从两个人的出生信息一步到位生成合盘绘制所需的所有数据
+  static AstrolabeData generateSynastryChartData({
+    required DateTime birthLocal1,
+    required double geoLat1,
+    required double geoLon1,
+    required DateTime birthLocal2,
+    required double geoLat2,
+    required double geoLon2,
+    double timeZoneOffsetHours1 = 0.0,
+    double timeZoneOffsetHours2 = 0.0,
+    String? name1,
+    String? name2,
+  }) {
+    // 计算第一个人的本命盘
+    final natalChart1 = computeNatalChart(
+      birthLocal: birthLocal1,
+      geoLat: geoLat1,
+      geoLon: geoLon1,
+      timeZoneOffsetHours: timeZoneOffsetHours1,
+    );
+
+    // 计算第二个人的本命盘
+    final natalChart2 = computeNatalChart(
+      birthLocal: birthLocal2,
+      geoLat: geoLat2,
+      geoLon: geoLon2,
+      timeZoneOffsetHours: timeZoneOffsetHours2,
+    );
+
+    // 转换为合盘绘制数据
+    return SwephToAstrolabeDataConverter.convertSynastryChart(
+      natalChart1: natalChart1,
+      natalChart2: natalChart2,
+      name1: name1,
+      name2: name2,
+    );
   }
 }

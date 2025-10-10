@@ -54,6 +54,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "AI กำลังสร้างรูปกลุ่มสนุกๆ",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("ทั้งหมด"),
+    "analyzingText": MessageLookupByLibrary.simpleMessage("กำลังวิเคราะห์..."),
+    "aquariusSign": MessageLookupByLibrary.simpleMessage("กุมภ์"),
+    "ariesSign": MessageLookupByLibrary.simpleMessage("เมษ"),
+    "ascendantSignLabel": MessageLookupByLibrary.simpleMessage("ราศีอัศจรรย์"),
     "astroChartTab": MessageLookupByLibrary.simpleMessage("แผนภูมิดวงดาว"),
     "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
       "ผู้ใช้คนอื่นยังไม่ได้กรอกข้อมูลตำแหน่งที่เกิดให้ครบถ้วน ดังนั้นเราจึงไม่สามารถสร้างแผนภูมิโหราศาสตร์ได้ กรุณารอให้ผู้ใช้คนอื่นกรอกข้อมูลให้ครบถ้วน",
@@ -73,6 +77,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "อัปเดตอวตาล้มเหลว",
     ),
     "bio": MessageLookupByLibrary.simpleMessage("บทนำ"),
+    "birthInfo": MessageLookupByLibrary.simpleMessage("ข้อมูลการเกิด"),
+    "birthPlace": MessageLookupByLibrary.simpleMessage("สถานที่เกิด"),
+    "birthPlaceLabel": MessageLookupByLibrary.simpleMessage("สถานที่เกิด"),
+    "birthTimeLabel": MessageLookupByLibrary.simpleMessage("เวลาเกิด"),
+    "birthday": MessageLookupByLibrary.simpleMessage("วันเกิด"),
     "block": MessageLookupByLibrary.simpleMessage("บล็อก"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
         MessageLookupByLibrary.simpleMessage(
@@ -109,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonNext": MessageLookupByLibrary.simpleMessage("ขั้นตอนถัดไป"),
     "buttonOpenLink": MessageLookupByLibrary.simpleMessage("เปิดลิงก์"),
     "buttonPreview": MessageLookupByLibrary.simpleMessage("ตัวอย่าง"),
+    "buttonPurchase": MessageLookupByLibrary.simpleMessage("ซื้อ"),
     "buttonRefresh": MessageLookupByLibrary.simpleMessage("รีเฟรช"),
     "buttonResend": MessageLookupByLibrary.simpleMessage("ส่งอีกครั้ง"),
     "buttonRestore": MessageLookupByLibrary.simpleMessage("กู้คืน"),
@@ -122,8 +132,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage(
       "ยกเลิกการสมัครสมาชิก",
     ),
+    "cancerSign": MessageLookupByLibrary.simpleMessage("กรกฎ"),
+    "capricornSign": MessageLookupByLibrary.simpleMessage("มังกร"),
     "catchMore": MessageLookupByLibrary.simpleMessage("จับได้มากขึ้น"),
     "charmTips": MessageLookupByLibrary.simpleMessage("เคล็ดลับเพิ่มเสน่ห์"),
+    "chartPreview": MessageLookupByLibrary.simpleMessage("แสดงตัวอย่างแผนภูมิ"),
     "chat": MessageLookupByLibrary.simpleMessage("แชท"),
     "chatWithMatches": MessageLookupByLibrary.simpleMessage(
       "แชทกับผู้ใช้ที่จับคู่ได้อย่างกระตือรือร้น",
@@ -133,6 +146,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "ตรวจสอบโปรไฟล์ของพวกเขา",
     ),
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("เลือก"),
+    "clickToSetBirthPlace": MessageLookupByLibrary.simpleMessage(
+      "คลิกเพื่อตั้งสถานที่เกิด",
+    ),
+    "clickToSetBirthday": MessageLookupByLibrary.simpleMessage(
+      "คลิกเพื่อตั้งวันเกิด",
+    ),
+    "closeButtonText": MessageLookupByLibrary.simpleMessage("ปิด"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage("ล้อเล่น! ฟรี"),
     "clubFeePrefix": MessageLookupByLibrary.simpleMessage(
       "ค่าสมาชิกคลับ: \$99/เดือน",
@@ -144,6 +164,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonLanguage": MessageLookupByLibrary.simpleMessage("ภาษาหลัก"),
     "commonLanguageTitle": MessageLookupByLibrary.simpleMessage(
       "ภาษาที่ใช้บ่อย",
+    ),
+    "communicationCompatibility": MessageLookupByLibrary.simpleMessage(
+      "การสื่อสาร",
     ),
     "completeAstroInfo": MessageLookupByLibrary.simpleMessage(
       "เติมเต็มข้อมูลดวงดาวอย่างละเอียด",
@@ -167,6 +190,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
       "พิกัดที่เลือกไว้ในปัจจุบัน",
     ),
+    "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
+      "รายงานการวิเคราะห์ AI อย่างลึกซึ้ง",
+    ),
+    "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage(
+      "การวิเคราะห์ซินาสตรีเชิงลึก",
+    ),
+    "deepSynastryRemark": MessageLookupByLibrary.simpleMessage(
+      "การวิเคราะห์ความเข้ากันได้เชิงลึก",
+    ),
+    "defaultBirthTime": MessageLookupByLibrary.simpleMessage(
+      "12:00 (ค่าเริ่มต้น)",
+    ),
     "deletePhoto": MessageLookupByLibrary.simpleMessage("ลบรูปภาพ"),
     "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
       "แน่ใจหรือไม่ว่าต้องการลบรูปภาพนี้? การดำเนินการนี้ไม่สามารถยกเลิกได้",
@@ -175,6 +210,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "คำอธิบาย (ไม่บังคับ)",
     ),
     "destinyMatch": MessageLookupByLibrary.simpleMessage("การจับคู่แห่งชะตา"),
+    "diamondConsumeFailed": MessageLookupByLibrary.simpleMessage(
+      "การใช้เพชรไม่สำเร็จ",
+    ),
+    "diamondStore": MessageLookupByLibrary.simpleMessage("ร้านเพชร"),
+    "diamondStoreSubtitle": MessageLookupByLibrary.simpleMessage(
+      "ปลดล็อกฟีเจอร์พรีเมียมด้วยเพชร",
+    ),
+    "diamondStoreTitle": MessageLookupByLibrary.simpleMessage("ร้านเพชร"),
     "disclaimer": MessageLookupByLibrary.simpleMessage("คำชี้แจง"),
     "displayMyCity": MessageLookupByLibrary.simpleMessage("แสดงเมืองของฉัน"),
     "dm": MessageLookupByLibrary.simpleMessage("DM"),
@@ -183,8 +226,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Duo Snap อย่างไรก็ตาม",
     ),
     "editProfile": MessageLookupByLibrary.simpleMessage("แก้ไขโปรไฟล์"),
+    "emotionalCompatibility": MessageLookupByLibrary.simpleMessage("อารมณ์"),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "ห้องแชทส่วนตัวของคุณยังว่างอยู่\nแต่ดวงดาวรู้ว่าคนที่ใช่กำลังมาหาคุณ",
+    ),
+    "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
+      "กรุณากรอกสถานที่เกิด",
     ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "ไม่ได้ส่ง โปรแกรม AstroPair จะไม่แปลคำที่ถูกห้ามใช้",
@@ -207,6 +254,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "เฮ้ย ฉันว่านายน่าทึ่งมาก มาเป็นเพื่อนกันไหม?",
     ),
+    "futureCompatibility": MessageLookupByLibrary.simpleMessage("อนาคต"),
+    "geminiSign": MessageLookupByLibrary.simpleMessage("เมถุน"),
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "รับ AstroPair Plus",
     ),
@@ -235,8 +284,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "imInterestedSomething": m0,
     "imVeryInterestedInSomething": m1,
+    "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage(
+      "ข้อมูลวันเกิดของผู้ใช้ไม่สมบูรณ์",
+    ),
     "infoIncompleteTitle": MessageLookupByLibrary.simpleMessage(
       "ข้อมูลไม่สมบูรณ์",
+    ),
+    "intellectualCompatibility": MessageLookupByLibrary.simpleMessage(
+      "สติปัญญา",
     ),
     "interests": MessageLookupByLibrary.simpleMessage("ความสนใจ"),
     "interpretationOff": MessageLookupByLibrary.simpleMessage(
@@ -249,8 +304,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "justNow": MessageLookupByLibrary.simpleMessage("เมื่อสักครู่"),
     "justSendALike": MessageLookupByLibrary.simpleMessage("เพียงส่งไลค์"),
     "justTypeInYourLanguage": m2,
+    "leoSign": MessageLookupByLibrary.simpleMessage("ราศีสิงห์"),
     "letAstroPairSayHiForYou": MessageLookupByLibrary.simpleMessage(
       "AstroPair ช่วยคุณทักทายนะ",
+    ),
+    "libraSign": MessageLookupByLibrary.simpleMessage("ราศีตุลย์"),
+    "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage("ไลฟ์สไตล์"),
+    "lightAnalysisTitle": MessageLookupByLibrary.simpleMessage(
+      "การวิเคราะห์ AI แบบอ่อน",
+    ),
+    "lightSynastryRemark": MessageLookupByLibrary.simpleMessage(
+      "การวิเคราะห์ความเข้ากันได้",
     ),
     "likeBack": MessageLookupByLibrary.simpleMessage("ไลค์กลับ"),
     "likedBack": MessageLookupByLibrary.simpleMessage("ไลค์กลับแล้ว"),
@@ -261,6 +325,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "สถานะ: ยังไม่มีไลค์\n\nทำอย่างไร: ริเริ่ม\n\nข้อเสนอ:\nอัปโหลดรูปภาพที่คุณพอใจ\nเขียนประวัติของคุณอย่างแท้จริง\nเลือกความสนใจของคุณ",
     ),
     "likedYou": MessageLookupByLibrary.simpleMessage("ที่ชอบคุณ"),
+    "loading": MessageLookupByLibrary.simpleMessage("กำลังโหลด..."),
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "เราต้องการตำแหน่งของคุณเพื่อแสดงคนใกล้เคียง",
     ),
@@ -371,6 +436,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "รูปนี้อาจไม่ใช่ของจริง",
     ),
     "photos": MessageLookupByLibrary.simpleMessage("รูปภาพ"),
+    "piscesSign": MessageLookupByLibrary.simpleMessage("มีน"),
     "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
         MessageLookupByLibrary.simpleMessage(
           "โปรดตรวจสอบอินเทอร์เน็ตหรือแตะเพื่อรีเฟรชและลองอีกครั้ง",
@@ -436,7 +502,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "พูลหัวข้อการสนทนาตามการวิเคราะห์โปรไฟล์",
     ),
     "plusBenefitUnlockLikedMe": MessageLookupByLibrary.simpleMessage(
-      "ปลดล็อกอวตารและแท็กที่ชัดเจนในถูกไลค์\"",
+      "ปลดล็อกอวตารและแท็กที่ชัดเจนในถูกไลค์",
     ),
     "plusDescTitle": MessageLookupByLibrary.simpleMessage("คำอธิบาย Plus"),
     "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
@@ -470,12 +536,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacyPolicy": MessageLookupByLibrary.simpleMessage(
       "นโยบายความเป็นส่วนตัว",
     ),
+    "productNotFound": MessageLookupByLibrary.simpleMessage("ไม่พบสินค้า"),
     "profileInfoTab": MessageLookupByLibrary.simpleMessage("โปรไฟล์"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "ยังไม่ได้แสดงตัวตนที่แท้จริง",
     ),
     "profileTip": MessageLookupByLibrary.simpleMessage(
       "✨ เติมเต็มโปรไฟล์ให้ดวงดาวรู้จักคุณมากขึ้น เพื่อการจับคู่ที่แม่นยำ",
+    ),
+    "purchaseFailed": MessageLookupByLibrary.simpleMessage("การซื้อไม่สำเร็จ"),
+    "purchasePending": MessageLookupByLibrary.simpleMessage(
+      "กำลังดำเนินการซื้อ...",
     ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "การแจ้งเตือนแบบพุช",
@@ -501,16 +572,25 @@ class MessageLookup extends MessageLookupByLibrary {
     "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
       "พบชาวต่างชาติที่อยู่ใกล้คุณ",
     ),
+    "sagittariusSign": MessageLookupByLibrary.simpleMessage("ธนู"),
+    "scorpioSign": MessageLookupByLibrary.simpleMessage("พิจิก"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage(
       "หลักฐานภาพหน้าจอ",
     ),
     "seeProfile": MessageLookupByLibrary.simpleMessage("ดูโปรไฟล์"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("ดูว่าใครชอบคุณ"),
+    "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
+      "เลือกสถานที่เกิด",
+    ),
+    "selectBirthdayHint": MessageLookupByLibrary.simpleMessage(
+      "กรุณาเลือกวันเกิดเพื่อดูแผนภูมิดวงดาวของคุณ",
+    ),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage(
       "เลือกประเทศ",
     ),
     "selectLocationTitle": MessageLookupByLibrary.simpleMessage("เลือกสถานที่"),
     "sendDm": MessageLookupByLibrary.simpleMessage("ส่ง DM"),
+    "sendDmRemark": MessageLookupByLibrary.simpleMessage("ส่งข้อความ DM"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
       "💫 ส่งคำทักทายดาวเพื่อปลดล็อกอัลบั้ม ต่อไป",
     ),
@@ -563,7 +643,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(
       " ของเรา",
     ),
+    "sunSignLabel": MessageLookupByLibrary.simpleMessage("ราศีดวงอาทิตย์"),
+    "synastryAnalysis": MessageLookupByLibrary.simpleMessage(
+      "การวิเคราะห์ซินาสตรี",
+    ),
     "takeIt": MessageLookupByLibrary.simpleMessage("ใช้"),
+    "taurusSign": MessageLookupByLibrary.simpleMessage("พฤษภ"),
     "termsOfService": MessageLookupByLibrary.simpleMessage(
       "ข้อกำหนดในการให้บริการ",
     ),
@@ -580,10 +665,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
       "👅คุณได้ถึงขีดจำกัดประจำสัปดาห์แล้ว",
     ),
+    "unknownLocation": MessageLookupByLibrary.simpleMessage("ไม่ทราบ"),
     "unlockHighMatchUsers": m5,
     "unlockUsersWithDestiny": m6,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "ราคาพิเศษที่ไม่ควรพลาด",
+    ),
+    "unsupportedPlatform": MessageLookupByLibrary.simpleMessage(
+      "แพลตฟอร์มที่ไม่รองรับ",
     ),
     "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
       "อัปเกรดเป็นพรีเมียมเพื่อรับคำแนะนำเพิ่มเติม",
@@ -652,12 +741,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "userPhoneNumberPageTitle": MessageLookupByLibrary.simpleMessage(
       "กรุณากรอกหมายเลขโทรศัพท์",
     ),
+    "valuesCompatibility": MessageLookupByLibrary.simpleMessage("ค่านิยม"),
     "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage(
       "ป้อนรหัสยืนยัน",
     ),
     "viewAstroReport": MessageLookupByLibrary.simpleMessage(
       "ดูรายงานดวงดาวกับ",
     ),
+    "virgoSign": MessageLookupByLibrary.simpleMessage("สิงห์"),
     "wannaHollaAt": MessageLookupByLibrary.simpleMessage("ทักทายกันเถอะ!"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "ปิดหลังจากนั้น จะไม่แสดงเมืองของคุณในขณะจับคู่",

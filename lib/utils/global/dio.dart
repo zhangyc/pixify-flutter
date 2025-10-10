@@ -2,9 +2,9 @@ part of './global.dart';
 
 Dio _createDioInstance() {
   final options = BaseOptions(
-      connectTimeout: const Duration(milliseconds: 15000),
-      receiveTimeout: const Duration(milliseconds: 15000),
-      sendTimeout: const Duration(milliseconds: 15000),
+      connectTimeout: const Duration(milliseconds: 15000*2),
+      receiveTimeout: const Duration(milliseconds: 15000*2),
+      sendTimeout: const Duration(milliseconds: 15000*2),
       baseUrl: env.apiServer,
       headers: {
         'device': Platform.operatingSystem,

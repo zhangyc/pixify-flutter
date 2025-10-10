@@ -111,7 +111,7 @@ dependencies:
 
   #m
   mime: ^1.0.5
-
+  gpt_markdown: ^1.1.4
 
   # U
   url_launcher: ^6.1.14

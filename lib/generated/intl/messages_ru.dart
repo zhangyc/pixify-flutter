@@ -54,6 +54,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "ИИ создает веселые групповые фото",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("Все"),
+    "analyzingText": MessageLookupByLibrary.simpleMessage("Анализирую..."),
+    "aquariusSign": MessageLookupByLibrary.simpleMessage("Водолей"),
+    "ariesSign": MessageLookupByLibrary.simpleMessage("Овен"),
+    "ascendantSignLabel": MessageLookupByLibrary.simpleMessage(
+      "Восходящий знак",
+    ),
     "astroChartTab": MessageLookupByLibrary.simpleMessage(
       "Астрологическая Карта",
     ),
@@ -77,6 +83,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Не удалось обновить аватар",
     ),
     "bio": MessageLookupByLibrary.simpleMessage("Введение"),
+    "birthInfo": MessageLookupByLibrary.simpleMessage("Информация о рождении"),
+    "birthPlace": MessageLookupByLibrary.simpleMessage("Место рождения"),
+    "birthPlaceLabel": MessageLookupByLibrary.simpleMessage("Место рождения"),
+    "birthTimeLabel": MessageLookupByLibrary.simpleMessage("Время рождения"),
+    "birthday": MessageLookupByLibrary.simpleMessage("День рождения"),
     "block": MessageLookupByLibrary.simpleMessage("Блокировать"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
         MessageLookupByLibrary.simpleMessage(
@@ -121,6 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonNext": MessageLookupByLibrary.simpleMessage("Следующий Шаг"),
     "buttonOpenLink": MessageLookupByLibrary.simpleMessage("Открыть Ссылку"),
     "buttonPreview": MessageLookupByLibrary.simpleMessage("Предпросмотр"),
+    "buttonPurchase": MessageLookupByLibrary.simpleMessage("Купить"),
     "buttonRefresh": MessageLookupByLibrary.simpleMessage("Обновить"),
     "buttonResend": MessageLookupByLibrary.simpleMessage("Переслать"),
     "buttonRestore": MessageLookupByLibrary.simpleMessage("Восстановить"),
@@ -134,8 +146,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Отменить совпадение",
     ),
     "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("Отписаться"),
+    "cancerSign": MessageLookupByLibrary.simpleMessage("Рак"),
+    "capricornSign": MessageLookupByLibrary.simpleMessage("Козерог"),
     "catchMore": MessageLookupByLibrary.simpleMessage("Поймайте больше"),
     "charmTips": MessageLookupByLibrary.simpleMessage("Советы по очарованию"),
+    "chartPreview": MessageLookupByLibrary.simpleMessage(
+      "Предварительный Просмотр Графика",
+    ),
     "chat": MessageLookupByLibrary.simpleMessage("Чат"),
     "chatWithMatches": MessageLookupByLibrary.simpleMessage(
       "Активно общайтесь с подходящими пользователями",
@@ -145,6 +162,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Проверьте их профили",
     ),
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Выбрать"),
+    "clickToSetBirthPlace": MessageLookupByLibrary.simpleMessage(
+      "Нажмите, чтобы установить место рождения",
+    ),
+    "clickToSetBirthday": MessageLookupByLibrary.simpleMessage(
+      "Нажмите, чтобы установить день рождения",
+    ),
+    "closeButtonText": MessageLookupByLibrary.simpleMessage("Закрыть"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage(
       "Шутка! Это бесплатно",
     ),
@@ -160,6 +184,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonLanguage": MessageLookupByLibrary.simpleMessage("Основной язык"),
     "commonLanguageTitle": MessageLookupByLibrary.simpleMessage(
       "Обычно используемые языки",
+    ),
+    "communicationCompatibility": MessageLookupByLibrary.simpleMessage(
+      "Общение",
     ),
     "completeAstroInfo": MessageLookupByLibrary.simpleMessage(
       "Завершите подробную астрологическую информацию",
@@ -185,6 +212,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
       "Текущие выбранные координаты",
     ),
+    "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
+      "Отчет глубокого анализа ИИ",
+    ),
+    "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage(
+      "Глубокий синастрический анализ",
+    ),
+    "deepSynastryRemark": MessageLookupByLibrary.simpleMessage(
+      "Глубокий Анализ Синастрии",
+    ),
+    "defaultBirthTime": MessageLookupByLibrary.simpleMessage(
+      "12:00 (По умолчанию)",
+    ),
     "deletePhoto": MessageLookupByLibrary.simpleMessage("Удалить Фото"),
     "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
       "Вы уверены, что хотите удалить это фото? Это действие нельзя отменить.",
@@ -194,6 +233,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "destinyMatch": MessageLookupByLibrary.simpleMessage(
       "Судьбоносное совпадение",
+    ),
+    "diamondConsumeFailed": MessageLookupByLibrary.simpleMessage(
+      "Не удалось потратить бриллианты",
+    ),
+    "diamondStore": MessageLookupByLibrary.simpleMessage("Магазин Бриллиантов"),
+    "diamondStoreSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Разблокируйте премиум-функции бриллиантами",
+    ),
+    "diamondStoreTitle": MessageLookupByLibrary.simpleMessage(
+      "Магазин Бриллиантов",
     ),
     "disclaimer": MessageLookupByLibrary.simpleMessage(
       "Отказ от ответственности",
@@ -207,8 +256,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "editProfile": MessageLookupByLibrary.simpleMessage(
       "Редактировать Профиль",
     ),
+    "emotionalCompatibility": MessageLookupByLibrary.simpleMessage(
+      "Эмоциональный",
+    ),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "Ваша приватна кімната чату все ще порожня\nАле зірки знають, що правильна людина йде до вас",
+    ),
+    "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
+      "Введите место рождения",
     ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "Не отправлено. AstroPair не будет переводить запрещенные слова.",
@@ -231,6 +286,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "Привет, я думаю, ты потрясающий. Давай подружимся?",
     ),
+    "futureCompatibility": MessageLookupByLibrary.simpleMessage("Будущее"),
+    "geminiSign": MessageLookupByLibrary.simpleMessage("Близнецы"),
     "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
       "Получить AstroPair Plus",
     ),
@@ -257,8 +314,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "imInterestedSomething": m0,
     "imVeryInterestedInSomething": m1,
+    "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage(
+      "Информация о дне рождения пользователя неполная",
+    ),
     "infoIncompleteTitle": MessageLookupByLibrary.simpleMessage(
       "Информация Неполная",
+    ),
+    "intellectualCompatibility": MessageLookupByLibrary.simpleMessage(
+      "Интеллектуальный",
     ),
     "interests": MessageLookupByLibrary.simpleMessage("Интересы"),
     "interpretationOff": MessageLookupByLibrary.simpleMessage(
@@ -273,8 +336,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "Просто отправьте лайк",
     ),
     "justTypeInYourLanguage": m2,
+    "leoSign": MessageLookupByLibrary.simpleMessage("Лев"),
     "letAstroPairSayHiForYou": MessageLookupByLibrary.simpleMessage(
       "Пусть AstroPair поздоровается за вас",
+    ),
+    "libraSign": MessageLookupByLibrary.simpleMessage("Весы"),
+    "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage(
+      "Образ Жизни",
+    ),
+    "lightAnalysisTitle": MessageLookupByLibrary.simpleMessage(
+      "Легкий анализ ИИ",
+    ),
+    "lightSynastryRemark": MessageLookupByLibrary.simpleMessage(
+      "Анализ Синастрии",
     ),
     "likeBack": MessageLookupByLibrary.simpleMessage("Лайк в ответ"),
     "likedBack": MessageLookupByLibrary.simpleMessage("Уже лайкнул в ответ"),
@@ -285,6 +359,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Статус: Пока нет лайков\n\nЧто делать: Проявите инициативу\n\nПредложение: Загрузите ваши удовлетворительные фотографии\nНапишите подлинную биографию\nВыберите свои интересы",
     ),
     "likedYou": MessageLookupByLibrary.simpleMessage("Тебе нравился"),
+    "loading": MessageLookupByLibrary.simpleMessage("Загрузка..."),
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "Нам нужно ваше местоположение, чтобы показать вам людей поблизости",
     ),
@@ -399,6 +474,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Это фото может быть не настоящим",
     ),
     "photos": MessageLookupByLibrary.simpleMessage("Фотографии"),
+    "piscesSign": MessageLookupByLibrary.simpleMessage("Рыбы"),
     "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
         MessageLookupByLibrary.simpleMessage(
           "Пожалуйста, проверьте ваш интернет или Нажмите для обновления и попробуйте снова",
@@ -494,12 +570,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacyPolicy": MessageLookupByLibrary.simpleMessage(
       "Политика конфиденциальности",
     ),
+    "productNotFound": MessageLookupByLibrary.simpleMessage(
+      "Product not found",
+    ),
     "profileInfoTab": MessageLookupByLibrary.simpleMessage("Профиль"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "Они еще не показали свое настоящее лицо",
     ),
     "profileTip": MessageLookupByLibrary.simpleMessage(
       "✨ Завершіть свій профіль, щоб зірки могли краще вас знати, для більш точного співставлення",
+    ),
+    "purchaseFailed": MessageLookupByLibrary.simpleMessage(
+      "Покупка Не Удалась",
+    ),
+    "purchasePending": MessageLookupByLibrary.simpleMessage(
+      "Покупка Ожидает Обработки",
     ),
     "pushNotifications": MessageLookupByLibrary.simpleMessage(
       "Пуш-уведомления",
@@ -527,12 +612,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "runningIntoForeignersNearYou": MessageLookupByLibrary.simpleMessage(
       "Встреча с иностранцами рядом с вами",
     ),
+    "sagittariusSign": MessageLookupByLibrary.simpleMessage("Стрелец"),
+    "scorpioSign": MessageLookupByLibrary.simpleMessage("Скорпион"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage(
       "Скриншот доказательства",
     ),
     "seeProfile": MessageLookupByLibrary.simpleMessage("Посмотреть профиль"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage(
       "Смотрите, кто вас любит",
+    ),
+    "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
+      "Выберите место рождения",
+    ),
+    "selectBirthdayHint": MessageLookupByLibrary.simpleMessage(
+      "Пожалуйста выберите дату рождения чтобы просмотреть вашу астрологическую карту",
     ),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage(
       "Выбрать Страну",
@@ -541,6 +634,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Выбрать Местоположение",
     ),
     "sendDm": MessageLookupByLibrary.simpleMessage("Отправить ЛС"),
+    "sendDmRemark": MessageLookupByLibrary.simpleMessage(
+      "Отправить DM Сообщение",
+    ),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
       "💫 Отправьте звездное приветствие чтобы разблокировать альбом Продолжить",
     ),
@@ -595,7 +691,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("."),
+    "sunSignLabel": MessageLookupByLibrary.simpleMessage("Знак Солнца"),
+    "synastryAnalysis": MessageLookupByLibrary.simpleMessage(
+      "Синастрический анализ",
+    ),
     "takeIt": MessageLookupByLibrary.simpleMessage("Использовать"),
+    "taurusSign": MessageLookupByLibrary.simpleMessage("Телец"),
     "termsOfService": MessageLookupByLibrary.simpleMessage(
       "Условия обслуживания",
     ),
@@ -612,10 +713,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
       "👅достигли своего недельного лимита",
     ),
+    "unknownLocation": MessageLookupByLibrary.simpleMessage("Неизвестно"),
     "unlockHighMatchUsers": m5,
     "unlockUsersWithDestiny": m6,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "Незабываемые специальные цены",
+    ),
+    "unsupportedPlatform": MessageLookupByLibrary.simpleMessage(
+      "Unsupported platform",
     ),
     "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
       "Оновіться до Premium для більшої кількості рекомендацій",
@@ -690,12 +795,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "userPhoneNumberPageTitle": MessageLookupByLibrary.simpleMessage(
       "Введи номер телефона",
     ),
+    "valuesCompatibility": MessageLookupByLibrary.simpleMessage("Ценности"),
     "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage(
       "Введите код подтверждения",
     ),
     "viewAstroReport": MessageLookupByLibrary.simpleMessage(
       "Посмотреть астрологический отчет с",
     ),
+    "virgoSign": MessageLookupByLibrary.simpleMessage("Дева"),
     "wannaHollaAt": MessageLookupByLibrary.simpleMessage("Скажи привет!"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "Закрытие после этого, ваш город не будет отображаться во время сопоставления",
