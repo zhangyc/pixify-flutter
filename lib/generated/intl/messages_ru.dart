@@ -54,11 +54,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "ИИ создает веселые групповые фото",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("Все"),
-    "analyzingText": MessageLookupByLibrary.simpleMessage("Анализирую..."),
+    "analyzingText": MessageLookupByLibrary.simpleMessage("Analyzing..."),
     "aquariusSign": MessageLookupByLibrary.simpleMessage("Водолей"),
     "ariesSign": MessageLookupByLibrary.simpleMessage("Овен"),
     "ascendantSignLabel": MessageLookupByLibrary.simpleMessage(
-      "Восходящий знак",
+      "Ascendant Sign",
     ),
     "astroChartTab": MessageLookupByLibrary.simpleMessage(
       "Астрологическая Карта",
@@ -83,11 +83,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Не удалось обновить аватар",
     ),
     "bio": MessageLookupByLibrary.simpleMessage("Введение"),
-    "birthInfo": MessageLookupByLibrary.simpleMessage("Информация о рождении"),
-    "birthPlace": MessageLookupByLibrary.simpleMessage("Место рождения"),
-    "birthPlaceLabel": MessageLookupByLibrary.simpleMessage("Место рождения"),
-    "birthTimeLabel": MessageLookupByLibrary.simpleMessage("Время рождения"),
-    "birthday": MessageLookupByLibrary.simpleMessage("День рождения"),
+    "birthInfo": MessageLookupByLibrary.simpleMessage("Birth Information"),
+    "birthPlace": MessageLookupByLibrary.simpleMessage("Birth Place"),
+    "birthPlaceLabel": MessageLookupByLibrary.simpleMessage("Birth Place"),
+    "birthTimeLabel": MessageLookupByLibrary.simpleMessage("Birth Time"),
+    "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
     "block": MessageLookupByLibrary.simpleMessage("Блокировать"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
         MessageLookupByLibrary.simpleMessage(
@@ -103,7 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonAuthorize": MessageLookupByLibrary.simpleMessage("Авторизовать"),
     "buttonCancel": MessageLookupByLibrary.simpleMessage("Отменить"),
     "buttonChange": MessageLookupByLibrary.simpleMessage("Изменить"),
-    "buttonConfirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
+    "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirm"),
     "buttonContinue": MessageLookupByLibrary.simpleMessage("Продолжить"),
     "buttonCopy": MessageLookupByLibrary.simpleMessage("Копировать"),
     "buttonDelete": MessageLookupByLibrary.simpleMessage("Удалить"),
@@ -163,12 +163,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Выбрать"),
     "clickToSetBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Нажмите, чтобы установить место рождения",
+      "Click to set birth place",
     ),
     "clickToSetBirthday": MessageLookupByLibrary.simpleMessage(
-      "Нажмите, чтобы установить день рождения",
+      "Click to set birthday",
     ),
-    "closeButtonText": MessageLookupByLibrary.simpleMessage("Закрыть"),
+    "closeButtonText": MessageLookupByLibrary.simpleMessage("Close"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage(
       "Шутка! Это бесплатно",
     ),
@@ -188,6 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "communicationCompatibility": MessageLookupByLibrary.simpleMessage(
       "Общение",
     ),
+    "compatibilityScore": MessageLookupByLibrary.simpleMessage("Совместимость"),
     "completeAstroInfo": MessageLookupByLibrary.simpleMessage(
       "Завершите подробную астрологическую информацию",
     ),
@@ -213,17 +214,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "Текущие выбранные координаты",
     ),
     "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
-      "Отчет глубокого анализа ИИ",
+      "Deep AI Analysis Report",
     ),
     "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Глубокий синастрический анализ",
+      "Deep Analysis",
     ),
     "deepSynastryRemark": MessageLookupByLibrary.simpleMessage(
       "Глубокий Анализ Синастрии",
     ),
-    "defaultBirthTime": MessageLookupByLibrary.simpleMessage(
-      "12:00 (По умолчанию)",
-    ),
+    "defaultBirthTime": MessageLookupByLibrary.simpleMessage("12:00 (Default)"),
     "deletePhoto": MessageLookupByLibrary.simpleMessage("Удалить Фото"),
     "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
       "Вы уверены, что хотите удалить это фото? Это действие нельзя отменить.",
@@ -236,6 +235,18 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "diamondConsumeFailed": MessageLookupByLibrary.simpleMessage(
       "Не удалось потратить бриллианты",
+    ),
+    "diamondInsufficient": MessageLookupByLibrary.simpleMessage(
+      "Бриллианты не хватает",
+    ),
+    "diamondPack1": MessageLookupByLibrary.simpleMessage("Алмазный Пакет"),
+    "diamondPack2": MessageLookupByLibrary.simpleMessage("Алмазный Сундук"),
+    "diamondPack3": MessageLookupByLibrary.simpleMessage("Алмазный Подарок"),
+    "diamondPack4": MessageLookupByLibrary.simpleMessage(
+      "Большой Алмазный Пакет",
+    ),
+    "diamondPack5": MessageLookupByLibrary.simpleMessage(
+      "Высший Алмазный Пакет",
     ),
     "diamondStore": MessageLookupByLibrary.simpleMessage("Магазин Бриллиантов"),
     "diamondStoreSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -263,7 +274,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ваша приватна кімната чату все ще порожня\nАле зірки знають, що правильна людина йде до вас",
     ),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Введите место рождения",
+      "Enter birth place",
     ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "Не отправлено. AstroPair не будет переводить запрещенные слова.",
@@ -345,7 +356,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Образ Жизни",
     ),
     "lightAnalysisTitle": MessageLookupByLibrary.simpleMessage(
-      "Легкий анализ ИИ",
+      "Light AI Analysis",
     ),
     "lightSynastryRemark": MessageLookupByLibrary.simpleMessage(
       "Анализ Синастрии",
@@ -622,7 +633,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Смотрите, кто вас любит",
     ),
     "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Выберите место рождения",
+      "Select Birth Place",
     ),
     "selectBirthdayHint": MessageLookupByLibrary.simpleMessage(
       "Пожалуйста выберите дату рождения чтобы просмотреть вашу астрологическую карту",
@@ -691,10 +702,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("."),
-    "sunSignLabel": MessageLookupByLibrary.simpleMessage("Знак Солнца"),
-    "synastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Синастрический анализ",
-    ),
+    "sunSignLabel": MessageLookupByLibrary.simpleMessage("Sun Sign"),
+    "synastryAnalysis": MessageLookupByLibrary.simpleMessage("Синастрия"),
     "takeIt": MessageLookupByLibrary.simpleMessage("Использовать"),
     "taurusSign": MessageLookupByLibrary.simpleMessage("Телец"),
     "termsOfService": MessageLookupByLibrary.simpleMessage(

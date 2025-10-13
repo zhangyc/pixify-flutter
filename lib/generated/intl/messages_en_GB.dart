@@ -173,6 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "communicationCompatibility": MessageLookupByLibrary.simpleMessage(
       "Communication",
     ),
+    "compatibilityScore": MessageLookupByLibrary.simpleMessage("Compatibility"),
     "completeAstroInfo": MessageLookupByLibrary.simpleMessage(
       "Complete detailed astro information",
     ),
@@ -199,7 +200,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Deep AI Analysis Report",
     ),
     "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Deep Synastry Analysis",
+      "Deep Analysis",
     ),
     "deepSynastryRemark": MessageLookupByLibrary.simpleMessage(
       "Deep Synastry Analysis",
@@ -215,6 +216,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "destinyMatch": MessageLookupByLibrary.simpleMessage("Destiny Match"),
     "diamondConsumeFailed": MessageLookupByLibrary.simpleMessage(
       "Diamond consumption failed",
+    ),
+    "diamondInsufficient": MessageLookupByLibrary.simpleMessage(
+      "Diamonds are not enough",
+    ),
+    "diamondPack1": MessageLookupByLibrary.simpleMessage("Diamond Pack"),
+    "diamondPack2": MessageLookupByLibrary.simpleMessage("Diamond Chest"),
+    "diamondPack3": MessageLookupByLibrary.simpleMessage("Diamond Gift"),
+    "diamondPack4": MessageLookupByLibrary.simpleMessage("Diamond Bundle"),
+    "diamondPack5": MessageLookupByLibrary.simpleMessage(
+      "Diamond Supreme Pack",
     ),
     "diamondStore": MessageLookupByLibrary.simpleMessage("Diamond Store"),
     "diamondStoreSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -637,9 +648,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(" ."),
     "sunSignLabel": MessageLookupByLibrary.simpleMessage("Sun Sign"),
-    "synastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Synastry Analysis",
-    ),
+    "synastryAnalysis": MessageLookupByLibrary.simpleMessage("Synastry"),
     "takeIt": MessageLookupByLibrary.simpleMessage("Take It"),
     "taurusSign": MessageLookupByLibrary.simpleMessage("Taurus"),
     "termsOfService": MessageLookupByLibrary.simpleMessage("Terms of Service"),

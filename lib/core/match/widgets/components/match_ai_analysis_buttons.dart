@@ -148,7 +148,7 @@ class MatchAiAnalysisButtons extends StatelessWidget {
           flex: 2,
           child: MatchAIAnalysisButton(
             text: S.of(context).synastryAnalysis,
-            subtitle: '100钻石',
+            subtitle: '100 💎',
             icon: Icons.favorite,
             buttonType: ButtonType.light,
             isLoading: isLightAnalyzing,
@@ -161,7 +161,7 @@ class MatchAiAnalysisButtons extends StatelessWidget {
           flex: 3,
           child: MatchAIAnalysisButton(
             text: S.of(context).deepSynastryAnalysis,
-            subtitle: '250钻石',
+            subtitle: '250 💎',
             icon: Icons.psychology,
             buttonType: ButtonType.deep,
             isLoading: isDeepAnalyzing,

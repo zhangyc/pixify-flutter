@@ -54,13 +54,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "IA créant des photos de groupe amusantes",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("Tout"),
-    "analyzingText": MessageLookupByLibrary.simpleMessage(
-      "Analyse en cours...",
-    ),
+    "analyzingText": MessageLookupByLibrary.simpleMessage("Analizzando..."),
     "aquariusSign": MessageLookupByLibrary.simpleMessage("Verseau"),
     "ariesSign": MessageLookupByLibrary.simpleMessage("Bélier"),
     "ascendantSignLabel": MessageLookupByLibrary.simpleMessage(
-      "Signe Ascendant",
+      "Aufsteigendes Zeichen",
     ),
     "astroChartTab": MessageLookupByLibrary.simpleMessage("Graphique Astro"),
     "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
@@ -81,17 +79,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Échec de la mise à jour de l\'avatar",
     ),
     "bio": MessageLookupByLibrary.simpleMessage("Introduction"),
-    "birthInfo": MessageLookupByLibrary.simpleMessage(
-      "Informations de naissance",
-    ),
-    "birthPlace": MessageLookupByLibrary.simpleMessage("Lieu de naissance"),
-    "birthPlaceLabel": MessageLookupByLibrary.simpleMessage(
-      "Lieu de naissance",
-    ),
-    "birthTimeLabel": MessageLookupByLibrary.simpleMessage(
-      "Heure de naissance",
-    ),
-    "birthday": MessageLookupByLibrary.simpleMessage("Anniversaire"),
+    "birthInfo": MessageLookupByLibrary.simpleMessage("Geburtsinformationen"),
+    "birthPlace": MessageLookupByLibrary.simpleMessage("Geburtsort"),
+    "birthPlaceLabel": MessageLookupByLibrary.simpleMessage("Geburtsort"),
+    "birthTimeLabel": MessageLookupByLibrary.simpleMessage("Geburtszeit"),
+    "birthday": MessageLookupByLibrary.simpleMessage("Geburtstag"),
     "block": MessageLookupByLibrary.simpleMessage("Bloquer"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
         MessageLookupByLibrary.simpleMessage(
@@ -107,7 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonAuthorize": MessageLookupByLibrary.simpleMessage("Autoriser"),
     "buttonCancel": MessageLookupByLibrary.simpleMessage("Annuler"),
     "buttonChange": MessageLookupByLibrary.simpleMessage("Changer"),
-    "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirmer"),
+    "buttonConfirm": MessageLookupByLibrary.simpleMessage("Bestätigen"),
     "buttonContinue": MessageLookupByLibrary.simpleMessage("Continuer"),
     "buttonCopy": MessageLookupByLibrary.simpleMessage("Copier"),
     "buttonDelete": MessageLookupByLibrary.simpleMessage("Supprimer"),
@@ -165,12 +157,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Choisir"),
     "clickToSetBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Cliquez pour définir le lieu de naissance",
+      "Klicken Sie, um den Geburtsort festzulegen",
     ),
     "clickToSetBirthday": MessageLookupByLibrary.simpleMessage(
-      "Cliquez pour définir l\'anniversaire",
+      "Klicken Sie, um den Geburtstag festzulegen",
     ),
-    "closeButtonText": MessageLookupByLibrary.simpleMessage("Fermer"),
+    "closeButtonText": MessageLookupByLibrary.simpleMessage("Schließen"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage(
       "C\'est une blague ! C\'est gratuit",
     ),
@@ -190,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "communicationCompatibility": MessageLookupByLibrary.simpleMessage(
       "Communication",
     ),
+    "compatibilityScore": MessageLookupByLibrary.simpleMessage("Compatibilité"),
     "completeAstroInfo": MessageLookupByLibrary.simpleMessage(
       "Complétez les informations astrologiques détaillées",
     ),
@@ -215,16 +208,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Coordonnées sélectionnées actuelles",
     ),
     "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
-      "Rapport d\'Analyse IA Approfondie",
+      "Tiefe KI-Analyse-Bericht",
     ),
     "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Analyse Synastrique Approfondie",
+      "Tiefe Analyse",
     ),
     "deepSynastryRemark": MessageLookupByLibrary.simpleMessage(
       "Analyse Approfondie de Synastrie",
     ),
     "defaultBirthTime": MessageLookupByLibrary.simpleMessage(
-      "12:00 (Par défaut)",
+      "12:00 (Standard)",
     ),
     "deletePhoto": MessageLookupByLibrary.simpleMessage("Supprimer la Photo"),
     "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
@@ -236,6 +229,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "destinyMatch": MessageLookupByLibrary.simpleMessage("Match du Destin"),
     "diamondConsumeFailed": MessageLookupByLibrary.simpleMessage(
       "Échec de la consommation de diamants",
+    ),
+    "diamondInsufficient": MessageLookupByLibrary.simpleMessage(
+      "Diamants n\'est pas assez",
+    ),
+    "diamondPack1": MessageLookupByLibrary.simpleMessage("Pack Diamants"),
+    "diamondPack2": MessageLookupByLibrary.simpleMessage("Coffre Diamants"),
+    "diamondPack3": MessageLookupByLibrary.simpleMessage("Cadeau Diamants"),
+    "diamondPack4": MessageLookupByLibrary.simpleMessage("Pack Diamants Grand"),
+    "diamondPack5": MessageLookupByLibrary.simpleMessage(
+      "Pack Diamants Suprême",
     ),
     "diamondStore": MessageLookupByLibrary.simpleMessage("Boutique Diamants"),
     "diamondStoreSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -259,7 +262,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ihr privater Chatraum ist noch leer\nAber die Sterne wissen, die richtige Person kommt zu Ihnen",
     ),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Entrez le lieu de naissance",
+      "Geburtsort eingeben",
     ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "Non envoyé. AstroPair ne traduira pas les mots interdits.",
@@ -345,7 +348,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Style de Vie",
     ),
     "lightAnalysisTitle": MessageLookupByLibrary.simpleMessage(
-      "Analyse IA Léger",
+      "Leichte KI-Analyse",
     ),
     "lightSynastryRemark": MessageLookupByLibrary.simpleMessage(
       "Analyse de Synastrie",
@@ -579,7 +582,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Politique de confidentialité",
     ),
     "productNotFound": MessageLookupByLibrary.simpleMessage(
-      "Produkt nicht gefunden",
+      "Prodotto non trovato",
     ),
     "profileInfoTab": MessageLookupByLibrary.simpleMessage("Profil"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
@@ -624,7 +627,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "seeProfile": MessageLookupByLibrary.simpleMessage("Voir le profil"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("Voir qui vous aime"),
     "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Sélectionner le lieu de naissance",
+      "Geburtsort auswählen",
     ),
     "selectBirthdayHint": MessageLookupByLibrary.simpleMessage(
       "Selecione a sua data de nascimento para ver o seu gráfico astrológico",
@@ -691,10 +694,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(" ."),
-    "sunSignLabel": MessageLookupByLibrary.simpleMessage("Signe Solaire"),
-    "synastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Analyse Synastrique",
-    ),
+    "sunSignLabel": MessageLookupByLibrary.simpleMessage("Sonnenzeichen"),
+    "synastryAnalysis": MessageLookupByLibrary.simpleMessage("Analyse"),
     "takeIt": MessageLookupByLibrary.simpleMessage("Utiliser"),
     "taurusSign": MessageLookupByLibrary.simpleMessage("Taureau"),
     "termsOfService": MessageLookupByLibrary.simpleMessage(
@@ -720,7 +721,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Prix spéciaux incontournables",
     ),
     "unsupportedPlatform": MessageLookupByLibrary.simpleMessage(
-      "Nicht unterstützte Plattform",
+      "Piattaforma non supportata",
     ),
     "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
       "Upgrade auf Premium für mehr Empfehlungen",

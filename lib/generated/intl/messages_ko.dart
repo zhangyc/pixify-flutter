@@ -53,10 +53,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "AI가 재미있는 그룹 사진을 만들고 있습니다",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("전부"),
-    "analyzingText": MessageLookupByLibrary.simpleMessage("분석 중..."),
+    "analyzingText": MessageLookupByLibrary.simpleMessage("Analisando..."),
     "aquariusSign": MessageLookupByLibrary.simpleMessage("물병자리"),
     "ariesSign": MessageLookupByLibrary.simpleMessage("양자리"),
-    "ascendantSignLabel": MessageLookupByLibrary.simpleMessage("승천 별자리"),
+    "ascendantSignLabel": MessageLookupByLibrary.simpleMessage("ราศีอัศจรรย์"),
     "astroChartTab": MessageLookupByLibrary.simpleMessage("별자리 차트"),
     "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
       "상대방이 아직 출생지 정보를 완료하지 않았으므로 점성술 차트를 생성할 수 없습니다. 상대방이 정보를 완료할 때까지 기다려주세요.",
@@ -74,11 +74,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "astroReport": MessageLookupByLibrary.simpleMessage("별자리 리포트"),
     "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage("아바타 업데이트 실패"),
     "bio": MessageLookupByLibrary.simpleMessage("소개"),
-    "birthInfo": MessageLookupByLibrary.simpleMessage("출생 정보"),
-    "birthPlace": MessageLookupByLibrary.simpleMessage("출생지"),
-    "birthPlaceLabel": MessageLookupByLibrary.simpleMessage("출생지"),
-    "birthTimeLabel": MessageLookupByLibrary.simpleMessage("출생 시간"),
-    "birthday": MessageLookupByLibrary.simpleMessage("생일"),
+    "birthInfo": MessageLookupByLibrary.simpleMessage("ข้อมูลการเกิด"),
+    "birthPlace": MessageLookupByLibrary.simpleMessage("สถานที่เกิด"),
+    "birthPlaceLabel": MessageLookupByLibrary.simpleMessage("สถานที่เกิด"),
+    "birthTimeLabel": MessageLookupByLibrary.simpleMessage("เวลาเกิด"),
+    "birthday": MessageLookupByLibrary.simpleMessage("วันเกิด"),
     "block": MessageLookupByLibrary.simpleMessage("차단"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
         MessageLookupByLibrary.simpleMessage("이 사람을 차단해서 그들로부터 메시지를 받지 않게 하세요"),
@@ -90,7 +90,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonAuthorize": MessageLookupByLibrary.simpleMessage("승인"),
     "buttonCancel": MessageLookupByLibrary.simpleMessage("취소"),
     "buttonChange": MessageLookupByLibrary.simpleMessage("변경"),
-    "buttonConfirm": MessageLookupByLibrary.simpleMessage("확인"),
+    "buttonConfirm": MessageLookupByLibrary.simpleMessage("ยืนยัน"),
     "buttonContinue": MessageLookupByLibrary.simpleMessage("계속"),
     "buttonCopy": MessageLookupByLibrary.simpleMessage("복사"),
     "buttonDelete": MessageLookupByLibrary.simpleMessage("삭제"),
@@ -136,10 +136,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("선택"),
     "clickToSetBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "출생지 설정을 클릭하세요",
+      "คลิกเพื่อตั้งสถานที่เกิด",
     ),
-    "clickToSetBirthday": MessageLookupByLibrary.simpleMessage("생일 설정을 클릭하세요"),
-    "closeButtonText": MessageLookupByLibrary.simpleMessage("닫기"),
+    "clickToSetBirthday": MessageLookupByLibrary.simpleMessage(
+      "คลิกเพื่อตั้งวันเกิด",
+    ),
+    "closeButtonText": MessageLookupByLibrary.simpleMessage("ปิด"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage("농담이에요! 무료입니다"),
     "clubFeePrefix": MessageLookupByLibrary.simpleMessage("클럽 요금: 월 \$99"),
     "clubPromotionContent": MessageLookupByLibrary.simpleMessage(
@@ -151,6 +153,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "communicationCompatibility": MessageLookupByLibrary.simpleMessage(
       "커뮤니케이션",
     ),
+    "compatibilityScore": MessageLookupByLibrary.simpleMessage("호환성"),
     "completeAstroInfo": MessageLookupByLibrary.simpleMessage(
       "상세한 별자리 정보를 완성하세요",
     ),
@@ -170,11 +173,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "현재 선택된 좌표",
     ),
     "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
-      "심층 AI 분석 보고서",
+      "รายงานการวิเคราะห์ AI อย่างลึกซึ้ง",
     ),
-    "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage("심층 합판 분석"),
+    "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage(
+      "การวิเคราะห์เชิงลึก",
+    ),
     "deepSynastryRemark": MessageLookupByLibrary.simpleMessage("심층 시너스트리 분석"),
-    "defaultBirthTime": MessageLookupByLibrary.simpleMessage("12:00 (기본)"),
+    "defaultBirthTime": MessageLookupByLibrary.simpleMessage(
+      "12:00 (ค่าเริ่มต้น)",
+    ),
     "deletePhoto": MessageLookupByLibrary.simpleMessage("사진 삭제"),
     "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
       "이 사진을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
@@ -182,6 +189,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "descriptionOptional": MessageLookupByLibrary.simpleMessage("설명 (선택 사항)"),
     "destinyMatch": MessageLookupByLibrary.simpleMessage("운명의 매치"),
     "diamondConsumeFailed": MessageLookupByLibrary.simpleMessage("다이아몬드 소비 실패"),
+    "diamondInsufficient": MessageLookupByLibrary.simpleMessage("다이아몬드가 부족합니다"),
+    "diamondPack1": MessageLookupByLibrary.simpleMessage("다이아몬드 팩"),
+    "diamondPack2": MessageLookupByLibrary.simpleMessage("다이아몬드 상자"),
+    "diamondPack3": MessageLookupByLibrary.simpleMessage("다이아몬드 선물"),
+    "diamondPack4": MessageLookupByLibrary.simpleMessage("다이아몬드 번들"),
+    "diamondPack5": MessageLookupByLibrary.simpleMessage("다이아몬드 슈프림 팩"),
     "diamondStore": MessageLookupByLibrary.simpleMessage("다이아몬드 상점"),
     "diamondStoreSubtitle": MessageLookupByLibrary.simpleMessage(
       "다이아몬드로 프리미엄 기능 잠금 해제",
@@ -197,7 +210,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "당신의 전용 채팅방은 아직 비어있습니다\n하지만 별들은 알고 있습니다, 운명의 사람이 당신에게 오고 있습니다",
     ),
-    "enterBirthPlace": MessageLookupByLibrary.simpleMessage("출생지를 입력하세요"),
+    "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
+      "กรุณากรอกสถานที่เกิด",
+    ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "발송되지 않음. AstroPair는 금지된 단어를 번역하지 않습니다.",
     ),
@@ -261,7 +276,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("천칭자리"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage("라이프스타일"),
-    "lightAnalysisTitle": MessageLookupByLibrary.simpleMessage("가벼운 AI 분석"),
+    "lightAnalysisTitle": MessageLookupByLibrary.simpleMessage(
+      "การวิเคราะห์ AI แบบอ่อน",
+    ),
     "lightSynastryRemark": MessageLookupByLibrary.simpleMessage("시너스트리 분석"),
     "likeBack": MessageLookupByLibrary.simpleMessage("좋아요 반사"),
     "likedBack": MessageLookupByLibrary.simpleMessage("이미 좋아요 반사함"),
@@ -457,7 +474,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "preference": MessageLookupByLibrary.simpleMessage("취향"),
     "privacy": MessageLookupByLibrary.simpleMessage("프라이버시"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("개인정보처리방침"),
-    "productNotFound": MessageLookupByLibrary.simpleMessage("상품을 찾을 수 없음"),
+    "productNotFound": MessageLookupByLibrary.simpleMessage("ไม่พบสินค้า"),
     "profileInfoTab": MessageLookupByLibrary.simpleMessage("프로필"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
       "아직 진짜 모습을 보여주지 않았어요",
@@ -492,7 +509,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("스크린샷 증거"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("프로필 보기"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("당신을 좋아하는 사람들 보기"),
-    "selectBirthPlace": MessageLookupByLibrary.simpleMessage("출생지 선택"),
+    "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
+      "เลือกสถานที่เกิด",
+    ),
     "selectBirthdayHint": MessageLookupByLibrary.simpleMessage(
       "생년월일을 선택하여 별자리 차트를 확인하세요",
     ),
@@ -542,7 +561,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(
       "에 동의하는 것입니다.",
     ),
-    "sunSignLabel": MessageLookupByLibrary.simpleMessage("태양 별자리"),
+    "sunSignLabel": MessageLookupByLibrary.simpleMessage("ราศีดวงอาทิตย์"),
     "synastryAnalysis": MessageLookupByLibrary.simpleMessage("합판 분석"),
     "takeIt": MessageLookupByLibrary.simpleMessage("사용하다"),
     "taurusSign": MessageLookupByLibrary.simpleMessage("황소자리"),
@@ -564,7 +583,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "놓치면 안 되는 특가",
     ),
-    "unsupportedPlatform": MessageLookupByLibrary.simpleMessage("지원되지 않는 플랫폼"),
+    "unsupportedPlatform": MessageLookupByLibrary.simpleMessage(
+      "แพลตฟอร์มที่ไม่รองรับ",
+    ),
     "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
       "프리미엄으로 업그레이드하여 더 많은 추천 받기",
     ),

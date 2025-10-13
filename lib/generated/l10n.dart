@@ -1459,14 +1459,9 @@ class S {
     );
   }
 
-  /// `buttonConfirm`
+  /// `Confirm`
   String get buttonConfirm {
-    return Intl.message(
-      'buttonConfirm',
-      name: 'buttonConfirm',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Confirm', name: 'buttonConfirm', desc: '', args: []);
   }
 
   /// `Your account will be automatically deleted in 14 days. Please remember to go to the store to cancel your current subscription to avoid additional charges.`
@@ -2809,185 +2804,180 @@ class S {
     );
   }
 
-  /// `birthInfo`
+  /// `Birth Information`
   String get birthInfo {
-    return Intl.message('birthInfo', name: 'birthInfo', desc: '', args: []);
+    return Intl.message(
+      'Birth Information',
+      name: 'birthInfo',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// `birthday`
+  /// `Birthday`
   String get birthday {
-    return Intl.message('birthday', name: 'birthday', desc: '', args: []);
+    return Intl.message('Birthday', name: 'birthday', desc: '', args: []);
   }
 
-  /// `clickToSetBirthday`
+  /// `Click to set birthday`
   String get clickToSetBirthday {
     return Intl.message(
-      'clickToSetBirthday',
+      'Click to set birthday',
       name: 'clickToSetBirthday',
       desc: '',
       args: [],
     );
   }
 
-  /// `birthPlace`
+  /// `Birth Place`
   String get birthPlace {
-    return Intl.message('birthPlace', name: 'birthPlace', desc: '', args: []);
+    return Intl.message('Birth Place', name: 'birthPlace', desc: '', args: []);
   }
 
-  /// `clickToSetBirthPlace`
+  /// `Click to set birth place`
   String get clickToSetBirthPlace {
     return Intl.message(
-      'clickToSetBirthPlace',
+      'Click to set birth place',
       name: 'clickToSetBirthPlace',
       desc: '',
       args: [],
     );
   }
 
-  /// `selectBirthPlace`
+  /// `Select Birth Place`
   String get selectBirthPlace {
     return Intl.message(
-      'selectBirthPlace',
+      'Select Birth Place',
       name: 'selectBirthPlace',
       desc: '',
       args: [],
     );
   }
 
-  /// `enterBirthPlace`
+  /// `Enter birth place`
   String get enterBirthPlace {
     return Intl.message(
-      'enterBirthPlace',
+      'Enter birth place',
       name: 'enterBirthPlace',
       desc: '',
       args: [],
     );
   }
 
-  /// `synastryAnalysis`
+  /// `Synastry`
   String get synastryAnalysis {
     return Intl.message(
-      'synastryAnalysis',
+      'Synastry',
       name: 'synastryAnalysis',
       desc: '',
       args: [],
     );
   }
 
-  /// `deepSynastryAnalysis`
+  /// `Deep Analysis`
   String get deepSynastryAnalysis {
     return Intl.message(
-      'deepSynastryAnalysis',
+      'Deep Analysis',
       name: 'deepSynastryAnalysis',
       desc: '',
       args: [],
     );
   }
 
-  /// `analyzingText`
+  /// `Analyzing...`
   String get analyzingText {
     return Intl.message(
-      'analyzingText',
+      'Analyzing...',
       name: 'analyzingText',
       desc: '',
       args: [],
     );
   }
 
-  /// `sunSignLabel`
+  /// `Sun Sign`
   String get sunSignLabel {
-    return Intl.message(
-      'sunSignLabel',
-      name: 'sunSignLabel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Sun Sign', name: 'sunSignLabel', desc: '', args: []);
   }
 
-  /// `ascendantSignLabel`
+  /// `Ascendant Sign`
   String get ascendantSignLabel {
     return Intl.message(
-      'ascendantSignLabel',
+      'Ascendant Sign',
       name: 'ascendantSignLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `birthPlaceLabel`
+  /// `Birth Place`
   String get birthPlaceLabel {
     return Intl.message(
-      'birthPlaceLabel',
+      'Birth Place',
       name: 'birthPlaceLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `birthTimeLabel`
+  /// `Birth Time`
   String get birthTimeLabel {
     return Intl.message(
-      'birthTimeLabel',
+      'Birth Time',
       name: 'birthTimeLabel',
       desc: '',
       args: [],
     );
   }
 
-  /// `defaultBirthTime`
+  /// `12:00 (Default)`
   String get defaultBirthTime {
     return Intl.message(
-      'defaultBirthTime',
+      '12:00 (Default)',
       name: 'defaultBirthTime',
       desc: '',
       args: [],
     );
   }
 
-  /// `deepAnalysisReportTitle`
+  /// `Deep AI Analysis Report`
   String get deepAnalysisReportTitle {
     return Intl.message(
-      'deepAnalysisReportTitle',
+      'Deep AI Analysis Report',
       name: 'deepAnalysisReportTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `lightAnalysisTitle`
+  /// `Light AI Analysis`
   String get lightAnalysisTitle {
     return Intl.message(
-      'lightAnalysisTitle',
+      'Light AI Analysis',
       name: 'lightAnalysisTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `closeButtonText`
+  /// `Close`
   String get closeButtonText {
-    return Intl.message(
-      'closeButtonText',
-      name: 'closeButtonText',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Close', name: 'closeButtonText', desc: '', args: []);
   }
 
-  /// `unsupportedPlatform`
+  /// `Unsupported platform`
   String get unsupportedPlatform {
     return Intl.message(
-      'unsupportedPlatform',
+      'Unsupported platform',
       name: 'unsupportedPlatform',
       desc: '',
       args: [],
     );
   }
 
-  /// `productNotFound`
+  /// `Product not found`
   String get productNotFound {
     return Intl.message(
-      'productNotFound',
+      'Product not found',
       name: 'productNotFound',
       desc: '',
       args: [],
@@ -3252,6 +3242,76 @@ class S {
   /// `Pisces`
   String get piscesSign {
     return Intl.message('Pisces', name: 'piscesSign', desc: '', args: []);
+  }
+
+  /// `Diamond Pack`
+  String get diamondPack1 {
+    return Intl.message(
+      'Diamond Pack',
+      name: 'diamondPack1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diamond Chest`
+  String get diamondPack2 {
+    return Intl.message(
+      'Diamond Chest',
+      name: 'diamondPack2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diamond Gift`
+  String get diamondPack3 {
+    return Intl.message(
+      'Diamond Gift',
+      name: 'diamondPack3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diamond Bundle`
+  String get diamondPack4 {
+    return Intl.message(
+      'Diamond Bundle',
+      name: 'diamondPack4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diamond Supreme Pack`
+  String get diamondPack5 {
+    return Intl.message(
+      'Diamond Supreme Pack',
+      name: 'diamondPack5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diamonds are not enough`
+  String get diamondInsufficient {
+    return Intl.message(
+      'Diamonds are not enough',
+      name: 'diamondInsufficient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compatibility`
+  String get compatibilityScore {
+    return Intl.message(
+      'Compatibility',
+      name: 'compatibilityScore',
+      desc: '',
+      args: [],
+    );
   }
 }
 

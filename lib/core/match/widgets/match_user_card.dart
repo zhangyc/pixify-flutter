@@ -159,7 +159,7 @@ class _MatchUserCardState extends ConsumerState<MatchUserCard>
       // 如果success为true，说明钻石充足，继续执行
     } catch (e) {
       await EasyLoading.dismiss();
-      StyledSnackBar.showError(context, S.current.diamondConsumeFailed);
+      StyledSnackBar.showError(context, S.current.diamondInsufficient);
       return;
     }
 
@@ -182,7 +182,7 @@ class _MatchUserCardState extends ConsumerState<MatchUserCard>
 
       if (!consumeResult.isSuccess) {
         await EasyLoading.dismiss();
-        StyledSnackBar.showError(context, S.current.diamondConsumeFailed);
+        StyledSnackBar.showError(context, S.current.diamondInsufficient);
         return;
       }
 
@@ -239,15 +239,15 @@ class _MatchUserCardState extends ConsumerState<MatchUserCard>
           }
         } else {
           await EasyLoading.dismiss();
-          StyledSnackBar.showError(context, S.current.diamondConsumeFailed);
+          StyledSnackBar.showError(context, S.current.diamondInsufficient);
         }
       } else {
         await EasyLoading.dismiss();
-        StyledSnackBar.showError(context, S.current.diamondConsumeFailed);
+        StyledSnackBar.showError(context, S.current.diamondInsufficient);
       }
     } catch (e) {
       await EasyLoading.dismiss();
-      StyledSnackBar.showError(context, S.current.diamondConsumeFailed);
+      StyledSnackBar.showError(context, S.current.diamondInsufficient);
     } finally {
       await EasyLoading.dismiss();
       setState(() {

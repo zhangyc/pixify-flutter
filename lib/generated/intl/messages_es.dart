@@ -54,11 +54,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "IA creando fotos de grupo divertidas",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("Todo"),
-    "analyzingText": MessageLookupByLibrary.simpleMessage("Analizando..."),
+    "analyzingText": MessageLookupByLibrary.simpleMessage("Analysiere..."),
     "aquariusSign": MessageLookupByLibrary.simpleMessage("Acuario"),
     "ariesSign": MessageLookupByLibrary.simpleMessage("Aries"),
     "ascendantSignLabel": MessageLookupByLibrary.simpleMessage(
-      "Signo Ascendente",
+      "Signe Ascendant",
     ),
     "astroChartTab": MessageLookupByLibrary.simpleMessage("Gráfico Astro"),
     "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
@@ -80,16 +80,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "bio": MessageLookupByLibrary.simpleMessage("Introducción"),
     "birthInfo": MessageLookupByLibrary.simpleMessage(
-      "Información de Nacimiento",
+      "Informations de naissance",
     ),
-    "birthPlace": MessageLookupByLibrary.simpleMessage("Lugar de Nacimiento"),
+    "birthPlace": MessageLookupByLibrary.simpleMessage("Lieu de naissance"),
     "birthPlaceLabel": MessageLookupByLibrary.simpleMessage(
-      "Lugar de Nacimiento",
+      "Lieu de naissance",
     ),
     "birthTimeLabel": MessageLookupByLibrary.simpleMessage(
-      "Hora de Nacimiento",
+      "Heure de naissance",
     ),
-    "birthday": MessageLookupByLibrary.simpleMessage("Cumpleaños"),
+    "birthday": MessageLookupByLibrary.simpleMessage("Anniversaire"),
     "block": MessageLookupByLibrary.simpleMessage("Bloquear"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
         MessageLookupByLibrary.simpleMessage(
@@ -105,7 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonAuthorize": MessageLookupByLibrary.simpleMessage("Autorizar"),
     "buttonCancel": MessageLookupByLibrary.simpleMessage("Cancelar"),
     "buttonChange": MessageLookupByLibrary.simpleMessage("Cambiar"),
-    "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirmar"),
+    "buttonConfirm": MessageLookupByLibrary.simpleMessage("Confirmer"),
     "buttonContinue": MessageLookupByLibrary.simpleMessage("Continuar"),
     "buttonCopy": MessageLookupByLibrary.simpleMessage("Copiar"),
     "buttonDelete": MessageLookupByLibrary.simpleMessage("Borrar"),
@@ -159,12 +159,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Elegir"),
     "clickToSetBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Haga clic para establecer lugar de nacimiento",
+      "Cliquez pour définir le lieu de naissance",
     ),
     "clickToSetBirthday": MessageLookupByLibrary.simpleMessage(
-      "Haga clic para establecer cumpleaños",
+      "Cliquez pour définir l\'anniversaire",
     ),
-    "closeButtonText": MessageLookupByLibrary.simpleMessage("Cerrar"),
+    "closeButtonText": MessageLookupByLibrary.simpleMessage("Fermer"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage(
       "¡Es broma! Es gratis",
     ),
@@ -181,6 +181,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "communicationCompatibility": MessageLookupByLibrary.simpleMessage(
       "Comunicación",
+    ),
+    "compatibilityScore": MessageLookupByLibrary.simpleMessage(
+      "Compatibilidad",
     ),
     "completeAstroInfo": MessageLookupByLibrary.simpleMessage(
       "Completa información astrológica detallada",
@@ -207,16 +210,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Coordenadas seleccionadas actuales",
     ),
     "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
-      "Informe de Análisis IA Profundo",
+      "Rapport d\'Analyse IA Approfondie",
     ),
     "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Análisis Sinástrico Profundo",
+      "Analyse Approfondie",
     ),
     "deepSynastryRemark": MessageLookupByLibrary.simpleMessage(
       "Análisis Profundo de Sinastría",
     ),
     "defaultBirthTime": MessageLookupByLibrary.simpleMessage(
-      "12:00 (Predeterminado)",
+      "12:00 (Par défaut)",
     ),
     "deletePhoto": MessageLookupByLibrary.simpleMessage("Eliminar Foto"),
     "deletePhotoContent": MessageLookupByLibrary.simpleMessage(
@@ -228,6 +231,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "destinyMatch": MessageLookupByLibrary.simpleMessage("Match del Destino"),
     "diamondConsumeFailed": MessageLookupByLibrary.simpleMessage(
       "Consumo de diamante falló",
+    ),
+    "diamondInsufficient": MessageLookupByLibrary.simpleMessage(
+      "Diamantes no son suficientes",
+    ),
+    "diamondPack1": MessageLookupByLibrary.simpleMessage(
+      "Paquete de Diamantes",
+    ),
+    "diamondPack2": MessageLookupByLibrary.simpleMessage("Cofre de Diamantes"),
+    "diamondPack3": MessageLookupByLibrary.simpleMessage("Regalo de Diamantes"),
+    "diamondPack4": MessageLookupByLibrary.simpleMessage(
+      "Paquete Grande de Diamantes",
+    ),
+    "diamondPack5": MessageLookupByLibrary.simpleMessage(
+      "Paquete Supremo de Diamantes",
     ),
     "diamondStore": MessageLookupByLibrary.simpleMessage("Tienda de Diamantes"),
     "diamondStoreSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -251,7 +268,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Votre salon de chat privé est encore vide\nMais les étoiles savent, la bonne personne vient vers vous",
     ),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Ingrese lugar de nacimiento",
+      "Entrez le lieu de naissance",
     ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "No enviado. AstroPair no traducirá palabras prohibidas.",
@@ -337,7 +354,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Estilo de Vida",
     ),
     "lightAnalysisTitle": MessageLookupByLibrary.simpleMessage(
-      "Análisis IA Ligero",
+      "Analyse IA Léger",
     ),
     "lightSynastryRemark": MessageLookupByLibrary.simpleMessage(
       "Análisis de Sinastría",
@@ -567,7 +584,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Política de Privacidad",
     ),
     "productNotFound": MessageLookupByLibrary.simpleMessage(
-      "Produit introuvable",
+      "Produkt nicht gefunden",
     ),
     "profileInfoTab": MessageLookupByLibrary.simpleMessage("Perfil"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
@@ -612,7 +629,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "seeProfile": MessageLookupByLibrary.simpleMessage("Ver perfil"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("Mira quién te gusta"),
     "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Seleccionar Lugar de Nacimiento",
+      "Sélectionner le lieu de naissance",
     ),
     "selectBirthdayHint": MessageLookupByLibrary.simpleMessage(
       "Seleccione su fecha de nacimiento para ver su carta astral",
@@ -679,10 +696,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("."),
-    "sunSignLabel": MessageLookupByLibrary.simpleMessage("Signo Solar"),
-    "synastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Análisis Sinástrico",
-    ),
+    "sunSignLabel": MessageLookupByLibrary.simpleMessage("Signe Solaire"),
+    "synastryAnalysis": MessageLookupByLibrary.simpleMessage("Análisis"),
     "takeIt": MessageLookupByLibrary.simpleMessage("Usar"),
     "taurusSign": MessageLookupByLibrary.simpleMessage("Tauro"),
     "termsOfService": MessageLookupByLibrary.simpleMessage(
@@ -708,7 +723,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Precios especiales imperdibles",
     ),
     "unsupportedPlatform": MessageLookupByLibrary.simpleMessage(
-      "Plataforme non prise en charge",
+      "Nicht unterstützte Plattform",
     ),
     "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
       "Upgrade vers Premium pour plus de recommandations",

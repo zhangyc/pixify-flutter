@@ -54,7 +54,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "IA criando fotos de grupo divertidas",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("Tudo"),
-    "analyzingText": MessageLookupByLibrary.simpleMessage("Analisando..."),
+    "analyzingText": MessageLookupByLibrary.simpleMessage(
+      "Analyse en cours...",
+    ),
     "aquariusSign": MessageLookupByLibrary.simpleMessage("Aquário"),
     "ariesSign": MessageLookupByLibrary.simpleMessage("Áries"),
     "ascendantSignLabel": MessageLookupByLibrary.simpleMessage(
@@ -80,16 +82,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "bio": MessageLookupByLibrary.simpleMessage("Introdução"),
     "birthInfo": MessageLookupByLibrary.simpleMessage(
-      "Informações de Nascimento",
+      "Información de Nacimiento",
     ),
-    "birthPlace": MessageLookupByLibrary.simpleMessage("Local de Nascimento"),
+    "birthPlace": MessageLookupByLibrary.simpleMessage("Lugar de Nacimiento"),
     "birthPlaceLabel": MessageLookupByLibrary.simpleMessage(
-      "Local de Nascimento",
+      "Lugar de Nacimiento",
     ),
     "birthTimeLabel": MessageLookupByLibrary.simpleMessage(
-      "Hora de Nascimento",
+      "Hora de Nacimiento",
     ),
-    "birthday": MessageLookupByLibrary.simpleMessage("Aniversário"),
+    "birthday": MessageLookupByLibrary.simpleMessage("Cumpleaños"),
     "block": MessageLookupByLibrary.simpleMessage("Bloquear"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
         MessageLookupByLibrary.simpleMessage(
@@ -159,10 +161,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("Escolher"),
     "clickToSetBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Clique para definir local de nascimento",
+      "Haga clic para establecer lugar de nacimiento",
     ),
     "clickToSetBirthday": MessageLookupByLibrary.simpleMessage(
-      "Clique para definir aniversário",
+      "Haga clic para establecer cumpleaños",
     ),
     "closeButtonText": MessageLookupByLibrary.simpleMessage("Cerrar"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage(
@@ -183,6 +185,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "communicationCompatibility": MessageLookupByLibrary.simpleMessage(
       "Comunicação",
+    ),
+    "compatibilityScore": MessageLookupByLibrary.simpleMessage(
+      "Compatibilidade",
     ),
     "completeAstroInfo": MessageLookupByLibrary.simpleMessage(
       "Complete informações astrológicas detalhadas",
@@ -207,10 +212,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Coordenadas selecionadas atuais",
     ),
     "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
-      "Informe de Análisis AI Profundo",
+      "Informe de Análisis IA Profundo",
     ),
     "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Análise Sinastrial Profunda",
+      "Análisis Profundo",
     ),
     "deepSynastryRemark": MessageLookupByLibrary.simpleMessage(
       "Análise Profunda de Sinastria",
@@ -228,6 +233,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "destinyMatch": MessageLookupByLibrary.simpleMessage("Match do Destino"),
     "diamondConsumeFailed": MessageLookupByLibrary.simpleMessage(
       "Falha no consumo de diamante",
+    ),
+    "diamondInsufficient": MessageLookupByLibrary.simpleMessage(
+      "Diamantes não são suficientes",
+    ),
+    "diamondPack1": MessageLookupByLibrary.simpleMessage("Pacote de Diamantes"),
+    "diamondPack2": MessageLookupByLibrary.simpleMessage("Baú de Diamantes"),
+    "diamondPack3": MessageLookupByLibrary.simpleMessage(
+      "Presente de Diamantes",
+    ),
+    "diamondPack4": MessageLookupByLibrary.simpleMessage(
+      "Pacote Grande de Diamantes",
+    ),
+    "diamondPack5": MessageLookupByLibrary.simpleMessage(
+      "Pacote Supremo de Diamantes",
     ),
     "diamondStore": MessageLookupByLibrary.simpleMessage("Loja de Diamantes"),
     "diamondStoreSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -251,7 +270,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Tu sala de chat privada aún está vacía\nPero las estrellas saben, la persona correcta viene hacia ti",
     ),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Digite o local de nascimento",
+      "Ingrese lugar de nacimiento",
     ),
     "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
       "Não enviado. O AstroPair não traduzirá palavras proibidas.",
@@ -337,7 +356,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Estilo de Vida",
     ),
     "lightAnalysisTitle": MessageLookupByLibrary.simpleMessage(
-      "Análisis AI Ligero",
+      "Análisis IA Ligero",
     ),
     "lightSynastryRemark": MessageLookupByLibrary.simpleMessage(
       "Análise de Sinastria",
@@ -567,7 +586,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Política de Privacidade",
     ),
     "productNotFound": MessageLookupByLibrary.simpleMessage(
-      "Producto no encontrado",
+      "Produit introuvable",
     ),
     "profileInfoTab": MessageLookupByLibrary.simpleMessage("Perfil"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage(
@@ -614,7 +633,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Veja quem gosta de você",
     ),
     "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
-      "Selecionar Local de Nascimento",
+      "Seleccionar Lugar de Nacimiento",
     ),
     "selectBirthdayHint": MessageLookupByLibrary.simpleMessage(
       "Por favor selecione sua data de nascimento para ver seu gráfico astrológico",
@@ -680,9 +699,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("."),
     "sunSignLabel": MessageLookupByLibrary.simpleMessage("Signo Solar"),
-    "synastryAnalysis": MessageLookupByLibrary.simpleMessage(
-      "Análise Sinastrial",
-    ),
+    "synastryAnalysis": MessageLookupByLibrary.simpleMessage("Análise"),
     "takeIt": MessageLookupByLibrary.simpleMessage("Utilizar"),
     "taurusSign": MessageLookupByLibrary.simpleMessage("Touro"),
     "termsOfService": MessageLookupByLibrary.simpleMessage("Termos de Serviço"),
@@ -706,7 +723,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Preços especiais imperdíveis",
     ),
     "unsupportedPlatform": MessageLookupByLibrary.simpleMessage(
-      "Plataforma no compatible",
+      "Plataforme non prise en charge",
     ),
     "upgradeForMoreRecommendations": MessageLookupByLibrary.simpleMessage(
       "Actualiza a Premium para más recomendaciones",

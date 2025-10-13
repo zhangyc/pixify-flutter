@@ -811,8 +811,46 @@ class _MatchAstroTabState extends State<MatchAstroTab> {
             child: Center(
               child: AspectRatio(
                 aspectRatio: 1, // 保证正方形
-                child: CustomPaint(
-                  painter: CompatibilityRadarPainter(compatibilityData.scores),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // 雷达图背景
+                    CustomPaint(
+                      size: const Size(120, 120), // 设置固定尺寸
+                      painter:
+                          CompatibilityRadarPainter(compatibilityData.scores),
+                    ),
+                    // 契合度分数显示在中间
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            S.of(context).compatibilityScore,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            '${(compatibilityData.overallScore * 100).toStringAsFixed(2)}%',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
