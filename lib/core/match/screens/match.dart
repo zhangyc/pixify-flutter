@@ -196,10 +196,11 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                 _buildActionButton(
                                   onTap: () {
                                     if (currentPage == users.length - 1) return;
+                                    MatchApi.like(users[currentPage].id);
+
                                     Future.delayed(Duration(milliseconds: 200),
                                         () {
                                       if (canArrow) {
-                                        MatchApi.like(users[currentPage].id);
                                         showDm(context, users[currentPage], () {
                                           swiperController
                                               .swipe(CardSwiperDirection.right);

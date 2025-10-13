@@ -109,7 +109,7 @@ class _OtherUserProfileScreenState
     );
   }
 
-  Widget _buildUserHeader(BuildContext context, dynamic userData) {
+  Widget _buildUserHeader(BuildContext context, MatchUserInfo userData) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.5,
       decoration: BoxDecoration(
@@ -214,15 +214,15 @@ class _OtherUserProfileScreenState
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '${userData?.birthday?.toAge() ?? 'N/A'} years old',
+                    '${userData?.age ?? 'N/A'} years old',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Theme.of(context).hintColor,
                         ),
                   ),
-                  if (userData?.bio != null && userData.bio.isNotEmpty) ...[
+                  if (userData?.bio != null && userData.bio!.isNotEmpty) ...[
                     const SizedBox(height: 12),
                     Text(
-                      userData.bio,
+                      userData.bio??'',
                       style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.center,
                       maxLines: 3,

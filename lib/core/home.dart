@@ -115,7 +115,7 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         onPageChanged: _onPageChange,
         children: [
           MatchScreen(),
-          LikeMeScreen(),
+          // LikeMeScreen(),
           // RoomsPage(),
           ConversationScreen(onShowLikeMe: () {
             _pageController.animateToPage(1,
@@ -171,32 +171,32 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
                     // ),
                   ),
                   label: ''),
-              BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(
-                      Assets.homeUnFavorite,
-                      width: 24,
-                    ),
-                    // child: SonaIcon(
-                    //     icon: SonaIcons.navicon_like_me,
-                    //     size: 24,
-                    //     activeProvider: likeMeNoticeNotifier),
-                  ),
-                  activeIcon: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: SvgPicture.asset(
-                      Assets.homeFavorite,
-                      width: 24,
-                    ),
-
-                    // activeIcon: SonaIcon(
-                    //   icon: SonaIcons.navicon_like_me_active,
-                    //   size: 24,
-                    //   color: Theme.of(context).primaryColor,
-                    // ),
-                  ),
-                  label: ''),
+              // BottomNavigationBarItem(
+              //     icon: Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: SvgPicture.asset(
+              //         Assets.homeUnFavorite,
+              //         width: 24,
+              //       ),
+              //       // child: SonaIcon(
+              //       //     icon: SonaIcons.navicon_like_me,
+              //       //     size: 24,
+              //       //     activeProvider: likeMeNoticeNotifier),
+              //     ),
+              //     activeIcon: Padding(
+              //       padding: const EdgeInsets.all(4.0),
+              //       child: SvgPicture.asset(
+              //         Assets.homeFavorite,
+              //         width: 24,
+              //       ),
+              //
+              //       // activeIcon: SonaIcon(
+              //       //   icon: SonaIcons.navicon_like_me_active,
+              //       //   size: 24,
+              //       //   color: Theme.of(context).primaryColor,
+              //       // ),
+              //     ),
+              //     label: ''),
               BottomNavigationBarItem(
                   icon: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -252,9 +252,9 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
       _pageController.jumpToPage(index);
       final tabName = switch (index) {
         0 => 'match',
-        1 => 'like',
-        2 => 'chat',
-        3 => 'me',
+        1 => 'chat',
+        2 => 'me',
+        // 3 => 'like',
         _ => 'unknown'
       };
       SonaAnalytics.log('home_tab', {'index': index, 'name': tabName});

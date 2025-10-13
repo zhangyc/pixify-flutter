@@ -58,11 +58,16 @@ class _SubscribePageState extends ConsumerState<SubscribePage> {
   }
 
   Future _subscribePlus() async {
-    final plusDetails = ref
-        .read(asyncSubscriptionsProvider)
-        .value!
-        .firstWhere((sub) => sub.id == ref.read(selectedPlusSubIdProvider));
-    _subscribe(plusDetails);
+    try {
+      EasyLoading.show(status: S.current.loading);
+      final plusDetails = ref
+          .read(asyncSubscriptionsProvider)
+          .value!
+          .firstWhere((sub) => sub.id == ref.read(selectedPlusSubIdProvider));
+      await _subscribe(plusDetails);
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
 
   Future _subscribe(ProductDetails pd) async {
