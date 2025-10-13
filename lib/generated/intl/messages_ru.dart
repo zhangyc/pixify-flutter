@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m2(lang) => "Просто печатайте на ${lang}";
 
   static String m3(gender) =>
-      "Какая из ${Intl.gender(gender, female: 'её', male: 'его', other: 'их')}  идей вам нравится?";
+      "Какие из ${Intl.gender(gender, female: 'её', male: 'его', other: 'их')}  общих переживаний находят отклик в вашей душе?";
 
   static String m4(storeName) =>
       "При нажатии \"Продолжить\" взимается плата, подписка продлевается автоматически, Вы можете отменить через ${storeName}. Продолжая, вы соглашаетесь с нашими ";
@@ -66,15 +66,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
       "Другой пользователь еще не завершил информацию о месте рождения, поэтому мы не можем сгенерировать астрологическую карту. Пожалуйста, подождите, пока они завершат свою информацию.",
     ),
-    "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroPair Interpretazione disattivata",
+    "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
+      "⭕ AstroLearn Interpretazione disattivata",
     ),
-    "astroPairRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
+    "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
       "Рекомендация Сона: Охлаждение.\nЧто делать: Ждать.\nПредложение: Посмотреть фильм?",
     ),
-    "astroPairWillGenerateABioBasedOnInterests":
+    "astroLearnWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage(
-          "AstroPair создаст биографию, основанную на ваших интересах",
+          "AstroLearn создаст биографию, основанную на ваших интересах",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage(
       "Астрологический отчет",
@@ -120,7 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("Понял"),
     "buttonHitAIInterpretationMaximumLimit":
         MessageLookupByLibrary.simpleMessage(
-          "😪AstroPair устала, 👇жми, чтоб зарядить!",
+          "😪AstroLearn устала, 👇жми, чтоб зарядить!",
         ),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage(
       "Присоединиться сейчас",
@@ -142,9 +142,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonUnlockVipPerks": MessageLookupByLibrary.simpleMessage(
       "Разблокировать VIP привилегии",
     ),
-    "buttonUnmatch": MessageLookupByLibrary.simpleMessage(
-      "Отменить совпадение",
-    ),
+    "buttonUnmatch": MessageLookupByLibrary.simpleMessage("Завершить общение"),
     "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("Отписаться"),
     "cancerSign": MessageLookupByLibrary.simpleMessage("Рак"),
     "capricornSign": MessageLookupByLibrary.simpleMessage("Козерог"),
@@ -276,11 +274,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
       "Enter birth place",
     ),
-    "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
-      "Не отправлено. AstroPair не будет переводить запрещенные слова.",
-    ),
-    "exceptionAstroPairOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair перегружена, пожалуйста, попробуйте позже.",
+    "exceptionAstroLearnContentFilterTips":
+        MessageLookupByLibrary.simpleMessage(
+          "Не отправлено. AstroLearn не будет переводить запрещенные слова.",
+        ),
+    "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn перегружена, пожалуйста, попробуйте позже.",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "Ошибка отправки, пожалуйста, попробуйте позже.",
@@ -292,15 +291,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "Находить людей, которые разделяют ваши интересы",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroPair ищет потенциальных друзей...",
+      "AstroLearn ищет потенциальных друзей...",
     ),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "Привет, я думаю, ты потрясающий. Давай подружимся?",
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("Будущее"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("Близнецы"),
-    "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
-      "Получить AstroPair Plus",
+    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
+      "Получить AstroLearn Plus",
     ),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF не разрешен"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("Йди Відкривати"),
@@ -308,11 +307,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "Эй, угадай, кто первым нарушит молчание?",
     ),
-    "haveAstroPairSayHi": MessageLookupByLibrary.simpleMessage(
-      "Пусть AstroPair поздоровается",
+    "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
+      "Пусть AstroLearn поздоровается",
     ),
-    "hereAstroPairCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "Это специально сделано AstroPair для вас",
+    "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
+      "Это специально сделано AstroLearn для вас",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "Что вы думаете об одновременном переводе AI?",
@@ -344,12 +343,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "issues": MessageLookupByLibrary.simpleMessage("Проблемы"),
     "justNow": MessageLookupByLibrary.simpleMessage("Только что"),
     "justSendALike": MessageLookupByLibrary.simpleMessage(
-      "Просто отправьте лайк",
+      "Просто поделитесь своей благодарностью",
     ),
     "justTypeInYourLanguage": m2,
     "leoSign": MessageLookupByLibrary.simpleMessage("Лев"),
-    "letAstroPairSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "Пусть AstroPair поздоровается за вас",
+    "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
+      "Пусть AstroLearn поздоровается за вас",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("Весы"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage(
@@ -364,12 +363,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "likeBack": MessageLookupByLibrary.simpleMessage("Лайк в ответ"),
     "likedBack": MessageLookupByLibrary.simpleMessage("Уже лайкнул в ответ"),
     "likedPageMonetizeButton": MessageLookupByLibrary.simpleMessage(
-      "Проверьте их профили",
+      "Узнайте об их общении",
     ),
     "likedPageNoData": MessageLookupByLibrary.simpleMessage(
-      "Статус: Пока нет лайков\n\nЧто делать: Проявите инициативу\n\nПредложение: Загрузите ваши удовлетворительные фотографии\nНапишите подлинную биографию\nВыберите свои интересы",
+      "Статус: Пока нет оценок\n\nЧто делать: Начните делиться\n\nПредложение: Аутентичные портреты\nНастоящие истории\nОбщие интересы соединяют\n\nЯ имею в виду...\nЗагрузите ваши настоящие фотографии\nПоделитесь вашей аутентичной историей\nВыберите ваши интересы",
     ),
-    "likedYou": MessageLookupByLibrary.simpleMessage("Тебе нравился"),
+    "likedYou": MessageLookupByLibrary.simpleMessage("Ценит ваше общение"),
     "loading": MessageLookupByLibrary.simpleMessage("Загрузка..."),
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "Нам нужно ваше местоположение, чтобы показать вам людей поблизости",
@@ -409,12 +408,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "nearby": MessageLookupByLibrary.simpleMessage("Рядом"),
     "newGameplay": MessageLookupByLibrary.simpleMessage("Новый геймплей"),
-    "newMatch": MessageLookupByLibrary.simpleMessage("Новое совпадение!"),
+    "newMatch": MessageLookupByLibrary.simpleMessage("Новое соединение!"),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage(
       "Следующая дата оплаты",
     ),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
-      "Статус: Нет сообщений\n\nПредложение: Перейти на страницу подбора пар\n\nПредложение: Создайте потрясающий профиль",
+      "Статус: Нет сообщений\n\nЧто делать: Найдите слушателей\n\nПредложение: Поделитесь своей аутентичностью",
     ),
     "noOneFoundYourCharm": MessageLookupByLibrary.simpleMessage(
       "Никто еще не нашел вашего очарования",
@@ -422,7 +421,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noThanks": MessageLookupByLibrary.simpleMessage("Нет, спасибо"),
     "notifications": MessageLookupByLibrary.simpleMessage("Уведомления"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "AstroPair подобно домашней базе для граждан мира",
+      "AstroLearn подобно домашней базе для граждан мира",
     ),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "Независимо от того, дома вы или в пути, встречайте людей со всего мира. И...",
@@ -557,18 +556,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
       "1000 синхронных переводов/день",
     ),
-    "plusFuncAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - Твой советник по чату",
+    "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - Твой советник по чату",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("5 DM в неделю"),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
-      "Фильтровать страны для совпадений",
+      "Фильтровать страны для соединений",
     ),
     "plusFuncUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "Неограниченные лайки",
     ),
     "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "Разблокировать, чтобы увидеть, кто вас любит",
+      "Разблокировать, чтобы увидеть, кто ценит ваше общение",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 желания"),
     "plusMember": MessageLookupByLibrary.simpleMessage("Plus Пользователь"),
@@ -607,7 +606,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "report": MessageLookupByLibrary.simpleMessage("Сообщить"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("Жестокость"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("Другое"),
-    "reportOptionPerAstroPairlAttack": MessageLookupByLibrary.simpleMessage(
+    "reportOptionPerAstroLearnlAttack": MessageLookupByLibrary.simpleMessage(
       "Личная атака",
     ),
     "reportOptionPersonalAttack": MessageLookupByLibrary.simpleMessage(
@@ -630,7 +629,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "seeProfile": MessageLookupByLibrary.simpleMessage("Посмотреть профиль"),
     "seeWhoLikeU": MessageLookupByLibrary.simpleMessage(
-      "Смотрите, кто вас любит",
+      "Смотрите, кто вас ценит",
     ),
     "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
       "Select Birth Place",
@@ -658,7 +657,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Установите четкие теги интересов",
     ),
     "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
-    "showYourPerAstroPairlity": MessageLookupByLibrary.simpleMessage(
+    "showYourPerAstroLearnlity": MessageLookupByLibrary.simpleMessage(
       "Покажите вашу индивидуальность",
     ),
     "showYourPersonality": MessageLookupByLibrary.simpleMessage(
@@ -678,24 +677,24 @@ class MessageLookup extends MessageLookupByLibrary {
         MessageLookupByLibrary.simpleMessage(
           "1000 \nсинхронных \nпереводов/день",
         ),
-    "subPageSubtitleAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - \nТвой советник по чату",
+    "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - \nТвой советник по чату",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage(
       "5 DM в неделю",
     ),
     "subPageSubtitleFilterMatchingCountries":
         MessageLookupByLibrary.simpleMessage(
-          "Фильтровать \nстраны для совпадений",
+          "Фильтровать \nстраны для соединений",
         ),
     "subPageSubtitleUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "Неограниченные лайки",
     ),
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "Разблокировать, \nчтобы увидеть, кто вас любит",
+      "Разблокировать, \nчтобы увидеть, кто вас ценит",
     ),
     "subPageTitle": MessageLookupByLibrary.simpleMessage(
-      "Получить AstroPair Plus",
+      "Получить AstroLearn Plus",
     ),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage(
       "Условиями использования",
@@ -754,7 +753,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Из галереи выбрать",
     ),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Хороший портрет принесет вам больше совпадений.  ",
+      "Хороший портрет поможет вам связаться с большим количеством слушателей.  ",
     ),
     "userAvatarPageTitle": MessageLookupByLibrary.simpleMessage("Покажи себя"),
     "userAvatarUploadedLabel": MessageLookupByLibrary.simpleMessage(
@@ -776,7 +775,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Небинарный",
     ),
     "userGenderPickerSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Ваш пол не будет публично показан, он будет использоваться только для помощи в подборе",
+      "Ваш пол не будет публично показан, он будет использоваться только для помощи в установлении связи",
     ),
     "userInfoPageNamePlaceholder": MessageLookupByLibrary.simpleMessage(
       "Войти",
@@ -812,7 +811,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Посмотреть астрологический отчет с",
     ),
     "virgoSign": MessageLookupByLibrary.simpleMessage("Дева"),
-    "wannaHollaAt": MessageLookupByLibrary.simpleMessage("Скажи привет!"),
+    "wannaHollaAt": MessageLookupByLibrary.simpleMessage(
+      "Хотите поделиться...",
+    ),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "Закрытие после этого, ваш город не будет отображаться во время сопоставления",
     ),
@@ -827,13 +828,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Осторожно"),
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
-      "После отмены сопряжения весь история чата будет удалена.",
+      "После завершения общения весь история разговора будет удалена.",
     ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage(
       "Какой у вас email?",
     ),
-    "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Кто тебя любит"),
-    "whoLikesU": MessageLookupByLibrary.simpleMessage("Кто тебя любит"),
+    "whoLIkesYou": MessageLookupByLibrary.simpleMessage(
+      "Кто ценит ваше общение",
+    ),
+    "whoLikesU": MessageLookupByLibrary.simpleMessage("Кто тебя ценит"),
     "wishActivityAddTitle": MessageLookupByLibrary.simpleMessage(
       "Добавьте вашу мысль",
     ),

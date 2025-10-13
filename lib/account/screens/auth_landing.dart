@@ -136,7 +136,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                   margin: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height / 5),
                   alignment: Alignment.topCenter,
-                  child: const NeonWordmark(text: 'AstroPair', fontSize: 44),
+                  child: const NeonWordmark(text: 'AstroLearn', fontSize: 44),
                 )),
                 // Padding(
                 //   padding:

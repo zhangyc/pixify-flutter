@@ -114,7 +114,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
           ? const Color(0xFF0A0A0A)
           : const Color(0xFFF8F9FA),
       appBar: AppBar(
-        title: NeonWordmark(text: "AstroPair", fontSize: 18),
+        title: NeonWordmark(text: "AstroLearn", fontSize: 18),
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? const Color(0xFF0A0A0A)
             : const Color(0xFFF8F9FA),

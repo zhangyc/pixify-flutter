@@ -456,7 +456,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with RouteAware {
                     Icon(Icons.auto_awesome, size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      S.of(context).haveAstroPairSayHi,
+                      S.of(context).haveAstroLearnSayHi,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m2(lang) => "只需输入${lang}";
 
   static String m3(gender) =>
-      "你喜欢${Intl.gender(gender, female: '她', male: '他', other: '他们')}的哪个想法？";
+      "${Intl.gender(gender, female: '她', male: '他', other: '他们')}的哪些分享经历让你有共鸣？";
 
   static String m4(storeName) =>
       "点击“继续”后你会被收取费用，您的订阅将按对应套餐价格自动续订，您可以通过${storeName}取消，继续代表您同意我们的";
@@ -61,14 +61,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
       "对方尚未完善出生地信息，暂时无法生成星盘分析。请期待对方完善信息后查看。",
     ),
-    "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroPair传译已关闭",
+    "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
+      "⭕ AstroLearn传译已关闭",
     ),
-    "astroPairRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
-      "AstroPair推荐：冷却中\n怎么办：等等\n建议：看看小破站？",
+    "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn推荐：冷却中\n怎么办：等等\n建议：看看小破站？",
     ),
-    "astroPairWillGenerateABioBasedOnInterests":
-        MessageLookupByLibrary.simpleMessage("AstroPair会根据你的兴趣生成一份简介"),
+    "astroLearnWillGenerateABioBasedOnInterests":
+        MessageLookupByLibrary.simpleMessage("AstroLearn会根据你的兴趣生成一份简介"),
     "astroReport": MessageLookupByLibrary.simpleMessage("合盘"),
     "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage("头像更新失败"),
     "bio": MessageLookupByLibrary.simpleMessage("简介"),
@@ -100,7 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGo": MessageLookupByLibrary.simpleMessage("开始"),
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("明白了"),
     "buttonHitAIInterpretationMaximumLimit":
-        MessageLookupByLibrary.simpleMessage("😪AstroPair累了，👇点击给她加油！"),
+        MessageLookupByLibrary.simpleMessage("😪AstroLearn累了，👇点击给她加油！"),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage("立即加入"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("保留账户"),
     "buttonManage": MessageLookupByLibrary.simpleMessage("管理"),
@@ -115,7 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonSignOut": MessageLookupByLibrary.simpleMessage("退出"),
     "buttonSubmit": MessageLookupByLibrary.simpleMessage("提交"),
     "buttonUnlockVipPerks": MessageLookupByLibrary.simpleMessage("解锁VIP特权"),
-    "buttonUnmatch": MessageLookupByLibrary.simpleMessage("取消匹配"),
+    "buttonUnmatch": MessageLookupByLibrary.simpleMessage("结束分享"),
     "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("取消订阅"),
     "cancerSign": MessageLookupByLibrary.simpleMessage("巨蟹座"),
     "capricornSign": MessageLookupByLibrary.simpleMessage("摩羯座"),
@@ -185,11 +185,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "你的专属聊天室还是空的\n但星星知道，对的人正在向你走来",
     ),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage("請輸入出生地"),
-    "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
-      "未发送。AstroPair不会翻译违禁词。",
-    ),
-    "exceptionAstroPairOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair过载，请稍后再试。",
+    "exceptionAstroLearnContentFilterTips":
+        MessageLookupByLibrary.simpleMessage("未发送。AstroLearn不会翻译违禁词。"),
+    "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn过载，请稍后再试。",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "发送失败，请稍后再试。",
@@ -201,15 +200,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "找到与你有共同兴趣的人",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroPair正在寻找一些潜在的朋友...",
+      "AstroLearn正在寻找一些潜在的朋友...",
     ),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "嘿，我觉得你很棒。我们聊聊怎么样？",
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("未来"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("双子座"),
-    "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
-      "获取AstroPair Plus",
+    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
+      "获取AstroLearn Plus",
     ),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF文件不允许"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("去发现"),
@@ -217,9 +216,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "嘿，猜猜谁会先打破沉默？",
     ),
-    "haveAstroPairSayHi": MessageLookupByLibrary.simpleMessage("让AstroPair打招呼"),
-    "hereAstroPairCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "这是AstroPair为你特制的",
+    "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
+      "让AstroLearn打招呼",
+    ),
+    "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
+      "这是AstroLearn为你特制的",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage("你觉得AI传译怎么样?"),
     "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("我喜欢你的活力！"),
@@ -234,11 +235,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "interpretationOn": MessageLookupByLibrary.simpleMessage("AI传译：开"),
     "issues": MessageLookupByLibrary.simpleMessage("问题"),
     "justNow": MessageLookupByLibrary.simpleMessage("刚刚"),
-    "justSendALike": MessageLookupByLibrary.simpleMessage("就点个赞"),
+    "justSendALike": MessageLookupByLibrary.simpleMessage("就分享你的欣赏"),
     "justTypeInYourLanguage": m2,
     "leoSign": MessageLookupByLibrary.simpleMessage("狮子座"),
-    "letAstroPairSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "让AstroPair帮你打招呼",
+    "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
+      "让AstroLearn帮你打招呼",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("天秤座"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage("生活"),
@@ -246,11 +247,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "lightSynastryRemark": MessageLookupByLibrary.simpleMessage("合盘分析"),
     "likeBack": MessageLookupByLibrary.simpleMessage("回赞"),
     "likedBack": MessageLookupByLibrary.simpleMessage("已回赞"),
-    "likedPageMonetizeButton": MessageLookupByLibrary.simpleMessage("看看都是谁"),
+    "likedPageMonetizeButton": MessageLookupByLibrary.simpleMessage("了解他们的分享"),
     "likedPageNoData": MessageLookupByLibrary.simpleMessage(
-      "状态：暂时没有赞哦\n\n该做什么：采取主动\n\n建议：\n多传照片多加分\n写下简介显真诚\n选择兴趣有\n同道中人",
+      "状态：暂时没有欣赏哦\n\n该做什么：开始分享\n\n建议：\n真实的自拍照\n真诚的故事\n共同兴趣连接\n\n就是说...\n上传一些真实照片\n分享你的真实故事\n选择你的兴趣",
     ),
-    "likedYou": MessageLookupByLibrary.simpleMessage("喜欢了你"),
+    "likedYou": MessageLookupByLibrary.simpleMessage("欣赏你的分享"),
     "loading": MessageLookupByLibrary.simpleMessage("加载中..."),
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "我们需要您的位置来显示附近的人",
@@ -278,15 +279,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "nearby": MessageLookupByLibrary.simpleMessage("附近"),
     "newGameplay": MessageLookupByLibrary.simpleMessage("新玩法"),
-    "newMatch": MessageLookupByLibrary.simpleMessage("新匹配！"),
+    "newMatch": MessageLookupByLibrary.simpleMessage("新连接！"),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage("下次付费日"),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
-      "状态：暂无消息\n\n该做什么：前往匹配\n\n建议：制作棒棒的个人资料",
+      "状态：暂无消息\n\n该做什么：寻找倾听者\n\n建议：分享真实的自己",
     ),
     "noOneFoundYourCharm": MessageLookupByLibrary.simpleMessage("还没有人发现你的魅力"),
     "noThanks": MessageLookupByLibrary.simpleMessage("不了，谢谢"),
     "notifications": MessageLookupByLibrary.simpleMessage("通知"),
-    "onboarding0": MessageLookupByLibrary.simpleMessage("AstroPair是世界公民的家园"),
+    "onboarding0": MessageLookupByLibrary.simpleMessage("AstroLearn是世界公民的家园"),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "无论在家或是在旅途，都可以结识世界各地的朋友。并且...",
     ),
@@ -394,16 +395,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
       "每天1000条AI传译",
     ),
-    "plusFuncAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - 你的聊天参谋",
+    "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - 你的聊天参谋",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("每周5条DM"),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
-      "筛选配对的国家",
+      "筛选连接的国家",
     ),
     "plusFuncUnlimitedLikes": MessageLookupByLibrary.simpleMessage("无限点赞"),
     "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "解锁查看谁喜欢了你",
+      "解锁查看谁欣赏你的分享",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3个心愿"),
     "plusMember": MessageLookupByLibrary.simpleMessage("Plus 会员"),
@@ -426,7 +427,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "report": MessageLookupByLibrary.simpleMessage("举报"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("血腥"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("其他"),
-    "reportOptionPerAstroPairlAttack": MessageLookupByLibrary.simpleMessage(
+    "reportOptionPerAstroLearnlAttack": MessageLookupByLibrary.simpleMessage(
       "人身攻击",
     ),
     "reportOptionPersonalAttack": MessageLookupByLibrary.simpleMessage("人身攻击"),
@@ -440,7 +441,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "scorpioSign": MessageLookupByLibrary.simpleMessage("天蝎座"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("截图证据"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("查看资料"),
-    "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("看看谁喜欢你"),
+    "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("看看谁欣赏你"),
     "selectBirthPlace": MessageLookupByLibrary.simpleMessage("選擇出生地"),
     "selectBirthdayHint": MessageLookupByLibrary.simpleMessage("请选择出生日期查看您的星盘"),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("选择国家"),
@@ -453,7 +454,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "setDefault": MessageLookupByLibrary.simpleMessage("设置默认"),
     "setInterestTags": MessageLookupByLibrary.simpleMessage("设置清晰的兴趣标签"),
     "settings": MessageLookupByLibrary.simpleMessage("设置"),
-    "showYourPerAstroPairlity": MessageLookupByLibrary.simpleMessage(
+    "showYourPerAstroLearnlity": MessageLookupByLibrary.simpleMessage(
       "大声说出你的故事！",
     ),
     "showYourPersonality": MessageLookupByLibrary.simpleMessage("展现你的个性"),
@@ -465,19 +466,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "startedChat": MessageLookupByLibrary.simpleMessage("开始与聊天"),
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage("每天1000条\nAI传译"),
-    "subPageSubtitleAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - \n你的聊天参谋",
+    "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - \n你的聊天参谋",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage("每周5条DM"),
     "subPageSubtitleFilterMatchingCountries":
-        MessageLookupByLibrary.simpleMessage("筛选配对的\n国家"),
+        MessageLookupByLibrary.simpleMessage("筛选连接的\n国家"),
     "subPageSubtitleUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "无限点赞",
     ),
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "解锁查看\n谁喜欢了你",
+      "解锁查看\n谁欣赏你",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage("获取AstroPair Plus"),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("获取AstroLearn Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("条款"),
     "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("。"),
@@ -515,7 +516,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "userAvatarOptionCamera": MessageLookupByLibrary.simpleMessage("拍照"),
     "userAvatarOptionGallery": MessageLookupByLibrary.simpleMessage("从图库选择"),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
-      "一张好的肖像可以让你获得更多的匹配。保持真实的自我。",
+      "一张好的肖像可以帮助你与更多倾听者建立连接。保持真实的自我。",
     ),
     "userAvatarPageTitle": MessageLookupByLibrary.simpleMessage("展示你的自信"),
     "userAvatarUploadedLabel": MessageLookupByLibrary.simpleMessage("上传搞定！"),
@@ -529,7 +530,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "userGenderOptionMale": MessageLookupByLibrary.simpleMessage("男性"),
     "userGenderOptionNonBinary": MessageLookupByLibrary.simpleMessage("非二元性别"),
     "userGenderPickerSubtitle": MessageLookupByLibrary.simpleMessage(
-      "您的性别不会公开显示，仅用于帮助匹配",
+      "您的性别不会公开显示，仅用于帮助建立连接",
     ),
     "userInfoPageNamePlaceholder": MessageLookupByLibrary.simpleMessage("输入"),
     "userInfoPageTitle": MessageLookupByLibrary.simpleMessage("基础资料"),
@@ -555,7 +556,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage("输入验证码"),
     "viewAstroReport": MessageLookupByLibrary.simpleMessage("查看与的星盘合盘"),
     "virgoSign": MessageLookupByLibrary.simpleMessage("处女座"),
-    "wannaHollaAt": MessageLookupByLibrary.simpleMessage("打个招呼吧！"),
+    "wannaHollaAt": MessageLookupByLibrary.simpleMessage("你愿意分享吗…"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "关闭后，你的城市不会在匹配时显示",
     ),
@@ -570,11 +571,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "warningTitleCaution": MessageLookupByLibrary.simpleMessage("注意"),
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
-      "取消匹配后，你们之间的聊天内容都将被清除。",
+      "结束分享后，你们之间的对话内容都将被清除。",
     ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage("你的邮箱是什么？"),
-    "whoLIkesYou": MessageLookupByLibrary.simpleMessage("谁喜欢了你"),
-    "whoLikesU": MessageLookupByLibrary.simpleMessage("谁喜欢了你"),
+    "whoLIkesYou": MessageLookupByLibrary.simpleMessage("谁欣赏你的分享"),
+    "whoLikesU": MessageLookupByLibrary.simpleMessage("谁欣赏你"),
     "wishActivityAddTitle": MessageLookupByLibrary.simpleMessage("添加你的想法"),
     "wishActivityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "帮你找到搭子",

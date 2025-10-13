@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m2(lang) => "Basta scrivere in ${lang}";
 
   static String m3(gender) =>
-      "Quale delle ${Intl.gender(gender, female: 'sue', male: 'sue', other: 'loro')} idee ti piace?";
+      "Quale delle ${Intl.gender(gender, female: 'sue', male: 'sue', other: 'loro')} esperienze condivise risuona con te?";
 
   static String m4(storeName) =>
       "Cliccando su \"Continua\" ti verranno addebitati dei costi, l\'abbonamento si rinnoverà automaticamente al prezzo del pacchetto e potrai cancellare dal ${storeName}. Continuando, accetti i nostri ";
@@ -64,15 +64,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
       "L\'altro utente non ha ancora completato le sue informazioni sulla posizione di nascita, quindi non possiamo generare un grafico astrologico. Si prega di attendere che completino le loro informazioni.",
     ),
-    "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroPair Interpretazione disattivata",
+    "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
+      "⭕ AstroLearn Interpretazione disattivata",
     ),
-    "astroPairRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
-      "Raccomandazione di AstroPair: Cooldown.\nCosa fare: Aspettare.\nSuggerimento: Guardare un film?",
+    "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
+      "Raccomandazione di AstroLearn: Cooldown.\nCosa fare: Aspettare.\nSuggerimento: Guardare un film?",
     ),
-    "astroPairWillGenerateABioBasedOnInterests":
+    "astroLearnWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage(
-          "AstroPair genererà una biografia basata sui tuoi interessi",
+          "AstroLearn genererà una biografia basata sui tuoi interessi",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("Report astro"),
     "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage(
@@ -87,7 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "block": MessageLookupByLibrary.simpleMessage("Bloccare"),
     "blockThisPersonSoYouWontReceiveAnyMessagesFromThem":
         MessageLookupByLibrary.simpleMessage(
-          "Blocca questa perAstroPair per non ricevere più messaggi da loro",
+          "Blocca questa perAstroLearn per non ricevere più messaggi da loro",
         ),
     "boostYourAppeal": MessageLookupByLibrary.simpleMessage("Fascino Su!"),
     "breakIce": MessageLookupByLibrary.simpleMessage(
@@ -116,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("Capito"),
     "buttonHitAIInterpretationMaximumLimit":
         MessageLookupByLibrary.simpleMessage(
-          "😪AstroPair è stanca, 👇Tocca per ricaricarla!",
+          "😪AstroLearn è stanca, 👇Tocca per ricaricarla!",
         ),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage("Unisciti Ora"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage(
@@ -136,7 +136,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonUnlockVipPerks": MessageLookupByLibrary.simpleMessage(
       "Sblocca i vantaggi VIP",
     ),
-    "buttonUnmatch": MessageLookupByLibrary.simpleMessage("Annulla il match"),
+    "buttonUnmatch": MessageLookupByLibrary.simpleMessage(
+      "Termina condivisione",
+    ),
     "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("Disiscriviti"),
     "cancerSign": MessageLookupByLibrary.simpleMessage("Cancro"),
     "capricornSign": MessageLookupByLibrary.simpleMessage("Capricorno"),
@@ -264,11 +266,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
       "Введите место рождения",
     ),
-    "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
-      "Non inviato. AstroPair non tradurrà parole proibite.",
-    ),
-    "exceptionAstroPairOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair è sovraccaricata, per favore riprova più tardi.",
+    "exceptionAstroLearnContentFilterTips":
+        MessageLookupByLibrary.simpleMessage(
+          "Non inviato. AstroLearn non tradurrà parole proibite.",
+        ),
+    "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn è sovraccaricata, per favore riprova più tardi.",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "Invio fallito, per favore riprova più tardi.",
@@ -280,15 +283,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "Trovare persone che condividono i tuoi interessi",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroPair sta trovando alcuni amici potenziali...",
+      "AstroLearn sta trovando alcuni amici potenziali...",
     ),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "Ehi, penso che tu sia fantastico. Che ne dici di diventare amici?",
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("Futuro"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("Gemelli"),
-    "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
-      "Ottenere AstroPair Plus",
+    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
+      "Ottenere AstroLearn Plus",
     ),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage(
       "GIF non è consentito",
@@ -298,11 +301,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "Ehi, indovina chi romperà il silenzio per primo?",
     ),
-    "haveAstroPairSayHi": MessageLookupByLibrary.simpleMessage(
-      "Lascia che AstroPair dica ciao",
+    "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
+      "Lascia che AstroLearn dica ciao",
     ),
-    "hereAstroPairCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "Questo è stato fatto da AstroPair per te",
+    "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
+      "Questo è stato fatto da AstroLearn per te",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "Cosa ne pensi dell\'interpretazione simultanea AI?",
@@ -334,12 +337,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "issues": MessageLookupByLibrary.simpleMessage("Problemi"),
     "justNow": MessageLookupByLibrary.simpleMessage("Proprio ora"),
     "justSendALike": MessageLookupByLibrary.simpleMessage(
-      "Invia solo un Mi Piace",
+      "Condividi semplicemente la tua apprezzamento",
     ),
     "justTypeInYourLanguage": m2,
     "leoSign": MessageLookupByLibrary.simpleMessage("Leone"),
-    "letAstroPairSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "Lascia che AstroPair dica ciao per te",
+    "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
+      "Lascia che AstroLearn dica ciao per te",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("Bilancia"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage(
@@ -354,12 +357,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "likeBack": MessageLookupByLibrary.simpleMessage("Mi piace indietro"),
     "likedBack": MessageLookupByLibrary.simpleMessage("Già mi piace indietro"),
     "likedPageMonetizeButton": MessageLookupByLibrary.simpleMessage(
-      "Controlla i loro profili",
+      "Scopri la loro condivisione",
     ),
     "likedPageNoData": MessageLookupByLibrary.simpleMessage(
-      "Stato: Ancora nessun mi piace\n\nCosa fare: Prendi l\'iniziativa\n\nSuggerimento: Carica le tue foto soddisfacenti\nScrivi una biografia autentica\nScegli i tuoi interessi",
+      "Stato: Ancora nessuna apprezzamento\n\nCosa fare: Inizia a condividere\n\nSuggerimento: Ritratti autentici\nStorie genuine\nInteressi condivisi connettono\n\nIntendo...\nCarica le tue foto reali\nCondividi la tua storia autentica\nScegli i tuoi interessi",
     ),
-    "likedYou": MessageLookupByLibrary.simpleMessage("Ti è piaciuto"),
+    "likedYou": MessageLookupByLibrary.simpleMessage(
+      "Apprezza la tua condivisione",
+    ),
     "loading": MessageLookupByLibrary.simpleMessage("Caricamento..."),
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "Abbiamo bisogno della tua posizione per mostrarti persone vicine",
@@ -399,12 +404,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "nearby": MessageLookupByLibrary.simpleMessage("Vicino"),
     "newGameplay": MessageLookupByLibrary.simpleMessage("Nuovo gameplay"),
-    "newMatch": MessageLookupByLibrary.simpleMessage("Nuova partita!"),
+    "newMatch": MessageLookupByLibrary.simpleMessage("Nuova connessione!"),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage(
       "Prossima data di pagamento",
     ),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
-      "Stato: Nessun messaggio\n\nSuggerimento: Vai alla pagina di abbinamento\n\nSuggerimento: Crea un profilo fantastico",
+      "Stato: Nessun messaggio\n\nCosa fare: Trova ascoltatori\n\nSuggerimento: Condividi la tua autenticità",
     ),
     "noOneFoundYourCharm": MessageLookupByLibrary.simpleMessage(
       "Nessuno ha ancora trovato il tuo fascino",
@@ -412,7 +417,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noThanks": MessageLookupByLibrary.simpleMessage("No, grazie"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifiche"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "AstroPair è come una base di casa per i cittadini del mondo",
+      "AstroLearn è come una base di casa per i cittadini del mondo",
     ),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "Che tu sia a casa o in viaggio, incontra persone in tutto il mondo. E...",
@@ -549,20 +554,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
       "1000 interpretazioni simultanee/giorno",
     ),
-    "plusFuncAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - Il tuo consulente chat",
+    "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - Il tuo consulente chat",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage(
       "5 DM alla settimana",
     ),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
-      "Filtrare i paesi corrispondenti",
+      "Filtrare i paesi di connessione",
     ),
     "plusFuncUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "Like illimitati",
     ),
     "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "Sblocca per vedere chi ti piace",
+      "Sblocca per vedere chi apprezza la tua condivisione",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 desideri"),
     "plusMember": MessageLookupByLibrary.simpleMessage("Membro Plus"),
@@ -599,8 +604,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "report": MessageLookupByLibrary.simpleMessage("Segnalare"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("Gore"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("Altro"),
-    "reportOptionPerAstroPairlAttack": MessageLookupByLibrary.simpleMessage(
-      "Attacco perAstroPairle",
+    "reportOptionPerAstroLearnlAttack": MessageLookupByLibrary.simpleMessage(
+      "Attacco perAstroLearnle",
     ),
     "reportOptionPersonalAttack": MessageLookupByLibrary.simpleMessage(
       "Attacco personale",
@@ -621,7 +626,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Prova dello screenshot",
     ),
     "seeProfile": MessageLookupByLibrary.simpleMessage("Vedi profilo"),
-    "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("Vedi chi ti piace"),
+    "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("Vedi chi ti apprezza"),
     "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
       "Выберите место рождения",
     ),
@@ -646,8 +651,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Imposta tag di interesse chiare",
     ),
     "settings": MessageLookupByLibrary.simpleMessage("Impostazioni"),
-    "showYourPerAstroPairlity": MessageLookupByLibrary.simpleMessage(
-      "Mostra la tua perAstroPairlità",
+    "showYourPerAstroLearnlity": MessageLookupByLibrary.simpleMessage(
+      "Mostra la tua perAstroLearnlità",
     ),
     "showYourPersonality": MessageLookupByLibrary.simpleMessage(
       "Mostra la tua personalità",
@@ -668,24 +673,24 @@ class MessageLookup extends MessageLookupByLibrary {
         MessageLookupByLibrary.simpleMessage(
           "1000 \ninterpretazioni \nsimultanee/giorno",
         ),
-    "subPageSubtitleAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - \nIl tuo consulente chat",
+    "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - \nIl tuo consulente chat",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage(
       "5 DM alla settimana",
     ),
     "subPageSubtitleFilterMatchingCountries":
         MessageLookupByLibrary.simpleMessage(
-          "Filtrare i paesi \ncorrispondenti",
+          "Filtrare i paesi di \nconnessione",
         ),
     "subPageSubtitleUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "Like illimitati",
     ),
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "Sblocca per vedere \nchi ti piace",
+      "Sblocca per vedere \nchi ti apprezza",
     ),
     "subPageTitle": MessageLookupByLibrary.simpleMessage(
-      "Ottenere AstroPair Plus",
+      "Ottenere AstroLearn Plus",
     ),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage(
       "Termini e Condizioni",
@@ -744,7 +749,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Selezionare dalla galleria",
     ),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Un buon ritratto ti dà più corrispondenze. Sii reale e usa una foto legittima di te stesso.",
+      "Un buon ritratto ti aiuta a connetterti con più ascoltatori. Sii reale e usa una foto legittima di te stesso.",
     ),
     "userAvatarPageTitle": MessageLookupByLibrary.simpleMessage(
       "Mostra te stesso",
@@ -768,7 +773,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Non binario",
     ),
     "userGenderPickerSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Il tuo genere non sarà mostrato pubblicamente, verrà utilizzato solo per aiutare nel match",
+      "Il tuo genere non sarà mostrato pubblicamente, verrà utilizzato solo per aiutare nella connessione",
     ),
     "userInfoPageNamePlaceholder": MessageLookupByLibrary.simpleMessage(
       "Inserire",
@@ -804,7 +809,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Vedi report astro con",
     ),
     "virgoSign": MessageLookupByLibrary.simpleMessage("Vergine"),
-    "wannaHollaAt": MessageLookupByLibrary.simpleMessage("Dì ciao!"),
+    "wannaHollaAt": MessageLookupByLibrary.simpleMessage(
+      "Ti piacerebbe condividere...",
+    ),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "Dopo la chiusura, la tua città non verrà visualizzata durante l\'abbinamento",
     ),
@@ -819,13 +826,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "warningTitleCaution": MessageLookupByLibrary.simpleMessage("Attenzione"),
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
-      "Dopo lo sganciamento, tutta la cronologia della chat verrà cancellata.",
+      "Dopo aver terminato la condivisione, tutta la cronologia delle conversazioni verrà cancellata.",
     ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage(
       "Qual è la tua email?",
     ),
-    "whoLIkesYou": MessageLookupByLibrary.simpleMessage("Chi ti piace"),
-    "whoLikesU": MessageLookupByLibrary.simpleMessage("Chi ti piace"),
+    "whoLIkesYou": MessageLookupByLibrary.simpleMessage(
+      "Chi apprezza la tua condivisione",
+    ),
+    "whoLikesU": MessageLookupByLibrary.simpleMessage("Chi ti apprezza"),
     "wishActivityAddTitle": MessageLookupByLibrary.simpleMessage(
       "Aggiungi il tuo pensiero",
     ),

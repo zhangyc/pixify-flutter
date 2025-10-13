@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -69,7 +71,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const NeonWordmark(text: "AstroPair", fontSize: 18),
+            const NeonWordmark(text: "AstroLearn", fontSize: 18),
             Row(
               children: [
                 GestureDetector(
@@ -130,61 +132,65 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 // 跳过按钮
-                                _buildActionButton(
-                                  onTap: () {
-                                    if (currentPage == users.length - 1) return;
-                                    SonaAnalytics.log(
-                                        MatchEvent.match_dislike.name);
-                                    swiperController
-                                        .swipe(CardSwiperDirection.left);
-                                    MatchApi.skip(users[currentPage].id);
-                                  },
-                                  icon: Assets.matchCancel,
-                                  size: 40,
-                                  backgroundColor: const Color(0xFF2A2A35),
-                                  borderColor: const Color(0xFF4A4A55),
-                                  iconColor: const Color(0xFFFF6B6B),
-                                ),
+                                if (Platform.isAndroid)
+                                  _buildActionButton(
+                                    onTap: () {
+                                      if (currentPage == users.length - 1)
+                                        return;
+                                      SonaAnalytics.log(
+                                          MatchEvent.match_dislike.name);
+                                      swiperController
+                                          .swipe(CardSwiperDirection.left);
+                                      MatchApi.skip(users[currentPage].id);
+                                    },
+                                    icon: Assets.matchCancel,
+                                    size: 40,
+                                    backgroundColor: const Color(0xFF2A2A35),
+                                    borderColor: const Color(0xFF4A4A55),
+                                    iconColor: const Color(0xFFFF6B6B),
+                                  ),
 
                                 // 喜欢按钮（主要操作）
-                                _buildActionButton(
-                                  onTap: () {
-                                    if (currentPage == users.length - 1) return;
-                                    if (true) {
-                                      if (like > 0) like = like - 1;
-                                      swiperController
-                                          .swipe(CardSwiperDirection.right);
-                                      if (users[currentPage].likeMe == 1) {
+                                if (Platform.isAndroid)
+                                  _buildActionButton(
+                                    onTap: () {
+                                      if (currentPage == users.length - 1)
+                                        return;
+                                      if (true) {
+                                        if (like > 0) like = like - 1;
+                                        swiperController
+                                            .swipe(CardSwiperDirection.right);
+                                        if (users[currentPage].likeMe == 1) {
+                                          SonaAnalytics.log(
+                                              MatchEvent.match_matched.name);
+                                          MatchApi.like(users[currentPage].id);
+                                          showMatched(context,
+                                              target: users[currentPage],
+                                              next: () {});
+                                        }
+                                        setState(() {});
                                         SonaAnalytics.log(
-                                            MatchEvent.match_matched.name);
-                                        MatchApi.like(users[currentPage].id);
-                                        showMatched(context,
-                                            target: users[currentPage],
-                                            next: () {});
+                                            MatchEvent.match_like.name);
+                                      } else {
+                                        SonaAnalytics.log(
+                                            MatchEvent.match_like_limit.name);
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (c) {
+                                          return SubscribePage(
+                                              fromTag:
+                                                  FromTag.pay_match_likelimit);
+                                        }));
                                       }
-                                      setState(() {});
-                                      SonaAnalytics.log(
-                                          MatchEvent.match_like.name);
-                                    } else {
-                                      SonaAnalytics.log(
-                                          MatchEvent.match_like_limit.name);
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (c) {
-                                        return SubscribePage(
-                                            fromTag:
-                                                FromTag.pay_match_likelimit);
-                                      }));
-                                    }
-                                  },
-                                  icon: Assets.matchLike,
-                                  size: 68,
-                                  backgroundColor: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.15),
-                                  borderColor: Theme.of(context).primaryColor,
-                                  iconColor: Theme.of(context).primaryColor,
-                                  glowEffect: true,
-                                ),
+                                    },
+                                    icon: Assets.matchLike,
+                                    size: 68,
+                                    backgroundColor: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.15),
+                                    borderColor: Theme.of(context).primaryColor,
+                                    iconColor: Theme.of(context).primaryColor,
+                                    glowEffect: true,
+                                  ),
 
                                 // 消息按钮
                                 _buildActionButton(
@@ -193,6 +199,7 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                                     Future.delayed(Duration(milliseconds: 200),
                                         () {
                                       if (canArrow) {
+                                        MatchApi.like(users[currentPage].id);
                                         showDm(context, users[currentPage], () {
                                           swiperController
                                               .swipe(CardSwiperDirection.right);

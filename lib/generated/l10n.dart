@@ -209,10 +209,10 @@ class S {
     );
   }
 
-  /// `Your gender will not be shown public, it only be used to help for match`
+  /// `Your gender will not be shown public, it only be used to help for connection`
   String get userGenderPickerSubtitle {
     return Intl.message(
-      'Your gender will not be shown public, it only be used to help for match',
+      'Your gender will not be shown public, it only be used to help for connection',
       name: 'userGenderPickerSubtitle',
       desc: '',
       args: [],
@@ -259,10 +259,10 @@ class S {
     );
   }
 
-  /// `A good portrait gets you more matches. Keep it real and use a legit pic of yourself.`
+  /// `A good portrait helps you connect with more listeners. Keep it real and use a legit pic of yourself.`
   String get userAvatarPageSubtitle {
     return Intl.message(
-      'A good portrait gets you more matches. Keep it real and use a legit pic of yourself.',
+      'A good portrait helps you connect with more listeners. Keep it real and use a legit pic of yourself.',
       name: 'userAvatarPageSubtitle',
       desc: '',
       args: [],
@@ -499,10 +499,10 @@ class S {
     );
   }
 
-  /// `AstroPair is finding some potential friend...`
+  /// `AstroLearn is finding some potential friend...`
   String get firstLandingLoadingTitle {
     return Intl.message(
-      'AstroPair is finding some potential friend...',
+      'AstroLearn is finding some potential friend...',
       name: 'firstLandingLoadingTitle',
       desc: '',
       args: [],
@@ -529,20 +529,20 @@ class S {
     return Intl.message('Report', name: 'report', desc: '', args: []);
   }
 
-  /// `Which of {gender, select, male {his} female {her} other {their}} ideas do you like?`
+  /// `Which of {gender, select, male {his} female {her} other {their}} sharing experiences resonate with you?`
   String matchPageSelectIdeas(String gender) {
     return Intl.message(
-      'Which of ${Intl.gender(gender, male: 'his', female: 'her', other: 'their')} ideas do you like?',
+      'Which of ${Intl.gender(gender, male: 'his', female: 'her', other: 'their')} sharing experiences resonate with you?',
       name: 'matchPageSelectIdeas',
       desc: '',
       args: [gender],
     );
   }
 
-  /// `Just Send a Like`
+  /// `Share Your Appreciation`
   String get justSendALike {
     return Intl.message(
-      'Just Send a Like',
+      'Share Your Appreciation',
       name: 'justSendALike',
       desc: '',
       args: [],
@@ -554,21 +554,21 @@ class S {
     return Intl.message('DM', name: 'dm', desc: '', args: []);
   }
 
-  /// `Wanna holla at...`
+  /// `Would you like to share...`
   String get wannaHollaAt {
     return Intl.message(
-      'Wanna holla at...',
+      'Would you like to share...',
       name: 'wannaHollaAt',
       desc: '',
       args: [],
     );
   }
 
-  /// `Let AstroPair say hi for you`
-  String get letAstroPairSayHiForYou {
+  /// `Let AstroLearn say hi for you`
+  String get letAstroLearnSayHiForYou {
     return Intl.message(
-      'Let AstroPair say hi for you',
-      name: 'letAstroPairSayHiForYou',
+      'Let AstroLearn say hi for you',
+      name: 'letAstroLearnSayHiForYou',
       desc: '',
       args: [],
     );
@@ -629,11 +629,11 @@ class S {
     return Intl.message('Age', name: 'age', desc: '', args: []);
   }
 
-  /// `AstroPair Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?`
-  String get astroPairRecommendationCooldown {
+  /// `AstroLearn Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?`
+  String get astroLearnRecommendationCooldown {
     return Intl.message(
-      'AstroPair Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?',
-      name: 'astroPairRecommendationCooldown',
+      'AstroLearn Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?',
+      name: 'astroLearnRecommendationCooldown',
       desc: '',
       args: [],
     );
@@ -699,11 +699,11 @@ class S {
     return Intl.message('Scam', name: 'reportOptionScam', desc: '', args: []);
   }
 
-  /// `PerAstroPairl Attack`
-  String get reportOptionPerAstroPairlAttack {
+  /// `PerAstroLearnl Attack`
+  String get reportOptionPerAstroLearnlAttack {
     return Intl.message(
-      'PerAstroPairl Attack',
-      name: 'reportOptionPerAstroPairlAttack',
+      'PerAstroLearnl Attack',
+      name: 'reportOptionPerAstroLearnlAttack',
       desc: '',
       args: [],
     );
@@ -744,19 +744,24 @@ class S {
     return Intl.message('All People', name: 'allPeople', desc: '', args: []);
   }
 
-  /// `Who likes you`
+  /// `Who appreciates your sharing`
   String get whoLIkesYou {
     return Intl.message(
-      'Who likes you',
+      'Who appreciates your sharing',
       name: 'whoLIkesYou',
       desc: '',
       args: [],
     );
   }
 
-  /// `Liked you`
+  /// `Appreciates your sharing`
   String get likedYou {
-    return Intl.message('Liked you', name: 'likedYou', desc: '', args: []);
+    return Intl.message(
+      'Appreciates your sharing',
+      name: 'likedYou',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `"I'm interested in {something}"`
@@ -779,20 +784,20 @@ class S {
     );
   }
 
-  /// `Check out their profiles`
+  /// `Learn about their sharing`
   String get likedPageMonetizeButton {
     return Intl.message(
-      'Check out their profiles',
+      'Learn about their sharing',
       name: 'likedPageMonetizeButton',
       desc: '',
       args: [],
     );
   }
 
-  /// `Status: No likes yet\n\nWhat to do: Take the initiative\n\nSuggestion:\n"Self-portraits in light,\nA genuine bio's insight,\nInterests ignite."\n\nEmm..I mean...\nUpload some nice photos\nWrite a genuine bio\nPick your interests`
+  /// `Status: No appreciations yet\n\nWhat to do: Start sharing\n\nSuggestion:\n"Authentic portraits,\nGenuine stories,\nShared interests connect."\n\nI mean...\nUpload some real photos\nShare your authentic story\nPick your interests`
   String get likedPageNoData {
     return Intl.message(
-      'Status: No likes yet\n\nWhat to do: Take the initiative\n\nSuggestion:\n"Self-portraits in light,\nA genuine bio\'s insight,\nInterests ignite."\n\nEmm..I mean...\nUpload some nice photos\nWrite a genuine bio\nPick your interests',
+      'Status: No appreciations yet\n\nWhat to do: Start sharing\n\nSuggestion:\n"Authentic portraits,\nGenuine stories,\nShared interests connect."\n\nI mean...\nUpload some real photos\nShare your authentic story\nPick your interests',
       name: 'likedPageNoData',
       desc: '',
       args: [],
@@ -804,9 +809,14 @@ class S {
     return Intl.message('Chat', name: 'chat', desc: '', args: []);
   }
 
-  /// `Who likes you`
+  /// `Who appreciates you`
   String get whoLikesU {
-    return Intl.message('Who likes you', name: 'whoLikesU', desc: '', args: []);
+    return Intl.message(
+      'Who appreciates you',
+      name: 'whoLikesU',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Check out their profiles`
@@ -819,36 +829,41 @@ class S {
     );
   }
 
-  /// `New Matched!`
+  /// `New Connection!`
   String get newMatch {
-    return Intl.message('New Matched!', name: 'newMatch', desc: '', args: []);
+    return Intl.message(
+      'New Connection!',
+      name: 'newMatch',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// `Status: No messages\n\nWhat to do: Go to match\n\nSuggestion: Make an awesome profile`
+  /// `Status: No messages\n\nWhat to do: Find listeners\n\nSuggestion: Share your authentic self`
   String get noMessageTips {
     return Intl.message(
-      'Status: No messages\n\nWhat to do: Go to match\n\nSuggestion: Make an awesome profile',
+      'Status: No messages\n\nWhat to do: Find listeners\n\nSuggestion: Share your authentic self',
       name: 'noMessageTips',
       desc: '',
       args: [],
     );
   }
 
-  /// `See who likes you`
+  /// `See who appreciates you`
   String get seeWhoLikeU {
     return Intl.message(
-      'See who likes you',
+      'See who appreciates you',
       name: 'seeWhoLikeU',
       desc: '',
       args: [],
     );
   }
 
-  /// `Have AstroPair Say Hi`
-  String get haveAstroPairSayHi {
+  /// `Have AstroLearn Say Hi`
+  String get haveAstroLearnSayHi {
     return Intl.message(
-      'Have AstroPair Say Hi',
-      name: 'haveAstroPairSayHi',
+      'Have AstroLearn Say Hi',
+      name: 'haveAstroLearnSayHi',
       desc: '',
       args: [],
     );
@@ -929,15 +944,20 @@ class S {
     return Intl.message('See profile', name: 'seeProfile', desc: '', args: []);
   }
 
-  /// `Unmatch`
+  /// `End sharing`
   String get buttonUnmatch {
-    return Intl.message('Unmatch', name: 'buttonUnmatch', desc: '', args: []);
+    return Intl.message(
+      'End sharing',
+      name: 'buttonUnmatch',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// `😪AstroPair is tired, 👇Tap to refuel her!`
+  /// `😪AstroLearn is tired, 👇Tap to refuel her!`
   String get buttonHitAIInterpretationMaximumLimit {
     return Intl.message(
-      '😪AstroPair is tired, 👇Tap to refuel her!',
+      '😪AstroLearn is tired, 👇Tap to refuel her!',
       name: 'buttonHitAIInterpretationMaximumLimit',
       desc: '',
       args: [],
@@ -964,21 +984,21 @@ class S {
     );
   }
 
-  /// `After unmatching, all your chat history will be deleted.`
+  /// `After ending sharing, all your conversation history will be cleared.`
   String get warningUnmatching {
     return Intl.message(
-      'After unmatching, all your chat history will be deleted.',
+      'After ending sharing, all your conversation history will be cleared.',
       name: 'warningUnmatching',
       desc: '',
       args: [],
     );
   }
 
-  /// `⭕ AstroPair interpretation is turned off`
-  String get astroPairInterpretationOff {
+  /// `⭕ AstroLearn interpretation is turned off`
+  String get astroLearnInterpretationOff {
     return Intl.message(
-      '⭕ AstroPair interpretation is turned off',
-      name: 'astroPairInterpretationOff',
+      '⭕ AstroLearn interpretation is turned off',
+      name: 'astroLearnInterpretationOff',
       desc: '',
       args: [],
     );
@@ -1014,11 +1034,11 @@ class S {
     );
   }
 
-  /// `Unsent. AstroPair will not translate prohibited words`
-  String get exceptionAstroPairContentFilterTips {
+  /// `Unsent. AstroLearn will not translate prohibited words`
+  String get exceptionAstroLearnContentFilterTips {
     return Intl.message(
-      'Unsent. AstroPair will not translate prohibited words',
-      name: 'exceptionAstroPairContentFilterTips',
+      'Unsent. AstroLearn will not translate prohibited words',
+      name: 'exceptionAstroLearnContentFilterTips',
       desc: '',
       args: [],
     );
@@ -1034,11 +1054,11 @@ class S {
     );
   }
 
-  /// `AstroPair is overloaded, please try again later.`
-  String get exceptionAstroPairOverloadedTips {
+  /// `AstroLearn is overloaded, please try again later.`
+  String get exceptionAstroLearnOverloadedTips {
     return Intl.message(
-      'AstroPair is overloaded, please try again later.',
-      name: 'exceptionAstroPairOverloadedTips',
+      'AstroLearn is overloaded, please try again later.',
+      name: 'exceptionAstroLearnOverloadedTips',
       desc: '',
       args: [],
     );
@@ -1089,11 +1109,11 @@ class S {
     );
   }
 
-  /// `Get AstroPair Plus`
-  String get getAstroPairPlus {
+  /// `Get AstroLearn Plus`
+  String get getAstroLearnPlus {
     return Intl.message(
-      'Get AstroPair Plus',
-      name: 'getAstroPairPlus',
+      'Get AstroLearn Plus',
+      name: 'getAstroLearnPlus',
       desc: '',
       args: [],
     );
@@ -1139,11 +1159,11 @@ class S {
     return Intl.message('Edit', name: 'buttonEdit', desc: '', args: []);
   }
 
-  /// `Show your perAstroPairlity`
-  String get showYourPerAstroPairlity {
+  /// `Show your perAstroLearnlity`
+  String get showYourPerAstroLearnlity {
     return Intl.message(
-      'Show your perAstroPairlity',
-      name: 'showYourPerAstroPairlity',
+      'Show your perAstroLearnlity',
+      name: 'showYourPerAstroLearnlity',
       desc: '',
       args: [],
     );
@@ -1164,10 +1184,10 @@ class S {
     return Intl.message('Save', name: 'buttonSave', desc: '', args: []);
   }
 
-  /// `Get AstroPair Plus`
+  /// `Get AstroLearn Plus`
   String get subPageTitle {
     return Intl.message(
-      'Get AstroPair Plus',
+      'Get AstroLearn Plus',
       name: 'subPageTitle',
       desc: '',
       args: [],
@@ -1184,10 +1204,10 @@ class S {
     );
   }
 
-  /// `Unlock to see who likes you`
+  /// `Unlock to see who appreciates your sharing`
   String get plusFuncUnlockWhoLikesU {
     return Intl.message(
-      'Unlock to see who likes you',
+      'Unlock to see who appreciates your sharing',
       name: 'plusFuncUnlockWhoLikesU',
       desc: '',
       args: [],
@@ -1219,21 +1239,21 @@ class S {
     return Intl.message('3 Wshes', name: 'plusFuncWishes', desc: '', args: []);
   }
 
-  /// `Filter matching Countries`
+  /// `Filter connection Countries`
   String get plusFuncFilterMatchingCountries {
     return Intl.message(
-      'Filter matching Countries',
+      'Filter connection Countries',
       name: 'plusFuncFilterMatchingCountries',
       desc: '',
       args: [],
     );
   }
 
-  /// `AstroPair Tips - Your chat advisor`
-  String get plusFuncAstroPairTips {
+  /// `AstroLearn Tips - Your chat advisor`
+  String get plusFuncAstroLearnTips {
     return Intl.message(
-      'AstroPair Tips - Your chat advisor',
-      name: 'plusFuncAstroPairTips',
+      'AstroLearn Tips - Your chat advisor',
+      name: 'plusFuncAstroLearnTips',
       desc: '',
       args: [],
     );
@@ -1304,10 +1324,10 @@ class S {
     return Intl.message('Continue', name: 'buttonContinue', desc: '', args: []);
   }
 
-  /// `Unlock to see\nwho likes you`
+  /// `Unlock to see\nwho appreciates you`
   String get subPageSubtitleUnlockWhoLikesU {
     return Intl.message(
-      'Unlock to see\nwho likes you',
+      'Unlock to see\nwho appreciates you',
       name: 'subPageSubtitleUnlockWhoLikesU',
       desc: '',
       args: [],
@@ -1334,20 +1354,20 @@ class S {
     );
   }
 
-  /// `AstroPair Tips - \nYour chat advisor`
-  String get subPageSubtitleAstroPairTips {
+  /// `AstroLearn Tips - \nYour chat advisor`
+  String get subPageSubtitleAstroLearnTips {
     return Intl.message(
-      'AstroPair Tips - \nYour chat advisor',
-      name: 'subPageSubtitleAstroPairTips',
+      'AstroLearn Tips - \nYour chat advisor',
+      name: 'subPageSubtitleAstroLearnTips',
       desc: '',
       args: [],
     );
   }
 
-  /// `Filter matching \nCountries`
+  /// `Filter connection \nCountries`
   String get subPageSubtitleFilterMatchingCountries {
     return Intl.message(
-      'Filter matching \nCountries',
+      'Filter connection \nCountries',
       name: 'subPageSubtitleFilterMatchingCountries',
       desc: '',
       args: [],
@@ -1599,11 +1619,11 @@ class S {
     );
   }
 
-  /// `AstroPair will generate a bio based on your interests`
-  String get astroPairWillGenerateABioBasedOnInterests {
+  /// `AstroLearn will generate a bio based on your interests`
+  String get astroLearnWillGenerateABioBasedOnInterests {
     return Intl.message(
-      'AstroPair will generate a bio based on your interests',
-      name: 'astroPairWillGenerateABioBasedOnInterests',
+      'AstroLearn will generate a bio based on your interests',
+      name: 'astroLearnWillGenerateABioBasedOnInterests',
       desc: '',
       args: [],
     );
@@ -1614,11 +1634,11 @@ class S {
     return Intl.message('Generate', name: 'buttonGenerate', desc: '', args: []);
   }
 
-  /// `Here's AstroPair cooked up for you!`
-  String get hereAstroPairCookedUpForU {
+  /// `Here's AstroLearn cooked up for you!`
+  String get hereAstroLearnCookedUpForU {
     return Intl.message(
-      'Here\'s AstroPair cooked up for you!',
-      name: 'hereAstroPairCookedUpForU',
+      'Here\'s AstroLearn cooked up for you!',
+      name: 'hereAstroLearnCookedUpForU',
       desc: '',
       args: [],
     );
@@ -1669,10 +1689,10 @@ class S {
     return Intl.message('Set Default', name: 'setDefault', desc: '', args: []);
   }
 
-  /// `AstroPair is like a home base for world citizens`
+  /// `AstroLearn is like a home base for world citizens`
   String get onboarding0 {
     return Intl.message(
-      'AstroPair is like a home base for world citizens',
+      'AstroLearn is like a home base for world citizens',
       name: 'onboarding0',
       desc: '',
       args: [],

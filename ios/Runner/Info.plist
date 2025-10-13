@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>AstroPair</string>
+	<string>AstroLearn</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>AstroPair</string>
+	<string>AstroLearn</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,7 +26,7 @@
 	<array>
 		<dict>
       <key>CFBundleURLName</key>
-			<string>AstroPair</string>
+			<string>AstroLearn</string>
       <key>CFBundleURLSchemes</key>
       <array>
           <string>astrolink</string>
@@ -53,30 +53,30 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow AstroPair to access your camera to capture photos to showcase yourself, which will be uploaded to your match profile.</string>
+	<string>Allow AstroLearn to access your camera to capture photos to showcase yourself, which will be used in your learning profile.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Allow AstroPair to access your location at all times for recommending people nearby.</string>
+	<string>Allow AstroLearn to access your location at all times for recommending study partners nearby.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow AstroPair to access your location while using the app for recommending people nearby.</string>
+	<string>Allow AstroLearn to access your location while using the app for recommending study partners nearby.</string>
 	<key>NSLocationDefaultAccuracyReduced</key>
 	<false/>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>AstroLinkLocation</key>
-		<string>Allow AstroPair to access your precise location for more accurate matches and recommendations.</string>
+		<string>Allow AstroLearn to access your precise location for more accurate study partner recommendations.</string>
 	</dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allow AstroPair to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
+	<string>Allow AstroLearn to access your camera to capture photos and videos to showcase yourself, which will be used in your learning profile.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow AstroPair to access your camera to capture photos and videos to showcase yourself, which will be uploaded to your match profile.</string>
+	<string>Allow AstroLearn to access your camera to capture photos and videos to showcase yourself, which will be used in your learning profile.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow AstroPair to access your microphone to record voice message.</string>
+	<string>Allow AstroLearn to access your microphone to record voice message for better learning communication.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Allow AstroPair to access your speech recognition to transform your voice message to text.</string>
+	<string>Allow AstroLearn to access your speech recognition to transform your voice message to text for better learning communication.</string>
 	<key>NSUserTrackingUsageDescription</key>
   <string>To evaluate the effectiveness of our advertising campaigns and optimize our ad delivery strategies, we need to access your Identifier for Advertisers (IDFA). Your IDFA may be shared with our advertising partners, but it will not be associated with any other personal information.</string>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>AstroPair needs access to your music usage data to process voice message playback.</string>
+	<string>AstroLearn needs access to your music usage data to process voice message playback.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -103,7 +103,7 @@
   <key>FacebookClientToken</key>
   <string>05a5b4f17e6f876e110ef9df3945a657</string>
   <key>FacebookDisplayName</key>
-  <string>AstroLink</string>
+  <string>AstroLearn</string>
     <!-- gal: Required -->
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>We need add only access to save medias</string>

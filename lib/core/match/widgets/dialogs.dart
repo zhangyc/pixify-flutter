@@ -123,7 +123,7 @@ showChooseHobbies<T>(BuildContext context) {
                                   Text.rich(
                                     TextSpan(
                                       text:
-                                          '${S.current.astroPairWillGenerateABioBasedOnInterests}',
+                                          '${S.current.astroLearnWillGenerateABioBasedOnInterests}',
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium,

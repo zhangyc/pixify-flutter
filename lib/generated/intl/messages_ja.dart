@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m2(lang) => "${lang}でチャットできるよー";
 
   static String m3(gender) =>
-      "${Intl.gender(gender, female: '彼女', male: '彼', other: '彼ら')}のどのアイデアが好きですか？";
+      "${Intl.gender(gender, female: '彼女', male: '彼', other: '彼ら')}のどの共有体験が心に響きますか？";
 
   static String m4(storeName) =>
       "「続行」をクリックすると料金が発生し、対応するパッケージの価格で自動更新されます。${storeName}でキャンセルが可能です。続行することで、私たちの";
@@ -61,14 +61,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
       "相手ユーザーが出生地の情報をまだ完了していないため、占星術チャートを生成できません。相手が情報を完了するまでお待ちください。",
     ),
-    "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroPair同期通訳はオフになりました",
+    "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
+      "⭕ AstroLearn同期通訳はオフになりました",
     ),
-    "astroPairRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
+    "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
       "ソナおすすめ:クールダウン中\nやること:待ってる\nアドバイス:漫画でも読んどいたら?",
     ),
-    "astroPairWillGenerateABioBasedOnInterests":
-        MessageLookupByLibrary.simpleMessage("あなたの興味に基づいてAstroPairがバイオを生成します"),
+    "astroLearnWillGenerateABioBasedOnInterests":
+        MessageLookupByLibrary.simpleMessage("あなたの興味に基づいてAstroLearnがバイオを生成します"),
     "astroReport": MessageLookupByLibrary.simpleMessage("星盤レポート"),
     "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage(
       "アバターの更新に失敗しました",
@@ -105,7 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("分かった"),
     "buttonHitAIInterpretationMaximumLimit":
         MessageLookupByLibrary.simpleMessage(
-          "AstroPair疲れた😪、👇クリックでエネルギーチャージ！",
+          "AstroLearn疲れた😪、👇クリックでエネルギーチャージ！",
         ),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage("今すぐ参加"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("アカウントを保持"),
@@ -121,7 +121,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonSignOut": MessageLookupByLibrary.simpleMessage("ログアウト"),
     "buttonSubmit": MessageLookupByLibrary.simpleMessage("提出する"),
     "buttonUnlockVipPerks": MessageLookupByLibrary.simpleMessage("VIP特典をアンロック"),
-    "buttonUnmatch": MessageLookupByLibrary.simpleMessage("ペアリング解除"),
+    "buttonUnmatch": MessageLookupByLibrary.simpleMessage("共有を終了"),
     "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage("購読を解除する"),
     "cancerSign": MessageLookupByLibrary.simpleMessage("蟹座"),
     "capricornSign": MessageLookupByLibrary.simpleMessage("山羊座"),
@@ -205,11 +205,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "あなたの専用チャットルームはまだ空です\nでも星は知っています、運命の人はあなたに向かって来ています",
     ),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage("请输入出生地"),
-    "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
-      "送信されていない。AstroPairは禁止された言葉を翻訳しません。",
-    ),
-    "exceptionAstroPairOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPairは過負荷です、後で再試行してください。",
+    "exceptionAstroLearnContentFilterTips":
+        MessageLookupByLibrary.simpleMessage(
+          "送信されていない。AstroLearnは禁止された言葉を翻訳しません。",
+        ),
+    "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearnは過負荷です、後で再試行してください。",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "送信に失敗しました、後で再試行してください。",
@@ -221,15 +222,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "同じ趣味を持つ人を見つける",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroPairは潜在的な友人を探しています...",
+      "AstroLearnは潜在的な友人を探しています...",
     ),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "こんにちは!面白そうな人だね。ちょっと話してみませんか？",
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("未来"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("双子座"),
-    "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Plusを入手",
+    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Plusを入手",
     ),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIFは許可されていません"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("発見に行く"),
@@ -237,11 +238,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "ねえ、誰が最初に沈黙を破ると思う？",
     ),
-    "haveAstroPairSayHi": MessageLookupByLibrary.simpleMessage(
-      "AstroPairに挨拶させて",
+    "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
+      "AstroLearnに挨拶させて",
     ),
-    "hereAstroPairCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "これはAstroPair特製です",
+    "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
+      "これはAstroLearn特製です",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "AIのAI同期通訳についてどう思いますか?",
@@ -260,11 +261,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "interpretationOn": MessageLookupByLibrary.simpleMessage("AI同期通訳：オン"),
     "issues": MessageLookupByLibrary.simpleMessage("問題"),
     "justNow": MessageLookupByLibrary.simpleMessage("たった今"),
-    "justSendALike": MessageLookupByLibrary.simpleMessage("いいねを送るだけ"),
+    "justSendALike": MessageLookupByLibrary.simpleMessage("感謝の気持ちを伝えるだけ"),
     "justTypeInYourLanguage": m2,
     "leoSign": MessageLookupByLibrary.simpleMessage("獅子座"),
-    "letAstroPairSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "AstroPairに挨拶させて",
+    "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
+      "AstroLearnに挨拶させて",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("天秤座"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage("ライフスタイル"),
@@ -273,12 +274,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "likeBack": MessageLookupByLibrary.simpleMessage("いいね返し"),
     "likedBack": MessageLookupByLibrary.simpleMessage("いいね返し済み"),
     "likedPageMonetizeButton": MessageLookupByLibrary.simpleMessage(
-      "あいつらのプロフチェックしよう!",
+      "彼らの共有について知ろう",
     ),
     "likedPageNoData": MessageLookupByLibrary.simpleMessage(
-      "ステータス：一時的には空白ページだね\n\nすること：主導権を取る\n\n提案：\n満足写真 アップを\n自己紹介に 心込めよ\n魅力的に もっとなれ\n\n興味選べ \n人の海の中で\n面白い出会いが待っています",
+      "ステータス：まだ評価がないね\n\nすること：共有を始める\n\n提案：\n本物の写真を\n本当のストーリーを\n興味を共有しよう\n\nつまり...\n素敵な写真をアップロード\n本物の自己紹介を書く\n興味を選ぶ",
     ),
-    "likedYou": MessageLookupByLibrary.simpleMessage("月が...ううん"),
+    "likedYou": MessageLookupByLibrary.simpleMessage("あなたの共有を評価してくれる"),
     "loading": MessageLookupByLibrary.simpleMessage("読み込み中..."),
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "近くの人を見せるために位置情報が必要です",
@@ -312,10 +313,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "nearby": MessageLookupByLibrary.simpleMessage("近くに"),
     "newGameplay": MessageLookupByLibrary.simpleMessage("新しいゲームプレイ"),
-    "newMatch": MessageLookupByLibrary.simpleMessage("新しいマッチ！"),
+    "newMatch": MessageLookupByLibrary.simpleMessage("新しいつながり！"),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage("次の請求日"),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
-      "ステータス：メッセージなし\n\nすること：さあ、ペアリングページに行こう！\n\n提案：素晴らしいプロフィールを作る",
+      "ステータス：メッセージなし\n\nすること：さあ、聞き手を探そう！\n\n提案：本当の自分を共有しよう",
     ),
     "noOneFoundYourCharm": MessageLookupByLibrary.simpleMessage(
       "まだ誰もあなたの魅力を見つけていません",
@@ -323,7 +324,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noThanks": MessageLookupByLibrary.simpleMessage("いいえ、ありがとう"),
     "notifications": MessageLookupByLibrary.simpleMessage("通知"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "AstroPairは世界中の人々の共通の我が家です",
+      "AstroLearnは世界中の人々の共通の我が家です",
     ),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "自宅にいても、旅行中でも、世界中の人々と出会おう。そして…",
@@ -448,16 +449,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
       "1日に1000回のAI同期通訳",
     ),
-    "plusFuncAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - あなたのチャット参謀",
+    "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - あなたのチャット参謀",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("週に5回のDM"),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
-      "マッチング国を絞り込む",
+      "つながりの国を絞り込む",
     ),
     "plusFuncUnlimitedLikes": MessageLookupByLibrary.simpleMessage("いいね無制限"),
     "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "あなたを好きな人が誰か見るために解除",
+      "あなたの共有を評価してくれる人が誰か見るために解除",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3つの願い"),
     "plusMember": MessageLookupByLibrary.simpleMessage("Plus会員"),
@@ -482,7 +483,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "report": MessageLookupByLibrary.simpleMessage("報告する"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("グロテスク"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("その他"),
-    "reportOptionPerAstroPairlAttack": MessageLookupByLibrary.simpleMessage(
+    "reportOptionPerAstroLearnlAttack": MessageLookupByLibrary.simpleMessage(
       "人身攻撃",
     ),
     "reportOptionPersonalAttack": MessageLookupByLibrary.simpleMessage("人身攻撃"),
@@ -498,7 +499,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "scorpioSign": MessageLookupByLibrary.simpleMessage("蠍座"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("スクリーンショットの証拠"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("プロフィールを見る"),
-    "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("誰があなたを好きになったか見てみて"),
+    "seeWhoLikeU": MessageLookupByLibrary.simpleMessage(
+      "誰があなたの共有を評価してくれるか見てみて",
+    ),
     "selectBirthPlace": MessageLookupByLibrary.simpleMessage("选择出生地"),
     "selectBirthdayHint": MessageLookupByLibrary.simpleMessage(
       "生年月日を選択して星座チャートを表示してください",
@@ -513,7 +516,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "setDefault": MessageLookupByLibrary.simpleMessage("デフォルトに設定"),
     "setInterestTags": MessageLookupByLibrary.simpleMessage("明確な興味タグを設定する"),
     "settings": MessageLookupByLibrary.simpleMessage("設定"),
-    "showYourPerAstroPairlity": MessageLookupByLibrary.simpleMessage(
+    "showYourPerAstroLearnlity": MessageLookupByLibrary.simpleMessage(
       "あなたの世界観や個性を表現してみてね ♪",
     ),
     "showYourPersonality": MessageLookupByLibrary.simpleMessage("あなたの個性を見せて"),
@@ -527,19 +530,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "startedChat": MessageLookupByLibrary.simpleMessage("チャット開始"),
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage("1日に1000回\nのAI同期通訳"),
-    "subPageSubtitleAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - \nあなたのチャット参謀",
+    "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - \nあなたのチャット参謀",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage("週に5回のDM"),
     "subPageSubtitleFilterMatchingCountries":
-        MessageLookupByLibrary.simpleMessage("マッチング\n国を絞り込む"),
+        MessageLookupByLibrary.simpleMessage("つながりの\n国を絞り込む"),
     "subPageSubtitleUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "いいね無制限",
     ),
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "あなたを好きな人が\n誰か見るために解除",
+      "あなたの共有を評価してくれる人が\n誰か見るために解除",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage("AstroPair Plusを入手"),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("AstroLearn Plusを入手"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("利用規約"),
     "subscriptionAgreementPrefix": m4,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(
@@ -583,7 +586,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ギャラリーから選択",
     ),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
-      "良いポートレートはもっとマッチをもたらします。本物の写真を使ってください。",
+      "良いポートレートはもっと多くの聞き手とつながるのに役立ちます。本物の写真を使ってください。",
     ),
     "userAvatarPageTitle": MessageLookupByLibrary.simpleMessage("写真を追加する"),
     "userAvatarUploadedLabel": MessageLookupByLibrary.simpleMessage(
@@ -601,7 +604,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ノンバイナリー",
     ),
     "userGenderPickerSubtitle": MessageLookupByLibrary.simpleMessage(
-      "公開されることなく、マッチングのためだけに使用されます",
+      "公開されることなく、つながりのためだけに使用されます",
     ),
     "userInfoPageNamePlaceholder": MessageLookupByLibrary.simpleMessage("入力"),
     "userInfoPageTitle": MessageLookupByLibrary.simpleMessage("個人情報"),
@@ -631,7 +634,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "viewAstroReport": MessageLookupByLibrary.simpleMessage("星盤レポートを表示"),
     "virgoSign": MessageLookupByLibrary.simpleMessage("乙女座"),
-    "wannaHollaAt": MessageLookupByLibrary.simpleMessage("挨拶しよう！"),
+    "wannaHollaAt": MessageLookupByLibrary.simpleMessage("共有したいですか…"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "閉じた後、ペアリング時にあなたの街は表示されません",
     ),
@@ -646,11 +649,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "warningTitleCaution": MessageLookupByLibrary.simpleMessage("注意"),
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
-      "ペアリング解除後、お互いのチャット内容が全て消去されます。",
+      "共有終了後、お互いの会話履歴が全てクリアされます。",
     ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage("メールアドレスは何ですか？"),
-    "whoLIkesYou": MessageLookupByLibrary.simpleMessage("あなたを好きな人は"),
-    "whoLikesU": MessageLookupByLibrary.simpleMessage("あなたを好きな人は"),
+    "whoLIkesYou": MessageLookupByLibrary.simpleMessage("あなたの共有を評価してくれる人"),
+    "whoLikesU": MessageLookupByLibrary.simpleMessage("あなたを評価してくれる人"),
     "wishActivityAddTitle": MessageLookupByLibrary.simpleMessage(
       "あなたの考えを加えてみてね",
     ),

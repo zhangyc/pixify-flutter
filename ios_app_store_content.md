@@ -1,81 +1,104 @@
-### 📱 App Store 应用描述
+[App Name]
+AstroLearn - Your Astrology Learning Community
 
-#### 🌍 英文版本 (App Store Description)
+[Description - English]
+In today's fast-paced world where young people face unprecedented pressure, AstroLearn provides a unique space to explore astrology while finding peace and connection. Learn, share, and grow with fellow astrology enthusiasts in a supportive community.
 
-**HeartSpace - Safe Space for Sharing & Listening**
+Why AstroLearn:
+• Learn Together: Connect with astrology learners at all levels - from beginners to advanced practitioners
+• Stress Relief: Discover how understanding astrology can help you navigate life's challenges
+• Supportive Community: Share your learning journey with like-minded individuals
+• Personalized Learning: Find study partners who match your interests and learning pace
+• Safe Environment: Express yourself freely in our judgment-free community
 
-In a world where everyone needs someone to truly listen, HeartSpace creates a safe, judgment-free environment where you can share your thoughts and connect with compassionate listeners.
+Features:
+• Join study groups based on your astrological interests
+• Share and discuss birth charts with fellow learners
+• Practice chart reading with supportive peers
+• Access beginner-friendly astrology resources
+• Connect with experienced community members
 
-**What makes HeartSpace special:**
-- **Safe & Private**: Your conversations are protected with end-to-end encryption and strict privacy controls
-- **Compassionate Listeners**: Connect with trained listeners who provide supportive, non-judgmental ears
-- **Anonymous Sharing**: Share your feelings anonymously if you prefer, or build meaningful connections
-- **24/7 Support**: Find listeners available around the clock for whenever you need to talk
-- **Crisis Resources**: Quick access to professional help when you need it most
+Premium Features:
+• Priority access to experienced astrology learners
+• Unlimited chart analysis and discussions
+• Advanced learning materials and resources
+• Ad-free experience for better focus
+• Flexible subscription options to suit your needs
 
-**How it works:**
-1. Share what's on your heart - your joys, challenges, or just daily thoughts
-2. Connect with listeners who understand and care
-3. Experience the healing power of being truly heard
+Diamond System:
+• Use diamonds for quick questions to experienced members
+• Get faster responses for efficient learning
+• Premium support for challenging topics
+• Enhanced learning experience through direct interaction
 
-**Why choose HeartSpace:**
-Because everyone deserves a safe space to be heard. Whether you're going through a tough time, celebrating a victory, or just need to process your thoughts - we're here for you.
+Perfect for:
+• Astrology beginners looking for study partners
+• Intermediate learners seeking deeper understanding
+• Anyone interested in using astrology for personal growth
+• Young people seeking alternative ways to understand themselves and relieve stress
 
-**Available in 14 languages. Free to start sharing.**
+Available in 14 languages. Start your astrology journey today.
 
----
+[Description - Chinese]
+星学社 - 你的占星学习社区
 
-#### 🇨🇳 中文版本 (App Store Description)
+在这个压力与日俱增的时代，年轻人常常感到焦虑和迷茫。星学社为你提供一个独特的空间，通过学习占星术来寻找内心的平静，同时结识志同道合的伙伴。
 
-**心灵港湾 - 安全倾诉与倾听空间**
+星学社的独特之处：
+• 共同学习：连接各个层次的占星爱好者 - 从初学者到进阶学习者
+• 减压解压：了解占星学如何帮助你应对生活压力
+• 互助社群：与志同道合的伙伴分享学习心得
+• 个性化学习：找到与你兴趣相投的学习伙伴
+• 安全环境：在无评判的社区中自由表达
 
-在这个每个人都需要真正倾听的世界，心灵港湾创造了一个安全、无评判的环境，让您可以分享心事，并与富有同情心的倾听者建立连接。
+功能特色：
+• 加入基于占星兴趣的学习小组
+• 与学习伙伴分享讨论星盘
+• 与支持性的伙伴练习星盘解读
+• 获取适合初学者的占星资源
+• 与经验丰富的社区成员交流
 
-**心灵港湾的独特之处：**
-- **安全私密**：您的对话通过端到端加密和严格隐私控制保护
-- **富有同情心的倾听者**：与经过培训的倾听者连接，他们提供支持性的、不带评判的倾听
-- **匿名分享**：如果您愿意，可以匿名分享您的感受，或建立有意义的连接
-- **24小时支持**：随时找到随时可用的倾听者，在您需要倾诉时提供陪伴
-- **危机资源**：在您最需要时快速访问专业帮助
+会员特权：
+• 优先接触经验丰富的占星学习者
+• 无限制的星盘分析与讨论
+• 进阶学习资料与资源
+• 无广告体验，专注学习
+• 灵活的订阅方案满足不同需求
 
-**使用方式：**
-1. 分享您心中的想法 - 您的喜悦、挑战，或只是日常思绪
-2. 与理解和关心的倾听者建立连接
-3. 体验被真正倾听的治愈力量
+钻石系统：
+• 使用钻石向资深会员快速提问
+• 获得更快的回复以提高学习效率
+• 难点问题获得优质支持
+• 通过直接互动提升学习体验
 
-**为什么选择心灵港湾：**
-因为每个人都值得拥有一个被倾听的安全空间。无论您正经历艰难时刻、庆祝胜利，还是只是需要梳理思绪 - 我们都在这里陪伴您。
+特别适合：
+• 寻找学习伙伴的占星初学者
+• 寻求深入理解的进阶学习者
+• 对通过占星术实现个人成长感兴趣的人
+• 寻找另类减压方式的年轻人
 
-**支持14种语言。免费开始倾诉。**
+支持14种语言。现在开始你的占星之旅。
 
----
+[Keywords - English]
+astrology learning, study astrology, astrology community, stress relief, personal growth, birth chart study, astrology beginners, learning partner, chart reading practice, spiritual growth
 
-#### 🔍 关键词 (Keywords)
+[Keywords - Chinese]
+占星学习, 占星社区, 减压解压, 个人成长, 星盘学习, 占星初学者, 学习伙伴, 星盘解读, 心灵成长, 占星交流
 
-**英文关键词：**
-safe space sharing, emotional support, compassionate listening, mental wellness, anonymous sharing, emotional connection, supportive community, heart sharing, listener network, safe conversations
+[Subtitle - English]
+Learn Astrology Together - Find Your Peace
 
-**中文关键词：**
-安全倾诉空间, 情感支持, 倾听陪伴, 心理健康, 匿名分享, 情感连接, 支持性社区, 心灵分享, 倾听者网络, 安全对话
+[Subtitle - Chinese]
+一起学占星 - 寻找内心平静
 
----
+[Promotional Text - English]
+Join a supportive community to learn astrology and find your inner peace. Premium features available for enhanced learning experience. ✨
 
-#### 🏷️ 副标题 (Subtitle)
+[Promotional Text - Chinese]
+加入互助社群，学习占星术，找到内心的平静。解锁会员特权，获得更好的学习体验。✨
 
-**英文：** Safe Space for Hearts - Share & Be Heard
-**中文：** 心灵的安全港湾 - 分享与被倾听
+[Disclaimer - English]
+AstroLearn is a community for astrology learning and stress relief through peer support. We are not a substitute for professional mental health services. If you're in crisis, please contact emergency services or a qualified mental health professional.
 
----
-
-#### 📋 推广文字 (Promotional Text)
-
-**英文：** Find your safe space to share and connect with compassionate listeners who truly care. 💙
-**中文：** 找到您分享心事的安全空间，与真正关心的倾听者建立连接。💙
-
----
-
-#### ⚠️ 免责声明 (Disclaimer)
-
-**英文：** HeartSpace provides peer support through compassionate listening. We are not a substitute for professional mental health services. If you're in crisis, please contact emergency services or a qualified mental health professional.
-
-**中文：** 心灵港湾通过富有同情心的倾听提供同行支持。我们不是专业心理健康服务的替代品。如果您处于危机中，请联系紧急服务或合格的心理健康专业人士。
+[Disclaimer - Chinese]
+星学社是一个通过同伴支持进行占星学习和压力缓解的社区。我们不是专业心理健康服务的替代品。如果您处于危机中，请联系紧急服务或合格的心理健康专业人士。

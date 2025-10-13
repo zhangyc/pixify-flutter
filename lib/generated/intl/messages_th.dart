@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m2(lang) => "เพียงพิมพ์เป็น${lang}";
 
   static String m3(gender) =>
-      "คุณชอบความคิดของ${Intl.gender(gender, female: 'เธอ', male: 'เขา', other: 'พวกเขา')} อันไหน?";
+      "คุณสัมผัสได้กับประสบการณ์การแบ่งปันของ${Intl.gender(gender, female: 'เธอ', male: 'เขา', other: 'พวกเขา')} อันไหน?";
 
   static String m4(storeName) =>
       "ดำเนินการต่อ คุณจะถูกเรียกเก็บเงิน การสมัครใช้งานของคุณจะถูกต่ออายุอัตโนมัติในราคาแพ็กเกจ คุณสามารถยกเลิกได้ผ่าน ${storeName} การดำเนินการต่อคุณจะตกลงกับ ";
@@ -64,15 +64,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "astroInfoIncompleteMessage": MessageLookupByLibrary.simpleMessage(
       "ผู้ใช้คนอื่นยังไม่ได้กรอกข้อมูลตำแหน่งที่เกิดให้ครบถ้วน ดังนั้นเราจึงไม่สามารถสร้างแผนภูมิโหราศาสตร์ได้ กรุณารอให้ผู้ใช้คนอื่นกรอกข้อมูลให้ครบถ้วน",
     ),
-    "astroPairInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroPair การแปลภาษาถูกปิดแล้ว",
+    "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
+      "⭕ AstroLearn การแปลภาษาถูกปิดแล้ว",
     ),
-    "astroPairRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
-      "AstroPairแนะนำ: ระงับ.\nทำอย่างไร: รอ.\nแนะนำ: ดูหนัง?",
+    "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
+      "AstroLearnแนะนำ: ระงับ.\nทำอย่างไร: รอ.\nแนะนำ: ดูหนัง?",
     ),
-    "astroPairWillGenerateABioBasedOnInterests":
+    "astroLearnWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage(
-          "AstroPair จะสร้างประวัติตามความสนใจของคุณ",
+          "AstroLearn จะสร้างประวัติตามความสนใจของคุณ",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("รายงานดวงดาว"),
     "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage(
@@ -118,7 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("เข้าใจแล้ว"),
     "buttonHitAIInterpretationMaximumLimit":
         MessageLookupByLibrary.simpleMessage(
-          "😪AstroPair เหนื่อย, 👇แตะเพื่อเติมพลังให้เธอ!",
+          "😪AstroLearn เหนื่อย, 👇แตะเพื่อเติมพลังให้เธอ!",
         ),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage("เข้าร่วมเลย"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("รักษาบัญชี"),
@@ -136,7 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonUnlockVipPerks": MessageLookupByLibrary.simpleMessage(
       "ปลดล็อกสิทธิประโยชน์ VIP",
     ),
-    "buttonUnmatch": MessageLookupByLibrary.simpleMessage("ยกเลิกการจับคู่"),
+    "buttonUnmatch": MessageLookupByLibrary.simpleMessage("สิ้นสุดการแบ่งปัน"),
     "buttonUnsubscribe": MessageLookupByLibrary.simpleMessage(
       "ยกเลิกการสมัครสมาชิก",
     ),
@@ -250,11 +250,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
       "Digite o local de nascimento",
     ),
-    "exceptionAstroPairContentFilterTips": MessageLookupByLibrary.simpleMessage(
-      "ไม่ได้ส่ง โปรแกรม AstroPair จะไม่แปลคำที่ถูกห้ามใช้",
-    ),
-    "exceptionAstroPairOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair มีการใช้งานมากเกินไป กรุณาลองใหม่ภายหลัง",
+    "exceptionAstroLearnContentFilterTips":
+        MessageLookupByLibrary.simpleMessage(
+          "ไม่ได้ส่ง โปรแกรม AstroLearn จะไม่แปลคำที่ถูกห้ามใช้",
+        ),
+    "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn มีการใช้งานมากเกินไป กรุณาลองใหม่ภายหลัง",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "ส่งไม่สำเร็จ กรุณาลองใหม่ภายหลัง",
@@ -266,15 +267,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "การหาคนที่มีความสนใจร่วมกันกับคุณ",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroPairกำลังหาเพื่อนที่มีศักยภาพ...",
+      "AstroLearnกำลังหาเพื่อนที่มีศักยภาพ...",
     ),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "เฮ้ย ฉันว่านายน่าทึ่งมาก มาเป็นเพื่อนกันไหม?",
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("อนาคต"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("เมถุน"),
-    "getAstroPairPlus": MessageLookupByLibrary.simpleMessage(
-      "รับ AstroPair Plus",
+    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
+      "รับ AstroLearn Plus",
     ),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage(
       "GIF ไม่ได้รับอนุญาต",
@@ -284,11 +285,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "เฮ้ย ลองทายสิว่าใครจะเป็นคนพูดก่อน?",
     ),
-    "haveAstroPairSayHi": MessageLookupByLibrary.simpleMessage(
-      "ให้AstroPairทักทายหน่อย",
+    "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
+      "ให้AstroLearnทักทายหน่อย",
     ),
-    "hereAstroPairCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "นี่คือสิ่งที่ AstroPair ทำเป็นพิเศษเพื่อคุณ",
+    "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
+      "นี่คือสิ่งที่ AstroLearn ทำเป็นพิเศษเพื่อคุณ",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "คุณคิดว่าการแปลภาษาโดย AI แบบเรียลไทม์เป็นอย่างไร?",
@@ -319,11 +320,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "issues": MessageLookupByLibrary.simpleMessage("ปัญหา"),
     "justNow": MessageLookupByLibrary.simpleMessage("เมื่อสักครู่"),
-    "justSendALike": MessageLookupByLibrary.simpleMessage("เพียงส่งไลค์"),
+    "justSendALike": MessageLookupByLibrary.simpleMessage(
+      "เพียงแบ่งปันความชื่นชมของคุณ",
+    ),
     "justTypeInYourLanguage": m2,
     "leoSign": MessageLookupByLibrary.simpleMessage("ราศีสิงห์"),
-    "letAstroPairSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "AstroPair ช่วยคุณทักทายนะ",
+    "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn ช่วยคุณทักทายนะ",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("ราศีตุลย์"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage("ไลฟ์สไตล์"),
@@ -336,12 +339,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "likeBack": MessageLookupByLibrary.simpleMessage("ไลค์กลับ"),
     "likedBack": MessageLookupByLibrary.simpleMessage("ไลค์กลับแล้ว"),
     "likedPageMonetizeButton": MessageLookupByLibrary.simpleMessage(
-      "ตรวจสอบโปรไฟล์ของพวกเขา",
+      "เรียนรู้เกี่ยวกับการแบ่งปันของพวกเขา",
     ),
     "likedPageNoData": MessageLookupByLibrary.simpleMessage(
-      "สถานะ: ยังไม่มีไลค์\n\nทำอย่างไร: ริเริ่ม\n\nข้อเสนอ:\nอัปโหลดรูปภาพที่คุณพอใจ\nเขียนประวัติของคุณอย่างแท้จริง\nเลือกความสนใจของคุณ",
+      "สถานะ: ยังไม่มีใครชื่นชม\n\nทำอย่างไร: เริ่มแบ่งปัน\n\nข้อเสนอ:\nภาพถ่ายที่แท้จริง\nเรื่องราวที่จริงใจ\nความสนใจที่แบ่งปัน\n\nหมายความว่า...\nอัปโหลดรูปภาพที่แท้จริง\nแบ่งปันเรื่องราวของคุณ\nเลือกความสนใจของคุณ",
     ),
-    "likedYou": MessageLookupByLibrary.simpleMessage("ที่ชอบคุณ"),
+    "likedYou": MessageLookupByLibrary.simpleMessage("ชื่นชมการแบ่งปันของคุณ"),
     "loading": MessageLookupByLibrary.simpleMessage("กำลังโหลด..."),
     "locationAuthorizeContent": MessageLookupByLibrary.simpleMessage(
       "เราต้องการตำแหน่งของคุณเพื่อแสดงคนใกล้เคียง",
@@ -381,12 +384,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "nearby": MessageLookupByLibrary.simpleMessage("ใกล้ๆ"),
     "newGameplay": MessageLookupByLibrary.simpleMessage("การเล่นเกมใหม่"),
-    "newMatch": MessageLookupByLibrary.simpleMessage("จับคู่ใหม่!"),
+    "newMatch": MessageLookupByLibrary.simpleMessage("การเชื่อมต่อใหม่!"),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage(
       "วันชำระเงินครั้งต่อไป",
     ),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
-      "สถานะ: ไม่มีข้อความ\n\nทำอย่างไร: ไปที่หน้าจับคู่กันเถอะ\n\nข้อเสนอ: ทำโปรไฟล์ที่ดี",
+      "สถานะ: ไม่มีข้อความ\n\nทำอย่างไร: ค้นหาผู้ฟัง\n\nข้อเสนอ: แบ่งปันตัวตนที่แท้จริงของคุณ",
     ),
     "noOneFoundYourCharm": MessageLookupByLibrary.simpleMessage(
       "ยังไม่มีใครพบเสน่ห์ของคุณ",
@@ -394,7 +397,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noThanks": MessageLookupByLibrary.simpleMessage("ไม่ละ ขอบคุณนะ"),
     "notifications": MessageLookupByLibrary.simpleMessage("การแจ้งเตือน"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "AstroPair เหมือนกับฐานบ้านสำหรับพลเมืองโลก",
+      "AstroLearn เหมือนกับฐานบ้านสำหรับพลเมืองโลก",
     ),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "ไม่ว่าจะอยู่ที่บ้านหรือบนท้องถนน พบปะผู้คนทั่วโลก และ...",
@@ -525,20 +528,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "plusFuncAIInterpretation": MessageLookupByLibrary.simpleMessage(
       "AI แปลภาษาเรียลไทม์ 1000 ครั้ง/วัน",
     ),
-    "plusFuncAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - ที่ปรึกษาการแชทของคุณ",
+    "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - ที่ปรึกษาการแชทของคุณ",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage(
       "ทุกสัปดาห์ 5 DM",
     ),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
-      "กรองประเทศที่จับคู่ได้",
+      "กรองประเทศที่เชื่อมต่อได้",
     ),
     "plusFuncUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "ไลค์ไม่จำกัด",
     ),
     "plusFuncUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "ปลดล็อกเพื่อดูว่าใครชอบคุณ",
+      "ปลดล็อกเพื่อดูว่าใครชื่นชมการแบ่งปันของคุณ",
     ),
     "plusFuncWishes": MessageLookupByLibrary.simpleMessage("3 คำอธิษฐาน"),
     "plusMember": MessageLookupByLibrary.simpleMessage("สมาชิก Plus"),
@@ -577,7 +580,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "report": MessageLookupByLibrary.simpleMessage("รายงาน"),
     "reportOptionGore": MessageLookupByLibrary.simpleMessage("โหดร้าย"),
     "reportOptionOther": MessageLookupByLibrary.simpleMessage("อื่นๆ"),
-    "reportOptionPerAstroPairlAttack": MessageLookupByLibrary.simpleMessage(
+    "reportOptionPerAstroLearnlAttack": MessageLookupByLibrary.simpleMessage(
       "การโจมตีส่วนบุคคล",
     ),
     "reportOptionPersonalAttack": MessageLookupByLibrary.simpleMessage(
@@ -597,7 +600,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "หลักฐานภาพหน้าจอ",
     ),
     "seeProfile": MessageLookupByLibrary.simpleMessage("ดูโปรไฟล์"),
-    "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("ดูว่าใครชอบคุณ"),
+    "seeWhoLikeU": MessageLookupByLibrary.simpleMessage("ดูว่าใครชื่นชมคุณ"),
     "selectBirthPlace": MessageLookupByLibrary.simpleMessage(
       "Selecionar Local de Nascimento",
     ),
@@ -620,7 +623,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ตั้งแท็กความสนใจที่ชัดเจน",
     ),
     "settings": MessageLookupByLibrary.simpleMessage("การตั้งค่า"),
-    "showYourPerAstroPairlity": MessageLookupByLibrary.simpleMessage(
+    "showYourPerAstroLearnlity": MessageLookupByLibrary.simpleMessage(
       "แสดงบุคลิกของคุณ",
     ),
     "showYourPersonality": MessageLookupByLibrary.simpleMessage(
@@ -640,21 +643,21 @@ class MessageLookup extends MessageLookupByLibrary {
         MessageLookupByLibrary.simpleMessage(
           "AI \nแปลภาษาเรียลไทม์ \n1000 ครั้ง/วัน",
         ),
-    "subPageSubtitleAstroPairTips": MessageLookupByLibrary.simpleMessage(
-      "AstroPair Tips - \nที่ปรึกษาการแชทของคุณ",
+    "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
+      "AstroLearn Tips - \nที่ปรึกษาการแชทของคุณ",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage(
       "ทุกสัปดาห์ 5 DM",
     ),
     "subPageSubtitleFilterMatchingCountries":
-        MessageLookupByLibrary.simpleMessage("กรองประเทศที่จับคู่ได้"),
+        MessageLookupByLibrary.simpleMessage("กรองประเทศที่เชื่อมต่อได้"),
     "subPageSubtitleUnlimitedLikes": MessageLookupByLibrary.simpleMessage(
       "ไลค์ไม่จำกัด",
     ),
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
-      "ปลดล็อกเพื่อดูว่าใครชอบคุณ",
+      "ปลดล็อกเพื่อดูว่าใครชื่นชมคุณ",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage("รับ AstroPair Plus"),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("รับ AstroLearn Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage(
       "ข้อกำหนดและเงื่อนไข",
     ),
@@ -712,7 +715,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "จากแกลเลอรีเลือก",
     ),
     "userAvatarPageSubtitle": MessageLookupByLibrary.simpleMessage(
-      "ภาพที่ดีจะทำให้คุณมีการจับคู่มากขึ้น ให้เป็นภาพจริงและใช้ภาพของคุณเองที่ถูกต้อง",
+      "ภาพที่ดีจะช่วยให้คุณเชื่อมต่อกับผู้ฟังมากขึ้น ให้เป็นภาพจริงและใช้ภาพของคุณเองที่ถูกต้อง",
     ),
     "userAvatarPageTitle": MessageLookupByLibrary.simpleMessage("แสดงตัวเอง"),
     "userAvatarUploadedLabel": MessageLookupByLibrary.simpleMessage(
@@ -732,7 +735,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ไม่ได้กำหนดเพศ",
     ),
     "userGenderPickerSubtitle": MessageLookupByLibrary.simpleMessage(
-      "เพศของคุณจะไม่ถูกแสดงต่อสาธารณะ ใช้เพื่อช่วยในการจับคู่เท่านั้น",
+      "เพศของคุณจะไม่ถูกแสดงต่อสาธารณะ ใช้เพื่อช่วยในการเชื่อมต่อเท่านั้น",
     ),
     "userInfoPageNamePlaceholder": MessageLookupByLibrary.simpleMessage("ป้อน"),
     "userInfoPageTitle": MessageLookupByLibrary.simpleMessage("ข้อมูลพื้นฐาน"),
@@ -766,7 +769,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ดูรายงานดวงดาวกับ",
     ),
     "virgoSign": MessageLookupByLibrary.simpleMessage("สิงห์"),
-    "wannaHollaAt": MessageLookupByLibrary.simpleMessage("ทักทายกันเถอะ!"),
+    "wannaHollaAt": MessageLookupByLibrary.simpleMessage("อยากแบ่งปันไหม!"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "ปิดหลังจากนั้น จะไม่แสดงเมืองของคุณในขณะจับคู่",
     ),
@@ -781,13 +784,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "warningTitleCaution": MessageLookupByLibrary.simpleMessage("ระวัง"),
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
-      "หลังจากยกเลิกการจับคู่ ข้อความสนทนาทั้งหมดจะถูกลบออก",
+      "หลังจากสิ้นสุดการแบ่งปัน ประวัติการสนทนาทั้งหมดจะถูกลบออก",
     ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage(
       "อีเมลของคุณคืออะไร?",
     ),
-    "whoLIkesYou": MessageLookupByLibrary.simpleMessage("ใครที่ชอบคุณ"),
-    "whoLikesU": MessageLookupByLibrary.simpleMessage("ใครที่ชอบคุณ"),
+    "whoLIkesYou": MessageLookupByLibrary.simpleMessage(
+      "ใครบ้างที่ชื่นชมการแบ่งปันของคุณ",
+    ),
+    "whoLikesU": MessageLookupByLibrary.simpleMessage("ใครบ้างที่ชื่นชมคุณ"),
     "wishActivityAddTitle": MessageLookupByLibrary.simpleMessage(
       "เพิ่มความคิดของคุณ",
     ),
