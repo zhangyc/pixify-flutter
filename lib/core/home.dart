@@ -116,11 +116,11 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         children: [
           MatchScreen(),
           LikeMeScreen(),
-          // RoomsPage(),
-          ConversationScreen(onShowLikeMe: () {
-            _pageController.animateToPage(1,
-                duration: const Duration(milliseconds: 2), curve: Curves.ease);
-          }),
+          RoomsPage(),
+          // ConversationScreen(onShowLikeMe: () {
+          //   _pageController.animateToPage(1,
+          //       duration: const Duration(milliseconds: 2), curve: Curves.ease);
+          // }),
           PersonaScreen(),
         ],
       ),

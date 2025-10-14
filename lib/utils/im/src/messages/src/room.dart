@@ -74,16 +74,16 @@ abstract class Room extends Equatable {
   /// Equatable props.
   @override
   List<Object?> get props => [
-        createdAt,
-        id,
-        imageUrl,
-        lastMessages,
-        metadata,
-        name,
-        type,
-        updatedAt,
-        users,
-      ];
+    createdAt,
+    id,
+    imageUrl,
+    lastMessages,
+    metadata,
+    name,
+    type,
+    updatedAt,
+    users,
+  ];
 
   /// Creates a copy of the room with an updated data.
   /// [imageUrl], [name] and [updatedAt] with null values will nullify existing values

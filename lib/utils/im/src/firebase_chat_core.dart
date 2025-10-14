@@ -22,13 +22,13 @@ class FirebaseChatCore {
 
   /// Singleton instance.
   static final FirebaseChatCore instance =
-      FirebaseChatCore._privateConstructor();
+  FirebaseChatCore._privateConstructor();
 
   /// Gets proper [FirebaseFirestore] instance.
   FirebaseFirestore getFirebaseFirestore() => config.firebaseAppName != null
       ? FirebaseFirestore.instanceFor(
-          app: Firebase.app(config.firebaseAppName!),
-        )
+    app: Firebase.app(config.firebaseAppName!),
+  )
       : FirebaseFirestore.instance;
 
   /// Sets custom config to change default names for rooms
@@ -70,7 +70,7 @@ class FirebaseChatCore {
       'userIds': roomUsers.map((u) => u.id).toList(),
       'userRoles': roomUsers.fold<Map<String, String?>>(
         {},
-        (previousValue, user) => {
+            (previousValue, user) => {
           ...previousValue,
           user.id: user.role?.toShortString(),
         },
@@ -90,10 +90,10 @@ class FirebaseChatCore {
   /// Creates a direct chat for 2 people. Add [metadata] for any additional
   /// custom data.
   Future<types.Room> createRoom(
-    types.User otherUser, {
-    Map<String, dynamic>? metadata,
-    required MyProfile currentUser,
-  }) async {
+      types.User otherUser, {
+        Map<String, dynamic>? metadata,
+        required MyProfile currentUser,
+      }) async {
     // Sort two user ids array to always have the same array for both users,
     // this will make it easy to find the room if exist and make one read only.
     final userIds = [currentUser.id.toString(), otherUser.id]..sort();
@@ -214,13 +214,13 @@ class FirebaseChatCore {
 
   /// Returns a stream of messages from Firebase for a given room.
   Stream<List<types.Message>> messages(
-    types.Room room, {
-    List<Object?>? endAt,
-    List<Object?>? endBefore,
-    int? limit,
-    List<Object?>? startAfter,
-    List<Object?>? startAt,
-  }) {
+      types.Room room, {
+        List<Object?>? endAt,
+        List<Object?>? endBefore,
+        int? limit,
+        List<Object?>? startAfter,
+        List<Object?>? startAt,
+      }) {
     var query = getFirebaseFirestore()
         .collection('${config.roomsCollectionName}/${room.id}/messages')
         .orderBy('createdAt', descending: true);
@@ -247,23 +247,23 @@ class FirebaseChatCore {
 
     return query.snapshots().map(
           (snapshot) => snapshot.docs.fold<List<types.Message>>(
-            [],
+        [],
             (previousValue, doc) {
-              final data = doc.data();
-              final author = room.users.firstWhere(
+          final data = doc.data();
+          final author = room.users.firstWhere(
                 (u) => u.id == data['authorId'],
-                orElse: () => types.User(id: data['authorId'] as String),
-              );
+            orElse: () => types.User(id: data['authorId'] as String),
+          );
 
-              data['author'] = author.toJson();
-              data['createdAt'] = data['createdAt']?.millisecondsSinceEpoch;
-              data['id'] = doc.id;
-              data['updatedAt'] = data['updatedAt']?.millisecondsSinceEpoch;
+          data['author'] = author.toJson();
+          data['createdAt'] = data['createdAt']?.millisecondsSinceEpoch;
+          data['id'] = doc.id;
+          data['updatedAt'] = data['updatedAt']?.millisecondsSinceEpoch;
 
-              return [...previousValue, types.Message.fromJson(data)];
-            },
-          ),
-        );
+          return [...previousValue, types.Message.fromJson(data)];
+        },
+      ),
+    );
   }
 
   /// Returns a stream of changes in a room from Firebase.
@@ -274,12 +274,12 @@ class FirebaseChatCore {
         .snapshots()
         .asyncMap(
           (doc) => processRoomDocument(
-            doc,
-            currentUser.id,
-            getFirebaseFirestore(),
-            config.usersCollectionName,
-          ),
-        );
+        doc,
+        currentUser.id,
+        getFirebaseFirestore(),
+        config.usersCollectionName,
+      ),
+    );
   }
 
   /// Returns a stream of rooms from Firebase. Only rooms where current
@@ -296,21 +296,21 @@ class FirebaseChatCore {
       {bool orderByUpdatedAt = false}) {
     final collection = orderByUpdatedAt
         ? getFirebaseFirestore()
-            .collection(config.roomsCollectionName)
-            .where('userIds', arrayContains: currentUser.id)
-            .orderBy('updatedAt', descending: true)
+        .collection(config.roomsCollectionName)
+        .where('userIds', arrayContains: currentUser.id)
+        .orderBy('updatedAt', descending: true)
         : getFirebaseFirestore()
-            .collection(config.roomsCollectionName)
-            .where('userIds', arrayContains: currentUser.id);
+        .collection(config.roomsCollectionName)
+        .where('userIds', arrayContains: currentUser.id);
 
     return collection.snapshots().asyncMap(
           (query) => processRoomsQuery(
-            currentUser.id,
-            getFirebaseFirestore(),
-            query,
-            config.usersCollectionName,
-          ),
-        );
+        currentUser.id,
+        getFirebaseFirestore(),
+        query,
+        config.usersCollectionName,
+      ),
+    );
   }
 
   /// Sends a message to the Firestore. Accepts any partial message and a
@@ -372,7 +372,7 @@ class FirebaseChatCore {
 
     final messageMap = message.toJson();
     messageMap.removeWhere(
-      (key, value) => key == 'author' || key == 'createdAt' || key == 'id',
+          (key, value) => key == 'author' || key == 'createdAt' || key == 'id',
     );
     messageMap['authorId'] = message.author.id;
     messageMap['updatedAt'] = FieldValue.serverTimestamp();
@@ -388,7 +388,7 @@ class FirebaseChatCore {
   void updateRoom(types.Room room, MyProfile currentUser) async {
     final roomMap = room.toJson();
     roomMap.removeWhere((key, value) =>
-        key == 'createdAt' ||
+    key == 'createdAt' ||
         key == 'id' ||
         key == 'lastMessages' ||
         key == 'users');
@@ -402,7 +402,7 @@ class FirebaseChatCore {
       final messageMap = m.toJson();
 
       messageMap.removeWhere((key, value) =>
-          key == 'author' ||
+      key == 'author' ||
           key == 'createdAt' ||
           key == 'id' ||
           key == 'updatedAt');
@@ -427,20 +427,20 @@ class FirebaseChatCore {
         .snapshots()
         .map(
           (snapshot) => snapshot.docs.fold<List<types.User>>(
-            [],
+        [],
             (previousValue, doc) {
-              if (currentUser.id.toString() == doc.id) return previousValue;
+          if (currentUser.id.toString() == doc.id) return previousValue;
 
-              final data = doc.data();
+          final data = doc.data();
 
-              data['createdAt'] = data['createdAt']?.millisecondsSinceEpoch;
-              data['id'] = doc.id;
-              data['lastSeen'] = data['lastSeen']?.millisecondsSinceEpoch;
-              data['updatedAt'] = data['updatedAt']?.millisecondsSinceEpoch;
+          data['createdAt'] = data['createdAt']?.millisecondsSinceEpoch;
+          data['id'] = doc.id;
+          data['lastSeen'] = data['lastSeen']?.millisecondsSinceEpoch;
+          data['updatedAt'] = data['updatedAt']?.millisecondsSinceEpoch;
 
-              return [...previousValue, types.User.fromJson(data)];
-            },
-          ),
-        );
+          return [...previousValue, types.User.fromJson(data)];
+        },
+      ),
+    );
   }
 }

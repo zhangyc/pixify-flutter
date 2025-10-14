@@ -13,7 +13,7 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sona/utils/global/global.dart';
 
-import '../../../utils/im/src/firebase_chat_core.dart';
+import '../../../utils/im/im_manager.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({
@@ -30,13 +30,48 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   bool _isAttachmentUploading = false;
 
+  // 控制发送按钮状态
+  bool get _canSend => !_isAttachmentUploading;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeChat();
+  }
+
+  void _initializeChat() {
+    // 标记消息已读
+    if (profile != null) {
+      IMManager.instance.updateMessage(
+        types.TextMessage(
+          author: types.User(id: profile!.id.toString()),
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          text: '',
+          status: types.Status.seen,
+        ),
+        widget.room.id,
+        profile!,
+      );
+    }
+  }
+
+  void _showError(String error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
   void _handleAtachmentPressed() {
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) => SafeArea(
-        child: SizedBox(
-          height: 144,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TextButton(
@@ -73,74 +108,152 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void _handleFileSelection() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.any,
-    );
+  Future<void> _handleFileSelection() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.any,
+        allowCompression: true, // 允许压缩
+        allowMultiple: false, // 单文件
+      );
 
-    if (result != null && result.files.single.path != null) {
+      if (result == null || result.files.single.path == null) return;
+
       _setAttachmentUploading(true);
-      final name = result.files.single.name;
-      final filePath = result.files.single.path!;
-      final file = File(filePath);
+      final file = File(result.files.single.path!);
+      final size = await file.length();
 
-      try {
-        final reference = FirebaseStorage.instance.ref(name);
-        await reference.putFile(file);
-        final uri = await reference.getDownloadURL();
-
-        final message = types.PartialFile(
-          mimeType: lookupMimeType(filePath),
-          name: name,
-          size: result.files.single.size,
-          uri: uri,
-        );
-
-        FirebaseChatCore.instance.sendMessage(message, widget.room.id,profile!);
-        _setAttachmentUploading(false);
-      } finally {
-        _setAttachmentUploading(false);
+      // 检查文件大小限制 (20MB)
+      if (size > 20 * 1024 * 1024) {
+        _showError('File size cannot exceed 20MB');
+        return;
       }
+
+      // 生成唯一文件名
+      final ext = result.files.single.extension ?? '';
+      final name = '${DateTime.now().millisecondsSinceEpoch}.$ext';
+
+      // 上传到指定目录
+      final reference = FirebaseStorage.instance
+          .ref()
+          .child('chat')
+          .child(widget.room.id)
+          .child(name);
+
+      // 上传文件
+      final uploadTask = reference.putFile(
+        file,
+        SettableMetadata(
+          contentType: lookupMimeType(result.files.single.path!),
+          customMetadata: {
+            'uploadedBy': profile?.id.toString() ?? 'unknown',
+            'uploadedAt': DateTime.now().toIso8601String(),
+          },
+        ),
+      );
+
+      // 监听上传进度
+      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+        final progress = snapshot.bytesTransferred / snapshot.totalBytes;
+        debugPrint('Upload progress: ${(progress * 100).toStringAsFixed(2)}%');
+      });
+
+      // 等待上传完成
+      await uploadTask;
+      final uri = await reference.getDownloadURL();
+
+      // 发送文件消息
+      await IMManager.instance.sendFileMessage(
+        widget.room.id,
+        uri,
+        profile!,
+        name: result.files.single.name,
+        size: size,
+        mimeType: lookupMimeType(result.files.single.path!),
+      );
+    } catch (e, stackTrace) {
+      debugPrint('File upload error: $e');
+      debugPrint('Stack trace: $stackTrace');
+      _showError('Failed to upload file: ${e.toString()}');
+    } finally {
+      _setAttachmentUploading(false);
     }
   }
 
-  void _handleImageSelection() async {
-    final result = await ImagePicker().pickImage(
-      imageQuality: 70,
-      maxWidth: 1440,
-      source: ImageSource.gallery,
-    );
+  Future<void> _handleImageSelection() async {
+    try {
+      final result = await ImagePicker().pickImage(
+        imageQuality: 70,
+        maxWidth: 1440,
+        source: ImageSource.gallery,
+      );
 
-    if (result != null) {
+      if (result == null) return;
+
       _setAttachmentUploading(true);
       final file = File(result.path);
-      final size = file.lengthSync();
+      final size = await file.length();
+
+      // 检查文件大小限制 (10MB)
+      if (size > 10 * 1024 * 1024) {
+        _showError('Image size cannot exceed 10MB');
+        return;
+      }
+
       final bytes = await result.readAsBytes();
       final image = await decodeImageFromList(bytes);
-      final name = result.name;
 
-      try {
-        final reference = FirebaseStorage.instance.ref(name);
-        await reference.putFile(file);
-        final uri = await reference.getDownloadURL();
+      // 生成唯一文件名
+      final ext = result.name.split('.').last;
+      final name = '${DateTime.now().millisecondsSinceEpoch}.$ext';
 
-        final message = types.PartialImage(
-          height: image.height.toDouble(),
-          name: name,
-          size: size,
-          uri: uri,
-          width: image.width.toDouble(),
-        );
+      // 上传到指定目录
+      final reference = FirebaseStorage.instance
+          .ref()
+          .child('chat')
+          .child(widget.room.id)
+          .child('images')
+          .child(name);
 
-        FirebaseChatCore.instance.sendMessage(
-          message,
-          widget.room.id,
-            profile!
-        );
-        _setAttachmentUploading(false);
-      } finally {
-        _setAttachmentUploading(false);
-      }
+      // 上传图片
+      final uploadTask = reference.putFile(
+        file,
+        SettableMetadata(
+          contentType: 'image/$ext',
+          customMetadata: {
+            'uploadedBy': profile?.id.toString() ?? 'unknown',
+            'uploadedAt': DateTime.now().toIso8601String(),
+            'width': image.width.toString(),
+            'height': image.height.toString(),
+          },
+        ),
+      );
+
+      // 监听上传进度
+      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+        final progress = snapshot.bytesTransferred / snapshot.totalBytes;
+        debugPrint('Upload progress: ${(progress * 100).toStringAsFixed(2)}%');
+      });
+
+      // 等待上传完成
+      await uploadTask;
+      final uri = await reference.getDownloadURL();
+
+      // 发送图片消息
+      await IMManager.instance.sendImageMessage(
+        widget.room.id,
+        uri,
+        profile!,
+        name: name,
+        size: size,
+        width: image.width.toDouble(),
+        height: image.height.toDouble(),
+      );
+    } catch (e, stackTrace) {
+      debugPrint('Image upload error: $e');
+      debugPrint('Stack trace: $stackTrace');
+      _showError('Failed to upload image: ${e.toString()}');
+    } finally {
+      _setAttachmentUploading(false);
     }
   }
 
@@ -151,11 +264,8 @@ class _ChatPageState extends State<ChatPage> {
       if (message.uri.startsWith('http')) {
         try {
           final updatedMessage = message.copyWith(isLoading: true);
-          FirebaseChatCore.instance.updateMessage(
-            updatedMessage,
-            widget.room.id,
-              profile!
-          );
+          IMManager.instance
+              .updateMessage(updatedMessage, widget.room.id, profile!);
 
           final client = http.Client();
           final request = await client.get(Uri.parse(message.uri));
@@ -169,11 +279,8 @@ class _ChatPageState extends State<ChatPage> {
           }
         } finally {
           final updatedMessage = message.copyWith(isLoading: false);
-          FirebaseChatCore.instance.updateMessage(
-            updatedMessage,
-            widget.room.id,
-              profile!
-          );
+          IMManager.instance
+              .updateMessage(updatedMessage, widget.room.id, profile!);
         }
       }
 
@@ -187,15 +294,11 @@ class _ChatPageState extends State<ChatPage> {
   ) {
     final updatedMessage = message.copyWith(previewData: previewData);
 
-    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.room.id,profile!);
+    IMManager.instance.updateMessage(updatedMessage, widget.room.id, profile!);
   }
 
   void _handleSendPressed(types.PartialText message) {
-    FirebaseChatCore.instance.sendMessage(
-      message,
-      widget.room.id,
-        profile!
-    );
+    IMManager.instance.sendTextMessage(widget.room.id, message.text, profile!);
   }
 
   void _setAttachmentUploading(bool uploading) {
@@ -208,26 +311,110 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           systemOverlayStyle: SystemUiOverlayStyle.light,
-          title: const Text('Chat'),
+          title: Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: widget.room.imageUrl != null
+                    ? NetworkImage(widget.room.imageUrl!)
+                    : null,
+                child: widget.room.imageUrl == null
+                    ? Text(widget.room.name?[0].toUpperCase() ?? '?')
+                    : null,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: widget.room.name?[0].toUpperCase() ?? '?',
+                            style: const TextStyle(fontSize: 16, height: 2.0)),
+                        if (widget.room.type == types.RoomType.group)
+                          TextSpan(
+                              text: '${widget.room.users.length} members',
+                              style: const TextStyle(fontSize: 12)),
+                      ]),
+                    ),
+                    Text(
+                      widget.room.name ?? 'Chat',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    if (widget.room.type == types.RoomType.group)
+                      Text(
+                        '${widget.room.users.length} members',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Theme.of(context).textTheme.bodySmall?.color,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.more_vert),
+              onPressed: () {
+                // TODO: 显示聊天室设置菜单
+              },
+            ),
+          ],
         ),
         body: StreamBuilder<types.Room>(
           initialData: widget.room,
-          stream: FirebaseChatCore.instance.room(widget.room.id,profile!),
-          builder: (context, snapshot) => StreamBuilder<List<types.Message>>(
-            initialData: const [],
-            stream: FirebaseChatCore.instance.messages(snapshot.data!),
-            builder: (context, snapshot) => Chat(
-              isAttachmentUploading: _isAttachmentUploading,
-              messages: snapshot.data ?? [],
-              onAttachmentPressed: _handleAtachmentPressed,
-              onMessageTap: _handleMessageTap,
-              onPreviewDataFetched: _handlePreviewDataFetched,
-              onSendPressed: _handleSendPressed,
-              user: types.User(
-                id: profile!.id.toString()
-              ),
-            ),
-          ),
+          stream: IMManager.instance.getRoomStream(widget.room.id, profile!),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            }
+
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return StreamBuilder<List<types.Message>>(
+              initialData: const [],
+              stream: IMManager.instance.getMessageListStream(snapshot.data!),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                }
+
+                return Chat(
+                  theme: DefaultChatTheme(
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    primaryColor: Theme.of(context).primaryColor,
+                    secondaryColor: Theme.of(context).cardColor,
+                    userAvatarNameColors: [
+                      Theme.of(context).primaryColor,
+                    ],
+                  ),
+                  isAttachmentUploading: _isAttachmentUploading,
+                  messages: snapshot.data ?? [],
+                  onAttachmentPressed:
+                      _canSend ? _handleAtachmentPressed : null,
+                  onMessageTap: _handleMessageTap,
+                  onPreviewDataFetched: _handlePreviewDataFetched,
+                  onSendPressed: _handleSendPressed,
+                  showUserAvatars: true,
+                  showUserNames: widget.room.type == types.RoomType.group,
+                  user: types.User(
+                    id: profile!.id.toString(),
+                  ),
+                );
+              },
+            );
+          },
         ),
       );
 }

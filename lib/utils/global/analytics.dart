@@ -1,6 +1,5 @@
 part of './global.dart';
 
-
 class SonaAnalytics {
   SonaAnalytics._();
 
@@ -22,16 +21,41 @@ class SonaAnalytics {
     FirebaseAnalytics.instance.setUserId(id: id.toString());
   }
 
+  static Map<String, Object> _getCommonParams() {
+    return {
+      'platform': Platform.isIOS ? 'ios' : 'android',
+      'os_version': Platform.operatingSystemVersion,
+      'timestamp': DateTime.now().toIso8601String(),
+      if (userId != null) 'user_id': userId!
+    };
+  }
+
   static log(String name, [Map<String, Object>? parameters]) {
     if (kDebugMode) return;
     try {
-      FirebaseAnalytics.instance.logEvent(name: name, parameters: parameters);
-    } catch(e) {
+      // 合并通用参数
+      final params = {..._getCommonParams(), ...?parameters};
+
+      // Firebase 打点
+      FirebaseAnalytics.instance.logEvent(name: name, parameters: params);
+
+      // Facebook 打点
+      _facebook.logEvent(
+          name: name,
+          parameters:
+              params.map((key, value) => MapEntry(key, value.toString())));
+    } catch (e) {
       //
     }
   }
 
   static logFacebookEvent(String name, [Map<String, dynamic>? parameters]) {
-    _facebook.logEvent(name: name, parameters: parameters);
+    if (kDebugMode) return;
+    try {
+      final params = {..._getCommonParams(), ...?parameters};
+      _facebook.logEvent(name: name, parameters: params);
+    } catch (e) {
+      //
+    }
   }
 }

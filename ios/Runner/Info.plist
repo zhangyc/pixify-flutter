@@ -30,7 +30,7 @@
       <key>CFBundleURLSchemes</key>
       <array>
           <string>astrolink</string>
-          <string>fb357454540279529</string>
+          <string>fb1150089127134218</string>
       </array>
 		</dict>
 		<dict>
@@ -49,6 +49,10 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mailto</string>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -98,12 +102,12 @@
 	<false/>
 	<key>FirebaseMessagingAutoInitEnabled</key>
 	<true/>
-	<key>FacebookAppID</key>
-  <string>357454540279529</string>
+  <key>FacebookAppID</key>
+  <string>1150089127134218</string>
   <key>FacebookClientToken</key>
-  <string>05a5b4f17e6f876e110ef9df3945a657</string>
+  <string>7d8bab6b89b1e994fd0a3b5b276b15e7</string>
   <key>FacebookDisplayName</key>
-  <string>AstroLink</string>
+  <string>AstroPair</string>
     <!-- gal: Required -->
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>We need add only access to save medias</string>
