@@ -20,26 +20,46 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ko';
 
-  static String m0(something) => "\"${something}에 관심이 있어요!\"";
+  static String m0(month, day) => "${month}월 ${day}일";
 
-  static String m1(something) => "\'${something}\'에 매우 관심이 있어요！";
+  static String m1(x) => "30일 목표까지 ${x}일 남음";
 
-  static String m2(lang) => "${lang}로만 입력하세요";
+  static String m2(something) => "\"${something}에 관심이 있어요!\"";
 
-  static String m3(gender) =>
+  static String m3(something) => "\'${something}\'에 매우 관심이 있어요！";
+
+  static String m4(lang) => "${lang}로만 입력하세요";
+
+  static String m5(gender) =>
       "${Intl.gender(gender, female: '그녀의', male: '그의', other: '그들의')} 어떤 공유 경험이 당신의 마음에 와 닿나요?";
 
-  static String m4(storeName) =>
+  static String m6(minutes) => "${minutes} 분";
+
+  static String m7(month, day) => "${month}월${day}일";
+
+  static String m8(score) => "기분 ${score}/10";
+
+  static String m9(error) => "❌ 저장 실패: ${error}";
+
+  static String m10(x) => "🔥 ${x}일 연속!";
+
+  static String m11(storeName) =>
       "계속을 클릭하면 요금이 부과되며, 해당 패키지 가격에 따라 구독이 자동 갱신됩니다. ${storeName}를 통해 취소할 수 있습니다. 계속 진행하면 우리의 ";
 
-  static String m5(count) => "고매치 사용자 ${count}명 잠금 해제하여 보기 ✨";
+  static String m12(count) => "고매치 사용자 ${count}명 잠금 해제하여 보기 ✨";
 
-  static String m6(count, destinyCount) =>
+  static String m13(count, destinyCount) =>
       "사용자 ${count}명 잠금 해제 운명의 매치 ${destinyCount}명 포함 ⭐";
 
-  static String m7(country) => "건너뛰기, 그냥country}";
+  static String m14(country) => "건너뛰기, 그냥country}";
 
-  static String m8(country) => "${country}에 가려고 하세요?";
+  static String m15(country) => "${country}에 가려고 하세요?";
+
+  static String m16(x) => "${x}일";
+
+  static String m17(x) => "${x}시간";
+
+  static String m18(x) => "${x}회";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -47,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1년"),
     "about": MessageLookupByLibrary.simpleMessage("정보"),
     "account": MessageLookupByLibrary.simpleMessage("계정"),
+    "active_days": MessageLookupByLibrary.simpleMessage("활성 일수"),
     "addPhoto": MessageLookupByLibrary.simpleMessage("사진 추가"),
     "age": MessageLookupByLibrary.simpleMessage("나이"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
@@ -72,7 +93,23 @@ class MessageLookup extends MessageLookupByLibrary {
           "AstroLearn는 당신의 관심사에 기반하여 바이오를 생성할 것입니다",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("별자리 리포트"),
+    "astro_calendar_title": MessageLookupByLibrary.simpleMessage("별자리 치유 캘린더"),
+    "audio_1_desc": MessageLookupByLibrary.simpleMessage(
+      "조용한 별하늘 아래서 내면의 평화를 찾으세요",
+    ),
+    "audio_1_title": MessageLookupByLibrary.simpleMessage("별하늘 명상"),
+    "audio_2_desc": MessageLookupByLibrary.simpleMessage("내면의 용기와 활력을 일깨우세요"),
+    "audio_2_title": MessageLookupByLibrary.simpleMessage("양자리 에너지 오디오"),
+    "audio_3_desc": MessageLookupByLibrary.simpleMessage(
+      "스트레스를 해소하고 완전한 이완을 찾으세요",
+    ),
+    "audio_3_title": MessageLookupByLibrary.simpleMessage("깊은 이완 가이드"),
+    "audio_4_desc": MessageLookupByLibrary.simpleMessage(
+      "감정의 균형을 잡고 내면의 조화를 찾으세요",
+    ),
+    "audio_4_title": MessageLookupByLibrary.simpleMessage("감정 균형 음악"),
     "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage("아바타 업데이트 실패"),
+    "average_mood": MessageLookupByLibrary.simpleMessage("평균 기분"),
     "bio": MessageLookupByLibrary.simpleMessage("소개"),
     "birthInfo": MessageLookupByLibrary.simpleMessage("ข้อมูลการเกิด"),
     "birthPlace": MessageLookupByLibrary.simpleMessage("สถานที่เกิด"),
@@ -86,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "breakIce": MessageLookupByLibrary.simpleMessage(
       "🔨🔨🔨 나를 신경 쓰지 마🔨🔨🔨 분위기를 풀러 왔어🔨🔨🔨",
     ),
+    "breathe_relax": MessageLookupByLibrary.simpleMessage("깊은 숨을 쉬고 휴식..."),
     "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("Plus 회원이에요"),
     "buttonAuthorize": MessageLookupByLibrary.simpleMessage("승인"),
     "buttonCancel": MessageLookupByLibrary.simpleMessage("취소"),
@@ -143,6 +181,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "clickToSetBirthday": MessageLookupByLibrary.simpleMessage(
       "คลิกเพื่อตั้งวันเกิด",
     ),
+    "click_for_encouragement": MessageLookupByLibrary.simpleMessage(
+      "격려를 받으려면 클릭",
+    ),
+    "click_to_record_status": MessageLookupByLibrary.simpleMessage("상태 기록하기"),
     "closeButtonText": MessageLookupByLibrary.simpleMessage("ปิด"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage("농담이에요! 무료입니다"),
     "clubFeePrefix": MessageLookupByLibrary.simpleMessage("클럽 요금: 월 \$99"),
@@ -174,6 +216,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
       "현재 선택된 좌표",
     ),
+    "current_emotion": MessageLookupByLibrary.simpleMessage("현재 감정"),
+    "daily_quote": MessageLookupByLibrary.simpleMessage("오늘의 명언"),
+    "daily_quotes_title": MessageLookupByLibrary.simpleMessage("일일 명언"),
+    "daily_status": MessageLookupByLibrary.simpleMessage("일일 상태"),
+    "date_format_md": m0,
+    "days_to_30_goal": m1,
     "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
       "รายงานการวิเคราะห์ AI อย่างลึกซึ้ง",
     ),
@@ -208,12 +256,40 @@ class MessageLookup extends MessageLookupByLibrary {
     "duoSnap": MessageLookupByLibrary.simpleMessage("듀오 스냅"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("어쨌든 듀오 스냅"),
     "editProfile": MessageLookupByLibrary.simpleMessage("프로필 편집"),
+    "emotion_analysis": MessageLookupByLibrary.simpleMessage("감정 분석"),
+    "emotion_angry": MessageLookupByLibrary.simpleMessage("😠 화남"),
+    "emotion_anxious": MessageLookupByLibrary.simpleMessage("😰 불안"),
+    "emotion_calm": MessageLookupByLibrary.simpleMessage("😌 평온"),
+    "emotion_category": MessageLookupByLibrary.simpleMessage("감정"),
+    "emotion_diary": MessageLookupByLibrary.simpleMessage("감정 일기"),
+    "emotion_diary_saved": MessageLookupByLibrary.simpleMessage("✅ 감정 일기 저장됨"),
+    "emotion_diary_title": MessageLookupByLibrary.simpleMessage("감정 일기"),
+    "emotion_distribution": MessageLookupByLibrary.simpleMessage("감정 분포"),
+    "emotion_happy": MessageLookupByLibrary.simpleMessage("😊 행복"),
+    "emotion_management": MessageLookupByLibrary.simpleMessage("감정 관리"),
+    "emotion_management_title": MessageLookupByLibrary.simpleMessage("감정 관리"),
+    "emotion_records": MessageLookupByLibrary.simpleMessage("감정 기록"),
+    "emotion_sad": MessageLookupByLibrary.simpleMessage("😢 슬픔"),
+    "emotion_subtitle": MessageLookupByLibrary.simpleMessage(
+      "감정을 이해하고 자기 관리를 배우세요",
+    ),
+    "emotion_tip": MessageLookupByLibrary.simpleMessage(
+      "현재의 자신을 받아들이고, 감정은 별처럼 흘러 결국 평화로 돌아간다",
+    ),
+    "emotion_tired": MessageLookupByLibrary.simpleMessage("😴 피곤"),
     "emotionalCompatibility": MessageLookupByLibrary.simpleMessage("감정"),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "당신의 전용 채팅방은 아직 비어있습니다\n하지만 별들은 알고 있습니다, 운명의 사람이 당신에게 오고 있습니다",
     ),
+    "energy": MessageLookupByLibrary.simpleMessage("에너지"),
+    "energy_category": MessageLookupByLibrary.simpleMessage("에너지"),
+    "energy_index": MessageLookupByLibrary.simpleMessage("에너지 지수"),
+    "energy_level": MessageLookupByLibrary.simpleMessage("에너지 레벨"),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
       "กรุณากรอกสถานที่เกิด",
+    ),
+    "every_emotion_matters": MessageLookupByLibrary.simpleMessage(
+      "모든 감정은 기록될 가치가 있습니다",
     ),
     "exceptionAstroLearnContentFilterTips":
         MessageLookupByLibrary.simpleMessage(
@@ -234,8 +310,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
       "AstroLearn가 잠재적인 친구를 찾고 있습니다...",
     ),
+    "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
+      "상현달, 행동과 결정을 내리기에 좋은 시기",
+    ),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "헤이, 너 정말 멋진 것 같아. 친구가 되어볼래?",
+    ),
+    "full_moon_insight": MessageLookupByLibrary.simpleMessage(
+      "보름달 에너지가 가장 강함, 감정을 해방하기에 완벽",
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("미래"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("쌍둥이자리"),
@@ -245,12 +327,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF는 허용되지 않습니다"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("발견하러 가기"),
     "gotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
+    "great_keep_going": MessageLookupByLibrary.simpleMessage("잘했어요! 계속 가요 ✨"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "헤이, 누가 먼저 침묵을 깰까?",
     ),
     "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
       "AstroLearn에게 인사하게 하세요",
     ),
+    "healing_calendar_title": MessageLookupByLibrary.simpleMessage("별자리 치유 달력"),
+    "healing_category": MessageLookupByLibrary.simpleMessage("치유"),
+    "healing_count": MessageLookupByLibrary.simpleMessage("치유 세션"),
+    "healing_data": MessageLookupByLibrary.simpleMessage("치유 데이터"),
+    "healing_music_title": MessageLookupByLibrary.simpleMessage("치유 음악"),
+    "healing_sessions": MessageLookupByLibrary.simpleMessage("치유 세션"),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
       "이것은 AstroLearn가 당신을 위해 특별히 만든 것입니다",
     ),
@@ -259,8 +348,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("너의 에너지가 대단해!"),
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("스타일이 마음에 들어요!"),
-    "imInterestedSomething": m0,
-    "imVeryInterestedInSomething": m1,
+    "imInterestedSomething": m2,
+    "imVeryInterestedInSomething": m3,
     "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage(
       "사용자 생년월일 정보가 불완전합니다",
     ),
@@ -272,7 +361,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "issues": MessageLookupByLibrary.simpleMessage("문제"),
     "justNow": MessageLookupByLibrary.simpleMessage("방금 전"),
     "justSendALike": MessageLookupByLibrary.simpleMessage("그냥 감사를 표현하세요"),
-    "justTypeInYourLanguage": m2,
+    "justTypeInYourLanguage": m4,
+    "keep_it_up": MessageLookupByLibrary.simpleMessage("계속 해요! 잘하고 있어요 ✨"),
+    "last_quarter_insight": MessageLookupByLibrary.simpleMessage(
+      "하현달, 과거를 놓고 새로운 시작을 준비",
+    ),
     "leoSign": MessageLookupByLibrary.simpleMessage("사자자리"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
       "AstroLearn가 당신을 대신해 인사해요",
@@ -307,25 +400,43 @@ class MessageLookup extends MessageLookupByLibrary {
       "위치 승인",
     ),
     "mapSelectedLocation": MessageLookupByLibrary.simpleMessage("지도에서 선택한 위치"),
-    "matchPageSelectIdeas": m3,
+    "matchPageSelectIdeas": m5,
     "me": MessageLookupByLibrary.simpleMessage("나"),
+    "meditation_category": MessageLookupByLibrary.simpleMessage("명상"),
+    "meditation_count": MessageLookupByLibrary.simpleMessage("명상 횟수"),
+    "meditation_practice": MessageLookupByLibrary.simpleMessage("명상 연습"),
+    "meditation_practice_title": MessageLookupByLibrary.simpleMessage("명상 연습"),
+    "meditation_saved": MessageLookupByLibrary.simpleMessage("✅ 명상 기록 저장됨"),
+    "meditation_subtitle": MessageLookupByLibrary.simpleMessage(
+      "별자리 명상으로 내면의 평화를 찾으세요",
+    ),
     "memberCenter": MessageLookupByLibrary.simpleMessage("회원 센터"),
     "membersPerks": MessageLookupByLibrary.simpleMessage("멤버는 독점 혜택을 받습니다"),
+    "minutes_duration": m6,
     "month": MessageLookupByLibrary.simpleMessage("월"),
+    "month_day_format": m7,
+    "mood": MessageLookupByLibrary.simpleMessage("기분"),
+    "mood_index": MessageLookupByLibrary.simpleMessage("기분 지수"),
+    "mood_score": m8,
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
       "사진이 많을수록 추천도가 높아집니다",
     ),
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage(
       "사진이 더 많으면 매력도 더해요",
     ),
+    "music_subtitle": MessageLookupByLibrary.simpleMessage("마음과 몸을 위한 별자리 오디오"),
     "myPhotos": MessageLookupByLibrary.simpleMessage("내 사진"),
     "myProfileTitle": MessageLookupByLibrary.simpleMessage("내 프로필"),
+    "my_statistics": MessageLookupByLibrary.simpleMessage("내 통계"),
     "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
       "별자리 프로필 페이지로 이동",
     ),
     "nearby": MessageLookupByLibrary.simpleMessage("근처에"),
     "newGameplay": MessageLookupByLibrary.simpleMessage("새로운 게임플레이"),
     "newMatch": MessageLookupByLibrary.simpleMessage("새로운 연결!"),
+    "new_moon_insight": MessageLookupByLibrary.simpleMessage(
+      "새달의 순간, 새로운 치유 계획을 시작하기에 완벽",
+    ),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage("다음 지불 날짜"),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
       "상태: 메시지 없음\n\n할 일: 청취자를 찾아라\n\n제안: 진정한 자신을 공유하세요",
@@ -334,6 +445,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "아직 아무도 당신의 매력을 발견하지 못했어요",
     ),
     "noThanks": MessageLookupByLibrary.simpleMessage("아니요, 감사합니다"),
+    "no_audio": MessageLookupByLibrary.simpleMessage("오디오 없음"),
+    "no_quotes": MessageLookupByLibrary.simpleMessage("명언 없음"),
+    "no_records_today": MessageLookupByLibrary.simpleMessage("이 날의 기록이 없습니다"),
+    "notes": MessageLookupByLibrary.simpleMessage("메모"),
     "notifications": MessageLookupByLibrary.simpleMessage("알림"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
       "AstroLearn는 세계 시민들의 근거지와 같습니다",
@@ -388,8 +503,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "photos": MessageLookupByLibrary.simpleMessage("사진"),
     "piscesSign": MessageLookupByLibrary.simpleMessage("물고기자리"),
+    "played_audio": MessageLookupByLibrary.simpleMessage("오디오 재생"),
     "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
         MessageLookupByLibrary.simpleMessage("인터넷을 확인하거나 새로 고침을 탭하여 다시 시도하세요"),
+    "please_write_feelings": MessageLookupByLibrary.simpleMessage("감정을 적어주세요"),
     "plusBenefitActivityReminder": MessageLookupByLibrary.simpleMessage(
       "활동 및 복귀 알림",
     ),
@@ -474,6 +591,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Plus 멤버십 혜택",
     ),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("Plus 듀오 스냅"),
+    "practice_count": MessageLookupByLibrary.simpleMessage("연습 횟수"),
     "preference": MessageLookupByLibrary.simpleMessage("취향"),
     "privacy": MessageLookupByLibrary.simpleMessage("프라이버시"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("개인정보처리방침"),
@@ -485,10 +603,30 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileTip": MessageLookupByLibrary.simpleMessage(
       "✨ 프로필을 완성하여 별들이 당신을 더 잘 알 수 있도록, 더 정확한 매칭을",
     ),
+    "psychological_healing": MessageLookupByLibrary.simpleMessage("심리 치유"),
     "purchaseFailed": MessageLookupByLibrary.simpleMessage("구매 실패"),
     "purchasePending": MessageLookupByLibrary.simpleMessage("구매 진행 중..."),
     "pushNotifications": MessageLookupByLibrary.simpleMessage("푸시 알림"),
     "quickActions": MessageLookupByLibrary.simpleMessage("빠른 작업"),
+    "quote_1": MessageLookupByLibrary.simpleMessage("오늘의 당신은 별처럼 빛나요"),
+    "quote_10": MessageLookupByLibrary.simpleMessage("조용한 순간에 답을 찾으세요"),
+    "quote_2": MessageLookupByLibrary.simpleMessage("별을 믿듯이 자신을 믿으세요"),
+    "quote_3": MessageLookupByLibrary.simpleMessage("모든 사람은 독특한 별자리예요"),
+    "quote_4": MessageLookupByLibrary.simpleMessage("우주의 에너지가 당신과 함께해요"),
+    "quote_5": MessageLookupByLibrary.simpleMessage("지금의 자신을 받아들이세요"),
+    "quote_6": MessageLookupByLibrary.simpleMessage("모든 감정은 인정받을 가치가 있어요"),
+    "quote_7": MessageLookupByLibrary.simpleMessage("별의 에너지가 당신을 통해 흐르게 하세요"),
+    "quote_8": MessageLookupByLibrary.simpleMessage("오늘은 무한한 가능성이 있는 새로운 날이에요"),
+    "quote_9": MessageLookupByLibrary.simpleMessage("당신의 존재 자체가 기적이에요"),
+    "quotes_subtitle": MessageLookupByLibrary.simpleMessage("별들로부터의 치유 에너지"),
+    "record_daily_status": MessageLookupByLibrary.simpleMessage("일일 상태 기록"),
+    "record_today_hint": MessageLookupByLibrary.simpleMessage(
+      "오늘 무엇을 기록하고 싶으신가요?",
+    ),
+    "record_your_feelings": MessageLookupByLibrary.simpleMessage("감정을 기록하세요"),
+    "recorded_days": MessageLookupByLibrary.simpleMessage("기록 일수"),
+    "recorded_emotion": MessageLookupByLibrary.simpleMessage("기록된 감정"),
+    "relaxation_category": MessageLookupByLibrary.simpleMessage("이완"),
     "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
       "📸 사진 업로드를 권하고 서로를 더 잘 알아가세요",
     ),
@@ -508,6 +646,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "당신 근처에서 외국인을 만나다",
     ),
     "sagittariusSign": MessageLookupByLibrary.simpleMessage("사수자리"),
+    "save": MessageLookupByLibrary.simpleMessage("저장"),
+    "save_failed": m9,
     "scorpioSign": MessageLookupByLibrary.simpleMessage("전갈자리"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("스크린샷 증거"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("프로필 보기"),
@@ -522,6 +662,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("국가 선택"),
     "selectLocationTitle": MessageLookupByLibrary.simpleMessage("위치 선택"),
+    "select_duration_start": MessageLookupByLibrary.simpleMessage(
+      "시간을 선택하고 명상 시작",
+    ),
+    "select_meditation_duration": MessageLookupByLibrary.simpleMessage(
+      "명상 시간 선택",
+    ),
     "sendDm": MessageLookupByLibrary.simpleMessage("DM 보내기"),
     "sendDmRemark": MessageLookupByLibrary.simpleMessage("DM 메시지 보내기"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
@@ -540,12 +686,22 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "signUpLastStepPageTitle": MessageLookupByLibrary.simpleMessage("곧 완성됩니다"),
     "sixMonths": MessageLookupByLibrary.simpleMessage("6개월"),
+    "sleep_category": MessageLookupByLibrary.simpleMessage("수면"),
     "speakSameLanguage": MessageLookupByLibrary.simpleMessage(
       "여러분은 같은 언어를 사용합니다",
     ),
+    "spiritual_growth": MessageLookupByLibrary.simpleMessage("영적 성장"),
     "standard": MessageLookupByLibrary.simpleMessage("표준"),
     "startChat": MessageLookupByLibrary.simpleMessage("채팅 시작"),
+    "start_meditation": MessageLookupByLibrary.simpleMessage("명상 시작"),
     "startedChat": MessageLookupByLibrary.simpleMessage("채팅 시작"),
+    "status_saved": MessageLookupByLibrary.simpleMessage("✅ 상태 저장됨"),
+    "stop_meditation": MessageLookupByLibrary.simpleMessage("명상 중지"),
+    "streak_days": MessageLookupByLibrary.simpleMessage("연속 일수"),
+    "streak_x_days": m10,
+    "stress": MessageLookupByLibrary.simpleMessage("스트레스"),
+    "stress_index": MessageLookupByLibrary.simpleMessage("스트레스 지수"),
+    "stress_level": MessageLookupByLibrary.simpleMessage("스트레스 레벨"),
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage("하루에 1000번 \nAI 동시통역"),
     "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
@@ -562,7 +718,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subPageTitle": MessageLookupByLibrary.simpleMessage("AstroLearn Plus받기"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("약관"),
-    "subscriptionAgreementPrefix": m4,
+    "subscriptionAgreementPrefix": m11,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(
       "에 동의하는 것입니다.",
     ),
@@ -582,9 +738,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
       "👅당신은 이번 주의 한도에 도달했습니다",
     ),
+    "toggle_background_music": MessageLookupByLibrary.simpleMessage("배경음악 전환"),
+    "total_duration": MessageLookupByLibrary.simpleMessage("총 시간"),
     "unknownLocation": MessageLookupByLibrary.simpleMessage("알 수 없음"),
-    "unlockHighMatchUsers": m5,
-    "unlockUsersWithDestiny": m6,
+    "unlockHighMatchUsers": m12,
+    "unlockUsersWithDestiny": m13,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "놓치면 안 되는 특가",
     ),
@@ -647,7 +805,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "valuesCompatibility": MessageLookupByLibrary.simpleMessage("가치관"),
     "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage("인증 코드를 입력하세요"),
     "viewAstroReport": MessageLookupByLibrary.simpleMessage("별자리 리포트 보기"),
+    "view_details": MessageLookupByLibrary.simpleMessage("상세 보기"),
     "virgoSign": MessageLookupByLibrary.simpleMessage("처녀자리"),
+    "waning_crescent_insight": MessageLookupByLibrary.simpleMessage(
+      "그믐달의 순간, 휴식과 회복이 중요",
+    ),
+    "waning_gibbous_insight": MessageLookupByLibrary.simpleMessage(
+      "달이 기울어지고, 성찰과 정리에 좋은 시기",
+    ),
     "wannaHollaAt": MessageLookupByLibrary.simpleMessage("공유하고 싶으세요!"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "닫은 후에는 페어링할 때 도시가 표시되지 않습니다",
@@ -665,6 +830,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
       "공유 종료 후, 서로의 대화 기록이 모두 삭제됩니다.",
     ),
+    "waxing_crescent_insight": MessageLookupByLibrary.simpleMessage(
+      "달이 차오르고, 에너지가 점진적으로 축적됨",
+    ),
+    "waxing_gibbous_insight": MessageLookupByLibrary.simpleMessage(
+      "보름달이 다가오고, 감정이 더 민감해질 수 있음",
+    ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage("이메일 주소가 무엇인가요?"),
     "whoLIkesYou": MessageLookupByLibrary.simpleMessage("너의 공유를 높이 평가하는 사람"),
     "whoLikesU": MessageLookupByLibrary.simpleMessage("너를 높이 평가하는 사람"),
@@ -675,7 +846,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "뭔가 하고 싶어?",
     ),
-    "wishCityPickerSkipButton": m7,
+    "wishCityPickerSkipButton": m14,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "거기에 간다면, 어떤 도시를 방문하고 싶습니까?",
     ),
@@ -689,13 +860,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishDateOptionNotSure": MessageLookupByLibrary.simpleMessage("아직 확실하지 않아"),
     "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("최근이라고 생각해요"),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("1년 이내"),
-    "wishDatePickerSubtitle": m8,
+    "wishDatePickerSubtitle": m15,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("언제"),
     "wishList": MessageLookupByLibrary.simpleMessage("소망 목록"),
     "wishes": MessageLookupByLibrary.simpleMessage("소원"),
     "writeInterestingBio": MessageLookupByLibrary.simpleMessage(
       "흥미로운 개인 소개를 작성하세요",
     ),
+    "write_feelings_hint": MessageLookupByLibrary.simpleMessage(
+      "지금 느끼는 것을 적어보세요...",
+    ),
+    "x_days": m16,
+    "x_hours": m17,
+    "x_times": m18,
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage("이제 클럽 멤버입니다"),
     "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage(
       "언제든지 편집할 수 있습니다",

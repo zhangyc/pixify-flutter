@@ -2,7 +2,7 @@ name: sona
 description: an AI persona dating app.
 publish_to: 'none'
 
-version: 1.0.2+14
+version: 1.0.2+15
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -55,9 +55,8 @@ dependencies:
   flutter_chat_ui: ^1.6.14
   file_picker: ^8.0.3
   faker: ^2.1.0
-
-
-  #  flutter_tts: ^4.2.3
+  flutter_tts: ^4.2.3
+  table_calendar: ^3.1.2
 
   # G
   gal:
@@ -98,6 +97,7 @@ dependencies:
 
   # R
   record: ^6.1.1
+  rive: ^0.13.14
   rxdart: ^0.28.0
 
 
@@ -175,6 +175,8 @@ flutter:
     - assets/test/
     - assets/match/
     - assets/home/
+    - assets/rive/
+    - assets/mp3/
 
 # dart run arb_generator
 arb_generator:

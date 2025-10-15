@@ -121,6 +121,8 @@ class Assets {
   static const String matchCancel = 'assets/match/cancel.svg';
   static const String matchLike = 'assets/match/like.svg';
   static const String matchSend = 'assets/match/send.svg';
+  static const String riveBear = 'assets/rive/bear.riv';
+  static const String riveGirl = 'assets/rive/girl.riv';
   static const String svgAiDress = 'assets/svg/ai_dress.svg';
   static const String svgArrow = 'assets/svg/arrow.svg';
   static const String svgC = 'assets/svg/c.svg';

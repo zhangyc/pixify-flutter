@@ -3333,6 +3333,1081 @@ class S {
       args: [],
     );
   }
+
+  /// `Astro Healing Calendar`
+  String get healing_calendar_title {
+    return Intl.message(
+      'Astro Healing Calendar',
+      name: 'healing_calendar_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active Days`
+  String get active_days {
+    return Intl.message('Active Days', name: 'active_days', desc: '', args: []);
+  }
+
+  /// `Healing Sessions`
+  String get healing_count {
+    return Intl.message(
+      'Healing Sessions',
+      name: 'healing_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Streak Days`
+  String get streak_days {
+    return Intl.message('Streak Days', name: 'streak_days', desc: '', args: []);
+  }
+
+  /// `No records for this day`
+  String get no_records_today {
+    return Intl.message(
+      'No records for this day',
+      name: 'no_records_today',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Psychological Healing`
+  String get psychological_healing {
+    return Intl.message(
+      'Psychological Healing',
+      name: 'psychological_healing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Toggle Background Music`
+  String get toggle_background_music {
+    return Intl.message(
+      'Toggle Background Music',
+      name: 'toggle_background_music',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily Quote`
+  String get daily_quote {
+    return Intl.message('Daily Quote', name: 'daily_quote', desc: '', args: []);
+  }
+
+  /// `Click to record status`
+  String get click_to_record_status {
+    return Intl.message(
+      'Click to record status',
+      name: 'click_to_record_status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Click me for encouragement`
+  String get click_for_encouragement {
+    return Intl.message(
+      'Click me for encouragement',
+      name: 'click_for_encouragement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Great! Keep going ✨`
+  String get great_keep_going {
+    return Intl.message(
+      'Great! Keep going ✨',
+      name: 'great_keep_going',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Find inner peace through astro meditation`
+  String get meditation_subtitle {
+    return Intl.message(
+      'Find inner peace through astro meditation',
+      name: 'meditation_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emotion Management`
+  String get emotion_management {
+    return Intl.message(
+      'Emotion Management',
+      name: 'emotion_management',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Understand your emotions and learn self-care`
+  String get emotion_subtitle {
+    return Intl.message(
+      'Understand your emotions and learn self-care',
+      name: 'emotion_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healing energy from the stars`
+  String get quotes_subtitle {
+    return Intl.message(
+      'Healing energy from the stars',
+      name: 'quotes_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Relaxing astro audio for mind and body`
+  String get music_subtitle {
+    return Intl.message(
+      'Relaxing astro audio for mind and body',
+      name: 'music_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select duration to start meditation`
+  String get select_duration_start {
+    return Intl.message(
+      'Select duration to start meditation',
+      name: 'select_duration_start',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take a deep breath and relax...`
+  String get breathe_relax {
+    return Intl.message(
+      'Take a deep breath and relax...',
+      name: 'breathe_relax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select meditation duration`
+  String get select_meditation_duration {
+    return Intl.message(
+      'Select meditation duration',
+      name: 'select_meditation_duration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start Meditation`
+  String get start_meditation {
+    return Intl.message(
+      'Start Meditation',
+      name: 'start_meditation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stop Meditation`
+  String get stop_meditation {
+    return Intl.message(
+      'Stop Meditation',
+      name: 'stop_meditation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `✅ Meditation record saved`
+  String get meditation_saved {
+    return Intl.message(
+      '✅ Meditation record saved',
+      name: 'meditation_saved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Emotion`
+  String get current_emotion {
+    return Intl.message(
+      'Current Emotion',
+      name: 'current_emotion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Record your feelings`
+  String get record_your_feelings {
+    return Intl.message(
+      'Record your feelings',
+      name: 'record_your_feelings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write down how you feel...`
+  String get write_feelings_hint {
+    return Intl.message(
+      'Write down how you feel...',
+      name: 'write_feelings_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Every emotion deserves to be seen and recorded`
+  String get every_emotion_matters {
+    return Intl.message(
+      'Every emotion deserves to be seen and recorded',
+      name: 'every_emotion_matters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `✅ Emotion diary saved`
+  String get emotion_diary_saved {
+    return Intl.message(
+      '✅ Emotion diary saved',
+      name: 'emotion_diary_saved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New moon moment, perfect for starting new healing plans`
+  String get new_moon_insight {
+    return Intl.message(
+      'New moon moment, perfect for starting new healing plans',
+      name: 'new_moon_insight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Moon is waxing, energy is gradually accumulating`
+  String get waxing_crescent_insight {
+    return Intl.message(
+      'Moon is waxing, energy is gradually accumulating',
+      name: 'waxing_crescent_insight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First quarter moon, good time for action and decisions`
+  String get first_quarter_insight {
+    return Intl.message(
+      'First quarter moon, good time for action and decisions',
+      name: 'first_quarter_insight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full moon approaching, emotions may be more sensitive`
+  String get waxing_gibbous_insight {
+    return Intl.message(
+      'Full moon approaching, emotions may be more sensitive',
+      name: 'waxing_gibbous_insight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full moon energy is strongest, perfect for releasing emotions`
+  String get full_moon_insight {
+    return Intl.message(
+      'Full moon energy is strongest, perfect for releasing emotions',
+      name: 'full_moon_insight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Moon is waning, good time for reflection and organization`
+  String get waning_gibbous_insight {
+    return Intl.message(
+      'Moon is waning, good time for reflection and organization',
+      name: 'waning_gibbous_insight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last quarter moon, let go of the past and prepare for new beginnings`
+  String get last_quarter_insight {
+    return Intl.message(
+      'Last quarter moon, let go of the past and prepare for new beginnings',
+      name: 'last_quarter_insight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waning crescent moment, rest and recovery are important`
+  String get waning_crescent_insight {
+    return Intl.message(
+      'Waning crescent moment, rest and recovery are important',
+      name: 'waning_crescent_insight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Statistics`
+  String get my_statistics {
+    return Intl.message(
+      'My Statistics',
+      name: 'my_statistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Duration`
+  String get total_duration {
+    return Intl.message(
+      'Total Duration',
+      name: 'total_duration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Practice Count`
+  String get practice_count {
+    return Intl.message(
+      'Practice Count',
+      name: 'practice_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{x} days to 30-day goal`
+  String days_to_30_goal(Object x) {
+    return Intl.message(
+      '$x days to 30-day goal',
+      name: 'days_to_30_goal',
+      desc: '',
+      args: [x],
+    );
+  }
+
+  /// `Emotion Analysis`
+  String get emotion_analysis {
+    return Intl.message(
+      'Emotion Analysis',
+      name: 'emotion_analysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Average Mood`
+  String get average_mood {
+    return Intl.message(
+      'Average Mood',
+      name: 'average_mood',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recorded Days`
+  String get recorded_days {
+    return Intl.message(
+      'Recorded Days',
+      name: 'recorded_days',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emotion Distribution`
+  String get emotion_distribution {
+    return Intl.message(
+      'Emotion Distribution',
+      name: 'emotion_distribution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `😊 Happy`
+  String get emotion_happy {
+    return Intl.message('😊 Happy', name: 'emotion_happy', desc: '', args: []);
+  }
+
+  /// `😢 Sad`
+  String get emotion_sad {
+    return Intl.message('😢 Sad', name: 'emotion_sad', desc: '', args: []);
+  }
+
+  /// `😠 Angry`
+  String get emotion_angry {
+    return Intl.message('😠 Angry', name: 'emotion_angry', desc: '', args: []);
+  }
+
+  /// `😰 Anxious`
+  String get emotion_anxious {
+    return Intl.message(
+      '😰 Anxious',
+      name: 'emotion_anxious',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `😌 Calm`
+  String get emotion_calm {
+    return Intl.message('😌 Calm', name: 'emotion_calm', desc: '', args: []);
+  }
+
+  /// `😴 Tired`
+  String get emotion_tired {
+    return Intl.message('😴 Tired', name: 'emotion_tired', desc: '', args: []);
+  }
+
+  /// `Daily Status`
+  String get daily_status {
+    return Intl.message(
+      'Daily Status',
+      name: 'daily_status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Energy Index`
+  String get energy_index {
+    return Intl.message(
+      'Energy Index',
+      name: 'energy_index',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stress Index`
+  String get stress_index {
+    return Intl.message(
+      'Stress Index',
+      name: 'stress_index',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🔥 {x} day streak!`
+  String streak_x_days(Object x) {
+    return Intl.message(
+      '🔥 $x day streak!',
+      name: 'streak_x_days',
+      desc: '',
+      args: [x],
+    );
+  }
+
+  /// `Keep it up! You're doing great ✨`
+  String get keep_it_up {
+    return Intl.message(
+      'Keep it up! You\'re doing great ✨',
+      name: 'keep_it_up',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healing Data`
+  String get healing_data {
+    return Intl.message(
+      'Healing Data',
+      name: 'healing_data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Details`
+  String get view_details {
+    return Intl.message(
+      'View Details',
+      name: 'view_details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Meditation Count`
+  String get meditation_count {
+    return Intl.message(
+      'Meditation Count',
+      name: 'meditation_count',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emotion Records`
+  String get emotion_records {
+    return Intl.message(
+      'Emotion Records',
+      name: 'emotion_records',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You shine like a star today`
+  String get quote_1 {
+    return Intl.message(
+      'You shine like a star today',
+      name: 'quote_1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trust yourself like you trust the stars`
+  String get quote_2 {
+    return Intl.message(
+      'Trust yourself like you trust the stars',
+      name: 'quote_2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Everyone is a unique constellation`
+  String get quote_3 {
+    return Intl.message(
+      'Everyone is a unique constellation',
+      name: 'quote_3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The universe's energy is with you`
+  String get quote_4 {
+    return Intl.message(
+      'The universe\'s energy is with you',
+      name: 'quote_4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accept yourself as you are now`
+  String get quote_5 {
+    return Intl.message(
+      'Accept yourself as you are now',
+      name: 'quote_5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Every emotion deserves to be seen`
+  String get quote_6 {
+    return Intl.message(
+      'Every emotion deserves to be seen',
+      name: 'quote_6',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Let stellar energy flow through you`
+  String get quote_7 {
+    return Intl.message(
+      'Let stellar energy flow through you',
+      name: 'quote_7',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today is new with infinite possibilities`
+  String get quote_8 {
+    return Intl.message(
+      'Today is new with infinite possibilities',
+      name: 'quote_8',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your existence is a miracle itself`
+  String get quote_9 {
+    return Intl.message(
+      'Your existence is a miracle itself',
+      name: 'quote_9',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Find answers in the quiet moments`
+  String get quote_10 {
+    return Intl.message(
+      'Find answers in the quiet moments',
+      name: 'quote_10',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Starry Sky Meditation`
+  String get audio_1_title {
+    return Intl.message(
+      'Starry Sky Meditation',
+      name: 'audio_1_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Find inner peace under the quiet starry sky`
+  String get audio_1_desc {
+    return Intl.message(
+      'Find inner peace under the quiet starry sky',
+      name: 'audio_1_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aries Energy Audio`
+  String get audio_2_title {
+    return Intl.message(
+      'Aries Energy Audio',
+      name: 'audio_2_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ignite your inner courage and vitality`
+  String get audio_2_desc {
+    return Intl.message(
+      'Ignite your inner courage and vitality',
+      name: 'audio_2_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deep Relaxation Guide`
+  String get audio_3_title {
+    return Intl.message(
+      'Deep Relaxation Guide',
+      name: 'audio_3_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Release stress and find complete relaxation`
+  String get audio_3_desc {
+    return Intl.message(
+      'Release stress and find complete relaxation',
+      name: 'audio_3_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emotion Balance Music`
+  String get audio_4_title {
+    return Intl.message(
+      'Emotion Balance Music',
+      name: 'audio_4_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Balance emotions and find inner harmony`
+  String get audio_4_desc {
+    return Intl.message(
+      'Balance emotions and find inner harmony',
+      name: 'audio_4_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{month}/{day}`
+  String date_format_md(Object month, Object day) {
+    return Intl.message(
+      '$month/$day',
+      name: 'date_format_md',
+      desc: '',
+      args: [month, day],
+    );
+  }
+
+  /// `No audio available`
+  String get no_audio {
+    return Intl.message(
+      'No audio available',
+      name: 'no_audio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healing`
+  String get healing_category {
+    return Intl.message(
+      'Healing',
+      name: 'healing_category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Meditation`
+  String get meditation_category {
+    return Intl.message(
+      'Meditation',
+      name: 'meditation_category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Relaxation`
+  String get relaxation_category {
+    return Intl.message(
+      'Relaxation',
+      name: 'relaxation_category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sleep`
+  String get sleep_category {
+    return Intl.message('Sleep', name: 'sleep_category', desc: '', args: []);
+  }
+
+  /// `Energy`
+  String get energy_category {
+    return Intl.message('Energy', name: 'energy_category', desc: '', args: []);
+  }
+
+  /// `Emotion`
+  String get emotion_category {
+    return Intl.message(
+      'Emotion',
+      name: 'emotion_category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Record Daily Status`
+  String get record_daily_status {
+    return Intl.message(
+      'Record Daily Status',
+      name: 'record_daily_status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mood`
+  String get mood {
+    return Intl.message('Mood', name: 'mood', desc: '', args: []);
+  }
+
+  /// `Energy`
+  String get energy {
+    return Intl.message('Energy', name: 'energy', desc: '', args: []);
+  }
+
+  /// `Stress`
+  String get stress {
+    return Intl.message('Stress', name: 'stress', desc: '', args: []);
+  }
+
+  /// `Notes`
+  String get notes {
+    return Intl.message('Notes', name: 'notes', desc: '', args: []);
+  }
+
+  /// `✅ Status saved`
+  String get status_saved {
+    return Intl.message(
+      '✅ Status saved',
+      name: 'status_saved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No quotes available`
+  String get no_quotes {
+    return Intl.message(
+      'No quotes available',
+      name: 'no_quotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Spiritual Growth`
+  String get spiritual_growth {
+    return Intl.message(
+      'Spiritual Growth',
+      name: 'spiritual_growth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please write your feelings`
+  String get please_write_feelings {
+    return Intl.message(
+      'Please write your feelings',
+      name: 'please_write_feelings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `❌ Save failed: {error}`
+  String save_failed(Object error) {
+    return Intl.message(
+      '❌ Save failed: $error',
+      name: 'save_failed',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `{x} hours`
+  String x_hours(Object x) {
+    return Intl.message('$x hours', name: 'x_hours', desc: '', args: [x]);
+  }
+
+  /// `{x} times`
+  String x_times(Object x) {
+    return Intl.message('$x times', name: 'x_times', desc: '', args: [x]);
+  }
+
+  /// `{x} days`
+  String x_days(Object x) {
+    return Intl.message('$x days', name: 'x_days', desc: '', args: [x]);
+  }
+
+  /// `Meditation Practice`
+  String get meditation_practice_title {
+    return Intl.message(
+      'Meditation Practice',
+      name: 'meditation_practice_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emotion Management`
+  String get emotion_management_title {
+    return Intl.message(
+      'Emotion Management',
+      name: 'emotion_management_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily Quotes`
+  String get daily_quotes_title {
+    return Intl.message(
+      'Daily Quotes',
+      name: 'daily_quotes_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healing Music`
+  String get healing_music_title {
+    return Intl.message(
+      'Healing Music',
+      name: 'healing_music_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emotion Diary`
+  String get emotion_diary {
+    return Intl.message(
+      'Emotion Diary',
+      name: 'emotion_diary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message('Save', name: 'save', desc: '', args: []);
+  }
+
+  /// `Mood Index`
+  String get mood_index {
+    return Intl.message('Mood Index', name: 'mood_index', desc: '', args: []);
+  }
+
+  /// `Energy Level`
+  String get energy_level {
+    return Intl.message(
+      'Energy Level',
+      name: 'energy_level',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stress Level`
+  String get stress_level {
+    return Intl.message(
+      'Stress Level',
+      name: 'stress_level',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What would you like to record today?`
+  String get record_today_hint {
+    return Intl.message(
+      'What would you like to record today?',
+      name: 'record_today_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accept yourself in the present moment, emotions flow like stars and will eventually return to peace`
+  String get emotion_tip {
+    return Intl.message(
+      'Accept yourself in the present moment, emotions flow like stars and will eventually return to peace',
+      name: 'emotion_tip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Astro Healing Calendar`
+  String get astro_calendar_title {
+    return Intl.message(
+      'Astro Healing Calendar',
+      name: 'astro_calendar_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healing Sessions`
+  String get healing_sessions {
+    return Intl.message(
+      'Healing Sessions',
+      name: 'healing_sessions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{month}月{day}日`
+  String month_day_format(Object month, Object day) {
+    return Intl.message(
+      '$month月$day日',
+      name: 'month_day_format',
+      desc: '',
+      args: [month, day],
+    );
+  }
+
+  /// `Meditation Practice`
+  String get meditation_practice {
+    return Intl.message(
+      'Meditation Practice',
+      name: 'meditation_practice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{minutes} minutes`
+  String minutes_duration(Object minutes) {
+    return Intl.message(
+      '$minutes minutes',
+      name: 'minutes_duration',
+      desc: '',
+      args: [minutes],
+    );
+  }
+
+  /// `Emotion Diary`
+  String get emotion_diary_title {
+    return Intl.message(
+      'Emotion Diary',
+      name: 'emotion_diary_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recorded emotion`
+  String get recorded_emotion {
+    return Intl.message(
+      'Recorded emotion',
+      name: 'recorded_emotion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mood {score}/10`
+  String mood_score(Object score) {
+    return Intl.message(
+      'Mood $score/10',
+      name: 'mood_score',
+      desc: '',
+      args: [score],
+    );
+  }
+
+  /// `Played audio`
+  String get played_audio {
+    return Intl.message(
+      'Played audio',
+      name: 'played_audio',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,15 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:sona/core/match/widgets/match_user_card.dart';
-import 'package:sona/utils/toast/flutter_toast.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:sona/core/match/widgets/match_grid_item.dart';
+import 'package:sona/core/match/screens/user_detail_page.dart';
+import 'package:sona/core/match/widgets/luna_avatar.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sona/core/match/screens/filter_page.dart';
-import 'package:sona/core/match/widgets/button_animations.dart';
 import 'package:sona/core/match/widgets/no_data.dart';
 import 'package:sona/core/match/widgets/no_more.dart';
 import 'package:sona/generated/assets.dart';
@@ -17,14 +14,8 @@ import 'package:sona/utils/locale/locale.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../account/providers/profile.dart';
-import '../../../common/permission/permission.dart';
 import '../../../common/widgets/text/neon_word_mark.dart';
-import '../../../generated/l10n.dart';
-import '../../../utils/global/global.dart';
-import '../../subscribe/subscribe_page.dart';
 import '../bean/match_user.dart';
-import '../providers/matched.dart';
-import '../util/event.dart';
 import '../util/http_util.dart';
 import '../util/local_data.dart';
 import '../widgets/dialogs.dart';
@@ -51,22 +42,23 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
 
   List<MatchUserInfo> users = [];
-  CardSwiperController swiperController = CardSwiperController();
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void dispose() {
-    swiperController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
-  int currentPage = 0;
-  bool detecting = false;
+  int currentPage = 1;
+  bool isLoadingMore = false;
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       extendBodyBehindAppBar: false,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +73,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
                     height: 32,
                   ),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (c) {
+                    Navigator.push<void>(context,
+                        MaterialPageRoute(builder: (c) {
                       return FilterPage();
                     })).then((value) {
                       _initData();
@@ -96,146 +89,40 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
           ],
         ),
       ),
-      body: Stack(
+      body: Column(
         children: [
-          _buildMatch(),
-          (users.isNotEmpty && users[currentPage].id == -1) ||
-                  _state == PageState.fail ||
-                  _state == PageState.noData ||
-                  _state == PageState.loading
-              ? Container()
-              : Positioned(
-                  bottom: 8 + MediaQuery.of(context).padding.bottom,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 68),
-                    child: (users.isNotEmpty && users[currentPage].matched)
-                        ? TextButton(
-                            onPressed: () {
-                              swiperController.swipe(CardSwiperDirection.right);
-                              MatchApi.like(
-                                users[currentPage].id,
-                              );
-                              SonaAnalytics.log(
-                                  MatchEvent.match_like_justlike.name);
-                            },
-                            child: Text(
-                              '${S.of(context).justSendALike} >',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 16,
-                              ),
-                            ))
-                        : Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                // 跳过按钮
-                                if (Platform.isAndroid)
-                                  _buildActionButton(
-                                    onTap: () {
-                                      if (currentPage == users.length - 1)
-                                        return;
-                                      SonaAnalytics.log(
-                                          MatchEvent.match_dislike.name);
-                                      swiperController
-                                          .swipe(CardSwiperDirection.left);
-                                      MatchApi.skip(users[currentPage].id);
-                                    },
-                                    icon: Assets.matchCancel,
-                                    size: 40,
-                                    backgroundColor: const Color(0xFF2A2A35),
-                                    borderColor: const Color(0xFF4A4A55),
-                                    iconColor: const Color(0xFFFF6B6B),
-                                  ),
+          // Luna AI导师引导区
+          _buildLunaGuide(),
+          // 主要内容区
+          Expanded(child: _buildMatch()),
+        ],
+      ),
+    );
+  }
 
-                                // 喜欢按钮（主要操作）
-                                if (Platform.isAndroid)
-                                  _buildActionButton(
-                                    onTap: () {
-                                      if (currentPage == users.length - 1)
-                                        return;
-                                      if (true) {
-                                        if (like > 0) like = like - 1;
-                                        swiperController
-                                            .swipe(CardSwiperDirection.right);
-                                        if (users[currentPage].likeMe == 1) {
-                                          SonaAnalytics.log(
-                                              MatchEvent.match_matched.name);
-                                          MatchApi.like(users[currentPage].id);
-                                          showMatched(context,
-                                              target: users[currentPage],
-                                              next: () {});
-                                        }
-                                        setState(() {});
-                                        SonaAnalytics.log(
-                                            MatchEvent.match_like.name);
-                                      } else {
-                                        SonaAnalytics.log(
-                                            MatchEvent.match_like_limit.name);
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (c) {
-                                          return SubscribePage(
-                                              fromTag:
-                                                  FromTag.pay_match_likelimit);
-                                        }));
-                                      }
-                                    },
-                                    icon: Assets.matchLike,
-                                    size: 68,
-                                    backgroundColor: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.15),
-                                    borderColor: Theme.of(context).primaryColor,
-                                    iconColor: Theme.of(context).primaryColor,
-                                    glowEffect: true,
-                                  ),
-
-                                // 消息按钮
-                                _buildActionButton(
-                                  onTap: () {
-                                    if (currentPage == users.length - 1) return;
-                                    MatchApi.like(users[currentPage].id);
-
-                                    Future.delayed(Duration(milliseconds: 200),
-                                        () {
-                                      if (canArrow) {
-                                        showDm(context, users[currentPage], () {
-                                          swiperController
-                                              .swipe(CardSwiperDirection.right);
-                                        });
-                                      } else {
-                                        bool isMember = ref
-                                                .read(myProfileProvider)
-                                                ?.isMember ??
-                                            false;
-                                        if (isMember) {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  'Arrow on cool down this week');
-                                        } else {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(builder: (c) {
-                                            return SubscribePage(
-                                                fromTag:
-                                                    FromTag.pay_match_arrow);
-                                          }));
-                                        }
-                                      }
-                                    });
-                                  },
-                                  icon: Assets.matchSend,
-                                  size: 40,
-                                  backgroundColor: const Color(0xFF2A2A35),
-                                  borderColor: const Color(0xFF4A4A55),
-                                  iconColor: const Color(0xFFFFD700),
-                                ),
-                              ],
-                            ),
-                          ),
-                  ),
-                ),
+  /// Luna AI导师引导区
+  Widget _buildLunaGuide() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Theme.of(context).primaryColor.withOpacity(0.1),
+            Colors.transparent,
+          ],
+        ),
+      ),
+      child: Row(
+        children: [
+          const LunaAvatar(size: 50),
+          const SizedBox(width: 12),
+          Expanded(
+            child: LunaSpeechBubble(
+              message: users.isEmpty ? '让我为你推荐一些星盘案例吧！' : '点击查看星盘，我会为你详细讲解 ✨',
+            ),
+          ),
         ],
       ),
     );
@@ -244,61 +131,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   @override
   bool get wantKeepAlive => true;
 
-  Widget _buildActionButton({
-    required VoidCallback onTap,
-    required String icon,
-    required double size,
-    required Color backgroundColor,
-    required Color borderColor,
-    required Color iconColor,
-    bool glowEffect = false,
-    bool isAsset = false,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: size + 16,
-        height: size + 16,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: backgroundColor,
-          border: Border.all(
-            color: borderColor,
-            width: glowEffect ? 2 : 1.5,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-            if (glowEffect)
-              BoxShadow(
-                color: borderColor.withOpacity(0.4),
-                blurRadius: 20,
-                offset: const Offset(0, 0),
-              ),
-          ],
-        ),
-        child: Center(
-          child: isAsset
-              ? Image.asset(
-                  icon,
-                  width: size * 0.6,
-                  height: size * 0.6,
-                )
-              : SvgPicture.asset(
-                  icon,
-                  width: size * 0.6,
-                  height: size * 0.6,
-                ),
-        ),
-      ),
-    );
-  }
-
-  int current = 1;
-
   void _initData() async {
     longitude = ref.read(myProfileProvider)!.position?.longitude;
     latitude = ref.read(myProfileProvider)!.position?.latitude;
@@ -306,17 +138,16 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
     if (mounted) {
       setState(() {});
     }
-    current = 1;
-    currentPage = 0;
+    currentPage = 1;
     try {
-      final resp = await post('/user/match-v2', data: {
+      final resp = await post('/user/match-ios', data: {
         'gender': currentFilterGender,
         'minAge': currentFilterMinAge,
         'maxAge': currentFilterMaxAge,
         'longitude': longitude,
         'latitude': latitude,
-        "page": current, // 页码
-        "pageSize": 30, // 每页数量
+        "page": currentPage,
+        "pageSize": 30,
         "recommendMode": recommendMode
       });
       if (resp.isSuccess) {
@@ -330,10 +161,14 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         List<MatchUserInfo> users1 =
             list.map((e) => MatchUserInfo.fromJson(e)).toList();
         users = users1;
-        if (users.every((element) => element.id != -1) && users.length <= 30) {
-          users.add(MatchUserInfo(
-              id: -1, name: '', gender: null, birthday: null, avatar: null));
+
+        // 预加载图片
+        for (var element in users) {
+          if (element.avatar != null) {
+            DefaultCacheManager().downloadFile(element.avatar!);
+          }
         }
+
         setState(() {});
       } else {
         _state = PageState.fail;
@@ -349,54 +184,48 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
   }
 
   void _loadMore() async {
+    if (isLoadingMore) return;
+
+    setState(() {
+      isLoadingMore = true;
+    });
+
     try {
-      final resp = await post('/user/match-v2', data: {
+      currentPage++;
+      final resp = await post('/user/match-ios', data: {
         'gender': currentFilterGender,
         'minAge': currentFilterMinAge,
         'maxAge': currentFilterMaxAge,
         'longitude': longitude,
         'latitude': latitude,
-        "page": current, // 页码
-        "pageSize": 30, // 每页数量,
+        "page": currentPage,
+        "pageSize": 30,
         "recommendMode": recommendMode
       });
+
       if (resp.isSuccess) {
         List list = resp.data;
+        if (list.isNotEmpty) {
+          List<MatchUserInfo> newUsers =
+              list.map((e) => MatchUserInfo.fromJson(e)).toList();
+          users.addAll(newUsers);
 
-        if (list.isEmpty) {
-          //_state=PageState.noData;
-        } else {
-          _state = PageState.success;
-        }
-        List<MatchUserInfo> users1 =
-            list.map((e) => MatchUserInfo.fromJson(e)).toList();
-        // users=[...users,...users1,...[UserInfo(id: -1, name: '', gender: null, birthday: null, avatar: null)]];
-
-        users.addAll(users1);
-        if (users.every((element) => element.id != -1)) {
-          users.add(MatchUserInfo(
-              id: -1, name: '', gender: null, birthday: null, avatar: null));
-        } else {
-          users.removeWhere((element) => element.id == -1);
-          users.add(MatchUserInfo(
-              id: -1, name: '', gender: null, birthday: null, avatar: null));
-        }
-        for (var element in users1) {
-          if (element.avatar != null) {
-            DefaultCacheManager().downloadFile(element.avatar!);
+          // 预加载新图片
+          for (var element in newUsers) {
+            if (element.avatar != null) {
+              DefaultCacheManager().downloadFile(element.avatar!);
+            }
           }
         }
-        setState(() {});
-      } else {
-        _state = PageState.fail;
         setState(() {});
       }
     } catch (e) {
       if (kDebugMode) print(e);
-      if (mounted) {
-        _state = PageState.fail;
-        setState(() {});
-      }
+      currentPage--; // 加载失败，回退页码
+    } finally {
+      setState(() {
+        isLoadingMore = false;
+      });
     }
   }
 
@@ -416,37 +245,75 @@ class _MatchScreenState extends ConsumerState<MatchScreen>
         },
       );
     } else if (_state == PageState.success) {
-      return CardSwiper(
-        controller: swiperController,
-        cardsCount: users.length,
-        cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
-          if (index >= users.length) return const SizedBox.shrink();
-
-          final user = users[index];
-          return MatchUserCard(
-            user: user,
-          );
-        },
-        onSwipe: (previousIndex, currentIndex, direction) {
-          if (currentIndex == null) return false;
-          if (direction == CardSwiperDirection.left) {
-            MatchApi.skip(users[currentIndex].id);
-          } else if (direction == CardSwiperDirection.right) {
-            MatchApi.like(users[currentIndex].id);
+      return NotificationListener<ScrollNotification>(
+        onNotification: (ScrollNotification scrollInfo) {
+          if (!isLoadingMore &&
+              scrollInfo.metrics.pixels >=
+                  scrollInfo.metrics.maxScrollExtent - 200) {
+            _loadMore();
           }
-          return true;
+          return false;
         },
-        onEnd: () {
-          // 没有更多卡片时的处理
-        },
-        // 自定义配置
-        maxAngle: 30,
-        threshold: 50,
-        duration: Duration(milliseconds: 200),
-        scale: 0.9,
-        numberOfCardsDisplayed: 2,
-        allowedSwipeDirection: const AllowedSwipeDirection.all(),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            _initData();
+          },
+          child: MasonryGridView.count(
+            controller: _scrollController,
+            crossAxisCount: 2,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            padding: const EdgeInsets.all(16),
+            itemCount: users.length + (isLoadingMore ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index == users.length) {
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor,
+                    ),
+                  ),
+                );
+              }
+
+              final user = users[index];
+              return MatchGridItem(
+                user: user,
+                onTap: () async {
+                  final result = await Navigator.push<Map<String, dynamic>>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserDetailPage(user: user),
+                    ),
+                  );
+
+                  if (result != null) {
+                    final action = result['action'];
+                    if (action == 'like' || action == 'skip') {
+                      // 移除该用户
+                      setState(() {
+                        users.removeAt(index);
+                      });
+                    } else if (action == 'message') {
+                      // 处理发消息逻辑
+                      final targetUser = result['user'] as MatchUserInfo?;
+                      if (targetUser != null) {
+                        showDm(context, targetUser, () {
+                          setState(() {
+                            users.removeAt(index);
+                          });
+                        });
+                      }
+                    }
+                  }
+                },
+              );
+            },
+          ),
+        ),
       );
     } else if (_state == PageState.noData) {
       return NoMoreWidget(

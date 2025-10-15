@@ -23,6 +23,8 @@ import 'package:sona/utils/toast/flutter_toast.dart';
 // import 'package:sona/core/persona/widgets/profile_progress_indicator.dart';
 // import 'package:sona/core/subscribe/subscribe_page.dart';
 import 'package:sona/setting/screens/setting.dart';
+import 'package:sona/core/healing/widgets/statistics_page.dart';
+import 'package:sona/core/healing/services/healing_database.dart';
 
 import '../../../generated/l10n.dart';
 import '../../subscribe/model/member.dart';
@@ -36,6 +38,39 @@ class PersonaScreen extends ConsumerStatefulWidget {
 
 class _PersonaScreenState extends ConsumerState<PersonaScreen>
     with AutomaticKeepAliveClientMixin {
+  Map<String, dynamic> _healingStats = {};
+  bool _isLoadingStats = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHealingStats();
+  }
+
+  Future<void> _loadHealingStats() async {
+    try {
+      final stats = await HealingDatabase.instance.getStatistics(
+        DateTime.now()
+            .subtract(const Duration(days: 30))
+            .toIso8601String()
+            .split('T')[0],
+        DateTime.now().toIso8601String().split('T')[0],
+      );
+      if (mounted) {
+        setState(() {
+          _healingStats = stats;
+          _isLoadingStats = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoadingStats = false;
+        });
+      }
+    }
+  }
+
   Future<void> _onChangeAvatar(BuildContext context, WidgetRef ref) async {
     try {
       // 选择图片来源
@@ -78,31 +113,31 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    // if (ref.read(myProfileProvider)?.birthLongitude == null) {
-    //   /// 使用全局提示框提示用户去完善出生地信息
-    //   Future.delayed(const Duration(seconds: 2), () {
-    //     GlobalNotifications.showAstroNotification(
-    //       title: S.current.infoIncompleteTitle,
-    //       content: S.current.completeBirthLocationInfo,
-    //       onTap: () {
-    //         LocationSelectorBottomSheet.show(context,
-    //             onLocationSelected: (city, lat, lng) {
-    //           ref.read(myProfileProvider.notifier).updateFields(
-    //               birthCity: city,
-    //               birthLatitude: lat.toString(),
-    //               birthLongitude: lng.toString());
-
-    //           /// 关闭通知
-    //           GlobalNotifications.hide();
-    //         });
-    //       },
-    //     );
-    //   });
-    // }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // if (ref.read(myProfileProvider)?.birthLongitude == null) {
+  //   //   /// 使用全局提示框提示用户去完善出生地信息
+  //   //   Future.delayed(const Duration(seconds: 2), () {
+  //   //     GlobalNotifications.showAstroNotification(
+  //   //       title: S.current.infoIncompleteTitle,
+  //   //       content: S.current.completeBirthLocationInfo,
+  //   //       onTap: () {
+  //   //         LocationSelectorBottomSheet.show(context,
+  //   //             onLocationSelected: (city, lat, lng) {
+  //   //           ref.read(myProfileProvider.notifier).updateFields(
+  //   //               birthCity: city,
+  //   //               birthLatitude: lat.toString(),
+  //   //               birthLongitude: lng.toString());
+  //
+  //   //           /// 关闭通知
+  //   //           GlobalNotifications.hide();
+  //   //         });
+  //   //       },
+  //   //     );
+  //   //   });
+  //   // }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +171,9 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
 
                 // 信息卡片组
                 _buildInfoCards(context, myProfile),
+
+                // 疗愈统计概览
+                _buildHealingStatsOverview(context),
 
                 // 快捷操作网格
                 _buildQuickActions(context),
@@ -296,6 +334,174 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
     );
   }
 
+  // 疗愈统计概览
+  Widget _buildHealingStatsOverview(BuildContext context) {
+    if (_isLoadingStats) {
+      return const SizedBox.shrink();
+    }
+
+    final meditationMinutes = _healingStats['meditation_minutes'] ?? 0;
+    final meditationCount = _healingStats['meditation_count'] ?? 0;
+    final emotionDist = _healingStats['emotion_distribution'] as Map? ?? {};
+    final avgMood = _healingStats['avg_mood'] ?? 0.0;
+
+    // 如果没有任何数据，不显示
+    if (meditationCount == 0 && emotionDist.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16, top: 8),
+          child: Row(
+            children: [
+              Text(
+                '疗愈数据',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+              ),
+              const Spacer(),
+              TextButton.icon(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const StatisticsPage(),
+                  ),
+                ),
+                icon: const Icon(Icons.arrow_forward, size: 16),
+                label: const Text('查看详情'),
+                style: TextButton.styleFrom(
+                  foregroundColor: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+              builder: (_) => const StatisticsPage(),
+            ),
+          ),
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 24),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  const Color(0xFF9B59B6).withOpacity(0.15),
+                  const Color(0xFFE74C3C).withOpacity(0.15),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white.withOpacity(0.1)
+                    : Colors.black.withOpacity(0.05),
+                width: 0.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.black.withOpacity(0.15)
+                      : Colors.black.withOpacity(0.03),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                // 冥想数据
+                Expanded(
+                  child: _buildStatOverviewItem(
+                    context,
+                    icon: Icons.self_improvement,
+                    value: meditationCount.toString(),
+                    label: '冥想次数',
+                    color: const Color(0xFF9B59B6),
+                  ),
+                ),
+                Container(
+                  width: 1,
+                  height: 40,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white.withOpacity(0.1)
+                      : Colors.black.withOpacity(0.1),
+                ),
+                // 情绪记录
+                Expanded(
+                  child: _buildStatOverviewItem(
+                    context,
+                    icon: Icons.favorite,
+                    value: emotionDist.length.toString(),
+                    label: '情绪记录',
+                    color: const Color(0xFFE74C3C),
+                  ),
+                ),
+                Container(
+                  width: 1,
+                  height: 40,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white.withOpacity(0.1)
+                      : Colors.black.withOpacity(0.1),
+                ),
+                // 平均心情
+                Expanded(
+                  child: _buildStatOverviewItem(
+                    context,
+                    icon: Icons.sentiment_satisfied,
+                    value: avgMood.toStringAsFixed(1),
+                    label: '平均心情',
+                    color: const Color(0xFF4CAF50),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStatOverviewItem(
+    BuildContext context, {
+    required IconData icon,
+    required String value,
+    required String label,
+    required Color color,
+  }) {
+    return Column(
+      children: [
+        Icon(icon, color: color, size: 24),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: TextStyle(
+            color: color,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+
   // 快捷操作网格
   Widget _buildQuickActions(BuildContext context) {
     return Column(
@@ -314,10 +520,10 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
         GridView.count(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 1.1,
+          childAspectRatio: 1.0,
           children: [
             _buildQuickActionItem(
               context,
@@ -356,15 +562,6 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
                 ),
               ),
             ),
-            // _buildQuickActionItem(
-            //   context,
-            //   icon: Icons.bar_chart,
-            //   title: '数据统计',
-            //   color: const Color(0xFF4CAF50),
-            //   onTap: () {
-            //     // TODO: 跳转到数据统计页面
-            //   },
-            // ),
           ],
         ),
       ],

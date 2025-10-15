@@ -15,9 +15,11 @@ import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/core/chat/screens/chat.dart';
 import 'package:sona/core/chat/screens/conversation.dart';
 import 'package:sona/core/discover/screens/discover.dart';
+import 'package:sona/core/healing/healing_screen.dart';
 import 'package:sona/core/im/rooms/rooms.dart';
 import 'package:sona/core/like_me/providers/liked_me.dart';
 import 'package:sona/core/like_me/screens/like_me.dart';
+import 'package:sona/core/match/screens/match.dart';
 import 'package:sona/core/match/widgets/location_selector.dart';
 import 'package:sona/core/persona/screens/persona.dart';
 import 'package:sona/core/providers/home_provider.dart';
@@ -33,7 +35,7 @@ import '../common/widgets/dialogs/test.dart';
 import '../firebase/sona_firebase.dart';
 import '../generated/l10n.dart';
 import 'chat/providers/chat.dart';
-import 'match/screens/match.dart';
+import 'healing/screens/astro_calendar_page.dart';
 import 'match/util/local_data.dart';
 import 'package:sona/common/env.dart';
 
@@ -114,14 +116,9 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
         physics: const NeverScrollableScrollPhysics(),
         onPageChanged: _onPageChange,
         children: [
-          MatchScreen(),
-          // LikeMeScreen(),
-          // RoomsPage(),
-          ConversationScreen(onShowLikeMe: () {
-            _pageController.animateToPage(1,
-                duration: const Duration(milliseconds: 2), curve: Curves.ease);
-          }),
-          PersonaScreen(),
+          HealingScreen(), // Tab 0：心理疗愈
+          AstroCalendarPage(), // Tab 1：星盘日历
+          PersonaScreen(), // Tab 2：我的
         ],
       ),
       bottomNavigationBar: Consumer(
@@ -149,71 +146,33 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
                 ? const Color(0xFFB5B6C8) // nightTheme 的次级文字色
                 : Theme.of(context).hintColor,
             items: [
+              // Tab 0: 心理疗愈
               BottomNavigationBarItem(
                   icon: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(
-                      Assets.homeUndiscover,
-                      width: 24,
-                    ),
-                    // child: SonaIcon(icon: SonaIcons.navicon_match, size: 24),x
+                    child: Icon(Icons.self_improvement, size: 24),
                   ),
                   activeIcon: Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: SvgPicture.asset(
-                      Assets.homeDiscover,
-                      width: 24,
+                    child: Icon(
+                      Icons.self_improvement,
+                      size: 24,
+                      color: Theme.of(context).primaryColor,
                     ),
-                    // activeIcon: SonaIcon(
-                    //   icon: SonaIcons.navicon_match_active,
-                    //   size: 24,
-                    //   color: Theme.of(context).primaryColor,
-                    // ),
                   ),
                   label: ''),
-              // BottomNavigationBarItem(
-              //     icon: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: SvgPicture.asset(
-              //         Assets.homeUnFavorite,
-              //         width: 24,
-              //       ),
-              //       // child: SonaIcon(
-              //       //     icon: SonaIcons.navicon_like_me,
-              //       //     size: 24,
-              //       //     activeProvider: likeMeNoticeNotifier),
-              //     ),
-              //     activeIcon: Padding(
-              //       padding: const EdgeInsets.all(4.0),
-              //       child: SvgPicture.asset(
-              //         Assets.homeFavorite,
-              //         width: 24,
-              //       ),
-              //
-              //       // activeIcon: SonaIcon(
-              //       //   icon: SonaIcons.navicon_like_me_active,
-              //       //   size: 24,
-              //       //   color: Theme.of(context).primaryColor,
-              //       // ),
-              //     ),
-              //     label: ''),
+              // Tab 1: 星盘日历
               BottomNavigationBarItem(
                   icon: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(
-                      Assets.homeUnchat,
-                      width: 24,
-                    ),
-                    // child: SonaIcon(
-                    //     icon: SonaIcons.navicon_chat,
-                    //     size: 24,
-                    //     activeProvider: chatNoticeProvider),
+                    child: Icon(Icons.calendar_month, size: 24),
                   ),
                   activeIcon: Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: SvgPicture.asset(
-                      Assets.homeChat,
-                      width: 24,
+                    padding: const EdgeInsets.all(4.0),
+                    child: Icon(
+                      Icons.calendar_month,
+                      size: 24,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                   label: ''),
@@ -238,23 +197,14 @@ class _SonaHomeState extends ConsumerState<SonaHome> {
   void _onPageChange(int index) {
     _currentIndex = index;
     setState(() {});
-    if (index == 1) {
-      ref
-          .read(likeMeLastCheckTimeProvider.notifier)
-          .update((state) => DateTime.now());
-    } else if (index == 2) {
-      ref
-          .read(convosLastCheckTimeProvider.notifier)
-          .update((state) => DateTime.now());
-    }
+
     if (index != ref.read(currentHomeTapIndexProvider)) {
       ref.read(currentHomeTapIndexProvider.notifier).update((_) => index);
       _pageController.jumpToPage(index);
       final tabName = switch (index) {
-        0 => 'match',
-        1 => 'chat',
-        2 => 'me',
-        // 3 => 'like',
+        0 => 'healing', // 心理疗愈
+        1 => 'calendar', // 星盘日历
+        2 => 'me', // 我的
         _ => 'unknown'
       };
       SonaAnalytics.log('home_tab', {'index': index, 'name': tabName});

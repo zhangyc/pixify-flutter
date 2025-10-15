@@ -20,27 +20,47 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'th';
 
-  static String m0(something) => "\"ฉันสนใจ${something}\"";
+  static String m0(month, day) => "${month}/${day}";
 
-  static String m1(something) => "ฉันสนใจ \'${something}\' มาก！";
+  static String m1(x) => "อีก ${x} วันถึงเป้าหมาย 30 วัน";
 
-  static String m2(lang) => "เพียงพิมพ์เป็น${lang}";
+  static String m2(something) => "\"ฉันสนใจ${something}\"";
 
-  static String m3(gender) =>
+  static String m3(something) => "ฉันสนใจ \'${something}\' มาก！";
+
+  static String m4(lang) => "เพียงพิมพ์เป็น${lang}";
+
+  static String m5(gender) =>
       "คุณสัมผัสได้กับประสบการณ์การแบ่งปันของ${Intl.gender(gender, female: 'เธอ', male: 'เขา', other: 'พวกเขา')} อันไหน?";
 
-  static String m4(storeName) =>
+  static String m6(minutes) => "${minutes} นาที";
+
+  static String m7(month, day) => "${month}月${day}日";
+
+  static String m8(score) => "อารมณ์ ${score}/10";
+
+  static String m9(error) => "❌ บันทึกล้มเหลว: ${error}";
+
+  static String m10(x) => "🔥 ทำต่อเนื่อง ${x} วัน!";
+
+  static String m11(storeName) =>
       "ดำเนินการต่อ คุณจะถูกเรียกเก็บเงิน การสมัครใช้งานของคุณจะถูกต่ออายุอัตโนมัติในราคาแพ็กเกจ คุณสามารถยกเลิกได้ผ่าน ${storeName} การดำเนินการต่อคุณจะตกลงกับ ";
 
-  static String m5(count) =>
+  static String m12(count) =>
       "ปลดล็อกเพื่อดูผู้ใช้ที่มีการจับคู่สูง ${count} คน ✨";
 
-  static String m6(count, destinyCount) =>
+  static String m13(count, destinyCount) =>
       "ปลดล็อกผู้ใช้ ${count} คน รวมการจับคู่แห่งชะตา ${destinyCount} คน ⭐";
 
-  static String m7(country) => "ข้าม, แค่${country}";
+  static String m14(country) => "ข้าม, แค่${country}";
 
-  static String m8(country) => "คุณวางแผนจะไป${country}ไหม";
+  static String m15(country) => "คุณวางแผนจะไป${country}ไหม";
+
+  static String m16(x) => "${x} วัน";
+
+  static String m17(x) => "${x} ชั่วโมง";
+
+  static String m18(x) => "${x} ครั้ง";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -48,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1 ปี"),
     "about": MessageLookupByLibrary.simpleMessage("เกี่ยวกับ"),
     "account": MessageLookupByLibrary.simpleMessage("บัญชี"),
+    "active_days": MessageLookupByLibrary.simpleMessage("วันที่มีกิจกรรม"),
     "addPhoto": MessageLookupByLibrary.simpleMessage("เพิ่มรูปภาพ"),
     "age": MessageLookupByLibrary.simpleMessage("อายุ"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
@@ -75,9 +96,31 @@ class MessageLookup extends MessageLookupByLibrary {
           "AstroLearn จะสร้างประวัติตามความสนใจของคุณ",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("รายงานดวงดาว"),
+    "astro_calendar_title": MessageLookupByLibrary.simpleMessage(
+      "ปฏิทินการรักษาดวงดาว",
+    ),
+    "audio_1_desc": MessageLookupByLibrary.simpleMessage(
+      "ค้นพบความสงบภายใต้ท้องฟ้าที่เต็มไปด้วยดวงดาว",
+    ),
+    "audio_1_title": MessageLookupByLibrary.simpleMessage("สมาธิใต้ดวงดาว"),
+    "audio_2_desc": MessageLookupByLibrary.simpleMessage(
+      "จุดประกายความกล้าและพลังภายในของคุณ",
+    ),
+    "audio_2_title": MessageLookupByLibrary.simpleMessage("เสียงพลังราศีเมษ"),
+    "audio_3_desc": MessageLookupByLibrary.simpleMessage(
+      "ปล่อยความเครียดและค้นพบการผ่อนคลายที่สมบูรณ์",
+    ),
+    "audio_3_title": MessageLookupByLibrary.simpleMessage(
+      "คู่มือการผ่อนคลายลึก",
+    ),
+    "audio_4_desc": MessageLookupByLibrary.simpleMessage(
+      "สมดุลอารมณ์และค้นพบความกลมกลืนภายใน",
+    ),
+    "audio_4_title": MessageLookupByLibrary.simpleMessage("ดนตรีสมดุลอารมณ์"),
     "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage(
       "อัปเดตอวตาล้มเหลว",
     ),
+    "average_mood": MessageLookupByLibrary.simpleMessage("อารมณ์เฉลี่ย"),
     "bio": MessageLookupByLibrary.simpleMessage("บทนำ"),
     "birthInfo": MessageLookupByLibrary.simpleMessage(
       "Informações de Nascimento",
@@ -98,6 +141,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "boostYourAppeal": MessageLookupByLibrary.simpleMessage("เสน่ห์ขึ้น!"),
     "breakIce": MessageLookupByLibrary.simpleMessage(
       "🔨🔨🔨 ไม่ต้องสนใจฉัน🔨🔨🔨 ฉันแค่มาทำลายความเงียบ🔨🔨🔨",
+    ),
+    "breathe_relax": MessageLookupByLibrary.simpleMessage(
+      "หายใจลึกๆ และผ่อนคลาย...",
     ),
     "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage(
       "คุณเป็นสมาชิก Plus",
@@ -160,6 +206,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "clickToSetBirthday": MessageLookupByLibrary.simpleMessage(
       "Clique para definir aniversário",
     ),
+    "click_for_encouragement": MessageLookupByLibrary.simpleMessage(
+      "คลิกฉันเพื่อกำลังใจ",
+    ),
+    "click_to_record_status": MessageLookupByLibrary.simpleMessage(
+      "คลิกเพื่อบันทึกสถานะ",
+    ),
     "closeButtonText": MessageLookupByLibrary.simpleMessage("Cerrar"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage("ล้อเล่น! ฟรี"),
     "clubFeePrefix": MessageLookupByLibrary.simpleMessage(
@@ -201,6 +253,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
       "พิกัดที่เลือกไว้ในปัจจุบัน",
     ),
+    "current_emotion": MessageLookupByLibrary.simpleMessage("อารมณ์ปัจจุบัน"),
+    "daily_quote": MessageLookupByLibrary.simpleMessage("คำคมประจำวัน"),
+    "daily_quotes_title": MessageLookupByLibrary.simpleMessage("คำคมประจำวัน"),
+    "daily_status": MessageLookupByLibrary.simpleMessage("สถานะประจำวัน"),
+    "date_format_md": m0,
+    "days_to_30_goal": m1,
     "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
       "Relatório de Análise AI Profunda",
     ),
@@ -243,12 +301,52 @@ class MessageLookup extends MessageLookupByLibrary {
       "Duo Snap อย่างไรก็ตาม",
     ),
     "editProfile": MessageLookupByLibrary.simpleMessage("แก้ไขโปรไฟล์"),
+    "emotion_analysis": MessageLookupByLibrary.simpleMessage(
+      "การวิเคราะห์อารมณ์",
+    ),
+    "emotion_angry": MessageLookupByLibrary.simpleMessage("😠 โกรธ"),
+    "emotion_anxious": MessageLookupByLibrary.simpleMessage("😰 วิตกกังวล"),
+    "emotion_calm": MessageLookupByLibrary.simpleMessage("😌 สงบ"),
+    "emotion_category": MessageLookupByLibrary.simpleMessage("อารมณ์"),
+    "emotion_diary": MessageLookupByLibrary.simpleMessage("ไดอารี่อารมณ์"),
+    "emotion_diary_saved": MessageLookupByLibrary.simpleMessage(
+      "✅ บันทึกอารมณ์แล้ว",
+    ),
+    "emotion_diary_title": MessageLookupByLibrary.simpleMessage(
+      "ไดอารี่อารมณ์",
+    ),
+    "emotion_distribution": MessageLookupByLibrary.simpleMessage(
+      "การกระจายอารมณ์",
+    ),
+    "emotion_happy": MessageLookupByLibrary.simpleMessage("😊 มีความสุข"),
+    "emotion_management": MessageLookupByLibrary.simpleMessage(
+      "การจัดการอารมณ์",
+    ),
+    "emotion_management_title": MessageLookupByLibrary.simpleMessage(
+      "การจัดการอารมณ์",
+    ),
+    "emotion_records": MessageLookupByLibrary.simpleMessage("บันทึกอารมณ์"),
+    "emotion_sad": MessageLookupByLibrary.simpleMessage("😢 เศร้า"),
+    "emotion_subtitle": MessageLookupByLibrary.simpleMessage(
+      "เข้าใจอารมณ์และเรียนรู้การดูแลตัวเอง",
+    ),
+    "emotion_tip": MessageLookupByLibrary.simpleMessage(
+      "ยอมรับตัวเองในปัจจุบัน อารมณ์ไหลเหมือนดวงดาวและจะกลับสู่ความสงบในที่สุด",
+    ),
+    "emotion_tired": MessageLookupByLibrary.simpleMessage("😴 เหนื่อย"),
     "emotionalCompatibility": MessageLookupByLibrary.simpleMessage("อารมณ์"),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "ห้องแชทส่วนตัวของคุณยังว่างอยู่\nแต่ดวงดาวรู้ว่าคนที่ใช่กำลังมาหาคุณ",
     ),
+    "energy": MessageLookupByLibrary.simpleMessage("พลังงาน"),
+    "energy_category": MessageLookupByLibrary.simpleMessage("พลังงาน"),
+    "energy_index": MessageLookupByLibrary.simpleMessage("ดัชนีพลังงาน"),
+    "energy_level": MessageLookupByLibrary.simpleMessage("ระดับพลังงาน"),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage(
       "Digite o local de nascimento",
+    ),
+    "every_emotion_matters": MessageLookupByLibrary.simpleMessage(
+      "ทุกอารมณ์สมควรได้รับการมองเห็นและบันทึก",
     ),
     "exceptionAstroLearnContentFilterTips":
         MessageLookupByLibrary.simpleMessage(
@@ -269,8 +367,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
       "AstroLearnกำลังหาเพื่อนที่มีศักยภาพ...",
     ),
+    "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
+      "ดวงจันทร์ข้างขึ้น เป็นช่วงเวลาที่ดีสำหรับการกระทำและการตัดสินใจ",
+    ),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "เฮ้ย ฉันว่านายน่าทึ่งมาก มาเป็นเพื่อนกันไหม?",
+    ),
+    "full_moon_insight": MessageLookupByLibrary.simpleMessage(
+      "พลังงานดวงจันทร์เต็มดวงแรงที่สุด เหมาะสำหรับการปลดปล่อยอารมณ์",
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("อนาคต"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("เมถุน"),
@@ -282,12 +386,25 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "goDiscover": MessageLookupByLibrary.simpleMessage("ไปค้นหา"),
     "gotIt": MessageLookupByLibrary.simpleMessage("เข้าใจแล้ว"),
+    "great_keep_going": MessageLookupByLibrary.simpleMessage(
+      "เยี่ยมมาก! ทำต่อไป ✨",
+    ),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "เฮ้ย ลองทายสิว่าใครจะเป็นคนพูดก่อน?",
     ),
     "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
       "ให้AstroLearnทักทายหน่อย",
     ),
+    "healing_calendar_title": MessageLookupByLibrary.simpleMessage(
+      "ปฏิทินการเยียวยาด้วยดวงดาว",
+    ),
+    "healing_category": MessageLookupByLibrary.simpleMessage("การเยียวยา"),
+    "healing_count": MessageLookupByLibrary.simpleMessage(
+      "จำนวนครั้งการเยียวยา",
+    ),
+    "healing_data": MessageLookupByLibrary.simpleMessage("ข้อมูลการเยียวยา"),
+    "healing_music_title": MessageLookupByLibrary.simpleMessage("ดนตรีบำบัด"),
+    "healing_sessions": MessageLookupByLibrary.simpleMessage("เซสชั่นการรักษา"),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
       "นี่คือสิ่งที่ AstroLearn ทำเป็นพิเศษเพื่อคุณ",
     ),
@@ -300,8 +417,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage(
       "ฉันชอบสไตล์ของคุณ!",
     ),
-    "imInterestedSomething": m0,
-    "imVeryInterestedInSomething": m1,
+    "imInterestedSomething": m2,
+    "imVeryInterestedInSomething": m3,
     "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage(
       "ข้อมูลวันเกิดของผู้ใช้ไม่สมบูรณ์",
     ),
@@ -323,7 +440,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "justSendALike": MessageLookupByLibrary.simpleMessage(
       "เพียงแบ่งปันความชื่นชมของคุณ",
     ),
-    "justTypeInYourLanguage": m2,
+    "justTypeInYourLanguage": m4,
+    "keep_it_up": MessageLookupByLibrary.simpleMessage(
+      "ทำต่อไป! คุณทำได้ดีมาก ✨",
+    ),
+    "last_quarter_insight": MessageLookupByLibrary.simpleMessage(
+      "ดวงจันทร์ข้างแรม ปล่อยวางอดีตและเตรียมพร้อมสำหรับการเริ่มต้นใหม่",
+    ),
     "leoSign": MessageLookupByLibrary.simpleMessage("ราศีสิงห์"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
       "AstroLearn ช่วยคุณทักทายนะ",
@@ -364,27 +487,53 @@ class MessageLookup extends MessageLookupByLibrary {
     "mapSelectedLocation": MessageLookupByLibrary.simpleMessage(
       "ตำแหน่งที่เลือกบนแผนที่",
     ),
-    "matchPageSelectIdeas": m3,
+    "matchPageSelectIdeas": m5,
     "me": MessageLookupByLibrary.simpleMessage("ฉัน"),
+    "meditation_category": MessageLookupByLibrary.simpleMessage("สมาธิ"),
+    "meditation_count": MessageLookupByLibrary.simpleMessage(
+      "จำนวนครั้งการทำสมาธิ",
+    ),
+    "meditation_practice": MessageLookupByLibrary.simpleMessage("การฝึกสมาธิ"),
+    "meditation_practice_title": MessageLookupByLibrary.simpleMessage(
+      "การฝึกสมาธิ",
+    ),
+    "meditation_saved": MessageLookupByLibrary.simpleMessage(
+      "✅ บันทึกสมาธิแล้ว",
+    ),
+    "meditation_subtitle": MessageLookupByLibrary.simpleMessage(
+      "ค้นพบความสงบภายในผ่านสมาธิดวงดาว",
+    ),
     "memberCenter": MessageLookupByLibrary.simpleMessage("ศูนย์สมาชิก"),
     "membersPerks": MessageLookupByLibrary.simpleMessage(
       "สมาชิกได้รับสิทธิประโยชน์พิเศษ",
     ),
+    "minutes_duration": m6,
     "month": MessageLookupByLibrary.simpleMessage("เดือน"),
+    "month_day_format": m7,
+    "mood": MessageLookupByLibrary.simpleMessage("อารมณ์"),
+    "mood_index": MessageLookupByLibrary.simpleMessage("ดัชนีอารมณ์"),
+    "mood_score": m8,
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
       "ยิ่งมีรูปภาพมากเท่าไร ค่าแนะนำก็ยิ่งสูงขึ้น",
     ),
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage(
       "รูปเยอะ, เสน่ห์เยอะ!",
     ),
+    "music_subtitle": MessageLookupByLibrary.simpleMessage(
+      "เสียงดวงดาวผ่อนคลายสำหรับจิตใจและร่างกาย",
+    ),
     "myPhotos": MessageLookupByLibrary.simpleMessage("รูปภาพของฉัน"),
     "myProfileTitle": MessageLookupByLibrary.simpleMessage("โปรไฟล์ของฉัน"),
+    "my_statistics": MessageLookupByLibrary.simpleMessage("สถิติของฉัน"),
     "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
       "ไปที่หน้าโปรไฟล์ดวงดาว",
     ),
     "nearby": MessageLookupByLibrary.simpleMessage("ใกล้ๆ"),
     "newGameplay": MessageLookupByLibrary.simpleMessage("การเล่นเกมใหม่"),
     "newMatch": MessageLookupByLibrary.simpleMessage("การเชื่อมต่อใหม่!"),
+    "new_moon_insight": MessageLookupByLibrary.simpleMessage(
+      "ช่วงเวลาจันทร์ดับ เหมาะสำหรับเริ่มแผนการรักษาใหม่",
+    ),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage(
       "วันชำระเงินครั้งต่อไป",
     ),
@@ -395,6 +544,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "ยังไม่มีใครพบเสน่ห์ของคุณ",
     ),
     "noThanks": MessageLookupByLibrary.simpleMessage("ไม่ละ ขอบคุณนะ"),
+    "no_audio": MessageLookupByLibrary.simpleMessage("ไม่มีเสียง"),
+    "no_quotes": MessageLookupByLibrary.simpleMessage("ไม่มีคำคมที่มีอยู่"),
+    "no_records_today": MessageLookupByLibrary.simpleMessage(
+      "วันนี้ยังไม่มีบันทึก",
+    ),
+    "notes": MessageLookupByLibrary.simpleMessage("บันทึก"),
     "notifications": MessageLookupByLibrary.simpleMessage("การแจ้งเตือน"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
       "AstroLearn เหมือนกับฐานบ้านสำหรับพลเมืองโลก",
@@ -457,10 +612,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "photos": MessageLookupByLibrary.simpleMessage("รูปภาพ"),
     "piscesSign": MessageLookupByLibrary.simpleMessage("มีน"),
+    "played_audio": MessageLookupByLibrary.simpleMessage("เล่นเสียง"),
     "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
         MessageLookupByLibrary.simpleMessage(
           "โปรดตรวจสอบอินเทอร์เน็ตหรือแตะเพื่อรีเฟรชและลองอีกครั้ง",
         ),
+    "please_write_feelings": MessageLookupByLibrary.simpleMessage(
+      "กรุณาเขียนความรู้สึกของคุณ",
+    ),
     "plusBenefitActivityReminder": MessageLookupByLibrary.simpleMessage(
       "การแจ้งเตือนกิจกรรมและการกลับมา",
     ),
@@ -551,6 +710,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage(
       "Duo Snap กับ Plus",
     ),
+    "practice_count": MessageLookupByLibrary.simpleMessage("จำนวนครั้งการฝึก"),
     "preference": MessageLookupByLibrary.simpleMessage("การตั้งค่า"),
     "privacy": MessageLookupByLibrary.simpleMessage("ความเป็นส่วนตัว"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage(
@@ -566,6 +726,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileTip": MessageLookupByLibrary.simpleMessage(
       "✨ เติมเต็มโปรไฟล์ให้ดวงดาวรู้จักคุณมากขึ้น เพื่อการจับคู่ที่แม่นยำ",
     ),
+    "psychological_healing": MessageLookupByLibrary.simpleMessage(
+      "การเยียวยาทางจิตใจ",
+    ),
     "purchaseFailed": MessageLookupByLibrary.simpleMessage("การซื้อไม่สำเร็จ"),
     "purchasePending": MessageLookupByLibrary.simpleMessage(
       "กำลังดำเนินการซื้อ...",
@@ -574,6 +737,47 @@ class MessageLookup extends MessageLookupByLibrary {
       "การแจ้งเตือนแบบพุช",
     ),
     "quickActions": MessageLookupByLibrary.simpleMessage("การดำเนินการด่วน"),
+    "quote_1": MessageLookupByLibrary.simpleMessage(
+      "วันนี้คุณเปล่งประกายเหมือนดวงดาว",
+    ),
+    "quote_10": MessageLookupByLibrary.simpleMessage(
+      "ค้นหาคำตอบในช่วงเวลาที่เงียบสงบ",
+    ),
+    "quote_2": MessageLookupByLibrary.simpleMessage(
+      "เชื่อในตัวเองเหมือนที่เชื่อในดวงดาว",
+    ),
+    "quote_3": MessageLookupByLibrary.simpleMessage(
+      "ทุกคนเป็นกลุ่มดาวที่ไม่เหมือนใคร",
+    ),
+    "quote_4": MessageLookupByLibrary.simpleMessage("พลังของจักรวาลอยู่กับคุณ"),
+    "quote_5": MessageLookupByLibrary.simpleMessage("ยอมรับตัวเองในตอนนี้"),
+    "quote_6": MessageLookupByLibrary.simpleMessage(
+      "ทุกอารมณ์สมควรได้รับการมองเห็น",
+    ),
+    "quote_7": MessageLookupByLibrary.simpleMessage(
+      "ปล่อยให้พลังดวงดาวไหลผ่านตัวคุณ",
+    ),
+    "quote_8": MessageLookupByLibrary.simpleMessage(
+      "วันนี้เป็นวันใหม่ที่เต็มไปด้วยความเป็นไปได้",
+    ),
+    "quote_9": MessageLookupByLibrary.simpleMessage(
+      "การมีอยู่ของคุณเป็นปาฏิหาริย์",
+    ),
+    "quotes_subtitle": MessageLookupByLibrary.simpleMessage(
+      "พลังบำบัดจากดวงดาว",
+    ),
+    "record_daily_status": MessageLookupByLibrary.simpleMessage(
+      "บันทึกสถานะประจำวัน",
+    ),
+    "record_today_hint": MessageLookupByLibrary.simpleMessage(
+      "วันนี้อยากบันทึกอะไร?",
+    ),
+    "record_your_feelings": MessageLookupByLibrary.simpleMessage(
+      "บันทึกความรู้สึกของคุณ",
+    ),
+    "recorded_days": MessageLookupByLibrary.simpleMessage("วันที่บันทึก"),
+    "recorded_emotion": MessageLookupByLibrary.simpleMessage("บันทึกอารมณ์"),
+    "relaxation_category": MessageLookupByLibrary.simpleMessage("การผ่อนคลาย"),
     "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
       "📸 กระตุ้นให้อัปโหลดรูปภาพ รู้จักกันมากขึ้น",
     ),
@@ -595,6 +799,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "พบชาวต่างชาติที่อยู่ใกล้คุณ",
     ),
     "sagittariusSign": MessageLookupByLibrary.simpleMessage("ธนู"),
+    "save": MessageLookupByLibrary.simpleMessage("บันทึก"),
+    "save_failed": m9,
     "scorpioSign": MessageLookupByLibrary.simpleMessage("พิจิก"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage(
       "หลักฐานภาพหน้าจอ",
@@ -611,6 +817,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "เลือกประเทศ",
     ),
     "selectLocationTitle": MessageLookupByLibrary.simpleMessage("เลือกสถานที่"),
+    "select_duration_start": MessageLookupByLibrary.simpleMessage(
+      "เลือกระยะเวลาเพื่อเริ่มสมาธิ",
+    ),
+    "select_meditation_duration": MessageLookupByLibrary.simpleMessage(
+      "เลือกระยะเวลาสมาธิ",
+    ),
     "sendDm": MessageLookupByLibrary.simpleMessage("ส่ง DM"),
     "sendDmRemark": MessageLookupByLibrary.simpleMessage("ส่งข้อความ DM"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
@@ -633,12 +845,24 @@ class MessageLookup extends MessageLookupByLibrary {
       "ใกล้จะเสร็จแล้ว",
     ),
     "sixMonths": MessageLookupByLibrary.simpleMessage("6 เดือน"),
+    "sleep_category": MessageLookupByLibrary.simpleMessage("การนอน"),
     "speakSameLanguage": MessageLookupByLibrary.simpleMessage(
       "คุณทั้งสองพูดภาษาเดียวกัน",
     ),
+    "spiritual_growth": MessageLookupByLibrary.simpleMessage(
+      "การเติบโตทางจิตวิญญาณ",
+    ),
     "standard": MessageLookupByLibrary.simpleMessage("มาตรฐาน"),
     "startChat": MessageLookupByLibrary.simpleMessage("เริ่มแชท"),
+    "start_meditation": MessageLookupByLibrary.simpleMessage("เริ่มสมาธิ"),
     "startedChat": MessageLookupByLibrary.simpleMessage("เริ่มแชทกับ"),
+    "status_saved": MessageLookupByLibrary.simpleMessage("✅ บันทึกสถานะแล้ว"),
+    "stop_meditation": MessageLookupByLibrary.simpleMessage("หยุดสมาธิ"),
+    "streak_days": MessageLookupByLibrary.simpleMessage("วันต่อเนื่อง"),
+    "streak_x_days": m10,
+    "stress": MessageLookupByLibrary.simpleMessage("ความเครียด"),
+    "stress_index": MessageLookupByLibrary.simpleMessage("ดัชนีความเครียด"),
+    "stress_level": MessageLookupByLibrary.simpleMessage("ระดับความเครียด"),
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage(
           "AI \nแปลภาษาเรียลไทม์ \n1000 ครั้ง/วัน",
@@ -661,7 +885,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage(
       "ข้อกำหนดและเงื่อนไข",
     ),
-    "subscriptionAgreementPrefix": m4,
+    "subscriptionAgreementPrefix": m11,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(
       " ของเรา",
     ),
@@ -685,9 +909,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
       "👅คุณได้ถึงขีดจำกัดประจำสัปดาห์แล้ว",
     ),
+    "toggle_background_music": MessageLookupByLibrary.simpleMessage(
+      "เปิด/ปิดดนตรีพื้นหลัง",
+    ),
+    "total_duration": MessageLookupByLibrary.simpleMessage("ระยะเวลารวม"),
     "unknownLocation": MessageLookupByLibrary.simpleMessage("ไม่ทราบ"),
-    "unlockHighMatchUsers": m5,
-    "unlockUsersWithDestiny": m6,
+    "unlockHighMatchUsers": m12,
+    "unlockUsersWithDestiny": m13,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "ราคาพิเศษที่ไม่ควรพลาด",
     ),
@@ -768,7 +996,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewAstroReport": MessageLookupByLibrary.simpleMessage(
       "ดูรายงานดวงดาวกับ",
     ),
+    "view_details": MessageLookupByLibrary.simpleMessage("ดูรายละเอียด"),
     "virgoSign": MessageLookupByLibrary.simpleMessage("สิงห์"),
+    "waning_crescent_insight": MessageLookupByLibrary.simpleMessage(
+      "ช่วงเวลาจันทร์เสี้ยว การพักผ่อนและการฟื้นฟูมีความสำคัญ",
+    ),
+    "waning_gibbous_insight": MessageLookupByLibrary.simpleMessage(
+      "ดวงจันทร์กำลังลดลง เป็นช่วงเวลาที่ดีสำหรับการไตร่ตรองและการจัดระเบียบ",
+    ),
     "wannaHollaAt": MessageLookupByLibrary.simpleMessage("อยากแบ่งปันไหม!"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "ปิดหลังจากนั้น จะไม่แสดงเมืองของคุณในขณะจับคู่",
@@ -786,6 +1021,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
       "หลังจากสิ้นสุดการแบ่งปัน ประวัติการสนทนาทั้งหมดจะถูกลบออก",
     ),
+    "waxing_crescent_insight": MessageLookupByLibrary.simpleMessage(
+      "ดวงจันทร์กำลังเติบโต พลังงานค่อยๆ สะสม",
+    ),
+    "waxing_gibbous_insight": MessageLookupByLibrary.simpleMessage(
+      "ดวงจันทร์เต็มดวงใกล้เข้ามา อารมณ์อาจจะอ่อนไหวมากขึ้น",
+    ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage(
       "อีเมลของคุณคืออะไร?",
     ),
@@ -802,7 +1043,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "อยากทำอะไรบ้าง?",
     ),
-    "wishCityPickerSkipButton": m7,
+    "wishCityPickerSkipButton": m14,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "ถ้าคุณไปที่นั่น คุณอยากเยี่ยมชมเมืองไหนบ้าง?",
     ),
@@ -822,13 +1063,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "บางทีในไม่ช้านี้",
     ),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("ภายในหนึ่งปี"),
-    "wishDatePickerSubtitle": m8,
+    "wishDatePickerSubtitle": m15,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("เมื่อ"),
     "wishList": MessageLookupByLibrary.simpleMessage("รายการสิ่งที่ปรารถนา"),
     "wishes": MessageLookupByLibrary.simpleMessage("ความปรารถนา"),
     "writeInterestingBio": MessageLookupByLibrary.simpleMessage(
       "เขียนประวัติส่วนตัวที่น่าสนใจ",
     ),
+    "write_feelings_hint": MessageLookupByLibrary.simpleMessage(
+      "เขียนความรู้สึกของคุณ...",
+    ),
+    "x_days": m16,
+    "x_hours": m17,
+    "x_times": m18,
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage(
       "คุณเป็นสมาชิกคลับแล้ว",
     ),

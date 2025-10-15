@@ -20,26 +20,46 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ja';
 
-  static String m0(something) => "\"${something}に興味があります\"";
+  static String m0(month, day) => "${month}月${day}日";
 
-  static String m1(something) => "「${something}」にとても興味があります！";
+  static String m1(x) => "30日目標まであと${x}日";
 
-  static String m2(lang) => "${lang}でチャットできるよー";
+  static String m2(something) => "\"${something}に興味があります\"";
 
-  static String m3(gender) =>
+  static String m3(something) => "「${something}」にとても興味があります！";
+
+  static String m4(lang) => "${lang}でチャットできるよー";
+
+  static String m5(gender) =>
       "${Intl.gender(gender, female: '彼女', male: '彼', other: '彼ら')}のどの共有体験が心に響きますか？";
 
-  static String m4(storeName) =>
+  static String m6(minutes) => "${minutes} 分";
+
+  static String m7(month, day) => "${month}月${day}日";
+
+  static String m8(score) => "気分 ${score}/10";
+
+  static String m9(error) => "❌ 保存に失敗しました：${error}";
+
+  static String m10(x) => "🔥 ${x}日連続！";
+
+  static String m11(storeName) =>
       "「続行」をクリックすると料金が発生し、対応するパッケージの価格で自動更新されます。${storeName}でキャンセルが可能です。続行することで、私たちの";
 
-  static String m5(count) => "高マッチユーザー${count}人をアンロックして表示 ✨";
+  static String m12(count) => "高マッチユーザー${count}人をアンロックして表示 ✨";
 
-  static String m6(count, destinyCount) =>
+  static String m13(count, destinyCount) =>
       "ユーザー${count}人をアンロック 命定マッチ${destinyCount}人含む ⭐";
 
-  static String m7(country) => "スキップ、ただ${country}";
+  static String m14(country) => "スキップ、ただ${country}";
 
-  static String m8(country) => "${country}に行く予定ですか";
+  static String m15(country) => "${country}に行く予定ですか";
+
+  static String m16(x) => "${x}日";
+
+  static String m17(x) => "${x}時間";
+
+  static String m18(x) => "${x}回";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -47,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1年"),
     "about": MessageLookupByLibrary.simpleMessage("約"),
     "account": MessageLookupByLibrary.simpleMessage("アカウント"),
+    "active_days": MessageLookupByLibrary.simpleMessage("アクティブ日数"),
     "addPhoto": MessageLookupByLibrary.simpleMessage("写真を追加"),
     "age": MessageLookupByLibrary.simpleMessage("年齢"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
@@ -70,9 +91,25 @@ class MessageLookup extends MessageLookupByLibrary {
     "astroLearnWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage("あなたの興味に基づいてAstroLearnがバイオを生成します"),
     "astroReport": MessageLookupByLibrary.simpleMessage("星盤レポート"),
+    "astro_calendar_title": MessageLookupByLibrary.simpleMessage(
+      "星盤ヒーリングカレンダー",
+    ),
+    "audio_1_desc": MessageLookupByLibrary.simpleMessage("静かな星空の下で心の平安を見つける"),
+    "audio_1_title": MessageLookupByLibrary.simpleMessage("星空瞑想"),
+    "audio_2_desc": MessageLookupByLibrary.simpleMessage("内なる勇気と活力を呼び起こす"),
+    "audio_2_title": MessageLookupByLibrary.simpleMessage("牡羊座エネルギー"),
+    "audio_3_desc": MessageLookupByLibrary.simpleMessage(
+      "ストレスを解放し、完全なリラックスを見つける",
+    ),
+    "audio_3_title": MessageLookupByLibrary.simpleMessage("深いリラックスガイド"),
+    "audio_4_desc": MessageLookupByLibrary.simpleMessage(
+      "感情のバランスを取り、内なる調和を見つける",
+    ),
+    "audio_4_title": MessageLookupByLibrary.simpleMessage("感情バランス音楽"),
     "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage(
       "アバターの更新に失敗しました",
     ),
+    "average_mood": MessageLookupByLibrary.simpleMessage("平均気分"),
     "bio": MessageLookupByLibrary.simpleMessage("アバウトミー"),
     "birthInfo": MessageLookupByLibrary.simpleMessage("出生信息"),
     "birthPlace": MessageLookupByLibrary.simpleMessage("出生地"),
@@ -88,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "breakIce": MessageLookupByLibrary.simpleMessage(
       "🔨🔨🔨 気にしないで🔨🔨🔨 氷を砕くだけ🔨🔨🔨",
     ),
+    "breathe_relax": MessageLookupByLibrary.simpleMessage("深呼吸をして、リラックス..."),
     "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("あなたはPlus会員です"),
     "buttonAuthorize": MessageLookupByLibrary.simpleMessage("認証"),
     "buttonCancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
@@ -139,6 +177,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "choosePlaceholder": MessageLookupByLibrary.simpleMessage("選択"),
     "clickToSetBirthPlace": MessageLookupByLibrary.simpleMessage("点击设置出生地"),
     "clickToSetBirthday": MessageLookupByLibrary.simpleMessage("点击设置生日"),
+    "click_for_encouragement": MessageLookupByLibrary.simpleMessage("励ましをもらう"),
+    "click_to_record_status": MessageLookupByLibrary.simpleMessage("ステータスを記録"),
     "closeButtonText": MessageLookupByLibrary.simpleMessage("关闭"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage("冗談です！無料です"),
     "clubFeePrefix": MessageLookupByLibrary.simpleMessage("クラブ料金：月額99ドル"),
@@ -170,6 +210,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
       "現在選択されている座標",
     ),
+    "current_emotion": MessageLookupByLibrary.simpleMessage("現在の感情"),
+    "daily_quote": MessageLookupByLibrary.simpleMessage("今日の言葉"),
+    "daily_quotes_title": MessageLookupByLibrary.simpleMessage("デイリークォート"),
+    "daily_status": MessageLookupByLibrary.simpleMessage("日々の状態"),
+    "date_format_md": m0,
+    "days_to_30_goal": m1,
     "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage("深度AI分析报告"),
     "deepSynastryAnalysis": MessageLookupByLibrary.simpleMessage("深度分析"),
     "deepSynastryRemark": MessageLookupByLibrary.simpleMessage("深い相性分析"),
@@ -200,11 +246,41 @@ class MessageLookup extends MessageLookupByLibrary {
     "duoSnap": MessageLookupByLibrary.simpleMessage("デュオスナップ"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("とにかくデュオスナップ"),
     "editProfile": MessageLookupByLibrary.simpleMessage("プロフィールを編集"),
+    "emotion_analysis": MessageLookupByLibrary.simpleMessage("感情分析"),
+    "emotion_angry": MessageLookupByLibrary.simpleMessage("😠 怒り"),
+    "emotion_anxious": MessageLookupByLibrary.simpleMessage("😰 不安"),
+    "emotion_calm": MessageLookupByLibrary.simpleMessage("😌 落ち着いた"),
+    "emotion_category": MessageLookupByLibrary.simpleMessage("感情"),
+    "emotion_diary": MessageLookupByLibrary.simpleMessage("感情日記"),
+    "emotion_diary_saved": MessageLookupByLibrary.simpleMessage(
+      "✅ 感情日記を保存しました",
+    ),
+    "emotion_diary_title": MessageLookupByLibrary.simpleMessage("感情日記"),
+    "emotion_distribution": MessageLookupByLibrary.simpleMessage("感情分布"),
+    "emotion_happy": MessageLookupByLibrary.simpleMessage("😊 嬉しい"),
+    "emotion_management": MessageLookupByLibrary.simpleMessage("感情マネジメント"),
+    "emotion_management_title": MessageLookupByLibrary.simpleMessage(
+      "感情マネジメント",
+    ),
+    "emotion_records": MessageLookupByLibrary.simpleMessage("感情記録"),
+    "emotion_sad": MessageLookupByLibrary.simpleMessage("😢 悲しい"),
+    "emotion_subtitle": MessageLookupByLibrary.simpleMessage("感情を理解し、自己ケアを学ぶ"),
+    "emotion_tip": MessageLookupByLibrary.simpleMessage(
+      "今の自分を受け入れ、感情は星のように流れ、やがて平和に戻る",
+    ),
+    "emotion_tired": MessageLookupByLibrary.simpleMessage("😴 疲れた"),
     "emotionalCompatibility": MessageLookupByLibrary.simpleMessage("感情"),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "あなたの専用チャットルームはまだ空です\nでも星は知っています、運命の人はあなたに向かって来ています",
     ),
+    "energy": MessageLookupByLibrary.simpleMessage("エネルギー"),
+    "energy_category": MessageLookupByLibrary.simpleMessage("エネルギー"),
+    "energy_index": MessageLookupByLibrary.simpleMessage("エネルギー指数"),
+    "energy_level": MessageLookupByLibrary.simpleMessage("エネルギー水準"),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage("请输入出生地"),
+    "every_emotion_matters": MessageLookupByLibrary.simpleMessage(
+      "すべての感情は記録される価値があります",
+    ),
     "exceptionAstroLearnContentFilterTips":
         MessageLookupByLibrary.simpleMessage(
           "送信されていない。AstroLearnは禁止された言葉を翻訳しません。",
@@ -224,8 +300,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
       "AstroLearnは潜在的な友人を探しています...",
     ),
+    "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
+      "上弦の月、行動と決断の良い時期",
+    ),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "こんにちは!面白そうな人だね。ちょっと話してみませんか？",
+    ),
+    "full_moon_insight": MessageLookupByLibrary.simpleMessage(
+      "満月のエネルギーが最も強い、感情を解放するのに最適",
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("未来"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("双子座"),
@@ -235,12 +317,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIFは許可されていません"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("発見に行く"),
     "gotIt": MessageLookupByLibrary.simpleMessage("分かった"),
+    "great_keep_going": MessageLookupByLibrary.simpleMessage("素晴らしい！その調子で ✨"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "ねえ、誰が最初に沈黙を破ると思う？",
     ),
     "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
       "AstroLearnに挨拶させて",
     ),
+    "healing_calendar_title": MessageLookupByLibrary.simpleMessage(
+      "星座ヒーリングカレンダー",
+    ),
+    "healing_category": MessageLookupByLibrary.simpleMessage("ヒーリング"),
+    "healing_count": MessageLookupByLibrary.simpleMessage("ヒーリング回数"),
+    "healing_data": MessageLookupByLibrary.simpleMessage("ヒーリングデータ"),
+    "healing_music_title": MessageLookupByLibrary.simpleMessage("ヒーリング音楽"),
+    "healing_sessions": MessageLookupByLibrary.simpleMessage("ヒーリングセッション"),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
       "これはAstroLearn特製です",
     ),
@@ -249,8 +340,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("あなたのオーラがすごくいい感じ！"),
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("スタイルがすごくかわいいわね!"),
-    "imInterestedSomething": m0,
-    "imVeryInterestedInSomething": m1,
+    "imInterestedSomething": m2,
+    "imVeryInterestedInSomething": m3,
     "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage(
       "ユーザーの生年月日情報が不完全です",
     ),
@@ -262,7 +353,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "issues": MessageLookupByLibrary.simpleMessage("問題"),
     "justNow": MessageLookupByLibrary.simpleMessage("たった今"),
     "justSendALike": MessageLookupByLibrary.simpleMessage("感謝の気持ちを伝えるだけ"),
-    "justTypeInYourLanguage": m2,
+    "justTypeInYourLanguage": m4,
+    "keep_it_up": MessageLookupByLibrary.simpleMessage("その調子！素晴らしい ✨"),
+    "last_quarter_insight": MessageLookupByLibrary.simpleMessage(
+      "下弦の月、過去を手放し、新しい始まりの準備を",
+    ),
     "leoSign": MessageLookupByLibrary.simpleMessage("獅子座"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
       "AstroLearnに挨拶させて",
@@ -297,23 +392,43 @@ class MessageLookup extends MessageLookupByLibrary {
       "位置を許可する",
     ),
     "mapSelectedLocation": MessageLookupByLibrary.simpleMessage("マップで選択された場所"),
-    "matchPageSelectIdeas": m3,
+    "matchPageSelectIdeas": m5,
     "me": MessageLookupByLibrary.simpleMessage("マイページ"),
+    "meditation_category": MessageLookupByLibrary.simpleMessage("瞑想"),
+    "meditation_count": MessageLookupByLibrary.simpleMessage("瞑想回数"),
+    "meditation_practice": MessageLookupByLibrary.simpleMessage("瞑想練習"),
+    "meditation_practice_title": MessageLookupByLibrary.simpleMessage("瞑想練習"),
+    "meditation_saved": MessageLookupByLibrary.simpleMessage("✅ 瞑想記録を保存しました"),
+    "meditation_subtitle": MessageLookupByLibrary.simpleMessage(
+      "星座瞑想で心の平安を見つける",
+    ),
     "memberCenter": MessageLookupByLibrary.simpleMessage("会員センター"),
     "membersPerks": MessageLookupByLibrary.simpleMessage("メンバーは限定特典を獲得"),
+    "minutes_duration": m6,
     "month": MessageLookupByLibrary.simpleMessage("月"),
+    "month_day_format": m7,
+    "mood": MessageLookupByLibrary.simpleMessage("気分"),
+    "mood_index": MessageLookupByLibrary.simpleMessage("気分指数"),
+    "mood_score": m8,
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
       "写真多いほどおすすめ度高くなる",
     ),
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage("写真増えて、魅力もね♪"),
+    "music_subtitle": MessageLookupByLibrary.simpleMessage(
+      "心身をリラックスさせる星座オーディオ",
+    ),
     "myPhotos": MessageLookupByLibrary.simpleMessage("私の写真"),
     "myProfileTitle": MessageLookupByLibrary.simpleMessage("マイプロフィール"),
+    "my_statistics": MessageLookupByLibrary.simpleMessage("私の統計"),
     "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
       "星盤プロフィールページにジャンプ",
     ),
     "nearby": MessageLookupByLibrary.simpleMessage("近くに"),
     "newGameplay": MessageLookupByLibrary.simpleMessage("新しいゲームプレイ"),
     "newMatch": MessageLookupByLibrary.simpleMessage("新しいつながり！"),
+    "new_moon_insight": MessageLookupByLibrary.simpleMessage(
+      "新月の瞬間、新しいヒーリングプランを始めるのに最適",
+    ),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage("次の請求日"),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
       "ステータス：メッセージなし\n\nすること：さあ、聞き手を探そう！\n\n提案：本当の自分を共有しよう",
@@ -322,6 +437,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "まだ誰もあなたの魅力を見つけていません",
     ),
     "noThanks": MessageLookupByLibrary.simpleMessage("いいえ、ありがとう"),
+    "no_audio": MessageLookupByLibrary.simpleMessage("音声なし"),
+    "no_quotes": MessageLookupByLibrary.simpleMessage("引用なし"),
+    "no_records_today": MessageLookupByLibrary.simpleMessage("この日の記録はありません"),
+    "notes": MessageLookupByLibrary.simpleMessage("メモ"),
     "notifications": MessageLookupByLibrary.simpleMessage("通知"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
       "AstroLearnは世界中の人々の共通の我が家です",
@@ -378,10 +497,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "photos": MessageLookupByLibrary.simpleMessage("写真"),
     "piscesSign": MessageLookupByLibrary.simpleMessage("魚座"),
+    "played_audio": MessageLookupByLibrary.simpleMessage("音声を再生"),
     "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
         MessageLookupByLibrary.simpleMessage(
           "ネットワークを確認するか、更新ボタンを押してリトライしてくださいね~",
         ),
+    "please_write_feelings": MessageLookupByLibrary.simpleMessage("感情を書いてください"),
     "plusBenefitActivityReminder": MessageLookupByLibrary.simpleMessage(
       "活動と復帰リマインダー",
     ),
@@ -464,6 +585,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "plusMember": MessageLookupByLibrary.simpleMessage("Plus会員"),
     "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage("Plus会員特典"),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("Plusでデュオスナップ"),
+    "practice_count": MessageLookupByLibrary.simpleMessage("練習回数"),
     "preference": MessageLookupByLibrary.simpleMessage("好み"),
     "privacy": MessageLookupByLibrary.simpleMessage("プライバシー"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("プライバシーポリシー"),
@@ -473,10 +595,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileTip": MessageLookupByLibrary.simpleMessage(
       "✨ プロフィールを完成させて、星があなたをもっとよく知れるように、より正確なマッチングを",
     ),
+    "psychological_healing": MessageLookupByLibrary.simpleMessage("心理的なヒーリング"),
     "purchaseFailed": MessageLookupByLibrary.simpleMessage("購入に失敗しました"),
     "purchasePending": MessageLookupByLibrary.simpleMessage("購入処理中..."),
     "pushNotifications": MessageLookupByLibrary.simpleMessage("プッシュ通知"),
     "quickActions": MessageLookupByLibrary.simpleMessage("クイックアクション"),
+    "quote_1": MessageLookupByLibrary.simpleMessage("今日のあなたは星のように輝いています"),
+    "quote_10": MessageLookupByLibrary.simpleMessage("静かな時間に答えを見つけて"),
+    "quote_2": MessageLookupByLibrary.simpleMessage("星を信じるように自分を信じて"),
+    "quote_3": MessageLookupByLibrary.simpleMessage("誰もが独自の星座です"),
+    "quote_4": MessageLookupByLibrary.simpleMessage("宇宙のエネルギーがあなたと共にあります"),
+    "quote_5": MessageLookupByLibrary.simpleMessage("今のままの自分を受け入れて"),
+    "quote_6": MessageLookupByLibrary.simpleMessage("すべての感情は認められるべき"),
+    "quote_7": MessageLookupByLibrary.simpleMessage("星のエネルギーを体に流して"),
+    "quote_8": MessageLookupByLibrary.simpleMessage("今日は無限の可能性に満ちている"),
+    "quote_9": MessageLookupByLibrary.simpleMessage("あなたの存在自体が奇跡です"),
+    "quotes_subtitle": MessageLookupByLibrary.simpleMessage("星々からの癒しのエネルギー"),
+    "record_daily_status": MessageLookupByLibrary.simpleMessage("デイリーステータスを記録"),
+    "record_today_hint": MessageLookupByLibrary.simpleMessage("今日は何を記録しますか?"),
+    "record_your_feelings": MessageLookupByLibrary.simpleMessage("感情を記録する"),
+    "recorded_days": MessageLookupByLibrary.simpleMessage("記録日数"),
+    "recorded_emotion": MessageLookupByLibrary.simpleMessage("記録された感情"),
+    "relaxation_category": MessageLookupByLibrary.simpleMessage("リラックス"),
     "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
       "📸 写真のアップロードを促し、お互いをもっと知り合いましょう",
     ),
@@ -496,6 +636,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "あなたの近くの外国人に出会う",
     ),
     "sagittariusSign": MessageLookupByLibrary.simpleMessage("射手座"),
+    "save": MessageLookupByLibrary.simpleMessage("保存"),
+    "save_failed": m9,
     "scorpioSign": MessageLookupByLibrary.simpleMessage("蠍座"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("スクリーンショットの証拠"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("プロフィールを見る"),
@@ -508,6 +650,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("国を選択"),
     "selectLocationTitle": MessageLookupByLibrary.simpleMessage("場所を選択"),
+    "select_duration_start": MessageLookupByLibrary.simpleMessage(
+      "瞑想時間を選択して開始",
+    ),
+    "select_meditation_duration": MessageLookupByLibrary.simpleMessage(
+      "瞑想時間を選択",
+    ),
     "sendDm": MessageLookupByLibrary.simpleMessage("DMを送る"),
     "sendDmRemark": MessageLookupByLibrary.simpleMessage("DMメッセージ送信"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
@@ -522,12 +670,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "showYourPersonality": MessageLookupByLibrary.simpleMessage("あなたの個性を見せて"),
     "signUpLastStepPageTitle": MessageLookupByLibrary.simpleMessage("もうすぐ完成です"),
     "sixMonths": MessageLookupByLibrary.simpleMessage("6ヶ月"),
+    "sleep_category": MessageLookupByLibrary.simpleMessage("睡眠"),
     "speakSameLanguage": MessageLookupByLibrary.simpleMessage(
       "🤝 同語なら翻訳しなくてもいいよ",
     ),
+    "spiritual_growth": MessageLookupByLibrary.simpleMessage("精神的成長"),
     "standard": MessageLookupByLibrary.simpleMessage("標準"),
     "startChat": MessageLookupByLibrary.simpleMessage("チャット開始"),
+    "start_meditation": MessageLookupByLibrary.simpleMessage("瞑想を開始"),
     "startedChat": MessageLookupByLibrary.simpleMessage("チャット開始"),
+    "status_saved": MessageLookupByLibrary.simpleMessage("✅ ステータスを保存しました"),
+    "stop_meditation": MessageLookupByLibrary.simpleMessage("瞑想を停止"),
+    "streak_days": MessageLookupByLibrary.simpleMessage("連続日数"),
+    "streak_x_days": m10,
+    "stress": MessageLookupByLibrary.simpleMessage("ストレス"),
+    "stress_index": MessageLookupByLibrary.simpleMessage("ストレス指数"),
+    "stress_level": MessageLookupByLibrary.simpleMessage("ストレス水準"),
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage("1日に1000回\nのAI同期通訳"),
     "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
@@ -544,7 +702,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subPageTitle": MessageLookupByLibrary.simpleMessage("AstroLearn Plusを入手"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("利用規約"),
-    "subscriptionAgreementPrefix": m4,
+    "subscriptionAgreementPrefix": m11,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(
       "に同意したことになります。",
     ),
@@ -564,9 +722,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
       "👅週の制限に達しました",
     ),
+    "toggle_background_music": MessageLookupByLibrary.simpleMessage("BGM切り替え"),
+    "total_duration": MessageLookupByLibrary.simpleMessage("合計時間"),
     "unknownLocation": MessageLookupByLibrary.simpleMessage("不明"),
-    "unlockHighMatchUsers": m5,
-    "unlockUsersWithDestiny": m6,
+    "unlockHighMatchUsers": m12,
+    "unlockUsersWithDestiny": m13,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "見逃せない特別価格",
     ),
@@ -633,7 +793,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "認証コードを入力してください",
     ),
     "viewAstroReport": MessageLookupByLibrary.simpleMessage("星盤レポートを表示"),
+    "view_details": MessageLookupByLibrary.simpleMessage("詳細を表示"),
     "virgoSign": MessageLookupByLibrary.simpleMessage("乙女座"),
+    "waning_crescent_insight": MessageLookupByLibrary.simpleMessage(
+      "残月の瞬間、休息と回復が重要",
+    ),
+    "waning_gibbous_insight": MessageLookupByLibrary.simpleMessage(
+      "月が欠けていく、反省と整理の良い時期",
+    ),
     "wannaHollaAt": MessageLookupByLibrary.simpleMessage("共有したいですか…"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "閉じた後、ペアリング時にあなたの街は表示されません",
@@ -651,6 +818,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
       "共有終了後、お互いの会話履歴が全てクリアされます。",
     ),
+    "waxing_crescent_insight": MessageLookupByLibrary.simpleMessage(
+      "月が満ちていく、エネルギーが徐々に蓄積される",
+    ),
+    "waxing_gibbous_insight": MessageLookupByLibrary.simpleMessage(
+      "満月が近づく、感情がより敏感になるかもしれない",
+    ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage("メールアドレスは何ですか？"),
     "whoLIkesYou": MessageLookupByLibrary.simpleMessage("あなたの共有を評価してくれる人"),
     "whoLikesU": MessageLookupByLibrary.simpleMessage("あなたを評価してくれる人"),
@@ -663,7 +836,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "特別にしたいことあるかな?",
     ),
-    "wishCityPickerSkipButton": m7,
+    "wishCityPickerSkipButton": m14,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "そこに行くなら、どの都市を訪れたいですか？",
     ),
@@ -677,11 +850,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishDateOptionNotSure": MessageLookupByLibrary.simpleMessage("まだ確かじゃないよ"),
     "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("最近ね、たぶん"),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("1年以内"),
-    "wishDatePickerSubtitle": m8,
+    "wishDatePickerSubtitle": m15,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("いつ"),
     "wishList": MessageLookupByLibrary.simpleMessage("願いリスト"),
     "wishes": MessageLookupByLibrary.simpleMessage("願い"),
     "writeInterestingBio": MessageLookupByLibrary.simpleMessage("興味深い自己紹介を書く"),
+    "write_feelings_hint": MessageLookupByLibrary.simpleMessage(
+      "感じていることを書き留めてください...",
+    ),
+    "x_days": m16,
+    "x_hours": m17,
+    "x_times": m18,
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage(
       "あなたは今クラブメンバーです",
     ),

@@ -20,26 +20,46 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh_TW';
 
-  static String m0(something) => "\"我對${something}感興趣\"";
+  static String m0(month, day) => "${month}月${day}日";
 
-  static String m1(something) => "我對「${something}」非常感興趣！";
+  static String m1(x) => "距離30天目標還有 ${x} 次";
 
-  static String m2(lang) => "只需輸入${lang}";
+  static String m2(something) => "\"我對${something}感興趣\"";
 
-  static String m3(gender) =>
+  static String m3(something) => "我對「${something}」非常感興趣！";
+
+  static String m4(lang) => "只需輸入${lang}";
+
+  static String m5(gender) =>
       "${Intl.gender(gender, female: '她', male: '他', other: '他們')}的哪些分享經歷讓你有共鳴？";
 
-  static String m4(storeName) =>
+  static String m6(minutes) => "${minutes} 分鐘";
+
+  static String m7(month, day) => "${month}月${day}日";
+
+  static String m8(score) => "心情 ${score}/10";
+
+  static String m9(error) => "❌ 保存失敗：${error}";
+
+  static String m10(x) => "🔥 連續記錄 ${x} 天！";
+
+  static String m11(storeName) =>
       "點擊“繼續”後你會被收取費用，您的訂閱將按對應套餐價格自動續訂，您可以通過${storeName}取消，繼續代表您同意我們的";
 
-  static String m5(count) => "解鎖查看${count}個高匹配用戶 ✨";
+  static String m12(count) => "解鎖查看${count}個高匹配用戶 ✨";
 
-  static String m6(count, destinyCount) =>
+  static String m13(count, destinyCount) =>
       "解鎖${count}個用戶，包含${destinyCount}個命定匹配 ⭐";
 
-  static String m7(country) => "跳過，就${country}";
+  static String m14(country) => "跳過，就${country}";
 
-  static String m8(country) => "有計劃要去${country}嗎";
+  static String m15(country) => "有計劃要去${country}嗎";
+
+  static String m16(x) => "${x}天";
+
+  static String m17(x) => "${x}小時";
+
+  static String m18(x) => "${x}次";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -47,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aYear": MessageLookupByLibrary.simpleMessage("1年"),
     "about": MessageLookupByLibrary.simpleMessage("關於"),
     "account": MessageLookupByLibrary.simpleMessage("帳戶"),
+    "active_days": MessageLookupByLibrary.simpleMessage("活躍天數"),
     "addPhoto": MessageLookupByLibrary.simpleMessage("添加照片"),
     "age": MessageLookupByLibrary.simpleMessage("年齡"),
     "aiCreatingFunGroupPics": MessageLookupByLibrary.simpleMessage(
@@ -70,7 +91,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "astroLearnWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage("AstroLearn會根據你的興趣生成一份簡介"),
     "astroReport": MessageLookupByLibrary.simpleMessage("合盤"),
+    "astro_calendar_title": MessageLookupByLibrary.simpleMessage("星盤療癒日曆"),
+    "audio_1_desc": MessageLookupByLibrary.simpleMessage("在寧靜的星空下，找到內心的平靜"),
+    "audio_1_title": MessageLookupByLibrary.simpleMessage("星空冥想曲"),
+    "audio_2_desc": MessageLookupByLibrary.simpleMessage("激發你內在的勇氣與活力"),
+    "audio_2_title": MessageLookupByLibrary.simpleMessage("白羊座能量音頻"),
+    "audio_3_desc": MessageLookupByLibrary.simpleMessage("釋放壓力，讓身心完全放鬆"),
+    "audio_3_title": MessageLookupByLibrary.simpleMessage("深度放鬆引導"),
+    "audio_4_desc": MessageLookupByLibrary.simpleMessage("平衡情緒，找回內心的和諧"),
+    "audio_4_title": MessageLookupByLibrary.simpleMessage("情緒平衡音樂"),
     "avatarUpdateFailed": MessageLookupByLibrary.simpleMessage("頭像更新失敗"),
+    "average_mood": MessageLookupByLibrary.simpleMessage("平均心情"),
     "bio": MessageLookupByLibrary.simpleMessage("簡介"),
     "birthInfo": MessageLookupByLibrary.simpleMessage("출생 정보"),
     "birthPlace": MessageLookupByLibrary.simpleMessage("출생지"),
@@ -84,6 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "breakIce": MessageLookupByLibrary.simpleMessage(
       "🔨🔨🔨 別介意🔨🔨🔨 我在破冰🔨🔨🔨",
     ),
+    "breathe_relax": MessageLookupByLibrary.simpleMessage("深呼吸，放鬆身心..."),
     "buttonAlreadyPlus": MessageLookupByLibrary.simpleMessage("你是Plus會員"),
     "buttonAuthorize": MessageLookupByLibrary.simpleMessage("授權"),
     "buttonCancel": MessageLookupByLibrary.simpleMessage("取消"),
@@ -131,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "출생지 설정을 클릭하세요",
     ),
     "clickToSetBirthday": MessageLookupByLibrary.simpleMessage("생일 설정을 클릭하세요"),
+    "click_for_encouragement": MessageLookupByLibrary.simpleMessage("點擊我獲得鼓勵"),
+    "click_to_record_status": MessageLookupByLibrary.simpleMessage("點擊記錄今日狀態"),
     "closeButtonText": MessageLookupByLibrary.simpleMessage("닫기"),
     "clubFeeJoking": MessageLookupByLibrary.simpleMessage("開玩笑！免費的"),
     "clubFeePrefix": MessageLookupByLibrary.simpleMessage("俱樂部費用：\$99/月"),
@@ -156,6 +190,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "currentSelectedCoordinates": MessageLookupByLibrary.simpleMessage(
       "當前選擇的座標",
     ),
+    "current_emotion": MessageLookupByLibrary.simpleMessage("此刻的情緒"),
+    "daily_quote": MessageLookupByLibrary.simpleMessage("今日心語"),
+    "daily_quotes_title": MessageLookupByLibrary.simpleMessage("每日心語"),
+    "daily_status": MessageLookupByLibrary.simpleMessage("每日狀態"),
+    "date_format_md": m0,
+    "days_to_30_goal": m1,
     "deepAnalysisReportTitle": MessageLookupByLibrary.simpleMessage(
       "심층 AI 분석 보고서",
     ),
@@ -184,11 +224,37 @@ class MessageLookup extends MessageLookupByLibrary {
     "duoSnap": MessageLookupByLibrary.simpleMessage("雙人快照"),
     "duosnapAnyway": MessageLookupByLibrary.simpleMessage("無論如何都要雙人快照"),
     "editProfile": MessageLookupByLibrary.simpleMessage("編輯資料"),
+    "emotion_analysis": MessageLookupByLibrary.simpleMessage("情緒分析"),
+    "emotion_angry": MessageLookupByLibrary.simpleMessage("😠 憤怒"),
+    "emotion_anxious": MessageLookupByLibrary.simpleMessage("😰 焦慮"),
+    "emotion_calm": MessageLookupByLibrary.simpleMessage("😌 平靜"),
+    "emotion_category": MessageLookupByLibrary.simpleMessage("情緒"),
+    "emotion_diary": MessageLookupByLibrary.simpleMessage("情緒日記"),
+    "emotion_diary_saved": MessageLookupByLibrary.simpleMessage("✅ 情緒日記已保存"),
+    "emotion_diary_title": MessageLookupByLibrary.simpleMessage("情緒日記"),
+    "emotion_distribution": MessageLookupByLibrary.simpleMessage("情緒分布"),
+    "emotion_happy": MessageLookupByLibrary.simpleMessage("😊 開心"),
+    "emotion_management": MessageLookupByLibrary.simpleMessage("情緒管理"),
+    "emotion_management_title": MessageLookupByLibrary.simpleMessage("情緒管理"),
+    "emotion_records": MessageLookupByLibrary.simpleMessage("情緒記錄"),
+    "emotion_sad": MessageLookupByLibrary.simpleMessage("😢 難過"),
+    "emotion_subtitle": MessageLookupByLibrary.simpleMessage("了解你的情緒，學會與自己相處"),
+    "emotion_tip": MessageLookupByLibrary.simpleMessage(
+      "接納當下的自己，情緒如同星辰流轉，終將歸於平靜",
+    ),
+    "emotion_tired": MessageLookupByLibrary.simpleMessage("😴 疲憊"),
     "emotionalCompatibility": MessageLookupByLibrary.simpleMessage("情感"),
     "emptyChatRoomMessage": MessageLookupByLibrary.simpleMessage(
       "你的專屬聊天室還是空的\n但星星知道，對的人正在向你走來",
     ),
+    "energy": MessageLookupByLibrary.simpleMessage("能量"),
+    "energy_category": MessageLookupByLibrary.simpleMessage("能量"),
+    "energy_index": MessageLookupByLibrary.simpleMessage("能量指數"),
+    "energy_level": MessageLookupByLibrary.simpleMessage("能量水平"),
     "enterBirthPlace": MessageLookupByLibrary.simpleMessage("출생지를 입력하세요"),
+    "every_emotion_matters": MessageLookupByLibrary.simpleMessage(
+      "每一種情緒都值得被看見和記錄",
+    ),
     "exceptionAstroLearnContentFilterTips":
         MessageLookupByLibrary.simpleMessage("未寄出。AstroLearn不會翻譯違禁詞。"),
     "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
@@ -206,9 +272,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
       "AstroLearn正在尋找一些潜在的朋友...",
     ),
+    "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
+      "上弦月，是行動和決策的好時機",
+    ),
     "friendsIntention": MessageLookupByLibrary.simpleMessage(
       "嘿，我覺得你很棒。我們成為朋友怎麼樣？",
     ),
+    "full_moon_insight": MessageLookupByLibrary.simpleMessage("滿月能量最強，適合釋放情緒"),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("未来"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("双子座"),
     "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
@@ -217,20 +287,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF檔案不允許"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("去發現"),
     "gotIt": MessageLookupByLibrary.simpleMessage("明白了"),
+    "great_keep_going": MessageLookupByLibrary.simpleMessage("你真棒！繼續保持 ✨"),
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "嘿，猜猜誰會先打破沉默？",
     ),
     "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
       "讓AstroLearn打招呼",
     ),
+    "healing_calendar_title": MessageLookupByLibrary.simpleMessage("星盤療癒日曆"),
+    "healing_category": MessageLookupByLibrary.simpleMessage("療癒"),
+    "healing_count": MessageLookupByLibrary.simpleMessage("療癒次數"),
+    "healing_data": MessageLookupByLibrary.simpleMessage("療癒數據"),
+    "healing_music_title": MessageLookupByLibrary.simpleMessage("療癒音樂"),
+    "healing_sessions": MessageLookupByLibrary.simpleMessage("療癒次數"),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
       "這是AstroLearn為你特製的",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage("你覺得AI傳譯怎麼樣?"),
     "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("你的活力很有吸引力！"),
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("我中意你的風格！"),
-    "imInterestedSomething": m0,
-    "imVeryInterestedInSomething": m1,
+    "imInterestedSomething": m2,
+    "imVeryInterestedInSomething": m3,
     "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage("用戶生日資訊不完整"),
     "infoIncompleteTitle": MessageLookupByLibrary.simpleMessage("資訊不完整"),
     "intellectualCompatibility": MessageLookupByLibrary.simpleMessage("智力"),
@@ -240,7 +317,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "issues": MessageLookupByLibrary.simpleMessage("問題"),
     "justNow": MessageLookupByLibrary.simpleMessage("剛剛"),
     "justSendALike": MessageLookupByLibrary.simpleMessage("就分享你的欣賞"),
-    "justTypeInYourLanguage": m2,
+    "justTypeInYourLanguage": m4,
+    "keep_it_up": MessageLookupByLibrary.simpleMessage("堅持就是勝利，繼續加油 ✨"),
+    "last_quarter_insight": MessageLookupByLibrary.simpleMessage(
+      "下弦月，放下過去，準備新開始",
+    ),
     "leoSign": MessageLookupByLibrary.simpleMessage("獅子座"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
       "讓AstroLearn代你打招呼",
@@ -269,27 +350,47 @@ class MessageLookup extends MessageLookupByLibrary {
       "位置授權",
     ),
     "mapSelectedLocation": MessageLookupByLibrary.simpleMessage("地圖選擇地點"),
-    "matchPageSelectIdeas": m3,
+    "matchPageSelectIdeas": m5,
     "me": MessageLookupByLibrary.simpleMessage("我的"),
+    "meditation_category": MessageLookupByLibrary.simpleMessage("冥想"),
+    "meditation_count": MessageLookupByLibrary.simpleMessage("冥想次數"),
+    "meditation_practice": MessageLookupByLibrary.simpleMessage("冥想練習"),
+    "meditation_practice_title": MessageLookupByLibrary.simpleMessage("冥想練習"),
+    "meditation_saved": MessageLookupByLibrary.simpleMessage("✅ 冥想記錄已保存"),
+    "meditation_subtitle": MessageLookupByLibrary.simpleMessage(
+      "通過星座冥想，找到內心的平靜",
+    ),
     "memberCenter": MessageLookupByLibrary.simpleMessage("會員中心"),
     "membersPerks": MessageLookupByLibrary.simpleMessage("會員享受專屬特權"),
+    "minutes_duration": m6,
     "month": MessageLookupByLibrary.simpleMessage("月"),
+    "month_day_format": m7,
+    "mood": MessageLookupByLibrary.simpleMessage("心情"),
+    "mood_index": MessageLookupByLibrary.simpleMessage("心情指數"),
+    "mood_score": m8,
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage("照片越多，推薦值越高"),
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage("照片多多魅力增！"),
+    "music_subtitle": MessageLookupByLibrary.simpleMessage("放鬆身心的星座音頻"),
     "myPhotos": MessageLookupByLibrary.simpleMessage("我的照片"),
     "myProfileTitle": MessageLookupByLibrary.simpleMessage("我的"),
+    "my_statistics": MessageLookupByLibrary.simpleMessage("我的統計"),
     "navigateToAstroProfile": MessageLookupByLibrary.simpleMessage(
       "跳轉到星盤資料完善頁面",
     ),
     "nearby": MessageLookupByLibrary.simpleMessage("附近"),
     "newGameplay": MessageLookupByLibrary.simpleMessage("新玩法"),
     "newMatch": MessageLookupByLibrary.simpleMessage("新連接！"),
+    "new_moon_insight": MessageLookupByLibrary.simpleMessage("新月時刻，適合開啟新的療癒計劃"),
     "nextBilingDate": MessageLookupByLibrary.simpleMessage("下次付費日"),
     "noMessageTips": MessageLookupByLibrary.simpleMessage(
       "狀態：暫無消息\n\n該做什麼：尋找傾聽者\n\n建議：分享真實的自己",
     ),
     "noOneFoundYourCharm": MessageLookupByLibrary.simpleMessage("還沒有人發現你的魅力"),
     "noThanks": MessageLookupByLibrary.simpleMessage("不了，謝謝"),
+    "no_audio": MessageLookupByLibrary.simpleMessage("暫無音頻"),
+    "no_quotes": MessageLookupByLibrary.simpleMessage("暫無心語記錄"),
+    "no_records_today": MessageLookupByLibrary.simpleMessage("這天還沒有記錄哦"),
+    "notes": MessageLookupByLibrary.simpleMessage("記錄"),
     "notifications": MessageLookupByLibrary.simpleMessage("通知"),
     "onboarding0": MessageLookupByLibrary.simpleMessage("AstroLearn是世界公民的家園"),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
@@ -332,8 +433,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "photoMightNotBeReal": MessageLookupByLibrary.simpleMessage("這張照片可能不是真實的"),
     "photos": MessageLookupByLibrary.simpleMessage("照片"),
     "piscesSign": MessageLookupByLibrary.simpleMessage("雙魚座"),
+    "played_audio": MessageLookupByLibrary.simpleMessage("播放了音頻"),
     "pleaseCheckYourInternetOrTapToRefreshAndTryAgain":
         MessageLookupByLibrary.simpleMessage("請檢查網路或點擊刷新重試"),
+    "please_write_feelings": MessageLookupByLibrary.simpleMessage("請寫下你的感受"),
     "plusBenefitActivityReminder": MessageLookupByLibrary.simpleMessage(
       "對方活躍/回流提醒",
     ),
@@ -414,6 +517,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "plusMember": MessageLookupByLibrary.simpleMessage("Plus 會員"),
     "plusMembershipBenefits": MessageLookupByLibrary.simpleMessage("Plus會員權益"),
     "plusPerkDuoSnap": MessageLookupByLibrary.simpleMessage("Plus雙人快照"),
+    "practice_count": MessageLookupByLibrary.simpleMessage("練習次數"),
     "preference": MessageLookupByLibrary.simpleMessage("偏好"),
     "privacy": MessageLookupByLibrary.simpleMessage("隱私"),
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("隱私政策"),
@@ -421,10 +525,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileInfoTab": MessageLookupByLibrary.simpleMessage("資料"),
     "profileNotShown": MessageLookupByLibrary.simpleMessage("TA還沒有展示真容"),
     "profileTip": MessageLookupByLibrary.simpleMessage("✨ 完善資料讓星星更了解你，匹配更精準"),
+    "psychological_healing": MessageLookupByLibrary.simpleMessage("心理療癒"),
     "purchaseFailed": MessageLookupByLibrary.simpleMessage("購買失敗"),
     "purchasePending": MessageLookupByLibrary.simpleMessage("購買處理中..."),
     "pushNotifications": MessageLookupByLibrary.simpleMessage("推送通知"),
     "quickActions": MessageLookupByLibrary.simpleMessage("快捷操作"),
+    "quote_1": MessageLookupByLibrary.simpleMessage("今天的你，閃耀如星"),
+    "quote_10": MessageLookupByLibrary.simpleMessage("在寧靜中尋找內心的答案"),
+    "quote_2": MessageLookupByLibrary.simpleMessage("相信自己，如同相信星座的指引"),
+    "quote_3": MessageLookupByLibrary.simpleMessage("每個人都是獨一無二的星座組合"),
+    "quote_4": MessageLookupByLibrary.simpleMessage("宇宙的能量與你同在"),
+    "quote_5": MessageLookupByLibrary.simpleMessage("接納當下的自己，你已經很好了"),
+    "quote_6": MessageLookupByLibrary.simpleMessage("每一種情緒都值得被看見"),
+    "quote_7": MessageLookupByLibrary.simpleMessage("深呼吸，讓星辰的力量流經你的身體"),
+    "quote_8": MessageLookupByLibrary.simpleMessage("今天是嶄新的一天，充滿無限可能"),
+    "quote_9": MessageLookupByLibrary.simpleMessage("你的存在本身就是一種奇蹟"),
+    "quotes_subtitle": MessageLookupByLibrary.simpleMessage("來自星座的治癒能量"),
+    "record_daily_status": MessageLookupByLibrary.simpleMessage("記錄今日狀態"),
+    "record_today_hint": MessageLookupByLibrary.simpleMessage("今天有什麼想記錄的嗎？"),
+    "record_your_feelings": MessageLookupByLibrary.simpleMessage("記錄你的感受"),
+    "recorded_days": MessageLookupByLibrary.simpleMessage("記錄天數"),
+    "recorded_emotion": MessageLookupByLibrary.simpleMessage("記錄了情緒"),
+    "relaxation_category": MessageLookupByLibrary.simpleMessage("放鬆"),
     "remindUploadPhoto": MessageLookupByLibrary.simpleMessage(
       "📸 提醒TA上傳照片，讓彼此更了解",
     ),
@@ -442,6 +564,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "優先展示附近的外國人",
     ),
     "sagittariusSign": MessageLookupByLibrary.simpleMessage("射手座"),
+    "save": MessageLookupByLibrary.simpleMessage("保存"),
+    "save_failed": m9,
     "scorpioSign": MessageLookupByLibrary.simpleMessage("天蠍座"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("截圖證據"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("查看個人資料"),
@@ -450,6 +574,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectBirthdayHint": MessageLookupByLibrary.simpleMessage("請選擇出生日期查看您的星盤"),
     "selectCountryPageTitle": MessageLookupByLibrary.simpleMessage("選擇國家"),
     "selectLocationTitle": MessageLookupByLibrary.simpleMessage("選擇地點"),
+    "select_duration_start": MessageLookupByLibrary.simpleMessage("選擇時長，開始冥想"),
+    "select_meditation_duration": MessageLookupByLibrary.simpleMessage(
+      "選擇冥想時長",
+    ),
     "sendDm": MessageLookupByLibrary.simpleMessage("發送私訊"),
     "sendDmRemark": MessageLookupByLibrary.simpleMessage("發送DM消息"),
     "sendStarGreetingToUnlockAlbum": MessageLookupByLibrary.simpleMessage(
@@ -462,10 +590,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "showYourPersonality": MessageLookupByLibrary.simpleMessage("展現你的個性"),
     "signUpLastStepPageTitle": MessageLookupByLibrary.simpleMessage("即將完成"),
     "sixMonths": MessageLookupByLibrary.simpleMessage("6個月"),
+    "sleep_category": MessageLookupByLibrary.simpleMessage("睡眠"),
     "speakSameLanguage": MessageLookupByLibrary.simpleMessage("🤝 同語無需譯,靈犀一點通"),
+    "spiritual_growth": MessageLookupByLibrary.simpleMessage("心靈成長"),
     "standard": MessageLookupByLibrary.simpleMessage("標準"),
     "startChat": MessageLookupByLibrary.simpleMessage("開聊"),
+    "start_meditation": MessageLookupByLibrary.simpleMessage("開始冥想"),
     "startedChat": MessageLookupByLibrary.simpleMessage("開始與聊天"),
+    "status_saved": MessageLookupByLibrary.simpleMessage("✅ 狀態已保存"),
+    "stop_meditation": MessageLookupByLibrary.simpleMessage("停止冥想"),
+    "streak_days": MessageLookupByLibrary.simpleMessage("連續打卡"),
+    "streak_x_days": m10,
+    "stress": MessageLookupByLibrary.simpleMessage("壓力"),
+    "stress_index": MessageLookupByLibrary.simpleMessage("壓力指數"),
+    "stress_level": MessageLookupByLibrary.simpleMessage("壓力水平"),
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage("每天1000條\nAI傳譯"),
     "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
@@ -482,7 +620,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subPageTitle": MessageLookupByLibrary.simpleMessage("取得AstroLearn Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("條款"),
-    "subscriptionAgreementPrefix": m4,
+    "subscriptionAgreementPrefix": m11,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("。"),
     "sunSignLabel": MessageLookupByLibrary.simpleMessage("태양 별자리"),
     "synastryAnalysis": MessageLookupByLibrary.simpleMessage("合盤分析"),
@@ -500,9 +638,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "toastHitWeeklyMaximumLimit": MessageLookupByLibrary.simpleMessage(
       "👅你已達到本週限額",
     ),
+    "toggle_background_music": MessageLookupByLibrary.simpleMessage(
+      "開啟/關閉背景音樂",
+    ),
+    "total_duration": MessageLookupByLibrary.simpleMessage("總時長"),
     "unknownLocation": MessageLookupByLibrary.simpleMessage("未知"),
-    "unlockHighMatchUsers": m5,
-    "unlockUsersWithDestiny": m6,
+    "unlockHighMatchUsers": m12,
+    "unlockUsersWithDestiny": m13,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "不容錯過的特價",
     ),
@@ -557,7 +699,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "valuesCompatibility": MessageLookupByLibrary.simpleMessage("價值觀"),
     "verifyCodePageTitle": MessageLookupByLibrary.simpleMessage("輸入驗證碼"),
     "viewAstroReport": MessageLookupByLibrary.simpleMessage("查看與的星盤合盤"),
+    "view_details": MessageLookupByLibrary.simpleMessage("查看詳情"),
     "virgoSign": MessageLookupByLibrary.simpleMessage("處女座"),
+    "waning_crescent_insight": MessageLookupByLibrary.simpleMessage(
+      "殘月時刻，休息和恢復很重要",
+    ),
+    "waning_gibbous_insight": MessageLookupByLibrary.simpleMessage(
+      "月亮漸虧，適合反思和整理",
+    ),
     "wannaHollaAt": MessageLookupByLibrary.simpleMessage("你願意分享嗎…"),
     "warningCancelDisplayCity": MessageLookupByLibrary.simpleMessage(
       "關閉後，你的城市不會在匹配時顯示",
@@ -575,6 +724,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "warningUnmatching": MessageLookupByLibrary.simpleMessage(
       "結束分享後，你們之間的對話內容都將被清除。",
     ),
+    "waxing_crescent_insight": MessageLookupByLibrary.simpleMessage(
+      "月亮漸盈，能量逐漸積累",
+    ),
+    "waxing_gibbous_insight": MessageLookupByLibrary.simpleMessage(
+      "滿月將至，情緒可能更加敏感",
+    ),
     "whatsYourEmail": MessageLookupByLibrary.simpleMessage("你的郵箱是什麼？"),
     "whoLIkesYou": MessageLookupByLibrary.simpleMessage("誰欣賞你的分享"),
     "whoLikesU": MessageLookupByLibrary.simpleMessage("誰欣賞你"),
@@ -585,7 +740,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "有什麼特別想做的事嗎？",
     ),
-    "wishCityPickerSkipButton": m7,
+    "wishCityPickerSkipButton": m14,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "如果你去那裡，你想去哪些城市？",
     ),
@@ -597,11 +752,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishDateOptionNotSure": MessageLookupByLibrary.simpleMessage("還不確定喲"),
     "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("近期吧，大概"),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("一年內"),
-    "wishDatePickerSubtitle": m8,
+    "wishDatePickerSubtitle": m15,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("何時"),
     "wishList": MessageLookupByLibrary.simpleMessage("心願單"),
     "wishes": MessageLookupByLibrary.simpleMessage("心願"),
     "writeInterestingBio": MessageLookupByLibrary.simpleMessage("寫一個有趣的個人簡介"),
+    "write_feelings_hint": MessageLookupByLibrary.simpleMessage("寫下此刻的感受..."),
+    "x_days": m16,
+    "x_hours": m17,
+    "x_times": m18,
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage("你現在是俱樂部會員了"),
     "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage("你可以隨時編輯"),
     "youSeemCool": MessageLookupByLibrary.simpleMessage("你看起來很酷。"),
