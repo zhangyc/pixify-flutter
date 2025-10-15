@@ -499,10 +499,10 @@ class S {
     );
   }
 
-  /// `AstroLearn is finding some potential friend...`
+  /// `Zena is finding some potential friend...`
   String get firstLandingLoadingTitle {
     return Intl.message(
-      'AstroLearn is finding some potential friend...',
+      'Zena is finding some potential friend...',
       name: 'firstLandingLoadingTitle',
       desc: '',
       args: [],
@@ -564,10 +564,10 @@ class S {
     );
   }
 
-  /// `Let AstroLearn say hi for you`
+  /// `Let Zena say hi for you`
   String get letAstroLearnSayHiForYou {
     return Intl.message(
-      'Let AstroLearn say hi for you',
+      'Let Zena say hi for you',
       name: 'letAstroLearnSayHiForYou',
       desc: '',
       args: [],
@@ -629,10 +629,10 @@ class S {
     return Intl.message('Age', name: 'age', desc: '', args: []);
   }
 
-  /// `AstroLearn Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?`
+  /// `Zena Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?`
   String get astroLearnRecommendationCooldown {
     return Intl.message(
-      'AstroLearn Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?',
+      'Zena Recommendation: Cooldown\nWhat to do: Wait\nSuggestion: Watch a movie?',
       name: 'astroLearnRecommendationCooldown',
       desc: '',
       args: [],
@@ -699,10 +699,10 @@ class S {
     return Intl.message('Scam', name: 'reportOptionScam', desc: '', args: []);
   }
 
-  /// `PerAstroLearnl Attack`
+  /// `PerZenal Attack`
   String get reportOptionPerAstroLearnlAttack {
     return Intl.message(
-      'PerAstroLearnl Attack',
+      'PerZenal Attack',
       name: 'reportOptionPerAstroLearnlAttack',
       desc: '',
       args: [],
@@ -859,10 +859,10 @@ class S {
     );
   }
 
-  /// `Have AstroLearn Say Hi`
+  /// `Have Zena Say Hi`
   String get haveAstroLearnSayHi {
     return Intl.message(
-      'Have AstroLearn Say Hi',
+      'Have Zena Say Hi',
       name: 'haveAstroLearnSayHi',
       desc: '',
       args: [],
@@ -954,10 +954,10 @@ class S {
     );
   }
 
-  /// `😪AstroLearn is tired, 👇Tap to refuel her!`
+  /// `😪Zena is tired, 👇Tap to refuel her!`
   String get buttonHitAIInterpretationMaximumLimit {
     return Intl.message(
-      '😪AstroLearn is tired, 👇Tap to refuel her!',
+      '😪Zena is tired, 👇Tap to refuel her!',
       name: 'buttonHitAIInterpretationMaximumLimit',
       desc: '',
       args: [],
@@ -994,10 +994,10 @@ class S {
     );
   }
 
-  /// `⭕ AstroLearn interpretation is turned off`
+  /// `⭕ Zena interpretation is turned off`
   String get astroLearnInterpretationOff {
     return Intl.message(
-      '⭕ AstroLearn interpretation is turned off',
+      '⭕ Zena interpretation is turned off',
       name: 'astroLearnInterpretationOff',
       desc: '',
       args: [],
@@ -1034,10 +1034,10 @@ class S {
     );
   }
 
-  /// `Unsent. AstroLearn will not translate prohibited words`
+  /// `Unsent. Zena will not translate prohibited words`
   String get exceptionAstroLearnContentFilterTips {
     return Intl.message(
-      'Unsent. AstroLearn will not translate prohibited words',
+      'Unsent. Zena will not translate prohibited words',
       name: 'exceptionAstroLearnContentFilterTips',
       desc: '',
       args: [],
@@ -1054,10 +1054,10 @@ class S {
     );
   }
 
-  /// `AstroLearn is overloaded, please try again later.`
+  /// `Zena is overloaded, please try again later.`
   String get exceptionAstroLearnOverloadedTips {
     return Intl.message(
-      'AstroLearn is overloaded, please try again later.',
+      'Zena is overloaded, please try again later.',
       name: 'exceptionAstroLearnOverloadedTips',
       desc: '',
       args: [],
@@ -1109,10 +1109,10 @@ class S {
     );
   }
 
-  /// `Get AstroLearn Plus`
+  /// `Get Zena Plus`
   String get getAstroLearnPlus {
     return Intl.message(
-      'Get AstroLearn Plus',
+      'Get Zena Plus',
       name: 'getAstroLearnPlus',
       desc: '',
       args: [],
@@ -1159,10 +1159,10 @@ class S {
     return Intl.message('Edit', name: 'buttonEdit', desc: '', args: []);
   }
 
-  /// `Show your perAstroLearnlity`
+  /// `Show your perZenality`
   String get showYourPerAstroLearnlity {
     return Intl.message(
-      'Show your perAstroLearnlity',
+      'Show your perZenality',
       name: 'showYourPerAstroLearnlity',
       desc: '',
       args: [],
@@ -1184,10 +1184,10 @@ class S {
     return Intl.message('Save', name: 'buttonSave', desc: '', args: []);
   }
 
-  /// `Get AstroLearn Plus`
+  /// `Get Zena Plus`
   String get subPageTitle {
     return Intl.message(
-      'Get AstroLearn Plus',
+      'Get Zena Plus',
       name: 'subPageTitle',
       desc: '',
       args: [],
@@ -1249,10 +1249,10 @@ class S {
     );
   }
 
-  /// `AstroLearn Tips - Your chat advisor`
+  /// `Zena Tips - Your chat advisor`
   String get plusFuncAstroLearnTips {
     return Intl.message(
-      'AstroLearn Tips - Your chat advisor',
+      'Zena Tips - Your chat advisor',
       name: 'plusFuncAstroLearnTips',
       desc: '',
       args: [],
@@ -1354,10 +1354,10 @@ class S {
     );
   }
 
-  /// `AstroLearn Tips - \nYour chat advisor`
+  /// `Zena Tips - \nYour chat advisor`
   String get subPageSubtitleAstroLearnTips {
     return Intl.message(
-      'AstroLearn Tips - \nYour chat advisor',
+      'Zena Tips - \nYour chat advisor',
       name: 'subPageSubtitleAstroLearnTips',
       desc: '',
       args: [],
@@ -1619,10 +1619,10 @@ class S {
     );
   }
 
-  /// `AstroLearn will generate a bio based on your interests`
+  /// `Zena will generate a bio based on your interests`
   String get astroLearnWillGenerateABioBasedOnInterests {
     return Intl.message(
-      'AstroLearn will generate a bio based on your interests',
+      'Zena will generate a bio based on your interests',
       name: 'astroLearnWillGenerateABioBasedOnInterests',
       desc: '',
       args: [],
@@ -1634,10 +1634,10 @@ class S {
     return Intl.message('Generate', name: 'buttonGenerate', desc: '', args: []);
   }
 
-  /// `Here's AstroLearn cooked up for you!`
+  /// `Here's Zena cooked up for you!`
   String get hereAstroLearnCookedUpForU {
     return Intl.message(
-      'Here\'s AstroLearn cooked up for you!',
+      'Here\'s Zena cooked up for you!',
       name: 'hereAstroLearnCookedUpForU',
       desc: '',
       args: [],
@@ -1689,10 +1689,10 @@ class S {
     return Intl.message('Set Default', name: 'setDefault', desc: '', args: []);
   }
 
-  /// `AstroLearn is like a home base for world citizens`
+  /// `Zena is like a home base for world citizens`
   String get onboarding0 {
     return Intl.message(
-      'AstroLearn is like a home base for world citizens',
+      'Zena is like a home base for world citizens',
       name: 'onboarding0',
       desc: '',
       args: [],

@@ -1,104 +1,96 @@
 [App Name]
-AstroLearn - Your Astrology Learning Community
+Zena - Wellness & Connection Companion
 
 [Description - English]
-In today's fast-paced world where young people face unprecedented pressure, AstroLearn provides a unique space to explore astrology while finding peace and connection. Learn, share, and grow with fellow astrology enthusiasts in a supportive community.
+Find emotional healing, build meaningful connections, and discover your best self with Zena. Our AI-powered wellness companion combines personalized therapy tools, mood tracking, and intelligent matchmaking to help you heal emotionally and connect with like-minded people.
 
-Why AstroLearn:
-• Learn Together: Connect with astrology learners at all levels - from beginners to advanced practitioners
-• Stress Relief: Discover how understanding astrology can help you navigate life's challenges
-• Supportive Community: Share your learning journey with like-minded individuals
-• Personalized Learning: Find study partners who match your interests and learning pace
-• Safe Environment: Express yourself freely in our judgment-free community
+Why Zena:
+• Emotional Healing: Guided meditation, mood tracking, and therapeutic practices for mental wellness
+• Mindful Living: Daily wellness check-ins and emotional diary for better self-awareness
+• Soul Connections: Find meaningful relationships through personality-compatible matching
+• Personalized Growth: AI-driven recommendations for meditation, music, and healing practices
+• Community Support: Connect with others on similar wellness journeys
 
-Features:
-• Join study groups based on your astrological interests
-• Share and discuss birth charts with fellow learners
-• Practice chart reading with supportive peers
-• Access beginner-friendly astrology resources
-• Connect with experienced community members
+Core Features:
+• Wellness Profile: Create your personal wellness and personality profile
+• Healing Calendar: Track your emotional journey with guided wellness practices
+• Meditation Library: Curated meditation sessions for different emotional states
+• Mood & Emotion Tracking: Daily check-ins and emotional pattern insights
+• Therapeutic Music: Curated playlists for relaxation, healing, and positive energy
+• Compatibility Matching: Connect with people who share your values and wellness goals
 
-Premium Features:
-• Priority access to experienced astrology learners
-• Unlimited chart analysis and discussions
-• Advanced learning materials and resources
-• Ad-free experience for better focus
-• Flexible subscription options to suit your needs
-
-Diamond System:
-• Use diamonds for quick questions to experienced members
-• Get faster responses for efficient learning
-• Premium support for challenging topics
-• Enhanced learning experience through direct interaction
+Premium Experience:
+• Advanced Wellness Insights: Deep emotional and personality analysis
+• Unlimited Healing Sessions: Full access to meditation and wellness content
+• Priority Matching: Enhanced compatibility algorithms and profile visibility
+• Ad-free Experience: Immersive wellness journey without distractions
+• Premium Support: Direct access to wellness coaches and mental health resources
 
 Perfect for:
-• Astrology beginners looking for study partners
-• Intermediate learners seeking deeper understanding
-• Anyone interested in using astrology for personal growth
-• Young people seeking alternative ways to understand themselves and relieve stress
+• Those seeking emotional healing and mental wellness
+• Individuals interested in mindfulness and self-improvement
+• People looking for meaningful, value-aligned relationships
+• Anyone wanting to build healthy emotional habits
+• Those interested in personal growth through mindful practices
 
-Available in 14 languages. Start your astrology journey today.
+Available in 14 languages. Start your wellness journey today.
 
 [Description - Chinese]
-星学社 - 你的占星学习社区
+Zena - 疗愈与连接陪伴
 
-在这个压力与日俱增的时代，年轻人常常感到焦虑和迷茫。星学社为你提供一个独特的空间，通过学习占星术来寻找内心的平静，同时结识志同道合的伙伴。
+寻找情感疗愈，建立有意义的连接，发现最好的自己。Zena 结合个性化疗愈工具、情绪追踪和智能匹配，帮助你情感疗愈并与志同道合的人建立连接。
 
-星学社的独特之处：
-• 共同学习：连接各个层次的占星爱好者 - 从初学者到进阶学习者
-• 减压解压：了解占星学如何帮助你应对生活压力
-• 互助社群：与志同道合的伙伴分享学习心得
-• 个性化学习：找到与你兴趣相投的学习伙伴
-• 安全环境：在无评判的社区中自由表达
+为什么选择 Zena：
+• 情感疗愈：引导冥想、情绪追踪和心理 wellness 练习
+• 正念生活：每日 wellness 检查和情感日记，提升自我觉察
+• 灵魂连接：通过性格相容匹配找到有意义的关系
+• 个性化成长：AI 驱动的冥想、音乐和疗愈练习推荐
+• 社区支持：与其他在相似 wellness 旅程中的人建立连接
 
-功能特色：
-• 加入基于占星兴趣的学习小组
-• 与学习伙伴分享讨论星盘
-• 与支持性的伙伴练习星盘解读
-• 获取适合初学者的占星资源
-• 与经验丰富的社区成员交流
+核心功能：
+• Wellness 档案：创建你的个人 wellness 和性格档案
+• 疗愈日历：通过引导式 wellness 练习追踪你的情感旅程
+• 冥想库：为不同情感状态精心策划的冥想课程
+• 情绪追踪：每日检查和情感模式洞察
+• 疗愈音乐：为放松、疗愈和正能量精心策划的播放列表
+• 相容匹配：与分享你的价值观和 wellness 目标的人建立连接
 
-会员特权：
-• 优先接触经验丰富的占星学习者
-• 无限制的星盘分析与讨论
-• 进阶学习资料与资源
-• 无广告体验，专注学习
-• 灵活的订阅方案满足不同需求
-
-钻石系统：
-• 使用钻石向资深会员快速提问
-• 获得更快的回复以提高学习效率
-• 难点问题获得优质支持
-• 通过直接互动提升学习体验
+尊享体验：
+• 高级 Wellness 洞察：深入的情感和性格分析
+• 无限制疗愈课程：完整访问冥想和 wellness 内容
+• 优先匹配：增强的相容算法和档案可见度
+• 无广告体验：沉浸式 wellness 旅程，无干扰
+• 尊享支持：直接访问 wellness 教练和心理健康资源
 
 特别适合：
-• 寻找学习伙伴的占星初学者
-• 寻求深入理解的进阶学习者
-• 对通过占星术实现个人成长感兴趣的人
-• 寻找另类减压方式的年轻人
+• 寻求情感疗愈和心理 wellness 的人
+• 对正念和自我提升感兴趣的个人
+• 寻找有意义、价值观一致关系的人
+• 希望建立健康情感习惯的人
+• 对通过正念实践实现个人成长感兴趣的人
 
-支持14种语言。现在开始你的占星之旅。
+支持14种语言。今天就开始你的 wellness 之旅。
 
 [Keywords - English]
-astrology learning, study astrology, astrology community, stress relief, personal growth, birth chart study, astrology beginners, learning partner, chart reading practice, spiritual growth
+emotional healing, mental wellness, mindfulness app, mood tracking, meditation app, wellness companion, relationship matching, personal growth, emotional intelligence, therapeutic music, guided meditation, wellness journal
 
 [Keywords - Chinese]
-占星学习, 占星社区, 减压解压, 个人成长, 星盘学习, 占星初学者, 学习伙伴, 星盘解读, 心灵成长, 占星交流
+情感疗愈, 心理健康, 正念应用, 情绪追踪, 冥想应用, wellness伙伴, 关系匹配, 个人成长, 情感智慧, 疗愈音乐, 引导冥想, wellness日记
 
 [Subtitle - English]
-Learn Astrology Together - Find Your Peace
+Emotional Healing & Meaningful Connections
 
 [Subtitle - Chinese]
-一起学占星 - 寻找内心平静
+情感疗愈与有意义的连接
 
 [Promotional Text - English]
-Join a supportive community to learn astrology and find your inner peace. Premium features available for enhanced learning experience. ✨
+Heal emotionally, track your mood, and find meaningful connections. AI-powered wellness companion for personal growth and relationships. ✨
 
 [Promotional Text - Chinese]
-加入互助社群，学习占星术，找到内心的平静。解锁会员特权，获得更好的学习体验。✨
+情感疗愈，追踪情绪，找到有意义的连接。AI 驱动的 wellness 伙伴，助你成长和发展关系。✨
 
 [Disclaimer - English]
-AstroLearn is a community for astrology learning and stress relief through peer support. We are not a substitute for professional mental health services. If you're in crisis, please contact emergency services or a qualified mental health professional.
+Zena provides wellness and relationship insights for personal growth and entertainment purposes. Our tools are designed to support emotional well-being but are not a substitute for professional medical, psychological, or relationship advice. If you need help with mental health concerns, relationship issues, or medical conditions, please consult qualified professionals. We are not responsible for decisions made based on wellness insights provided by the app.
 
 [Disclaimer - Chinese]
-星学社是一个通过同伴支持进行占星学习和压力缓解的社区。我们不是专业心理健康服务的替代品。如果您处于危机中，请联系紧急服务或合格的心理健康专业人士。
+Zena 提供 wellness 和关系洞察，用于个人成长和娱乐目的。我们的工具旨在支持情感健康，但不是专业医疗、心理或关系建议的替代品。如果您需要心理健康、关系问题或医疗状况方面的帮助，请咨询合格的专业人士。我们不对基于应用提供的 wellness 洞察做出的决定负责。

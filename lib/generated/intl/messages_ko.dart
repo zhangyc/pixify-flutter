@@ -83,14 +83,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "상대방이 아직 출생지 정보를 완료하지 않았으므로 점성술 차트를 생성할 수 없습니다. 상대방이 정보를 완료할 때까지 기다려주세요.",
     ),
     "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroLearn 동시 통역이 꺼졌습니다",
+      "⭕ Zena 동시 통역이 꺼졌습니다",
     ),
     "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn 추천: 쿨다운. \n해야 할 일: 기다리기. \n제안: 영화 보기?",
+      "Zena 추천: 쿨다운. \n해야 할 일: 기다리기. \n제안: 영화 보기?",
     ),
     "astroLearnWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage(
-          "AstroLearn는 당신의 관심사에 기반하여 바이오를 생성할 것입니다",
+          "Zena는 당신의 관심사에 기반하여 바이오를 생성할 것입니다",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("별자리 리포트"),
     "astro_calendar_title": MessageLookupByLibrary.simpleMessage("별자리 치유 캘린더"),
@@ -140,9 +140,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGo": MessageLookupByLibrary.simpleMessage("가다"),
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
     "buttonHitAIInterpretationMaximumLimit":
-        MessageLookupByLibrary.simpleMessage(
-          "😪AstroLearn 피곤해, 👇탭하고 에너지 충전해!",
-        ),
+        MessageLookupByLibrary.simpleMessage("😪Zena 피곤해, 👇탭하고 에너지 충전해!"),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage("지금 가입"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("계정 유지"),
     "buttonManage": MessageLookupByLibrary.simpleMessage("관리하다"),
@@ -293,10 +291,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "exceptionAstroLearnContentFilterTips":
         MessageLookupByLibrary.simpleMessage(
-          "발송되지 않음. AstroLearn는 금지된 단어를 번역하지 않습니다.",
+          "발송되지 않음. Zena는 금지된 단어를 번역하지 않습니다.",
         ),
     "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn가 과부하 상태입니다, 나중에 다시 시도해주세요.",
+      "Zena가 과부하 상태입니다, 나중에 다시 시도해주세요.",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "전송 실패, 나중에 다시 시도해주세요.",
@@ -308,7 +306,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "같은 관심사를 가진 사람들 찾기",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn가 잠재적인 친구를 찾고 있습니다...",
+      "Zena가 잠재적인 친구를 찾고 있습니다...",
     ),
     "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
       "상현달, 행동과 결정을 내리기에 좋은 시기",
@@ -321,9 +319,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("미래"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("쌍둥이자리"),
-    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Plus받기",
-    ),
+    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage("Zena Plus받기"),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF는 허용되지 않습니다"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("발견하러 가기"),
     "gotIt": MessageLookupByLibrary.simpleMessage("알겠어요"),
@@ -332,7 +328,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "헤이, 누가 먼저 침묵을 깰까?",
     ),
     "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn에게 인사하게 하세요",
+      "Zena에게 인사하게 하세요",
     ),
     "healing_calendar_title": MessageLookupByLibrary.simpleMessage("별자리 치유 달력"),
     "healing_category": MessageLookupByLibrary.simpleMessage("치유"),
@@ -341,7 +337,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "healing_music_title": MessageLookupByLibrary.simpleMessage("치유 음악"),
     "healing_sessions": MessageLookupByLibrary.simpleMessage("치유 세션"),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "이것은 AstroLearn가 당신을 위해 특별히 만든 것입니다",
+      "이것은 Zena가 당신을 위해 특별히 만든 것입니다",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "AI 동시통역에 대해 어떻게 생각하세요?",
@@ -368,7 +364,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "leoSign": MessageLookupByLibrary.simpleMessage("사자자리"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn가 당신을 대신해 인사해요",
+      "Zena가 당신을 대신해 인사해요",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("천칭자리"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage("라이프스타일"),
@@ -451,7 +447,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notes": MessageLookupByLibrary.simpleMessage("메모"),
     "notifications": MessageLookupByLibrary.simpleMessage("알림"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn는 세계 시민들의 근거지와 같습니다",
+      "Zena는 세계 시민들의 근거지와 같습니다",
     ),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "집에 있든 길 위에 있든, 전 세계 사람들을 만나세요. 그리고...",
@@ -575,7 +571,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "하루에 1000번 AI 동시통역",
     ),
     "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - 당신의 채팅 상담원",
+      "Zena Tips - 당신의 채팅 상담원",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("주당 5회 DM"),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
@@ -705,7 +701,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage("하루에 1000번 \nAI 동시통역"),
     "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - \n당신의 채팅 상담원",
+      "Zena Tips - \n당신의 채팅 상담원",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage("주당 5회 DM"),
     "subPageSubtitleFilterMatchingCountries":
@@ -716,7 +712,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
       "너의 공유를 높이 평가하는 사람이 \n누구인지 보려면 잠금 해제",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage("AstroLearn Plus받기"),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("Zena Plus받기"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("약관"),
     "subscriptionAgreementPrefix": m11,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(

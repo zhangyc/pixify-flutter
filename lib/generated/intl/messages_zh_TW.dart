@@ -83,13 +83,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "對方尚未完善出生地資訊，暫時無法生成星盤分析。請期待對方完善資訊後查看。",
     ),
     "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroLearn傳譯已關閉",
+      "⭕ Zena傳譯已關閉",
     ),
     "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn推薦：冷卻\n怎麼辦：等待\n建議：看看電影？",
+      "Zena推薦：冷卻\n怎麼辦：等待\n建議：看看電影？",
     ),
     "astroLearnWillGenerateABioBasedOnInterests":
-        MessageLookupByLibrary.simpleMessage("AstroLearn會根據你的興趣生成一份簡介"),
+        MessageLookupByLibrary.simpleMessage("Zena會根據你的興趣生成一份簡介"),
     "astroReport": MessageLookupByLibrary.simpleMessage("合盤"),
     "astro_calendar_title": MessageLookupByLibrary.simpleMessage("星盤療癒日曆"),
     "audio_1_desc": MessageLookupByLibrary.simpleMessage("在寧靜的星空下，找到內心的平靜"),
@@ -132,7 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGo": MessageLookupByLibrary.simpleMessage("開始"),
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("明白了"),
     "buttonHitAIInterpretationMaximumLimit":
-        MessageLookupByLibrary.simpleMessage("😪AstroLearn累了，👇點擊給她加油！"),
+        MessageLookupByLibrary.simpleMessage("😪Zena累了，👇點擊給她加油！"),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage("立即加入"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("保留帳戶"),
     "buttonManage": MessageLookupByLibrary.simpleMessage("管理"),
@@ -256,9 +256,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "每一種情緒都值得被看見和記錄",
     ),
     "exceptionAstroLearnContentFilterTips":
-        MessageLookupByLibrary.simpleMessage("未寄出。AstroLearn不會翻譯違禁詞。"),
+        MessageLookupByLibrary.simpleMessage("未寄出。Zena不會翻譯違禁詞。"),
     "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn過載，請稍後再試。",
+      "Zena過載，請稍後再試。",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "傳送失敗，請稍後再試。",
@@ -270,7 +270,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "找到與你有共同興趣的人",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn正在尋找一些潜在的朋友...",
+      "Zena正在尋找一些潜在的朋友...",
     ),
     "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
       "上弦月，是行動和決策的好時機",
@@ -281,9 +281,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "full_moon_insight": MessageLookupByLibrary.simpleMessage("滿月能量最強，適合釋放情緒"),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("未来"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("双子座"),
-    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
-      "取得AstroLearn Plus",
-    ),
+    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage("取得Zena Plus"),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF檔案不允許"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("去發現"),
     "gotIt": MessageLookupByLibrary.simpleMessage("明白了"),
@@ -291,9 +289,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "嘿，猜猜誰會先打破沉默？",
     ),
-    "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
-      "讓AstroLearn打招呼",
-    ),
+    "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage("讓Zena打招呼"),
     "healing_calendar_title": MessageLookupByLibrary.simpleMessage("星盤療癒日曆"),
     "healing_category": MessageLookupByLibrary.simpleMessage("療癒"),
     "healing_count": MessageLookupByLibrary.simpleMessage("療癒次數"),
@@ -301,7 +297,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "healing_music_title": MessageLookupByLibrary.simpleMessage("療癒音樂"),
     "healing_sessions": MessageLookupByLibrary.simpleMessage("療癒次數"),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "這是AstroLearn為你特製的",
+      "這是Zena為你特製的",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage("你覺得AI傳譯怎麼樣?"),
     "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("你的活力很有吸引力！"),
@@ -324,7 +320,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "leoSign": MessageLookupByLibrary.simpleMessage("獅子座"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "讓AstroLearn代你打招呼",
+      "讓Zena代你打招呼",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("天秤座"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage("生活"),
@@ -392,7 +388,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_records_today": MessageLookupByLibrary.simpleMessage("這天還沒有記錄哦"),
     "notes": MessageLookupByLibrary.simpleMessage("記錄"),
     "notifications": MessageLookupByLibrary.simpleMessage("通知"),
-    "onboarding0": MessageLookupByLibrary.simpleMessage("AstroLearn是世界公民的家園"),
+    "onboarding0": MessageLookupByLibrary.simpleMessage("Zena是世界公民的家園"),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "無論在家或是在旅途，都可以結識世界各地的朋友。 並且...",
     ),
@@ -503,7 +499,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "每天1000條AI傳譯",
     ),
     "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - 你的聊天參謀",
+      "Zena Tips - 你的聊天參謀",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("每週5次DM"),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
@@ -607,7 +603,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage("每天1000條\nAI傳譯"),
     "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - \n你的聊天參謀",
+      "Zena Tips - \n你的聊天參謀",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage("每週5次DM"),
     "subPageSubtitleFilterMatchingCountries":
@@ -618,7 +614,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
       "解鎖查看\n誰欣賞你",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage("取得AstroLearn Plus"),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("取得Zena Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("條款"),
     "subscriptionAgreementPrefix": m11,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("。"),

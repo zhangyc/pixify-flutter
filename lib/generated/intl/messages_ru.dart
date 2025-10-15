@@ -88,14 +88,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "Другой пользователь еще не завершил информацию о месте рождения, поэтому мы не можем сгенерировать астрологическую карту. Пожалуйста, подождите, пока они завершат свою информацию.",
     ),
     "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroLearn Interpretazione disattivata",
+      "⭕ Zena Interpretazione disattivata",
     ),
     "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
       "Рекомендация Сона: Охлаждение.\nЧто делать: Ждать.\nПредложение: Посмотреть фильм?",
     ),
     "astroLearnWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage(
-          "AstroLearn создаст биографию, основанную на ваших интересах",
+          "Zena создаст биографию, основанную на ваших интересах",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage(
       "Астрологический отчет",
@@ -170,7 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("Понял"),
     "buttonHitAIInterpretationMaximumLimit":
         MessageLookupByLibrary.simpleMessage(
-          "😪AstroLearn устала, 👇жми, чтоб зарядить!",
+          "😪Zena устала, 👇жми, чтоб зарядить!",
         ),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage(
       "Присоединиться сейчас",
@@ -378,10 +378,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "exceptionAstroLearnContentFilterTips":
         MessageLookupByLibrary.simpleMessage(
-          "Не отправлено. AstroLearn не будет переводить запрещенные слова.",
+          "Не отправлено. Zena не будет переводить запрещенные слова.",
         ),
     "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn перегружена, пожалуйста, попробуйте позже.",
+      "Zena перегружена, пожалуйста, попробуйте позже.",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "Ошибка отправки, пожалуйста, попробуйте позже.",
@@ -393,7 +393,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Находить людей, которые разделяют ваши интересы",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn ищет потенциальных друзей...",
+      "Zena ищет потенциальных друзей...",
     ),
     "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
       "Первая четверть луны, хорошее время для действий и решений",
@@ -407,7 +407,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("Будущее"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("Близнецы"),
     "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
-      "Получить AstroLearn Plus",
+      "Получить Zena Plus",
     ),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIF не разрешен"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("Йди Відкривати"),
@@ -419,7 +419,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Эй, угадай, кто первым нарушит молчание?",
     ),
     "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
-      "Пусть AstroLearn поздоровается",
+      "Пусть Zena поздоровается",
     ),
     "healing_calendar_title": MessageLookupByLibrary.simpleMessage(
       "Астрологический Календарь Исцеления",
@@ -434,7 +434,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Сеансы Исцеления",
     ),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "Это специально сделано AstroLearn для вас",
+      "Это специально сделано Zena для вас",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "Что вы думаете об одновременном переводе AI?",
@@ -477,7 +477,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "leoSign": MessageLookupByLibrary.simpleMessage("Лев"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "Пусть AstroLearn поздоровается за вас",
+      "Пусть Zena поздоровается за вас",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("Весы"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage(
@@ -584,7 +584,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notes": MessageLookupByLibrary.simpleMessage("Заметки"),
     "notifications": MessageLookupByLibrary.simpleMessage("Уведомления"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn подобно домашней базе для граждан мира",
+      "Zena подобно домашней базе для граждан мира",
     ),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "Независимо от того, дома вы или в пути, встречайте людей со всего мира. И...",
@@ -726,7 +726,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "1000 синхронных переводов/день",
     ),
     "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - Твой советник по чату",
+      "Zena Tips - Твой советник по чату",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("5 DM в неделю"),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
@@ -922,7 +922,7 @@ class MessageLookup extends MessageLookupByLibrary {
           "1000 \nсинхронных \nпереводов/день",
         ),
     "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - \nТвой советник по чату",
+      "Zena Tips - \nТвой советник по чату",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage(
       "5 DM в неделю",
@@ -937,9 +937,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
       "Разблокировать, \nчтобы увидеть, кто вас ценит",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage(
-      "Получить AstroLearn Plus",
-    ),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("Получить Zena Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage(
       "Условиями использования",
     ),

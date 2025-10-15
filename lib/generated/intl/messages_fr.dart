@@ -86,14 +86,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "L\'autre utilisateur n\'a pas encore terminé ses informations de lieu de naissance, nous ne pouvons donc pas générer un graphique astrologique. Veuillez attendre qu\'ils terminent leurs informations.",
     ),
     "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroLearn Interprétation désactivée",
+      "⭕ Zena Interprétation désactivée",
     ),
     "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
-      "Recommandation de AstroLearn : Refroidissement.\nQue faire : Attendre.\nSuggestion : Regarder un film ?",
+      "Recommandation de Zena : Refroidissement.\nQue faire : Attendre.\nSuggestion : Regarder un film ?",
     ),
     "astroLearnWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage(
-          "AstroLearn générera une biographie basée sur vos intérêts",
+          "Zena générera une biographie basée sur vos intérêts",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("Rapport astro"),
     "astro_calendar_title": MessageLookupByLibrary.simpleMessage(
@@ -168,7 +168,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("Compris"),
     "buttonHitAIInterpretationMaximumLimit":
         MessageLookupByLibrary.simpleMessage(
-          "😪AstroLearn est fatiguée, 👇Tapez pour la recharger!",
+          "😪Zena est fatiguée, 👇Tapez pour la recharger!",
         ),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage(
       "Rejoignez Maintenant",
@@ -376,10 +376,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "exceptionAstroLearnContentFilterTips":
         MessageLookupByLibrary.simpleMessage(
-          "Non envoyé. AstroLearn ne traduira pas les mots interdits.",
+          "Non envoyé. Zena ne traduira pas les mots interdits.",
         ),
     "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn est surchargée, veuillez réessayer plus tard.",
+      "Zena est surchargée, veuillez réessayer plus tard.",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "Échec de l\'envoi, veuillez réessayer plus tard.",
@@ -393,7 +393,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Trouver des personnes qui partagent vos intérêts",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn recherche des amis potentiels...",
+      "Zena recherche des amis potentiels...",
     ),
     "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
       "Erstes Viertel, gute Zeit für Aktion und Entscheidungen",
@@ -407,7 +407,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("Avenir"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("Gémeaux"),
     "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
-      "Obtenir AstroLearn Plus",
+      "Obtenir Zena Plus",
     ),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage(
       "GIF n\'est pas autorisé",
@@ -421,7 +421,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hé, devine qui va briser le silence en premier ?",
     ),
     "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
-      "Laissez AstroLearn dire bonjour",
+      "Laissez Zena dire bonjour",
     ),
     "healing_calendar_title": MessageLookupByLibrary.simpleMessage(
       "Calendrier de Guérison Astral",
@@ -438,7 +438,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Séances de Guérison",
     ),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "Ceci est fait par AstroLearn pour vous",
+      "Ceci est fait par Zena pour vous",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "Que pensez-vous de l\'interprétation simultanée par IA?",
@@ -481,7 +481,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "leoSign": MessageLookupByLibrary.simpleMessage("Le Lion"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "Laissez AstroLearn vous saluer",
+      "Laissez Zena vous saluer",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("Balance"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage(
@@ -590,7 +590,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notes": MessageLookupByLibrary.simpleMessage("Notes"),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn est comme une base d\'accueil pour les citoyens du monde",
+      "Zena est comme une base d\'accueil pour les citoyens du monde",
     ),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "Que vous soyez chez vous ou en route, rencontrez des gens du monde entier. Et...",
@@ -732,7 +732,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "1000 interprétations simultanées/jour",
     ),
     "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - Ton conseiller de chat",
+      "Zena Tips - Ton conseiller de chat",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage(
       "5 DM par semaine",
@@ -928,7 +928,7 @@ class MessageLookup extends MessageLookupByLibrary {
           "1000 \ninterprétations \nsimultanées/jour",
         ),
     "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - \nTon conseiller de chat",
+      "Zena Tips - \nTon conseiller de chat",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage(
       "5 DM par semaine",
@@ -941,9 +941,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
       "Libérer pour voir \nqui vous apprécie",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage(
-      "Obtenir AstroLearn Plus",
-    ),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("Obtenir Zena Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage(
       "Conditions Générales",
     ),

@@ -86,14 +86,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "ผู้ใช้คนอื่นยังไม่ได้กรอกข้อมูลตำแหน่งที่เกิดให้ครบถ้วน ดังนั้นเราจึงไม่สามารถสร้างแผนภูมิโหราศาสตร์ได้ กรุณารอให้ผู้ใช้คนอื่นกรอกข้อมูลให้ครบถ้วน",
     ),
     "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroLearn การแปลภาษาถูกปิดแล้ว",
+      "⭕ Zena การแปลภาษาถูกปิดแล้ว",
     ),
     "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
-      "AstroLearnแนะนำ: ระงับ.\nทำอย่างไร: รอ.\nแนะนำ: ดูหนัง?",
+      "Zenaแนะนำ: ระงับ.\nทำอย่างไร: รอ.\nแนะนำ: ดูหนัง?",
     ),
     "astroLearnWillGenerateABioBasedOnInterests":
         MessageLookupByLibrary.simpleMessage(
-          "AstroLearn จะสร้างประวัติตามความสนใจของคุณ",
+          "Zena จะสร้างประวัติตามความสนใจของคุณ",
         ),
     "astroReport": MessageLookupByLibrary.simpleMessage("รายงานดวงดาว"),
     "astro_calendar_title": MessageLookupByLibrary.simpleMessage(
@@ -164,7 +164,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("เข้าใจแล้ว"),
     "buttonHitAIInterpretationMaximumLimit":
         MessageLookupByLibrary.simpleMessage(
-          "😪AstroLearn เหนื่อย, 👇แตะเพื่อเติมพลังให้เธอ!",
+          "😪Zena เหนื่อย, 👇แตะเพื่อเติมพลังให้เธอ!",
         ),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage("เข้าร่วมเลย"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("รักษาบัญชี"),
@@ -350,10 +350,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "exceptionAstroLearnContentFilterTips":
         MessageLookupByLibrary.simpleMessage(
-          "ไม่ได้ส่ง โปรแกรม AstroLearn จะไม่แปลคำที่ถูกห้ามใช้",
+          "ไม่ได้ส่ง โปรแกรม Zena จะไม่แปลคำที่ถูกห้ามใช้",
         ),
     "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn มีการใช้งานมากเกินไป กรุณาลองใหม่ภายหลัง",
+      "Zena มีการใช้งานมากเกินไป กรุณาลองใหม่ภายหลัง",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "ส่งไม่สำเร็จ กรุณาลองใหม่ภายหลัง",
@@ -365,7 +365,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "การหาคนที่มีความสนใจร่วมกันกับคุณ",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroLearnกำลังหาเพื่อนที่มีศักยภาพ...",
+      "Zenaกำลังหาเพื่อนที่มีศักยภาพ...",
     ),
     "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
       "ดวงจันทร์ข้างขึ้น เป็นช่วงเวลาที่ดีสำหรับการกระทำและการตัดสินใจ",
@@ -378,9 +378,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("อนาคต"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("เมถุน"),
-    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
-      "รับ AstroLearn Plus",
-    ),
+    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage("รับ Zena Plus"),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage(
       "GIF ไม่ได้รับอนุญาต",
     ),
@@ -393,7 +391,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "เฮ้ย ลองทายสิว่าใครจะเป็นคนพูดก่อน?",
     ),
     "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
-      "ให้AstroLearnทักทายหน่อย",
+      "ให้Zenaทักทายหน่อย",
     ),
     "healing_calendar_title": MessageLookupByLibrary.simpleMessage(
       "ปฏิทินการเยียวยาด้วยดวงดาว",
@@ -406,7 +404,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "healing_music_title": MessageLookupByLibrary.simpleMessage("ดนตรีบำบัด"),
     "healing_sessions": MessageLookupByLibrary.simpleMessage("เซสชั่นการรักษา"),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "นี่คือสิ่งที่ AstroLearn ทำเป็นพิเศษเพื่อคุณ",
+      "นี่คือสิ่งที่ Zena ทำเป็นพิเศษเพื่อคุณ",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "คุณคิดว่าการแปลภาษาโดย AI แบบเรียลไทม์เป็นอย่างไร?",
@@ -449,7 +447,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "leoSign": MessageLookupByLibrary.simpleMessage("ราศีสิงห์"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn ช่วยคุณทักทายนะ",
+      "Zena ช่วยคุณทักทายนะ",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("ราศีตุลย์"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage("ไลฟ์สไตล์"),
@@ -552,7 +550,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notes": MessageLookupByLibrary.simpleMessage("บันทึก"),
     "notifications": MessageLookupByLibrary.simpleMessage("การแจ้งเตือน"),
     "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn เหมือนกับฐานบ้านสำหรับพลเมืองโลก",
+      "Zena เหมือนกับฐานบ้านสำหรับพลเมืองโลก",
     ),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "ไม่ว่าจะอยู่ที่บ้านหรือบนท้องถนน พบปะผู้คนทั่วโลก และ...",
@@ -688,7 +686,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "AI แปลภาษาเรียลไทม์ 1000 ครั้ง/วัน",
     ),
     "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - ที่ปรึกษาการแชทของคุณ",
+      "Zena Tips - ที่ปรึกษาการแชทของคุณ",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage(
       "ทุกสัปดาห์ 5 DM",
@@ -868,7 +866,7 @@ class MessageLookup extends MessageLookupByLibrary {
           "AI \nแปลภาษาเรียลไทม์ \n1000 ครั้ง/วัน",
         ),
     "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - \nที่ปรึกษาการแชทของคุณ",
+      "Zena Tips - \nที่ปรึกษาการแชทของคุณ",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage(
       "ทุกสัปดาห์ 5 DM",
@@ -881,7 +879,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
       "ปลดล็อกเพื่อดูว่าใครชื่นชมคุณ",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage("รับ AstroLearn Plus"),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("รับ Zena Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage(
       "ข้อกำหนดและเงื่อนไข",
     ),

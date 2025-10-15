@@ -83,13 +83,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "相手ユーザーが出生地の情報をまだ完了していないため、占星術チャートを生成できません。相手が情報を完了するまでお待ちください。",
     ),
     "astroLearnInterpretationOff": MessageLookupByLibrary.simpleMessage(
-      "⭕ AstroLearn同期通訳はオフになりました",
+      "⭕ Zena同期通訳はオフになりました",
     ),
     "astroLearnRecommendationCooldown": MessageLookupByLibrary.simpleMessage(
       "ソナおすすめ:クールダウン中\nやること:待ってる\nアドバイス:漫画でも読んどいたら?",
     ),
     "astroLearnWillGenerateABioBasedOnInterests":
-        MessageLookupByLibrary.simpleMessage("あなたの興味に基づいてAstroLearnがバイオを生成します"),
+        MessageLookupByLibrary.simpleMessage("あなたの興味に基づいてZenaがバイオを生成します"),
     "astroReport": MessageLookupByLibrary.simpleMessage("星盤レポート"),
     "astro_calendar_title": MessageLookupByLibrary.simpleMessage(
       "星盤ヒーリングカレンダー",
@@ -142,9 +142,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "buttonGo": MessageLookupByLibrary.simpleMessage("進む"),
     "buttonGotIt": MessageLookupByLibrary.simpleMessage("分かった"),
     "buttonHitAIInterpretationMaximumLimit":
-        MessageLookupByLibrary.simpleMessage(
-          "AstroLearn疲れた😪、👇クリックでエネルギーチャージ！",
-        ),
+        MessageLookupByLibrary.simpleMessage("Zena疲れた😪、👇クリックでエネルギーチャージ！"),
     "buttonJoinNow": MessageLookupByLibrary.simpleMessage("今すぐ参加"),
     "buttonKeepAccount": MessageLookupByLibrary.simpleMessage("アカウントを保持"),
     "buttonManage": MessageLookupByLibrary.simpleMessage("管理する"),
@@ -282,11 +280,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "すべての感情は記録される価値があります",
     ),
     "exceptionAstroLearnContentFilterTips":
-        MessageLookupByLibrary.simpleMessage(
-          "送信されていない。AstroLearnは禁止された言葉を翻訳しません。",
-        ),
+        MessageLookupByLibrary.simpleMessage("送信されていない。Zenaは禁止された言葉を翻訳しません。"),
     "exceptionAstroLearnOverloadedTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearnは過負荷です、後で再試行してください。",
+      "Zenaは過負荷です、後で再試行してください。",
     ),
     "exceptionFailedToSendTips": MessageLookupByLibrary.simpleMessage(
       "送信に失敗しました、後で再試行してください。",
@@ -298,7 +294,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "同じ趣味を持つ人を見つける",
     ),
     "firstLandingLoadingTitle": MessageLookupByLibrary.simpleMessage(
-      "AstroLearnは潜在的な友人を探しています...",
+      "Zenaは潜在的な友人を探しています...",
     ),
     "first_quarter_insight": MessageLookupByLibrary.simpleMessage(
       "上弦の月、行動と決断の良い時期",
@@ -311,9 +307,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "futureCompatibility": MessageLookupByLibrary.simpleMessage("未来"),
     "geminiSign": MessageLookupByLibrary.simpleMessage("双子座"),
-    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Plusを入手",
-    ),
+    "getAstroLearnPlus": MessageLookupByLibrary.simpleMessage("Zena Plusを入手"),
     "gifNotAllowed": MessageLookupByLibrary.simpleMessage("GIFは許可されていません"),
     "goDiscover": MessageLookupByLibrary.simpleMessage("発見に行く"),
     "gotIt": MessageLookupByLibrary.simpleMessage("分かった"),
@@ -321,9 +315,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "guessWhoBreakSilence": MessageLookupByLibrary.simpleMessage(
       "ねえ、誰が最初に沈黙を破ると思う？",
     ),
-    "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage(
-      "AstroLearnに挨拶させて",
-    ),
+    "haveAstroLearnSayHi": MessageLookupByLibrary.simpleMessage("Zenaに挨拶させて"),
     "healing_calendar_title": MessageLookupByLibrary.simpleMessage(
       "星座ヒーリングカレンダー",
     ),
@@ -333,7 +325,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "healing_music_title": MessageLookupByLibrary.simpleMessage("ヒーリング音楽"),
     "healing_sessions": MessageLookupByLibrary.simpleMessage("ヒーリングセッション"),
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
-      "これはAstroLearn特製です",
+      "これはZena特製です",
     ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "AIのAI同期通訳についてどう思いますか?",
@@ -360,7 +352,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "leoSign": MessageLookupByLibrary.simpleMessage("獅子座"),
     "letAstroLearnSayHiForYou": MessageLookupByLibrary.simpleMessage(
-      "AstroLearnに挨拶させて",
+      "Zenaに挨拶させて",
     ),
     "libraSign": MessageLookupByLibrary.simpleMessage("天秤座"),
     "lifestyleCompatibility": MessageLookupByLibrary.simpleMessage("ライフスタイル"),
@@ -442,9 +434,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_records_today": MessageLookupByLibrary.simpleMessage("この日の記録はありません"),
     "notes": MessageLookupByLibrary.simpleMessage("メモ"),
     "notifications": MessageLookupByLibrary.simpleMessage("通知"),
-    "onboarding0": MessageLookupByLibrary.simpleMessage(
-      "AstroLearnは世界中の人々の共通の我が家です",
-    ),
+    "onboarding0": MessageLookupByLibrary.simpleMessage("Zenaは世界中の人々の共通の我が家です"),
     "onboarding1": MessageLookupByLibrary.simpleMessage(
       "自宅にいても、旅行中でも、世界中の人々と出会おう。そして…",
     ),
@@ -571,7 +561,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "1日に1000回のAI同期通訳",
     ),
     "plusFuncAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - あなたのチャット参謀",
+      "Zena Tips - あなたのチャット参謀",
     ),
     "plusFuncDMPerWeek": MessageLookupByLibrary.simpleMessage("週に5回のDM"),
     "plusFuncFilterMatchingCountries": MessageLookupByLibrary.simpleMessage(
@@ -689,7 +679,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subPageSubtitleAIInterpretationDaily":
         MessageLookupByLibrary.simpleMessage("1日に1000回\nのAI同期通訳"),
     "subPageSubtitleAstroLearnTips": MessageLookupByLibrary.simpleMessage(
-      "AstroLearn Tips - \nあなたのチャット参謀",
+      "Zena Tips - \nあなたのチャット参謀",
     ),
     "subPageSubtitleDMWeekly": MessageLookupByLibrary.simpleMessage("週に5回のDM"),
     "subPageSubtitleFilterMatchingCountries":
@@ -700,7 +690,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subPageSubtitleUnlockWhoLikesU": MessageLookupByLibrary.simpleMessage(
       "あなたの共有を評価してくれる人が\n誰か見るために解除",
     ),
-    "subPageTitle": MessageLookupByLibrary.simpleMessage("AstroLearn Plusを入手"),
+    "subPageTitle": MessageLookupByLibrary.simpleMessage("Zena Plusを入手"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("利用規約"),
     "subscriptionAgreementPrefix": m11,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(

@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>AstroLearn</string>
+	<string>Zena</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>AstroLearn</string>
+	<string>Zena</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -26,7 +26,7 @@
 	<array>
 		<dict>
       <key>CFBundleURLName</key>
-			<string>AstroLearn</string>
+			<string>Zena</string>
       <key>CFBundleURLSchemes</key>
       <array>
           <string>astrolink</string>
@@ -53,30 +53,30 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow AstroLearn to access your camera to capture photos to showcase yourself, which will be used in your learning profile.</string>
+	<string>Allow Zena to access your camera to capture photos to showcase yourself, which will be used in your profile.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Allow AstroLearn to access your location at all times for recommending study partners nearby.</string>
+	<string>Allow Zena to access your location at all times for recommending matches nearby.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow AstroLearn to access your location while using the app for recommending study partners nearby.</string>
+	<string>Allow Zena to access your location while using the app for recommending matches nearby.</string>
 	<key>NSLocationDefaultAccuracyReduced</key>
 	<false/>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>AstroLinkLocation</key>
-		<string>Allow AstroLearn to access your precise location for more accurate study partner recommendations.</string>
+		<string>Allow Zena to access your precise location for more accurate match recommendations.</string>
 	</dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allow AstroLearn to access your camera to capture photos and videos to showcase yourself, which will be used in your learning profile.</string>
+	<string>Allow Zena to access your photos to save captured images to your gallery.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow AstroLearn to access your camera to capture photos and videos to showcase yourself, which will be used in your learning profile.</string>
+	<string>Allow Zena to access your photos to select and upload profile images.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow AstroLearn to access your microphone to record voice message for better learning communication.</string>
+	<string>Allow Zena to access your microphone to record voice messages for better communication.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Allow AstroLearn to access your speech recognition to transform your voice message to text for better learning communication.</string>
+	<string>Allow Zena to access your speech recognition to convert voice messages to text for better communication.</string>
 	<key>NSUserTrackingUsageDescription</key>
   <string>To evaluate the effectiveness of our advertising campaigns and optimize our ad delivery strategies, we need to access your Identifier for Advertisers (IDFA). Your IDFA may be shared with our advertising partners, but it will not be associated with any other personal information.</string>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>AstroLearn needs access to your music usage data to process voice message playback.</string>
+	<string>Zena needs access to your music usage data to process voice message playback.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -103,7 +103,7 @@
   <key>FacebookClientToken</key>
   <string>05a5b4f17e6f876e110ef9df3945a657</string>
   <key>FacebookDisplayName</key>
-  <string>AstroLearn</string>
+  <string>Zena</string>
     <!-- gal: Required -->
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>We need add only access to save medias</string>
