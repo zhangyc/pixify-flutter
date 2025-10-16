@@ -24,42 +24,46 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(x) => "30日目標まであと${x}日";
 
-  static String m2(something) => "\"${something}に興味があります\"";
+  static String m2(error) => "運勢分析の取得に失敗しました: ${error}";
 
-  static String m3(something) => "「${something}」にとても興味があります！";
+  static String m3(something) => "\"${something}に興味があります\"";
 
-  static String m4(lang) => "${lang}でチャットできるよー";
+  static String m4(something) => "「${something}」にとても興味があります！";
 
-  static String m5(gender) =>
+  static String m5(lang) => "${lang}でチャットできるよー";
+
+  static String m6(gender) =>
       "${Intl.gender(gender, female: '彼女', male: '彼', other: '彼ら')}のどの共有体験が心に響きますか？";
 
-  static String m6(minutes) => "${minutes} 分";
+  static String m7(minutes) => "${minutes} 分";
 
-  static String m7(month, day) => "${month}月${day}日";
+  static String m8(month, day) => "${month}月${day}日";
 
-  static String m8(score) => "気分 ${score}/10";
+  static String m9(score) => "気分 ${score}/10";
 
-  static String m9(error) => "❌ 保存に失敗しました：${error}";
+  static String m10(error) => "月相分析の取得に失敗しました: ${error}";
 
-  static String m10(x) => "🔥 ${x}日連続！";
+  static String m11(error) => "❌ 保存に失敗しました：${error}";
 
-  static String m11(storeName) =>
+  static String m12(x) => "🔥 ${x}日連続！";
+
+  static String m13(storeName) =>
       "「続行」をクリックすると料金が発生し、対応するパッケージの価格で自動更新されます。${storeName}でキャンセルが可能です。続行することで、私たちの";
 
-  static String m12(count) => "高マッチユーザー${count}人をアンロックして表示 ✨";
+  static String m14(count) => "高マッチユーザー${count}人をアンロックして表示 ✨";
 
-  static String m13(count, destinyCount) =>
+  static String m15(count, destinyCount) =>
       "ユーザー${count}人をアンロック 命定マッチ${destinyCount}人含む ⭐";
 
-  static String m14(country) => "スキップ、ただ${country}";
+  static String m16(country) => "スキップ、ただ${country}";
 
-  static String m15(country) => "${country}に行く予定ですか";
+  static String m17(country) => "${country}に行く予定ですか";
 
-  static String m16(x) => "${x}日";
+  static String m18(x) => "${x}日";
 
-  static String m17(x) => "${x}時間";
+  static String m19(x) => "${x}時間";
 
-  static String m18(x) => "${x}回";
+  static String m20(x) => "${x}回";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -74,6 +78,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "AIが楽しいグループ写真を作成中",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("全部"),
+    "analyzingDailyHoroscope": MessageLookupByLibrary.simpleMessage(
+      "今日の運勢を分析中...",
+    ),
+    "analyzingMoonPhase": MessageLookupByLibrary.simpleMessage(
+      "月相エネルギーを分析中...",
+    ),
     "analyzingText": MessageLookupByLibrary.simpleMessage("分析中..."),
     "aquariusSign": MessageLookupByLibrary.simpleMessage("水瓶座"),
     "ariesSign": MessageLookupByLibrary.simpleMessage("牡羊座"),
@@ -209,6 +219,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "現在選択されている座標",
     ),
     "current_emotion": MessageLookupByLibrary.simpleMessage("現在の感情"),
+    "dailyHoroscope": MessageLookupByLibrary.simpleMessage("今日の運勢"),
+    "dailyHoroscopeAnalysis": MessageLookupByLibrary.simpleMessage("今日の運勢分析"),
+    "dailyHoroscopeAnalysisRemark": MessageLookupByLibrary.simpleMessage(
+      "今日の運勢分析",
+    ),
+    "dailyHoroscopeTitle": MessageLookupByLibrary.simpleMessage("今日の運勢"),
     "daily_quote": MessageLookupByLibrary.simpleMessage("今日の言葉"),
     "daily_quotes_title": MessageLookupByLibrary.simpleMessage("デイリークォート"),
     "daily_status": MessageLookupByLibrary.simpleMessage("日々の状態"),
@@ -327,13 +343,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
       "これはZena特製です",
     ),
+    "horoscopeAnalysisError": m2,
+    "horoscopeFetchFailed": MessageLookupByLibrary.simpleMessage(
+      "運勢の取得に失敗しました",
+    ),
+    "horoscopeRemark": MessageLookupByLibrary.simpleMessage("今日の運勢分析"),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "AIのAI同期通訳についてどう思いますか?",
     ),
     "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("あなたのオーラがすごくいい感じ！"),
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("スタイルがすごくかわいいわね!"),
-    "imInterestedSomething": m2,
-    "imVeryInterestedInSomething": m3,
+    "imInterestedSomething": m3,
+    "imVeryInterestedInSomething": m4,
     "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage(
       "ユーザーの生年月日情報が不完全です",
     ),
@@ -345,7 +366,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "issues": MessageLookupByLibrary.simpleMessage("問題"),
     "justNow": MessageLookupByLibrary.simpleMessage("たった今"),
     "justSendALike": MessageLookupByLibrary.simpleMessage("感謝の気持ちを伝えるだけ"),
-    "justTypeInYourLanguage": m4,
+    "justTypeInYourLanguage": m5,
     "keep_it_up": MessageLookupByLibrary.simpleMessage("その調子！素晴らしい ✨"),
     "last_quarter_insight": MessageLookupByLibrary.simpleMessage(
       "下弦の月、過去を手放し、新しい始まりの準備を",
@@ -384,7 +405,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "位置を許可する",
     ),
     "mapSelectedLocation": MessageLookupByLibrary.simpleMessage("マップで選択された場所"),
-    "matchPageSelectIdeas": m5,
+    "matchPageSelectIdeas": m6,
     "me": MessageLookupByLibrary.simpleMessage("マイページ"),
     "meditation_category": MessageLookupByLibrary.simpleMessage("瞑想"),
     "meditation_count": MessageLookupByLibrary.simpleMessage("瞑想回数"),
@@ -396,12 +417,23 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "memberCenter": MessageLookupByLibrary.simpleMessage("会員センター"),
     "membersPerks": MessageLookupByLibrary.simpleMessage("メンバーは限定特典を獲得"),
-    "minutes_duration": m6,
+    "minutes_duration": m7,
     "month": MessageLookupByLibrary.simpleMessage("月"),
-    "month_day_format": m7,
+    "month_day_format": m8,
     "mood": MessageLookupByLibrary.simpleMessage("気分"),
     "mood_index": MessageLookupByLibrary.simpleMessage("気分指数"),
-    "mood_score": m8,
+    "mood_score": m9,
+    "moonPhaseAnalysis": MessageLookupByLibrary.simpleMessage("月相分析"),
+    "moonPhaseAnalysisError": m10,
+    "moonPhaseAnalysisRemark": MessageLookupByLibrary.simpleMessage(
+      "月相エネルギー分析",
+    ),
+    "moonPhaseAnalysisTitle": MessageLookupByLibrary.simpleMessage("月相エネルギー分析"),
+    "moonPhaseEnergy": MessageLookupByLibrary.simpleMessage("月相エネルギー"),
+    "moonPhaseFetchFailed": MessageLookupByLibrary.simpleMessage(
+      "月相の取得に失敗しました",
+    ),
+    "moonPhaseRemark": MessageLookupByLibrary.simpleMessage("月相エネルギー分析"),
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
       "写真多いほどおすすめ度高くなる",
     ),
@@ -627,7 +659,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sagittariusSign": MessageLookupByLibrary.simpleMessage("射手座"),
     "save": MessageLookupByLibrary.simpleMessage("保存"),
-    "save_failed": m9,
+    "save_failed": m11,
     "scorpioSign": MessageLookupByLibrary.simpleMessage("蠍座"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("スクリーンショットの証拠"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("プロフィールを見る"),
@@ -672,7 +704,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "status_saved": MessageLookupByLibrary.simpleMessage("✅ ステータスを保存しました"),
     "stop_meditation": MessageLookupByLibrary.simpleMessage("瞑想を停止"),
     "streak_days": MessageLookupByLibrary.simpleMessage("連続日数"),
-    "streak_x_days": m10,
+    "streak_x_days": m12,
     "stress": MessageLookupByLibrary.simpleMessage("ストレス"),
     "stress_index": MessageLookupByLibrary.simpleMessage("ストレス指数"),
     "stress_level": MessageLookupByLibrary.simpleMessage("ストレス水準"),
@@ -692,7 +724,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subPageTitle": MessageLookupByLibrary.simpleMessage("Zena Plusを入手"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("利用規約"),
-    "subscriptionAgreementPrefix": m11,
+    "subscriptionAgreementPrefix": m13,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(
       "に同意したことになります。",
     ),
@@ -715,8 +747,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "toggle_background_music": MessageLookupByLibrary.simpleMessage("BGM切り替え"),
     "total_duration": MessageLookupByLibrary.simpleMessage("合計時間"),
     "unknownLocation": MessageLookupByLibrary.simpleMessage("不明"),
-    "unlockHighMatchUsers": m12,
-    "unlockUsersWithDestiny": m13,
+    "unlockDailyHoroscope": MessageLookupByLibrary.simpleMessage(
+      "詳細な星座運勢をアンロック",
+    ),
+    "unlockHighMatchUsers": m14,
+    "unlockMoonPhaseInsight": MessageLookupByLibrary.simpleMessage(
+      "今日の月相エネルギー洞察をアンロック",
+    ),
+    "unlockUsersWithDestiny": m15,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "見逃せない特別価格",
     ),
@@ -826,7 +864,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "特別にしたいことあるかな?",
     ),
-    "wishCityPickerSkipButton": m14,
+    "wishCityPickerSkipButton": m16,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "そこに行くなら、どの都市を訪れたいですか？",
     ),
@@ -840,7 +878,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishDateOptionNotSure": MessageLookupByLibrary.simpleMessage("まだ確かじゃないよ"),
     "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("最近ね、たぶん"),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("1年以内"),
-    "wishDatePickerSubtitle": m15,
+    "wishDatePickerSubtitle": m17,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("いつ"),
     "wishList": MessageLookupByLibrary.simpleMessage("願いリスト"),
     "wishes": MessageLookupByLibrary.simpleMessage("願い"),
@@ -848,9 +886,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "write_feelings_hint": MessageLookupByLibrary.simpleMessage(
       "感じていることを書き留めてください...",
     ),
-    "x_days": m16,
-    "x_hours": m17,
-    "x_times": m18,
+    "x_days": m18,
+    "x_hours": m19,
+    "x_times": m20,
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage(
       "あなたは今クラブメンバーです",
     ),

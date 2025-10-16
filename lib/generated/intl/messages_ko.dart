@@ -24,42 +24,46 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(x) => "30일 목표까지 ${x}일 남음";
 
-  static String m2(something) => "\"${something}에 관심이 있어요!\"";
+  static String m2(error) => "운세 분석 가져오기 실패: ${error}";
 
-  static String m3(something) => "\'${something}\'에 매우 관심이 있어요！";
+  static String m3(something) => "\"${something}에 관심이 있어요!\"";
 
-  static String m4(lang) => "${lang}로만 입력하세요";
+  static String m4(something) => "\'${something}\'에 매우 관심이 있어요！";
 
-  static String m5(gender) =>
+  static String m5(lang) => "${lang}로만 입력하세요";
+
+  static String m6(gender) =>
       "${Intl.gender(gender, female: '그녀의', male: '그의', other: '그들의')} 어떤 공유 경험이 당신의 마음에 와 닿나요?";
 
-  static String m6(minutes) => "${minutes} 분";
+  static String m7(minutes) => "${minutes} 분";
 
-  static String m7(month, day) => "${month}월${day}일";
+  static String m8(month, day) => "${month}월${day}일";
 
-  static String m8(score) => "기분 ${score}/10";
+  static String m9(score) => "기분 ${score}/10";
 
-  static String m9(error) => "❌ 저장 실패: ${error}";
+  static String m10(error) => "달 단계 분석 가져오기 실패: ${error}";
 
-  static String m10(x) => "🔥 ${x}일 연속!";
+  static String m11(error) => "❌ 저장 실패: ${error}";
 
-  static String m11(storeName) =>
+  static String m12(x) => "🔥 ${x}일 연속!";
+
+  static String m13(storeName) =>
       "계속을 클릭하면 요금이 부과되며, 해당 패키지 가격에 따라 구독이 자동 갱신됩니다. ${storeName}를 통해 취소할 수 있습니다. 계속 진행하면 우리의 ";
 
-  static String m12(count) => "고매치 사용자 ${count}명 잠금 해제하여 보기 ✨";
+  static String m14(count) => "고매치 사용자 ${count}명 잠금 해제하여 보기 ✨";
 
-  static String m13(count, destinyCount) =>
+  static String m15(count, destinyCount) =>
       "사용자 ${count}명 잠금 해제 운명의 매치 ${destinyCount}명 포함 ⭐";
 
-  static String m14(country) => "건너뛰기, 그냥country}";
+  static String m16(country) => "건너뛰기, 그냥country}";
 
-  static String m15(country) => "${country}에 가려고 하세요?";
+  static String m17(country) => "${country}에 가려고 하세요?";
 
-  static String m16(x) => "${x}일";
+  static String m18(x) => "${x}일";
 
-  static String m17(x) => "${x}시간";
+  static String m19(x) => "${x}시간";
 
-  static String m18(x) => "${x}회";
+  static String m20(x) => "${x}회";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -74,6 +78,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "AI가 재미있는 그룹 사진을 만들고 있습니다",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("전부"),
+    "analyzingDailyHoroscope": MessageLookupByLibrary.simpleMessage(
+      "오늘의 운세를 분석하는 중...",
+    ),
+    "analyzingMoonPhase": MessageLookupByLibrary.simpleMessage(
+      "달 단계 에너지를 분석하는 중...",
+    ),
     "analyzingText": MessageLookupByLibrary.simpleMessage("Analisando..."),
     "aquariusSign": MessageLookupByLibrary.simpleMessage("물병자리"),
     "ariesSign": MessageLookupByLibrary.simpleMessage("양자리"),
@@ -215,6 +225,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "현재 선택된 좌표",
     ),
     "current_emotion": MessageLookupByLibrary.simpleMessage("현재 감정"),
+    "dailyHoroscope": MessageLookupByLibrary.simpleMessage("일일 운세"),
+    "dailyHoroscopeAnalysis": MessageLookupByLibrary.simpleMessage("일일 운세 분석"),
+    "dailyHoroscopeAnalysisRemark": MessageLookupByLibrary.simpleMessage(
+      "일일 운세 분석",
+    ),
+    "dailyHoroscopeTitle": MessageLookupByLibrary.simpleMessage("일일 운세"),
     "daily_quote": MessageLookupByLibrary.simpleMessage("오늘의 명언"),
     "daily_quotes_title": MessageLookupByLibrary.simpleMessage("일일 명언"),
     "daily_status": MessageLookupByLibrary.simpleMessage("일일 상태"),
@@ -339,13 +355,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
       "이것은 Zena가 당신을 위해 특별히 만든 것입니다",
     ),
+    "horoscopeAnalysisError": m2,
+    "horoscopeFetchFailed": MessageLookupByLibrary.simpleMessage("운세 가져오기 실패"),
+    "horoscopeRemark": MessageLookupByLibrary.simpleMessage("일일 운세 분석"),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "AI 동시통역에 대해 어떻게 생각하세요?",
     ),
     "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("너의 에너지가 대단해!"),
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("스타일이 마음에 들어요!"),
-    "imInterestedSomething": m2,
-    "imVeryInterestedInSomething": m3,
+    "imInterestedSomething": m3,
+    "imVeryInterestedInSomething": m4,
     "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage(
       "사용자 생년월일 정보가 불완전합니다",
     ),
@@ -357,7 +376,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "issues": MessageLookupByLibrary.simpleMessage("문제"),
     "justNow": MessageLookupByLibrary.simpleMessage("방금 전"),
     "justSendALike": MessageLookupByLibrary.simpleMessage("그냥 감사를 표현하세요"),
-    "justTypeInYourLanguage": m4,
+    "justTypeInYourLanguage": m5,
     "keep_it_up": MessageLookupByLibrary.simpleMessage("계속 해요! 잘하고 있어요 ✨"),
     "last_quarter_insight": MessageLookupByLibrary.simpleMessage(
       "하현달, 과거를 놓고 새로운 시작을 준비",
@@ -396,7 +415,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "위치 승인",
     ),
     "mapSelectedLocation": MessageLookupByLibrary.simpleMessage("지도에서 선택한 위치"),
-    "matchPageSelectIdeas": m5,
+    "matchPageSelectIdeas": m6,
     "me": MessageLookupByLibrary.simpleMessage("나"),
     "meditation_category": MessageLookupByLibrary.simpleMessage("명상"),
     "meditation_count": MessageLookupByLibrary.simpleMessage("명상 횟수"),
@@ -408,12 +427,25 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "memberCenter": MessageLookupByLibrary.simpleMessage("회원 센터"),
     "membersPerks": MessageLookupByLibrary.simpleMessage("멤버는 독점 혜택을 받습니다"),
-    "minutes_duration": m6,
+    "minutes_duration": m7,
     "month": MessageLookupByLibrary.simpleMessage("월"),
-    "month_day_format": m7,
+    "month_day_format": m8,
     "mood": MessageLookupByLibrary.simpleMessage("기분"),
     "mood_index": MessageLookupByLibrary.simpleMessage("기분 지수"),
-    "mood_score": m8,
+    "mood_score": m9,
+    "moonPhaseAnalysis": MessageLookupByLibrary.simpleMessage("달 단계 분석"),
+    "moonPhaseAnalysisError": m10,
+    "moonPhaseAnalysisRemark": MessageLookupByLibrary.simpleMessage(
+      "달 단계 에너지 분석",
+    ),
+    "moonPhaseAnalysisTitle": MessageLookupByLibrary.simpleMessage(
+      "달 단계 에너지 분석",
+    ),
+    "moonPhaseEnergy": MessageLookupByLibrary.simpleMessage("달 단계 에너지"),
+    "moonPhaseFetchFailed": MessageLookupByLibrary.simpleMessage(
+      "달 단계 가져오기 실패",
+    ),
+    "moonPhaseRemark": MessageLookupByLibrary.simpleMessage("달 단계 에너지 분석"),
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
       "사진이 많을수록 추천도가 높아집니다",
     ),
@@ -643,7 +675,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sagittariusSign": MessageLookupByLibrary.simpleMessage("사수자리"),
     "save": MessageLookupByLibrary.simpleMessage("저장"),
-    "save_failed": m9,
+    "save_failed": m11,
     "scorpioSign": MessageLookupByLibrary.simpleMessage("전갈자리"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("스크린샷 증거"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("프로필 보기"),
@@ -694,7 +726,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "status_saved": MessageLookupByLibrary.simpleMessage("✅ 상태 저장됨"),
     "stop_meditation": MessageLookupByLibrary.simpleMessage("명상 중지"),
     "streak_days": MessageLookupByLibrary.simpleMessage("연속 일수"),
-    "streak_x_days": m10,
+    "streak_x_days": m12,
     "stress": MessageLookupByLibrary.simpleMessage("스트레스"),
     "stress_index": MessageLookupByLibrary.simpleMessage("스트레스 지수"),
     "stress_level": MessageLookupByLibrary.simpleMessage("스트레스 레벨"),
@@ -714,7 +746,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subPageTitle": MessageLookupByLibrary.simpleMessage("Zena Plus받기"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("약관"),
-    "subscriptionAgreementPrefix": m11,
+    "subscriptionAgreementPrefix": m13,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(
       "에 동의하는 것입니다.",
     ),
@@ -737,8 +769,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "toggle_background_music": MessageLookupByLibrary.simpleMessage("배경음악 전환"),
     "total_duration": MessageLookupByLibrary.simpleMessage("총 시간"),
     "unknownLocation": MessageLookupByLibrary.simpleMessage("알 수 없음"),
-    "unlockHighMatchUsers": m12,
-    "unlockUsersWithDestiny": m13,
+    "unlockDailyHoroscope": MessageLookupByLibrary.simpleMessage(
+      "상세한 별자리 운세 잠금 해제",
+    ),
+    "unlockHighMatchUsers": m14,
+    "unlockMoonPhaseInsight": MessageLookupByLibrary.simpleMessage(
+      "오늘의 달 단계 에너지 통찰 해제",
+    ),
+    "unlockUsersWithDestiny": m15,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "놓치면 안 되는 특가",
     ),
@@ -842,7 +880,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "뭔가 하고 싶어?",
     ),
-    "wishCityPickerSkipButton": m14,
+    "wishCityPickerSkipButton": m16,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "거기에 간다면, 어떤 도시를 방문하고 싶습니까?",
     ),
@@ -856,7 +894,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishDateOptionNotSure": MessageLookupByLibrary.simpleMessage("아직 확실하지 않아"),
     "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("최근이라고 생각해요"),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("1년 이내"),
-    "wishDatePickerSubtitle": m15,
+    "wishDatePickerSubtitle": m17,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("언제"),
     "wishList": MessageLookupByLibrary.simpleMessage("소망 목록"),
     "wishes": MessageLookupByLibrary.simpleMessage("소원"),
@@ -866,9 +904,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "write_feelings_hint": MessageLookupByLibrary.simpleMessage(
       "지금 느끼는 것을 적어보세요...",
     ),
-    "x_days": m16,
-    "x_hours": m17,
-    "x_times": m18,
+    "x_days": m18,
+    "x_hours": m19,
+    "x_times": m20,
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage("이제 클럽 멤버입니다"),
     "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage(
       "언제든지 편집할 수 있습니다",

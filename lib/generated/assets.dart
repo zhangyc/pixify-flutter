@@ -71,6 +71,7 @@ class Assets {
   static const String iconsWomanUnselected = 'assets/icons/woman_unselected.png';
   static const String iconsWonmanSelected = 'assets/icons/wonman_selected.png';
   static const String imagesAddPhoto = 'assets/images/add_photo.png';
+  static const String imagesAuth = 'assets/images/auth.jpeg';
   static const String imagesChatBg = 'assets/images/chat_bg.png';
   static const String imagesCloudGreenNarrow = 'assets/images/cloud_green_narrow.png';
   static const String imagesDataEmpty = 'assets/images/data_empty.png';
@@ -121,6 +122,7 @@ class Assets {
   static const String matchCancel = 'assets/match/cancel.svg';
   static const String matchLike = 'assets/match/like.svg';
   static const String matchSend = 'assets/match/send.svg';
+  static const String mp3Music1 = 'assets/mp3/music1.mp3';
   static const String riveBear = 'assets/rive/bear.riv';
   static const String riveGirl = 'assets/rive/girl.riv';
   static const String svgAiDress = 'assets/svg/ai_dress.svg';

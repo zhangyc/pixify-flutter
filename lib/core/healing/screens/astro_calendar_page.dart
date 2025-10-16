@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sona/core/healing/services/healing_database.dart';
 import 'package:sona/generated/l10n.dart';
+import 'package:sona/core/diamond/services/diamond.dart';
+import 'package:sona/core/diamond/diamond_store_page.dart';
+import 'package:sona/core/match/util/http_util.dart';
+import 'package:sona/account/providers/profile.dart';
 
 /// 星盘疗愈日历页面
-class AstroCalendarPage extends StatefulWidget {
+class AstroCalendarPage extends ConsumerStatefulWidget {
   const AstroCalendarPage({super.key});
 
   @override
-  State<AstroCalendarPage> createState() => _AstroCalendarPageState();
+  ConsumerState<AstroCalendarPage> createState() => _AstroCalendarPageState();
 }
 
-class _AstroCalendarPageState extends State<AstroCalendarPage> {
+class _AstroCalendarPageState extends ConsumerState<AstroCalendarPage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   Map<DateTime, List<HealingActivity>> _healingActivities = {};
@@ -136,85 +142,92 @@ class _AstroCalendarPageState extends State<AstroCalendarPage> {
           // 月度统计卡片
           _buildMonthlyStats(theme),
 
+          // 钻石消耗功能区
+          _buildDiamondFeatures(theme),
+
           // 日历
           Expanded(
-            child: TableCalendar(
-              firstDay: DateTime.utc(2024, 1, 1),
-              lastDay: DateTime.utc(2030, 12, 31),
-              focusedDay: _focusedDay,
-              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-              calendarFormat: CalendarFormat.month,
-              startingDayOfWeek: StartingDayOfWeek.monday,
+            child: SingleChildScrollView(
+              child: TableCalendar(
+                daysOfWeekHeight: 40,
+                firstDay: DateTime.utc(2024, 1, 1),
+                lastDay: DateTime.utc(2030, 12, 31),
+                focusedDay: _focusedDay,
+                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                calendarFormat: CalendarFormat.month,
+                startingDayOfWeek: StartingDayOfWeek.monday,
 
-              // 样式配置
-              calendarStyle: CalendarStyle(
-                outsideDaysVisible: false,
-                weekendTextStyle: const TextStyle(color: Colors.white70),
-                defaultTextStyle: const TextStyle(color: Colors.white),
-                selectedDecoration: BoxDecoration(
-                  color: theme.primaryColor,
-                  shape: BoxShape.circle,
+                // 样式配置
+                calendarStyle: CalendarStyle(
+                  cellMargin: EdgeInsets.zero,
+                  outsideDaysVisible: false,
+                  weekendTextStyle: const TextStyle(color: Colors.white70),
+                  defaultTextStyle: const TextStyle(color: Colors.white),
+                  selectedDecoration: BoxDecoration(
+                    color: theme.primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  todayDecoration: BoxDecoration(
+                    color: theme.primaryColor.withOpacity(0.3),
+                    shape: BoxShape.circle,
+                  ),
+                  markerDecoration: BoxDecoration(
+                    color: theme.primaryColor,
+                    shape: BoxShape.circle,
+                  ),
                 ),
-                todayDecoration: BoxDecoration(
-                  color: theme.primaryColor.withOpacity(0.3),
-                  shape: BoxShape.circle,
+
+                headerStyle: HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  titleTextStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  leftChevronIcon:
+                      const Icon(Icons.chevron_left, color: Colors.white),
+                  rightChevronIcon:
+                      const Icon(Icons.chevron_right, color: Colors.white),
                 ),
-                markerDecoration: BoxDecoration(
-                  color: theme.primaryColor,
-                  shape: BoxShape.circle,
+
+                daysOfWeekStyle: const DaysOfWeekStyle(
+                  weekdayStyle: TextStyle(color: Colors.white70),
+                  weekendStyle: TextStyle(color: Colors.white70),
                 ),
-              ),
 
-              headerStyle: HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-                titleTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-                leftChevronIcon:
-                    const Icon(Icons.chevron_left, color: Colors.white),
-                rightChevronIcon:
-                    const Icon(Icons.chevron_right, color: Colors.white),
-              ),
-
-              daysOfWeekStyle: const DaysOfWeekStyle(
-                weekdayStyle: TextStyle(color: Colors.white70),
-                weekendStyle: TextStyle(color: Colors.white70),
-              ),
-
-              // 事件标记
-              eventLoader: (day) {
-                final normalizedDay = DateTime(day.year, day.month, day.day);
-                return _healingActivities[normalizedDay] ?? [];
-              },
-
-              // 自定义日历格子
-              calendarBuilders: CalendarBuilders<HealingActivity>(
-                defaultBuilder: (context, day, focusedDay) {
-                  return _buildCalendarCell(day, false, false);
+                // 事件标记
+                eventLoader: (day) {
+                  final normalizedDay = DateTime(day.year, day.month, day.day);
+                  return _healingActivities[normalizedDay] ?? [];
                 },
-                selectedBuilder: (context, day, focusedDay) {
-                  return _buildCalendarCell(day, true, false);
-                },
-                todayBuilder: (context, day, focusedDay) {
-                  return _buildCalendarCell(day, false, true);
-                },
-              ),
 
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
+                // 自定义日历格子
+                calendarBuilders: CalendarBuilders<HealingActivity>(
+                  defaultBuilder: (context, day, focusedDay) {
+                    return _buildCalendarCell(day, false, false);
+                  },
+                  selectedBuilder: (context, day, focusedDay) {
+                    return _buildCalendarCell(day, true, false);
+                  },
+                  todayBuilder: (context, day, focusedDay) {
+                    return _buildCalendarCell(day, false, true);
+                  },
+                ),
+
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+                  _showDayDetails(selectedDay);
+                },
+
+                onPageChanged: (focusedDay) {
                   _focusedDay = focusedDay;
-                });
-                _showDayDetails(selectedDay);
-              },
-
-              onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
-                _loadMonthData(focusedDay);
-              },
+                  _loadMonthData(focusedDay);
+                },
+              ),
             ),
           ),
         ],
@@ -612,6 +625,406 @@ class _AstroCalendarPageState extends State<AstroCalendarPage> {
         return S.of(context).last_quarter_insight;
       case MoonPhase.waningCrescent:
         return S.of(context).waning_crescent_insight;
+    }
+  }
+
+  /// 钻石消耗功能区
+  Widget _buildDiamondFeatures(ThemeData theme) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFF6366F1).withOpacity(0.2),
+            const Color(0xFF8B5CF6).withOpacity(0.1),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const Color(0xFF6366F1).withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 标题
+          Row(
+            children: [
+              const Icon(Icons.auto_awesome,
+                  color: Color(0xFF6366F1), size: 20),
+              const SizedBox(width: 8),
+              Text(
+                '星座能量解读',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
+          // 功能按钮
+          Row(
+            children: [
+              // 月相能量解读
+              Expanded(
+                child: _buildDiamondFeatureButton(
+                  title: S.current.moonPhaseEnergy,
+                  subtitle: S.current.unlockMoonPhaseInsight,
+                  cost: 20,
+                  icon: Icons.nightlight_round,
+                  onTap: _unlockMoonPhaseInsight,
+                ),
+              ),
+              const SizedBox(width: 12),
+              // 每日运势
+              Expanded(
+                child: _buildDiamondFeatureButton(
+                  title: S.current.dailyHoroscope,
+                  subtitle: S.current.unlockDailyHoroscope,
+                  cost: 30,
+                  icon: Icons.wb_sunny,
+                  onTap: _unlockDailyHoroscope,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 钻石功能按钮
+  Widget _buildDiamondFeatureButton({
+    required String title,
+    required String subtitle,
+    required int cost,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.white.withOpacity(0.2),
+            width: 1,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 图标和钻石消耗提示
+            Row(
+              children: [
+                Icon(icon, color: const Color(0xFF00EED1), size: 16),
+                const Spacer(),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF00EED1).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.diamond,
+                          size: 10, color: Color(0xFF00EED1)),
+                      const SizedBox(width: 2),
+                      Text(
+                        '$cost',
+                        style: const TextStyle(
+                          color: Color(0xFF00EED1),
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            // 标题
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 2),
+            // 副标题
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.7),
+                fontSize: 10,
+              ),
+              maxLines: 2,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// 解锁月相能量解读
+  Future<void> _unlockMoonPhaseInsight() async {
+    // 检查钻石余额
+    final checkResult = await DiamondService.checkBalance(requiredDiamonds: 20);
+
+    if (!checkResult.isSuccess || !checkResult.data["hasEnough"]) {
+      // 钻石不足，跳转到商店
+      if (mounted) {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (context) => const DiamondStorePage(),
+          ),
+        );
+      }
+      return;
+    }
+
+    // 获取当前选中的日期的月相
+    final selectedDate = _selectedDay ?? _focusedDay;
+    final moonPhase = _moonPhases[selectedDate] ?? MoonPhase.newMoon;
+
+    // 调用API获取月相解读
+    try {
+      // 显示loading
+      await EasyLoading.show(
+        status: S.current.analyzingMoonPhase,
+        maskType: EasyLoadingMaskType.black,
+      );
+
+      final moonPhaseResult =
+          await _fetchMoonPhaseInsight(moonPhase, selectedDate);
+
+      // 消耗钻石
+      final consumeResult = await DiamondService.consume(
+        diamondCount: 20,
+        remark: S.current.moonPhaseRemark,
+      );
+
+      // 隐藏loading
+      await EasyLoading.dismiss();
+
+      if (consumeResult.isSuccess) {
+        // 显示月相能量解读内容
+        _showMoonPhaseInsightDialog(moonPhaseResult);
+      }
+    } catch (e) {
+      // 隐藏loading
+      await EasyLoading.dismiss();
+    }
+  }
+
+  /// 解锁每日运势
+  Future<void> _unlockDailyHoroscope() async {
+    // 显示loading
+    await EasyLoading.show(
+      status: S.current.analyzingDailyHoroscope,
+      maskType: EasyLoadingMaskType.black,
+    );
+    // 检查钻石余额
+    final checkResult = await DiamondService.checkBalance(requiredDiamonds: 30);
+
+    if (!checkResult.isSuccess || !checkResult.data["hasEnough"]) {
+      // 钻石不足，跳转到商店
+      if (mounted) {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (context) => const DiamondStorePage(),
+          ),
+        );
+      }
+      return;
+    }
+
+    // 获取用户生日信息
+    final myProfile = ref.read(myProfileProvider);
+    if (myProfile?.birthday == null) {
+      // 没有生日信息，无法获取运势
+      return;
+    }
+
+    // 调用API获取每日运势
+    try {
+      final horoscopeResult = await _fetchDailyHoroscope(myProfile!.birthday!);
+
+      // 消耗钻石
+      final consumeResult = await DiamondService.consume(
+        diamondCount: 30,
+        remark: S.current.horoscopeRemark,
+      );
+
+      // 隐藏loading
+      await EasyLoading.dismiss();
+
+      if (consumeResult.isSuccess) {
+        // 显示真实的运势内容
+        _showDailyHoroscopeDialog(horoscopeResult);
+      }
+    } catch (e) {
+      // 隐藏loading
+      await EasyLoading.dismiss();
+    }
+  }
+
+  /// 显示月相能量解读对话框
+  void _showMoonPhaseInsightDialog(String moonPhaseContent) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1A1A),
+        title: Text(S.current.moonPhaseAnalysisTitle,
+            style: const TextStyle(color: Colors.white)),
+        content: SingleChildScrollView(
+          child: Text(
+            // 直接显示后端返回的字符串内容
+            moonPhaseContent,
+            style: const TextStyle(color: Colors.white70, height: 1.6),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(S.current.buttonConfirm),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 显示每日运势对话框
+  void _showDailyHoroscopeDialog(String horoscopeContent) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1A1A),
+        title: Text(S.current.dailyHoroscopeTitle,
+            style: const TextStyle(color: Colors.white)),
+        content: SingleChildScrollView(
+          child: Text(
+            // 直接显示后端返回的字符串内容
+            horoscopeContent,
+            style: const TextStyle(color: Colors.white70, height: 1.6),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('确定'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 获取每日运势API
+  Future<String> _fetchDailyHoroscope(DateTime birthday) async {
+    // 显示loading
+    await EasyLoading.show(
+      status: S.current.analyzingDailyHoroscope,
+      maskType: EasyLoadingMaskType.black,
+    );
+    // 根据生日计算星座
+    final zodiacSign = _getZodiacSign(birthday);
+
+    // 调用后端API - 返回字符串内容
+    final result = await post('/astro/horoscope/daily', data: {
+      'zodiacSign': zodiacSign,
+      'date': DateTime.now().toIso8601String().split('T')[0],
+    });
+
+    if (result.isSuccess) {
+      // 后端返回的是字符串内容
+      return result.data as String;
+    } else {
+      throw Exception(S.current.horoscopeFetchFailed);
+    }
+  }
+
+  /// 获取月相能量解读API
+  Future<String> _fetchMoonPhaseInsight(
+      MoonPhase moonPhase, DateTime date) async {
+    // 将MoonPhase枚举转换为字符串
+    final moonPhaseStr = _moonPhaseToString(moonPhase);
+
+    // 调用后端API - 返回字符串内容
+    final result = await post('/astro/moon-phase/analyze', data: {
+      'moonPhase': moonPhaseStr,
+      'date': date.toIso8601String().split('T')[0],
+    });
+
+    if (result.isSuccess) {
+      // 后端返回的是字符串内容
+      return result.data as String;
+    } else {
+      throw Exception(S.current.moonPhaseFetchFailed);
+    }
+  }
+
+  /// 将MoonPhase枚举转换为字符串
+  String _moonPhaseToString(MoonPhase phase) {
+    switch (phase) {
+      case MoonPhase.newMoon:
+        return 'newMoon';
+      case MoonPhase.waxingCrescent:
+        return 'waxingCrescent';
+      case MoonPhase.firstQuarter:
+        return 'firstQuarter';
+      case MoonPhase.waxingGibbous:
+        return 'waxingGibbous';
+      case MoonPhase.fullMoon:
+        return 'fullMoon';
+      case MoonPhase.waningGibbous:
+        return 'waningGibbous';
+      case MoonPhase.lastQuarter:
+        return 'lastQuarter';
+      case MoonPhase.waningCrescent:
+        return 'waningCrescent';
+    }
+  }
+
+  /// 根据生日获取星座
+  String _getZodiacSign(DateTime birthday) {
+    final month = birthday.month;
+    final day = birthday.day;
+
+    if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) {
+      return 'aquarius'; // 水瓶座
+    } else if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) {
+      return 'pisces'; // 双鱼座
+    } else if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
+      return 'aries'; // 白羊座
+    } else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) {
+      return 'taurus'; // 金牛座
+    } else if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) {
+      return 'gemini'; // 双子座
+    } else if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) {
+      return 'cancer'; // 巨蟹座
+    } else if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) {
+      return 'leo'; // 狮子座
+    } else if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) {
+      return 'virgo'; // 处女座
+    } else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) {
+      return 'libra'; // 天秤座
+    } else if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) {
+      return 'scorpio'; // 天蝎座
+    } else if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) {
+      return 'sagittarius'; // 射手座
+    } else {
+      return 'capricorn'; // 摩羯座
     }
   }
 }

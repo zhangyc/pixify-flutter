@@ -16,6 +16,7 @@ import 'package:sona/common/widgets/image/user_avatar.dart';
 import 'package:sona/common/widgets/text/neon_word_mark.dart';
 import 'package:sona/core/match/widgets/location_selector.dart';
 import 'package:sona/core/subscribe/subscribe_page.dart';
+import 'package:sona/core/diamond/diamond_store_page.dart';
 import 'package:sona/utils/dialog/input.dart';
 import 'package:sona/utils/image_compress_util.dart';
 import 'package:sona/utils/toast/flutter_toast.dart';
@@ -149,7 +150,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
           ? const Color(0xFF0A0A0A)
           : const Color(0xFFF8F9FA),
       appBar: AppBar(
-        title: NeonWordmark(text: "AstroLearn", fontSize: 18),
+        title: NeonWordmark(text: "Zena", fontSize: 18),
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? const Color(0xFF0A0A0A)
             : const Color(0xFFF8F9FA),
@@ -523,7 +524,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
           crossAxisCount: 3,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 1.0,
+          childAspectRatio: 0.9,
           children: [
             _buildQuickActionItem(
               context,
@@ -547,6 +548,18 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
                 MaterialPageRoute<void>(
                   builder: (_) =>
                       const SubscribePage(fromTag: FromTag.profile_myplan),
+                ),
+              ),
+            ),
+            _buildQuickActionItem(
+              context,
+              icon: Icons.diamond,
+              title: S.of(context).diamondStore,
+              color: const Color(0xFF00EED1),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (_) => const DiamondStorePage(),
                 ),
               ),
             ),
@@ -579,7 +592,7 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Theme.of(context).brightness == Brightness.dark
               ? const Color(0xFF1A1A1A)
@@ -620,6 +633,8 @@ class _PersonaScreenState extends ConsumerState<PersonaScreen>
             const SizedBox(height: 8),
             Text(
               title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).colorScheme.onSurface,

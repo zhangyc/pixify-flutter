@@ -24,43 +24,48 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(x) => "${x} dias para meta de 30 dias";
 
-  static String m2(something) => "\"Estou interessado em ${something}!\"";
+  static String m2(error) => "Error al obtener análisis de horóscopo: ${error}";
 
-  static String m3(something) => "Estou muito interessado em ‘${something}’!";
+  static String m3(something) => "\"Estou interessado em ${something}!\"";
 
-  static String m4(lang) => "Basta digitar em ${lang}";
+  static String m4(something) => "Estou muito interessado em ‘${something}’!";
 
-  static String m5(gender) =>
+  static String m5(lang) => "Basta digitar em ${lang}";
+
+  static String m6(gender) =>
       "Qual das ${Intl.gender(gender, female: 'experiências de compartilhamento dela', male: 'experiências de compartilhamento dele', other: 'experiências de compartilhamento deles')} ressoa com você?";
 
-  static String m6(minutes) => "${minutes} minutos";
+  static String m7(minutes) => "${minutes} minutos";
 
-  static String m7(month, day) => "${month}月${day}日";
+  static String m8(month, day) => "${month}月${day}日";
 
-  static String m8(score) => "Humor ${score}/10";
+  static String m9(score) => "Humor ${score}/10";
 
-  static String m9(error) => "❌ Falha ao salvar: ${error}";
+  static String m10(error) =>
+      "Error al obtener análisis de fase lunar: ${error}";
 
-  static String m10(x) => "🔥 ${x} dias seguidos!";
+  static String m11(error) => "❌ Falha ao salvar: ${error}";
 
-  static String m11(storeName) =>
+  static String m12(x) => "🔥 ${x} dias seguidos!";
+
+  static String m13(storeName) =>
       "Ao clicar em \"Continuar\", será cobrado, a assinatura renovará automaticamente pelo preço do pacote e poderá cancelar pela ${storeName}. Ao continuar, concorda com nossos ";
 
-  static String m12(count) =>
+  static String m14(count) =>
       "Desbloquear para ver ${count} usuários de alta correspondência ✨";
 
-  static String m13(count, destinyCount) =>
+  static String m15(count, destinyCount) =>
       "Desbloquear ${count} usuários incluindo ${destinyCount} matches do destino ⭐";
 
-  static String m14(country) => "Pular, Só ${country}";
+  static String m16(country) => "Pular, Só ${country}";
 
-  static String m15(country) => "Você está planejando ir para o ${country}";
+  static String m17(country) => "Você está planejando ir para o ${country}";
 
-  static String m16(x) => "${x} dias";
+  static String m18(x) => "${x} dias";
 
-  static String m17(x) => "${x} horas";
+  static String m19(x) => "${x} horas";
 
-  static String m18(x) => "${x} vezes";
+  static String m20(x) => "${x} vezes";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -75,6 +80,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "IA criando fotos de grupo divertidas",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("Tudo"),
+    "analyzingDailyHoroscope": MessageLookupByLibrary.simpleMessage(
+      "Analizando horóscopo diario...",
+    ),
+    "analyzingMoonPhase": MessageLookupByLibrary.simpleMessage(
+      "Analizando energía de la fase lunar...",
+    ),
     "analyzingText": MessageLookupByLibrary.simpleMessage(
       "Analyse en cours...",
     ),
@@ -272,6 +283,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Coordenadas selecionadas atuais",
     ),
     "current_emotion": MessageLookupByLibrary.simpleMessage("Emoção Atual"),
+    "dailyHoroscope": MessageLookupByLibrary.simpleMessage("Horóscopo Diario"),
+    "dailyHoroscopeAnalysis": MessageLookupByLibrary.simpleMessage(
+      "Análisis de Horóscopo Diario",
+    ),
+    "dailyHoroscopeAnalysisRemark": MessageLookupByLibrary.simpleMessage(
+      "Análisis de horóscopo diario",
+    ),
+    "dailyHoroscopeTitle": MessageLookupByLibrary.simpleMessage(
+      "Horóscopo Diario",
+    ),
     "daily_quote": MessageLookupByLibrary.simpleMessage("Citação do Dia"),
     "daily_quotes_title": MessageLookupByLibrary.simpleMessage(
       "Citações Diárias",
@@ -444,6 +465,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
       "Isto foi feito pela Zena para você",
     ),
+    "horoscopeAnalysisError": m2,
+    "horoscopeFetchFailed": MessageLookupByLibrary.simpleMessage(
+      "Error al obtener horóscopo",
+    ),
+    "horoscopeRemark": MessageLookupByLibrary.simpleMessage(
+      "Análisis de horóscopo diario",
+    ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "O que você acha da interpretação simultânea por IA?",
     ),
@@ -453,8 +481,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage(
       "Eu gosto do seu estilo!",
     ),
-    "imInterestedSomething": m2,
-    "imVeryInterestedInSomething": m3,
+    "imInterestedSomething": m3,
+    "imVeryInterestedInSomething": m4,
     "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage(
       "Informações de aniversário do usuário estão incompletas",
     ),
@@ -476,7 +504,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "justSendALike": MessageLookupByLibrary.simpleMessage(
       "Apenas Compartilhe sua Apreciação",
     ),
-    "justTypeInYourLanguage": m4,
+    "justTypeInYourLanguage": m5,
     "keep_it_up": MessageLookupByLibrary.simpleMessage(
       "Continue assim! Você está indo muito bem ✨",
     ),
@@ -527,7 +555,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mapSelectedLocation": MessageLookupByLibrary.simpleMessage(
       "Localização selecionada no mapa",
     ),
-    "matchPageSelectIdeas": m5,
+    "matchPageSelectIdeas": m6,
     "me": MessageLookupByLibrary.simpleMessage("Eu"),
     "meditation_category": MessageLookupByLibrary.simpleMessage("Meditação"),
     "meditation_count": MessageLookupByLibrary.simpleMessage(
@@ -549,12 +577,31 @@ class MessageLookup extends MessageLookupByLibrary {
     "membersPerks": MessageLookupByLibrary.simpleMessage(
       "Os membros recebem benefícios exclusivos",
     ),
-    "minutes_duration": m6,
+    "minutes_duration": m7,
     "month": MessageLookupByLibrary.simpleMessage("Mês"),
-    "month_day_format": m7,
+    "month_day_format": m8,
     "mood": MessageLookupByLibrary.simpleMessage("Humor"),
     "mood_index": MessageLookupByLibrary.simpleMessage("Índice de Humor"),
-    "mood_score": m8,
+    "mood_score": m9,
+    "moonPhaseAnalysis": MessageLookupByLibrary.simpleMessage(
+      "Análisis de Fase Lunar",
+    ),
+    "moonPhaseAnalysisError": m10,
+    "moonPhaseAnalysisRemark": MessageLookupByLibrary.simpleMessage(
+      "Análisis de energía de fase lunar",
+    ),
+    "moonPhaseAnalysisTitle": MessageLookupByLibrary.simpleMessage(
+      "Análisis de Energía de Fase Lunar",
+    ),
+    "moonPhaseEnergy": MessageLookupByLibrary.simpleMessage(
+      "Energía de Fase Lunar",
+    ),
+    "moonPhaseFetchFailed": MessageLookupByLibrary.simpleMessage(
+      "Error al obtener fase lunar",
+    ),
+    "moonPhaseRemark": MessageLookupByLibrary.simpleMessage(
+      "Análisis de energía de fase lunar",
+    ),
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
       "Quanto mais fotos, maior o valor de recomendação",
     ),
@@ -858,7 +905,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sagittariusSign": MessageLookupByLibrary.simpleMessage("Sagitário"),
     "save": MessageLookupByLibrary.simpleMessage("Salvar"),
-    "save_failed": m9,
+    "save_failed": m11,
     "scorpioSign": MessageLookupByLibrary.simpleMessage("Escorpião"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage(
       "Evidência de captura de tela",
@@ -921,7 +968,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "status_saved": MessageLookupByLibrary.simpleMessage("✅ Status salvo"),
     "stop_meditation": MessageLookupByLibrary.simpleMessage("Parar Meditação"),
     "streak_days": MessageLookupByLibrary.simpleMessage("Dias Consecutivos"),
-    "streak_x_days": m10,
+    "streak_x_days": m12,
     "stress": MessageLookupByLibrary.simpleMessage("Estresse"),
     "stress_index": MessageLookupByLibrary.simpleMessage("Índice de Estresse"),
     "stress_level": MessageLookupByLibrary.simpleMessage("Nível de Estresse"),
@@ -947,7 +994,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage(
       "Termos e Condições",
     ),
-    "subscriptionAgreementPrefix": m11,
+    "subscriptionAgreementPrefix": m13,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("."),
     "sunSignLabel": MessageLookupByLibrary.simpleMessage("Signo Solar"),
     "synastryAnalysis": MessageLookupByLibrary.simpleMessage("Análise"),
@@ -972,8 +1019,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "total_duration": MessageLookupByLibrary.simpleMessage("Duração Total"),
     "unknownLocation": MessageLookupByLibrary.simpleMessage("Desconhecido"),
-    "unlockHighMatchUsers": m12,
-    "unlockUsersWithDestiny": m13,
+    "unlockDailyHoroscope": MessageLookupByLibrary.simpleMessage(
+      "Desbloquear horóscopo detallado del zodíaco",
+    ),
+    "unlockHighMatchUsers": m14,
+    "unlockMoonPhaseInsight": MessageLookupByLibrary.simpleMessage(
+      "Desbloquear insight de energía de fase lunar de hoy",
+    ),
+    "unlockUsersWithDestiny": m15,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "Preços especiais imperdíveis",
     ),
@@ -1109,7 +1162,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "Quer fazer alguma coisa?",
     ),
-    "wishCityPickerSkipButton": m14,
+    "wishCityPickerSkipButton": m16,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "se você for lá, Quais cidades você quer visitar?",
     ),
@@ -1129,7 +1182,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage(
       "Dentro de um ano",
     ),
-    "wishDatePickerSubtitle": m15,
+    "wishDatePickerSubtitle": m17,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("Quando"),
     "wishList": MessageLookupByLibrary.simpleMessage("Lista de Desejos"),
     "wishes": MessageLookupByLibrary.simpleMessage("Desejo"),
@@ -1139,9 +1192,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "write_feelings_hint": MessageLookupByLibrary.simpleMessage(
       "Escreva como você se sente...",
     ),
-    "x_days": m16,
-    "x_hours": m17,
-    "x_times": m18,
+    "x_days": m18,
+    "x_hours": m19,
+    "x_times": m20,
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage(
       "Agora você é membro do clube",
     ),

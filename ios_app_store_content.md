@@ -35,6 +35,20 @@ Perfect for:
 
 Available in 14 languages. Start your wellness journey today.
 
+**Astro Pair Plus Subscription**
+
+Auto-renewing subscription options:
+
+• Monthly: $9.99/month
+• Quarterly: $24.99/3 months ($8.33/month)
+• Biannually: $44.99/6 months ($7.50/month)
+• Annually: $79.99/year ($6.67/month)
+
+Subscription automatically renews unless cancelled at least 24 hours before the end of the current period. Account will be charged for renewal within 24 hours prior to the end of the current period. Subscriptions may be managed and auto-renewal may be turned off by going to Account Settings after purchase.
+
+Terms of Service: https://pixify-rp.web.app/terms-and-conditions-astro.html
+Privacy Policy: https://pixify-rp.web.app/privacy-policy-astro.html
+
 [Description - Chinese]
 Zena - 疗愈与连接陪伴
 
@@ -70,6 +84,20 @@ Zena - 疗愈与连接陪伴
 • 对通过正念实践实现个人成长感兴趣的人
 
 支持14种语言。今天就开始你的 wellness 之旅。
+
+**Astro Pair Plus 订阅服务**
+
+自动续费订阅选项：
+
+• 月度订阅：每月 ¥68
+• 季度订阅：每3个月 ¥168（每月 ¥56）
+• 半年订阅：每6个月 ¥298（每月 ¥49.67）
+• 年度订阅：每年 ¥488（每月 ¥40.67）
+
+订阅将在当前周期结束前24小时自动续费，除非在当前周期结束前至少24小时取消。账户将在当前周期结束前24小时内被收取续费费用。订阅可在购买后通过账户设置进行管理，并可关闭自动续费。
+
+服务条款：https://pixify-rp.web.app/terms-and-conditions-astro.html
+隐私政策：https://pixify-rp.web.app/privacy-policy-astro.html
 
 [Keywords - English]
 emotional healing, mental wellness, mindfulness app, mood tracking, meditation app, wellness companion, relationship matching, personal growth, emotional intelligence, therapeutic music, guided meditation, wellness journal

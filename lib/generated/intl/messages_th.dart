@@ -24,43 +24,47 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(x) => "อีก ${x} วันถึงเป้าหมาย 30 วัน";
 
-  static String m2(something) => "\"ฉันสนใจ${something}\"";
+  static String m2(error) => "ไม่สามารถรับการวิเคราะห์ดวงได้: ${error}";
 
-  static String m3(something) => "ฉันสนใจ \'${something}\' มาก！";
+  static String m3(something) => "\"ฉันสนใจ${something}\"";
 
-  static String m4(lang) => "เพียงพิมพ์เป็น${lang}";
+  static String m4(something) => "ฉันสนใจ \'${something}\' มาก！";
 
-  static String m5(gender) =>
+  static String m5(lang) => "เพียงพิมพ์เป็น${lang}";
+
+  static String m6(gender) =>
       "คุณสัมผัสได้กับประสบการณ์การแบ่งปันของ${Intl.gender(gender, female: 'เธอ', male: 'เขา', other: 'พวกเขา')} อันไหน?";
 
-  static String m6(minutes) => "${minutes} นาที";
+  static String m7(minutes) => "${minutes} นาที";
 
-  static String m7(month, day) => "${month}月${day}日";
+  static String m8(month, day) => "${month}月${day}日";
 
-  static String m8(score) => "อารมณ์ ${score}/10";
+  static String m9(score) => "อารมณ์ ${score}/10";
 
-  static String m9(error) => "❌ บันทึกล้มเหลว: ${error}";
+  static String m10(error) => "ไม่สามารถรับการวิเคราะห์ดวงจันทร์ได้: ${error}";
 
-  static String m10(x) => "🔥 ทำต่อเนื่อง ${x} วัน!";
+  static String m11(error) => "❌ บันทึกล้มเหลว: ${error}";
 
-  static String m11(storeName) =>
+  static String m12(x) => "🔥 ทำต่อเนื่อง ${x} วัน!";
+
+  static String m13(storeName) =>
       "ดำเนินการต่อ คุณจะถูกเรียกเก็บเงิน การสมัครใช้งานของคุณจะถูกต่ออายุอัตโนมัติในราคาแพ็กเกจ คุณสามารถยกเลิกได้ผ่าน ${storeName} การดำเนินการต่อคุณจะตกลงกับ ";
 
-  static String m12(count) =>
+  static String m14(count) =>
       "ปลดล็อกเพื่อดูผู้ใช้ที่มีการจับคู่สูง ${count} คน ✨";
 
-  static String m13(count, destinyCount) =>
+  static String m15(count, destinyCount) =>
       "ปลดล็อกผู้ใช้ ${count} คน รวมการจับคู่แห่งชะตา ${destinyCount} คน ⭐";
 
-  static String m14(country) => "ข้าม, แค่${country}";
+  static String m16(country) => "ข้าม, แค่${country}";
 
-  static String m15(country) => "คุณวางแผนจะไป${country}ไหม";
+  static String m17(country) => "คุณวางแผนจะไป${country}ไหม";
 
-  static String m16(x) => "${x} วัน";
+  static String m18(x) => "${x} วัน";
 
-  static String m17(x) => "${x} ชั่วโมง";
+  static String m19(x) => "${x} ชั่วโมง";
 
-  static String m18(x) => "${x} ครั้ง";
+  static String m20(x) => "${x} ครั้ง";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -75,6 +79,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "AI กำลังสร้างรูปกลุ่มสนุกๆ",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("ทั้งหมด"),
+    "analyzingDailyHoroscope": MessageLookupByLibrary.simpleMessage(
+      "กำลังวิเคราะห์ดวงรายวัน...",
+    ),
+    "analyzingMoonPhase": MessageLookupByLibrary.simpleMessage(
+      "กำลังวิเคราะห์พลังงานดวงจันทร์...",
+    ),
     "analyzingText": MessageLookupByLibrary.simpleMessage("Analisando..."),
     "aquariusSign": MessageLookupByLibrary.simpleMessage("กุมภ์"),
     "ariesSign": MessageLookupByLibrary.simpleMessage("เมษ"),
@@ -254,6 +264,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "พิกัดที่เลือกไว้ในปัจจุบัน",
     ),
     "current_emotion": MessageLookupByLibrary.simpleMessage("อารมณ์ปัจจุบัน"),
+    "dailyHoroscope": MessageLookupByLibrary.simpleMessage("ดูดวงรายวัน"),
+    "dailyHoroscopeAnalysis": MessageLookupByLibrary.simpleMessage(
+      "วิเคราะห์ดวงรายวัน",
+    ),
+    "dailyHoroscopeAnalysisRemark": MessageLookupByLibrary.simpleMessage(
+      "วิเคราะห์ดวงรายวัน",
+    ),
+    "dailyHoroscopeTitle": MessageLookupByLibrary.simpleMessage("ดูดวงรายวัน"),
     "daily_quote": MessageLookupByLibrary.simpleMessage("คำคมประจำวัน"),
     "daily_quotes_title": MessageLookupByLibrary.simpleMessage("คำคมประจำวัน"),
     "daily_status": MessageLookupByLibrary.simpleMessage("สถานะประจำวัน"),
@@ -406,6 +424,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
       "นี่คือสิ่งที่ Zena ทำเป็นพิเศษเพื่อคุณ",
     ),
+    "horoscopeAnalysisError": m2,
+    "horoscopeFetchFailed": MessageLookupByLibrary.simpleMessage(
+      "ไม่สามารถดึงข้อมูลดวงได้",
+    ),
+    "horoscopeRemark": MessageLookupByLibrary.simpleMessage(
+      "วิเคราะห์ดวงรายวัน",
+    ),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage(
       "คุณคิดว่าการแปลภาษาโดย AI แบบเรียลไทม์เป็นอย่างไร?",
     ),
@@ -415,8 +440,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage(
       "ฉันชอบสไตล์ของคุณ!",
     ),
-    "imInterestedSomething": m2,
-    "imVeryInterestedInSomething": m3,
+    "imInterestedSomething": m3,
+    "imVeryInterestedInSomething": m4,
     "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage(
       "ข้อมูลวันเกิดของผู้ใช้ไม่สมบูรณ์",
     ),
@@ -438,7 +463,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "justSendALike": MessageLookupByLibrary.simpleMessage(
       "เพียงแบ่งปันความชื่นชมของคุณ",
     ),
-    "justTypeInYourLanguage": m4,
+    "justTypeInYourLanguage": m5,
     "keep_it_up": MessageLookupByLibrary.simpleMessage(
       "ทำต่อไป! คุณทำได้ดีมาก ✨",
     ),
@@ -485,7 +510,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mapSelectedLocation": MessageLookupByLibrary.simpleMessage(
       "ตำแหน่งที่เลือกบนแผนที่",
     ),
-    "matchPageSelectIdeas": m5,
+    "matchPageSelectIdeas": m6,
     "me": MessageLookupByLibrary.simpleMessage("ฉัน"),
     "meditation_category": MessageLookupByLibrary.simpleMessage("สมาธิ"),
     "meditation_count": MessageLookupByLibrary.simpleMessage(
@@ -505,12 +530,29 @@ class MessageLookup extends MessageLookupByLibrary {
     "membersPerks": MessageLookupByLibrary.simpleMessage(
       "สมาชิกได้รับสิทธิประโยชน์พิเศษ",
     ),
-    "minutes_duration": m6,
+    "minutes_duration": m7,
     "month": MessageLookupByLibrary.simpleMessage("เดือน"),
-    "month_day_format": m7,
+    "month_day_format": m8,
     "mood": MessageLookupByLibrary.simpleMessage("อารมณ์"),
     "mood_index": MessageLookupByLibrary.simpleMessage("ดัชนีอารมณ์"),
-    "mood_score": m8,
+    "mood_score": m9,
+    "moonPhaseAnalysis": MessageLookupByLibrary.simpleMessage(
+      "วิเคราะห์ดวงจันทร์",
+    ),
+    "moonPhaseAnalysisError": m10,
+    "moonPhaseAnalysisRemark": MessageLookupByLibrary.simpleMessage(
+      "วิเคราะห์พลังงานดวงจันทร์",
+    ),
+    "moonPhaseAnalysisTitle": MessageLookupByLibrary.simpleMessage(
+      "วิเคราะห์พลังงานดวงจันทร์",
+    ),
+    "moonPhaseEnergy": MessageLookupByLibrary.simpleMessage("พลังงานดวงจันทร์"),
+    "moonPhaseFetchFailed": MessageLookupByLibrary.simpleMessage(
+      "ไม่สามารถดึงข้อมูลดวงจันทร์ได้",
+    ),
+    "moonPhaseRemark": MessageLookupByLibrary.simpleMessage(
+      "วิเคราะห์พลังงานดวงจันทร์",
+    ),
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage(
       "ยิ่งมีรูปภาพมากเท่าไร ค่าแนะนำก็ยิ่งสูงขึ้น",
     ),
@@ -798,7 +840,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sagittariusSign": MessageLookupByLibrary.simpleMessage("ธนู"),
     "save": MessageLookupByLibrary.simpleMessage("บันทึก"),
-    "save_failed": m9,
+    "save_failed": m11,
     "scorpioSign": MessageLookupByLibrary.simpleMessage("พิจิก"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage(
       "หลักฐานภาพหน้าจอ",
@@ -857,7 +899,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "status_saved": MessageLookupByLibrary.simpleMessage("✅ บันทึกสถานะแล้ว"),
     "stop_meditation": MessageLookupByLibrary.simpleMessage("หยุดสมาธิ"),
     "streak_days": MessageLookupByLibrary.simpleMessage("วันต่อเนื่อง"),
-    "streak_x_days": m10,
+    "streak_x_days": m12,
     "stress": MessageLookupByLibrary.simpleMessage("ความเครียด"),
     "stress_index": MessageLookupByLibrary.simpleMessage("ดัชนีความเครียด"),
     "stress_level": MessageLookupByLibrary.simpleMessage("ระดับความเครียด"),
@@ -883,7 +925,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage(
       "ข้อกำหนดและเงื่อนไข",
     ),
-    "subscriptionAgreementPrefix": m11,
+    "subscriptionAgreementPrefix": m13,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage(
       " ของเรา",
     ),
@@ -912,8 +954,14 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "total_duration": MessageLookupByLibrary.simpleMessage("ระยะเวลารวม"),
     "unknownLocation": MessageLookupByLibrary.simpleMessage("ไม่ทราบ"),
-    "unlockHighMatchUsers": m12,
-    "unlockUsersWithDestiny": m13,
+    "unlockDailyHoroscope": MessageLookupByLibrary.simpleMessage(
+      "ปลดล็อกดวงรายละเอียดราศี",
+    ),
+    "unlockHighMatchUsers": m14,
+    "unlockMoonPhaseInsight": MessageLookupByLibrary.simpleMessage(
+      "ปลดล็อกข้อมูลเชิงลึกพลังงานดวงจันทร์วันนี้",
+    ),
+    "unlockUsersWithDestiny": m15,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "ราคาพิเศษที่ไม่ควรพลาด",
     ),
@@ -1041,7 +1089,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "อยากทำอะไรบ้าง?",
     ),
-    "wishCityPickerSkipButton": m14,
+    "wishCityPickerSkipButton": m16,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "ถ้าคุณไปที่นั่น คุณอยากเยี่ยมชมเมืองไหนบ้าง?",
     ),
@@ -1061,7 +1109,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "บางทีในไม่ช้านี้",
     ),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("ภายในหนึ่งปี"),
-    "wishDatePickerSubtitle": m15,
+    "wishDatePickerSubtitle": m17,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("เมื่อ"),
     "wishList": MessageLookupByLibrary.simpleMessage("รายการสิ่งที่ปรารถนา"),
     "wishes": MessageLookupByLibrary.simpleMessage("ความปรารถนา"),
@@ -1071,9 +1119,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "write_feelings_hint": MessageLookupByLibrary.simpleMessage(
       "เขียนความรู้สึกของคุณ...",
     ),
-    "x_days": m16,
-    "x_hours": m17,
-    "x_times": m18,
+    "x_days": m18,
+    "x_hours": m19,
+    "x_times": m20,
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage(
       "คุณเป็นสมาชิกคลับแล้ว",
     ),

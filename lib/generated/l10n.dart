@@ -4408,6 +4408,186 @@ class S {
       args: [],
     );
   }
+
+  /// `Analyzing moon phase energy...`
+  String get analyzingMoonPhase {
+    return Intl.message(
+      'Analyzing moon phase energy...',
+      name: 'analyzingMoonPhase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analyzing daily horoscope...`
+  String get analyzingDailyHoroscope {
+    return Intl.message(
+      'Analyzing daily horoscope...',
+      name: 'analyzingDailyHoroscope',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Moon Phase Energy`
+  String get moonPhaseEnergy {
+    return Intl.message(
+      'Moon Phase Energy',
+      name: 'moonPhaseEnergy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlock today's moon phase energy insight`
+  String get unlockMoonPhaseInsight {
+    return Intl.message(
+      'Unlock today\'s moon phase energy insight',
+      name: 'unlockMoonPhaseInsight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily Horoscope`
+  String get dailyHoroscope {
+    return Intl.message(
+      'Daily Horoscope',
+      name: 'dailyHoroscope',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlock detailed zodiac horoscope`
+  String get unlockDailyHoroscope {
+    return Intl.message(
+      'Unlock detailed zodiac horoscope',
+      name: 'unlockDailyHoroscope',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Moon Phase Analysis`
+  String get moonPhaseAnalysis {
+    return Intl.message(
+      'Moon Phase Analysis',
+      name: 'moonPhaseAnalysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily Horoscope Analysis`
+  String get dailyHoroscopeAnalysis {
+    return Intl.message(
+      'Daily Horoscope Analysis',
+      name: 'dailyHoroscopeAnalysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Moon Phase Energy Analysis`
+  String get moonPhaseAnalysisTitle {
+    return Intl.message(
+      'Moon Phase Energy Analysis',
+      name: 'moonPhaseAnalysisTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily Horoscope`
+  String get dailyHoroscopeTitle {
+    return Intl.message(
+      'Daily Horoscope',
+      name: 'dailyHoroscopeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to get moon phase analysis: {error}`
+  String moonPhaseAnalysisError(Object error) {
+    return Intl.message(
+      'Failed to get moon phase analysis: $error',
+      name: 'moonPhaseAnalysisError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to get horoscope analysis: {error}`
+  String horoscopeAnalysisError(Object error) {
+    return Intl.message(
+      'Failed to get horoscope analysis: $error',
+      name: 'horoscopeAnalysisError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Moon phase energy analysis`
+  String get moonPhaseRemark {
+    return Intl.message(
+      'Moon phase energy analysis',
+      name: 'moonPhaseRemark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily horoscope analysis`
+  String get horoscopeRemark {
+    return Intl.message(
+      'Daily horoscope analysis',
+      name: 'horoscopeRemark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to fetch horoscope`
+  String get horoscopeFetchFailed {
+    return Intl.message(
+      'Failed to fetch horoscope',
+      name: 'horoscopeFetchFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to fetch moon phase`
+  String get moonPhaseFetchFailed {
+    return Intl.message(
+      'Failed to fetch moon phase',
+      name: 'moonPhaseFetchFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Moon phase energy analysis`
+  String get moonPhaseAnalysisRemark {
+    return Intl.message(
+      'Moon phase energy analysis',
+      name: 'moonPhaseAnalysisRemark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily horoscope analysis`
+  String get dailyHoroscopeAnalysisRemark {
+    return Intl.message(
+      'Daily horoscope analysis',
+      name: 'dailyHoroscopeAnalysisRemark',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

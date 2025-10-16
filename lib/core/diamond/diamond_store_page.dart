@@ -330,7 +330,7 @@ class _DiamondStorePageState extends ConsumerState<DiamondStorePage> {
                             crossAxisCount: 2,
                             mainAxisSpacing: 16,
                             crossAxisSpacing: 16,
-                            childAspectRatio: 0.9,
+                            childAspectRatio: 1,
                           ),
                           delegate: SliverChildBuilderDelegate((
                             context,
@@ -362,6 +362,85 @@ class _DiamondStorePageState extends ConsumerState<DiamondStorePage> {
 
 /// 钻石商品卡片组件
 class _DiamondProductCard extends StatelessWidget {
+  /// 根据商品ID获取标签
+  static List<String> _getProductTags(String productId) {
+    switch (productId) {
+      case 'diamond_200':
+        return ['💰']; // 性价比之选
+      case 'diamond_500':
+        return ['⭐']; // 热门推荐
+      case 'diamond_1200':
+        return ['🌟']; // 超值推荐
+      case 'diamond_3000':
+        return ['👑']; // 尊贵选择
+      case 'diamond_8000':
+        return ['💎']; // 豪华礼包
+      default:
+        return [];
+    }
+  }
+
+  /// 构建标签组件
+  static Widget _buildTagChip(String tag, String productId) {
+    Color tagColor;
+    Color textColor;
+
+    // 根据不同emoji设置颜色
+    switch (tag) {
+      case '💰': // 性价比
+        tagColor = Colors.green.shade100;
+        textColor = Colors.green.shade800;
+        break;
+      case '⭐': // 热门
+        tagColor = Colors.yellow.shade100;
+        textColor = Colors.yellow.shade800;
+        break;
+      case '🌟': // 超值
+        tagColor = Colors.orange.shade100;
+        textColor = Colors.orange.shade800;
+        break;
+      case '👑': // 尊贵
+        tagColor = Colors.purple.shade100;
+        textColor = Colors.purple.shade800;
+        break;
+      case '💎': // 豪华
+        tagColor = Colors.blue.shade100;
+        textColor = Colors.blue.shade800;
+        break;
+      default:
+        tagColor = Colors.grey.shade100;
+        textColor = Colors.grey.shade800;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: tagColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: tagColor.withOpacity(0.6),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: tagColor.withOpacity(0.3),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Text(
+        tag,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.5, // 增加字母间距让🔥更清晰
+        ),
+      ),
+    );
+  }
+
   final DiamondProduct product;
   final VoidCallback onPurchase;
   final bool isPending;
@@ -380,133 +459,197 @@ class _DiamondProductCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.white.withOpacity(0.15),
-            Colors.white.withOpacity(0.05),
+            const Color(0xFF667EEA).withOpacity(0.2),
+            const Color(0xFF764BA2).withOpacity(0.15),
+            const Color(0xFFF093FB).withOpacity(0.1),
           ],
         ),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.2),
+          width: 1,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 20,
+            color: const Color(0xFF667EEA).withOpacity(0.15),
+            blurRadius: 15,
             spreadRadius: 2,
             offset: const Offset(0, 8),
           ),
         ],
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: isPending ? null : onPurchase,
-          borderRadius: BorderRadius.circular(24),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // 钻石数量 - 突出显示
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Colors.white24, Colors.white12],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+      child: InkWell(
+        onTap: isPending ? null : onPurchase,
+        borderRadius: BorderRadius.circular(20),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // 主内容区域
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // 钻石图标和数量
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 6,
                     ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.diamond, size: 20, color: Colors.white),
-                      const SizedBox(width: 6),
-                      Text(
-                        '${product.diamondCount}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.white.withOpacity(0.8),
+                          Colors.white.withOpacity(0.6),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                // 价格
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Text(
-                    '${product.price}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // 购买按钮
-                Container(
-                  width: double.infinity,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    gradient: isPending
-                        ? null
-                        : const LinearGradient(
-                            colors: [Colors.white24, Colors.white12],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ShaderMask(
+                          shaderCallback: (Rect bounds) {
+                            return LinearGradient(
+                              colors: [
+                                const Color(0xFF667EEA),
+                                const Color(0xFFF093FB),
+                              ],
+                            ).createShader(bounds);
+                          },
+                          child: const Icon(
+                            Icons.diamond,
+                            size: 20,
+                            color: Colors.white,
                           ),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.3),
-                      width: 1,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          '${product.diamondCount}',
+                          style: TextStyle(
+                            color: Colors.grey.shade800,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Material(
-                    color: Colors.transparent,
+
+                  const SizedBox(height: 12),
+
+                  // 价格标签
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.2),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      '${product.price}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // 购买按钮
+                  Container(
+                    width: double.infinity,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      gradient: isPending
+                          ? null
+                          : LinearGradient(
+                              colors: [
+                                Colors.white.withOpacity(0.8),
+                                Colors.white.withOpacity(0.6),
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.3),
+                        width: 1,
+                      ),
+                      boxShadow: isPending
+                          ? null
+                          : [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.15),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                    ),
                     child: InkWell(
                       onTap: isPending ? null : onPurchase,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(18),
                       child: Center(
                         child: isPending
                             ? const SizedBox(
-                                width: 20,
-                                height: 20,
+                                width: 18,
+                                height: 18,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.white,
+                                    Color(0xFF667EEA),
                                   ),
                                 ),
                               )
                             : Text(
                                 S.current.buttonPurchase,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
+                                style: TextStyle(
+                                  color: Colors.grey.shade800,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+
+            // 右上角标签
+            if (_DiamondProductCard._getProductTags(product.productId)
+                .isNotEmpty)
+              Positioned(
+                top: 8,
+                right: 8,
+                child: Wrap(
+                  spacing: 4,
+                  runSpacing: 4,
+                  children:
+                      _DiamondProductCard._getProductTags(product.productId)
+                          .map((tag) => _DiamondProductCard._buildTagChip(
+                              tag, product.productId))
+                          .toList(),
+                ),
+              ),
+          ],
         ),
       ),
     );

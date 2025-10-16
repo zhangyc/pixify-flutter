@@ -15,6 +15,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:sona/account/services/auth.dart';
 import 'package:sona/common/widgets/image/icon.dart';
 import 'package:sona/firebase/sona_firebase.dart';
+import 'package:sona/generated/assets.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../common/env.dart';
@@ -43,7 +44,6 @@ class AuthLandingScreen extends ConsumerStatefulWidget {
 }
 
 class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
-  late final VideoPlayerController _videoController;
 
   @override
   void initState() {
@@ -54,19 +54,10 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
     //   // 尝试轻量认证，但不依赖 authenticationEvents
     //   GoogleSignIn.instance.attemptLightweightAuthentication();
     // });
-    _videoController = VideoPlayerController.asset('assets/videos/landing.mp4',
-        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
-      ..setLooping(true)
-      ..initialize().then((value) {
-        setState(() {});
-        _videoController.play().then((value) => _videoController.play());
-      });
   }
 
   @override
   void dispose() {
-    _videoController.pause();
-    _videoController.dispose();
     super.dispose();
   }
 
@@ -85,13 +76,19 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
+          // Positioned.fill(
+          //     child: _videoController.value.isInitialized
+          //         ? AspectRatio(
+          //             aspectRatio: _videoController.value.aspectRatio,
+          //             child: VideoPlayer(_videoController),
+          //           )
+          //         : Container()),
           Positioned.fill(
-              child: _videoController.value.isInitialized
-                  ? AspectRatio(
-                      aspectRatio: _videoController.value.aspectRatio,
-                      child: VideoPlayer(_videoController),
-                    )
-                  : Container()),
+            child: Image.asset(
+              Assets.imagesAuth,
+              fit: BoxFit.cover,
+            ),
+          ),
 
           /// 霓虹渐变氛围层（紫→青，低透明度）
           Positioned.fill(
@@ -136,7 +133,7 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                   margin: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height / 5),
                   alignment: Alignment.topCenter,
-                  child: const NeonWordmark(text: 'AstroLearn', fontSize: 44),
+                  child: const NeonWordmark(text: 'Zena', fontSize: 44),
                 )),
                 // Padding(
                 //   padding:
@@ -217,39 +214,39 @@ class _AuthLandingScreenState extends ConsumerState<AuthLandingScreen> {
                                       color: Colors.white),
                                   label: Text('E-mail')),
                             ),
-                            if (Platform.isAndroid)
-                              Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 16),
-                                  child: OutlinedButton.icon(
-                                      onPressed: _signInWithGoogle,
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                Colors.white.withOpacity(0.05)),
-                                        foregroundColor:
-                                            const MaterialStatePropertyAll(
-                                                Colors.white),
-                                        overlayColor: MaterialStatePropertyAll(
-                                            const Color(0xFF22D3EE)
-                                                .withOpacity(0.10)),
-                                        side: MaterialStatePropertyAll(
-                                            BorderSide(
-                                                color: const Color(0xFF22D3EE)
-                                                    .withOpacity(0.70),
-                                                width: 1.5)),
-                                        shape: MaterialStatePropertyAll(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(24))),
-                                      ),
-                                      icon: const SonaIcon(
-                                          icon: SonaIcons.google,
-                                          color: Colors.white),
-                                      label: Text('Google')),
-                                ),
-                              ),
+                            // if (Platform.isAndroid)
+                            //   Flexible(
+                            //     child: Padding(
+                            //       padding: const EdgeInsets.symmetric(
+                            //           vertical: 6, horizontal: 16),
+                            //       child: OutlinedButton.icon(
+                            //           onPressed: _signInWithGoogle,
+                            //           style: ButtonStyle(
+                            //             backgroundColor:
+                            //                 MaterialStatePropertyAll(
+                            //                     Colors.white.withOpacity(0.05)),
+                            //             foregroundColor:
+                            //                 const MaterialStatePropertyAll(
+                            //                     Colors.white),
+                            //             overlayColor: MaterialStatePropertyAll(
+                            //                 const Color(0xFF22D3EE)
+                            //                     .withOpacity(0.10)),
+                            //             side: MaterialStatePropertyAll(
+                            //                 BorderSide(
+                            //                     color: const Color(0xFF22D3EE)
+                            //                         .withOpacity(0.70),
+                            //                     width: 1.5)),
+                            //             shape: MaterialStatePropertyAll(
+                            //                 RoundedRectangleBorder(
+                            //                     borderRadius:
+                            //                         BorderRadius.circular(24))),
+                            //           ),
+                            //           icon: const SonaIcon(
+                            //               icon: SonaIcons.google,
+                            //               color: Colors.white),
+                            //           label: Text('Google')),
+                            //     ),
+                            //   ),
                             // if (Platform.isIOS)
                             //   Flexible(
                             //     child: Padding(

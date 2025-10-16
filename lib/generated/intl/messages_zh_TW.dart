@@ -24,42 +24,46 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(x) => "距離30天目標還有 ${x} 次";
 
-  static String m2(something) => "\"我對${something}感興趣\"";
+  static String m2(error) => "獲取運勢失敗: ${error}";
 
-  static String m3(something) => "我對「${something}」非常感興趣！";
+  static String m3(something) => "\"我對${something}感興趣\"";
 
-  static String m4(lang) => "只需輸入${lang}";
+  static String m4(something) => "我對「${something}」非常感興趣！";
 
-  static String m5(gender) =>
+  static String m5(lang) => "只需輸入${lang}";
+
+  static String m6(gender) =>
       "${Intl.gender(gender, female: '她', male: '他', other: '他們')}的哪些分享經歷讓你有共鳴？";
 
-  static String m6(minutes) => "${minutes} 分鐘";
+  static String m7(minutes) => "${minutes} 分鐘";
 
-  static String m7(month, day) => "${month}月${day}日";
+  static String m8(month, day) => "${month}月${day}日";
 
-  static String m8(score) => "心情 ${score}/10";
+  static String m9(score) => "心情 ${score}/10";
 
-  static String m9(error) => "❌ 保存失敗：${error}";
+  static String m10(error) => "獲取月相解讀失敗: ${error}";
 
-  static String m10(x) => "🔥 連續記錄 ${x} 天！";
+  static String m11(error) => "❌ 保存失敗：${error}";
 
-  static String m11(storeName) =>
+  static String m12(x) => "🔥 連續記錄 ${x} 天！";
+
+  static String m13(storeName) =>
       "點擊“繼續”後你會被收取費用，您的訂閱將按對應套餐價格自動續訂，您可以通過${storeName}取消，繼續代表您同意我們的";
 
-  static String m12(count) => "解鎖查看${count}個高匹配用戶 ✨";
+  static String m14(count) => "解鎖查看${count}個高匹配用戶 ✨";
 
-  static String m13(count, destinyCount) =>
+  static String m15(count, destinyCount) =>
       "解鎖${count}個用戶，包含${destinyCount}個命定匹配 ⭐";
 
-  static String m14(country) => "跳過，就${country}";
+  static String m16(country) => "跳過，就${country}";
 
-  static String m15(country) => "有計劃要去${country}嗎";
+  static String m17(country) => "有計劃要去${country}嗎";
 
-  static String m16(x) => "${x}天";
+  static String m18(x) => "${x}天";
 
-  static String m17(x) => "${x}小時";
+  static String m19(x) => "${x}小時";
 
-  static String m18(x) => "${x}次";
+  static String m20(x) => "${x}次";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -74,6 +78,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "AI正在創建有趣的群組照片",
     ),
     "allPeople": MessageLookupByLibrary.simpleMessage("所有人"),
+    "analyzingDailyHoroscope": MessageLookupByLibrary.simpleMessage(
+      "正在解讀今日運勢...",
+    ),
+    "analyzingMoonPhase": MessageLookupByLibrary.simpleMessage("正在解讀月相能量..."),
     "analyzingText": MessageLookupByLibrary.simpleMessage("กำลังวิเคราะห์..."),
     "aquariusSign": MessageLookupByLibrary.simpleMessage("水瓶座"),
     "ariesSign": MessageLookupByLibrary.simpleMessage("白羊座"),
@@ -191,6 +199,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "當前選擇的座標",
     ),
     "current_emotion": MessageLookupByLibrary.simpleMessage("此刻的情緒"),
+    "dailyHoroscope": MessageLookupByLibrary.simpleMessage("每日運勢"),
+    "dailyHoroscopeAnalysis": MessageLookupByLibrary.simpleMessage("每日運勢分析"),
+    "dailyHoroscopeAnalysisRemark": MessageLookupByLibrary.simpleMessage(
+      "每日運勢解讀",
+    ),
+    "dailyHoroscopeTitle": MessageLookupByLibrary.simpleMessage("每日運勢"),
     "daily_quote": MessageLookupByLibrary.simpleMessage("今日心語"),
     "daily_quotes_title": MessageLookupByLibrary.simpleMessage("每日心語"),
     "daily_status": MessageLookupByLibrary.simpleMessage("每日狀態"),
@@ -299,11 +313,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "hereAstroLearnCookedUpForU": MessageLookupByLibrary.simpleMessage(
       "這是Zena為你特製的",
     ),
+    "horoscopeAnalysisError": m2,
+    "horoscopeFetchFailed": MessageLookupByLibrary.simpleMessage("獲取運勢失敗"),
+    "horoscopeRemark": MessageLookupByLibrary.simpleMessage("每日運勢解讀"),
     "howDoUFeelAboutAI": MessageLookupByLibrary.simpleMessage("你覺得AI傳譯怎麼樣?"),
     "iDigYourEnergy": MessageLookupByLibrary.simpleMessage("你的活力很有吸引力！"),
     "iLikeYourStyle": MessageLookupByLibrary.simpleMessage("我中意你的風格！"),
-    "imInterestedSomething": m2,
-    "imVeryInterestedInSomething": m3,
+    "imInterestedSomething": m3,
+    "imVeryInterestedInSomething": m4,
     "incompleteBirthdayInfo": MessageLookupByLibrary.simpleMessage("用戶生日資訊不完整"),
     "infoIncompleteTitle": MessageLookupByLibrary.simpleMessage("資訊不完整"),
     "intellectualCompatibility": MessageLookupByLibrary.simpleMessage("智力"),
@@ -313,7 +330,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "issues": MessageLookupByLibrary.simpleMessage("問題"),
     "justNow": MessageLookupByLibrary.simpleMessage("剛剛"),
     "justSendALike": MessageLookupByLibrary.simpleMessage("就分享你的欣賞"),
-    "justTypeInYourLanguage": m4,
+    "justTypeInYourLanguage": m5,
     "keep_it_up": MessageLookupByLibrary.simpleMessage("堅持就是勝利，繼續加油 ✨"),
     "last_quarter_insight": MessageLookupByLibrary.simpleMessage(
       "下弦月，放下過去，準備新開始",
@@ -346,7 +363,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "位置授權",
     ),
     "mapSelectedLocation": MessageLookupByLibrary.simpleMessage("地圖選擇地點"),
-    "matchPageSelectIdeas": m5,
+    "matchPageSelectIdeas": m6,
     "me": MessageLookupByLibrary.simpleMessage("我的"),
     "meditation_category": MessageLookupByLibrary.simpleMessage("冥想"),
     "meditation_count": MessageLookupByLibrary.simpleMessage("冥想次數"),
@@ -358,12 +375,19 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "memberCenter": MessageLookupByLibrary.simpleMessage("會員中心"),
     "membersPerks": MessageLookupByLibrary.simpleMessage("會員享受專屬特權"),
-    "minutes_duration": m6,
+    "minutes_duration": m7,
     "month": MessageLookupByLibrary.simpleMessage("月"),
-    "month_day_format": m7,
+    "month_day_format": m8,
     "mood": MessageLookupByLibrary.simpleMessage("心情"),
     "mood_index": MessageLookupByLibrary.simpleMessage("心情指數"),
-    "mood_score": m8,
+    "mood_score": m9,
+    "moonPhaseAnalysis": MessageLookupByLibrary.simpleMessage("月相分析"),
+    "moonPhaseAnalysisError": m10,
+    "moonPhaseAnalysisRemark": MessageLookupByLibrary.simpleMessage("月相能量解讀"),
+    "moonPhaseAnalysisTitle": MessageLookupByLibrary.simpleMessage("月相能量解讀"),
+    "moonPhaseEnergy": MessageLookupByLibrary.simpleMessage("月相能量"),
+    "moonPhaseFetchFailed": MessageLookupByLibrary.simpleMessage("獲取月相解讀失敗"),
+    "moonPhaseRemark": MessageLookupByLibrary.simpleMessage("月相能量解讀"),
     "morePhotosBenefit": MessageLookupByLibrary.simpleMessage("照片越多，推薦值越高"),
     "morePhotosMoreCharm": MessageLookupByLibrary.simpleMessage("照片多多魅力增！"),
     "music_subtitle": MessageLookupByLibrary.simpleMessage("放鬆身心的星座音頻"),
@@ -561,7 +585,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "sagittariusSign": MessageLookupByLibrary.simpleMessage("射手座"),
     "save": MessageLookupByLibrary.simpleMessage("保存"),
-    "save_failed": m9,
+    "save_failed": m11,
     "scorpioSign": MessageLookupByLibrary.simpleMessage("天蠍座"),
     "screenshotEvidence": MessageLookupByLibrary.simpleMessage("截圖證據"),
     "seeProfile": MessageLookupByLibrary.simpleMessage("查看個人資料"),
@@ -596,7 +620,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "status_saved": MessageLookupByLibrary.simpleMessage("✅ 狀態已保存"),
     "stop_meditation": MessageLookupByLibrary.simpleMessage("停止冥想"),
     "streak_days": MessageLookupByLibrary.simpleMessage("連續打卡"),
-    "streak_x_days": m10,
+    "streak_x_days": m12,
     "stress": MessageLookupByLibrary.simpleMessage("壓力"),
     "stress_index": MessageLookupByLibrary.simpleMessage("壓力指數"),
     "stress_level": MessageLookupByLibrary.simpleMessage("壓力水平"),
@@ -616,7 +640,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subPageTitle": MessageLookupByLibrary.simpleMessage("取得Zena Plus"),
     "subscriptionAgreement": MessageLookupByLibrary.simpleMessage("條款"),
-    "subscriptionAgreementPrefix": m11,
+    "subscriptionAgreementPrefix": m13,
     "subscriptionAgreementSuffix": MessageLookupByLibrary.simpleMessage("。"),
     "sunSignLabel": MessageLookupByLibrary.simpleMessage("태양 별자리"),
     "synastryAnalysis": MessageLookupByLibrary.simpleMessage("合盤分析"),
@@ -639,8 +663,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "total_duration": MessageLookupByLibrary.simpleMessage("總時長"),
     "unknownLocation": MessageLookupByLibrary.simpleMessage("未知"),
-    "unlockHighMatchUsers": m12,
-    "unlockUsersWithDestiny": m13,
+    "unlockDailyHoroscope": MessageLookupByLibrary.simpleMessage("獲取詳細星座運勢解讀"),
+    "unlockHighMatchUsers": m14,
+    "unlockMoonPhaseInsight": MessageLookupByLibrary.simpleMessage(
+      "解鎖今日月相能量解讀",
+    ),
+    "unlockUsersWithDestiny": m15,
     "unmissableSpecialOfferPrices": MessageLookupByLibrary.simpleMessage(
       "不容錯過的特價",
     ),
@@ -736,7 +764,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishActivityPickerTitle": MessageLookupByLibrary.simpleMessage(
       "有什麼特別想做的事嗎？",
     ),
-    "wishCityPickerSkipButton": m14,
+    "wishCityPickerSkipButton": m16,
     "wishCityPickerSubtitle": MessageLookupByLibrary.simpleMessage(
       "如果你去那裡，你想去哪些城市？",
     ),
@@ -748,15 +776,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "wishDateOptionNotSure": MessageLookupByLibrary.simpleMessage("還不確定喲"),
     "wishDateOptionRecent": MessageLookupByLibrary.simpleMessage("近期吧，大概"),
     "wishDateOptionYear": MessageLookupByLibrary.simpleMessage("一年內"),
-    "wishDatePickerSubtitle": m15,
+    "wishDatePickerSubtitle": m17,
     "wishDatePickerTitle": MessageLookupByLibrary.simpleMessage("何時"),
     "wishList": MessageLookupByLibrary.simpleMessage("心願單"),
     "wishes": MessageLookupByLibrary.simpleMessage("心願"),
     "writeInterestingBio": MessageLookupByLibrary.simpleMessage("寫一個有趣的個人簡介"),
     "write_feelings_hint": MessageLookupByLibrary.simpleMessage("寫下此刻的感受..."),
-    "x_days": m16,
-    "x_hours": m17,
-    "x_times": m18,
+    "x_days": m18,
+    "x_hours": m19,
+    "x_times": m20,
     "youAreAClubMemberNow": MessageLookupByLibrary.simpleMessage("你現在是俱樂部會員了"),
     "youCanEditItAnytime": MessageLookupByLibrary.simpleMessage("你可以隨時編輯"),
     "youSeemCool": MessageLookupByLibrary.simpleMessage("你看起來很酷。"),
